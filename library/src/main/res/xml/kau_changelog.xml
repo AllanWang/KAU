@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--This is a template-->
+
+    <!--
+    <version title="v"/>
+    <item text="" />
+    -->
+
+    <version title="v0.1" />
+    <item text="Initial Changelog" />
+    <item text="" />
+</resources>

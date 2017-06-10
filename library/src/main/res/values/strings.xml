@@ -1,0 +1,15 @@
+<resources>
+    <string name="kau_changelog">Changelog</string>
+    <string name="kau_great">Great</string>
+    <string name="kau_error">Error</string>
+    <string name="kau_back">Back</string>
+    <string name="kau_cancel">Cancel</string>
+    <string name="kau_done">Done</string>
+    <string name="kau_u2022">•</string>
+    <string name="kau_color_picker">Color Picker</string>
+
+    <!--Color Picker-->
+    <string name="kau_md_custom">Custom</string>
+    <string name="kau_md_presets">Presets</string>
+    <string name="kau_md_color_palette">Color Palette</string>
+</resources>
