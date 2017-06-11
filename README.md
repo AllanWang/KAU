@@ -74,7 +74,10 @@ As mentioned, blank items will be ignored, so feel free to create a bunch of emp
 <a name="ripple-canvas"></a>
 ## Ripple Canvas
 
-Ripple canvas provides a way to create simultaneous ripples against a background color. They can be used as transitions, or as a toolbar background to replicate the look for [Google Calendar](https://stackoverflow.com/questions/27872324/how-can-i-animate-the-color-change-of-the-statusbar-and-toolbar-like-the-new-ca)
+Ripple canvas provides a way to create simultaneous ripples against a background color. 
+They can be used as transitions, or as a toolbar background to replicate the look for [Google Calendar](https://stackoverflow.com/questions/27872324/how-can-i-animate-the-color-change-of-the-statusbar-and-toolbar-like-the-new-ca)
+Many ripples can be stacked on top of each other to run at the same time from different locations.
+The canvas also supports color fading and direct color setting so it can effectively replace any background.
 
 <a name="timber-logger"></a>
 ## Timber Logger
