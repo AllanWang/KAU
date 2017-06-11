@@ -72,16 +72,18 @@ class RippleCanvas @JvmOverloads constructor(
     }
 
     fun ripple(color: Int, startX: Float = 0f, startY: Float = 0f, duration: Int = 1000, fade: Boolean = Color.alpha(color) != 255) {
-        var x = startX
-        var y = startY
         val w = width.toFloat()
         val h = height.toFloat()
-        if (x == MIDDLE)
-            x = w / 2
-        else if (x > w) x = 0f
-        if (y == MIDDLE)
-            y = h / 2
-        else if (y > h) y = 0f
+        val x = when (startX) {
+            MIDDLE -> w/2
+            END -> w
+            else -> startX
+        }
+        val y = when (startY) {
+            MIDDLE -> h/2
+            END -> h
+            else -> startY
+        }
         val maxRadius = Math.hypot(Math.max(x, w - x).toDouble(), Math.max(y, h - y).toDouble()).toFloat()
         val ripple = Ripple(color, x, y, 0f, maxRadius, fade)
         ripples.add(ripple)
@@ -109,6 +111,7 @@ class RippleCanvas @JvmOverloads constructor(
 
     companion object {
         const val MIDDLE = -1.0f
+        const val END = -2.0f
         const val FADE_PIVOT = 0.5f
     }
 }

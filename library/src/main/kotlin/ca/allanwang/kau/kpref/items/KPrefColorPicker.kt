@@ -10,6 +10,9 @@ import com.mikepenz.iconics.typeface.IIcon
 
 /**
  * Created by Allan Wang on 2017-06-07.
+ *
+ * ColorPicker preference
+ * When a color is successfully selected in the dialog, it will be saved as an int
  */
 class KPrefColorPicker(builder: KPrefAdapterBuilder,
                        @StringRes title: Int,
@@ -20,8 +23,8 @@ class KPrefColorPicker(builder: KPrefAdapterBuilder,
                        setter: (value: Int) -> Unit,
                        val configs: Builder.() -> Unit = {}) : KPrefItemBase<Int>(builder, title, description, iicon, enabled, getter, setter) {
 
-    override fun onPostBindView(viewHolder: KPrefItemCore.ViewHolder) {
-        super.onPostBindView(viewHolder)
+    override fun onPostBindView(viewHolder: KPrefItemCore.ViewHolder, builder: KPrefAdapterBuilder) {
+        super.onPostBindView(viewHolder, builder)
         //TODO add color circle view
     }
 

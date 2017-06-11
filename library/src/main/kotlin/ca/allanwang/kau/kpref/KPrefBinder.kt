@@ -1,6 +1,5 @@
 package ca.allanwang.kau.kpref
 
-import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -29,7 +28,12 @@ fun RecyclerView.setKPrefAdapter(builder: KPrefAdapterBuilder.() -> Unit): FastI
 class KPrefAdapterBuilder {
 
     var textColor: Int? = null
+        get() = textColorGetter?.invoke() ?: field
     var accentColor: Int? = null
+        get() = accentColorGetter?.invoke() ?: field
+
+    var textColorGetter: (() -> Int)? = null
+    var accentColorGetter: (() -> Int)? = null
 
     fun header(@StringRes title: Int) = list.add(KPrefHeader(this, title))
 

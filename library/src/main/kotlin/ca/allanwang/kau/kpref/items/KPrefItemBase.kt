@@ -28,7 +28,7 @@ abstract class KPrefItemBase<T>(builder: KPrefAdapterBuilder,
         }
 
     @CallSuper
-    override fun onPostBindView(viewHolder: ViewHolder) {
+    override fun onPostBindView(viewHolder: ViewHolder, builder: KPrefAdapterBuilder) {
         viewHolder.itemView.isEnabled = enabled
         viewHolder.itemView.alpha = if (enabled) 1.0f else 0.3f
     }

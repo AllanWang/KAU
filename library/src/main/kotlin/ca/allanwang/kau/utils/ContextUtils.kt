@@ -3,6 +3,7 @@ package ca.allanwang.kau.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.os.Handler
@@ -28,6 +29,12 @@ fun Activity.restart(extras: ((Intent) -> Unit)? = null) {
     finish()
     overridePendingTransition(0, 0)
 }
+
+var Activity.navigationBarColor: Int
+    get() = if (buildIsLollipopAndUp) window.navigationBarColor else Color.BLACK
+    set(value) {
+        if (buildIsLollipopAndUp) window.navigationBarColor = value
+    }
 
 //Toast helpers
 fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = toast(this.string(id), duration)
@@ -86,10 +93,11 @@ fun Context.showChangelog(@XmlRes xmlRes: Int) {
     }).start()
 }
 
-fun Context.isNetworkAvailable(): Boolean {
-    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val activeNetworkInfo = connectivityManager.activeNetworkInfo
-    return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
-}
+val Context.isNetworkAvailable: Boolean
+    get() {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
+    }
 
 fun Context.getDip(value: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)

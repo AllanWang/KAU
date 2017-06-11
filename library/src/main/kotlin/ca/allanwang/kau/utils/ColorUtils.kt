@@ -82,12 +82,12 @@ fun String.toColor(): Int {
 
 //Get ColorStateList
 fun Context.colorStateList(@ColorInt color: Int): ColorStateList {
-    val disabledColor = getDisabledColor()
+    val disabledColor = color.adjustAlpha(0.3f)
     return ColorStateList(arrayOf(intArrayOf(android.R.attr.state_enabled, -android.R.attr.state_checked),
             intArrayOf(android.R.attr.state_enabled, android.R.attr.state_checked),
             intArrayOf(-android.R.attr.state_enabled, -android.R.attr.state_checked),
             intArrayOf(-android.R.attr.state_enabled, android.R.attr.state_checked)),
-            intArrayOf(this.resolveColor(R.attr.colorControlNormal), color, disabledColor, disabledColor))
+            intArrayOf(color.adjustAlpha(0.8f), color, disabledColor, disabledColor))
 }
 
 /*

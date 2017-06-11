@@ -1,56 +1,61 @@
 package ca.allanwang.kau.sample
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
+import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
-import ca.allanwang.kau.kpref.items.KPrefItemCore
-import ca.allanwang.kau.kpref.setKPrefAdapter
+import ca.allanwang.kau.utils.darken
+import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.showChangelog
 import ca.allanwang.kau.views.RippleCanvas
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
-class MainActivity : AppCompatActivity() {
 
-    lateinit var adapter: FastItemAdapter<KPrefItemCore>
-    lateinit var builder: KPrefAdapterBuilder
+class MainActivity : KPrefActivity() {
+
+    override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
+        textColorGetter = { KPrefSample.textColor }
+        accentColorGetter = { KPrefSample.accentColor }
+        header(R.string.header)
+        checkbox(title = R.string.checkbox_1, description = R.string.desc,
+                getter = { KPrefSample.check1 }, setter = { KPrefSample.check1 = it })
+        checkbox(title = R.string.checkbox_2,
+                getter = { KPrefSample.check2 }, setter = { KPrefSample.check2 = it })
+        checkbox(title = R.string.checkbox_3, description = R.string.desc_disabled, enabled = false,
+                getter = { KPrefSample.check3 }, setter = { KPrefSample.check3 = it })
+        colorPicker(title = R.string.text_color, description = R.string.color_custom,
+                getter = { KPrefSample.textColor }, setter = {
+            KPrefSample.textColor = it
+            adapter.notifyAdapterDataSetChanged()
+        },
+                configs = {
+                    allowCustom = true
+                })
+        colorPicker(title = R.string.accent_color, description = R.string.color_no_custom,
+                getter = { KPrefSample.accentColor }, setter = {
+            KPrefSample.accentColor = it
+            adapter.notifyAdapterDataSetChanged()
+            val darkerColor = it.darken()
+            this@MainActivity.navigationBarColor = darkerColor
+            toolbarCanvas.ripple(darkerColor, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500)
+        },
+                configs = {
+                    allowCustom = false
+                })
+        colorPicker(title = R.string.background_color, description = R.string.color_custom_alpha,
+                getter = { KPrefSample.bgColor }, setter = { KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500) },
+                configs = {
+                    allowCustomAlpha = true
+                    allowCustom = true
+                })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val recycler = RecyclerView(this)
-        val bgCanvas = RippleCanvas(this)
-        setContentView(bgCanvas)
-        addContentView(recycler, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         bgCanvas.set(KPrefSample.bgColor)
-        adapter = recycler.setKPrefAdapter {
-            builder = this
-            textColor = KPrefSample.textColor
-            header(R.string.header)
-            checkbox(title = R.string.checkbox_1, description = R.string.desc,
-                    getter = { KPrefSample.check1 }, setter = { KPrefSample.check1 = it })
-            checkbox(title = R.string.checkbox_2,
-                    getter = { KPrefSample.check2 }, setter = { KPrefSample.check2 = it })
-            checkbox(title = R.string.checkbox_3, description = R.string.desc_disabled, enabled = false,
-                    getter = { KPrefSample.check3 }, setter = { KPrefSample.check3 = it })
-            colorPicker(title = R.string.text_color,
-                    getter = { KPrefSample.textColor }, setter = { KPrefSample.textColor = it; builder.textColor = it; refresh() },
-                    configs = {
-                        allowCustom = false
-                    })
-            colorPicker(title = R.string.background_color,
-                    getter = { KPrefSample.bgColor }, setter = { KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500) },
-                    configs = {
-                        allowCustomAlpha = true
-                        allowCustom = true
-                    })
-        }
-    }
-
-    fun refresh() {
-        adapter.notifyAdapterDataSetChanged()
+        val darkAccent = KPrefSample.accentColor.darken()
+        toolbarCanvas.set(darkAccent)
+        this.navigationBarColor = darkAccent
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

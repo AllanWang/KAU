@@ -45,13 +45,12 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
                 icon?.setIcon(iicon, 48)
             } else iconFrame?.gone()
             innerFrame?.removeAllViews()
-            onPostBindView(this)
-            setColors(this, builder)
+            setColors(this)
+            onPostBindView(this, builder)
         }
     }
 
-    @CallSuper
-    open fun setColors(viewHolder: ViewHolder, builder: KPrefAdapterBuilder) {
+    fun setColors(viewHolder: ViewHolder) {
         with(viewHolder) {
             if (builder.textColor != null) {
                 title.setTextColor(builder.textColor!!)
@@ -63,7 +62,7 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
         }
     }
 
-    abstract fun onPostBindView(viewHolder: ViewHolder)
+    abstract fun onPostBindView(viewHolder: ViewHolder, builder: KPrefAdapterBuilder)
 
     abstract fun onClick(itemView: View): Boolean
 

@@ -7,13 +7,17 @@ import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 
 /**
  * Created by Allan Wang on 2017-06-07.
+ *
+ * Header preference
+ * This view just holds a title and is not clickable. It is styled using the accent color
  */
-class KPrefHeader(builder:KPrefAdapterBuilder, @StringRes title: Int) : KPrefItemCore(builder, title = title) {
+class KPrefHeader(builder: KPrefAdapterBuilder, @StringRes title: Int) : KPrefItemCore(builder, title = title) {
 
     override fun getLayoutRes(): Int = R.layout.kau_preference_header
 
-    override fun onPostBindView(viewHolder: ViewHolder) {
+    override fun onPostBindView(viewHolder: ViewHolder, builder: KPrefAdapterBuilder) {
         viewHolder.itemView.isClickable = false
+        if (builder.accentColor != null) viewHolder.title.setTextColor(builder.accentColor!!)
     }
 
     override fun onClick(itemView: View): Boolean = true
