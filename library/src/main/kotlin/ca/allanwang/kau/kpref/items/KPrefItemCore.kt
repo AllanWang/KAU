@@ -12,7 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import butterknife.ButterKnife
 import ca.allanwang.kau.R
-import ca.allanwang.kau.logging.SL
+import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon
@@ -23,7 +23,8 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 
-abstract class KPrefItemCore(@StringRes val title: Int,
+abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
+                             @StringRes val title: Int,
                              @StringRes val description: Int = -1,
                              val iicon: IIcon? = null) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>() {
 
@@ -43,7 +44,22 @@ abstract class KPrefItemCore(@StringRes val title: Int,
                 iconFrame?.visible()
                 icon?.setIcon(iicon, 48)
             } else iconFrame?.gone()
+            innerFrame?.removeAllViews()
             onPostBindView(this)
+            setColors(this, builder)
+        }
+    }
+
+    @CallSuper
+    open fun setColors(viewHolder: ViewHolder, builder: KPrefAdapterBuilder) {
+        with(viewHolder) {
+            if (builder.textColor != null) {
+                title.setTextColor(builder.textColor!!)
+                desc?.setTextColor(builder.textColor!!)
+            }
+            if (builder.accentColor != null) {
+                icon?.drawable?.setTint(builder.accentColor!!)
+            }
         }
     }
 

@@ -33,12 +33,12 @@ fun Int.toHSV(): FloatArray {
     return hsv
 }
 
-fun FloatArray.toColor():Int=Color.HSVToColor(this)
+fun FloatArray.toColor(): Int = Color.HSVToColor(this)
 
-fun Int.isColorVisibleOn(@ColorInt color: Int, @IntRange(from = 0L, to = 255L) delta: Int = 8,
+fun Int.isColorVisibleOn(@ColorInt color: Int, @IntRange(from = 0L, to = 255L) delta: Int = 25,
                          @IntRange(from = 0L, to = 255L) minAlpha: Int = 50): Boolean =
         if (Color.alpha(this) < minAlpha) false
-        else (Math.abs(Color.red(this) - Color.red(color)) < delta
+        else !(Math.abs(Color.red(this) - Color.red(color)) < delta
                 && Math.abs(Color.green(this) - Color.green(color)) < delta
                 && Math.abs(Color.blue(this) - Color.blue(color)) < delta)
 
@@ -54,6 +54,20 @@ fun Context.getDisabledColor(): Int {
 fun Int.adjustAlpha(factor: Float): Int {
     val alpha = Math.round(Color.alpha(this) * factor)
     return Color.argb(alpha, Color.red(this), Color.green(this), Color.blue(this))
+}
+
+@ColorInt
+fun Int.lighten(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int {
+    val (red, green, blue) = intArrayOf(Color.red(this), Color.green(this), Color.blue(this))
+            .map { Math.min(it * (1 + factor), 255.0f).toInt() }
+    return Color.argb(Color.alpha(this), red, green, blue)
+}
+
+@ColorInt
+fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int {
+    val (red, green, blue) = intArrayOf(Color.red(this), Color.green(this), Color.blue(this))
+            .map { Math.max(it * (1 - factor), 0f).toInt() }
+    return Color.argb(Color.alpha(this), red, green, blue)
 }
 
 @Throws(IllegalArgumentException::class)

@@ -29,6 +29,9 @@ internal class ColorPickerView @JvmOverloads constructor(
     var isInSub: Boolean = false
     var isInCustom: Boolean = false
     var circleSize: Int = context.dimen(R.dimen.kau_color_circle_size).toInt()
+    val backgroundColor = context.resolveColor(R.attr.md_background_color,
+            if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark()) Color.WHITE else 0xff424242.toInt())
+    val backgroundColorTint = if (backgroundColor.isColorDark()) backgroundColor.lighten(0.2f) else backgroundColor.darken(0.2f)
     lateinit var dialog: MaterialDialog
     lateinit var builder: Builder
     lateinit var colorsTop: IntArray
@@ -89,7 +92,7 @@ internal class ColorPickerView @JvmOverloads constructor(
                 hexInput.filters = arrayOf(InputFilter.LengthFilter(8))
             }
         }
-        if (findColor(builder.defaultColor)) isInCustom = true //when toggled this will be false
+        if (findColor(builder.defaultColor) || !builder.allowCustom) isInCustom = true //when toggled this will be false
         toggleCustom()
     }
 
@@ -109,7 +112,7 @@ internal class ColorPickerView @JvmOverloads constructor(
         isInCustom = !isInCustom
         if (isInCustom) {
             isInSub = false
-            dialog.setActionButton(DialogAction.NEUTRAL, builder.presetText)
+            if (builder.allowCustom) dialog.setActionButton(DialogAction.NEUTRAL, builder.presetText)
             dialog.setActionButton(DialogAction.NEGATIVE, builder.cancelText)
             customHexTextWatcher = object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -174,7 +177,7 @@ internal class ColorPickerView @JvmOverloads constructor(
             customFrame.fadeIn()
         } else {
             findColor(selectedColor)
-            dialog.setActionButton(DialogAction.NEUTRAL, builder.customText)
+            if (builder.allowCustom) dialog.setActionButton(DialogAction.NEUTRAL, builder.customText)
             dialog.setActionButton(DialogAction.NEGATIVE, if (isInSub) builder.backText else builder.cancelText)
             gridView.fadeIn(onStart = { invalidateGrid() })
             customFrame.fadeOut(onFinish = { customFrame.gone() })
@@ -190,19 +193,14 @@ internal class ColorPickerView @JvmOverloads constructor(
 
     fun refreshColors() {
         if (!isInCustom) findColor(selectedColor)
+        //Ensure that our tinted color is still visible against the background
+        val visibleColor = if (selectedColor.isColorVisibleOn(backgroundColor)) selectedColor else backgroundColorTint
         if (builder.dynamicButtonColors) {
-            dialog.getActionButton(DialogAction.POSITIVE).setTextColor(selectedColor)
-            dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(selectedColor)
-            dialog.getActionButton(DialogAction.NEUTRAL).setTextColor(selectedColor)
+            dialog.getActionButton(DialogAction.POSITIVE).setTextColor(visibleColor)
+            dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(visibleColor)
+            dialog.getActionButton(DialogAction.NEUTRAL).setTextColor(visibleColor)
         }
         if (!builder.allowCustom || !isInCustom) return
-        // Once we get close to white or transparent,
-        // the action buttons and seekbars will be a very light gray.
-        // TODO change by dialog theme
-        val visibleColor = if (Color.alpha(selectedColor) < 64 ||
-                Color.red(selectedColor) > 247 && Color.green(selectedColor) > 247 && Color.blue(selectedColor) > 247)
-            "#DEDEDE".toColor() else selectedColor
-
         if (builder.allowCustomAlpha)
             alphaSeekbar.visible().tint(visibleColor)
         redSeekbar.tint(visibleColor)
@@ -253,7 +251,10 @@ internal class ColorPickerView @JvmOverloads constructor(
         override fun onClick(v: View) {
             if (v.tag != null && v.tag is String) {
                 val tags = (v.tag as String).split(":")
-                if (colorIndex == tags[0].toInt()) return
+                if (colorIndex == tags[0].toInt()) {
+                    colorIndex = tags[0].toInt() //Go to sub list if exists
+                    return
+                }
                 if (colorIndex != -1) (gridView.getChildAt(colorIndex) as CircleView).animateSelected(false)
                 selectedColor = tags[1].toInt()
                 refreshColors()
@@ -328,6 +329,7 @@ class Builder {
 
     var theme: Theme? = null
 
+    fun applyNestedBuilder(action: Builder.() -> Unit) = this.action()
 }
 
 
@@ -341,7 +343,7 @@ fun Context.colorPickerDialog(action: Builder.() -> Unit): MaterialDialog {
         autoDismiss(false)
         positiveText(b.doneText)
         negativeText(b.cancelText)
-        neutralText(b.presetText)
+        if (b.allowCustom) neutralText(b.presetText)
         onPositive { dialog, _ -> b.colorCallbacks.forEach { it.invoke(view.selectedColor) }; dialog.dismiss() }
         onNegative { dialog, _ -> view.backOrCancel() }
         if (b.allowCustom) onNeutral { dialog, _ -> view.toggleCustom() }

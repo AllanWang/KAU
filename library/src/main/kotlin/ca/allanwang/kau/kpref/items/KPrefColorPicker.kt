@@ -3,18 +3,22 @@ package ca.allanwang.kau.kpref.items
 import android.support.annotation.StringRes
 import android.view.View
 import ca.allanwang.kau.R
+import ca.allanwang.kau.dialogs.color.Builder
 import ca.allanwang.kau.dialogs.color.colorPickerDialog
+import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import com.mikepenz.iconics.typeface.IIcon
 
 /**
  * Created by Allan Wang on 2017-06-07.
  */
-class KPrefColorPicker(@StringRes title: Int,
+class KPrefColorPicker(builder: KPrefAdapterBuilder,
+                       @StringRes title: Int,
                        @StringRes description: Int = -1,
                        iicon: IIcon? = null,
                        enabled: Boolean = true,
                        getter: () -> Int,
-                       setter: (value: Int) -> Unit) : KPrefItemBase<Int>(title, description, iicon, enabled, getter, setter) {
+                       setter: (value: Int) -> Unit,
+                       val configs: Builder.() -> Unit = {}) : KPrefItemBase<Int>(builder, title, description, iicon, enabled, getter, setter) {
 
     override fun onPostBindView(viewHolder: KPrefItemCore.ViewHolder) {
         super.onPostBindView(viewHolder)
@@ -26,6 +30,7 @@ class KPrefColorPicker(@StringRes title: Int,
             titleRes = this@KPrefColorPicker.title
             defaultColor = pref
             colorCallbacks.add { pref = it }
+            applyNestedBuilder(configs)
         }.show()
         return true
     }

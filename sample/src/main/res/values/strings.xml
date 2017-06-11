@@ -6,5 +6,7 @@
     <string name="checkbox_1">Checkbox 1</string>
     <string name="checkbox_2">Checkbox 2</string>
     <string name="checkbox_3">Checkbox 3</string>
+    <string name="desc_disabled">I am disabled</string>
     <string name="text_color">Text Color</string>
+    <string name="background_color">Background Color</string>
 </resources>

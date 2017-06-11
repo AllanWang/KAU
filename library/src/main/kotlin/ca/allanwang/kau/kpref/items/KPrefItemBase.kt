@@ -4,6 +4,7 @@ import android.support.annotation.CallSuper
 import android.support.annotation.StringRes
 import android.util.Log
 import ca.allanwang.kau.R
+import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import com.mikepenz.iconics.typeface.IIcon
 
 /**
@@ -12,12 +13,13 @@ import com.mikepenz.iconics.typeface.IIcon
  * Base class for pref setters that include the Shared Preference hooks
  */
 
-abstract class KPrefItemBase<T>(@StringRes title: Int,
+abstract class KPrefItemBase<T>(builder: KPrefAdapterBuilder,
+                                @StringRes title: Int,
                                 @StringRes description: Int = -1,
                                 iicon: IIcon? = null,
                                 val enabled: Boolean = true,
                                 private val getter: () -> T,
-                                private val setter: (value: T) -> Unit) : KPrefItemCore(title, description, iicon) {
+                                private val setter: (value: T) -> Unit) : KPrefItemCore(builder, title, description, iicon) {
 
     var pref: T
         get() = getter.invoke()
