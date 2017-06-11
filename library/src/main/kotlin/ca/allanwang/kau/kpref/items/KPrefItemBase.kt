@@ -4,7 +4,6 @@ import android.support.annotation.CallSuper
 import android.support.annotation.StringRes
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
-import ca.allanwang.kau.logging.SL
 import com.mikepenz.iconics.typeface.IIcon
 
 /**

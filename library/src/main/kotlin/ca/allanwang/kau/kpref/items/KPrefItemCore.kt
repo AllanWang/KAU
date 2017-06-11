@@ -18,7 +18,6 @@ import ca.allanwang.kau.logging.SL
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon
-import java.util.*
 
 /**
  * Created by Allan Wang on 2017-06-05.
