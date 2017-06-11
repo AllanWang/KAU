@@ -3,6 +3,7 @@ package ca.allanwang.kau.kpref
 import android.support.annotation.StringRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import ca.allanwang.kau.R
 import ca.allanwang.kau.dialogs.color.Builder
 import ca.allanwang.kau.kpref.items.KPrefCheckbox
 import ca.allanwang.kau.kpref.items.KPrefColorPicker
@@ -17,7 +18,7 @@ import com.mikepenz.iconics.typeface.IIcon
 fun RecyclerView.setKPrefAdapter(builder: KPrefAdapterBuilder.() -> Unit): FastItemAdapter<KPrefItemCore> {
     layoutManager = LinearLayoutManager(context)
     val adapter = FastItemAdapter<KPrefItemCore>()
-    adapter.withOnClickListener { v, _, item, _ -> item.onClick(v) }
+    adapter.withOnClickListener { v, _, item, _ -> item.onClick(v, v.findViewById(R.id.kau_pref_inner_content)) }
     val items = KPrefAdapterBuilder()
     builder.invoke(items)
     adapter.add(items.list)
@@ -27,30 +28,25 @@ fun RecyclerView.setKPrefAdapter(builder: KPrefAdapterBuilder.() -> Unit): FastI
 
 class KPrefAdapterBuilder {
 
-    var textColor: Int? = null
-        get() = textColorGetter?.invoke() ?: field
-    var accentColor: Int? = null
-        get() = accentColorGetter?.invoke() ?: field
-
-    var textColorGetter: (() -> Int)? = null
-    var accentColorGetter: (() -> Int)? = null
+    var textColor: (() -> Int)? = null
+    var accentColor: (() -> Int)? = null
 
     fun header(@StringRes title: Int) = list.add(KPrefHeader(this, title))
 
     fun checkbox(@StringRes title: Int,
                  @StringRes description: Int = -1,
                  iicon: IIcon? = null,
-                 enabled: Boolean = true,
+                 enabler: () -> Boolean = { true },
                  getter: () -> Boolean,
-                 setter: (value: Boolean) -> Unit) = list.add(KPrefCheckbox(this, title, description, iicon, enabled, getter, setter))
+                 setter: (value: Boolean) -> Unit) = list.add(KPrefCheckbox(this, title, description, iicon, enabler, getter, setter))
 
     fun colorPicker(@StringRes title: Int,
                     @StringRes description: Int = -1,
                     iicon: IIcon? = null,
-                    enabled: Boolean = true,
+                    enabler: () -> Boolean = { true },
                     getter: () -> Int,
                     setter: (value: Int) -> Unit,
-                    configs: Builder.() -> Unit = {}) = list.add(KPrefColorPicker(this, title, description, iicon, enabled, getter, setter, configs))
+                    configs: Builder.() -> Unit = {}) = list.add(KPrefColorPicker(this, title, description, iicon, enabler, getter, setter, configs))
 
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 

@@ -13,6 +13,7 @@ import android.widget.TextView
 import butterknife.ButterKnife
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
+import ca.allanwang.kau.logging.SL
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon
@@ -33,6 +34,7 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
     @CallSuper
     override fun bindView(viewHolder: ViewHolder, payloads: List<Any>) {
         super.bindView(viewHolder, payloads)
+        SL.d("BINDVIEW")
         with(viewHolder) {
             val context = itemView.context
             title.text = context.string(this@KPrefItemCore.title)
@@ -45,36 +47,31 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
                 icon?.setIcon(iicon, 48)
             } else iconFrame?.gone()
             innerFrame?.removeAllViews()
-            setColors(this)
-            onPostBindView(this, builder)
+            val textColor = builder.textColor?.invoke()
+            if (textColor != null) {
+                title.setTextColor(textColor)
+                desc?.setTextColor(textColor)
+            }
+            val accentColor = builder.accentColor?.invoke()
+            if (accentColor != null) {
+                icon?.drawable?.setTint(accentColor)
+            }
+            onPostBindView(this, textColor, accentColor)
         }
     }
 
-    fun setColors(viewHolder: ViewHolder) {
-        with(viewHolder) {
-            if (builder.textColor != null) {
-                title.setTextColor(builder.textColor!!)
-                desc?.setTextColor(builder.textColor!!)
-            }
-            if (builder.accentColor != null) {
-                icon?.drawable?.setTint(builder.accentColor!!)
-            }
-        }
-    }
+    abstract fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?)
 
-    abstract fun onPostBindView(viewHolder: ViewHolder, builder: KPrefAdapterBuilder)
-
-    abstract fun onClick(itemView: View): Boolean
+    abstract fun onClick(itemView: View, innerContent: View?): Boolean
 
     override fun unbindView(holder: ViewHolder) {
         super.unbindView(holder)
+        SL.d("UNBINDVIEW")
         with(holder) {
             title.text = null
             desc?.text = null
             icon?.setImageDrawable(null)
-            innerFrame?.removeAllViews()
-            itemView.isEnabled = true
-            itemView.alpha = 1.0f
+//            innerFrame?.removeAllViews()
         }
     }
 
@@ -84,14 +81,23 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
         val icon: ImageView? by bindOptionalView(R.id.kau_pref_icon)
         val iconFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_icon_frame)
         val innerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_inner_frame)
+        val innerContent: View?
+            get() = itemView.findViewById(R.id.kau_pref_inner_content)
 
         init {
             ButterKnife.bind(v)
         }
 
-        fun addInnerView(@LayoutRes id: Int) {
-            LayoutInflater.from(innerFrame!!.context).inflate(id, innerFrame)
+        inline fun <reified T : View> bindInnerView(@LayoutRes id: Int): T {
+            if (innerFrame == null) throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
+            if (innerContent !is T) {
+                innerFrame!!.removeAllViews()
+                LayoutInflater.from(innerFrame!!.context).inflate(id, innerFrame)
+            }
+            return innerContent as T
         }
+
+        inline fun <reified T : View> getInnerView() = innerContent as T
 
         operator fun get(@IdRes id: Int): View = itemView.findViewById(id)
     }

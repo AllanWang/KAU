@@ -18,17 +18,18 @@ class KPrefColorPicker(builder: KPrefAdapterBuilder,
                        @StringRes title: Int,
                        @StringRes description: Int = -1,
                        iicon: IIcon? = null,
-                       enabled: Boolean = true,
+                       enabler: () -> Boolean = { true },
                        getter: () -> Int,
                        setter: (value: Int) -> Unit,
-                       val configs: Builder.() -> Unit = {}) : KPrefItemBase<Int>(builder, title, description, iicon, enabled, getter, setter) {
+                       val configs: Builder.() -> Unit = {}) : KPrefItemBase<Int>(builder, title, description, iicon, enabler, getter, setter) {
 
-    override fun onPostBindView(viewHolder: KPrefItemCore.ViewHolder, builder: KPrefAdapterBuilder) {
-        super.onPostBindView(viewHolder, builder)
+    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
+        super.onPostBindView(viewHolder, textColor, accentColor)
         //TODO add color circle view
     }
 
-    override fun onClick(itemView: View): Boolean {
+
+    override fun onClick(itemView: View, innerContent: View?): Boolean {
         itemView.context.colorPickerDialog {
             titleRes = this@KPrefColorPicker.title
             defaultColor = pref

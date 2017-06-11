@@ -1,6 +1,7 @@
 package ca.allanwang.kau.kpref
 
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
@@ -11,7 +12,6 @@ import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.resolveColor
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
-
 
 abstract class KPrefActivity : AppCompatActivity() {
 
@@ -32,6 +32,20 @@ abstract class KPrefActivity : AppCompatActivity() {
         adapter = recycler.setKPrefAdapter(onCreateKPrefs(savedInstanceState))
     }
 
+    fun reload(vararg index: Int) {
+        if (index.isEmpty()) adapter.notifyAdapterDataSetChanged()
+        else index.forEach { adapter.notifyItemChanged(it) }
+    }
+
+    fun reloadByTitle(@StringRes vararg title:Int){
+        if (title.isEmpty()) return
+        adapter.adapterItems.forEachIndexed { index, item ->
+            if (title.any { item.title == it })
+                adapter.notifyItemChanged(index)
+        }
+    }
+
     abstract fun onCreateKPrefs(savedInstanceState: Bundle?): KPrefAdapterBuilder.() -> Unit
 
 }
+

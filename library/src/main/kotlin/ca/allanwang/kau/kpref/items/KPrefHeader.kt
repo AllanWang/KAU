@@ -15,12 +15,12 @@ class KPrefHeader(builder: KPrefAdapterBuilder, @StringRes title: Int) : KPrefIt
 
     override fun getLayoutRes(): Int = R.layout.kau_preference_header
 
-    override fun onPostBindView(viewHolder: ViewHolder, builder: KPrefAdapterBuilder) {
+    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         viewHolder.itemView.isClickable = false
-        if (builder.accentColor != null) viewHolder.title.setTextColor(builder.accentColor!!)
+        if (accentColor != null) viewHolder.title.setTextColor(accentColor)
     }
 
-    override fun onClick(itemView: View): Boolean = true
+    override fun onClick(itemView: View, innerContent: View?): Boolean = true
 
     override fun getType() = R.id.kau_item_pref_header
 

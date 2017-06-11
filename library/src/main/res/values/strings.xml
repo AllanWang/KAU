@@ -12,4 +12,6 @@
     <string name="kau_md_custom">Custom</string>
     <string name="kau_md_presets">Presets</string>
     <string name="kau_md_color_palette">Color Palette</string>
+
+    <string name="kau_kpref_title_placeholder">Title Placeholder</string>
 </resources>

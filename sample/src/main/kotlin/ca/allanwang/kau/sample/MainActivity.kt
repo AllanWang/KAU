@@ -14,27 +14,24 @@ import ca.allanwang.kau.views.RippleCanvas
 class MainActivity : KPrefActivity() {
 
     override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
-        textColorGetter = { KPrefSample.textColor }
-        accentColorGetter = { KPrefSample.accentColor }
+        textColor = { KPrefSample.textColor }
+        accentColor = { KPrefSample.accentColor }
         header(R.string.header)
         checkbox(title = R.string.checkbox_1, description = R.string.desc,
                 getter = { KPrefSample.check1 }, setter = { KPrefSample.check1 = it })
         checkbox(title = R.string.checkbox_2,
-                getter = { KPrefSample.check2 }, setter = { KPrefSample.check2 = it })
-        checkbox(title = R.string.checkbox_3, description = R.string.desc_disabled, enabled = false,
+                getter = { KPrefSample.check2 }, setter = { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) })
+        checkbox(title = R.string.checkbox_3, description = R.string.desc_dependent, enabler = { KPrefSample.check2 },
                 getter = { KPrefSample.check3 }, setter = { KPrefSample.check3 = it })
         colorPicker(title = R.string.text_color, description = R.string.color_custom,
-                getter = { KPrefSample.textColor }, setter = {
-            KPrefSample.textColor = it
-            adapter.notifyAdapterDataSetChanged()
-        },
+                getter = { KPrefSample.textColor }, setter = { KPrefSample.textColor = it; reload() },
                 configs = {
                     allowCustom = true
                 })
         colorPicker(title = R.string.accent_color, description = R.string.color_no_custom,
                 getter = { KPrefSample.accentColor }, setter = {
             KPrefSample.accentColor = it
-            adapter.notifyAdapterDataSetChanged()
+            reload()
             val darkerColor = it.darken()
             this@MainActivity.navigationBarColor = darkerColor
             toolbarCanvas.ripple(darkerColor, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500)
