@@ -35,7 +35,7 @@ class MyPrefs {
 KPrefs greatly simplifies it by using Kotlin's object pattern and delegates to achieve the following:
 
 ```Kotlin
-object KPrefSample : KPref() {
+object MyPrefs : KPref() {
     var textColor: Int by kpref("TEXT_COLOR", Color.WHITE)
     var bgColor: Int by kpref("BG_COLOR", Color.BLACK)
     var isFirstLaunch: Boolean by kpref("IS_FIRST_LAUNCH", true)
