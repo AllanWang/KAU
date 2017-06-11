@@ -6,7 +6,9 @@ This library contains small helper functions used throughout almost all of my ot
 
 # Features
 * [KPrefs](#kprefs)
-* [Changelog Xml](#changelog)
+* [Changelog XML](#changelog)
+* [Ripple Canvas](#ripple-canvas)
+* [Timber Logger](#timber-logger)
 * [Extensions](#extensions)
 
 <a name="kprefs"></a>
@@ -69,10 +71,20 @@ And show it with `context.showChangelog(@XmlRes xmlRes: Int)`
 
 As mentioned, blank items will be ignored, so feel free to create a bunch of empty lines to facilitate updating the items in the future.
 
+<a name="ripple-canvas"></a>
+## Ripple Canvas
+
+Ripple canvas provides a way to create simultaneous ripples against a background color. They can be used as transitions, or as a toolbar background to replicate the look for [Google Calendar](https://stackoverflow.com/questions/27872324/how-can-i-animate-the-color-change-of-the-statusbar-and-toolbar-like-the-new-ca)
+
+<a name="timber-logger"></a>
+## Timber Logger
+
+[Timber](https://github.com/JakeWharton/timber)'s DebugTree uses the tag to specify the current class that is being logged. To add the tag directly in the message, create an object that extends the TimberLogger class with the tag name as the argument.
+
 <a name="extensions"></a>
 ## Extension Functions
 
-> "[Extensions](https://kotlinlang.org/docs/reference/extensions.html) provides the ability to extend a class with new functionality without having to inherit from the class"
+> "[Extensions](https://kotlinlang.org/docs/reference/extensions.html) provide the ability to extend a class with new functionality without having to inherit from the class"
 
 ### AnimUtils
 > Extends View
