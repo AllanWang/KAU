@@ -60,7 +60,7 @@ class KPrefDelegate<T : Any> internal constructor(private val key: String, priva
 
     override fun isInitialized(): Boolean = _value !== UNINITIALIZED
 
-    override fun toString(): String = if (isInitialized()) value.toString() else "Lazy value not initialized yet."
+    override fun toString(): String = if (isInitialized()) value.toString() else "Lazy pref $key not initialized yet."
 
     operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
         _value = t
