@@ -33,9 +33,8 @@ class KPrefCheckbox(builder: KPrefAdapterBuilder,
         super.onPostBindView(viewHolder, textColor, accentColor)
         val checkbox = viewHolder.bindInnerView<CheckBox>(R.layout.kau_preference_checkbox)
         if (accentColor != null) checkbox.tint(accentColor)
-        checkbox.isChecked = pref //Checkbox tick needs to be delayed since notifyDataSetChanged will cancel the animation
-        //It seems to work well here
-//        checkbox.jumpDrawablesToCurrentState()
+        checkbox.isChecked = pref
+        checkbox.jumpDrawablesToCurrentState() //Cancel the animation
     }
 
     override fun getType(): Int = R.id.kau_item_pref_checkbox

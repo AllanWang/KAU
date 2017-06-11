@@ -7,6 +7,7 @@ import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -17,6 +18,7 @@ import ca.allanwang.kau.logging.SL
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon
+import java.util.*
 
 /**
  * Created by Allan Wang on 2017-06-05.
@@ -34,7 +36,6 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
     @CallSuper
     override fun bindView(viewHolder: ViewHolder, payloads: List<Any>) {
         super.bindView(viewHolder, payloads)
-        SL.d("BINDVIEW")
         with(viewHolder) {
             val context = itemView.context
             title.text = context.string(this@KPrefItemCore.title)
@@ -42,10 +43,8 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
                 desc?.visible()?.setText(description)
             else
                 desc?.gone()
-            if (iicon != null) {
-                iconFrame?.visible()
-                icon?.setIcon(iicon, 48)
-            } else iconFrame?.gone()
+            if (iicon != null) icon?.visible()?.setIcon(iicon, 48)
+            else icon?.gone()
             innerFrame?.removeAllViews()
             val textColor = builder.textColor?.invoke()
             if (textColor != null) {
@@ -66,7 +65,6 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
 
     override fun unbindView(holder: ViewHolder) {
         super.unbindView(holder)
-        SL.d("UNBINDVIEW")
         with(holder) {
             title.text = null
             desc?.text = null
@@ -77,9 +75,9 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val title: TextView by bindView(R.id.kau_pref_title)
+        val container: ViewGroup? by bindOptionalView(R.id.kau_pref_container)
         val desc: TextView? by bindOptionalView(R.id.kau_pref_desc)
         val icon: ImageView? by bindOptionalView(R.id.kau_pref_icon)
-        val iconFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_icon_frame)
         val innerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_inner_frame)
         val innerContent: View?
             get() = itemView.findViewById(R.id.kau_pref_inner_content)
@@ -93,6 +91,8 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
             if (innerContent !is T) {
                 innerFrame!!.removeAllViews()
                 LayoutInflater.from(innerFrame!!.context).inflate(id, innerFrame)
+            } else {
+                SL.d("Inner view still attached")
             }
             return innerContent as T
         }

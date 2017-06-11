@@ -30,19 +30,17 @@ abstract class KPrefItemBase<T>(builder: KPrefAdapterBuilder,
     @CallSuper
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         val enabled = enabler.invoke()
-        with(viewHolder){
-            itemView.isEnabled = enabled
-            itemView.alpha = if (enabled) 1.0f else 0.3f
-            SL.d("Alpha ${itemView.isEnabled} ${itemView.alpha}")
+        with(viewHolder) {
+            container?.isEnabled = enabled
+            container?.alpha = if (enabled) 1.0f else 0.3f
         }
     }
 
     override fun unbindView(holder: ViewHolder) {
         super.unbindView(holder)
         with(holder) {
-//            itemView.isEnabled = true
-//            itemView.alpha = 1.0f
-            SL.d("Unset alpha ${itemView.isEnabled} ${itemView.alpha}")
+            container?.isEnabled = true
+            container?.alpha = 1.0f
         }
     }
 

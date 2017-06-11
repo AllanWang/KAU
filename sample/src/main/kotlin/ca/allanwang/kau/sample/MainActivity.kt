@@ -20,7 +20,7 @@ class MainActivity : KPrefActivity() {
         checkbox(title = R.string.checkbox_1, description = R.string.desc,
                 getter = { KPrefSample.check1 }, setter = { KPrefSample.check1 = it })
         checkbox(title = R.string.checkbox_2,
-                getter = { KPrefSample.check2 }, setter = { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) })
+                getter = { KPrefSample.check2 }, setter = { KPrefSample.check2 = it; reload(3) })
         checkbox(title = R.string.checkbox_3, description = R.string.desc_dependent, enabler = { KPrefSample.check2 },
                 getter = { KPrefSample.check3 }, setter = { KPrefSample.check3 = it })
         colorPicker(title = R.string.text_color, description = R.string.color_custom,

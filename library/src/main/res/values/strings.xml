@@ -14,4 +14,5 @@
     <string name="kau_md_color_palette">Color Palette</string>
 
     <string name="kau_kpref_title_placeholder">Title Placeholder</string>
+    <string name="kau_pref_icon">Pref Icon</string>
 </resources>
