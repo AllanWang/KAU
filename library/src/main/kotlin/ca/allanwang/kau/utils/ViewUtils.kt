@@ -44,15 +44,6 @@ fun View.matchParent() {
     }
 }
 
-fun ProgressBar.tintRes(@ColorRes id: Int) = tint(ContextCompat.getColor(context, id))
-
-fun ProgressBar.tint(@ColorInt color: Int) {
-    val sl = ColorStateList.valueOf(color)
-    progressTintList = sl
-    secondaryProgressTintList = sl
-    indeterminateTintList = sl
-}
-
 fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: (Snackbar) -> Unit = {}) {
     val snackbar = Snackbar.make(this, text, duration)
     builder.invoke(snackbar)
