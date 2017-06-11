@@ -7,6 +7,7 @@ import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.ColorInt
+import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
@@ -20,11 +21,19 @@ import com.afollestad.materialdialogs.R
 fun Int.isColorDark(): Boolean
         = (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255.0 < 0.5
 
-fun Int.toHexString(withAlpha: Boolean = false, withHexPrefix:Boolean = true): String {
+fun Int.toHexString(withAlpha: Boolean = false, withHexPrefix: Boolean = true): String {
     val hex = if (withAlpha) String.format("#%08X", this)
     else String.format("#%06X", 0xFFFFFF and this)
     return if (withHexPrefix) hex else hex.substring(1)
 }
+
+fun Int.toHSV(): FloatArray {
+    val hsv = FloatArray(3)
+    Color.colorToHSV(this, hsv)
+    return hsv
+}
+
+fun FloatArray.toColor():Int=Color.HSVToColor(this)
 
 fun Int.isColorVisibleOn(@ColorInt color: Int, @IntRange(from = 0L, to = 255L) delta: Int = 8,
                          @IntRange(from = 0L, to = 255L) minAlpha: Int = 50): Boolean =

@@ -12,12 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import ca.allanwang.kau.R
-import ca.allanwang.kau.logging.SL
 import ca.allanwang.kau.utils.*
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
-import com.afollestad.materialdialogs.color.CircleView
 import com.afollestad.materialdialogs.color.FillGridView
 import java.util.*
 
@@ -46,6 +44,7 @@ internal class ColorPickerView @JvmOverloads constructor(
                 if (colorsSub != null && colorsSub!!.size > value) {
                     dialog.setActionButton(DialogAction.NEGATIVE, builder.backText)
                     isInSub = true
+                    invalidateGrid()
                 }
             }
         }
@@ -143,7 +142,6 @@ internal class ColorPickerView @JvmOverloads constructor(
             hexInput.addTextChangedListener(customHexTextWatcher)
             customRgbListener = object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                    SL.d("Progress $progress")
                     if (fromUser) {
                         val color = if (builder.allowCustomAlpha)
                             Color.argb(alphaSeekbar.progress,
@@ -255,10 +253,14 @@ internal class ColorPickerView @JvmOverloads constructor(
         override fun onClick(v: View) {
             if (v.tag != null && v.tag is String) {
                 val tags = (v.tag as String).split(":")
-                colorIndex = tags[0].toInt()
+                if (colorIndex == tags[0].toInt()) return
+                if (colorIndex != -1) (gridView.getChildAt(colorIndex) as CircleView).animateSelected(false)
                 selectedColor = tags[1].toInt()
                 refreshColors()
-                invalidateGrid()
+                val currentSub = isInSub
+                colorIndex = tags[0].toInt()
+                if (currentSub == isInSub) (gridView.getChildAt(colorIndex) as CircleView).animateSelected(true)
+                //Otherwise we are invalidating our grid, so there is no point in animating
             }
         }
 
@@ -286,7 +288,7 @@ internal class ColorPickerView @JvmOverloads constructor(
             val color: Int = if (isInSub) colorsSub!![topIndex][position] else colorsTop[position]
             return view.apply {
                 setBackgroundColor(color)
-                isSelected = (if (isInSub) subIndex else topIndex) == position
+                isSelected = colorIndex == position
                 tag = "$position:$color"
                 setOnClickListener(this@ColorGridAdapter)
                 setOnLongClickListener(this@ColorGridAdapter)
