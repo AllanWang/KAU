@@ -34,14 +34,14 @@ abstract class KPrefActivity : AppCompatActivity() {
 
     fun reload(vararg index: Int) {
         if (index.isEmpty()) adapter.notifyAdapterDataSetChanged()
-        else index.forEach { adapter.notifyItemChanged(it, null) }
+        else index.forEach { adapter.notifyItemChanged(it) }
     }
 
     fun reloadByTitle(@StringRes vararg title: Int) {
         if (title.isEmpty()) return
         adapter.adapterItems.forEachIndexed { index, item ->
             if (title.any { item.title == it })
-                adapter.notifyItemChanged(index, null)
+                adapter.notifyItemChanged(index)
         }
     }
 

@@ -34,13 +34,13 @@ class MainActivity : KPrefActivity() {
             reload()
             val darkerColor = it.darken()
             this@MainActivity.navigationBarColor = darkerColor
-            toolbarCanvas.ripple(darkerColor, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500)
+            toolbarCanvas.ripple(darkerColor, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500L)
         },
                 configs = {
                     allowCustom = false
                 })
         colorPicker(title = R.string.background_color, description = R.string.color_custom_alpha,
-                getter = { KPrefSample.bgColor }, setter = { KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500) },
+                getter = { KPrefSample.bgColor }, setter = { KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500L) },
                 configs = {
                     allowCustomAlpha = true
                     allowCustom = true

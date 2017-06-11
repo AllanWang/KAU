@@ -1,5 +1,6 @@
 package ca.allanwang.kau.views
 
+import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
@@ -71,16 +72,21 @@ class RippleCanvas @JvmOverloads constructor(
         return color.adjustAlpha(factor)
     }
 
-    fun ripple(color: Int, startX: Float = 0f, startY: Float = 0f, duration: Int = 1000, fade: Boolean = Color.alpha(color) != 255) {
+    /**
+     * Creates a ripple effect from the given starting values
+     * [fade] will gradually transition previous ripples to a transparent color so the resulting background is what we want
+     * this is typically only necessary if the ripple color has transparency
+     */
+    fun ripple(color: Int, startX: Float = 0f, startY: Float = 0f, duration: Long = 600L, fade: Boolean = Color.alpha(color) != 255) {
         val w = width.toFloat()
         val h = height.toFloat()
         val x = when (startX) {
-            MIDDLE -> w/2
+            MIDDLE -> w / 2
             END -> w
             else -> startX
         }
         val y = when (startY) {
-            MIDDLE -> h/2
+            MIDDLE -> h / 2
             END -> h
             else -> startY
         }
@@ -88,7 +94,7 @@ class RippleCanvas @JvmOverloads constructor(
         val ripple = Ripple(color, x, y, 0f, maxRadius, fade)
         ripples.add(ripple)
         val animator = ValueAnimator.ofFloat(0f, maxRadius)
-        animator.duration = duration.toLong()
+        animator.duration = duration
         animator.addUpdateListener { animation ->
             ripple.radius = animation.animatedValue as Float
             invalidate()
@@ -96,10 +102,27 @@ class RippleCanvas @JvmOverloads constructor(
         animator.start()
     }
 
+    /**
+     * Sets a color directly; clears ripple queue if it exists
+     */
     fun set(color: Int) {
         baseColor = color
         ripples.clear()
         invalidate()
+    }
+
+    /**
+     * Sets a color directly but with a transition
+     */
+    fun fade(color: Int, duration: Long = 300L) {
+        ripples.clear()
+        val animator = ValueAnimator.ofObject(ArgbEvaluator(), baseColor, color)
+        animator.duration = duration
+        animator.addUpdateListener { animation ->
+            baseColor = animation.animatedValue as Int
+            invalidate()
+        }
+        animator.start()
     }
 
     internal class Ripple(val color: Int,
