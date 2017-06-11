@@ -4,6 +4,7 @@ import android.support.annotation.StringRes
 import android.view.View
 import ca.allanwang.kau.R
 import ca.allanwang.kau.dialogs.color.Builder
+import ca.allanwang.kau.dialogs.color.CircleView
 import ca.allanwang.kau.dialogs.color.colorPickerDialog
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import com.mikepenz.iconics.typeface.IIcon
@@ -21,11 +22,17 @@ class KPrefColorPicker(builder: KPrefAdapterBuilder,
                        enabler: () -> Boolean = { true },
                        getter: () -> Int,
                        setter: (value: Int) -> Unit,
-                       val configs: Builder.() -> Unit = {}) : KPrefItemBase<Int>(builder, title, description, iicon, enabler, getter, setter) {
+                       val configs: Builder.() -> Unit = {},
+                       val showPreview: Boolean = false) : KPrefItemBase<Int>(builder, title, description, iicon, enabler, getter, setter) {
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
         //TODO add color circle view
+        if (showPreview) {
+            val preview = viewHolder.bindInnerView<CircleView>(R.layout.kau_preference_color_preview)
+            preview.setBackgroundColor(pref)
+            preview.withBorder = true
+        }
     }
 
 
@@ -33,7 +40,11 @@ class KPrefColorPicker(builder: KPrefAdapterBuilder,
         itemView.context.colorPickerDialog {
             titleRes = this@KPrefColorPicker.title
             defaultColor = pref
-            colorCallbacks.add { pref = it }
+            colorCallbacks.add {
+                pref = it
+                if (showPreview)
+                    (innerContent as CircleView).setBackgroundColor(it)
+            }
             applyNestedBuilder(configs)
         }.show()
         return true

@@ -37,6 +37,7 @@ import ca.allanwang.kau.utils.toHSV
  */
 class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
 
+    private val borderWidthMicro: Float = context.getDip(1f)
     private val borderWidthSmall: Float = context.getDip(3f)
     private val borderWidthLarge: Float = context.getDip(5f)
     private var whiteOuterBound: Float = borderWidthLarge
@@ -45,6 +46,14 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private val whitePaint: Paint = Paint().apply { isAntiAlias = true; color = Color.WHITE }
     private val innerPaint: Paint = Paint().apply { isAntiAlias = true }
     private var selected: Boolean = false
+    var withBorder: Boolean = false
+        get() = field
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
 
     init {
         update(Color.DKGRAY)
@@ -134,18 +143,19 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         super.onDraw(canvas)
         val centerWidth = (measuredWidth / 2).toFloat()
         val centerHeight = (measuredHeight / 2).toFloat()
+        if (withBorder) canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
         if (selected) {
             val whiteRadius = centerWidth - whiteOuterBound
             val innerRadius = whiteRadius - borderWidthSmall
             if (whiteRadius >= centerWidth) {
                 canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
             } else {
-                canvas.drawCircle(centerWidth, centerHeight, centerWidth, outerPaint)
+                canvas.drawCircle(centerWidth, centerHeight, if (withBorder) centerWidth - borderWidthMicro else centerWidth, outerPaint)
                 canvas.drawCircle(centerWidth, centerHeight, whiteRadius, whitePaint)
             }
             canvas.drawCircle(centerWidth, centerHeight, innerRadius, innerPaint)
         } else {
-            canvas.drawCircle(centerWidth, centerHeight, centerWidth, innerPaint)
+            canvas.drawCircle(centerWidth, centerHeight, if (withBorder) centerWidth - borderWidthMicro else centerWidth, innerPaint)
         }
     }
 

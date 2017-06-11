@@ -46,7 +46,8 @@ class KPrefAdapterBuilder {
                     enabler: () -> Boolean = { true },
                     getter: () -> Int,
                     setter: (value: Int) -> Unit,
-                    configs: Builder.() -> Unit = {}) = list.add(KPrefColorPicker(this, title, description, iicon, enabler, getter, setter, configs))
+                    configs: Builder.() -> Unit = {},
+                    showPreview: Boolean = true) = list.add(KPrefColorPicker(this, title, description, iicon, enabler, getter, setter, configs, showPreview))
 
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 
