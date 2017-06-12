@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
+import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.*
 import android.support.v4.content.ContextCompat
@@ -30,11 +31,11 @@ fun Activity.restart(extras: ((Intent) -> Unit)? = null) {
     overridePendingTransition(0, 0)
 }
 
-fun Context.startActivity(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}) {
+fun Context.startActivity(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundle: Bundle? = null) {
     val intent = (Intent(this, clazz))
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.intentBuilder()
-    startActivity(intent)
+    ContextCompat.startActivity(this, intent, bundle)
     if (this is Activity && clearStack) finish()
 }
 

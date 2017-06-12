@@ -6,19 +6,8 @@ import android.support.v4.app.Fragment
 /**
  * Created by Allan Wang on 2017-05-29.
  */
-
-private fun Fragment.bundle(): Bundle {
-    if (this.arguments == null)
-        this.arguments = Bundle()
-    return this.arguments
-}
-
-fun <T : Fragment> T.putString(key: String, value: String): T {
-    this.bundle().putString(key, value)
-    return this
-}
-
-fun <T : Fragment> T.putInt(key: String, value: Int): T {
-    this.bundle().putInt(key, value)
+fun <T : Fragment> T.withBundle(builder: Bundle.() -> Unit = {}): T {
+    if (this.arguments == null) this.arguments = Bundle()
+    this.arguments.builder()
     return this
 }

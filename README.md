@@ -152,11 +152,11 @@ The canvas also supports color fading and direct color setting so it can effecti
 
 ### FragmentUtils
 > Extends Fragment
-* Directly put extras into a fragment; if a bundle does not exist, it will be created
+* `withBundle` Directly put extras into a fragment; if a bundle does not exist, it will be created
 
 ### IIconUtils
 > Extends [IIcon](https://github.com/mikepenz/Android-Iconics)
-* toDrawable method that only requires a context; defaults to a white icon of size 24dp and uses a ColorStateList to allow for dimming
+* `toDrawable` method that only requires a context; defaults to a white icon of size 24dp and uses a ColorStateList to allow for dimming
 
 ### Utils [Misc]
 > Extends Int
