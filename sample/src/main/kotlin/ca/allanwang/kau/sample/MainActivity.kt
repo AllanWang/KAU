@@ -9,6 +9,7 @@ import ca.allanwang.kau.utils.darken
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.showChangelog
 import ca.allanwang.kau.views.RippleCanvas
+import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 
 class MainActivity : KPrefActivity() {
@@ -39,7 +40,8 @@ class MainActivity : KPrefActivity() {
                 configs = {
                     allowCustom = false
                 })
-        colorPicker(title = R.string.background_color, description = R.string.color_custom_alpha,
+        colorPicker(iicon = GoogleMaterial.Icon.gmd_colorize,
+                title = R.string.background_color, description = R.string.color_custom_alpha,
                 getter = { KPrefSample.bgColor }, setter = { KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500L) },
                 configs = {
                     allowCustomAlpha = true

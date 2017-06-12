@@ -1,17 +1,14 @@
 package ca.allanwang.kau.utils
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
+import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 
 
@@ -57,8 +54,8 @@ fun TextView.setTextIfValid(@StringRes id: Int) {
     if (id > 0) text = context.string(id)
 }
 
-fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE) {
+fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
     if (icon == null) return
-    setImageDrawable(icon.toDrawable(context, sizeDp, color))
+    setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
 }
 

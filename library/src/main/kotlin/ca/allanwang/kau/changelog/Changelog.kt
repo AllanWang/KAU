@@ -34,7 +34,7 @@ internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>) : 
     override fun getItemCount() = items.size
 
     internal class ChangelogVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val text: TextView = itemView.findViewById(R.id.kau_changelog_text) as TextView
+        val text: TextView = itemView.findViewById<TextView>(R.id.kau_changelog_text)
     }
 }
 

@@ -42,7 +42,7 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
                 desc?.visible()?.setText(description)
             else
                 desc?.gone()
-            if (iicon != null) icon?.visible()?.setIcon(iicon, 48)
+            if (iicon != null) icon?.visible()?.setIcon(iicon, 24)
             else icon?.gone()
             innerFrame?.removeAllViews()
             val textColor = builder.textColor?.invoke()

@@ -20,45 +20,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!--As per Android N, icons (24dp) are aligned to the left rather than centered-->
+
         <ImageView
             android:id="@+id/kau_pref_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
             android:contentDescription="@string/kau_pref_icon"
-            android:maxHeight="48dp"
-            android:maxWidth="48dp"
+            android:paddingEnd="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             tools:layout_editor_absoluteX="0dp" />
 
-        <LinearLayout
-            android:id="@+id/kau_pref_inner_frame"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:gravity="center_vertical|end"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            tools:layout_editor_absoluteX="1dp" />
-
         <TextView
             android:id="@+id/kau_pref_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:ellipsize="marquee"
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/kau_pref_desc"
-            app:layout_constraintEnd_toStartOf="@id/kau_pref_inner_frame"
+            app:layout_constraintEnd_toStartOf="@+id/kau_pref_inner_frame"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
             app:layout_constraintTop_toTopOf="parent"
@@ -67,7 +54,7 @@
 
         <TextView
             android:id="@id/kau_pref_desc"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:ellipsize="end"
@@ -78,8 +65,32 @@
             app:layout_constraintEnd_toStartOf="@id/kau_pref_inner_frame"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
-            app:layout_constraintTop_toBottomOf="@+id/kau_pref_title"
+            app:layout_constraintTop_toBottomOf="@id/kau_pref_title"
             tools:layout_editor_absoluteX="-175dp" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/kau_pref_barrier"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="kau_pref_title,kau_pref_desc"
+            app:barrierDirection="end"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <LinearLayout
+            android:id="@id/kau_pref_inner_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center_vertical|end"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/kau_pref_barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            tools:layout_editor_absoluteX="1dp" />
 
     </android.support.constraint.ConstraintLayout>
 
