@@ -143,6 +143,7 @@ The canvas also supports color fading and direct color setting so it can effecti
 > Extends Activity
 * Restart an activity
 > Extends Context
+* Start Activity using the class, with optional intents and stack clearing
 * Create a toast directly
 * Get resource values through `.color(id)`, `.dimen(id)`, `.drawable(id)`, `.integer(id)`, `.string(id)`
 * Get attribute values through resolve methods

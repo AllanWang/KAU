@@ -30,6 +30,14 @@ fun Activity.restart(extras: ((Intent) -> Unit)? = null) {
     overridePendingTransition(0, 0)
 }
 
+fun Context.startActivity(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}) {
+    val intent = (Intent(this, clazz))
+    if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.intentBuilder()
+    startActivity(intent)
+    if (this is Activity && clearStack) finish()
+}
+
 var Activity.navigationBarColor: Int
     get() = if (buildIsLollipopAndUp) window.navigationBarColor else Color.BLACK
     set(value) {
