@@ -2,13 +2,13 @@
 
 Kotlin Android Utils
 
-<!--Current Release 0.1-->
+<!--Current Release v1.0-->
 
 This library contains small helper functions used throughout almost all of my other projects. The goal is to make common interactions executable in a single line.
 
 ------------
 
-Capsule is available on JitPack
+KAU is available on JitPack
 
 [![](https://jitpack.io/v/ca.allanwang/kau.svg)](https://jitpack.io/#ca.allanwang/kau)
 
@@ -16,10 +16,10 @@ To apply, add the following to your root build.gradle:
 
 ```gradle
 allprojects {
-	repositories {
-		...
-		maven { url "https://jitpack.io" }
-	}
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
 }
 ```
 
@@ -27,7 +27,7 @@ And add the following dependencies (You can use a specific version, commit, or -
 
 ```gradle
 dependencies {
-        compile 'ca.allanwang:kau:v0.1'
+    compile 'ca.allanwang:kau:v1.0'
 }
 
 ```
@@ -48,17 +48,17 @@ A typical SharedPreference contains items that look like so:
 
 ```Java
 class MyPrefs {
-	public static final String TEXT_COLOR = "TEXT_COLOR";
+    public static final String TEXT_COLOR = "TEXT_COLOR";
 
-	private static SharedPreference prefs = ...
+    private static SharedPreference prefs = ...
 
-	public static void setTextColor(int color) {
-		prefs.edit().putInt(TEXT_COLOR, color).apply();
-	}
+    public static void setTextColor(int color) {
+        prefs.edit().putInt(TEXT_COLOR, color).apply();
+    }
 
-	public static int getTextColor() {
-		prefs.getInt(TEXT_COLOR, Color.WHITE);
-	}
+    public static int getTextColor() {
+        prefs.getInt(TEXT_COLOR, Color.WHITE);
+    }
 }
 ```
   
