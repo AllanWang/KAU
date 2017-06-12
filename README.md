@@ -2,7 +2,37 @@
 
 Kotlin Android Utils
 
+<!--Current Release 0.1-->
+
 This library contains small helper functions used throughout almost all of my other projects. The goal is to make common interactions executable in a single line.
+
+------------
+
+Capsule is available on JitPack
+
+[![](https://jitpack.io/v/ca.allanwang/kau.svg)](https://jitpack.io/#ca.allanwang/kau)
+
+To apply, add the following to your root build.gradle:
+
+```gradle
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
+	}
+}
+```
+
+And add the following dependencies (You can use a specific version, commit, or -SNAPSHOT):
+
+```gradle
+dependencies {
+        compile 'ca.allanwang:kau:v0.1'
+}
+
+```
+
+-----------
 
 # Features
 * [KPrefs](#kprefs)
