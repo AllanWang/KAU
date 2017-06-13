@@ -70,6 +70,14 @@ fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int {
     return Color.argb(Color.alpha(this), red, green, blue)
 }
 
+@ColorInt
+fun Int.colorToBackground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int
+        = if (isColorDark()) darken(factor) else lighten(factor)
+
+@ColorInt
+fun Int.colorToForeground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int
+        = if (isColorDark()) lighten(factor) else darken(factor)
+
 @Throws(IllegalArgumentException::class)
 fun String.toColor(): Int {
     val toParse: String
