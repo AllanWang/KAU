@@ -57,6 +57,14 @@ fun Int.adjustAlpha(factor: Float): Int {
 }
 
 @ColorInt
+fun Int.withAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int
+        = Color.argb(alpha, Color.red(this), Color.green(this), Color.blue(this))
+
+@ColorInt
+fun Int.withMinAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int
+        = Color.argb(Math.max(alpha, Color.alpha(this)), Color.red(this), Color.green(this), Color.blue(this))
+
+@ColorInt
 fun Int.lighten(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int {
     val (red, green, blue) = intArrayOf(Color.red(this), Color.green(this), Color.blue(this))
             .map { Math.min(it * (1 + factor), 255.0f).toInt() }
