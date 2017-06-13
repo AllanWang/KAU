@@ -7,7 +7,7 @@ import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.utils.darken
 import ca.allanwang.kau.utils.navigationBarColor
-import ca.allanwang.kau.utils.showChangelog
+import ca.allanwang.kau.utils.startActivitySlideIn
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -65,14 +65,7 @@ class MainActivity : KPrefActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> {
-
-            }
-            R.id.action_changelog -> showChangelog(R.xml.kau_changelog)
-            R.id.action_call -> {
-            }
-            R.id.action_db -> {
-            }
-            R.id.action_restart -> {
+                startActivitySlideIn(AnimActivity::class.java, clearStack = true)
             }
             else -> return super.onOptionsItemSelected(item)
         }

@@ -9,6 +9,7 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.*
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.widget.Toast
@@ -37,6 +38,27 @@ fun Context.startActivity(clazz: Class<out Activity>, clearStack: Boolean = fals
     intent.intentBuilder()
     ContextCompat.startActivity(this, intent, bundle)
     if (this is Activity && clearStack) finish()
+}
+
+/**
+ * Bring in activity from the right
+ */
+fun Context.startActivitySlideIn(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
+    val bundle = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_slide_in_right, R.anim.kau_fade_out).toBundle()
+    bundle.bundleBuilder()
+    startActivity(clazz, clearStack, intentBuilder, bundle)
+}
+
+/**
+ * Bring in activity from behind while pushing the current activity to the right
+ * This replicates the exit animation of a sliding activity, but is a forward creation
+ * For the animation to work, the previous activity should not be in the stack (otherwise you wouldn't need this in the first place)
+ * Consequently, the stack will be cleared by default
+ */
+fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolean = true, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
+    val bundle = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top).toBundle()
+    bundle.bundleBuilder()
+    startActivity(clazz, clearStack, intentBuilder, bundle)
 }
 
 var Activity.navigationBarColor: Int
