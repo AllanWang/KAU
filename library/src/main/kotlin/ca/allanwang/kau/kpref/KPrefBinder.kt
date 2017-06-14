@@ -5,12 +5,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import ca.allanwang.kau.R
 import ca.allanwang.kau.dialogs.color.Builder
-import ca.allanwang.kau.kpref.items.KPrefCheckbox
-import ca.allanwang.kau.kpref.items.KPrefColorPicker
-import ca.allanwang.kau.kpref.items.KPrefHeader
-import ca.allanwang.kau.kpref.items.KPrefItemCore
+import ca.allanwang.kau.kpref.items.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
-import com.mikepenz.iconics.typeface.IIcon
 
 /**
  * Created by Allan Wang on 2017-06-08.
@@ -34,20 +30,15 @@ class KPrefAdapterBuilder {
     fun header(@StringRes title: Int) = list.add(KPrefHeader(this, title))
 
     fun checkbox(@StringRes title: Int,
-                 @StringRes description: Int = -1,
-                 iicon: IIcon? = null,
-                 enabler: () -> Boolean = { true },
-                 getter: () -> Boolean,
-                 setter: (value: Boolean) -> Unit) = list.add(KPrefCheckbox(this, title, description, iicon, enabler, getter, setter))
+                 coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
+                 itemBuilder: KPrefItemBase.Builder<Boolean>.() -> Unit = {}) = list.add(KPrefCheckbox(
+            this, title, coreBuilder, itemBuilder))
 
     fun colorPicker(@StringRes title: Int,
-                    @StringRes description: Int = -1,
-                    iicon: IIcon? = null,
-                    enabler: () -> Boolean = { true },
-                    getter: () -> Int,
-                    setter: (value: Int) -> Unit,
-                    configs: Builder.() -> Unit = {},
-                    showPreview: Boolean = true) = list.add(KPrefColorPicker(this, title, description, iicon, enabler, getter, setter, configs, showPreview))
+                    coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
+                    itemBuilder: KPrefItemBase.Builder<Int>.() -> Unit = {},
+                    colorBuilder: Builder.() -> Unit = {},
+                    showPreview: Boolean = true) = list.add(KPrefColorPicker(this, title, coreBuilder, itemBuilder, colorBuilder, showPreview))
 
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 

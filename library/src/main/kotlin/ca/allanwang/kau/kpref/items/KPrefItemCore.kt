@@ -27,10 +27,16 @@ import com.mikepenz.iconics.typeface.IIcon
 
 abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
                              @StringRes val title: Int,
-                             @StringRes val description: Int = -1,
-                             val iicon: IIcon? = null) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>() {
+                             coreBuilder: Builder.() -> Unit = {}) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>() {
 
     override final fun getViewHolder(v: View) = ViewHolder(v)
+
+    val core: Builder
+
+    init {
+        core = Builder()
+        core.coreBuilder()
+    }
 
     @CallSuper
     override fun bindView(viewHolder: ViewHolder, payloads: List<Any>) {
@@ -38,11 +44,11 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
         with(viewHolder) {
             val context = itemView.context
             title.text = context.string(this@KPrefItemCore.title)
-            if (description > 0)
-                desc?.visible()?.setText(description)
+            if (core.description > 0)
+                desc?.visible()?.setText(core.description)
             else
                 desc?.gone()
-            if (iicon != null) icon?.visible()?.setIcon(iicon, 24)
+            if (core.iicon != null) icon?.visible()?.setIcon(core.iicon, 24)
             else icon?.gone()
             innerFrame?.removeAllViews()
             val textColor = builder.textColor?.invoke()
@@ -70,6 +76,11 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
             icon?.setImageDrawable(null)
 //            innerFrame?.removeAllViews()
         }
+    }
+
+    class Builder {
+        var description: Int = -1
+        var iicon: IIcon? = null
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

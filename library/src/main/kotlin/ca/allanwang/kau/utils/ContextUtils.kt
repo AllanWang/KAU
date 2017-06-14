@@ -94,6 +94,15 @@ fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {
     }
 }
 
+fun Context.resolveDrawable(@AttrRes attr: Int): Drawable? {
+    val a = theme.obtainStyledAttributes(intArrayOf(attr))
+    try {
+        return a.getDrawable(0)
+    } finally {
+        a.recycle()
+    }
+}
+
 fun Context.resolveBoolean(@AttrRes attr: Int, fallback: Boolean = false): Boolean {
     val a = theme.obtainStyledAttributes(intArrayOf(attr))
     try {

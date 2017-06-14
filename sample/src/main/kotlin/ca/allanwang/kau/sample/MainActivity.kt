@@ -8,6 +8,7 @@ import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.utils.darken
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.startActivitySlideIn
+import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -17,36 +18,68 @@ class MainActivity : KPrefActivity() {
     override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
         textColor = { KPrefSample.textColor }
         accentColor = { KPrefSample.accentColor }
+
         header(R.string.header)
-        checkbox(title = R.string.checkbox_1, description = R.string.desc,
-                getter = { KPrefSample.check1 }, setter = { KPrefSample.check1 = it })
-        checkbox(title = R.string.checkbox_2,
-                getter = { KPrefSample.check2 }, setter = { KPrefSample.check2 = it; reload(3) })
-        checkbox(title = R.string.checkbox_3, description = R.string.desc_dependent, enabler = { KPrefSample.check2 },
-                getter = { KPrefSample.check3 }, setter = { KPrefSample.check3 = it })
-        colorPicker(title = R.string.text_color, description = R.string.color_custom,
-                getter = { KPrefSample.textColor }, setter = { KPrefSample.textColor = it; reload() },
-                configs = {
-                    allowCustom = true
-                })
-        colorPicker(title = R.string.accent_color, description = R.string.color_no_custom,
-                getter = { KPrefSample.accentColor }, setter = {
-            KPrefSample.accentColor = it
-            reload()
-            val darkerColor = it.darken()
-            this@MainActivity.navigationBarColor = darkerColor
-            toolbarCanvas.ripple(darkerColor, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500L)
-        },
-                configs = {
-                    allowCustom = false
-                })
-        colorPicker(iicon = GoogleMaterial.Icon.gmd_colorize,
-                title = R.string.background_color, description = R.string.color_custom_alpha,
-                getter = { KPrefSample.bgColor }, setter = { KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500L) },
-                configs = {
-                    allowCustomAlpha = true
-                    allowCustom = true
-                })
+
+        checkbox(title = R.string.checkbox_1, coreBuilder = {
+            description = R.string.desc
+        }, itemBuilder = {
+            getter = { KPrefSample.check1 }
+            setter = { KPrefSample.check1 = it }
+        })
+
+        checkbox(title = R.string.checkbox_2, itemBuilder = {
+            getter = { KPrefSample.check2 }
+            setter = { KPrefSample.check2 = it; reload(3) }
+        })
+
+        checkbox(title = R.string.checkbox_3, coreBuilder = {
+            description = R.string.desc_dependent
+        }, itemBuilder = {
+            enabler = { KPrefSample.check2 }
+            getter = { KPrefSample.check3 }
+            setter = { KPrefSample.check3 = it }
+            onDisabledClick = {
+                itemView, innerContent ->
+                itemView.context.toast("I am still disabled")
+                true
+            }
+        })
+
+        colorPicker(title = R.string.text_color, coreBuilder = {
+            description = R.string.color_custom
+        }, itemBuilder = {
+            getter = { KPrefSample.textColor }
+            setter = { KPrefSample.textColor = it; reload() }
+        }, colorBuilder = {
+            allowCustom = true
+        })
+
+        colorPicker(title = R.string.accent_color, coreBuilder = {
+            description = R.string.color_no_custom
+        }, itemBuilder = {
+            getter = { KPrefSample.accentColor }
+            setter = {
+                KPrefSample.accentColor = it
+                reload()
+                val darkerColor = it.darken()
+                this@MainActivity.navigationBarColor = darkerColor
+                toolbarCanvas.ripple(darkerColor, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500L)
+            }
+        }, colorBuilder = {
+            allowCustom = false
+        })
+
+        colorPicker(title = R.string.background_color, coreBuilder = {
+            iicon = GoogleMaterial.Icon.gmd_colorize
+            description = R.string.color_custom_alpha
+        }, itemBuilder = {
+            getter = { KPrefSample.bgColor }
+            setter = { KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500L) }
+        }, colorBuilder = {
+            allowCustomAlpha = true
+            allowCustom = true
+        })
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

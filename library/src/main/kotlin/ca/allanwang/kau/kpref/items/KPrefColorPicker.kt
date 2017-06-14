@@ -3,11 +3,9 @@ package ca.allanwang.kau.kpref.items
 import android.support.annotation.StringRes
 import android.view.View
 import ca.allanwang.kau.R
-import ca.allanwang.kau.dialogs.color.Builder
 import ca.allanwang.kau.dialogs.color.CircleView
 import ca.allanwang.kau.dialogs.color.colorPickerDialog
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
-import com.mikepenz.iconics.typeface.IIcon
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -17,13 +15,11 @@ import com.mikepenz.iconics.typeface.IIcon
  */
 class KPrefColorPicker(builder: KPrefAdapterBuilder,
                        @StringRes title: Int,
-                       @StringRes description: Int = -1,
-                       iicon: IIcon? = null,
-                       enabler: () -> Boolean = { true },
-                       getter: () -> Int,
-                       setter: (value: Int) -> Unit,
-                       val configs: Builder.() -> Unit = {},
-                       val showPreview: Boolean = false) : KPrefItemBase<Int>(builder, title, description, iicon, enabler, getter, setter) {
+                       coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
+                       itemBuilder: KPrefItemBase.Builder<Int>.() -> Unit = {},
+                       val colorBuilder: ca.allanwang.kau.dialogs.color.Builder.() -> Unit = {},
+                       val showPreview: Boolean = false
+) : KPrefItemBase<Int>(builder, title, coreBuilder, itemBuilder) {
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
@@ -36,7 +32,7 @@ class KPrefColorPicker(builder: KPrefAdapterBuilder,
     }
 
 
-    override fun onClick(itemView: View, innerContent: View?): Boolean {
+    override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
         itemView.context.colorPickerDialog {
             titleRes = this@KPrefColorPicker.title
             defaultColor = pref
@@ -45,7 +41,7 @@ class KPrefColorPicker(builder: KPrefAdapterBuilder,
                 if (showPreview)
                     (innerContent as CircleView).setBackgroundColor(it)
             }
-            applyNestedBuilder(configs)
+            applyNestedBuilder(colorBuilder)
         }.show()
         return true
     }

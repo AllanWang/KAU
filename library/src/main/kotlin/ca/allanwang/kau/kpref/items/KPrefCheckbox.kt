@@ -6,7 +6,6 @@ import android.widget.CheckBox
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.utils.tint
-import com.mikepenz.iconics.typeface.IIcon
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -16,14 +15,11 @@ import com.mikepenz.iconics.typeface.IIcon
  */
 class KPrefCheckbox(builder: KPrefAdapterBuilder,
                     @StringRes title: Int,
-                    @StringRes description: Int = -1,
-                    iicon: IIcon? = null,
-                    enabler: () -> Boolean = { true },
-                    getter: () -> Boolean,
-                    setter: (value: Boolean) -> Unit) : KPrefItemBase<Boolean>(builder, title, description, iicon, enabler, getter, setter) {
+                    coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
+                    itemBuilder: Builder<Boolean>.() -> Unit = {}
+) : KPrefItemBase<Boolean>(builder, title, coreBuilder, itemBuilder) {
 
-
-    override fun onClick(itemView: View, innerContent: View?): Boolean {
+    override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
         pref = !pref
         (innerContent as CheckBox).isChecked = pref
         return true
