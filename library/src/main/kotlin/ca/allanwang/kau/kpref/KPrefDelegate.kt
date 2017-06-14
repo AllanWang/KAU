@@ -15,7 +15,7 @@ fun KPref.kpref(key: String, fallback: String): KPrefDelegate<String> = KPrefDel
 
 class StringSet(set: Collection<String>) : LinkedHashSet<String>(set)
 
-class KPrefDelegate<T : Any> internal constructor(private val key: String, private val fallback: T, private val pref: KPref, lock: Any? = null) : Lazy<T>, java.io.Serializable {
+class KPrefDelegate<T : Any> internal constructor(private val key: String, private val fallback: T, private val pref: KPref, lock: Any? = null, var postSetter: (value: T) -> Unit = {}) : Lazy<T>, java.io.Serializable {
 
     @Volatile private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this
@@ -75,6 +75,7 @@ class KPrefDelegate<T : Any> internal constructor(private val key: String, priva
             else -> throw KPrefException(t)
         }
         editor.apply()
+        postSetter.invoke(t)
     }
 }
 

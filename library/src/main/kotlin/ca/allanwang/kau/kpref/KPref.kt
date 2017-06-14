@@ -21,12 +21,15 @@ open class KPref {
 
     internal val sp: SharedPreferences by lazy {
         if (!initialized) throw KPrefException("KPref object has not yet been initialized; please initialize it with a context and preference name")
-        c.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE) }
+        c.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+    }
 
     internal val prefMap: MutableMap<String, KPrefDelegate<*>> = mutableMapOf()
 
     fun reset() {
         prefMap.values.forEach { it.invalidate() }
     }
+
+    operator fun get(key: String): KPrefDelegate<*>? = prefMap[key]
 
 }
