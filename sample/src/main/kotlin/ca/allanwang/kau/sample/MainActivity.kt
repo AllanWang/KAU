@@ -93,8 +93,7 @@ class MainActivity : KPrefActivity() {
                         reloadByTitle(R.string.text)
                     })
                     inputRange(0, 20)
-                    build()
-                }.show()
+                }
                 true
             }
         })

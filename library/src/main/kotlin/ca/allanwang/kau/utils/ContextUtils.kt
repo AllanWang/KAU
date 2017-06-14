@@ -135,10 +135,14 @@ fun Context.showChangelog(@XmlRes xmlRes: Int) {
 
 /**
  * Wrapper function for the MaterialDialog builder
- * Must end with build() to return the dialog
- * Don't forget to call show() on the result to display the dialog
+ * There is no need to call build() or show() as those are done by default
  */
-fun Context.materialDialog(action: MaterialDialog.Builder.() -> MaterialDialog): MaterialDialog = MaterialDialog.Builder(this).action()
+fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): MaterialDialog {
+    val builder = MaterialDialog.Builder(this)
+    builder.action()
+    builder.build()
+    return builder.show()
+}
 
 val Context.isNetworkAvailable: Boolean
     get() {
