@@ -40,7 +40,7 @@ class MainActivity : KPrefActivity() {
             getter = { KPrefSample.check3 }
             setter = { KPrefSample.check3 = it }
             onDisabledClick = {
-                itemView, innerContent ->
+                itemView, _, _ ->
                 itemView.context.toast("I am still disabled")
                 true
             }

@@ -33,7 +33,7 @@ abstract class KPrefItemBase<T>(builder: KPrefAdapterBuilder,
         itemBase = Builder<T>()
         itemBase.itemBuilder()
         if (itemBase.onClick == null) itemBase.onClick = {
-            itemView, innerContent ->
+            itemView, innerContent, _ ->
             defaultOnClick(itemView, innerContent)
         }
     }
@@ -53,8 +53,8 @@ abstract class KPrefItemBase<T>(builder: KPrefAdapterBuilder,
     }
 
     override final fun onClick(itemView: View, innerContent: View?): Boolean {
-        return if (enabled) itemBase.onClick?.invoke(itemView, innerContent) ?: false
-        else itemBase.onDisabledClick?.invoke(itemView, innerContent) ?: false
+        return if (enabled) itemBase.onClick?.invoke(itemView, innerContent, this) ?: false
+        else itemBase.onDisabledClick?.invoke(itemView, innerContent, this) ?: false
     }
 
     override fun unbindView(holder: ViewHolder) {
@@ -70,8 +70,8 @@ abstract class KPrefItemBase<T>(builder: KPrefAdapterBuilder,
 
     open class Builder<T> {
         var enabler: () -> Boolean = { true }
-        var onClick: ((itemView: View, innerContent: View?) -> Boolean)? = null
-        var onDisabledClick: ((itemView: View, innerContent: View?) -> Boolean)? = null
+        var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
+        var onDisabledClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
         var getter: (() -> T)? = null
         var setter: ((value: T) -> Unit)? = null
     }
