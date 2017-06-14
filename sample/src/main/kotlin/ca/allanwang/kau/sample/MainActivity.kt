@@ -5,10 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
-import ca.allanwang.kau.utils.darken
-import ca.allanwang.kau.utils.navigationBarColor
-import ca.allanwang.kau.utils.startActivitySlideIn
-import ca.allanwang.kau.utils.toast
+import ca.allanwang.kau.utils.*
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -30,7 +27,7 @@ class MainActivity : KPrefActivity() {
 
         checkbox(title = R.string.checkbox_2, itemBuilder = {
             getter = { KPrefSample.check2 }
-            setter = { KPrefSample.check2 = it; reload(3) }
+            setter = { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) }
         })
 
         checkbox(title = R.string.checkbox_3, coreBuilder = {
@@ -79,6 +76,27 @@ class MainActivity : KPrefActivity() {
         }, colorBuilder = {
             allowCustomAlpha = true
             allowCustom = true
+        })
+
+        text<String>(title = R.string.text, coreBuilder = {
+            description = R.string.text_desc
+        }, itemBuilder = {
+            getter = { KPrefSample.text }
+            setter = { KPrefSample.text = it }
+            onClick = {
+                itemView, _, item ->
+                itemView.context.materialDialog {
+                    title("Type Text")
+                    input("Type here", item.pref, {
+                        _, input ->
+                        item.pref = input.toString()
+                        reloadByTitle(R.string.text)
+                    })
+                    inputRange(0, 20)
+                    build()
+                }.show()
+                true
+            }
         })
     }
 

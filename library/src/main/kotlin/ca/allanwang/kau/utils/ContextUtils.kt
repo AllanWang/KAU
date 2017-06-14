@@ -133,6 +133,13 @@ fun Context.showChangelog(@XmlRes xmlRes: Int) {
     }).start()
 }
 
+/**
+ * Wrapper function for the MaterialDialog builder
+ * Must end with build() to return the dialog
+ * Don't forget to call show() on the result to display the dialog
+ */
+fun Context.materialDialog(action: MaterialDialog.Builder.() -> MaterialDialog): MaterialDialog = MaterialDialog.Builder(this).action()
+
 val Context.isNetworkAvailable: Boolean
     get() {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

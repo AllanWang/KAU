@@ -31,14 +31,21 @@ class KPrefAdapterBuilder {
 
     fun checkbox(@StringRes title: Int,
                  coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
-                 itemBuilder: KPrefItemBase.Builder<Boolean>.() -> Unit = {}) = list.add(KPrefCheckbox(
-            this, title, coreBuilder, itemBuilder))
+                 itemBuilder: KPrefItemBase.Builder<Boolean>.() -> Unit = {}
+    ) = list.add(KPrefCheckbox(this, title, coreBuilder, itemBuilder))
 
     fun colorPicker(@StringRes title: Int,
                     coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
                     itemBuilder: KPrefItemBase.Builder<Int>.() -> Unit = {},
                     colorBuilder: Builder.() -> Unit = {},
-                    showPreview: Boolean = true) = list.add(KPrefColorPicker(this, title, coreBuilder, itemBuilder, colorBuilder, showPreview))
+                    showPreview: Boolean = true
+    ) = list.add(KPrefColorPicker(this, title, coreBuilder, itemBuilder, colorBuilder, showPreview))
+
+    fun <T> text(@StringRes title: Int,
+                 coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
+                 itemBuilder: KPrefItemBase.Builder<T>.() -> Unit = {},
+                 textGetter: (T) -> String? = { it?.toString() }
+    ) = list.add(KPrefText<T>(this, title, coreBuilder, itemBuilder, textGetter))
 
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 

@@ -14,4 +14,5 @@ object KPrefSample : KPref() {
     var check1: Boolean by kpref("check1", true)
     var check2: Boolean by kpref("check2", false)
     var check3: Boolean by kpref("check3", false)
+    var text: String by kpref("text", "empty")
 }

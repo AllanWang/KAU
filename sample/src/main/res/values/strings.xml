@@ -13,4 +13,6 @@
     <string name="color_custom">This selector allows custom colors</string>
     <string name="color_no_custom">This selector does not allow custom colors</string>
     <string name="color_custom_alpha">This selector allows for custom colors with alpha values</string>
+    <string name="text">Text Pref</string>
+    <string name="text_desc">Saves the text</string>
 </resources>
