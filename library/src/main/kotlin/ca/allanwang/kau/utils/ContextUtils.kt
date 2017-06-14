@@ -140,7 +140,6 @@ fun Context.showChangelog(@XmlRes xmlRes: Int) {
 fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): MaterialDialog {
     val builder = MaterialDialog.Builder(this)
     builder.action()
-    builder.build()
     return builder.show()
 }
 
