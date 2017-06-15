@@ -67,6 +67,12 @@ var Activity.navigationBarColor: Int
         if (buildIsLollipopAndUp) window.navigationBarColor = value
     }
 
+var Activity.statusBarColor: Int
+    get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
+    set(value) {
+        if (buildIsLollipopAndUp) window.statusBarColor = value
+    }
+
 //Toast helpers
 fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = toast(this.string(id), duration)
 
