@@ -98,6 +98,7 @@ Create an xml resource with the following structure:
 ```
 
 And show it with `context.showChangelog(@XmlRes xmlRes: Int)`
+There is an optional `customize` argument to modify the builder before showing the changelog.
 
 As mentioned, blank items will be ignored, so feel free to create a bunch of empty lines to facilitate updating the items in the future.
 

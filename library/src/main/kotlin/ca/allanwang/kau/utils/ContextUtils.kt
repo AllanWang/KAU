@@ -123,17 +123,18 @@ fun Context.resolveString(@AttrRes attr: Int, fallback: String = ""): String {
     return if (theme.resolveAttribute(attr, v, true)) v.string.toString() else fallback
 }
 
-fun Context.showChangelog(@XmlRes xmlRes: Int) {
+fun Context.showChangelog(@XmlRes xmlRes: Int, customize: MaterialDialog.Builder.() -> Unit = {}) {
     val mHandler = Handler()
     Thread(Runnable {
         val items = parse(this, xmlRes)
         mHandler.post(object : TimerTask() {
             override fun run() {
-                MaterialDialog.Builder(this@showChangelog)
+                val builder = MaterialDialog.Builder(this@showChangelog)
                         .title(R.string.kau_changelog)
                         .positiveText(R.string.kau_great)
                         .adapter(ChangelogAdapter(items), null)
-                        .show()
+                builder.customize()
+                builder.show()
             }
         })
     }).start()
