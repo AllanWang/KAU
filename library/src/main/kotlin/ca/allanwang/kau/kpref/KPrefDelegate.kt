@@ -15,6 +15,11 @@ fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Un
 
 class StringSet(set: Collection<String>) : LinkedHashSet<String>(set)
 
+/**
+ * Implementation of a kpref data item
+ * Contains a unique key for the shared preference as well as a nonnull fallback item
+ * Also contains an optional mutable postSetter that will be called every time a new value is given
+ */
 class KPrefDelegate<T : Any> internal constructor(private val key: String, private val fallback: T, private val pref: KPref, var postSetter: (value: T) -> Unit = {}, lock: Any? = null) : Lazy<T>, java.io.Serializable {
 
     @Volatile private var _value: Any = UNINITIALIZED

@@ -10,7 +10,7 @@ import ca.allanwang.kau.kpref.KPrefAdapterBuilder
  * Header preference
  * This view just holds a titleRes and is not clickable. It is styled using the accent color
  */
-class KPrefHeader(adapterBuilder: KPrefAdapterBuilder, builder: CoreContract) : KPrefItemCore(adapterBuilder, builder) {
+class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
 
     override fun getLayoutRes(): Int = R.layout.kau_preference_header
 

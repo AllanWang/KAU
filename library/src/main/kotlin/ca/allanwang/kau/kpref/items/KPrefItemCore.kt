@@ -12,8 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import butterknife.ButterKnife
 import ca.allanwang.kau.R
-import ca.allanwang.kau.kpref.KPrefAdapterBuilder
-import ca.allanwang.kau.logging.SL
+import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon
@@ -24,8 +23,7 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 
-abstract class KPrefItemCore(val adapterBuilder: KPrefAdapterBuilder,
-                             val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>() {
+abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>() {
 
     override final fun getViewHolder(v: View) = ViewHolder(v)
 
@@ -42,12 +40,12 @@ abstract class KPrefItemCore(val adapterBuilder: KPrefAdapterBuilder,
             if (core.iicon != null) icon?.visible()?.setIcon(core.iicon, 24)
             else icon?.gone()
             innerFrame?.removeAllViews()
-            val textColor = adapterBuilder.textColor?.invoke()
+            val textColor = core.attributes.textColor?.invoke()
             if (textColor != null) {
                 title.setTextColor(textColor)
                 desc?.setTextColor(textColor)
             }
-            val accentColor = adapterBuilder.accentColor?.invoke()
+            val accentColor = core.attributes.accentColor?.invoke()
             if (accentColor != null) {
                 icon?.drawable?.setTint(accentColor)
             }
@@ -69,19 +67,23 @@ abstract class KPrefItemCore(val adapterBuilder: KPrefAdapterBuilder,
         }
     }
 
-    open class CoreBuilder : CoreContract {
-        override var titleRes: Int = -1
-        override var descRes: Int = -1
-        override var iicon: IIcon? = null
+    /**
+     * Core values for all kpref items
+     */
+    interface CoreContract {
+        val attributes: CoreAttributeContract
+        val titleRes: Int
+        var descRes: Int
+        var iicon: IIcon?
     }
 
     /**
-     * Mandatory values: [titleRes]
+     * Default impementation of [CoreContract]
      */
-    interface CoreContract {
-        var titleRes: Int
-        var descRes: Int
-        var iicon: IIcon?
+    class CoreBuilder(override val attributes: CoreAttributeContract,
+                      override val titleRes: Int) : CoreContract {
+        override var descRes: Int = -1
+        override var iicon: IIcon? = null
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -102,8 +104,6 @@ abstract class KPrefItemCore(val adapterBuilder: KPrefAdapterBuilder,
             if (innerContent !is T) {
                 innerFrame!!.removeAllViews()
                 LayoutInflater.from(innerFrame!!.context).inflate(id, innerFrame)
-            } else {
-                SL.d("Inner view still attached")
             }
             return innerContent as T
         }

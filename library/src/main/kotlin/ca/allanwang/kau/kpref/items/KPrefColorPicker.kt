@@ -6,7 +6,7 @@ import ca.allanwang.kau.dialogs.color.CircleView
 import ca.allanwang.kau.dialogs.color.ColorBuilder
 import ca.allanwang.kau.dialogs.color.ColorContract
 import ca.allanwang.kau.dialogs.color.colorPickerDialog
-import ca.allanwang.kau.kpref.KPrefAdapterBuilder
+import ca.allanwang.kau.kpref.CoreAttributeContract
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -14,9 +14,7 @@ import ca.allanwang.kau.kpref.KPrefAdapterBuilder
  * ColorPicker preference
  * When a color is successfully selected in the dialog, it will be saved as an int
  */
-class KPrefColorPicker(adapterBuilder: KPrefAdapterBuilder,
-                       val builder: KPrefColorContract
-) : KPrefItemBase<Int>(adapterBuilder, builder) {
+class KPrefColorPicker(val builder: KPrefColorContract) : KPrefItemBase<Int>(builder) {
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
@@ -49,13 +47,24 @@ class KPrefColorPicker(adapterBuilder: KPrefAdapterBuilder,
         return true
     }
 
-    class KPrefColorBuilder : KPrefColorContract, BaseContract<Int> by BaseBuilder<Int>(), ColorContract by ColorBuilder() {
-        override var showPreview: Boolean = true
-        override var titleRes: Int = -1
-    }
-
+    /**
+     * Extension of the base contract and [ColorContract] along with a showPreview option
+     */
     interface KPrefColorContract : BaseContract<Int>, ColorContract {
         var showPreview: Boolean
+    }
+
+    /**
+     * Default implementation of [KPrefColorContract]
+     */
+    class KPrefColorBuilder(attributes: CoreAttributeContract,
+                            titleRes: Int,
+                            getter: () -> Int,
+                            setter: (value: Int) -> Unit
+    ) : KPrefColorContract, BaseContract<Int> by BaseBuilder<Int>(attributes, titleRes, getter, setter),
+            ColorContract by ColorBuilder() {
+        override var showPreview: Boolean = true
+        override var titleRes: Int = -1
     }
 
     override fun getType(): Int = R.id.kau_item_pref_color_picker

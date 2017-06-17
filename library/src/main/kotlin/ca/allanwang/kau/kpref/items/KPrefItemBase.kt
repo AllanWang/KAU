@@ -3,10 +3,8 @@ package ca.allanwang.kau.kpref.items
 import android.support.annotation.CallSuper
 import android.view.View
 import ca.allanwang.kau.R
-import ca.allanwang.kau.kpref.KPrefAdapterBuilder
-import ca.allanwang.kau.kpref.KPrefException
+import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.utils.resolveDrawable
-import ca.allanwang.kau.utils.string
 
 /**
  * Created by Allan Wang on 2017-06-05.
@@ -14,13 +12,12 @@ import ca.allanwang.kau.utils.string
  * Base class for pref setters that include the Shared Preference hooks
  */
 
-abstract class KPrefItemBase<T>(adapterBuilder: KPrefAdapterBuilder, val base: BaseContract<T>
-) : KPrefItemCore(adapterBuilder, base) {
+abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base) {
 
     var pref: T
-        get() = base.getter!!.invoke()
+        get() = base.getter.invoke()
         set(value) {
-            base.setter!!.invoke(value)
+            base.setter.invoke(value)
         }
 
     var enabled: Boolean = true
@@ -36,9 +33,6 @@ abstract class KPrefItemBase<T>(adapterBuilder: KPrefAdapterBuilder, val base: B
 
     @CallSuper
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
-        val c = viewHolder.itemView.context
-        if (base.getter == null) throw KPrefException("getter not set for ${c.string(core.titleRes)}")
-        if (base.setter == null) throw KPrefException("setter not set for ${c.string(core.titleRes)}")
         enabled = base.enabler.invoke()
         with(viewHolder) {
             if (!enabled) container?.background = null
@@ -62,22 +56,30 @@ abstract class KPrefItemBase<T>(adapterBuilder: KPrefAdapterBuilder, val base: B
 
     override final fun getLayoutRes(): Int = R.layout.kau_preference
 
-    open class BaseBuilder<T> : CoreBuilder(), BaseContract<T> {
-        override var enabler: () -> Boolean = { true }
-        override var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
-        override var onDisabledClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
-        override var getter: (() -> T)? = null
-        override var setter: ((value: T) -> Unit)? = null
-    }
-
     /**
-     * Mandatory values: [getter], [setter]
+     * Extension of the core contract
+     * Since everything that extends the base is an actual preference, there must be a getter and setter
+     * The rest are optional and will have their defaults
      */
     interface BaseContract<T> : CoreContract {
         var enabler: () -> Boolean
         var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)?
         var onDisabledClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)?
-        var getter: (() -> T)?
-        var setter: ((value: T) -> Unit)?
+        val getter: () -> T
+        val setter: (value: T) -> Unit
     }
+
+    /**
+     * Default implementation of [BaseContract]
+     */
+    class BaseBuilder<T>(attributes: CoreAttributeContract,
+                         titleRes: Int,
+                         override val getter: () -> T,
+                         override val setter: (value: T) -> Unit
+    ) : CoreContract by CoreBuilder(attributes, titleRes), BaseContract<T> {
+        override var enabler: () -> Boolean = { true }
+        override var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
+        override var onDisabledClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
+    }
+
 }

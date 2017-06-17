@@ -1,10 +1,9 @@
 package ca.allanwang.kau.kpref.items
 
-import android.support.annotation.StringRes
 import android.view.View
 import android.widget.TextView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.kpref.KPrefAdapterBuilder
+import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.utils.toast
 
 /**
@@ -15,10 +14,7 @@ import ca.allanwang.kau.utils.toast
  * This is still a generic preference
  *
  */
-class KPrefText<T>(adapterBuilder: KPrefAdapterBuilder,
-                   @StringRes title: Int,
-                   val builder: KPrefTextContract<T>
-) : KPrefItemBase<T>(adapterBuilder, title, builder) {
+class KPrefText<T>(val builder: KPrefTextContract<T>) : KPrefItemBase<T>(builder) {
 
     override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
         itemView.context.toast("No click function set")
@@ -32,12 +28,23 @@ class KPrefText<T>(adapterBuilder: KPrefAdapterBuilder,
         textview.text = builder.textGetter.invoke(pref)
     }
 
-    class KPrefTextBuilder<T> : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>() {
-        override var textGetter: (T) -> String? = { it?.toString() }
-    }
-
+    /**
+     * Extension of the base contract with an optional text getter
+     */
     interface KPrefTextContract<T> : BaseContract<T> {
         var textGetter: (T) -> String?
+    }
+
+    /**
+     * Default implementation of [KPrefTextContract]
+     */
+    class KPrefTextBuilder<T>(
+            attributes: CoreAttributeContract,
+            titleRes: Int,
+            getter: () -> T,
+            setter: (value: T) -> Unit
+    ) : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>(attributes, titleRes, getter, setter) {
+        override var textGetter: (T) -> String? = { it?.toString() }
     }
 
     override fun getType(): Int = R.id.kau_item_pref_checkbox

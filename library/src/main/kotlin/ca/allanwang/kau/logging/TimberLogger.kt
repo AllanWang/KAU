@@ -5,6 +5,8 @@ import timber.log.Timber
 
 /**
  * Created by Allan Wang on 2017-05-28.
+ *
+ * Timber extension that will embed the tag as part of the message for each log item
  */
 open class TimberLogger(tag: String) {
     internal val TAG = "$tag: %s"

@@ -9,6 +9,12 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
  * Created by Allan Wang on 2017-06-08.
+ *
+ * Houses all the components that can be called externally to setup the kpref adapter
+ */
+
+/**
+ * Base extension that will register the layout manager and adapter with the given items
  */
 fun RecyclerView.setKPrefAdapter(builder: KPrefAdapterBuilder.() -> Unit): FastItemAdapter<KPrefItemCore> {
     layoutManager = LinearLayoutManager(context)
@@ -21,53 +27,54 @@ fun RecyclerView.setKPrefAdapter(builder: KPrefAdapterBuilder.() -> Unit): FastI
     return adapter
 }
 
-class KPrefAdapterBuilder {
+/**
+ * Contains attributes shared amongst all kpref items
+ */
+interface CoreAttributeContract {
+    var textColor: (() -> Int)?
+    var accentColor: (() -> Int)?
+}
 
-    var textColor: (() -> Int)? = null
-    var accentColor: (() -> Int)? = null
+/**
+ * Implementation of [CoreAttributeContract]
+ */
+class CoreAttributeBuilder : CoreAttributeContract {
+    override var textColor: (() -> Int)? = null
+    override var accentColor: (() -> Int)? = null
+}
+
+/**
+ * Builder for kpref items
+ * Contains DSLs for every possible item
+ * The arguments are all the mandatory values plus an optional builder housing all the possible configurations
+ * The mandatory values are final so they cannot be edited in the builder
+ */
+class KPrefAdapterBuilder : CoreAttributeContract by CoreAttributeBuilder() {
 
     fun header(@StringRes title: Int)
-            = list.add(KPrefHeader(this, KPrefItemCore.CoreBuilder()
-            .apply {
-                titleRes = title
-            }))
+            = list.add(KPrefHeader(KPrefItemCore.CoreBuilder(this, title)))
 
     fun checkbox(@StringRes title: Int,
                  getter: (() -> Boolean),
                  setter: ((value: Boolean) -> Unit),
                  builder: KPrefItemBase.BaseContract<Boolean>.() -> Unit = {})
-            = list.add(KPrefCheckbox(this, KPrefItemBase.BaseBuilder<Boolean>()
-            .apply {
-                this.titleRes = title
-                this.getter = getter
-                this.setter = setter
-                builder()
-            }))
+            = list.add(KPrefCheckbox(KPrefItemBase.BaseBuilder<Boolean>(this, title, getter, setter)
+            .apply { builder() }))
 
 
     fun colorPicker(@StringRes title: Int,
                     getter: (() -> Int),
                     setter: ((value: Int) -> Unit),
                     builder: KPrefColorPicker.KPrefColorContract.() -> Unit = {})
-            = list.add(KPrefColorPicker(this, KPrefColorPicker.KPrefColorBuilder()
-            .apply {
-                this.titleRes = title
-                this.getter = getter
-                this.setter = setter
-                builder()
-            }))
+            = list.add(KPrefColorPicker(KPrefColorPicker.KPrefColorBuilder(this, title, getter, setter)
+            .apply { builder() }))
 
     fun <T> text(@StringRes title: Int,
                  getter: (() -> T),
                  setter: ((value: T) -> Unit),
                  builder: KPrefText.KPrefTextContract<T>.() -> Unit = {})
-            = list.add(KPrefText<T>(this, title, KPrefText.KPrefTextBuilder<T>()
-            .apply {
-                this.titleRes = title
-                this.getter = getter
-                this.setter = setter
-                builder()
-            }))
+            = list.add(KPrefText<T>(KPrefText.KPrefTextBuilder<T>(this, title, getter, setter)
+            .apply { builder() }))
 
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 
