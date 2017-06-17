@@ -102,7 +102,7 @@ class MainActivity : KPrefActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_settings -> startActivitySlideIn(AnimActivity::class.java, clearStack = true)
+            R.id.action_settings -> startActivity(AnimActivity::class.java, clearStack = true)
             else -> return super.onOptionsItemSelected(item)
         }
         return true

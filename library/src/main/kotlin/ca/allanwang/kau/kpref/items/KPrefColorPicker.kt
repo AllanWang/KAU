@@ -58,13 +58,12 @@ class KPrefColorPicker(val builder: KPrefColorContract) : KPrefItemBase<Int>(bui
      * Default implementation of [KPrefColorContract]
      */
     class KPrefColorBuilder(attributes: CoreAttributeContract,
-                            titleRes: Int,
+                            override var titleRes: Int,
                             getter: () -> Int,
                             setter: (value: Int) -> Unit
     ) : KPrefColorContract, BaseContract<Int> by BaseBuilder<Int>(attributes, titleRes, getter, setter),
             ColorContract by ColorBuilder() {
         override var showPreview: Boolean = true
-        override var titleRes: Int = -1
     }
 
     override fun getType(): Int = R.id.kau_item_pref_color_picker

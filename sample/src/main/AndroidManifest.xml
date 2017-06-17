@@ -21,7 +21,7 @@
         </activity>
         <activity
             android:name=".AnimActivity"
-            android:theme="@style/Theme.AppCompat" />
+            android:theme="@style/AppTheme.Slide" />
     </application>
 
 </manifest>

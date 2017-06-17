@@ -16,4 +16,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Slide" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/KauSlideInSlideOut</item>
+    </style>
+
 </resources>
