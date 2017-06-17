@@ -2,7 +2,6 @@ package ca.allanwang.kau.kpref.items
 
 import android.view.View
 import ca.allanwang.kau.R
-import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 
 /**
  * Created by Allan Wang on 2017-06-07.
