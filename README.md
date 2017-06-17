@@ -98,7 +98,7 @@ Each item also extends a bunch of other contracts that allow for mandatory argum
 The contracts are as follows:
 
 Contract | Mandatory | Optional | Description
-:--- | :--- | :---
+:--- | :--- | :--- | :---
 `CoreAttributeContract` | `NA` | `textColor` `accentColor` | Defines stylings that are added in every item
 `CoreContract` | `titleRes` | `descRes` `iicon` | Implemented by every item
 `BaseContract` | `getter` `setter` | `enabler` `onClick` `onDisabledClick` | Implemented by every preference item
@@ -108,7 +108,7 @@ Contract | Mandatory | Optional | Description
 The kpref items are as followed:
 
 Item | Implements | Description
-:--- | :---
+:--- | :--- | :---
 `checkbox` | `CoreContract` `BaseContract` | Checkbox item; by default, clicking it will toggle the checkbox and the kpref
 `colorPicker` | `CoreContract` `BaseContract` `KPrefColorContract` | Color picker item; by default, clicking it will open a dialog which will change the color (int)
 `header` | `CoreContract` | Header; just a title that isn't clickable
