@@ -119,7 +119,7 @@ An example of the adapter builder:
 ```kotlin
 override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
 	
-	textColor = { KPrefSample.textColor }
+	textColor = { KPrefSample.textColor } // getter function so the new text color will be retrieved for every reload
 	accentColor = { KPrefSample.accentColor }
 
 	header(R.string.header)
