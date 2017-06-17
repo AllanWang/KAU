@@ -36,6 +36,7 @@ dependencies {
 
 # Features
 * [KPrefs](#kprefs)
+* [KPref Items](#kpref-items)
 * [Changelog XML](#changelog)
 * [Ripple Canvas](#ripple-canvas)
 * [Timber Logger](#timber-logger)
@@ -80,6 +81,39 @@ The values are retrieved lazily and are only done so once; future retrievals wil
 The object inherits the initializer method `fun initialize(c: Context, preferenceName: String)`, which must be invoked (preferably in the Application class) before using a preference.
 
 There is also a `reset()` method to clear the local values and have them retrieve from the SharedPreference again
+
+<a name="kpref-items"></a>
+## KPref Items
+
+KAU supports Preferences that are created without xmls and through AppCompat. 
+The items are backed by a [FastAdapter](https://github.com/mikepenz/FastAdapter) and support [iicons](https://github.com/mikepenz/Android-Iconics)
+
+The easiest way to create the settings is to extend `KPrefActivity`.
+
+We will then override `onCreateKPrefs` to generate our adapter builder.
+
+The adapter builder implements `CoreAttributeContract` that will be added to every kpref item.
+Each item also extends a bunch of other contracts that allow for mandatory arguments and optional configurations.
+
+The contracts are as follows:
+
+Contract | Mandatory | Optional | Description
+:--- | :--- | :---
+`CoreAttributeContract` | `NA` | `textColor` `accentColor` | Defines stylings that are added in every item
+`CoreContract` | `titleRes` | `descRes` `iicon` | Implemented by every item
+`BaseContract` | `getter` `setter` | `enabler` `onClick` `onDisabledClick` | Implemented by every preference item
+`KPrefColorContract` | `NA` | `showPreview` | Additional configurations for the color picker
+`KPrefTextContract` | `NA` | `textGetter` | Additional configurations for the text item
+
+The kpref items are as followed:
+
+Item | Implements | Description
+:--- | :---
+`checkbox` | `CoreContract` `BaseContract` | Checkbox item; by default, clicking it will toggle the checkbox and the kpref
+`colorPicker` | `CoreContract` `BaseContract` `KPrefColorContract` | Color picker item; by default, clicking it will open a dialog which will change the color (int)
+`header` | `CoreContract` | Header; just a title that isn't clickable
+ `text` | `CoreContract` `BaseContract` `KPrefTextContract` | Text item; displays the kpref as a String on the right; does not have click implementation by default
+ 
 
 <a name="changelog"></a>
 ## Changelog XML
