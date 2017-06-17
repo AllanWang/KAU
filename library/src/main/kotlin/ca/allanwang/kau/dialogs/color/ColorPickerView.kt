@@ -34,7 +34,7 @@ internal class ColorPickerView @JvmOverloads constructor(
             if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark()) Color.WHITE else 0xff424242.toInt())
     val backgroundColorTint = backgroundColor.colorToForeground(0.2f)
     lateinit var dialog: MaterialDialog
-    lateinit var builder: Builder
+    lateinit var builder: ColorContract
     lateinit var colorsTop: IntArray
     var colorsSub: Array<IntArray>? = null
     var topIndex: Int = -1
@@ -75,11 +75,19 @@ internal class ColorPickerView @JvmOverloads constructor(
         View.inflate(context, R.layout.md_dialog_colorchooser, this)
     }
 
-    fun bind(builder: Builder, dialog: MaterialDialog) {
+    fun bind(builder: ColorContract, dialog: MaterialDialog) {
         this.builder = builder
         this.dialog = dialog
-        this.colorsTop = builder.colorsTop()
-        this.colorsSub = builder.colorsSub()
+        this.colorsTop = with(builder) {
+            if (colorsTop != null) colorsTop!!
+            else if (isAccent) ColorPalette.ACCENT_COLORS
+            else ColorPalette.PRIMARY_COLORS
+        }
+        this.colorsSub = with(builder) {
+            if (colorsTop != null) colorsSub
+            else if (isAccent) ColorPalette.ACCENT_COLORS_SUB
+            else ColorPalette.PRIMARY_COLORS_SUB
+        }
         this.selectedColor = builder.defaultColor
         if (builder.allowCustom) {
             if (!builder.allowCustomAlpha) {

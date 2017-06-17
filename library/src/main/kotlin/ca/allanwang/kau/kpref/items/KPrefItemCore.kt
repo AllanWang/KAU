@@ -3,7 +3,6 @@ package ca.allanwang.kau.kpref.items
 import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
-import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -25,38 +24,30 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 
-abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
-                             @StringRes val title: Int,
-                             coreBuilder: Builder.() -> Unit = {}) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>() {
+abstract class KPrefItemCore(val adapterBuilder: KPrefAdapterBuilder,
+                             val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>() {
 
     override final fun getViewHolder(v: View) = ViewHolder(v)
-
-    val core: Builder
-
-    init {
-        core = Builder()
-        core.coreBuilder()
-    }
 
     @CallSuper
     override fun bindView(viewHolder: ViewHolder, payloads: List<Any>) {
         super.bindView(viewHolder, payloads)
         with(viewHolder) {
             val context = itemView.context
-            title.text = context.string(this@KPrefItemCore.title)
-            if (core.description > 0)
-                desc?.visible()?.setText(core.description)
+            title.text = context.string(core.titleRes)
+            if (core.descRes > 0)
+                desc?.visible()?.setText(core.descRes)
             else
                 desc?.gone()
             if (core.iicon != null) icon?.visible()?.setIcon(core.iicon, 24)
             else icon?.gone()
             innerFrame?.removeAllViews()
-            val textColor = builder.textColor?.invoke()
+            val textColor = adapterBuilder.textColor?.invoke()
             if (textColor != null) {
                 title.setTextColor(textColor)
                 desc?.setTextColor(textColor)
             }
-            val accentColor = builder.accentColor?.invoke()
+            val accentColor = adapterBuilder.accentColor?.invoke()
             if (accentColor != null) {
                 icon?.drawable?.setTint(accentColor)
             }
@@ -78,9 +69,19 @@ abstract class KPrefItemCore(val builder: KPrefAdapterBuilder,
         }
     }
 
-    class Builder {
-        var description: Int = -1
-        var iicon: IIcon? = null
+    open class CoreBuilder : CoreContract {
+        override var titleRes: Int = -1
+        override var descRes: Int = -1
+        override var iicon: IIcon? = null
+    }
+
+    /**
+     * Mandatory values: [titleRes]
+     */
+    interface CoreContract {
+        var titleRes: Int
+        var descRes: Int
+        var iicon: IIcon?
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

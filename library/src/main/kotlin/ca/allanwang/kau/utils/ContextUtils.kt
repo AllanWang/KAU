@@ -141,7 +141,7 @@ fun Context.showChangelog(@XmlRes xmlRes: Int, customize: MaterialDialog.Builder
 }
 
 /**
- * Wrapper function for the MaterialDialog builder
+ * Wrapper function for the MaterialDialog adapterBuilder
  * There is no need to call build() or show() as those are done by default
  */
 fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): MaterialDialog {

@@ -1,6 +1,5 @@
 package ca.allanwang.kau.kpref.items
 
-import android.support.annotation.StringRes
 import android.view.View
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
@@ -9,9 +8,9 @@ import ca.allanwang.kau.kpref.KPrefAdapterBuilder
  * Created by Allan Wang on 2017-06-07.
  *
  * Header preference
- * This view just holds a title and is not clickable. It is styled using the accent color
+ * This view just holds a titleRes and is not clickable. It is styled using the accent color
  */
-class KPrefHeader(builder: KPrefAdapterBuilder, @StringRes title: Int) : KPrefItemCore(builder, title = title) {
+class KPrefHeader(adapterBuilder: KPrefAdapterBuilder, builder: CoreContract) : KPrefItemCore(adapterBuilder, builder) {
 
     override fun getLayoutRes(): Int = R.layout.kau_preference_header
 

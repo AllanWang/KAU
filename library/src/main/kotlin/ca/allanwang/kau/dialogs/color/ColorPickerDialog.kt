@@ -3,65 +3,77 @@ package ca.allanwang.kau.dialogs.color
 import android.content.Context
 import android.graphics.Color
 import ca.allanwang.kau.R
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.string
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 
-class Builder {
-    var title: String? = null
-    var titleRes: Int = -1
-    var allowCustom: Boolean = true
-    var allowCustomAlpha: Boolean = false
-    var isAccent: Boolean = false
-    var defaultColor: Int = Color.BLACK
-    var doneText: Int = R.string.kau_done
-    var backText: Int = R.string.kau_back
-    var cancelText: Int = R.string.kau_cancel
-    var presetText: Int = R.string.kau_md_presets
-    var customText: Int = R.string.kau_md_custom
+class ColorBuilder : ColorContract {
+    override var title: String? = null
+    override var titleRes: Int = -1
+    override var allowCustom: Boolean = true
+    override var allowCustomAlpha: Boolean = false
+    override var isAccent: Boolean = false
+    override var defaultColor: Int = Color.BLACK
+    override var doneText: Int = R.string.kau_done
+    override var backText: Int = R.string.kau_back
+    override var cancelText: Int = R.string.kau_cancel
+    override var presetText: Int = R.string.kau_md_presets
+    override var customText: Int = R.string.kau_md_custom
         get() = if (allowCustom) field else 0
-    var dynamicButtonColors: Boolean = true
-    var circleSizeRes: Int = R.dimen.kau_color_circle_size
-    var colorCallbacks: MutableList<((selectedColor: Int) -> Unit)> = mutableListOf()
-    var colorsTop: IntArray? = null
-    internal fun colorsTop(): IntArray =
-            if (colorsTop != null) colorsTop!!
-            else if (isAccent) ColorPalette.ACCENT_COLORS
-            else ColorPalette.PRIMARY_COLORS
+    override var dynamicButtonColors: Boolean = true
+    override var circleSizeRes: Int = R.dimen.kau_color_circle_size
+    override var colorCallback: ((selectedColor: Int) -> Unit)? = null
+    override var colorsTop: IntArray? = null
+    override var colorsSub: Array<IntArray>? = null
+    override var theme: Theme? = null
+}
 
-    var colorsSub: Array<IntArray>? = null
-    internal fun colorsSub(): Array<IntArray>? =
-            if (colorsTop != null) colorsSub
-            else if (isAccent) ColorPalette.ACCENT_COLORS_SUB
-            else ColorPalette.PRIMARY_COLORS_SUB
-
-    var theme: Theme? = null
-
-    fun applyNestedBuilder(action: Builder.() -> Unit) = this.action()
+interface ColorContract {
+    var title: String?
+    var titleRes: Int
+    var allowCustom: Boolean
+    var allowCustomAlpha: Boolean
+    var isAccent: Boolean
+    var defaultColor: Int
+    var doneText: Int
+    var backText: Int
+    var cancelText: Int
+    var presetText: Int
+    var customText: Int
+    var dynamicButtonColors: Boolean
+    var circleSizeRes: Int
+    var colorCallback: ((selectedColor: Int) -> Unit)?
+    var colorsTop: IntArray?
+    var colorsSub: Array<IntArray>?
+    var theme: Theme?
 }
 
 /**
  * This is the extension that allows us to initialize the dialog
  * Note that this returns just the dialog; you still need to call .show() to show it
  */
-fun Context.colorPickerDialog(action: Builder.() -> Unit): MaterialDialog {
-    val b = Builder()
+fun Context.colorPickerDialog(action: ColorContract.() -> Unit): MaterialDialog {
+    val b = ColorBuilder()
     b.action()
+    return colorPickerDialog(b)
+}
+
+fun Context.colorPickerDialog(contract: ColorContract): MaterialDialog {
     val view = ColorPickerView(this)
     val dialog = with(MaterialDialog.Builder(this)) {
-        title(string(b.titleRes, b.title) ?: string(R.string.kau_md_color_palette))
+        title(string(contract.titleRes, contract.title) ?: string(R.string.kau_md_color_palette))
         customView(view, false)
         autoDismiss(false)
-        positiveText(b.doneText)
-        negativeText(b.cancelText)
-        if (b.allowCustom) neutralText(b.presetText)
-        onPositive { dialog, _ -> b.colorCallbacks.forEach { it.invoke(view.selectedColor) }; dialog.dismiss() }
+        positiveText(contract.doneText)
+        negativeText(contract.cancelText)
+        if (contract.allowCustom) neutralText(contract.presetText)
+        onPositive { dialog, _ -> contract.colorCallback?.invoke(view.selectedColor); dialog.dismiss() }
         onNegative { dialog, _ -> view.backOrCancel() }
-        if (b.allowCustom) onNeutral { dialog, _ -> view.toggleCustom() }
+        if (contract.allowCustom) onNeutral { dialog, _ -> view.toggleCustom() }
         showListener { view.refreshColors() }
-        if (b.theme != null) theme(b.theme!!)
+        if (contract.theme != null) theme(contract.theme!!)
         build()
     }
-    view.bind(b, dialog)
+    view.bind(contract, dialog)
     return dialog
 }

@@ -13,11 +13,9 @@ import ca.allanwang.kau.utils.tint
  * Checkbox preference
  * When clicked, will toggle the preference and the apply the result to the checkbox
  */
-class KPrefCheckbox(builder: KPrefAdapterBuilder,
-                    @StringRes title: Int,
-                    coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
-                    itemBuilder: Builder<Boolean>.() -> Unit = {}
-) : KPrefItemBase<Boolean>(builder, title, coreBuilder, itemBuilder) {
+class KPrefCheckbox(adapterBuilder: KPrefAdapterBuilder,
+                    builder: BaseContract<Boolean>
+) : KPrefItemBase<Boolean>(adapterBuilder, builder) {
 
     override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
         pref = !pref

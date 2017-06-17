@@ -4,7 +4,6 @@ import android.support.annotation.StringRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.dialogs.color.Builder
 import ca.allanwang.kau.kpref.items.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
@@ -27,25 +26,48 @@ class KPrefAdapterBuilder {
     var textColor: (() -> Int)? = null
     var accentColor: (() -> Int)? = null
 
-    fun header(@StringRes title: Int) = list.add(KPrefHeader(this, title))
+    fun header(@StringRes title: Int)
+            = list.add(KPrefHeader(this, KPrefItemCore.CoreBuilder()
+            .apply {
+                titleRes = title
+            }))
 
     fun checkbox(@StringRes title: Int,
-                 coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
-                 itemBuilder: KPrefItemBase.Builder<Boolean>.() -> Unit = {}
-    ) = list.add(KPrefCheckbox(this, title, coreBuilder, itemBuilder))
+                 getter: (() -> Boolean),
+                 setter: ((value: Boolean) -> Unit),
+                 builder: KPrefItemBase.BaseContract<Boolean>.() -> Unit = {})
+            = list.add(KPrefCheckbox(this, KPrefItemBase.BaseBuilder<Boolean>()
+            .apply {
+                this.titleRes = title
+                this.getter = getter
+                this.setter = setter
+                builder()
+            }))
+
 
     fun colorPicker(@StringRes title: Int,
-                    coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
-                    itemBuilder: KPrefItemBase.Builder<Int>.() -> Unit = {},
-                    colorBuilder: Builder.() -> Unit = {},
-                    showPreview: Boolean = true
-    ) = list.add(KPrefColorPicker(this, title, coreBuilder, itemBuilder, colorBuilder, showPreview))
+                    getter: (() -> Int),
+                    setter: ((value: Int) -> Unit),
+                    builder: KPrefColorPicker.KPrefColorContract.() -> Unit = {})
+            = list.add(KPrefColorPicker(this, KPrefColorPicker.KPrefColorBuilder()
+            .apply {
+                this.titleRes = title
+                this.getter = getter
+                this.setter = setter
+                builder()
+            }))
 
     fun <T> text(@StringRes title: Int,
-                 coreBuilder: KPrefItemCore.Builder.() -> Unit = {},
-                 itemBuilder: KPrefItemBase.Builder<T>.() -> Unit = {},
-                 textGetter: (T) -> String? = { it?.toString() }
-    ) = list.add(KPrefText<T>(this, title, coreBuilder, itemBuilder, textGetter))
+                 getter: (() -> T),
+                 setter: ((value: T) -> Unit),
+                 builder: KPrefText.KPrefTextContract<T>.() -> Unit = {})
+            = list.add(KPrefText<T>(this, title, KPrefText.KPrefTextBuilder<T>()
+            .apply {
+                this.titleRes = title
+                this.getter = getter
+                this.setter = setter
+                builder()
+            }))
 
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 
