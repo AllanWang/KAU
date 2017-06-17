@@ -49,7 +49,7 @@ abstract class KPrefActivity : AppCompatActivity() {
     fun reloadByTitle(@StringRes vararg title: Int) {
         if (title.isEmpty()) return
         adapter.adapterItems.forEachIndexed { index, item ->
-            if (title.any { item.title == it })
+            if (title.any { item.core.titleRes == it })
                 adapter.notifyItemChanged(index)
         }
     }
