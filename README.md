@@ -92,8 +92,8 @@ The easiest way to create the settings is to extend `KPrefActivity`.
 
 We will then override `onCreateKPrefs` to generate our adapter builder.
 
-The adapter builder implements `CoreAttributeContract` that will be added to every kpref item.
-Each item also extends a bunch of other contracts that allow for mandatory arguments and optional configurations.
+The adapter builder can easily add items using defined functions. 
+Each item added extends one or more contracts to configure it.
 
 The contracts are as follows:
 
@@ -112,8 +112,40 @@ Item | Implements | Description
 `checkbox` | `CoreContract` `BaseContract` | Checkbox item; by default, clicking it will toggle the checkbox and the kpref
 `colorPicker` | `CoreContract` `BaseContract` `KPrefColorContract` | Color picker item; by default, clicking it will open a dialog which will change the color (int)
 `header` | `CoreContract` | Header; just a title that isn't clickable
- `text` | `CoreContract` `BaseContract` `KPrefTextContract` | Text item; displays the kpref as a String on the right; does not have click implementation by default
+`text` | `CoreContract` `BaseContract` `KPrefTextContract` | Text item; displays the kpref as a String on the right; does not have click implementation by default
  
+An example of the adapter builder:
+ 
+```kotlin
+override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
+	
+	textColor = { KPrefSample.textColor }
+	accentColor = { KPrefSample.accentColor }
+
+	header(R.string.header)
+
+	/**
+	 * This is how the setup looks like with all the proper tags
+	 */
+	checkbox(title = R.string.checkbox_1, getter = { KPrefSample.check1 }, setter = { KPrefSample.check1 = it },
+			builder = {
+				descRes = R.string.desc
+			})
+			
+	/**
+	 * This is how it looks like without the tags
+	 */
+	checkbox(R.string.checkbox_3, { KPrefSample.check3 }, { KPrefSample.check3 = it }) {
+		descRes = R.string.desc_dependent
+		enabler = { KPrefSample.check2 }
+		onDisabledClick = {
+			itemView, _, _ ->
+			itemView.context.toast("I am still disabled")
+			true
+		}
+	}
+}
+```
 
 <a name="changelog"></a>
 ## Changelog XML
