@@ -2,6 +2,8 @@ package ca.allanwang.kau.utils
 
 import android.content.res.Resources
 import android.os.Build
+import android.os.Looper
+import ca.allanwang.kau.logging.KL
 
 /**
  * Created by Allan Wang on 2017-05-28.
@@ -18,3 +20,11 @@ val buildIsLollipopAndUp: Boolean
 
 val buildIsMarshmallowAndUp: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+/**
+ * Log whether current state is in the main thread
+ */
+fun checkThread(id: Int) {
+    val status = if (Looper.myLooper() == Looper.getMainLooper()) "is" else "is not"
+    KL.d("$id $status in the main thread")
+}
