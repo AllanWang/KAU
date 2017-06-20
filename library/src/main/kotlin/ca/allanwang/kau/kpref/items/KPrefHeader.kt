@@ -7,7 +7,7 @@ import ca.allanwang.kau.R
  * Created by Allan Wang on 2017-06-07.
  *
  * Header preference
- * This view just holds a titleRes and is not clickable. It is styled using the accent color
+ * This view just holds a title and is not clickable. It is styled using the accent color
  */
 class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
 

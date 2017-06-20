@@ -2,19 +2,23 @@
 <resources>
 
     <!--
-    <version titleRes="v"/>
+    <version title="v"/>
     <item text="" />
     -->
 
+    <version title="v0.2"/>
+    <item text="Created kprefs" />
+    <item text="Created kpref items" />
+    <item text="Attached source files" />
+    <item text="Created color dialog" />
+    <item text="Added more utilities" />
+    <item text="Fixed stack clearing when starting activity" />
+    <item text="" />
+    <item text="" />
+
     <version title="v0.1" />
     <item text="Initial Changelog" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
+    <item text="Created many extension functions" />
+    <item text="Ported changelog builer" />
+    <item text="Ported ripple canvas" />
 </resources>

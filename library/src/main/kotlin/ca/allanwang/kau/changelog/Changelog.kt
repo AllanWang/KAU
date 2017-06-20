@@ -51,7 +51,7 @@ internal fun parse(context: Context, @XmlRes xmlRes: Int): List<Pair<String, Cha
 }
 
 internal enum class ChangelogType(val tag: String, val attr: String, @LayoutRes val layout: Int) {
-    TITLE("titleRes", "version", R.layout.kau_changelog_title),
+    TITLE("title", "version", R.layout.kau_changelog_title),
     ITEM("item", "text", R.layout.kau_changelog_content);
 
     companion object {
