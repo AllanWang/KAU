@@ -34,7 +34,7 @@ fun Activity.restart(extras: ((Intent) -> Unit)? = null) {
 
 fun Context.startActivity(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundle: Bundle? = null) {
     val intent = (Intent(this, clazz))
-    if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+    if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.intentBuilder()
     ContextCompat.startActivity(this, intent, bundle)
     if (this is Activity && clearStack) finish()
