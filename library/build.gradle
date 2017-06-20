@@ -59,9 +59,6 @@ dependencies {
     compile "com.mikepenz:iconics-core:${ICONICS}@aar"
 
     compile "com.jakewharton.timber:timber:${TIMBER}"
-
-    compile "com.jakewharton:butterknife:${BUTTERKNIFE}"
-    annotationProcessor "com.jakewharton:butterknife-compiler:${BUTTERKNIFE}"
 }
 
 // build a jar with source files

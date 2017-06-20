@@ -6,15 +6,14 @@
     <item text="" />
     -->
 
-    <version title="v0.2"/>
-    <item text="Created kprefs" />
+    <version title="v1.1"/>
     <item text="Created kpref items" />
     <item text="Attached source files" />
     <item text="Created color dialog" />
     <item text="Added more utilities" />
     <item text="Fixed stack clearing when starting activity" />
 
-    <version title="v0.1" />
+    <version title="v1.0" />
     <item text="Initial Changelog" />
     <item text="Created many extension functions" />
     <item text="Ported changelog builer" />

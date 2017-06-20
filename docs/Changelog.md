@@ -1,14 +1,13 @@
 # Changelog
 
-## v0.2
-* Created kprefs
+## v1.1
 * Created kpref items
 * Attached source files
 * Created color dialog
 * Added more utilities
 * Fixed stack clearing when starting activity
 
-## v0.1
+## v1.0
 * Initial Changelog
 * Created many extension functions
 * Ported changelog builer
