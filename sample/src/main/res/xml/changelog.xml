@@ -6,6 +6,15 @@
     <item text="" />
     -->
 
+    <version title="v1.2"/>
+    <item text="Fix title attribute in changelog" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+
     <version title="v1.1"/>
     <item text="Created kpref items" />
     <item text="Attached source files" />
