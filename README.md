@@ -2,7 +2,7 @@
 
 Kotlin Android Utils
 
-<!--Current Release v1.0-->
+<!--Current Release v1.1-->
 
 This library contains small helper functions used throughout almost all of my other projects. The goal is to make common interactions executable in a single line.
 
@@ -29,7 +29,7 @@ And add the following dependencies (You can use a specific version, commit, or -
 
 ```gradle
 dependencies {
-    compile 'ca.allanwang:kau:v1.0'
+    compile 'ca.allanwang:kau:v1.1'
 }
 
 ```
