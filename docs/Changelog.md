@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.2
+* Fix title attribute in changelog
+
 ## v1.1
 * Created kpref items
 * Attached source files
