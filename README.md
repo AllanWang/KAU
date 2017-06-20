@@ -6,6 +6,8 @@ Kotlin Android Utils
 
 This library contains small helper functions used throughout almost all of my other projects. The goal is to make common interactions executable in a single line.
 
+[Changelog](https://github.com/AllanWang/KAU/tree/master/docs/Changelog.md)
+
 ------------
 
 KAU is available on JitPack
