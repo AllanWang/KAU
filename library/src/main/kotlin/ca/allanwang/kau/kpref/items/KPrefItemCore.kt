@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import butterknife.ButterKnife
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.utils.*
@@ -94,10 +93,6 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         val innerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_inner_frame)
         val innerContent: View?
             get() = itemView.findViewById(R.id.kau_pref_inner_content)
-
-        init {
-            ButterKnife.bind(v)
-        }
 
         inline fun <reified T : View> bindInnerView(@LayoutRes id: Int): T {
             if (innerFrame == null) throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
