@@ -5,14 +5,12 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.AppCompatEditText
-import android.widget.*
+import android.support.v7.widget.Toolbar
+import android.widget.ImageButton
 import com.afollestad.materialdialogs.R
 
 /**
