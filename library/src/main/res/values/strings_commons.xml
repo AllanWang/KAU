@@ -7,6 +7,8 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_back">Back</string>
     <string name="kau_cancel">Cancel</string>
     <string name="kau_changelog">Changelog</string>
+    <string name="kau_close">Close</string>
+    <string name="kau_contact_us">Contact Us</string>
     <string name="kau_done">Done</string>
     <string name="kau_do_not_show_again">Do not show again</string>
     <string name="kau_error">Error</string>
@@ -20,6 +22,9 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_maybe">Maybe</string>
     <string name="kau_no">No</string>
     <string name="kau_none">None</string>
+    <string name="kau_ok">@android:string/ok</string>
+    <string name="kau_report_bug">Report A Bug</string>
+    <string name="kau_send_feedback">Send Feedback</string>
     <string name="kau_settings">Settings</string>
     <string name="kau_yes">Yes</string>
 </resources>

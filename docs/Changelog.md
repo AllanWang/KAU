@@ -3,6 +3,8 @@
 ## v1.2
 * Fix title attribute in changelog
 * Update support libs
+* Add is app installed utils
+* Add email builder
 
 ## v1.1
 * Created kpref items
