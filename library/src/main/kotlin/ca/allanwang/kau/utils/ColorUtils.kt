@@ -221,5 +221,12 @@ fun EditText.tintCursor(@ColorInt color: Int) {
     } catch (e: Exception) {
         e.printStackTrace()
     }
+}
 
+fun Toolbar.tint(@ColorInt color: Int, tintTitle: Boolean = true) {
+    if (tintTitle) {
+        setTitleTextColor(color)
+        setSubtitleTextColor(color)
+    }
+    (0 until childCount).asSequence().forEach { (getChildAt(it) as? ImageButton)?.setColorFilter(color) }
 }
