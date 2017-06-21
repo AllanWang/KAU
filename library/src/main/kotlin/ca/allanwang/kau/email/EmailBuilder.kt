@@ -68,7 +68,7 @@ class EmailBuilder(@StringRes val emailId: Int, @StringRes val subjectId: Int) {
 
         if (pairs.isNotEmpty()) emailBuilder.append("\n")
         pairs.forEach { k, v -> emailBuilder.append("$k: $v\n") }
-        
+
         if (footer != null)
             emailBuilder.append("\n").append(footer)
 
