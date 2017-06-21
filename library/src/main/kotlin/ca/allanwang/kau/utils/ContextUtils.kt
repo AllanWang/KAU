@@ -22,10 +22,11 @@ import java.util.*
 /**
  * Created by Allan Wang on 2017-06-03.
  */
-fun Activity.restart(extras: ((Intent) -> Unit)? = null) {
+fun Activity.restart(action: Intent.() -> Unit = {}) {
     val i = Intent(this, this::class.java)
     i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-    extras?.invoke(i)
+    i.putExtras(intent.extras)
+    i.action()
     startActivity(i)
     overridePendingTransition(0, 0) //No transitions
     finish()
