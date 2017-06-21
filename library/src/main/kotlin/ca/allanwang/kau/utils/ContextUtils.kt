@@ -61,6 +61,11 @@ fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolea
     startActivity(clazz, clearStack, intentBuilder, bundle)
 }
 
+fun Activity.finishSlideOut() {
+    finish()
+    overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_slide_out_right_top)
+}
+
 var Activity.navigationBarColor: Int
     get() = if (buildIsLollipopAndUp) window.navigationBarColor else Color.BLACK
     set(value) {
