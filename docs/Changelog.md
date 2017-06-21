@@ -2,6 +2,7 @@
 
 ## v1.2
 * Fix title attribute in changelog
+* Update support libs
 
 ## v1.1
 * Created kpref items

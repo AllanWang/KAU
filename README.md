@@ -43,6 +43,7 @@ dependencies {
 * [Ripple Canvas](#ripple-canvas)
 * [Timber Logger](#timber-logger)
 * [Extensions](#extensions)
+* [Email Builder](#email-builder)
 
 <a name="kprefs"></a>
 ## KPrefs
@@ -230,6 +231,8 @@ The canvas also supports color fading and direct color setting so it can effecti
 ### Utils [Misc]
 > Extends Int
 * dpToPx & pxToDp conversions
+* Check sdk version
+* Check if app is installed
 
 ### ViewUtils
 > Extends View
@@ -237,3 +240,9 @@ The canvas also supports color fading and direct color setting so it can effecti
 * matchParent method to set the layout params to match_parent
 * Create snackbar directly
 * Set IIcon into ImageView directly
+
+<a name="email-builder"></a>
+## Email Builder
+
+Easily send an email through `Context.sendEmail`. 
+Include your email and subject, along with other optional configurations such as retrieving device info.

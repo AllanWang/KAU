@@ -15,4 +15,7 @@
 
     <string name="kau_kpref_title_placeholder">Title Placeholder</string>
     <string name="kau_pref_icon">Pref Icon</string>
+
+    <string name="kau_send_via">Send via</string>
+
 </resources>

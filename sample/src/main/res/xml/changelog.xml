@@ -8,9 +8,9 @@
 
     <version title="v1.2"/>
     <item text="Fix title attribute in changelog" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
+    <item text="Update support libs" />
+    <item text="Add is app installed utils" />
+    <item text="Add email builder" />
     <item text="" />
     <item text="" />
     <item text="" />
