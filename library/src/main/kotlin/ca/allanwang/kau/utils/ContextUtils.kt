@@ -22,17 +22,6 @@ import java.util.*
 /**
  * Created by Allan Wang on 2017-06-03.
  */
-fun Activity.restart(action: Intent.() -> Unit = {}) {
-    val i = Intent(this, this::class.java)
-    i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-    i.putExtras(intent.extras)
-    i.action()
-    startActivity(i)
-    overridePendingTransition(0, 0) //No transitions
-    finish()
-    overridePendingTransition(0, 0)
-}
-
 fun Context.startActivity(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundle: Bundle? = null) {
     val intent = (Intent(this, clazz))
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -61,23 +50,6 @@ fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolea
     bundle.bundleBuilder()
     startActivity(clazz, clearStack, intentBuilder, bundle)
 }
-
-fun Activity.finishSlideOut() {
-    finish()
-    overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_slide_out_right_top)
-}
-
-var Activity.navigationBarColor: Int
-    get() = if (buildIsLollipopAndUp) window.navigationBarColor else Color.BLACK
-    set(value) {
-        if (buildIsLollipopAndUp) window.navigationBarColor = value
-    }
-
-var Activity.statusBarColor: Int
-    get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
-    set(value) {
-        if (buildIsLollipopAndUp) window.statusBarColor = value
-    }
 
 //Toast helpers
 fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = toast(this.string(id), duration)
