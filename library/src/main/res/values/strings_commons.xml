@@ -4,21 +4,26 @@ Most resources are verbatim and x represents a formatted item
 -->
 
 <resources>
+    <string name="kau_amoled" translatable="false">AMOLED</string>
     <string name="kau_back">Back</string>
     <string name="kau_cancel">Cancel</string>
     <string name="kau_changelog">Changelog</string>
     <string name="kau_close">Close</string>
     <string name="kau_contact_us">Contact Us</string>
-    <string name="kau_done">Done</string>
+    <string name="kau_custom">Custom</string>
+    <string name="kau_dark">Dark</string>
+    <string name="kau_default">Default</string>
     <string name="kau_do_not_show_again">Do not show again</string>
+    <string name="kau_done">Done</string>
     <string name="kau_error">Error</string>
     <string name="kau_exit">Exit</string>
     <string name="kau_exit_confirmation">Are you sure you want to exit?</string>
     <string name="kau_exit_confirmation_x">Are you sure you want to exit %s?</string>
     <string name="kau_great">Great</string>
+    <string name="kau_light">Light</string>
     <string name="kau_login">Login</string>
     <string name="kau_logout">Logout</string>
-    <string name="kau_lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="kau_lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="kau_maybe">Maybe</string>
     <string name="kau_no">No</string>
     <string name="kau_none">None</string>

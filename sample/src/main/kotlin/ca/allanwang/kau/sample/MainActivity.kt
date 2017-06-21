@@ -3,6 +3,7 @@ package ca.allanwang.kau.sample
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import ca.allanwang.kau.email.sendEmail
 import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.utils.*
@@ -103,6 +104,7 @@ class MainActivity : KPrefActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_settings -> startActivity(AnimActivity::class.java, clearStack = true)
+            R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
             else -> return super.onOptionsItemSelected(item)
         }
         return true
