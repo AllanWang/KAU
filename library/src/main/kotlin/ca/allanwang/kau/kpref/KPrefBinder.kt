@@ -15,8 +15,9 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
  * Base extension that will register the layout manager and adapter with the given items
+ * Returns toolbar title res
  */
-fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAdapterBuilder.() -> Unit): FastItemAdapter<KPrefItemCore> {
+fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAdapterBuilder.() -> Unit): Int {
     layoutManager = LinearLayoutManager(context)
     val adapter = FastItemAdapter<KPrefItemCore>()
     adapter.withOnClickListener { v, _, item, _ -> item.onClick(v, v.findViewById(R.id.kau_pref_inner_content)) }
@@ -24,7 +25,7 @@ fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAda
     builder.invoke(items)
     adapter.add(items.list)
     this.adapter = adapter
-    return adapter
+    return items.toolbarTitleRes
 }
 
 /**
@@ -61,6 +62,8 @@ class GlobalOptions(core: CoreAttributeContract, activity: KPrefActivityContract
  */
 class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
 
+    var toolbarTitleRes: Int = -1
+
     fun header(@StringRes title: Int)
             = list.add(KPrefHeader(KPrefItemCore.CoreBuilder(globalOptions, title)))
 
@@ -86,9 +89,11 @@ class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
             = list.add(KPrefText<T>(KPrefText.KPrefTextBuilder<T>(globalOptions, title, getter, setter)
             .apply { builder() }))
 
-    fun subItems(@StringRes title:Int,
-                 itemBuilder:KPrefAdapterBuilder.()->Unit)
-    = list.add(KPrefSubItems(KPrefSubItems.KPrefSubItemsBuilder(globalOptions, title, itemBuilder)))
+    fun subItems(@StringRes title: Int,
+                 itemBuilder: KPrefAdapterBuilder.() -> Unit,
+                 builder: KPrefSubItems.KPrefSubItemsContract.() -> Unit)
+            = list.add(KPrefSubItems(KPrefSubItems.KPrefSubItemsBuilder(globalOptions, title, itemBuilder)
+            .apply { builder() }))
 
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 }

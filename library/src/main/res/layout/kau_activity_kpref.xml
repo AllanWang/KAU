@@ -21,7 +21,17 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ca.allanwang.kau.views.TextSwitcherThemed
+            android:id="@+id/kau_toolbar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="@android:color/white" />
+
+    </android.support.v7.widget.Toolbar>
 
     <ca.allanwang.kau.views.RippleCanvas
         android:id="@+id/kau_ripple"

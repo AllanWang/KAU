@@ -90,6 +90,30 @@ class MainActivity : KPrefActivity() {
                 true
             }
         }
+
+        subItems(R.string.sub_item, subPrefs()) {
+            descRes = R.string.sub_item_desc
+        }
+    }
+
+    fun subPrefs(): KPrefAdapterBuilder.() -> Unit = {
+        toolbarTitleRes = R.string.sub_item
+        text<String>(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
+            descRes = R.string.text_desc
+            onClick = {
+                itemView, _, item ->
+                itemView.context.materialDialog {
+                    title("Type Text")
+                    input("Type here", item.pref, {
+                        _, input ->
+                        item.pref = input.toString()
+                        reloadByTitle(R.string.text)
+                    })
+                    inputRange(0, 20)
+                }
+                true
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
