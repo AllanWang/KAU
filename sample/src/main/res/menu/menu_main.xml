@@ -9,8 +9,13 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_email"
-        android:orderInCategory="2100"
+        android:orderInCategory="200"
         android:title="@string/kau_send_feedback"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/test"
+        android:orderInCategory="300"
+        android:title="@string/kau_menu"
         app:showAsAction="never" />
 </menu>
 

@@ -6,6 +6,7 @@ import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.mikepenz.iconics.IconicsDrawable
@@ -33,13 +34,6 @@ fun <T : View> T.gone(): T {
 fun View.isVisible(): Boolean = visibility == View.VISIBLE
 fun View.isInvisible(): Boolean = visibility == View.INVISIBLE
 fun View.isGone(): Boolean = visibility == View.GONE
-
-fun View.matchParent() {
-    with(layoutParams) {
-        height = ViewGroup.LayoutParams.MATCH_PARENT
-        width = ViewGroup.LayoutParams.MATCH_PARENT
-    }
-}
 
 fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: (Snackbar) -> Unit = {}) {
     val snackbar = Snackbar.make(this, text, duration)

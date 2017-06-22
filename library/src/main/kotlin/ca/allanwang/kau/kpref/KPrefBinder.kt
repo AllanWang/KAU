@@ -16,11 +16,11 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 /**
  * Base extension that will register the layout manager and adapter with the given items
  */
-fun RecyclerView.setKPrefAdapter(builder: KPrefAdapterBuilder.() -> Unit): FastItemAdapter<KPrefItemCore> {
+fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAdapterBuilder.() -> Unit): FastItemAdapter<KPrefItemCore> {
     layoutManager = LinearLayoutManager(context)
     val adapter = FastItemAdapter<KPrefItemCore>()
     adapter.withOnClickListener { v, _, item, _ -> item.onClick(v, v.findViewById(R.id.kau_pref_inner_content)) }
-    val items = KPrefAdapterBuilder()
+    val items = KPrefAdapterBuilder(globalOptions)
     builder.invoke(items)
     adapter.add(items.list)
     this.adapter = adapter
@@ -43,22 +43,32 @@ class CoreAttributeBuilder : CoreAttributeContract {
     override var accentColor: (() -> Int)? = null
 }
 
+interface KPrefActivityContract {
+    fun showNextPrefs(builder: KPrefAdapterBuilder.() -> Unit)
+    fun showPrevPrefs()
+}
+
+
+class GlobalOptions(core: CoreAttributeContract, activity: KPrefActivityContract
+) : CoreAttributeContract by core, KPrefActivityContract by activity
+
+
 /**
  * Builder for kpref items
  * Contains DSLs for every possible item
  * The arguments are all the mandatory values plus an optional builder housing all the possible configurations
  * The mandatory values are final so they cannot be edited in the builder
  */
-class KPrefAdapterBuilder : CoreAttributeContract by CoreAttributeBuilder() {
+class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
 
     fun header(@StringRes title: Int)
-            = list.add(KPrefHeader(KPrefItemCore.CoreBuilder(this, title)))
+            = list.add(KPrefHeader(KPrefItemCore.CoreBuilder(globalOptions, title)))
 
     fun checkbox(@StringRes title: Int,
                  getter: (() -> Boolean),
                  setter: ((value: Boolean) -> Unit),
                  builder: KPrefItemBase.BaseContract<Boolean>.() -> Unit = {})
-            = list.add(KPrefCheckbox(KPrefItemBase.BaseBuilder<Boolean>(this, title, getter, setter)
+            = list.add(KPrefCheckbox(KPrefItemBase.BaseBuilder(globalOptions, title, getter, setter)
             .apply { builder() }))
 
 
@@ -66,16 +76,19 @@ class KPrefAdapterBuilder : CoreAttributeContract by CoreAttributeBuilder() {
                     getter: (() -> Int),
                     setter: ((value: Int) -> Unit),
                     builder: KPrefColorPicker.KPrefColorContract.() -> Unit = {})
-            = list.add(KPrefColorPicker(KPrefColorPicker.KPrefColorBuilder(this, title, getter, setter)
+            = list.add(KPrefColorPicker(KPrefColorPicker.KPrefColorBuilder(globalOptions, title, getter, setter)
             .apply { builder() }))
 
     fun <T> text(@StringRes title: Int,
                  getter: (() -> T),
                  setter: ((value: T) -> Unit),
                  builder: KPrefText.KPrefTextContract<T>.() -> Unit = {})
-            = list.add(KPrefText<T>(KPrefText.KPrefTextBuilder<T>(this, title, getter, setter)
+            = list.add(KPrefText<T>(KPrefText.KPrefTextBuilder<T>(globalOptions, title, getter, setter)
             .apply { builder() }))
 
-    internal val list: MutableList<KPrefItemCore> = mutableListOf()
+    fun subItems(@StringRes title:Int,
+                 itemBuilder:KPrefAdapterBuilder.()->Unit)
+    = list.add(KPrefSubItems(KPrefSubItems.KPrefSubItemsBuilder(globalOptions, title, itemBuilder)))
 
+    internal val list: MutableList<KPrefItemCore> = mutableListOf()
 }

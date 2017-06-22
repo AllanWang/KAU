@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.CoreAttributeContract
+import ca.allanwang.kau.kpref.GlobalOptions
 import ca.allanwang.kau.utils.toast
 
 /**
@@ -39,11 +40,11 @@ class KPrefText<T>(val builder: KPrefTextContract<T>) : KPrefItemBase<T>(builder
      * Default implementation of [KPrefTextContract]
      */
     class KPrefTextBuilder<T>(
-            attributes: CoreAttributeContract,
+            globalOptions: GlobalOptions,
             titleRes: Int,
             getter: () -> T,
             setter: (value: T) -> Unit
-    ) : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>(attributes, titleRes, getter, setter) {
+    ) : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>(globalOptions, titleRes, getter, setter) {
         override var textGetter: (T) -> String? = { it?.toString() }
     }
 

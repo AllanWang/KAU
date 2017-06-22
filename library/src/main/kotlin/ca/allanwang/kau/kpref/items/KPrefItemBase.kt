@@ -4,6 +4,7 @@ import android.support.annotation.CallSuper
 import android.view.View
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.CoreAttributeContract
+import ca.allanwang.kau.kpref.GlobalOptions
 import ca.allanwang.kau.utils.resolveDrawable
 
 /**
@@ -72,11 +73,11 @@ abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base)
     /**
      * Default implementation of [BaseContract]
      */
-    class BaseBuilder<T>(attributes: CoreAttributeContract,
+    class BaseBuilder<T>(globalOptions: GlobalOptions,
                          titleRes: Int,
                          override val getter: () -> T,
                          override val setter: (value: T) -> Unit
-    ) : CoreContract by CoreBuilder(attributes, titleRes), BaseContract<T> {
+    ) : CoreContract by CoreBuilder(globalOptions, titleRes), BaseContract<T> {
         override var enabler: () -> Boolean = { true }
         override var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
         override var onDisabledClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null

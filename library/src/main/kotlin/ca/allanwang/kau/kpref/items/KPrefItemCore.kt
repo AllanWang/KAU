@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.kpref.CoreAttributeContract
+import ca.allanwang.kau.kpref.GlobalOptions
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon
@@ -39,12 +39,12 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
             if (core.iicon != null) icon?.visible()?.setIcon(core.iicon, 24)
             else icon?.gone()
             innerFrame?.removeAllViews()
-            val textColor = core.attributes.textColor?.invoke()
+            val textColor = core.globalOptions.textColor?.invoke()
             if (textColor != null) {
                 title.setTextColor(textColor)
                 desc?.setTextColor(textColor)
             }
-            val accentColor = core.attributes.accentColor?.invoke()
+            val accentColor = core.globalOptions.accentColor?.invoke()
             if (accentColor != null) {
                 icon?.drawable?.setTint(accentColor)
             }
@@ -70,7 +70,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
      * Core values for all kpref items
      */
     interface CoreContract {
-        val attributes: CoreAttributeContract
+        val globalOptions: GlobalOptions
         val titleRes: Int
         var descRes: Int
         var iicon: IIcon?
@@ -79,7 +79,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
     /**
      * Default impementation of [CoreContract]
      */
-    class CoreBuilder(override val attributes: CoreAttributeContract,
+    class CoreBuilder(override val globalOptions: GlobalOptions,
                       override val titleRes: Int) : CoreContract {
         override var descRes: Int = -1
         override var iicon: IIcon? = null

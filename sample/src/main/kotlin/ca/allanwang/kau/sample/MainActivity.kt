@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import ca.allanwang.kau.email.sendEmail
+import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.utils.*
@@ -13,9 +14,12 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 class MainActivity : KPrefActivity() {
 
-    override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
+    override fun kPrefCoreAttributes(): CoreAttributeContract.() -> Unit = {
         textColor = { KPrefSample.textColor }
         accentColor = { KPrefSample.accentColor }
+    }
+
+    override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
 
         header(R.string.header)
 
@@ -105,6 +109,7 @@ class MainActivity : KPrefActivity() {
         when (item.itemId) {
             R.id.action_settings -> startActivity(AnimActivity::class.java, clearStack = true)
             R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
+            R.id.test -> prefHolder.showNext()
             else -> return super.onOptionsItemSelected(item)
         }
         return true

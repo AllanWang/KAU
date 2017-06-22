@@ -7,6 +7,7 @@ import ca.allanwang.kau.dialogs.color.ColorBuilder
 import ca.allanwang.kau.dialogs.color.ColorContract
 import ca.allanwang.kau.dialogs.color.colorPickerDialog
 import ca.allanwang.kau.kpref.CoreAttributeContract
+import ca.allanwang.kau.kpref.GlobalOptions
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -57,11 +58,11 @@ class KPrefColorPicker(val builder: KPrefColorContract) : KPrefItemBase<Int>(bui
     /**
      * Default implementation of [KPrefColorContract]
      */
-    class KPrefColorBuilder(attributes: CoreAttributeContract,
+    class KPrefColorBuilder(globalOptions: GlobalOptions,
                             override var titleRes: Int,
                             getter: () -> Int,
                             setter: (value: Int) -> Unit
-    ) : KPrefColorContract, BaseContract<Int> by BaseBuilder<Int>(attributes, titleRes, getter, setter),
+    ) : KPrefColorContract, BaseContract<Int> by BaseBuilder<Int>(globalOptions, titleRes, getter, setter),
             ColorContract by ColorBuilder() {
         override var showPreview: Boolean = true
     }

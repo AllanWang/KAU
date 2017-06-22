@@ -59,6 +59,8 @@ dependencies {
     compile "com.mikepenz:iconics-core:${ICONICS}@aar"
 
     compile "com.jakewharton.timber:timber:${TIMBER}"
+
+    compile "com.mikepenz:itemanimators:0.5.0@aar"
 }
 
 // build a jar with source files

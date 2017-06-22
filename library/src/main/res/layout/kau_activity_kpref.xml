@@ -32,8 +32,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/kau_toolbar" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/kau_recycler"
+    <ViewAnimator
+        android:id="@+id/kau_holder"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
