@@ -131,6 +131,7 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
             outAnimation = if (animate) SLIDE_OUT_RIGHT_ITEMS else null
             showPrevious()
             removeView(current)
+            adapter.notifyAdapterDataSetChanged()
         }
         titleStack.pop()
         with(toolbarTitle) {
