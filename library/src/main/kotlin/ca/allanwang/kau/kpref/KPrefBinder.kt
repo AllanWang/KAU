@@ -15,9 +15,9 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
  * Base extension that will register the layout manager and adapter with the given items
- * Returns toolbar title res
+ * Returns FastAdapter
  */
-fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAdapterBuilder.() -> Unit): Int {
+fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAdapterBuilder.() -> Unit): FastItemAdapter<KPrefItemCore> {
     layoutManager = LinearLayoutManager(context)
     val adapter = FastItemAdapter<KPrefItemCore>()
     adapter.withOnClickListener { v, _, item, _ -> item.onClick(v, v.findViewById(R.id.kau_pref_inner_content)) }
@@ -25,7 +25,7 @@ fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAda
     builder.invoke(items)
     adapter.add(items.list)
     this.adapter = adapter
-    return items.toolbarTitleRes
+    return adapter
 }
 
 /**
@@ -45,7 +45,7 @@ class CoreAttributeBuilder : CoreAttributeContract {
 }
 
 interface KPrefActivityContract {
-    fun showNextPrefs(builder: KPrefAdapterBuilder.() -> Unit)
+    fun showNextPrefs(@StringRes toolbarTitleRes:Int, builder: KPrefAdapterBuilder.() -> Unit)
     fun showPrevPrefs()
 }
 
@@ -61,8 +61,6 @@ class GlobalOptions(core: CoreAttributeContract, activity: KPrefActivityContract
  * The mandatory values are final so they cannot be edited in the builder
  */
 class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
-
-    var toolbarTitleRes: Int = -1
 
     fun header(@StringRes title: Int)
             = list.add(KPrefHeader(KPrefItemCore.CoreBuilder(globalOptions, title)))

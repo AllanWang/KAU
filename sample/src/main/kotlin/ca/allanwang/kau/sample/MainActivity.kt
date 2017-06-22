@@ -97,7 +97,6 @@ class MainActivity : KPrefActivity() {
     }
 
     fun subPrefs(): KPrefAdapterBuilder.() -> Unit = {
-        toolbarTitleRes = R.string.sub_item
         text<String>(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
             descRes = R.string.text_desc
             onClick = {

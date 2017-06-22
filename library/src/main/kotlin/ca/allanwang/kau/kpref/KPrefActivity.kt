@@ -39,11 +39,10 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
     val toolbarTitle: TextSwitcherThemed by bindView(R.id.kau_toolbar_text)
     val prefHolder: ViewAnimator by bindView(R.id.kau_holder)
     private lateinit var globalOptions: GlobalOptions
-    private val titles: LinkedList<Pair<Int, Int>> = LinkedList()
-    private var index = -1
+    private val titleStack: Stack<Int> = Stack()
     var animate: Boolean = true
     val isRootPref: Boolean
-        get() = index <= 0
+        get() = titleStack.size == 1
 
     //we can't use the same animations for both views; otherwise the durations will sync
     private val SLIDE_IN_LEFT_TITLE: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.kau_slide_in_left) }
@@ -79,13 +78,11 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
         toolbarCanvas.set(resolveColor(R.attr.colorPrimary))
         bgCanvas.set(resolveColor(android.R.attr.colorBackground))
         prefHolder.animateFirstView = false
-        titles.add(Pair(-1, R.string.kau_settings))
         //setup prefs
         val core = CoreAttributeBuilder()
         val builder = kPrefCoreAttributes()
         core.builder()
         globalOptions = GlobalOptions(core, this)
-        showNextPrefs(onCreateKPrefs(savedInstanceState))
         with(toolbarTitle) {
             setFactory {
                 TextView(this@KPrefActivity).apply {
@@ -96,19 +93,19 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
                     TextViewCompat.setTextAppearance(this, R.style.TextAppearance_AppCompat_Title)
                 }
             }
-            setCurrentText(string(R.string.kau_settings))
         }
+        showNextPrefs(R.string.kau_settings, onCreateKPrefs(savedInstanceState))
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
     }
 
-    override fun showNextPrefs(builder: KPrefAdapterBuilder.() -> Unit) {
-        index++
+    override fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit) {
         val rv = RecyclerView(this).apply {
             layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-            titles.addFirst(Pair(index, setKPrefAdapter(globalOptions, builder)))
+            titleStack.push(toolbarTitleRes)
+            setKPrefAdapter(globalOptions, builder)
         }
         with(prefHolder) {
             inAnimation = if (animate) SLIDE_IN_RIGHT_ITEMS else null
@@ -116,18 +113,16 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
             addView(rv)
             showNext()
         }
-        if (titles.first().second != -1) {
-            with(toolbarTitle) {
-                inAnimation = if (animate) SLIDE_IN_RIGHT_TITLE else null
-                outAnimation = if (animate) SLIDE_OUT_LEFT_TITLE else null
-                setText(string(titles.first().second))
-            }
+        with(toolbarTitle) {
+            inAnimation = if (animate) SLIDE_IN_RIGHT_TITLE else null
+            outAnimation = if (animate) SLIDE_OUT_LEFT_TITLE else null
+            setText(string(titleStack.peek()))
         }
     }
 
     override fun showPrevPrefs() {
-        if (index <= 0) {
-            KL.e("Cannot go back in KPrefActivity; already at index $index")
+        if (titleStack.size <= 1) {
+            KL.e("Cannot go back in KPrefActivity; already at index ${titleStack.size - 1}")
             return
         }
         val current = prefHolder.currentView
@@ -137,15 +132,11 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
             showPrevious()
             removeView(current)
         }
-        index--
-        titles.removeFirst()
-        val nextTitle = string(titles.first { it.first <= index && it.second != -1 }.second)
-        if (nextTitle != (toolbarTitle.currentView as TextView).text) {
-            with(toolbarTitle) {
-                inAnimation = if (animate) SLIDE_IN_LEFT_TITLE else null
-                outAnimation = if (animate) SLIDE_OUT_RIGHT_TITLE else null
-                setText(string(titles.first { it.first <= index && it.second != -1 }.second))
-            }
+        titleStack.pop()
+        with(toolbarTitle) {
+            inAnimation = if (animate) SLIDE_IN_LEFT_TITLE else null
+            outAnimation = if (animate) SLIDE_OUT_RIGHT_TITLE else null
+            setText(string(titleStack.peek()))
         }
     }
 

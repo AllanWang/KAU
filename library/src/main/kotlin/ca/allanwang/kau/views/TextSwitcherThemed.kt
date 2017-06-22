@@ -19,4 +19,9 @@ class TextSwitcherThemed @JvmOverloads constructor(context: Context, attrs: Attr
             (getChildAt(0) as TextView).setTextColor(value)
             (getChildAt(1) as TextView).setTextColor(value)
         }
+
+    override fun setText(text: CharSequence?) {
+        if ((currentView as TextView).text == text) return
+        super.setText(text)
+    }
 }

@@ -16,7 +16,7 @@ import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 class KPrefSubItems(val builder: KPrefSubItemsBuilder) : KPrefItemCore(builder) {
 
     override fun onClick(itemView: View, innerContent: View?): Boolean {
-        builder.globalOptions.showNextPrefs(builder.itemBuilder)
+        builder.globalOptions.showNextPrefs(builder.titleRes, builder.itemBuilder)
         return true
     }
 
