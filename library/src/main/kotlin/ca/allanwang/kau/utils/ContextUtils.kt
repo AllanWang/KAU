@@ -3,7 +3,6 @@ package ca.allanwang.kau.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.os.Bundle
@@ -15,8 +14,8 @@ import android.util.TypedValue
 import android.widget.Toast
 import ca.allanwang.kau.R
 import com.afollestad.materialdialogs.MaterialDialog
-import com.pitchedapps.frost.utils.ChangelogAdapter
-import com.pitchedapps.frost.utils.parse
+import ca.allanwang.kau.changelog.ChangelogAdapter
+import ca.allanwang.kau.changelog.parse
 import java.util.*
 
 /**

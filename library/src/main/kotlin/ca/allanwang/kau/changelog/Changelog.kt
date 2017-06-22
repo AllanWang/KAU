@@ -1,4 +1,4 @@
-package com.pitchedapps.frost.utils
+package ca.allanwang.kau.changelog
 
 import android.content.Context
 import android.content.res.XmlResourceParser
@@ -15,6 +15,9 @@ import org.xmlpull.v1.XmlPullParser
 
 /**
  * Created by Allan Wang on 2017-05-28.
+ *
+ * Internals of the changelog dialog
+ * Contains an adapter for each item, as well as the tags to parse
  */
 internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>) : RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
 
