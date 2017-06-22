@@ -41,7 +41,7 @@ interface CoreAttributeContract {
  */
 class CoreAttributeBuilder : CoreAttributeContract {
     override var textColor: (() -> Int)? = null
-    override var accentColor: (() -> Int)? = null
+    override var accentColor: (() -> Int)? = textColor
 }
 
 interface KPrefActivityContract {

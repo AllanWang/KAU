@@ -53,7 +53,7 @@ class KPrefDelegate<T : Any> internal constructor(private val key: String, priva
                         is Float -> pref.sp.getFloat(key, fallback)
                         is Int -> pref.sp.getInt(key, fallback)
                         is Long -> pref.sp.getLong(key, fallback)
-                        is StringSet -> pref.sp.getStringSet(key, fallback)
+                        is StringSet -> StringSet(pref.sp.getStringSet(key, fallback))
                         is String -> pref.sp.getString(key, fallback)
                         else -> throw KPrefException(fallback)
                     }
