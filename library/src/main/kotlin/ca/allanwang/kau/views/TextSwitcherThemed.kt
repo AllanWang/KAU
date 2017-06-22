@@ -1,6 +1,7 @@
 package ca.allanwang.kau.views
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.TextSwitcher
 import android.widget.TextView
@@ -11,13 +12,11 @@ import android.widget.TextView
 class TextSwitcherThemed @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null
 ) : TextSwitcher(context, attrs) {
 
-    var textColor: Int = -1
+    var textColor: Int = Color.WHITE
         get() = field
         set(value) {
             field = value
-            if (value != -1) {
-                (getChildAt(0) as TextView).setTextColor(value)
-                (getChildAt(1) as TextView).setTextColor(value)
-            }
+            (getChildAt(0) as TextView).setTextColor(value)
+            (getChildAt(1) as TextView).setTextColor(value)
         }
 }
