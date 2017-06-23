@@ -69,25 +69,25 @@ fun Int.withMinAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int
         = Color.argb(Math.max(alpha, Color.alpha(this)), Color.red(this), Color.green(this), Color.blue(this))
 
 @ColorInt
-fun Int.lighten(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int {
+fun Int.lighten(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int {
     val (red, green, blue) = intArrayOf(Color.red(this), Color.green(this), Color.blue(this))
-            .map { Math.min(255f * factor + it, 255f).toInt() }
+            .map { (it * (1f - factor) + 255f * factor).toInt() }
     return Color.argb(Color.alpha(this), red, green, blue)
 }
 
 @ColorInt
-fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int {
+fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int {
     val (red, green, blue) = intArrayOf(Color.red(this), Color.green(this), Color.blue(this))
-            .map { Math.max(it - 255f * factor, 0f).toInt() }
+            .map { (it * (1f - factor)).toInt() }
     return Color.argb(Color.alpha(this), red, green, blue)
 }
 
 @ColorInt
-fun Int.colorToBackground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int
+fun Int.colorToBackground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int
         = if (isColorDark()) darken(factor) else lighten(factor)
 
 @ColorInt
-fun Int.colorToForeground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.2f): Int
+fun Int.colorToForeground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int
         = if (isColorDark()) lighten(factor) else darken(factor)
 
 @Throws(IllegalArgumentException::class)

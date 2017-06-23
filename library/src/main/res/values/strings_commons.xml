@@ -21,7 +21,9 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_exit_confirmation">Are you sure you want to exit?</string>
     <string name="kau_exit_confirmation_x">Are you sure you want to exit %s?</string>
     <string name="kau_glass">Glass</string>
+    <string name="kau_got_it">Got it</string>
     <string name="kau_great">Great</string>
+    <string name="kau_hide">Hide</string>
     <string name="kau_light">Light</string>
     <string name="kau_login">Login</string>
     <string name="kau_logout">Logout</string>

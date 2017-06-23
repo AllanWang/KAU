@@ -57,9 +57,8 @@ class MainActivity : KPrefActivity() {
         colorPicker(R.string.accent_color, { KPrefSample.accentColor }, {
             KPrefSample.accentColor = it
             reload()
-            val darkerColor = it.darken()
-            this@MainActivity.navigationBarColor = darkerColor
-            toolbarCanvas.ripple(darkerColor, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500L)
+            this@MainActivity.navigationBarColor = it
+            toolbarCanvas.ripple(it, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500L)
         }) {
             descRes = R.string.color_no_custom
             allowCustom = false
@@ -118,9 +117,8 @@ class MainActivity : KPrefActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bgCanvas.set(KPrefSample.bgColor)
-        val darkAccent = KPrefSample.accentColor.darken()
-        toolbarCanvas.set(darkAccent)
-        this.navigationBarColor = darkAccent
+        toolbarCanvas.set(KPrefSample.accentColor)
+        this.navigationBarColor = KPrefSample.accentColor
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
