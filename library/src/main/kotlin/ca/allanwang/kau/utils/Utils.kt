@@ -5,8 +5,11 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.os.Build
 import android.os.Looper
+import android.support.annotation.IntRange
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 
 /**
@@ -61,4 +64,12 @@ fun Context.minuteToText(minutes: Long): String = with(minutes) {
     else if (this % 1440L == 0L) String.format(string(R.string.kau_x_days), this / 1440L)
     else if (this % 60L == 0L) String.format(string(R.string.kau_x_hours), this / 60L)
     else String.format(string(R.string.kau_x_minutes), this)
+}
+
+fun Number.round(@IntRange(from = 1L) decimalCount: Int): String {
+    val expression = StringBuilder().append("#.")
+    (1..decimalCount).forEach { expression.append("#") }
+    val formatter = DecimalFormat(expression.toString())
+    formatter.roundingMode = RoundingMode.HALF_UP
+    return formatter.format(this)
 }

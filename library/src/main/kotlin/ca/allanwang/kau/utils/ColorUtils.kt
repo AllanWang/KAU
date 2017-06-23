@@ -28,6 +28,8 @@ fun Int.toHexString(withAlpha: Boolean = false, withHexPrefix: Boolean = true): 
     return if (withHexPrefix) hex else hex.substring(1)
 }
 
+fun Int.toRgbaString() :String = "rgba(${Color.red(this)}, ${Color.green(this)}, ${Color.blue(this)}, ${(Color.alpha(this)/255f).round(3)})"
+
 fun Int.toHSV(): FloatArray {
     val hsv = FloatArray(3)
     Color.colorToHSV(this, hsv)
