@@ -40,8 +40,11 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_report_bug">Report A Bug</string>
     <string name="kau_send_feedback">Send Feedback</string>
     <string name="kau_settings">Settings</string>
+    <string name="kau_thank_you">Thank You</string>
+    <string name="kau_uh_oh">Uh Oh</string>
     <string name="kau_x_days">%d days</string>
     <string name="kau_x_hours">%d hours</string>
     <string name="kau_x_minutes">%d minutes</string>
+    <string name="kau_warning">Warning</string>
     <string name="kau_yes">Yes</string>
 </resources>
