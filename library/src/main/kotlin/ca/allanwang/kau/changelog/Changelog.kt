@@ -2,6 +2,8 @@ package ca.allanwang.kau.changelog
 
 import android.content.Context
 import android.content.res.XmlResourceParser
+import android.os.Handler
+import android.support.annotation.ColorInt
 import android.support.annotation.LayoutRes
 import android.support.annotation.XmlRes
 import android.support.v7.widget.RecyclerView
@@ -10,22 +12,49 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import ca.allanwang.kau.R
+import ca.allanwang.kau.utils.bindOptionalView
+import ca.allanwang.kau.utils.bindView
+import com.afollestad.materialdialogs.MaterialDialog
 import org.xmlpull.v1.XmlPullParser
+import java.util.*
 
 
 /**
  * Created by Allan Wang on 2017-05-28.
- *
+ */
+
+fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null, customize: MaterialDialog.Builder.() -> Unit = {}) {
+    val mHandler = Handler()
+    Thread(Runnable {
+        val items = parse(this, xmlRes)
+        mHandler.post(object : TimerTask() {
+            override fun run() {
+                val builder = MaterialDialog.Builder(this@showChangelog)
+                        .title(R.string.kau_changelog)
+                        .positiveText(R.string.kau_great)
+                        .adapter(ChangelogAdapter(items, textColor), null)
+                builder.customize()
+                builder.show()
+            }
+        })
+    }).start()
+}
+
+/**
  * Internals of the changelog dialog
  * Contains an adapter for each item, as well as the tags to parse
  */
-internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>) : RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
+internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @ColorInt val textColor: Int? = null) : RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ChangelogVH(LayoutInflater.from(parent.context)
             .inflate(items[viewType].second.layout, parent, false))
 
     override fun onBindViewHolder(holder: ChangelogVH, position: Int) {
         holder.text.text = items[position].first
+        if (textColor != null) {
+            holder.text.setTextColor(textColor)
+            holder.bullet?.setTextColor(textColor)
+        }
     }
 
     override fun getItemId(position: Int) = position.toLong()
@@ -35,7 +64,8 @@ internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>) : 
     override fun getItemCount() = items.size
 
     internal class ChangelogVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val text: TextView = itemView.findViewById<TextView>(R.id.kau_changelog_text)
+        val text: TextView by bindView(R.id.kau_changelog_text)
+        val bullet: TextView? by bindOptionalView(R.id.kau_changelog_text)
     }
 }
 

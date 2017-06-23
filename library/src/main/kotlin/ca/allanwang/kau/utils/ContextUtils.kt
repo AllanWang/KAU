@@ -7,17 +7,13 @@ import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.support.annotation.*
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.widget.Toast
 import ca.allanwang.kau.R
-import ca.allanwang.kau.changelog.ChangelogAdapter
-import ca.allanwang.kau.changelog.parse
 import com.afollestad.materialdialogs.MaterialDialog
-import java.util.*
 
 
 /**
@@ -106,23 +102,6 @@ fun Context.resolveBoolean(@AttrRes attr: Int, fallback: Boolean = false): Boole
 fun Context.resolveString(@AttrRes attr: Int, fallback: String = ""): String {
     val v = TypedValue()
     return if (theme.resolveAttribute(attr, v, true)) v.string.toString() else fallback
-}
-
-fun Context.showChangelog(@XmlRes xmlRes: Int, customize: MaterialDialog.Builder.() -> Unit = {}) {
-    val mHandler = Handler()
-    Thread(Runnable {
-        val items = parse(this, xmlRes)
-        mHandler.post(object : TimerTask() {
-            override fun run() {
-                val builder = MaterialDialog.Builder(this@showChangelog)
-                        .title(R.string.kau_changelog)
-                        .positiveText(R.string.kau_great)
-                        .adapter(ChangelogAdapter(items), null)
-                builder.customize()
-                builder.show()
-            }
-        })
-    }).start()
 }
 
 /**

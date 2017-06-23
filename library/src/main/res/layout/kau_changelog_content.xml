@@ -10,6 +10,7 @@
     <!--padding bottom is 14sp * 0.6-->
 
     <TextView
+        android:id="@+id/kau_changelog_bullet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.6"
