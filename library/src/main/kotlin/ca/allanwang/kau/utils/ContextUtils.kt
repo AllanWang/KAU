@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.*
@@ -13,10 +14,11 @@ import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.widget.Toast
 import ca.allanwang.kau.R
-import com.afollestad.materialdialogs.MaterialDialog
 import ca.allanwang.kau.changelog.ChangelogAdapter
 import ca.allanwang.kau.changelog.parse
+import com.afollestad.materialdialogs.MaterialDialog
 import java.util.*
+
 
 /**
  * Created by Allan Wang on 2017-06-03.
@@ -48,6 +50,12 @@ fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolea
     val bundle = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top).toBundle()
     bundle.bundleBuilder()
     startActivity(clazz, clearStack, intentBuilder, bundle)
+}
+
+fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))
+
+fun Context.startPlayStoreLink(packageId: String) {
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageId")))
 }
 
 //Toast helpers
