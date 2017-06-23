@@ -31,7 +31,14 @@ val buildIsLollipopAndUp: Boolean
 val buildIsMarshmallowAndUp: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
-const val KAU_GOOGLE_PLAY_INSTALLER = "com.android.vending"
+const val INSTALLER_GOOGLE_PLAY_VENDING = "com.android.vending"
+const val INSTALLER_GOOGLE_PLAY_FEEDBACK = "com.google.android.feedback"
 
 val Context.installerPackageName: String?
     get() = packageManager.getInstallerPackageName(packageName)
+
+val Context.isFromGooglePlay: Boolean
+    get() {
+        val installer = installerPackageName
+        return arrayOf(INSTALLER_GOOGLE_PLAY_FEEDBACK, INSTALLER_GOOGLE_PLAY_VENDING).any { it == installer }
+    }
