@@ -65,7 +65,7 @@ internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @C
 
     internal class ChangelogVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val text: TextView by bindView(R.id.kau_changelog_text)
-        val bullet: TextView? by bindOptionalView(R.id.kau_changelog_text)
+        val bullet: TextView? by bindOptionalView(R.id.kau_changelog_bullet)
     }
 }
 
