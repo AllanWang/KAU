@@ -37,6 +37,8 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_ok">@android:string/ok</string>
     <string name="kau_one_day">1 day</string>
     <string name="kau_one_hour">1 hour</string>
+    <string name="kau_play_store">Play Store</string>
+    <string name="kau_rate">Rate</string>
     <string name="kau_report_bug">Report A Bug</string>
     <string name="kau_send_feedback">Send Feedback</string>
     <string name="kau_settings">Settings</string>
