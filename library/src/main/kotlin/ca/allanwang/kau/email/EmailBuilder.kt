@@ -10,6 +10,7 @@ import android.support.annotation.StringRes
 import android.util.DisplayMetrics
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
+import ca.allanwang.kau.utils.installerPackageName
 import ca.allanwang.kau.utils.isAppInstalled
 import ca.allanwang.kau.utils.string
 
@@ -37,17 +38,19 @@ class EmailBuilder(@StringRes val emailId: Int, @StringRes val subjectId: Int) {
         val emailBuilder = StringBuilder()
         emailBuilder.append(message).append("\n\n")
         if (deviceDetails) {
-            emailBuilder.append("\nOS Version: ").append(System.getProperty("os.version")).append("(").append(Build.VERSION.INCREMENTAL).append(")")
-                    .append("\nOS API Level: ").append(Build.VERSION.SDK_INT)
-                    .append("\nDevice: ").append(Build.DEVICE)
-                    .append("\nManufacturer: ").append(Build.MANUFACTURER)
-                    .append("\nModel (and Product): ").append(Build.MODEL).append(" (").append(Build.PRODUCT).append(")")
+            val deviceItems = mutableMapOf(
+                    "OS Version" to "${System.getProperty("os.version")} (${Build.VERSION.INCREMENTAL})",
+                    "OS API Level" to Build.DEVICE,
+                    "Manufacturer" to Build.MANUFACTURER,
+                    "Model (and Product)" to "${Build.MODEL} (${Build.PRODUCT})",
+                    "Package Installer" to (context.installerPackageName ?: "None")
+            )
             if (context is Activity) {
                 val metric = DisplayMetrics()
                 context.windowManager.defaultDisplay.getMetrics(metric)
-                emailBuilder.append("\nScreen Dimensions: ${metric.widthPixels} x ${metric.heightPixels}")
+                deviceItems.put("Screen Dimensions", "${metric.widthPixels} x ${metric.heightPixels}")
             }
-            emailBuilder.append("\n")
+            deviceItems.forEach { k, v -> emailBuilder.append("$k: $v\n") }
         }
         if (appInfo) {
             try {

@@ -22,35 +22,12 @@ val Int.dpToPx: Int
 val Int.pxToDp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
-val buildIsLollipopAndUp: Boolean
-    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-
-val buildIsMarshmallowAndUp: Boolean
-    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-
 /**
  * Log whether current state is in the main thread
  */
 fun checkThread(id: Int) {
     val status = if (Looper.myLooper() == Looper.getMainLooper()) "is" else "is not"
     KL.d("$id $status in the main thread")
-}
-
-/**
- * Checks if a given package is installed
- * @param packageName packageId
- * @return true if installed with activity, false otherwise
- */
-fun Context.isAppInstalled(packageName: String): Boolean {
-    val pm = packageManager
-    var installed: Boolean
-    try {
-        pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-        installed = true
-    } catch (e: PackageManager.NameNotFoundException) {
-        installed = false
-    }
-    return installed
 }
 
 /**
