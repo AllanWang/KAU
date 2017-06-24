@@ -49,4 +49,5 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_x_minutes">%d minutes</string>
     <string name="kau_warning">Warning</string>
     <string name="kau_yes">Yes</string>
+    <string name="kau_search">Search</string>
 </resources>

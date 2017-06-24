@@ -7,4 +7,5 @@
     <item name="kau_item_pref_color_picker" type="id" />
     <item name="kau_item_pref_sub_item" type="id" />
     <item name="kau_item_pref_plain_text" type="id" />
+    <item name="kau_item_search" type="id" />
 </resources>

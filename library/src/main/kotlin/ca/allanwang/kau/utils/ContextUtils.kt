@@ -11,6 +11,8 @@ import android.support.annotation.*
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import ca.allanwang.kau.R
 import com.afollestad.materialdialogs.MaterialDialog
@@ -122,3 +124,6 @@ val Context.isNetworkAvailable: Boolean
     }
 
 fun Context.getDip(value: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
+
+val Context.isRtl: Boolean
+    get() = resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL

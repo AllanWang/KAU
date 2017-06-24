@@ -57,8 +57,11 @@ dependencies {
     compile "com.afollestad.material-dialogs:commons:${MATERIAL_DIALOG}"
 
     compile "com.mikepenz:iconics-core:${ICONICS}@aar"
+    compile "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
 
     compile "com.jakewharton.timber:timber:${TIMBER}"
+
+    compile "org.jetbrains.anko:anko-commons:${ANKO}"
 }
 
 // build a jar with source files

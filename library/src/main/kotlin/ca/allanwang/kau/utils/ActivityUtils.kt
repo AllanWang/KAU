@@ -54,3 +54,5 @@ fun Activity.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg
         menu.findItem(id).icon = iicon.toDrawable(this, sizeDp = 20, color = color)
     }
 }
+
+fun Activity.hideKeyboard() = currentFocus.hideKeyboard()

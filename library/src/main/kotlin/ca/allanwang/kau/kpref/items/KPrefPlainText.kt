@@ -8,6 +8,8 @@ import ca.allanwang.kau.kpref.GlobalOptions
  * Created by Allan Wang on 2017-06-14.
  *
  * Just text with the core options. Extends base preference but has an empty getter and setter
+ * Useful replacement of [KPrefText] when nothing is displayed on the right side,
+ * and when the preference is completely handled by the click
  *
  */
 class KPrefPlainText(val builder: KPrefPlainTextBuilder) : KPrefItemBase<Unit>(builder) {
