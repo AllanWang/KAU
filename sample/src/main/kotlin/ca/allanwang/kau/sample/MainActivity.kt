@@ -7,7 +7,10 @@ import ca.allanwang.kau.email.sendEmail
 import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.materialDialog
+import ca.allanwang.kau.utils.navigationBarColor
+import ca.allanwang.kau.utils.startActivity
+import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -73,17 +76,13 @@ class MainActivity : KPrefActivity() {
             allowCustom = true
         }
 
-        text<String>(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
+        text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
             descRes = R.string.text_desc
             onClick = {
                 itemView, _, item ->
                 itemView.context.materialDialog {
                     title("Type Text")
-                    input("Type here", item.pref, {
-                        _, input ->
-                        item.pref = input.toString()
-                        reloadSelf()
-                    })
+                    input("Type here", item.pref, { _, input -> item.pref = input.toString() })
                     inputRange(0, 20)
                 }
                 true

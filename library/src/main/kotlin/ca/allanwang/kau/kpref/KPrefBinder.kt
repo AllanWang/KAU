@@ -45,7 +45,7 @@ class CoreAttributeBuilder : CoreAttributeContract {
 }
 
 interface KPrefActivityContract {
-    fun showNextPrefs(@StringRes toolbarTitleRes:Int, builder: KPrefAdapterBuilder.() -> Unit)
+    fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit)
     fun showPrevPrefs()
     fun reloadByTitle(@StringRes vararg title: Int)
 }
@@ -92,6 +92,11 @@ class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
                  itemBuilder: KPrefAdapterBuilder.() -> Unit,
                  builder: KPrefSubItems.KPrefSubItemsContract.() -> Unit)
             = list.add(KPrefSubItems(KPrefSubItems.KPrefSubItemsBuilder(globalOptions, title, itemBuilder)
+            .apply { builder() }))
+
+    fun plainText(@StringRes title: Int,
+                  builder: KPrefItemBase.BaseContract<Unit>.() -> Unit = {})
+            = list.add(KPrefPlainText(KPrefPlainText.KPrefPlainTextBuilder(globalOptions, title)
             .apply { builder() }))
 
     internal val list: MutableList<KPrefItemCore> = mutableListOf()

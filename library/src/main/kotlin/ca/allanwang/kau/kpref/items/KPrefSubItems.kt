@@ -8,12 +8,11 @@ import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 /**
  * Created by Allan Wang on 2017-06-14.
  *
- * Text preference
- * Holds a textview to display data on the right
- * This is still a generic preference
+ * Sub item preference
+ * When clicked, will navigate to a new set of preferences and add the old list to a stack
  *
  */
-class KPrefSubItems(val builder: KPrefSubItemsBuilder) : KPrefItemCore(builder) {
+class KPrefSubItems(val builder: KPrefSubItemsContract) : KPrefItemCore(builder) {
 
     override fun onClick(itemView: View, innerContent: View?): Boolean {
         builder.globalOptions.showNextPrefs(builder.titleRes, builder.itemBuilder)
@@ -39,6 +38,6 @@ class KPrefSubItems(val builder: KPrefSubItemsBuilder) : KPrefItemCore(builder) 
             override val itemBuilder: KPrefAdapterBuilder.() -> Unit
     ) : KPrefSubItemsContract, CoreContract by CoreBuilder(globalOptions, titleRes)
 
-    override fun getType(): Int = R.id.kau_item_pref_checkbox
+    override fun getType(): Int = R.id.kau_item_pref_sub_item
 
 }

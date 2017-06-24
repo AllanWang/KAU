@@ -57,6 +57,6 @@ class KPrefText<T>(val builder: KPrefTextContract<T>) : KPrefItemBase<T>(builder
         override var textGetter: (T) -> String? = { it?.toString() }
     }
 
-    override fun getType(): Int = R.id.kau_item_pref_checkbox
+    override fun getType(): Int = R.id.kau_item_pref_text
 
 }
