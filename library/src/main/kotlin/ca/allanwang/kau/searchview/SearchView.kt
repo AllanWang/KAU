@@ -16,6 +16,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import ca.allanwang.kau.R
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
@@ -116,8 +117,8 @@ class SearchView @JvmOverloads constructor(
         this.parent = parent
         val item = menu.findItem(id)
         if (item.icon == null) item.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 20)
-        gone()
-        item.setOnMenuItemClickListener { getMenuItemCoords(it); revealOpen(); true }
+        card.gone()
+        item.setOnMenuItemClickListener { KL.e("Click"); getMenuItemCoords(it); revealOpen(); true }
         shadow.setOnClickListener { revealClose() }
     }
 

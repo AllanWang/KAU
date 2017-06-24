@@ -1,29 +1,31 @@
 language: android
+jdk:
+- oraclejdk8
 android:
   components:
-    - tools
-    - platform-tools
-    - build-tools-26.0.0
-    - android-26
-    - extra-google-m2repository
-    - extra-android-m2repository
-jdk:
-  - oraclejdk8
-licenses:
+  - tools
+  - platform-tools
+  - build-tools-26.0.0
+  - android-26
+  - extra-android-support
+  - extra-android-m2repository
+  - extra-google-m2repository
+  licenses:
   - '.+'
 script: ./gradlew clean test
 branches:
   except:
-    - gh-pages
+  - gh-pages
 notifications:
   email: false
-  rooms:
+  slack:
+    rooms:
     - pitchedapps:G5OB9U1vsDxy9mxt0Nt6gbFu#kau
     on_success: always
     on_failure: always
 sudo: false
 cache:
   directories:
-    - $HOME/.m2
+  - $HOME/.m2
 before_script:
-  - chmod +x gradlew
+- chmod +x gradlew

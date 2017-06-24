@@ -7,8 +7,7 @@
         android:id="@+id/action_search"
         android:orderInCategory="90"
         android:title="@string/kau_search"
-        app:showAsAction="always|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
+        app:showAsAction="always|collapseActionView" />
 
     <item
         android:id="@+id/action_settings"
