@@ -47,6 +47,12 @@ class SearchView @JvmOverloads constructor(
                 field = value
                 tintForeground(value)
             }
+        var backgroundColor: Int = 0xfffafafa.toInt()
+            set(value) {
+                if (field == value) return
+                field = value
+                tintBackground(value)
+            }
         var navIcon: IIcon? = GoogleMaterial.Icon.gmd_arrow_back
             set(value) {
                 field = value
@@ -65,7 +71,7 @@ class SearchView @JvmOverloads constructor(
                 iconClear.setIcon(value)
                 if (value == null) iconClear.gone()
             }
-        var revealDuration: Long = 700L
+        var revealDuration: Long = 300L
         var shouldClearOnOpen: Boolean = true
         var openListener: (() -> Unit)? = null
         var closeListener: (() -> Unit)? = null
@@ -96,6 +102,7 @@ class SearchView @JvmOverloads constructor(
         iconMic.setIcon(configs.micIcon)
         iconClear.setIcon(configs.clearIcon)
         tintForeground(configs.foregroundColor)
+        tintBackground(configs.backgroundColor)
         with(recycler) {
             layoutManager = LinearLayoutManager(context)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -108,6 +115,10 @@ class SearchView @JvmOverloads constructor(
         }
     }
 
+    internal fun ImageView.setSearchIcon(iicon: IIcon) {
+        setIcon(iicon, sizeDp = 20, color = configs.foregroundColor)
+    }
+
     fun config(config: Configs.() -> Unit) {
         configs.config()
     }
@@ -118,16 +129,21 @@ class SearchView @JvmOverloads constructor(
         val item = menu.findItem(id)
         if (item.icon == null) item.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 20)
         card.gone()
-        item.setOnMenuItemClickListener { KL.e("Click"); getMenuItemCoords(it); revealOpen(); true }
+        item.setOnMenuItemClickListener { configureCoords(it); revealOpen(); true }
         shadow.setOnClickListener { revealClose() }
     }
 
-    fun getMenuItemCoords(item: MenuItem) {
+    fun configureCoords(item: MenuItem) {
         val view = parent.findViewById<View>(item.itemId) ?: return
         val locations = IntArray(2)
         view.getLocationOnScreen(locations)
-        revealX = locations[0]
-        revealY = locations[1]
+        revealX = (locations[0] + view.width / 2)
+        revealY = (locations[1] + view.height / 2)
+        val topAlignment = revealY - card.height / 2
+        val params = (card.layoutParams as MarginLayoutParams).apply {
+            topMargin = topAlignment
+        }
+        card.layoutParams = params
     }
 
     fun tintForeground(@ColorInt color: Int) {
@@ -135,6 +151,10 @@ class SearchView @JvmOverloads constructor(
         iconMic.drawable.setTint(color)
         iconClear.drawable.setTint(color)
         SearchItem.foregroundColor = color
+    }
+
+    fun tintBackground(@ColorInt color: Int) {
+        card.setCardBackgroundColor(color)
     }
 
     fun revealOpen() {
