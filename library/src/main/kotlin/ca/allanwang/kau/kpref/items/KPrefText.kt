@@ -3,7 +3,6 @@ package ca.allanwang.kau.kpref.items
 import android.view.View
 import android.widget.TextView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.GlobalOptions
 import ca.allanwang.kau.utils.toast
 
@@ -16,6 +15,16 @@ import ca.allanwang.kau.utils.toast
  *
  */
 class KPrefText<T>(val builder: KPrefTextContract<T>) : KPrefItemBase<T>(builder) {
+
+    /**
+     * Automatically reload on set
+     */
+    override var pref: T
+        get() = base.getter.invoke()
+        set(value) {
+            base.setter.invoke(value)
+            builder.reloadSelf()
+        }
 
     override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
         itemView.context.toast("No click function set")

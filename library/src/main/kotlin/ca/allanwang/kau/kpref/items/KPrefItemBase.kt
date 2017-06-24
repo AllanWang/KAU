@@ -15,7 +15,7 @@ import ca.allanwang.kau.utils.resolveDrawable
 
 abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base) {
 
-    var pref: T
+    open var pref: T
         get() = base.getter.invoke()
         set(value) {
             base.setter.invoke(value)

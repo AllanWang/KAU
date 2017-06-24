@@ -74,15 +74,24 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         val titleRes: Int
         var descRes: Int
         var iicon: IIcon?
+
+        /**
+         * Attempts to reload current item by identifying it with its [titleRes]
+         */
+        fun reloadSelf()
     }
 
     /**
-     * Default impementation of [CoreContract]
+     * Default implementation of [CoreContract]
      */
     class CoreBuilder(override val globalOptions: GlobalOptions,
                       override val titleRes: Int) : CoreContract {
         override var descRes: Int = -1
         override var iicon: IIcon? = null
+
+        override fun reloadSelf() {
+            globalOptions.reloadByTitle(titleRes)
+        }
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

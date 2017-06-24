@@ -146,7 +146,7 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
         else index.forEach { adapter.notifyItemChanged(it) }
     }
 
-    fun reloadByTitle(@StringRes vararg title: Int) {
+    override fun reloadByTitle(@StringRes vararg title: Int) {
         if (title.isEmpty()) return
         adapter.adapterItems.forEachIndexed { index, item ->
             if (title.any { item.core.titleRes == it })

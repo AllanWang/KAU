@@ -82,7 +82,7 @@ class MainActivity : KPrefActivity() {
                     input("Type here", item.pref, {
                         _, input ->
                         item.pref = input.toString()
-                        reloadByTitle(R.string.text)
+                        reloadSelf()
                     })
                     inputRange(0, 20)
                 }
@@ -105,7 +105,7 @@ class MainActivity : KPrefActivity() {
                     input("Type here", item.pref, {
                         _, input ->
                         item.pref = input.toString()
-                        reloadByTitle(R.string.text)
+                        reloadSelf()
                     })
                     inputRange(0, 20)
                 }

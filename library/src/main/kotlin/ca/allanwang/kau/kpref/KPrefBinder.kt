@@ -47,6 +47,7 @@ class CoreAttributeBuilder : CoreAttributeContract {
 interface KPrefActivityContract {
     fun showNextPrefs(@StringRes toolbarTitleRes:Int, builder: KPrefAdapterBuilder.() -> Unit)
     fun showPrevPrefs()
+    fun reloadByTitle(@StringRes vararg title: Int)
 }
 
 
