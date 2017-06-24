@@ -7,6 +7,7 @@ import ca.allanwang.kau.email.sendEmail
 import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
+import ca.allanwang.kau.searchview.SearchView
 import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.startActivity
@@ -122,7 +123,7 @@ class MainActivity : KPrefActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-
+        SearchView.bind(container, menu, R.id.action_search)
         return true
     }
 

@@ -2,6 +2,7 @@ package ca.allanwang.kau.kpref
 
 import android.os.Bundle
 import android.support.annotation.StringRes
+import android.support.constraint.ConstraintLayout
 import android.support.v4.widget.TextViewCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -33,6 +34,7 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
         get() = recycler.adapter as FastItemAdapter<KPrefItemCore>
     val recycler: RecyclerView
         get() = prefHolder.currentView as RecyclerView
+    val container: ConstraintLayout by bindView(R.id.kau_container)
     val bgCanvas: RippleCanvas by bindView(R.id.kau_ripple)
     val toolbarCanvas: RippleCanvas by bindView(R.id.kau_toolbar_ripple)
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)
