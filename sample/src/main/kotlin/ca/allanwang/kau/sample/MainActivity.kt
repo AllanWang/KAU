@@ -7,11 +7,8 @@ import ca.allanwang.kau.email.sendEmail
 import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
-import ca.allanwang.kau.searchview.SearchView
-import ca.allanwang.kau.utils.materialDialog
-import ca.allanwang.kau.utils.navigationBarColor
-import ca.allanwang.kau.utils.startActivity
-import ca.allanwang.kau.utils.toast
+import ca.allanwang.kau.searchview.bindSearchView
+import ca.allanwang.kau.utils.*
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -123,7 +120,9 @@ class MainActivity : KPrefActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        SearchView.bind(container, menu, R.id.action_search)
+        //workaround for menuY since this view draws under the status bar
+        val statusBarHeight = dimen(R.dimen.kau_status_bar_height).toInt().dpToPx
+        container.bindSearchView(menu, R.id.action_search)
         return true
     }
 
