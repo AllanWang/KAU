@@ -61,7 +61,7 @@ dependencies {
 
     compile "com.jakewharton.timber:timber:${TIMBER}"
 
-    compile "org.jetbrains.anko:anko-commons:${ANKO}"
+//    compile "org.jetbrains.anko:anko-commons:${ANKO}"
 
     compile "io.reactivex.rxjava2:rxkotlin:${RX_JAVA}"
     compile "io.reactivex.rxjava2:rxandroid:${RX_ANDROID}"

@@ -6,8 +6,6 @@ import android.support.v7.widget.RecyclerView
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.items.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 /**
  * Created by Allan Wang on 2017-06-08.
@@ -24,13 +22,13 @@ fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAda
     val adapter = FastItemAdapter<KPrefItemCore>()
     adapter.withOnClickListener { v, _, item, _ -> item.onClick(v, v.findViewById(R.id.kau_pref_inner_content)) }
     this.adapter = adapter
-    doAsync {
-        val items = KPrefAdapterBuilder(globalOptions)
-        builder.invoke(items)
-        uiThread {
-            adapter.add(items.list)
-        }
-    }
+//    doAsync {
+//        val items = KPrefAdapterBuilder(globalOptions)
+//        builder.invoke(items)
+//        uiThread {
+//            adapter.add(items.list)
+//        }
+//    }
     return adapter
 }
 
