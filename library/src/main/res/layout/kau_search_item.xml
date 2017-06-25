@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_item_frame"
     android:layout_width="match_parent"
     android:layout_height="@dimen/kau_search_item_height"
@@ -12,14 +13,17 @@
     <ImageView
         android:id="@+id/search_icon"
         android:layout_width="@dimen/kau_search_icon"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:contentDescription="@string/kau_search"
-        android:scaleType="center" />
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/search_text"
+        android:id="@+id/search_title"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="start|center_vertical"
         android:layout_weight="1"
         android:ellipsize="end"
@@ -28,6 +32,26 @@
         android:paddingEnd="@dimen/kau_search_key_line_16"
         android:paddingStart="@dimen/kau_search_key_line_8"
         android:textIsSelectable="false"
-        android:textSize="@dimen/kau_search_text_small" />
+        android:textSize="@dimen/kau_search_text_small"
+        app:layout_constraintStart_toEndOf="@id/search_icon"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/search_desc"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="start|center_vertical"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:visibility="gone"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        android:paddingEnd="@dimen/kau_search_key_line_16"
+        android:paddingStart="@dimen/kau_search_key_line_8"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/kau_search_text_micro"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/search_icon"
+        app:layout_constraintTop_toBottomOf="@id/search_title" />
+
+</android.support.constraint.ConstraintLayout>

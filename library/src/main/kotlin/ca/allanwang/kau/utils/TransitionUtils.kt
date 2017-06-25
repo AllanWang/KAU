@@ -14,6 +14,6 @@ class TransitionEndListener(val onEnd: (transition: Transition) -> Unit) : Trans
     override fun onTransitionStart(transition: Transition) {}
 }
 
-fun TransitionSet.addEndListener(onEnd: (transition: Transition) -> Unit) {
+@KauUtils fun TransitionSet.addEndListener(onEnd: (transition: Transition) -> Unit) {
     addListener(TransitionEndListener(onEnd))
 }

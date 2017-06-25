@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
+import ca.allanwang.kau.views.createSimpleRippleDrawable
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 
@@ -19,24 +20,24 @@ import com.mikepenz.iconics.typeface.IIcon
 /**
  * Created by Allan Wang on 2017-05-31.
  */
-fun <T : View> T.visible(): T {
+@KauUtils fun <T : View> T.visible(): T {
     visibility = View.VISIBLE
     return this
 }
 
-fun <T : View> T.invisible(): T {
+@KauUtils fun <T : View> T.invisible(): T {
     visibility = View.INVISIBLE
     return this
 }
 
-fun <T : View> T.gone(): T {
+@KauUtils fun <T : View> T.gone(): T {
     visibility = View.GONE
     return this
 }
 
-fun View.isVisible(): Boolean = visibility == View.VISIBLE
-fun View.isInvisible(): Boolean = visibility == View.INVISIBLE
-fun View.isGone(): Boolean = visibility == View.GONE
+@KauUtils fun View.isVisible(): Boolean = visibility == View.VISIBLE
+@KauUtils fun View.isInvisible(): Boolean = visibility == View.INVISIBLE
+@KauUtils fun View.isGone(): Boolean = visibility == View.GONE
 
 fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: (Snackbar) -> Unit = {}) {
     val snackbar = Snackbar.make(this, text, duration)
@@ -47,27 +48,31 @@ fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: (
 fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: (Snackbar) -> Unit = {})
         = snackbar(context.string(textId), duration, builder)
 
-fun TextView.setTextIfValid(@StringRes id: Int) {
+@KauUtils fun TextView.setTextIfValid(@StringRes id: Int) {
     if (id > 0) text = context.string(id)
 }
 
-fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
+@KauUtils fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
     if (icon == null) return
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
 }
 
-fun View.hideKeyboard() {
+@KauUtils fun View.hideKeyboard() {
     clearFocus()
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
 }
 
-fun View.showKeyboard() {
+@KauUtils fun View.showKeyboard() {
     requestFocus()
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
 
-fun ViewGroup.transitionAuto(builder: AutoTransition.() -> Unit = {}) {
+@KauUtils fun ViewGroup.transitionAuto(builder: AutoTransition.() -> Unit = {}) {
     val transition = AutoTransition()
     transition.builder()
     TransitionManager.beginDelayedTransition(this, transition)
+}
+
+@KauUtils fun View.setRippleBackground(@ColorInt foregroundColor: Int, @ColorInt backgroundColor: Int) {
+    background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }

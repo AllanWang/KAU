@@ -13,11 +13,11 @@ import android.widget.TextView
 /**
  * Created by Allan Wang on 2017-06-01.
  *
- * Animation extension functions for Views
+ * Animation extension @KauUtils functions for Views
  */
-fun View.rootCircularReveal(x: Int = 0, y: Int = 0, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils fun View.rootCircularReveal(x: Int = 0, y: Int = 0, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     this.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-        override fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
+        override @KauUtils fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
                                     oldRight: Int, oldBottom: Int) {
             v.removeOnLayoutChangeListener(this)
             var x2 = x
@@ -29,20 +29,20 @@ fun View.rootCircularReveal(x: Int = 0, y: Int = 0, duration: Long = 500L, onSta
             reveal.interpolator = DecelerateInterpolator(1f)
             reveal.duration = duration
             reveal.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationStart(animation: Animator?) {
+                override @KauUtils fun onAnimationStart(animation: Animator?) {
                     visible()
                     onStart?.invoke()
                 }
 
-                override fun onAnimationEnd(animation: Animator?) = onFinish?.invoke() ?: Unit
-                override fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
+                override @KauUtils fun onAnimationEnd(animation: Animator?) = onFinish?.invoke() ?: Unit
+                override @KauUtils fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
             })
             reveal.start()
         }
     })
 }
 
-fun View.circularReveal(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils fun View.circularReveal(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
         visible()
@@ -56,18 +56,18 @@ fun View.circularReveal(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float
     val anim = ViewAnimationUtils.createCircularReveal(this, x, y, 0f, r).setDuration(duration)
     anim.startDelay = offset
     anim.addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationStart(animation: Animator?) {
+        override @KauUtils fun onAnimationStart(animation: Animator?) {
             visible()
             onStart?.invoke()
         }
 
-        override fun onAnimationEnd(animation: Animator?) = onFinish?.invoke() ?: Unit
-        override fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
+        override @KauUtils fun onAnimationEnd(animation: Animator?) = onFinish?.invoke() ?: Unit
+        override @KauUtils fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
     })
     anim.start()
 }
 
-fun View.circularHide(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils fun View.circularHide(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
         invisible()
@@ -81,19 +81,19 @@ fun View.circularHide(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float =
     val anim = ViewAnimationUtils.createCircularReveal(this, x, y, r, 0f).setDuration(duration)
     anim.startDelay = offset
     anim.addListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationStart(animation: Animator?) = onStart?.invoke() ?: Unit
+        override @KauUtils fun onAnimationStart(animation: Animator?) = onStart?.invoke() ?: Unit
 
-        override fun onAnimationEnd(animation: Animator?) {
+        override @KauUtils fun onAnimationEnd(animation: Animator?) {
             invisible()
             onFinish?.invoke() ?: Unit
         }
 
-        override fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
+        override @KauUtils fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
     })
     anim.start()
 }
 
-fun View.fadeIn(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils fun View.fadeIn(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
         visible()
@@ -105,9 +105,9 @@ fun View.fadeIn(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)?
         anim.startOffset = offset
         anim.duration = duration
         anim.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {}
-            override fun onAnimationEnd(animation: Animation?) = onFinish?.invoke() ?: Unit
-            override fun onAnimationStart(animation: Animation?) {
+            override @KauUtils fun onAnimationRepeat(animation: Animation?) {}
+            override @KauUtils fun onAnimationEnd(animation: Animation?) = onFinish?.invoke() ?: Unit
+            override @KauUtils fun onAnimationStart(animation: Animation?) {
                 visible()
                 onStart?.invoke()
             }
@@ -116,7 +116,7 @@ fun View.fadeIn(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)?
     }
 }
 
-fun View.fadeOut(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils fun View.fadeOut(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
         invisible()
@@ -127,25 +127,25 @@ fun View.fadeOut(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)
     anim.startOffset = offset
     anim.duration = duration
     anim.setAnimationListener(object : Animation.AnimationListener {
-        override fun onAnimationRepeat(animation: Animation?) {}
-        override fun onAnimationEnd(animation: Animation?) {
+        override @KauUtils fun onAnimationRepeat(animation: Animation?) {}
+        override @KauUtils fun onAnimationEnd(animation: Animation?) {
             invisible()
             onFinish?.invoke()
         }
 
-        override fun onAnimationStart(animation: Animation?) {
+        override @KauUtils fun onAnimationStart(animation: Animation?) {
             onStart?.invoke()
         }
     })
     startAnimation(anim)
 }
 
-fun TextView.setTextWithFade(text: String, duration: Long = 200, onFinish: (() -> Unit)? = null) {
+@KauUtils fun TextView.setTextWithFade(text: String, duration: Long = 200, onFinish: (() -> Unit)? = null) {
     fadeOut(duration = duration, onFinish = {
         setText(text)
         fadeIn(duration = duration, onFinish = onFinish)
     })
 }
 
-fun TextView.setTextWithFade(@StringRes textId: Int, duration: Long = 200, onFinish: (() -> Unit)? = null) = setTextWithFade(context.getString(textId), duration, onFinish)
+@KauUtils fun TextView.setTextWithFade(@StringRes textId: Int, duration: Long = 200, onFinish: (() -> Unit)? = null) = setTextWithFade(context.getString(textId), duration, onFinish)
 

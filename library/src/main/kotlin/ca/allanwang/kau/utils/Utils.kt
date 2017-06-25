@@ -16,16 +16,23 @@ import java.text.DecimalFormat
  * Created by Allan Wang on 2017-05-28.
  */
 
-val Int.dpToPx: Int
+/**
+ * Markers to isolate respective extension @KauUtils functions to their extended class
+ * Avoids having a whole bunch of methods for nested calls
+ */
+@DslMarker
+annotation class KauUtils
+
+@KauUtils val Int.dpToPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-val Int.pxToDp: Int
+@KauUtils val Int.pxToDp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
 /**
  * Log whether current state is in the main thread
  */
-fun checkThread(id: Int) {
+@KauUtils fun checkThread(id: Int) {
     val status = if (Looper.myLooper() == Looper.getMainLooper()) "is" else "is not"
     KL.d("$id $status in the main thread")
 }
@@ -34,7 +41,7 @@ fun checkThread(id: Int) {
  * Converts minute value to string
  * Whole hours and days will be converted as such, otherwise it will default to x minutes
  */
-fun Context.minuteToText(minutes: Long): String = with(minutes) {
+@KauUtils fun Context.minuteToText(minutes: Long): String = with(minutes) {
     if (this < 0L) string(R.string.kau_none)
     else if (this == 60L) string(R.string.kau_one_hour)
     else if (this == 1440L) string(R.string.kau_one_day)
@@ -43,7 +50,7 @@ fun Context.minuteToText(minutes: Long): String = with(minutes) {
     else String.format(string(R.string.kau_x_minutes), this)
 }
 
-fun Number.round(@IntRange(from = 1L) decimalCount: Int): String {
+@KauUtils fun Number.round(@IntRange(from = 1L) decimalCount: Int): String {
     val expression = StringBuilder().append("#.")
     (1..decimalCount).forEach { expression.append("#") }
     val formatter = DecimalFormat(expression.toString())

@@ -13,7 +13,7 @@ import android.os.Build
  * @param packageName packageId
  * @return true if installed with activity, false otherwise
  */
-fun Context.isAppInstalled(packageName: String): Boolean {
+@KauUtils fun Context.isAppInstalled(packageName: String): Boolean {
     val pm = packageManager
     var installed: Boolean
     try {

@@ -11,7 +11,7 @@ import com.mikepenz.iconics.typeface.IIcon
 /**
  * Created by Allan Wang on 2017-05-29.
  */
-fun IIcon.toDrawable(c: Context, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}): Drawable {
+@KauUtils fun IIcon.toDrawable(c: Context, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}): Drawable {
     val state = ColorStateList.valueOf(color)
     val icon = IconicsDrawable(c).icon(this).sizeDp(sizeDp)
     icon.setTintList(state)
