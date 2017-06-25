@@ -12,7 +12,6 @@ import ca.allanwang.kau.utils.resolveDrawable
  *
  * Base class for pref setters that include the Shared Preference hooks
  */
-
 abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base) {
 
     open var pref: T

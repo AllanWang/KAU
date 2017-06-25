@@ -2,6 +2,8 @@ package ca.allanwang.kau.dialogs.color
 
 import android.content.Context
 import android.graphics.Color
+import android.support.annotation.DimenRes
+import android.support.annotation.StringRes
 import ca.allanwang.kau.R
 import ca.allanwang.kau.utils.string
 import com.afollestad.materialdialogs.MaterialDialog
@@ -30,18 +32,19 @@ class ColorBuilder : ColorContract {
 
 interface ColorContract {
     var title: String?
-    var titleRes: Int
+    var titleRes: Int @StringRes set
     var allowCustom: Boolean
     var allowCustomAlpha: Boolean
     var isAccent: Boolean
-    var defaultColor: Int
-    var doneText: Int
-    var backText: Int
-    var cancelText: Int
+    var defaultColor: Int @StringRes set
+    var doneText: Int @StringRes set
+    var backText: Int @StringRes set
+    var cancelText: Int @StringRes set
     var presetText: Int
-    var customText: Int
+        @StringRes set
+    var customText: Int @StringRes set
     var dynamicButtonColors: Boolean
-    var circleSizeRes: Int
+    var circleSizeRes: Int @DimenRes set
     var colorCallback: ((selectedColor: Int) -> Unit)?
     var colorsTop: IntArray?
     var colorsSub: Array<IntArray>?

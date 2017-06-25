@@ -3,6 +3,7 @@ package ca.allanwang.kau.kpref.items
 import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.GlobalOptions
+import ca.allanwang.kau.kpref.KPrefMarker
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon
@@ -69,10 +71,12 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
     /**
      * Core values for all kpref items
      */
+    @KPrefMarker
     interface CoreContract {
         val globalOptions: GlobalOptions
-        val titleRes: Int
+        @get:StringRes val titleRes: Int
         var descRes: Int
+            @StringRes get
         var iicon: IIcon?
 
         /**
@@ -85,7 +89,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
      * Default implementation of [CoreContract]
      */
     class CoreBuilder(override val globalOptions: GlobalOptions,
-                      override val titleRes: Int) : CoreContract {
+                      override @param:StringRes val titleRes: Int) : CoreContract {
         override var descRes: Int = -1
         override var iicon: IIcon? = null
 

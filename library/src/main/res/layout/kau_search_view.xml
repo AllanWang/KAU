@@ -68,32 +68,16 @@
                     android:layout_height="match_parent"
                     android:visibility="gone" />
 
-                <FrameLayout
-                    android:layout_width="48dp"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/search_mic"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:contentDescription="@string/kau_search"
-                        android:focusable="true"
-                        android:scaleType="center"
-                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/search_clear"
-                        android:layout_width="match_parent"
+                        android:layout_width="48dp"
                         android:layout_height="match_parent"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:clickable="true"
                         android:contentDescription="@string/kau_search"
                         android:focusable="true"
                         android:scaleType="center" />
-
-                </FrameLayout>
 
             </LinearLayout>
 

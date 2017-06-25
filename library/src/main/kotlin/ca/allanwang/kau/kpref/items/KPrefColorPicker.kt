@@ -8,6 +8,7 @@ import ca.allanwang.kau.dialogs.color.ColorContract
 import ca.allanwang.kau.dialogs.color.colorPickerDialog
 import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.GlobalOptions
+import ca.allanwang.kau.kpref.KPrefMarker
 
 /**
  * Created by Allan Wang on 2017-06-07.

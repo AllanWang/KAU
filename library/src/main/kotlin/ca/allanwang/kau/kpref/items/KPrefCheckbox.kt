@@ -3,6 +3,7 @@ package ca.allanwang.kau.kpref.items
 import android.view.View
 import android.widget.CheckBox
 import ca.allanwang.kau.R
+import ca.allanwang.kau.kpref.KPrefMarker
 import ca.allanwang.kau.utils.tint
 
 /**

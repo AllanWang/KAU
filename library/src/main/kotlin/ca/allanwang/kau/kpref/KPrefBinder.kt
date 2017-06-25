@@ -34,9 +34,13 @@ fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAda
     return adapter
 }
 
+@DslMarker
+annotation class KPrefMarker
+
 /**
  * Contains attributes shared amongst all kpref items
  */
+@KPrefMarker
 interface CoreAttributeContract {
     var textColor: (() -> Int)?
     var accentColor: (() -> Int)?
@@ -67,11 +71,14 @@ class GlobalOptions(core: CoreAttributeContract, activity: KPrefActivityContract
  * The arguments are all the mandatory values plus an optional builder housing all the possible configurations
  * The mandatory values are final so they cannot be edited in the builder
  */
+@KPrefMarker
 class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
 
+    @KPrefMarker
     fun header(@StringRes title: Int)
             = list.add(KPrefHeader(KPrefItemCore.CoreBuilder(globalOptions, title)))
 
+    @KPrefMarker
     fun checkbox(@StringRes title: Int,
                  getter: (() -> Boolean),
                  setter: ((value: Boolean) -> Unit),
@@ -79,7 +86,7 @@ class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
             = list.add(KPrefCheckbox(KPrefItemBase.BaseBuilder(globalOptions, title, getter, setter)
             .apply { builder() }))
 
-
+    @KPrefMarker
     fun colorPicker(@StringRes title: Int,
                     getter: (() -> Int),
                     setter: ((value: Int) -> Unit),
@@ -87,6 +94,7 @@ class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
             = list.add(KPrefColorPicker(KPrefColorPicker.KPrefColorBuilder(globalOptions, title, getter, setter)
             .apply { builder() }))
 
+    @KPrefMarker
     fun <T> text(@StringRes title: Int,
                  getter: (() -> T),
                  setter: ((value: T) -> Unit),
@@ -94,16 +102,19 @@ class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
             = list.add(KPrefText<T>(KPrefText.KPrefTextBuilder<T>(globalOptions, title, getter, setter)
             .apply { builder() }))
 
+    @KPrefMarker
     fun subItems(@StringRes title: Int,
                  itemBuilder: KPrefAdapterBuilder.() -> Unit,
                  builder: KPrefSubItems.KPrefSubItemsContract.() -> Unit)
             = list.add(KPrefSubItems(KPrefSubItems.KPrefSubItemsBuilder(globalOptions, title, itemBuilder)
             .apply { builder() }))
 
+    @KPrefMarker
     fun plainText(@StringRes title: Int,
                   builder: KPrefItemBase.BaseContract<Unit>.() -> Unit = {})
             = list.add(KPrefPlainText(KPrefPlainText.KPrefPlainTextBuilder(globalOptions, title)
             .apply { builder() }))
 
+    @KPrefMarker
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 }

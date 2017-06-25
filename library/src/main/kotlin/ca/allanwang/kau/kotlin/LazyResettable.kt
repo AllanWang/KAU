@@ -1,4 +1,4 @@
-package ca.allanwang.kau.utils
+package ca.allanwang.kau.kotlin
 
 import java.io.Serializable
 import kotlin.reflect.KProperty

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
+import android.support.annotation.StringRes
 import android.support.transition.AutoTransition
 import android.support.v7.widget.*
 import android.util.AttributeSet
@@ -12,6 +13,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import ca.allanwang.kau.R
+import ca.allanwang.kau.kotlin.nonReadable
 import ca.allanwang.kau.utils.*
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
@@ -53,12 +55,6 @@ class SearchView @JvmOverloads constructor(
                 iconNav.setSearchIcon(value)
                 if (value == null) iconNav.gone()
             }
-        var micIcon: IIcon? = GoogleMaterial.Icon.gmd_mic
-            set(value) {
-                field = value
-                iconMic.setSearchIcon(value)
-                if (value == null) iconMic.gone()
-            }
         var clearIcon: IIcon? = GoogleMaterial.Icon.gmd_clear
             set(value) {
                 field = value
@@ -78,6 +74,18 @@ class SearchView @JvmOverloads constructor(
             set(value) {
                 field = value
                 if (value) divider.visible() else divider.invisible()
+            }
+        var hintText: String?
+            get() = editText.hint?.toString()
+            set(value) {
+                editText.hint = value
+            }
+
+        var hintTextRes: Int
+            @Deprecated(level = DeprecationLevel.ERROR, message = "Non readable property")
+            get() = nonReadable()
+            @StringRes set(value) {
+                hintText = context.string(value)
             }
         /**
          * StringRes for a "no results found" item
@@ -137,7 +145,6 @@ class SearchView @JvmOverloads constructor(
     private val editText: AppCompatEditText by bindView(R.id.search_edit_text)
     val textEvents: Observable<String>
     private val progress: ProgressBar by bindView(R.id.search_progress)
-    private val iconMic: ImageView by bindView(R.id.search_mic)
     private val iconClear: ImageView by bindView(R.id.search_clear)
     private val divider: View by bindView(R.id.search_divider)
     private val recycler: RecyclerView by bindView(R.id.search_recycler)
@@ -158,7 +165,6 @@ class SearchView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.kau_search_view, this)
         iconNav.setSearchIcon(configs.navIcon)
-        iconMic.setSearchIcon(configs.micIcon)
         iconClear.setSearchIcon(configs.clearIcon).setOnClickListener {
             editText.text.clear()
         }
@@ -239,7 +245,6 @@ class SearchView @JvmOverloads constructor(
 
     fun tintForeground(@ColorInt color: Int) {
         iconNav.drawable.setTint(color)
-        iconMic.drawable.setTint(color)
         iconClear.drawable.setTint(color)
         SearchItem.foregroundColor = color
         divider.setBackgroundColor(color.adjustAlpha(0.1f))
