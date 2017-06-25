@@ -1,15 +1,15 @@
 package ca.allanwang.kau.utils
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
+import android.support.transition.AutoTransition
+import android.support.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.mikepenz.iconics.IconicsDrawable
@@ -61,3 +61,13 @@ fun View.hideKeyboard() {
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
 }
 
+fun View.showKeyboard() {
+    requestFocus()
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+}
+
+fun ViewGroup.transitionAuto(builder: AutoTransition.() -> Unit = {}) {
+    val transition = AutoTransition()
+    transition.builder()
+    TransitionManager.beginDelayedTransition(this, transition)
+}

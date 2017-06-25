@@ -56,3 +56,5 @@ fun Activity.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg
 }
 
 fun Activity.hideKeyboard() = currentFocus.hideKeyboard()
+
+fun Activity.showKeyboard() = currentFocus.showKeyboard()

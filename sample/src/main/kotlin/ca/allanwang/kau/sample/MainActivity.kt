@@ -7,8 +7,13 @@ import ca.allanwang.kau.email.sendEmail
 import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
+import ca.allanwang.kau.logging.KL
+import ca.allanwang.kau.searchview.SearchItem
 import ca.allanwang.kau.searchview.bindSearchView
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.materialDialog
+import ca.allanwang.kau.utils.navigationBarColor
+import ca.allanwang.kau.utils.startActivity
+import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -120,9 +125,18 @@ class MainActivity : KPrefActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        //workaround for menuY since this view draws under the status bar
-        val statusBarHeight = dimen(R.dimen.kau_status_bar_height).toInt().dpToPx
-        container.bindSearchView(menu, R.id.action_search)
+        container.bindSearchView(menu, R.id.action_search) {
+            textObserver = {
+                observable, searchView ->
+                observable.subscribe {
+                    text ->
+                    KL.e(text)
+                    searchView.results = if (text.length == 3) emptyList() else Array<String>(text.length, { text }).map { SearchItem(it) }
+                }
+            }
+            noResultsFound = R.string.kau_no_results_found
+            shouldClearOnClose = false
+        }
         return true
     }
 

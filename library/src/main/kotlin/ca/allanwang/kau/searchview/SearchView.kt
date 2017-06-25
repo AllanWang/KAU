@@ -1,8 +1,10 @@
 package ca.allanwang.kau.searchview
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
+import android.support.transition.AutoTransition
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
@@ -13,15 +15,23 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import ca.allanwang.kau.R
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.*
+import com.jakewharton.rxbinding2.widget.RxTextView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.runOnUiThread
 
 
 /**
  * Created by Allan Wang on 2017-06-23.
+ *
+ * A materialized SearchView with complete theming and observables
+ *
+ * Huge thanks to @lapism for his base
+ * https://github.com/lapism/SearchView
  */
 class SearchView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -60,36 +70,76 @@ class SearchView @JvmOverloads constructor(
                 if (value == null) iconClear.gone()
             }
         var revealDuration: Long = 300L
-        var shouldClearOnOpen: Boolean = true
+        var transitionDuration: Long = 100L
+        var shouldClearOnClose: Boolean = true
         var openListener: ((searchView: SearchView) -> Unit)? = null
         var closeListener: ((searchView: SearchView) -> Unit)? = null
+        /**
+         * StringRes for a "no results found" item
+         * If [results] is ever set to an empty list, it will default to
+         * a list with one item with this string
+         *
+         * For simplicity, kau contains [R.string.kau_no_results_found]
+         * which you may use
+         */
+        var noResultsFound: Int = -1
+        /**
+         * Text watcher configurations on init
+         * By default, the observable is on a separate thread, so you may directly execute background processes
+         * This builder acts on an observable, so you may switch threads, debounce, and do anything else that you require
+         */
+        var textObserver: (observable: Observable<String>, searchView: SearchView) -> Unit = { _, _ -> }
     }
+
+    /**
+     * Contract for adapter items
+     * Setting results will ensure that the values are sent on the UI thread
+     */
+    var results: List<SearchItem>
+        get() = adapter.adapterItems
+        set(value) = context.runOnUiThread {
+            cardTransition()
+            adapter.setNewList(
+                    if (configs.noResultsFound > 0 && value.isEmpty())
+                        listOf(SearchItem("", context.string(configs.noResultsFound), null))
+                    else value)
+        }
+
+
+    fun clearResults() = context.runOnUiThread { adapter.clear() }
 
     val configs = Configs()
     //views
-    val shadow: View by bindView(R.id.search_shadow)
-    val card: CardView by bindView(R.id.search_cardview)
-    val iconNav: ImageView by bindView(R.id.search_nav)
-    val editText: AppCompatEditText by bindView(R.id.search_edit_text)
-    val progress: ProgressBar by bindView(R.id.search_progress)
-    val iconMic: ImageView by bindView(R.id.search_mic)
-    val iconClear: ImageView by bindView(R.id.search_clear)
-    val recycler: RecyclerView by bindView(R.id.search_recycler)
+    private val shadow: View by bindView(R.id.search_shadow)
+    private val card: CardView by bindView(R.id.search_cardview)
+    private val iconNav: ImageView by bindView(R.id.search_nav)
+    private val editText: AppCompatEditText by bindView(R.id.search_edit_text)
+    val textEvents: Observable<String>
+    private val progress: ProgressBar by bindView(R.id.search_progress)
+    private val iconMic: ImageView by bindView(R.id.search_mic)
+    private val iconClear: ImageView by bindView(R.id.search_clear)
+    private val recycler: RecyclerView by bindView(R.id.search_recycler)
     val adapter = FastItemAdapter<SearchItem>()
     lateinit var parent: ViewGroup
     val isOpen: Boolean
         get() = card.isVisible()
 
-    //menu view
-    var menuX: Int = -1
-    var menuY: Int = -1
-    var menuHalfHeight: Int = -1
+    /*
+     * Ripple start points and search view offset
+     * These are calculated every time the search view is opened,
+     * and can be overridden with the open listener if necessary
+     */
+    var menuX: Int = -1             //starting x for circular reveal
+    var menuY: Int = -1             //reference for cardview's marginTop
+    var menuHalfHeight: Int = -1    //starting y for circular reveal (relative to the cardview)
 
     init {
         View.inflate(context, R.layout.kau_search_view, this)
         iconNav.setSearchIcon(configs.navIcon)
         iconMic.setSearchIcon(configs.micIcon)
-        iconClear.setSearchIcon(configs.clearIcon)
+        iconClear.setSearchIcon(configs.clearIcon).setOnClickListener {
+            editText.text.clear()
+        }
         tintForeground(configs.foregroundColor)
         tintBackground(configs.backgroundColor)
         with(recycler) {
@@ -102,10 +152,21 @@ class SearchView @JvmOverloads constructor(
             })
             adapter = this@SearchView.adapter
         }
+        textEvents = RxTextView.textChangeEvents(editText)
+                .skipInitialValue()
+                .observeOn(Schedulers.newThread())
+                .map { it.text().toString().trim() }
+        textEvents.filter { it.isBlank() }
+                .subscribe { clearResults() }
     }
 
-    internal fun ImageView.setSearchIcon(iicon: IIcon?) {
+    internal fun ImageView.setSearchIcon(iicon: IIcon?): ImageView {
         setIcon(iicon, sizeDp = 18, color = configs.foregroundColor)
+        return this
+    }
+
+    internal fun cardTransition(builder: AutoTransition.() -> Unit = {}) {
+        card.transitionAuto { duration = configs.transitionDuration; builder() }
     }
 
     fun config(config: Configs.() -> Unit) {
@@ -114,6 +175,7 @@ class SearchView @JvmOverloads constructor(
 
     fun bind(parent: ViewGroup, menu: Menu, @IdRes id: Int, config: Configs.() -> Unit = {}): SearchView {
         config(config)
+        configs.textObserver(textEvents.filter { it.isNotBlank() }, this)
         this.parent = parent
         val item = menu.findItem(id)
         if (item.icon == null) item.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 20)
@@ -133,9 +195,6 @@ class SearchView @JvmOverloads constructor(
         card.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 view.viewTreeObserver.removeOnPreDrawListener(this)
-                with(card) {
-                    KL.e("S $width $measuredWidth $height $measuredHeight")
-                }
                 val topAlignment = menuY - card.height / 2
                 val params = (card.layoutParams as MarginLayoutParams).apply {
                     topMargin = topAlignment
@@ -151,6 +210,8 @@ class SearchView @JvmOverloads constructor(
         iconMic.drawable.setTint(color)
         iconClear.drawable.setTint(color)
         SearchItem.foregroundColor = color
+        editText.tint(color)
+        editText.setTextColor(ColorStateList.valueOf(color))
     }
 
     fun tintBackground(@ColorInt color: Int) {
@@ -164,25 +225,36 @@ class SearchView @JvmOverloads constructor(
          * We therefore use half the menuItem height, which is a close approximation to our intended value
          * The cardView matches the parent's width, so menuX is correct
          */
-        card.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration,
-                onStart = {
-                    configs.openListener?.invoke(this)
-                    if (configs.shouldClearOnOpen) editText.text.clear()
-                },
-                onFinish = {
-                    editText.requestFocus()
-                    shadow.fadeIn()
-                })
+        configs.openListener?.invoke(this)
+        card.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration) {
+            editText.showKeyboard()
+            cardTransition()
+            recycler.visible()
+            shadow.fadeIn()
+        }
     }
 
     fun revealClose() {
         if (!isOpen) return
-        shadow.fadeOut() {
-            card.circularHide(menuX, menuHalfHeight, duration = configs.revealDuration,
-                    onFinish = {
-                        configs.closeListener?.invoke(this)
-                    })
+        editText.hideKeyboard()
+        shadow.fadeOut(duration = configs.transitionDuration)
+        cardTransition {
+            addEndListener {
+                card.circularHide(menuX, menuHalfHeight, duration = configs.revealDuration,
+                        onFinish = {
+                            configs.closeListener?.invoke(this@SearchView)
+                            if (configs.shouldClearOnClose) editText.text.clear()
+                            recycler.gone()
+                        })
+            }
         }
+        recycler.gone()
+//        card.circularHide(menuX, menuHalfHeight, offset = 100, duration = configs.revealDuration,
+//                onFinish = {
+//                    configs.closeListener?.invoke(this)
+//                    if (configs.shouldClearOnClose) editText.text.clear()
+//                    recycler.gone()
+//                })
     }
 }
 

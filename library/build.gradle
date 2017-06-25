@@ -62,6 +62,11 @@ dependencies {
     compile "com.jakewharton.timber:timber:${TIMBER}"
 
     compile "org.jetbrains.anko:anko-commons:${ANKO}"
+
+    compile "io.reactivex.rxjava2:rxkotlin:${RX_JAVA}"
+    compile "io.reactivex.rxjava2:rxandroid:${RX_ANDROID}"
+    compile "com.jakewharton.rxbinding2:rxbinding-kotlin:${RX_BINDING}"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:${RX_BINDING}"
 }
 
 // build a jar with source files
