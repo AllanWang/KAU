@@ -2,8 +2,6 @@
 
 Kotlin Android Utils
 
-<!--Current Release v1.1-->
-
 This library contains small helper functions used throughout almost all of my other projects. The goal is to make common interactions executable in a single line.
 
 [Changelog](https://github.com/AllanWang/KAU/tree/master/docs/Changelog.md)
@@ -12,7 +10,7 @@ This library contains small helper functions used throughout almost all of my ot
 
 KAU is available on JitPack
 
-[![](https://jitpack.io/v/ca.allanwang/kau.svg)](https://jitpack.io/#ca.allanwang/kau)
+[![](https://jitpack.io/v/ca.allanwang/kau.svg)](https://jitpack.io/#ca.allanwang/kau) [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/AllanWang/KAU/master/LICENSE)
 
 To apply, add the following to your root build.gradle:
 
@@ -29,7 +27,7 @@ And add the following dependencies (You can use a specific version, commit, or -
 
 ```gradle
 dependencies {
-    compile 'ca.allanwang:kau:v1.1'
+    compile "ca.allanwang:kau:$KAU"
 }
 
 ```

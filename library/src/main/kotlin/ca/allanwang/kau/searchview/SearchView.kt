@@ -21,6 +21,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.anko.runOnUiThread
 
 
 /**
@@ -121,22 +122,20 @@ class SearchView @JvmOverloads constructor(
      */
     var results: List<SearchItem>
         get() = adapter.adapterItems
-        set(value) {}
-//        set(value) = context.runOnUiThread {
-//            cardTransition()
-//            adapter.setNewList(
-//                    if (configs.noResultsFound > 0 && value.isEmpty())
-//                        listOf(SearchItem("", context.string(configs.noResultsFound), null))
-//                    else value)
-//        }
+        set(value) = context.runOnUiThread {
+            cardTransition()
+            adapter.setNewList(
+                    if (configs.noResultsFound > 0 && value.isEmpty())
+                        listOf(SearchItem("", context.string(configs.noResultsFound), null))
+                    else value)
+        }
 
     /**
      * Empties the list on the UI thread
      * Note that this does not include any animations
      * Use results = listOf() for the animated version
      */
-    internal fun clearResults() {}
-//            = context.runOnUiThread { adapter.clear() }
+    internal fun clearResults() = context.runOnUiThread { adapter.clear() }
 
     val configs = Configs()
     //views

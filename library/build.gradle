@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 
+group = project.APP_GROUP
+
 android {
     compileSdkVersion Integer.parseInt(project.TARGET_SDK)
     buildToolsVersion project.BUILD_TOOLS
@@ -61,7 +63,7 @@ dependencies {
 
     compile "com.jakewharton.timber:timber:${TIMBER}"
 
-//    compile "org.jetbrains.anko:anko-commons:${ANKO}"
+    compile "org.jetbrains.anko:anko-commons:${ANKO}"
 
     compile "io.reactivex.rxjava2:rxkotlin:${RX_JAVA}"
     compile "io.reactivex.rxjava2:rxandroid:${RX_ANDROID}"
