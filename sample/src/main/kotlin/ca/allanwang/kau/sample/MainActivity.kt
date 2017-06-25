@@ -1,5 +1,6 @@
 package ca.allanwang.kau.sample
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -136,6 +137,11 @@ class MainActivity : KPrefActivity() {
             }
             noResultsFound = R.string.kau_no_results_found
             shouldClearOnClose = false
+            onItemClick = {
+                position, key, content, searchView ->
+                toast(content)
+                searchView.revealClose()
+            }
         }
         return true
     }

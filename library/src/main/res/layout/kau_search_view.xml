@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,8 +15,9 @@
         android:id="@+id/search_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="2dp"
-        android:paddingStart="2dp">
+        android:layout_marginEnd="@dimen/kau_search_base_margin"
+        android:layout_marginStart="@dimen/kau_search_base_margin"
+        app:cardCornerRadius="@dimen/kau_search_base_corners">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +25,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/kau_search_height"
                 android:focusable="true"

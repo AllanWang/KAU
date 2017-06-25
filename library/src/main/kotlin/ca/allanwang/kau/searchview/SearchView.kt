@@ -5,10 +5,7 @@ import android.content.res.ColorStateList
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
 import android.support.transition.AutoTransition
-import android.support.v7.widget.AppCompatEditText
-import android.support.v7.widget.CardView
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.*
 import android.util.AttributeSet
 import android.view.*
 import android.widget.FrameLayout
@@ -37,15 +34,14 @@ class SearchView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    //configs
     inner class Configs {
-        var foregroundColor: Int = 0xdd000000.toInt()
+        var foregroundColor: Int = SearchItem.foregroundColor
             set(value) {
                 if (field == value) return
                 field = value
                 tintForeground(value)
             }
-        var backgroundColor: Int = 0xfffafafa.toInt()
+        var backgroundColor: Int = SearchItem.backgroundColor
             set(value) {
                 if (field == value) return
                 field = value
@@ -75,6 +71,15 @@ class SearchView @JvmOverloads constructor(
         var openListener: ((searchView: SearchView) -> Unit)? = null
         var closeListener: ((searchView: SearchView) -> Unit)? = null
         /**
+         * Draw a divider between the search bar and the suggestion items
+         * The divider is colored based on the foreground color
+         */
+        var withDivider: Boolean = true
+            set(value) {
+                field = value
+                if (value) divider.visible() else divider.invisible()
+            }
+        /**
          * StringRes for a "no results found" item
          * If [results] is ever set to an empty list, it will default to
          * a list with one item with this string
@@ -89,6 +94,18 @@ class SearchView @JvmOverloads constructor(
          * This builder acts on an observable, so you may switch threads, debounce, and do anything else that you require
          */
         var textObserver: (observable: Observable<String>, searchView: SearchView) -> Unit = { _, _ -> }
+        /**
+         * Click event for suggestion items
+         * This event is only triggered when [key] is not blank (like in [noResultsFound]
+         */
+        var onItemClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit = { _, _, _, _ -> }
+        /**
+         * Long click event for suggestion items
+         * This event is only triggered when [key] is not blank (like in [noResultsFound]
+         */
+        var onItemLongClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit = { _, _, _, _ -> }
+
+
     }
 
     /**
@@ -105,8 +122,12 @@ class SearchView @JvmOverloads constructor(
                     else value)
         }
 
-
-    fun clearResults() = context.runOnUiThread { adapter.clear() }
+    /**
+     * Empties the list on the UI thread
+     * Note that this does not include any animations
+     * Use results = listOf() for the animated version
+     */
+    internal fun clearResults() = context.runOnUiThread { adapter.clear() }
 
     val configs = Configs()
     //views
@@ -118,6 +139,7 @@ class SearchView @JvmOverloads constructor(
     private val progress: ProgressBar by bindView(R.id.search_progress)
     private val iconMic: ImageView by bindView(R.id.search_mic)
     private val iconClear: ImageView by bindView(R.id.search_clear)
+    private val divider: View by bindView(R.id.search_divider)
     private val recycler: RecyclerView by bindView(R.id.search_recycler)
     val adapter = FastItemAdapter<SearchItem>()
     lateinit var parent: ViewGroup
@@ -151,6 +173,16 @@ class SearchView @JvmOverloads constructor(
                 }
             })
             adapter = this@SearchView.adapter
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false //clear the fade between item changes
+        }
+        with(adapter) {
+            withSelectable(true)
+            withOnClickListener { _, _, item, position ->
+                if (item.key.isNotBlank()) configs.onItemClick(position, item.key, item.content, this@SearchView); true
+            }
+            withOnLongClickListener { _, _, item, position ->
+                if (item.key.isNotBlank()) configs.onItemLongClick(position, item.key, item.content, this@SearchView); true
+            }
         }
         textEvents = RxTextView.textChangeEvents(editText)
                 .skipInitialValue()
@@ -210,6 +242,7 @@ class SearchView @JvmOverloads constructor(
         iconMic.drawable.setTint(color)
         iconClear.drawable.setTint(color)
         SearchItem.foregroundColor = color
+        divider.setBackgroundColor(color.adjustAlpha(0.1f))
         editText.tint(color)
         editText.setTextColor(ColorStateList.valueOf(color))
     }
@@ -249,12 +282,6 @@ class SearchView @JvmOverloads constructor(
             }
         }
         recycler.gone()
-//        card.circularHide(menuX, menuHalfHeight, offset = 100, duration = configs.revealDuration,
-//                onFinish = {
-//                    configs.closeListener?.invoke(this)
-//                    if (configs.shouldClearOnClose) editText.text.clear()
-//                    recycler.gone()
-//                })
     }
 }
 

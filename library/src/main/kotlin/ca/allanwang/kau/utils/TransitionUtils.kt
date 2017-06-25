@@ -15,5 +15,5 @@ class TransitionEndListener(val onEnd: (transition: Transition) -> Unit) : Trans
 }
 
 fun TransitionSet.addEndListener(onEnd: (transition: Transition) -> Unit) {
-    addListener(TransitionEndListener { onEnd })
+    addListener(TransitionEndListener(onEnd))
 }

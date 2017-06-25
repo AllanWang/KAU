@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout"
+    android:id="@+id/search_item_frame"
     android:layout_width="match_parent"
     android:layout_height="@dimen/kau_search_item_height"
     android:background="?android:attr/selectableItemBackground"

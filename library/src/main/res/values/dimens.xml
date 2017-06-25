@@ -14,6 +14,4 @@
 
     <dimen name="kau_status_bar_height">24dp</dimen>
 
-    <dimen name="kau_search_dropdownitem_icon_width">32dip</dimen>
-
 </resources>
