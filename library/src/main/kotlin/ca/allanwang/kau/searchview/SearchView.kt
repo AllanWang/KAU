@@ -1,5 +1,6 @@
 package ca.allanwang.kau.searchview
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -163,7 +164,6 @@ class SearchView @JvmOverloads constructor(
     private val divider: View by bindView(R.id.search_divider)
     private val recycler: RecyclerView by bindView(R.id.search_recycler)
     val adapter = FastItemAdapter<SearchItem>()
-    lateinit var parent: ViewGroup
     var menuItem: MenuItem? = null
     val isOpen: Boolean
         get() = card.isVisible()
@@ -228,10 +228,9 @@ class SearchView @JvmOverloads constructor(
         configs.config()
     }
 
-    fun bind(parent: ViewGroup, menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
+    fun bind(activity: Activity, menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
         config(config)
         configs.textObserver(textEvents.filter { it.isNotBlank() }, this)
-        this.parent = parent
         menuItem = menu.findItem(id)
         if (menuItem!!.icon == null) menuItem!!.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         card.gone()
@@ -241,12 +240,12 @@ class SearchView @JvmOverloads constructor(
     }
 
     fun unBind(replacementMenuItemClickListener: MenuItem.OnMenuItemClickListener? = null) {
-        parent.removeView(this)
+        (parent as ViewGroup).removeView(this)
         menuItem?.setOnMenuItemClickListener(replacementMenuItemClickListener)
     }
 
     fun configureCoords(item: MenuItem) {
-        val view = parent.findViewById<View>(item.itemId) ?: return
+        val view = (parent as ViewGroup).findViewById<View>(item.itemId) ?: return
         val locations = IntArray(2)
         view.getLocationOnScreen(locations)
         menuX = (locations[0] + view.width / 2)
@@ -331,10 +330,14 @@ class SearchView @JvmOverloads constructor(
     }
 }
 
-fun ViewGroup.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView {
-    val searchView = SearchView(context)
+@DslMarker
+annotation class KauSearch
+
+@KauSearch
+fun Activity.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView {
+    val searchView = SearchView(this)
     searchView.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-    addView(searchView)
+    findViewById<ViewGroup>(android.R.id.content).addView(searchView)
     searchView.bind(this, menu, id, menuIconColor, config)
     return searchView
 }

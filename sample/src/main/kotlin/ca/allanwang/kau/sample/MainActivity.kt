@@ -131,7 +131,7 @@ class MainActivity : KPrefActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        searchView = container.bindSearchView(menu, R.id.action_search) {
+        searchView = bindSearchView(menu, R.id.action_search) {
             textObserver = {
                 observable, searchView ->
                 observable.subscribe {

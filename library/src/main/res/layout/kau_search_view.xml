@@ -101,7 +101,8 @@
                 android:id="@+id/search_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                android:visibility="gone" />
 
         </LinearLayout>
 
