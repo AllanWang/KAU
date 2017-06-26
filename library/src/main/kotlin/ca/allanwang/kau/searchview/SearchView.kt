@@ -55,6 +55,17 @@ class SearchView @JvmOverloads constructor(
                 iconNav.setSearchIcon(value)
                 if (value == null) iconNav.gone()
             }
+        /**
+         * Optional icon just to the left of the clear icon
+         * This is not implemented by default, but can be used for anything, such as mic or redirects
+         * Make sure you add a click listener to [iconExtra] if you plan on using this
+         */
+        var extraIcon: IIcon? = null
+            set(value) {
+                field = value
+                iconExtra.setSearchIcon(value)
+                if (value == null) iconClear.gone()
+            }
         var clearIcon: IIcon? = GoogleMaterial.Icon.gmd_clear
             set(value) {
                 field = value
@@ -145,6 +156,7 @@ class SearchView @JvmOverloads constructor(
     private val editText: AppCompatEditText by bindView(R.id.search_edit_text)
     val textEvents: Observable<String>
     private val progress: ProgressBar by bindView(R.id.search_progress)
+    val iconExtra: ImageView by bindView(R.id.search_extra)
     private val iconClear: ImageView by bindView(R.id.search_clear)
     private val divider: View by bindView(R.id.search_divider)
     private val recycler: RecyclerView by bindView(R.id.search_recycler)

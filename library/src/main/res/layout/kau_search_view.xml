@@ -68,16 +68,26 @@
                     android:layout_height="match_parent"
                     android:visibility="gone" />
 
+                <ImageView
+                    android:id="@+id/search_extra"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/kau_search"
+                    android:focusable="true"
+                    android:scaleType="center"
+                    android:visibility="gone" />
 
-                    <ImageView
-                        android:id="@+id/search_clear"
-                        android:layout_width="48dp"
-                        android:layout_height="match_parent"
-                        android:background="?android:attr/selectableItemBackgroundBorderless"
-                        android:clickable="true"
-                        android:contentDescription="@string/kau_search"
-                        android:focusable="true"
-                        android:scaleType="center" />
+                <ImageView
+                    android:id="@+id/search_clear"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/kau_search"
+                    android:focusable="true"
+                    android:scaleType="center" />
 
             </LinearLayout>
 
