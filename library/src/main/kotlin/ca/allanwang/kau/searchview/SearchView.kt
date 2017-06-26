@@ -81,7 +81,7 @@ class SearchView @JvmOverloads constructor(
             }
         var revealDuration: Long = 300L
         var transitionDuration: Long = 100L
-        var shouldClearOnClose: Boolean = true
+        var shouldClearOnClose: Boolean = false
         var openListener: ((searchView: SearchView) -> Unit)? = null
         var closeListener: ((searchView: SearchView) -> Unit)? = null
         /**
@@ -183,7 +183,7 @@ class SearchView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.kau_search_view, this)
         z = 99f
-        iconNav.setSearchIcon(configs.navIcon).setOnClickListener { clearResults() }
+        iconNav.setSearchIcon(configs.navIcon).setOnClickListener { revealClose() }
         iconClear.setSearchIcon(configs.clearIcon).setOnClickListener { editText.text.clear() }
         tintForeground(configs.foregroundColor)
         tintBackground(configs.backgroundColor)
@@ -241,12 +241,12 @@ class SearchView @JvmOverloads constructor(
     }
 
     fun unBind(replacementMenuItemClickListener: MenuItem.OnMenuItemClickListener? = null) {
-        (parent as ViewGroup).removeView(this)
+        parentViewGroup.removeView(this)
         menuItem?.setOnMenuItemClickListener(replacementMenuItemClickListener)
     }
 
     fun configureCoords(item: MenuItem) {
-        val view = (parent as ViewGroup).findViewById<View>(item.itemId) ?: return
+        val view = parentViewGroup.findViewById<View>(item.itemId) ?: return
         val locations = IntArray(2)
         view.getLocationOnScreen(locations)
         menuX = (locations[0] + view.width / 2)

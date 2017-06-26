@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.view.ViewGroup
+import ca.allanwang.kau.utils.parentViewGroup
 
 /**
  * Created by Allan Wang on 2017-06-26.
@@ -19,7 +20,7 @@ class SearchCard @JvmOverloads constructor(
     val parentVisibleHeight: Int
         get() {
             val r = Rect()
-            (parent as ViewGroup).getWindowVisibleDisplayFrame(r)
+            parentViewGroup.getWindowVisibleDisplayFrame(r)
             return r.height()
         }
 

@@ -76,3 +76,6 @@ fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, 
 @KauUtils fun View.setRippleBackground(@ColorInt foregroundColor: Int, @ColorInt backgroundColor: Int) {
     background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }
+
+@KauUtils val View.parentViewGroup: ViewGroup
+    get() = parent as ViewGroup
