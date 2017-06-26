@@ -51,7 +51,7 @@ var Activity.statusBarColor: Int
  */
 fun Activity.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg iicons: Pair<Int, IIcon>) {
     iicons.forEach { (id, iicon) ->
-        menu.findItem(id).icon = iicon.toDrawable(this, sizeDp = 20, color = color)
+        menu.findItem(id).icon = iicon.toDrawable(this, sizeDp = 18, color = color)
     }
 }
 

@@ -10,7 +10,10 @@ import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.searchview.SearchItem
 import ca.allanwang.kau.searchview.bindSearchView
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.materialDialog
+import ca.allanwang.kau.utils.navigationBarColor
+import ca.allanwang.kau.utils.startActivity
+import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -128,7 +131,7 @@ class MainActivity : KPrefActivity() {
                 observable.subscribe {
                     text ->
                     KL.e(text)
-                    searchView.results = if (text.length == 3) emptyList() else Array<String>(text.length, { text }).map { SearchItem(it) }
+                    searchView.results = if (text.length == 3) emptyList() else Array<String>(text.length, { text }).map { SearchItem(it, description = it) }
                 }
             }
             noResultsFound = R.string.kau_no_results_found

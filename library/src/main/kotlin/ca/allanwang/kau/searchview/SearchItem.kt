@@ -1,6 +1,7 @@
 package ca.allanwang.kau.searchview
 
 import android.graphics.drawable.Drawable
+import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
@@ -61,6 +62,6 @@ class SearchItem(val key: String,
         val icon: ImageView by bindView(R.id.search_icon)
         val title: TextView by bindView(R.id.search_title)
         val desc: TextView by bindView(R.id.search_desc)
-        val container: LinearLayout by bindView(R.id.search_item_frame)
+        val container: ConstraintLayout by bindView(R.id.search_item_frame)
     }
 }

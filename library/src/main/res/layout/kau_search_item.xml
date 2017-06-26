@@ -23,7 +23,7 @@
     <TextView
         android:id="@+id/search_title"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:layout_weight="1"
         android:ellipsize="end"
@@ -33,24 +33,28 @@
         android:paddingStart="@dimen/kau_search_key_line_8"
         android:textIsSelectable="false"
         android:textSize="@dimen/kau_search_text_small"
+        app:layout_constraintBottom_toTopOf="@+id/search_desc"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/search_icon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
-        android:id="@+id/search_desc"
+        android:id="@id/search_desc"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical"
         android:layout_weight="1"
         android:ellipsize="end"
-        android:visibility="gone"
         android:gravity="start|center_vertical"
         android:maxLines="1"
         android:paddingEnd="@dimen/kau_search_key_line_16"
         android:paddingStart="@dimen/kau_search_key_line_8"
         android:textIsSelectable="false"
         android:textSize="@dimen/kau_search_text_micro"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/search_icon"
         app:layout_constraintTop_toBottomOf="@id/search_title" />
 

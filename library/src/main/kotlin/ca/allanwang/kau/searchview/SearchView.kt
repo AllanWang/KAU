@@ -2,6 +2,7 @@ package ca.allanwang.kau.searchview
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
 import android.support.annotation.StringRes
@@ -37,16 +38,18 @@ class SearchView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     inner class Configs {
-        var foregroundColor: Int = SearchItem.foregroundColor
+        var foregroundColor: Int
+            get() = SearchItem.foregroundColor
             set(value) {
-                if (field == value) return
-                field = value
+                if (SearchItem.foregroundColor == value) return
+                SearchItem.foregroundColor = value
                 tintForeground(value)
             }
-        var backgroundColor: Int = SearchItem.backgroundColor
+        var backgroundColor: Int
+            get() = SearchItem.backgroundColor
             set(value) {
-                if (field == value) return
-                field = value
+                if (SearchItem.backgroundColor == value) return
+                SearchItem.backgroundColor = value
                 tintBackground(value)
             }
         var navIcon: IIcon? = GoogleMaterial.Icon.gmd_arrow_back
@@ -137,16 +140,15 @@ class SearchView @JvmOverloads constructor(
             cardTransition()
             adapter.setNewList(
                     if (configs.noResultsFound > 0 && value.isEmpty())
-                        listOf(SearchItem("", context.string(configs.noResultsFound), null))
+                        listOf(SearchItem("", context.string(configs.noResultsFound), iicon = null))
                     else value)
         }
 
     /**
      * Empties the list on the UI thread
-     * Note that this does not include any animations
-     * Use results = listOf() for the animated version
+     * The noResults item will not be added
      */
-    internal fun clearResults() = context.runOnUiThread { adapter.clear() }
+    internal fun clearResults() = context.runOnUiThread { cardTransition(); adapter.clear() }
 
     val configs = Configs()
     //views
@@ -162,6 +164,7 @@ class SearchView @JvmOverloads constructor(
     private val recycler: RecyclerView by bindView(R.id.search_recycler)
     val adapter = FastItemAdapter<SearchItem>()
     lateinit var parent: ViewGroup
+    var menuItem: MenuItem? = null
     val isOpen: Boolean
         get() = card.isVisible()
 
@@ -223,16 +226,21 @@ class SearchView @JvmOverloads constructor(
         configs.config()
     }
 
-    fun bind(parent: ViewGroup, menu: Menu, @IdRes id: Int, config: Configs.() -> Unit = {}): SearchView {
+    fun bind(parent: ViewGroup, menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
         config(config)
         configs.textObserver(textEvents.filter { it.isNotBlank() }, this)
         this.parent = parent
-        val item = menu.findItem(id)
-        if (item.icon == null) item.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 20)
+        menuItem = menu.findItem(id)
+        if (menuItem!!.icon == null) menuItem!!.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         card.gone()
-        item.setOnMenuItemClickListener { configureCoords(it); revealOpen(); true }
+        menuItem!!.setOnMenuItemClickListener { configureCoords(it); revealOpen(); true }
         shadow.setOnClickListener { revealClose() }
         return this
+    }
+
+    fun unBind(replacementMenuItemClickListener: MenuItem.OnMenuItemClickListener? = null) {
+        parent.removeView(this)
+        menuItem?.setOnMenuItemClickListener(replacementMenuItemClickListener)
     }
 
     fun configureCoords(item: MenuItem) {
@@ -255,16 +263,23 @@ class SearchView @JvmOverloads constructor(
         })
     }
 
-    fun tintForeground(@ColorInt color: Int) {
+    /**
+     * Tint foreground attributes
+     * This can be done publicly through [configs], which will also save the color
+     */
+    internal fun tintForeground(@ColorInt color: Int) {
         iconNav.drawable.setTint(color)
         iconClear.drawable.setTint(color)
-        SearchItem.foregroundColor = color
         divider.setBackgroundColor(color.adjustAlpha(0.1f))
         editText.tint(color)
         editText.setTextColor(ColorStateList.valueOf(color))
     }
 
-    fun tintBackground(@ColorInt color: Int) {
+    /**
+     * Tint background attributes
+     * This can be done publicly through [configs], which will also save the color
+     */
+    internal fun tintBackground(@ColorInt color: Int) {
         card.setCardBackgroundColor(color)
     }
 
@@ -302,10 +317,10 @@ class SearchView @JvmOverloads constructor(
     }
 }
 
-fun ViewGroup.bindSearchView(menu: Menu, @IdRes id: Int, config: SearchView.Configs.() -> Unit = {}): SearchView {
+fun ViewGroup.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView {
     val searchView = SearchView(context)
     searchView.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
     addView(searchView)
-    searchView.bind(this, menu, id, config)
+    searchView.bind(this, menu, id, menuIconColor, config)
     return searchView
 }
