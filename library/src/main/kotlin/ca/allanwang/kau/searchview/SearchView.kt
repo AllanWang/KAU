@@ -8,7 +8,10 @@ import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
 import android.support.annotation.StringRes
 import android.support.transition.AutoTransition
-import android.support.v7.widget.*
+import android.support.v7.widget.AppCompatEditText
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SimpleItemAnimator
 import android.util.AttributeSet
 import android.view.*
 import android.widget.FrameLayout
@@ -154,7 +157,7 @@ class SearchView @JvmOverloads constructor(
     val configs = Configs()
     //views
     private val shadow: View by bindView(R.id.search_shadow)
-    private val card: CardView by bindView(R.id.search_cardview)
+    private val card: SearchCard by bindView(R.id.search_cardview)
     private val iconNav: ImageView by bindView(R.id.search_nav)
     private val editText: AppCompatEditText by bindView(R.id.search_edit_text)
     val textEvents: Observable<String>
@@ -302,8 +305,8 @@ class SearchView @JvmOverloads constructor(
          * The cardView matches the parent's width, so menuX is correct
          */
         configs.openListener?.invoke(this)
+        editText.showKeyboard()
         card.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration) {
-            editText.showKeyboard()
             cardTransition()
             recycler.visible()
             shadow.fadeIn()
@@ -312,7 +315,6 @@ class SearchView @JvmOverloads constructor(
 
     fun revealClose() {
         if (!isOpen) return
-        editText.hideKeyboard()
         shadow.fadeOut(duration = configs.transitionDuration)
         cardTransition {
             addEndListener {
@@ -325,6 +327,7 @@ class SearchView @JvmOverloads constructor(
             }
         }
         recycler.gone()
+        editText.hideKeyboard()
     }
 }
 
