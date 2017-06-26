@@ -6,14 +6,21 @@
     <item text="" />
     -->
 
+    <version title="v1.3"/>
+    <item text="Added kpref subitems" />
+    <item text="Added DSL markers" />
+    <item text="Added transition utils and other utils" />
+    <item text="Added custom searchview with binders" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+
     <version title="v1.2"/>
     <item text="Fix title attribute in changelog" />
     <item text="Update support libs" />
     <item text="Add is app installed utils" />
     <item text="Add email builder" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
 
     <version title="v1.1"/>
     <item text="Created kpref items" />

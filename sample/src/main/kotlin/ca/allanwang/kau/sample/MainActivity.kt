@@ -9,6 +9,7 @@ import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.searchview.SearchItem
+import ca.allanwang.kau.searchview.SearchView
 import ca.allanwang.kau.searchview.bindSearchView
 import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.navigationBarColor
@@ -19,6 +20,8 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 
 class MainActivity : KPrefActivity() {
+
+    lateinit var searchView: SearchView
 
     override fun kPrefCoreAttributes(): CoreAttributeContract.() -> Unit = {
         textColor = { KPrefSample.textColor }
@@ -95,6 +98,9 @@ class MainActivity : KPrefActivity() {
         subItems(R.string.sub_item, subPrefs()) {
             descRes = R.string.sub_item_desc
         }
+
+        plainText(R.string.kau_lorem_ipsum)
+
     }
 
     fun subPrefs(): KPrefAdapterBuilder.() -> Unit = {
@@ -125,7 +131,7 @@ class MainActivity : KPrefActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        container.bindSearchView(menu, R.id.action_search) {
+        searchView = container.bindSearchView(menu, R.id.action_search) {
             textObserver = {
                 observable, searchView ->
                 observable.subscribe {
@@ -155,4 +161,7 @@ class MainActivity : KPrefActivity() {
         return true
     }
 
+    override fun onBackPressed() {
+        if (!searchView.onBackPressed()) super.onBackPressed()
+    }
 }

@@ -179,6 +179,7 @@ class SearchView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.kau_search_view, this)
+        z = 99f
         iconNav.setSearchIcon(configs.navIcon)
         iconClear.setSearchIcon(configs.clearIcon).setOnClickListener {
             editText.text.clear()
@@ -186,6 +187,7 @@ class SearchView @JvmOverloads constructor(
         tintForeground(configs.foregroundColor)
         tintBackground(configs.backgroundColor)
         with(recycler) {
+            isNestedScrollingEnabled = false
             layoutManager = LinearLayoutManager(context)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -261,6 +263,18 @@ class SearchView @JvmOverloads constructor(
                 return false
             }
         })
+    }
+
+    /**
+     * Handle a back press event
+     * Returns true if back press is consumed, false otherwise
+     */
+    fun onBackPressed(): Boolean {
+        if (isOpen && menuItem != null) {
+            revealClose()
+            return true
+        }
+        return false
     }
 
     /**
