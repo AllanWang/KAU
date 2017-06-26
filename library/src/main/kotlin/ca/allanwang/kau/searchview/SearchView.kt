@@ -180,10 +180,8 @@ class SearchView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.kau_search_view, this)
         z = 99f
-        iconNav.setSearchIcon(configs.navIcon)
-        iconClear.setSearchIcon(configs.clearIcon).setOnClickListener {
-            editText.text.clear()
-        }
+        iconNav.setSearchIcon(configs.navIcon).setOnClickListener { clearResults() }
+        iconClear.setSearchIcon(configs.clearIcon).setOnClickListener { editText.text.clear() }
         tintForeground(configs.foregroundColor)
         tintBackground(configs.backgroundColor)
         with(recycler) {
