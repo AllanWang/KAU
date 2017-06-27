@@ -1,10 +1,13 @@
 # Changelog
 
+## v1.4
+
 ## v1.3
 * Added kpref subitems
 * Added DSL markers
 * Added transition utils and other utils
 * Added custom searchview with binders
+* Added KauBoundedCardView
 
 ## v1.2
 * Fix title attribute in changelog

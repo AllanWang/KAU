@@ -6,15 +6,21 @@
     <item text="" />
     -->
 
+    <version title="v1.4"/>
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+
     <version title="v1.3"/>
     <item text="Added kpref subitems" />
     <item text="Added DSL markers" />
     <item text="Added transition utils and other utils" />
     <item text="Added custom searchview with binders" />
     <item text="Added KauBoundedCardView" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
 
     <version title="v1.2"/>
     <item text="Fix title attribute in changelog" />

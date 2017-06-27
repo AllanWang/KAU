@@ -20,7 +20,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 class MainActivity : KPrefActivity() {
 
-    lateinit var searchView: SearchView
+    var searchView: SearchView? = null
     //some of the most common english words for show
     val wordBank: List<String> by lazy {
         listOf("the", "name", "of", "very", "to", "through",
@@ -178,7 +178,7 @@ class MainActivity : KPrefActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        searchView = bindSearchView(menu, R.id.action_search) {
+        if (searchView == null) searchView = bindSearchView(menu, R.id.action_search) {
             textObserver = {
                 observable, searchView ->
                 /*
@@ -213,6 +213,6 @@ class MainActivity : KPrefActivity() {
     }
 
     override fun onBackPressed() {
-        if (!searchView.onBackPressed()) super.onBackPressed()
+        if (!(searchView?.onBackPressed() ?: false)) super.onBackPressed()
     }
 }

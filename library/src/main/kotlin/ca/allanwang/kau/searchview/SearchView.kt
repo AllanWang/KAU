@@ -360,11 +360,11 @@ class SearchView @JvmOverloads constructor(
          * The cardView matches the parent's width, so menuX is correct
          */
         configs.openListener?.invoke(this)
+        shadow.fadeIn()
         editText.showKeyboard()
         card.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration) {
             cardTransition()
             recycler.visible()
-            shadow.fadeIn()
         }
     }
 
@@ -396,7 +396,11 @@ annotation class KauSearch
 fun Activity.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView
         = findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
 
-
+/**
+ * Bind searchView to a menu item; call this in [Activity.onCreateOptionsMenu]
+ * Be wary that if you may reinflate the menu many times (eg through [Activity.invalidateOptionsMenu]),
+ * it may be worthwhile to hold a reference to the searchview and only bind it if it hasn't been bound before
+ */
 @KauSearch
 fun ViewGroup.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView {
     val searchView = SearchView(context)
