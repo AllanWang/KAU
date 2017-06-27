@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="KauBoundedCardView">
+        <attr name="kau_maxHeight" format="dimension" />
+        <attr name="kau_maxHeightPercent" format="float" />
+    </declare-styleable>
+
+</resources>

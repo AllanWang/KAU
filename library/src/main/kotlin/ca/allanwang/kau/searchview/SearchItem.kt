@@ -1,11 +1,14 @@
 package ca.allanwang.kau.searchview
 
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.RecyclerView
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import ca.allanwang.kau.R
 import ca.allanwang.kau.utils.*
@@ -32,6 +35,18 @@ class SearchItem(val key: String,
         var backgroundColor: Int = 0xfffafafa.toInt()
     }
 
+    var styledContent: SpannableStringBuilder? = null
+
+    /**
+     * Highlight the subText if it is present in the content
+     */
+    fun withHighlights(subText: String) {
+        val index = content.indexOf(subText)
+        if (index == -1) return
+        styledContent = SpannableStringBuilder(content)
+        styledContent!!.setSpan(StyleSpan(Typeface.BOLD), index, index + subText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
     override fun getLayoutRes(): Int = R.layout.kau_search_item
 
     override fun getType(): Int = R.id.kau_item_search
@@ -47,7 +62,7 @@ class SearchItem(val key: String,
         else holder.icon.setIcon(iicon, sizeDp = 18, color = foregroundColor)
 
         holder.container.setRippleBackground(foregroundColor, backgroundColor)
-        holder.title.text = content
+        holder.title.text = styledContent ?: content
         if (description?.isNotBlank() ?: false) holder.desc.visible().text = description
     }
 

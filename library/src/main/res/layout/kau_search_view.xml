@@ -11,13 +11,14 @@
         android:background="@color/kau_search_full_shadow"
         android:visibility="gone" />
 
-    <ca.allanwang.kau.searchview.SearchCard
+    <ca.allanwang.kau.views.KauBoundedCardView
         android:id="@+id/search_cardview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/kau_search_base_margin"
         android:layout_marginStart="@dimen/kau_search_base_margin"
-        app:cardCornerRadius="@dimen/kau_search_base_corners">
+        app:cardCornerRadius="@dimen/kau_search_base_corners"
+        app:kau_maxHeightPercent="0.9">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,6 +108,6 @@
 
         </LinearLayout>
 
-    </ca.allanwang.kau.searchview.SearchCard>
+    </ca.allanwang.kau.views.KauBoundedCardView>
 
 </merge>

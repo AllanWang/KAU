@@ -19,7 +19,9 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kotlin.nonReadable
+import ca.allanwang.kau.searchview.SearchView.Configs
 import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.views.KauBoundedCardView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
@@ -33,6 +35,9 @@ import org.jetbrains.anko.runOnUiThread
  * Created by Allan Wang on 2017-06-23.
  *
  * A materialized SearchView with complete theming and observables
+ * This view can be added programmatically and configured using the [Configs] DSL
+ * It is preferred to add the view through an activity, but it can be attached to any ViewGroup
+ * Beware of where specifically this is added, as its view or the keyboard may affect positioning
  *
  * Huge thanks to @lapism for his base
  * https://github.com/lapism/SearchView
@@ -41,7 +46,16 @@ class SearchView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    /**
+     * Collection of all possible arguments when building the SearchView
+     * Everything is made as opened as possible so other components may be found in the [SearchView]
+     * However, these are the notable options put together an an inner class for better visibility
+     */
     inner class Configs {
+        /**
+         * In the searchview, foreground color accounts for all text colors and icon colors
+         * Various alpha levels may be used for sub texts/dividers etc
+         */
         var foregroundColor: Int
             get() = SearchItem.foregroundColor
             set(value) {
@@ -49,6 +63,9 @@ class SearchView @JvmOverloads constructor(
                 SearchItem.foregroundColor = value
                 tintForeground(value)
             }
+        /**
+         * Namely the background for the card and recycler view
+         */
         var backgroundColor: Int
             get() = SearchItem.backgroundColor
             set(value) {
@@ -56,49 +73,78 @@ class SearchView @JvmOverloads constructor(
                 SearchItem.backgroundColor = value
                 tintBackground(value)
             }
+        /**
+         * Icon for the leftmost ImageView, which typically contains the hamburger menu/back arror
+         */
         var navIcon: IIcon? = GoogleMaterial.Icon.gmd_arrow_back
             set(value) {
                 field = value
                 iconNav.setSearchIcon(value)
                 if (value == null) iconNav.gone()
             }
+
         /**
          * Optional icon just to the left of the clear icon
          * This is not implemented by default, but can be used for anything, such as mic or redirects
-         * Make sure you add a click listener to [iconExtra] if you plan on using this
+         * Returns the extra imageview
+         * Set the iicon as null to hide the extra icon
          */
-        var extraIcon: IIcon? = null
-            set(value) {
-                field = value
-                iconExtra.setSearchIcon(value)
-                if (value == null) iconClear.gone()
-            }
+        fun setExtraIcon(iicon: IIcon?, onClick: OnClickListener?): ImageView {
+            iconExtra.setSearchIcon(iicon)
+            if (iicon == null) iconClear.gone()
+            iconExtra.setOnClickListener(onClick)
+            return iconExtra
+        }
+
+        /**
+         * Icon for the rightmost ImageView, which typically contains a close icon
+         */
         var clearIcon: IIcon? = GoogleMaterial.Icon.gmd_clear
             set(value) {
                 field = value
                 iconClear.setSearchIcon(value)
                 if (value == null) iconClear.gone()
             }
+        /**
+         * Duration for the circular reveal animation
+         */
         var revealDuration: Long = 300L
+        /**
+         * Duration for the auto transition, which is namely used to resize the recycler view
+         */
         var transitionDuration: Long = 100L
+        /**
+         * Defines whether the edit text and adapter should clear themselves when the searchView is closed
+         */
         var shouldClearOnClose: Boolean = false
+        /**
+         * Callback that will be called every time the searchView opens
+         */
         var openListener: ((searchView: SearchView) -> Unit)? = null
+        /**
+         * Callback that will be called every time the searchView closes
+         */
         var closeListener: ((searchView: SearchView) -> Unit)? = null
         /**
          * Draw a divider between the search bar and the suggestion items
-         * The divider is colored based on the foreground color
+         * The divider is colored based on the [foregroundColor]
          */
         var withDivider: Boolean = true
             set(value) {
                 field = value
                 if (value) divider.visible() else divider.invisible()
             }
+        /**
+         * Hint string to be set in the searchView
+         */
         var hintText: String?
             get() = editText.hint?.toString()
             set(value) {
                 editText.hint = value
             }
-
+        /**
+         * Hint string res to be set in the searchView
+         */
         var hintTextRes: Int
             @Deprecated(level = DeprecationLevel.ERROR, message = "Non readable property")
             get() = nonReadable()
@@ -130,8 +176,11 @@ class SearchView @JvmOverloads constructor(
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
          */
         var onItemLongClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit = { _, _, _, _ -> }
-
-
+        /**
+         * If a [SearchItem]'s title contains the submitted query, make that portion bold
+         * See [SearchItem.withHighlights]
+         */
+        var highlightQueryText: Boolean = true
     }
 
     /**
@@ -141,11 +190,12 @@ class SearchView @JvmOverloads constructor(
     var results: List<SearchItem>
         get() = adapter.adapterItems
         set(value) = context.runOnUiThread {
+            val list = if (value.isEmpty() && configs.noResultsFound > 0)
+                listOf(SearchItem("", context.string(configs.noResultsFound), iicon = null))
+            else value
+            if (configs.highlightQueryText && value.isNotEmpty()) list.forEach { it.withHighlights(editText.text.toString()) }
             cardTransition()
-            adapter.setNewList(
-                    if (configs.noResultsFound > 0 && value.isEmpty())
-                        listOf(SearchItem("", context.string(configs.noResultsFound), iicon = null))
-                    else value)
+            adapter.setNewList(list)
         }
 
     /**
@@ -157,7 +207,7 @@ class SearchView @JvmOverloads constructor(
     val configs = Configs()
     //views
     private val shadow: View by bindView(R.id.search_shadow)
-    private val card: SearchCard by bindView(R.id.search_cardview)
+    private val card: KauBoundedCardView by bindView(R.id.search_cardview)
     private val iconNav: ImageView by bindView(R.id.search_nav)
     private val editText: AppCompatEditText by bindView(R.id.search_edit_text)
     val textEvents: Observable<String>
@@ -229,7 +279,12 @@ class SearchView @JvmOverloads constructor(
         configs.config()
     }
 
-    fun bind(activity: Activity, menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
+    /**
+     * Binds the SearchView to a menu item and handles everything internally
+     * This is assuming that SearchView has already been added to a ViewGroup
+     * If not, see the extension function [bindSearchView]
+     */
+    fun bind(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
         config(config)
         configs.textObserver(textEvents.filter { it.isNotBlank() }, this)
         menuItem = menu.findItem(id)
@@ -334,11 +389,20 @@ class SearchView @JvmOverloads constructor(
 @DslMarker
 annotation class KauSearch
 
+/**
+ * Helper function that binds to an activity's main view
+ */
 @KauSearch
-fun Activity.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView {
-    val searchView = SearchView(this)
+fun Activity.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView
+        = findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
+
+
+@KauSearch
+fun ViewGroup.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView {
+    val searchView = SearchView(context)
     searchView.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-    findViewById<ViewGroup>(android.R.id.content).addView(searchView)
-    searchView.bind(this, menu, id, menuIconColor, config)
+    addView(searchView)
+    searchView.bind(menu, id, menuIconColor, config)
     return searchView
 }
+
