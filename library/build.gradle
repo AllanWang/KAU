@@ -69,6 +69,10 @@ dependencies {
     compile "io.reactivex.rxjava2:rxandroid:${RX_ANDROID}"
     compile "com.jakewharton.rxbinding2:rxbinding-kotlin:${RX_BINDING}"
     compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:${RX_BINDING}"
+
+    compile("com.mikepenz:aboutlibraries:${ABOUT_LIBRARIES}@aar") {
+        transitive = true
+    }
 }
 
 // build a jar with source files

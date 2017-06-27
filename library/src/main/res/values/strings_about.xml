@@ -1,0 +1,19 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="define_int_kau" tools:ignore="ResourceName" />
+    <!-- Author section -->
+    <string name="library_kau_author" tools:ignore="ResourceName">Allan Wang</string>
+    <string name="library_kau_authorWebsite" tools:ignore="ResourceName">https://www.allanwang.ca/dev/</string>
+    <!-- Library section -->
+    <string name="library_kau_libraryName" tools:ignore="ResourceName">KAU</string>
+    <string name="library_kau_libraryDescription" tools:ignore="ResourceName">An extensive collection of Kotlin Android Utilities.</string>
+    <string name="library_kau_libraryWebsite" tools:ignore="ResourceName">https://github.com/AllanWang/KAU</string>
+    <string name="library_kau_libraryVersion" tools:ignore="ResourceName">1.3</string>
+    <!-- OpenSource section -->
+    <string name="library_kau_isOpenSource" tools:ignore="ResourceName">true</string>
+    <string name="library_kau_repositoryLink" tools:ignore="ResourceName">https://github.com/AllanWang/KAU</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_kau_classPath" tools:ignore="ResourceName">ca.allanwang.kau</string>
+    <!-- License section -->
+    <string name="library_kau_licenseId" tools:ignore="ResourceName">apache_2_0</string>
+    <!-- Custom variables section -->
+</resources>

@@ -51,4 +51,6 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_yes">Yes</string>
     <string name="kau_search">Search</string>
     <string name="kau_no_results_found">No Results Found</string>
+    <string name="kau_about_app">About App</string>
+    <string name="kau_about_x">About %s</string>
 </resources>
