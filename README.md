@@ -90,6 +90,8 @@ There is also a `reset()` method to clear the local values and have them retriev
 KAU supports Preferences that are created without xmls and through AppCompat. 
 The items are backed by a [FastAdapter](https://github.com/mikepenz/FastAdapter) and support [iicons](https://github.com/mikepenz/Android-Iconics)
 
+<img src="https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_kpref_items.gif">
+
 The easiest way to create the settings is to extend `KPrefActivity`.
 
 We will then override `onCreateKPrefs` to generate our adapter builder.
@@ -106,6 +108,7 @@ Contract | Mandatory | Optional | Description
 `BaseContract` | `getter` `setter` | `enabler` `onClick` `onDisabledClick` | Implemented by every preference item
 `KPrefColorContract` | `NA` | `showPreview` | Additional configurations for the color picker
 `KPrefTextContract` | `NA` | `textGetter` | Additional configurations for the text item
+`KPrefSubItemsContract` | `itemBuilder` | `NA` | Contains a new list for the adapter to load when clicked
 
 The kpref items are as followed:
 
@@ -115,6 +118,9 @@ Item | Implements | Description
 `colorPicker` | `CoreContract` `BaseContract` `KPrefColorContract` | Color picker item; by default, clicking it will open a dialog which will change the color (int)
 `header` | `CoreContract` | Header; just a title that isn't clickable
 `text` | `CoreContract` `BaseContract` `KPrefTextContract` | Text item; displays the kpref as a String on the right; does not have click implementation by default
+`plainText` | `BaseContract` | Plain text item; like `text` but does not deal with any preferences directly, so it doesn't need a getter or setter
+This can be used to display text or deal with preference that are completely handed within the click event (eg a dialog).
+`subItems` | `CoreContract` `KPrefSubItemsContract` | Sub items; contains a new page for the activity to load when clicked
  
 An example of the adapter builder:
  
@@ -174,7 +180,7 @@ As mentioned, blank items will be ignored, so feel free to create a bunch of emp
 ## Search View
 
 Kau contains a fully functional SearchView that can be added programmatically with one line. 
-It contains the `bindSearchView` extension functions from both an activity or viewgroup.
+It contains a `bindSearchView` extension functions for both activities and viewgroups.
 
 <img src="https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_search_view.gif">
 
