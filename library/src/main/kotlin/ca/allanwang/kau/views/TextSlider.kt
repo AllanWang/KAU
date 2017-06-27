@@ -2,6 +2,7 @@ package ca.allanwang.kau.views
 
 import android.content.Context
 import android.graphics.Color
+import android.support.annotation.AnimRes
 import android.support.v4.widget.TextViewCompat
 import android.text.TextUtils
 import android.util.AttributeSet
@@ -23,6 +24,20 @@ class TextSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet
 ) : TextSwitcher(context, attrs) {
 
     val titleStack: Stack<CharSequence?> = Stack()
+
+    inner class Animations(
+            private @param: AnimRes val nextIn: Int,
+            private @param: AnimRes val nextOut: Int,
+            private @param: AnimRes val prevIn: Int,
+            private @param: AnimRes val prevOut: Int
+    ) {
+
+        val NEXT_IN: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.kau_slide_in_left) }
+        val NEXT_OUT: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.kau_slide_in_right) }
+        val PREV_IN: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.kau_slide_in_top) }
+        val PREV_OUT: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.kau_slide_in_bottom) }
+
+    }
 
     private val SLIDE_IN_LEFT: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.kau_slide_in_left) }
     private val SLIDE_IN_RIGHT: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.kau_slide_in_right) }
