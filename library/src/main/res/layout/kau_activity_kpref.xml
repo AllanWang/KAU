@@ -24,13 +24,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ca.allanwang.kau.views.TextSlider
+        <ca.allanwang.kau.views.KauTextSlider
             android:id="@+id/kau_toolbar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@android:color/white" />
+            app:kau_animation_type="slide_horizontal" />
 
     </android.support.v7.widget.Toolbar>
 

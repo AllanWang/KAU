@@ -3,6 +3,7 @@ package ca.allanwang.kau.utils
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.support.annotation.RequiresApi
 
 /**
  * Created by Allan Wang on 2017-06-23.
@@ -30,6 +31,9 @@ val buildIsLollipopAndUp: Boolean
 
 val buildIsMarshmallowAndUp: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+val buildIsNougatAndUp: Boolean
+    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 
 const val INSTALLER_GOOGLE_PLAY_VENDING = "com.android.vending"
 const val INSTALLER_GOOGLE_PLAY_FEEDBACK = "com.google.android.feedback"

@@ -114,7 +114,7 @@ class SearchView @JvmOverloads constructor(
          */
         var transitionDuration: Long = 100L
         /**
-         * Defines whether the edit text and adapter should clear themselves when the searchView is closed
+         * Defines whether the edit text and mainAdapter should clear themselves when the searchView is closed
          */
         var shouldClearOnClose: Boolean = false
         /**
@@ -184,7 +184,7 @@ class SearchView @JvmOverloads constructor(
     }
 
     /**
-     * Contract for adapter items
+     * Contract for mainAdapter items
      * Setting results will ensure that the values are sent on the UI thread
      */
     var results: List<SearchItem>

@@ -20,7 +20,7 @@
 * Attached source files
 * Created color dialog
 * Added more utilities
-* Fixed stack clearing when starting activity
+* Fixed indexStack clearing when starting activity
 
 ## v1.0
 * Initial Changelog

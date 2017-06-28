@@ -6,4 +6,12 @@
         <attr name="kau_maxHeightPercent" format="float" />
     </declare-styleable>
 
+    <declare-styleable name="KauTextSlider">
+        <attr name="kau_animation_type" format="enum">
+            <enum name="none" value="1000" />
+            <enum name="slide_horizontal" value="1001" />
+            <enum name="slide_vertical" value="1002" />
+        </attr>
+    </declare-styleable>
+
 </resources>

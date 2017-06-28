@@ -1,5 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="define_int_kau" tools:ignore="ResourceName" />
+    <string name="kau_dependencies_used">Dependencies Used</string>
+
+    <string name="define_kau" tools:ignore="ResourceName" />
     <!-- Author section -->
     <string name="library_kau_author" tools:ignore="ResourceName">Allan Wang</string>
     <string name="library_kau_authorWebsite" tools:ignore="ResourceName">https://www.allanwang.ca/dev/</string>

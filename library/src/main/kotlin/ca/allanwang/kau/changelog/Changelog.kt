@@ -42,7 +42,7 @@ fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null,
 
 /**
  * Internals of the changelog dialog
- * Contains an adapter for each item, as well as the tags to parse
+ * Contains an mainAdapter for each item, as well as the tags to parse
  */
 internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @ColorInt val textColor: Int? = null) : RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
 

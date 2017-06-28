@@ -22,6 +22,9 @@
         <activity
             android:name=".AnimActivity"
             android:theme="@style/AppTheme.Slide" />
+        <activity
+            android:name=".AboutActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
     </application>
 
 </manifest>

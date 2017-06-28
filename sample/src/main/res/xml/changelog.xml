@@ -33,7 +33,7 @@
     <item text="Attached source files" />
     <item text="Created color dialog" />
     <item text="Added more utilities" />
-    <item text="Fixed stack clearing when starting activity" />
+    <item text="Fixed indexStack clearing when starting activity" />
 
     <version title="v1.0" />
     <item text="Initial Changelog" />

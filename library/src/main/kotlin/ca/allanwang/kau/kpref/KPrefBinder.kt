@@ -12,11 +12,11 @@ import org.jetbrains.anko.uiThread
 /**
  * Created by Allan Wang on 2017-06-08.
  *
- * Houses all the components that can be called externally to setup the kpref adapter
+ * Houses all the components that can be called externally to setup the kpref mainAdapter
  */
 
 /**
- * Base extension that will register the layout manager and adapter with the given items
+ * Base extension that will register the layout manager and mainAdapter with the given items
  * Returns FastAdapter
  */
 fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAdapterBuilder.() -> Unit): FastItemAdapter<KPrefItemCore> {
