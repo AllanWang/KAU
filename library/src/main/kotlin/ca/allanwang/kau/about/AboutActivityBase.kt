@@ -1,20 +1,18 @@
 package ca.allanwang.kau.about
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import ca.allanwang.kau.R
 import ca.allanwang.kau.adapters.ChainedAdapters
-import ca.allanwang.kau.logging.KL
+import ca.allanwang.kau.adapters.SectionAdapter
+import ca.allanwang.kau.animators.SlideUpAlphaAnimator
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.string
 import ca.allanwang.kau.views.KauTextSlider
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
-import com.mikepenz.fastadapter.adapters.HeaderAdapter
-import com.mikepenz.fastadapter.adapters.ItemAdapter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 
@@ -38,17 +36,14 @@ open class AboutActivityBase(val rClass: Class<*>) : AppCompatActivity() {
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)
     val toolbarText: KauTextSlider by bindView(R.id.kau_toolbar_text)
     val recycler: RecyclerView by bindView(R.id.kau_recycler)
-    val libSection: Pair<String, HeaderAdapter<LibraryItem>> by lazy { string(R.string.kau_dependencies_used) to HeaderAdapter<LibraryItem>() }
+    val libSection: Pair<String, SectionAdapter<LibraryItem>> by lazy { string(R.string.kau_dependencies_used) to SectionAdapter<LibraryItem>() }
     val sectionsChain: ChainedAdapters<String> = ChainedAdapters()
 
     fun addLibsAsync() {
         doAsync {
             val libs = Libs(this@AboutActivityBase, Libs.toStringArray(rClass.fields))
             val items = getLibraries(libs)
-            uiThread {
-                KL.e("Coun ${items.count()}")
-                libSection.second.add(items.map { LibraryItem(it) })
-            }
+            uiThread { libSection.second.add(items.map { LibraryItem(it) }) }
         }
     }
 
@@ -69,12 +64,15 @@ open class AboutActivityBase(val rClass: Class<*>) : AppCompatActivity() {
             if (dy > 0) toolbarText.setNextText(item)
             else toolbarText.setPrevText()
         }
+        recycler.itemAnimator = SlideUpAlphaAnimator()
         toolbarText.setCurrentText(sectionsChain[0].first)
+        onPostCreate()
+        addLibsAsync()
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onPostCreate(savedInstanceState, persistentState)
-        addLibsAsync()
+
+    open fun onPostCreate() {
+
     }
 
     /**
@@ -82,5 +80,5 @@ open class AboutActivityBase(val rClass: Class<*>) : AppCompatActivity() {
      * The adapters should be listed in the order that they appear,
      * and if the [libSection] shouldn't be at the end, it should be added in this list
      */
-    open fun onCreateSections(): List<Pair<String, HeaderAdapter<*>>> = listOf(libSection)
+    open fun onCreateSections(): List<Pair<String, SectionAdapter<*>>> = listOf(libSection)
 }

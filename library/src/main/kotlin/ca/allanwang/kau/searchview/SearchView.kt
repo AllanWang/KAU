@@ -11,13 +11,13 @@ import android.support.transition.AutoTransition
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SimpleItemAnimator
 import android.util.AttributeSet
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
 import ca.allanwang.kau.R
+import ca.allanwang.kau.animators.NoAnimator
 import ca.allanwang.kau.kotlin.nonReadable
 import ca.allanwang.kau.searchview.SearchView.Configs
 import ca.allanwang.kau.utils.*
@@ -247,7 +247,7 @@ class SearchView @JvmOverloads constructor(
                 }
             })
             adapter = this@SearchView.adapter
-            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false //clear the fade between item changes
+            itemAnimator = NoAnimator()
         }
         with(adapter) {
             withSelectable(true)

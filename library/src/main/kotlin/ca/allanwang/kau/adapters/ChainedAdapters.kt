@@ -2,7 +2,6 @@ package ca.allanwang.kau.adapters
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import ca.allanwang.kau.logging.KL
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.HeaderAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
@@ -17,18 +16,19 @@ import java.util.*
  * - Add a [LinearLayoutManager] to the recycler
  * - Add a listener for when a new adapter segment is being used
  */
-class ChainedAdapters<T>(vararg items: Pair<T, HeaderAdapter<*>>) {
-    private val chain: MutableList<Pair<T, HeaderAdapter<*>>> = mutableListOf(*items)
+class ChainedAdapters<T>(vararg items: Pair<T, SectionAdapter<*>>) {
+    private val chain: MutableList<Pair<T, SectionAdapter<*>>> = mutableListOf(*items)
     val baseAdapter: FastItemAdapter<IItem<*, *>> = FastItemAdapter()
     private val indexStack = Stack<Int>()
     var recycler: RecyclerView? = null
     val firstVisibleItemPosition: Int
         get() = (recycler?.layoutManager as LinearLayoutManager?)?.findFirstVisibleItemPosition() ?: throw IllegalArgumentException("No recyclerview was bounded to the chain adapters")
 
-    fun add(vararg items: Pair<T, HeaderAdapter<*>>) = add(items.toList())
+    fun add(vararg items: Pair<T, SectionAdapter<*>>) = add(items.toList())
 
-    fun add(items: Collection<Pair<T, HeaderAdapter<*>>>): ChainedAdapters<T> {
+    fun add(items: Collection<Pair<T, SectionAdapter<*>>>): ChainedAdapters<T> {
         if (recycler != null) throw IllegalAccessException("Chain adapter is already bounded to a recycler; cannot add directly.")
+        items.map { it.second }.forEachIndexed { index, sectionAdapter -> sectionAdapter.sectionOrder = chain.size + 1 + index }
         chain.addAll(items)
         return this
     }
@@ -51,7 +51,6 @@ class ChainedAdapters<T>(vararg items: Pair<T, HeaderAdapter<*>>) {
         chain.map { it.second }.forEachReversedWithIndex { i, headerAdapter ->
             if (i == chain.size - 1) headerAdapter.wrap(baseAdapter)
             else headerAdapter.wrap(chain[i + 1].second)
-            if (i < chain.size - 1) KL.e("${chain[i].first} ${chain[i + 1].first}")
         }
         recycler = recyclerView
         indexStack.push(0)
@@ -68,10 +67,8 @@ class ChainedAdapters<T>(vararg items: Pair<T, HeaderAdapter<*>>) {
                         val nextAdapterIndex = (currentAdapterIndex until chain.size).asSequence()
                                 .firstOrNull {
                                     val adapter = chain[it].second
-                                    KL.e("A $it ${adapter.adapterItemCount} ${adapter.getGlobalPosition(0)} $topPosition $currentAdapterIndex")
-                                    adapter.adapterItemCount > 0 && adapter.getGlobalPosition(0) >= topPosition
+                                    adapter.adapterItemCount > 0 && adapter.getGlobalPosition(adapter.adapterItemCount - 1) >= topPosition
                                 } ?: currentAdapterIndex
-                        KL.e("Next $nextAdapterIndex")
                         if (nextAdapterIndex == currentAdapterIndex) return
                         indexStack.push(nextAdapterIndex)
                         onAdapterSectionChanged(chain[indexStack.peek()].first, indexStack.peek(), dy)

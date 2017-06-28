@@ -36,11 +36,20 @@ class MainItem(builder: Config.() -> Unit) : AbstractItem<MainItem, MainItem.Vie
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
         super.bindView(holder, payloads)
-        with (holder) {
+        with(holder) {
             title.text = configs.title
             creator.text = configs.author
             description.text = configs.description
 //            license.text = configs.description
+        }
+    }
+
+    override fun unbindView(holder: ViewHolder) {
+        super.unbindView(holder)
+        with(holder) {
+            title.text = null
+            creator.text = null
+            description.text = null
         }
     }
 

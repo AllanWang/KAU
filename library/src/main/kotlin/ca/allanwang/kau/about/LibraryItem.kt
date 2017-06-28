@@ -54,6 +54,14 @@ class LibraryItem(val lib: Library) : AbstractItem<LibraryItem, LibraryItem.View
         }
     }
 
+    override fun unbindView(holder: ViewHolder) {
+        super.unbindView(holder)
+        with (holder) {
+            name.text = null
+            creator.text = null
+            description.text = null
+        }
+    }
 
     override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 

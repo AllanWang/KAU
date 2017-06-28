@@ -49,7 +49,7 @@ dependencies {
     compile "com.android.support:design:${ANDROID_SUPPORT_LIBS}"
     compile "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_LIBS}"
     compile "com.android.support:cardview-v7:${ANDROID_SUPPORT_LIBS}"
-    compile "com.android.support:preference-v14:${ANDROID_SUPPORT_LIBS}"
+//    compile "com.android.support:preference-v14:${ANDROID_SUPPORT_LIBS}"
     compile "com.android.support.constraint:constraint-layout:${CONSTRAINT_LAYOUT}"
 
     compile "com.mikepenz:fastadapter:${FAST_ADAPTER}@aar"
