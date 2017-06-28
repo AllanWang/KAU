@@ -1,1 +1,8 @@
+title: KAU
+description: An extensive collection of Kotlin Android Utils
+show_downloads: true
 theme: jekyll-theme-minimal
+
+gems:
+  - jekyll-mentions
+  - jekyll-readme-index
