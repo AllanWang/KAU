@@ -212,7 +212,7 @@ Most apps could not be possible without the collective efforts of other develope
 It's always nice to give credit where credit is due, but it's not always at the top of ones agenda.
 About Activity aims to fix that by preparing a beautiful overlay activity that does just that.
 
-![]("https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_about_activity.gif")
+![About Activity Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_about_activity.gif)
 
 The overlay is heavily based off of the about section in [Plaid](https://github.com/nickbutcher/plaid),
 and adds on the power of [About Libraries](https://github.com/mikepenz/AboutLibraries) to automatically find the dependencies.
