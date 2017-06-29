@@ -41,7 +41,7 @@ import ca.allanwang.kau.utils.AnimHolder;
 /**
  * An ink inspired widget for indicating pages in a {@link ViewPager}.
  */
-public class KauInkPageIndicator extends View implements ViewPager.OnPageChangeListener,
+public class InkPageIndicator extends View implements ViewPager.OnPageChangeListener,
         View.OnAttachStateChangeListener {
 
     // defaults
@@ -113,35 +113,35 @@ public class KauInkPageIndicator extends View implements ViewPager.OnPageChangeL
     float controlX2;
     float controlY2;
 
-    public KauInkPageIndicator(Context context) {
+    public InkPageIndicator(Context context) {
         this(context, null, 0);
     }
 
-    public KauInkPageIndicator(Context context, AttributeSet attrs) {
+    public InkPageIndicator(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public KauInkPageIndicator(Context context, AttributeSet attrs, int defStyle) {
+    public InkPageIndicator(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         final int density = (int) context.getResources().getDisplayMetrics().density;
 
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.KauInkPageIndicator, defStyle, 0);
+                attrs, R.styleable.InkPageIndicator, defStyle, 0);
 
-        dotDiameter = a.getDimensionPixelSize(R.styleable.KauInkPageIndicator_kau_dotDiameter,
+        dotDiameter = a.getDimensionPixelSize(R.styleable.InkPageIndicator_dotDiameter,
                 DEFAULT_DOT_SIZE * density);
         dotRadius = dotDiameter / 2;
         halfDotRadius = dotRadius / 2;
-        gap = a.getDimensionPixelSize(R.styleable.KauInkPageIndicator_kau_dotGap,
+        gap = a.getDimensionPixelSize(R.styleable.InkPageIndicator_dotGap,
                 DEFAULT_GAP * density);
-        animDuration = (long) a.getInteger(R.styleable.KauInkPageIndicator_kau_animationDuration,
+        animDuration = (long) a.getInteger(R.styleable.InkPageIndicator_animationDuration,
                 DEFAULT_ANIM_DURATION);
         animHalfDuration = animDuration / 2;
-        unselectedColour = a.getColor(R.styleable.KauInkPageIndicator_kau_pageIndicatorColor,
+        unselectedColour = a.getColor(R.styleable.InkPageIndicator_pageIndicatorColor,
                 DEFAULT_UNSELECTED_COLOUR);
-        selectedColour = a.getColor(R.styleable.KauInkPageIndicator_kau_currentPageIndicatorColor,
+        selectedColour = a.getColor(R.styleable.InkPageIndicator_currentPageIndicatorColor,
                 DEFAULT_SELECTED_COLOUR);
 
         a.recycle();
@@ -169,7 +169,7 @@ public class KauInkPageIndicator extends View implements ViewPager.OnPageChangeL
         viewPager.getAdapter().registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
-                setPageCount(KauInkPageIndicator.this.viewPager.getAdapter().getCount());
+                setPageCount(InkPageIndicator.this.viewPager.getAdapter().getCount());
             }
         });
         setCurrentPageImmediate();

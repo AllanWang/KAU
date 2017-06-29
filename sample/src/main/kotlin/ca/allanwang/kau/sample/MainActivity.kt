@@ -149,7 +149,7 @@ class MainActivity : KPrefActivity() {
         plainText(R.string.kau_lorem_ipsum) {
             onClick = {
                 _, _, _ ->
-                startActivity(AboutActivity2::class.java, transition = true)
+                startActivity(AboutActivity::class.java, transition = true)
                 false
             }
         }

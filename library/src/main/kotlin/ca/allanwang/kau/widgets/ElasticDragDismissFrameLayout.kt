@@ -31,7 +31,7 @@ import ca.allanwang.kau.utils.*
  * Applies an elasticity factor to reduce movement as you approach the given dismiss distance.
  * Optionally also scales down content during drag.
  */
-class KauElasticDragDismissFrameLayout @JvmOverloads constructor(
+class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
@@ -50,24 +50,15 @@ class KauElasticDragDismissFrameLayout @JvmOverloads constructor(
     private var callbacks: MutableList<ElasticDragDismissCallback> = mutableListOf()
 
     init {
-
-        val a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.KauElasticDragDismissFrameLayout, 0, 0)
-
-        if (a.hasValue(R.styleable.KauElasticDragDismissFrameLayout_kau_dragDismissDistance)) {
-            dragDismissDistance = a.getDimensionPixelSize(R.styleable.KauElasticDragDismissFrameLayout_kau_dragDismissDistance, 0).toFloat()
-        } else if (a.hasValue(R.styleable.KauElasticDragDismissFrameLayout_kau_dragDismissFraction)) {
-            dragDismissFraction = a.getFloat(R.styleable.KauElasticDragDismissFrameLayout_kau_dragDismissFraction, dragDismissFraction)
-        }
-        if (a.hasValue(R.styleable.KauElasticDragDismissFrameLayout_kau_dragDismissScale)) {
-            dragDismissScale = a.getFloat(R.styleable.KauElasticDragDismissFrameLayout_kau_dragDismissScale, dragDismissScale)
+        if (attrs != null) {
+            val a = getContext().obtainStyledAttributes(attrs, R.styleable.ElasticDragDismissFrameLayout, 0, 0)
+            dragDismissDistance = a.getDimensionPixelSize(R.styleable.ElasticDragDismissFrameLayout_dragDismissDistance, Int.MAX_VALUE).toFloat()
+            dragDismissFraction = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissFraction, dragDismissFraction)
+            dragDismissScale = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissScale, dragDismissScale)
             shouldScale = dragDismissScale != 1f
+            dragElacticity = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragElasticity, dragElacticity)
+            a.recycle()
         }
-        if (a.hasValue(R.styleable.KauElasticDragDismissFrameLayout_kau_dragElasticity)) {
-            dragElacticity = a.getFloat(R.styleable.KauElasticDragDismissFrameLayout_kau_dragElasticity,
-                    dragElacticity)
-        }
-        a.recycle()
     }
 
     abstract class ElasticDragDismissCallback {

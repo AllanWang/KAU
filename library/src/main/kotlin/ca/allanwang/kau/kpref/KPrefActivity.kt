@@ -17,7 +17,7 @@ import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.resolveColor
 import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.string
-import ca.allanwang.kau.widgets.KauTextSlider
+import ca.allanwang.kau.widgets.TextSlider
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
@@ -32,13 +32,13 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
     val bgCanvas: RippleCanvas by bindView(R.id.kau_ripple)
     val toolbarCanvas: RippleCanvas by bindView(R.id.kau_toolbar_ripple)
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)
-    val toolbarTitle: KauTextSlider by bindView(R.id.kau_toolbar_text)
+    val toolbarTitle: TextSlider by bindView(R.id.kau_toolbar_text)
     val prefHolder: ViewAnimator by bindView(R.id.kau_holder)
     private lateinit var globalOptions: GlobalOptions
     var animate: Boolean = true
         set(value) {
             field = value
-            toolbarTitle.animationType = if (value) KauTextSlider.ANIMATION_SLIDE_HORIZONTAL else KauTextSlider.ANIMATION_NONE
+            toolbarTitle.animationType = if (value) TextSlider.ANIMATION_SLIDE_HORIZONTAL else TextSlider.ANIMATION_NONE
         }
 
     private val SLIDE_IN_LEFT_ITEMS: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.kau_slide_in_left) }

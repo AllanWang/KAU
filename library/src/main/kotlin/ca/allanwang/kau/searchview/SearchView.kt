@@ -21,7 +21,7 @@ import ca.allanwang.kau.animators.NoAnimator
 import ca.allanwang.kau.kotlin.nonReadable
 import ca.allanwang.kau.searchview.SearchView.Configs
 import ca.allanwang.kau.utils.*
-import ca.allanwang.kau.views.KauBoundedCardView
+import ca.allanwang.kau.views.BoundedCardView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
@@ -207,7 +207,7 @@ class SearchView @JvmOverloads constructor(
     val configs = Configs()
     //views
     private val shadow: View by bindView(R.id.search_shadow)
-    private val card: KauBoundedCardView by bindView(R.id.search_cardview)
+    private val card: BoundedCardView by bindView(R.id.search_cardview)
     private val iconNav: ImageView by bindView(R.id.search_nav)
     private val editText: AppCompatEditText by bindView(R.id.search_edit_text)
     val textEvents: Observable<String>

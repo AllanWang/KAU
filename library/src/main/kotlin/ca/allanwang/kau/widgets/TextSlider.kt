@@ -19,7 +19,7 @@ import java.util.*
  * Text switcher with global text color and embedded sliding animations
  * Also has a stack to keep track of title changes
  */
-class KauTextSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null
+class TextSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null
 ) : TextSwitcher(context, attrs) {
 
     val titleStack: Stack<CharSequence?> = Stack()
@@ -68,8 +68,8 @@ class KauTextSlider @JvmOverloads constructor(context: Context, attrs: Attribute
 
     init {
         if (attrs != null) {
-            val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.KauTextSlider)
-            animationType = styledAttrs.getInteger(R.styleable.KauTextSlider_kau_animation_type, ANIMATION_SLIDE_HORIZONTAL)
+            val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.TextSlider)
+            animationType = styledAttrs.getInteger(R.styleable.TextSlider_animation_type, ANIMATION_SLIDE_HORIZONTAL)
             styledAttrs.recycle()
         }
     }

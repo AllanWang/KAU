@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
 
-    <declare-styleable name="KauBoundedCardView">
-        <attr name="kau_maxHeight" format="dimension" />
-        <attr name="kau_maxHeightPercent" format="float" />
+    <declare-styleable name="BoundedCardView">
+        <attr name="maxHeight" format="dimension" />
+        <attr name="maxHeightPercent" format="float" />
     </declare-styleable>
 
-    <declare-styleable name="KauTextSlider">
-        <attr name="kau_animation_type" format="enum">
+    <declare-styleable name="TextSlider">
+        <attr name="animation_type" format="enum">
             <enum name="none" value="1000" />
             <enum name="slide_horizontal" value="1001" />
             <enum name="slide_vertical" value="1002" />
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="KauInkPageIndicator">
-        <attr name="kau_dotDiameter" format="dimension" />
-        <attr name="kau_dotGap" format="dimension" />
-        <attr name="kau_animationDuration" format="integer" />
-        <attr name="kau_pageIndicatorColor" format="color" />
-        <attr name="kau_currentPageIndicatorColor" format="color" />
+    <declare-styleable name="InkPageIndicator">
+        <attr name="dotDiameter" format="dimension" />
+        <attr name="dotGap" format="dimension" />
+        <attr name="animationDuration" format="integer" />
+        <attr name="pageIndicatorColor" format="color" />
+        <attr name="currentPageIndicatorColor" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="KauElasticDragDismissFrameLayout">
-        <attr name="kau_dragDismissDistance" format="dimension" />
-        <attr name="kau_dragDismissFraction" format="float" />
-        <attr name="kau_dragDismissScale" format="float" />
-        <attr name="kau_dragElasticity" format="float" />
+    <declare-styleable name="ElasticDragDismissFrameLayout">
+        <attr name="dragDismissDistance" format="dimension" />
+        <attr name="dragDismissFraction" format="float" />
+        <attr name="dragDismissScale" format="float" />
+        <attr name="dragElasticity" format="float" />
     </declare-styleable>
 
-    <declare-styleable name="KauCutoutTextView">
-        <attr name="kau_foregroundColor" format="color" />
+    <declare-styleable name="CutoutTextView">
+        <attr name="foregroundColor" format="color" />
         <attr name="android:text" />
         <attr name="android:minHeight" />
-        <attr name="kau_heightPercentageToScreen" format="float" />
-        <attr name="kau_font" format="string" />
+        <attr name="heightPercentageToScreen" format="float" />
+        <attr name="font"/>
     </declare-styleable>
 
 </resources>

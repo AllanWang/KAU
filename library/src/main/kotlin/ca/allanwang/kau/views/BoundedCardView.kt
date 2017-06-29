@@ -16,7 +16,7 @@ import ca.allanwang.kau.utils.parentVisibleHeight
  * This view should be used with wrap_content as its height
  * Defaults to at most the parent's visible height
  */
-class KauBoundedCardView @JvmOverloads constructor(
+class BoundedCardView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
 
@@ -33,9 +33,9 @@ class KauBoundedCardView @JvmOverloads constructor(
 
     init {
         if (attrs != null) {
-            val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.KauBoundedCardView)
-            maxHeight = styledAttrs.getDimensionPixelSize(R.styleable.KauBoundedCardView_kau_maxHeight, -1)
-            maxHeightPercent = styledAttrs.getFloat(R.styleable.KauBoundedCardView_kau_maxHeightPercent, -1.0f)
+            val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.BoundedCardView)
+            maxHeight = styledAttrs.getDimensionPixelSize(R.styleable.BoundedCardView_maxHeight, -1)
+            maxHeightPercent = styledAttrs.getFloat(R.styleable.BoundedCardView_maxHeightPercent, -1.0f)
             styledAttrs.recycle()
         }
     }

@@ -23,7 +23,7 @@
             android:name=".AnimActivity"
             android:theme="@style/AppTheme.Slide" />
         <activity
-            android:name=".AboutActivity2"
+            android:name=".AboutActivity"
             android:theme="@style/Kau.Translucent.About" />
     </application>
 

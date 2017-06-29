@@ -71,8 +71,8 @@ fun Context.colorPickerDialog(contract: ColorContract): MaterialDialog {
         negativeText(contract.cancelText)
         if (contract.allowCustom) neutralText(contract.presetText)
         onPositive { dialog, _ -> contract.colorCallback?.invoke(view.selectedColor); dialog.dismiss() }
-        onNegative { dialog, _ -> view.backOrCancel() }
-        if (contract.allowCustom) onNeutral { dialog, _ -> view.toggleCustom() }
+        onNegative { _, _ -> view.backOrCancel() }
+        if (contract.allowCustom) onNeutral { _, _ -> view.toggleCustom() }
         showListener { view.refreshColors() }
         if (contract.theme != null) theme(contract.theme!!)
         build()

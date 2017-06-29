@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ca.allanwang.kau.widgets.KauElasticDragDismissFrameLayout
+<ca.allanwang.kau.widgets.ElasticDragDismissFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/about_draggable_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:kau_dragDismissDistance="@dimen/kau_drag_dismiss_distance"
-    app:kau_dragDismissScale="0.95"
+    app:dragDismissDistance="@dimen/kau_drag_dismiss_distance"
+    app:dragDismissScale="0.95"
     tools:context=".about.AboutActivityBase">
 
     <android.support.v4.view.ViewPager
@@ -15,13 +15,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ca.allanwang.kau.widgets.KauInkPageIndicator
+    <ca.allanwang.kau.widgets.InkPageIndicator
         android:id="@+id/about_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:layout_marginTop="@dimen/kau_padding_normal"
-        app:kau_pageIndicatorColor="@color/kau_about_page_indicator_dark"
-        app:kau_currentPageIndicatorColor="@color/kau_about_page_indicator_dark_selected" />
+        app:pageIndicatorColor="@color/kau_about_page_indicator_dark"
+        app:currentPageIndicatorColor="@color/kau_about_page_indicator_dark_selected" />
 
-</ca.allanwang.kau.widgets.KauElasticDragDismissFrameLayout>
+</ca.allanwang.kau.widgets.ElasticDragDismissFrameLayout>

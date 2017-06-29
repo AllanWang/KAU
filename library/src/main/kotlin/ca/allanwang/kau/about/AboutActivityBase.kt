@@ -17,9 +17,9 @@ import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.string
-import ca.allanwang.kau.views.KauCutoutTextView
-import ca.allanwang.kau.widgets.KauElasticDragDismissFrameLayout
-import ca.allanwang.kau.widgets.KauInkPageIndicator
+import ca.allanwang.kau.views.CutoutTextView
+import ca.allanwang.kau.widgets.ElasticDragDismissFrameLayout
+import ca.allanwang.kau.widgets.InkPageIndicator
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
@@ -39,9 +39,9 @@ import java.security.InvalidParameterException
  */
 abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Configs.() -> Unit = {}) : AppCompatActivity() {
 
-    val draggableFrame: KauElasticDragDismissFrameLayout by bindView(R.id.about_draggable_frame)
+    val draggableFrame: ElasticDragDismissFrameLayout by bindView(R.id.about_draggable_frame)
     val pager: ViewPager by bindView(R.id.about_pager)
-    val indicator: KauInkPageIndicator by bindView(R.id.about_indicator)
+    val indicator: InkPageIndicator by bindView(R.id.about_indicator)
     val configs: Configs by lazy { Configs().apply { configBuilder() } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +52,7 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
             pageMargin = dimenPixelSize(R.dimen.kau_spacing_normal)
         }
         indicator.setViewPager(pager)
-        draggableFrame.addListener(object : KauElasticDragDismissFrameLayout.SystemChromeFader(this) {
+        draggableFrame.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 // if we drag dismiss downward then the default reversal of the enter
                 // transition would slide content upward which looks weird. So reverse it.
@@ -91,14 +91,14 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
     fun inflateMainPage(layoutInflater: LayoutInflater, parent: ViewGroup): View {
         val v = layoutInflater.inflate(R.layout.kau_about_section_main, parent, false)
         postInflateMainPage(
-                v.findViewById<KauCutoutTextView>(R.id.about_main_cutout),
+                v.findViewById<CutoutTextView>(R.id.about_main_cutout),
                 v.findViewById<FrameLayout>(R.id.about_main_bottom_container),
                 v.findViewById<TextView>(R.id.about_main_bottom_text)
         )
         return v
     }
 
-    open fun postInflateMainPage(cutout: KauCutoutTextView, bottomContainer: FrameLayout, bottomText: TextView) {
+    open fun postInflateMainPage(cutout: CutoutTextView, bottomContainer: FrameLayout, bottomText: TextView) {
         with (configs) {
             cutout.text = string(cutoutTextRes, cutoutText)
             bottomText.text = string(mainPageTitleRes, mainPageTitle)

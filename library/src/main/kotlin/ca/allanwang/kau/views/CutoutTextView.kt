@@ -32,7 +32,7 @@ import ca.allanwang.kau.utils.parentVisibleHeight
 /**
  * A view which punches out some text from an opaque color block, allowing you to see through it.
  */
-class KauCutoutTextView @JvmOverloads constructor(
+class CutoutTextView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
     private val textPaint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
@@ -49,13 +49,13 @@ class KauCutoutTextView @JvmOverloads constructor(
 
     init {
         if (attrs != null) {
-            val a = context.obtainStyledAttributes(attrs, R.styleable.KauCutoutTextView, 0, 0)
-            if (a.hasValue(R.styleable.KauCutoutTextView_kau_font))
-                textPaint.typeface = context.getFont(a.getString(R.styleable.KauCutoutTextView_kau_font))
-            foregroundColor = a.getColor(R.styleable.KauCutoutTextView_kau_foregroundColor, foregroundColor)
-            text = a.getString(R.styleable.KauCutoutTextView_android_text) ?: text
-            minHeight = a.getDimension(R.styleable.KauCutoutTextView_android_minHeight, minHeight)
-            heightPercentage = a.getFloat(R.styleable.KauCutoutTextView_kau_heightPercentageToScreen, heightPercentage)
+            val a = context.obtainStyledAttributes(attrs, R.styleable.CutoutTextView, 0, 0)
+            if (a.hasValue(R.styleable.CutoutTextView_font))
+                textPaint.typeface = context.getFont(a.getString(R.styleable.CutoutTextView_font))
+            foregroundColor = a.getColor(R.styleable.CutoutTextView_foregroundColor, foregroundColor)
+            text = a.getString(R.styleable.CutoutTextView_android_text) ?: text
+            minHeight = a.getDimension(R.styleable.CutoutTextView_android_minHeight, minHeight)
+            heightPercentage = a.getFloat(R.styleable.CutoutTextView_heightPercentageToScreen, heightPercentage)
             a.recycle()
         }
         maxTextSize = context.dimenPixelSize(R.dimen.kau_display_4_text_size).toFloat()

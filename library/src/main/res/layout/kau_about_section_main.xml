@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ca.allanwang.kau.views.KauCutoutTextView
+        <ca.allanwang.kau.views.CutoutTextView
             android:id="@+id/about_main_cutout"
             android:layout_width="0dp"
             android:layout_height="@dimen/kau_about_header_height"
             android:minHeight="@dimen/kau_about_header_height"
-            app:kau_foregroundColor="?android:colorAccent"
-            app:kau_heightPercentageToScreen="0.5"
+            app:foregroundColor="?android:colorAccent"
+            app:heightPercentageToScreen="0.5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

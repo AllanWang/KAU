@@ -13,12 +13,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ca.allanwang.kau.widgets.KauTextSlider
+        <ca.allanwang.kau.widgets.TextSlider
             android:id="@+id/kau_toolbar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:kau_animation_type="slide_vertical" />
+            app:animation_type="slide_vertical" />
 
     </android.support.v7.widget.Toolbar>
 
