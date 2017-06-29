@@ -93,7 +93,7 @@ There is also a `reset()` method to clear the local values and have them retriev
 KAU supports Preferences that are created without xmls and through AppCompat. 
 The items are backed by a [FastAdapter](https://github.com/mikepenz/FastAdapter) and support [iicons](https://github.com/mikepenz/Android-Iconics)
 
-<img src="https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_kpref_items.gif">
+![KPref Items Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_kpref_items.gif)
 
 The easiest way to create the settings is to extend `KPrefActivity`.
 
@@ -185,7 +185,7 @@ As mentioned, blank items will be ignored, so feel free to create a bunch of emp
 Kau contains a fully functional SearchView that can be added programmatically with one line. 
 It contains a `bindSearchView` extension functions for both activities and viewgroups.
 
-<img src="https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_search_view.gif">
+![Search View Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_search_view.gif)
 
 The search view is:
 * Fully themable - set the foreground or background color to style every portion, from text colors to backgrounds to ripples
@@ -200,7 +200,7 @@ which means that you don't have to worry about long processes in the text watche
 Ripple canvas provides a way to create simultaneous ripples against a background color. 
 They can be used as transitions, or as a toolbar background to replicate the look for [Google Calendar](https://stackoverflow.com/questions/27872324/how-can-i-animate-the-color-change-of-the-statusbar-and-toolbar-like-the-new-ca)
 
-<img src="https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_kpref_accent.gif">
+![KPref Accent Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_kpref_accent.gif)
 
 Many ripples can be stacked on top of each other to run at the same time from different locations.
 The canvas also supports color fading and direct color setting so it can effectively replace any background.
