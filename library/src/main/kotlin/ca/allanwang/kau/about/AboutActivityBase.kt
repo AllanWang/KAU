@@ -1,26 +1,24 @@
 package ca.allanwang.kau.about
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.TextView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.utils.bindView
-import ca.allanwang.kau.utils.dimenPixelSize
-import ca.allanwang.kau.utils.string
-import ca.allanwang.kau.views.CutoutTextView
+import ca.allanwang.kau.iitems.CutoutIItem
+import ca.allanwang.kau.iitems.LibraryIItem
+import ca.allanwang.kau.utils.*
 import ca.allanwang.kau.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.widgets.InkPageIndicator
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
+import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -66,7 +64,9 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
 
     inner class Configs {
         var cutoutTextRes: Int = -1
-        val cutoutText: String? = "KAU" //todo make null
+        var cutoutText: String? = null
+        var cutoutDrawableRes: Int = -1
+        var cutoutDrawable: Drawable? = null
         var mainPageTitleRes: Int = -1
         var mainPageTitle: String = "Kau test"
         var libPageTitleRes: Int = -1
@@ -78,6 +78,11 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
 
     open val pageCount: Int = 2
 
+    /**
+     * Gets the view associated with the given page position
+     * Keep in mind that when inflating, do NOT add the view to the viewgroup
+     * Use layoutInflater.inflate(id, parent, false)
+     */
     open fun getPage(position: Int, layoutInflater: LayoutInflater, parent: ViewGroup): View {
         return when (position) {
             0 -> inflateMainPage(layoutInflater, parent)
@@ -86,43 +91,35 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
         }
     }
 
-    fun inflateMainPage(layoutInflater: LayoutInflater, parent: ViewGroup): View {
-        val v = layoutInflater.inflate(R.layout.kau_about_section_main, parent, false)
-        postInflateMainPage(
-                v.findViewById<CutoutTextView>(R.id.about_main_cutout),
-                v.findViewById<FrameLayout>(R.id.about_main_bottom_container),
-                v.findViewById<TextView>(R.id.about_main_bottom_text)
-        )
-        return v
-    }
-
-    open fun postInflateMainPage(cutout: CutoutTextView, bottomContainer: FrameLayout, bottomText: TextView) {
-        with (configs) {
-            cutout.text = string(cutoutTextRes, cutoutText)
-            bottomText.text = string(mainPageTitleRes, mainPageTitle)
+    open fun inflateMainPage(layoutInflater: LayoutInflater, parent: ViewGroup): View {
+        val fastAdapter = FastItemAdapter<IItem<*, *>>()
+        val recycler = fullLinearRecycler {
+            adapter = fastAdapter
         }
+        fastAdapter.add(CutoutIItem {
+            with(configs) {
+                text = string(cutoutTextRes, cutoutText)
+                drawable = drawable(cutoutDrawableRes, cutoutDrawable)
+            }
+        })
+        return recycler
     }
 
-    fun inflateLibPage(layoutInflater: LayoutInflater, parent: ViewGroup): View {
-        val v = layoutInflater.inflate(R.layout.kau_about_section_libraries, parent, false)
-        postInflateLibPage(
-                v.findViewById<TextView>(R.id.about_library_title),
-                v.findViewById<RecyclerView>(R.id.about_library_recycler)
-        )
-        return v
-    }
 
-    open fun postInflateLibPage(title: TextView, recycler: RecyclerView) {
-        title.text = string(configs.libPageTitleRes, configs.libPageTitle)
-        val libAdapter = FastItemAdapter<LibraryItem>()
-        with(recycler) {
-            layoutManager = LinearLayoutManager(this@AboutActivityBase)
-            adapter = libAdapter
-        }
+    open fun inflateLibPage(layoutInflater: LayoutInflater, parent: ViewGroup): View {
+        val v = layoutInflater.inflate(R.layout.kau_recycler_detached_background, parent, false)
+        val fastAdapter = FastItemAdapter<IItem<*, *>>()
+        val recycler = v.findViewById<RecyclerView>(R.id.kau_recycler_detached)
+        recycler.adapter = fastAdapter
+        val background = v.findViewById<View>(R.id.kau_recycler_detached_background)
         doAsync {
-            val libs = getLibraries(Libs(this@AboutActivityBase, Libs.toStringArray(rClass.fields))).map { LibraryItem(it) }
-            uiThread { libAdapter.add(libs) }
+            val libs = getLibraries(Libs(this@AboutActivityBase, Libs.toStringArray(rClass.fields))).map { LibraryIItem(it) }
+            uiThread {
+                recycler.transitionDelayed(R.transition.kau_enter_slide_top) //TODO fix this
+                fastAdapter.add(libs)
+            }
         }
+        return v
     }
 
     inner class AboutPagerAdapter : PagerAdapter() {

@@ -14,7 +14,7 @@
     </style>
 
     <style name="Kau.Translucent.About">
-        <item name="android:windowEnterTransition">@transition/kau_about_enter</item>
+        <item name="android:windowEnterTransition">@transition/kau_enter_slide_top</item>
         <item name="android:windowReturnTransition">@transition/kau_about_return_upwards</item>
     </style>
 

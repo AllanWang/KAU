@@ -1,4 +1,4 @@
-package ca.allanwang.kau.about
+package ca.allanwang.kau.iitems
 
 /**
  * Created by Allan Wang on 2017-06-27.
@@ -22,11 +22,11 @@ import com.mikepenz.fastadapter.items.AbstractItem
 /**
  * Created by mikepenz on 28.12.15.
  */
-class LibraryItem(val lib: Library) : AbstractItem<LibraryItem, LibraryItem.ViewHolder>() {
+class LibraryIItem(val lib: Library) : AbstractItem<LibraryIItem, LibraryIItem.ViewHolder>() {
 
     override fun getType(): Int = R.id.kau_item_about_library
 
-    override fun getLayoutRes(): Int = R.layout.kau_about_item_library
+    override fun getLayoutRes(): Int = R.layout.kau_about_iitem_library
 
     override fun isSelectable(): Boolean = false
 

@@ -8,6 +8,8 @@
     <item name="kau_item_pref_sub_item" type="id" />
     <item name="kau_item_pref_plain_text" type="id" />
     <item name="kau_item_search" type="id" />
+    <item name="kau_item_cutout" type="id" />
+    <item name="kau_item_card" type="id" />
     <item name="kau_item_about_library" type="id" />
     <item name="kau_item_about_main" type="id" />
 </resources>

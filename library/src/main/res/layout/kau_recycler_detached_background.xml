@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!-- we use a parallel view for the background rather than just setting a background on the
+         recycler view for a nicer return transition. i.e. we want the background to fade and the
+         list to slide out separately -->
+    <View
+        android:id="@+id/kau_recycler_detached_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:colorBackground" />
+
+    <!--defaults to a LinearLayoutManager-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/kau_recycler_detached"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/kau_spacing_normal"
+        android:scrollbars="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+</FrameLayout>

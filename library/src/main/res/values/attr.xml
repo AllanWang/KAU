@@ -29,9 +29,10 @@
         <attr name="dragElasticity" format="float" />
     </declare-styleable>
 
-    <declare-styleable name="CutoutTextView">
+    <declare-styleable name="CutoutView">
         <attr name="foregroundColor" format="color" />
         <attr name="android:text" />
+        <attr name="android:drawable" />
         <attr name="android:minHeight" />
         <attr name="heightPercentageToScreen" format="float" />
         <attr name="font"/>

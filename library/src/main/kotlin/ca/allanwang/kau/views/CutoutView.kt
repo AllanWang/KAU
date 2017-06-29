@@ -33,7 +33,7 @@ import ca.allanwang.kau.utils.toBitmap
 /**
  * A view which punches out some text from an opaque color block, allowing you to see through it.
  */
-class CutoutTextView @JvmOverloads constructor(
+class CutoutView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
@@ -43,8 +43,7 @@ class CutoutTextView @JvmOverloads constructor(
         const val TYPE_DRAWABLE = 101
     }
 
-    private val textPaint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
-    private val bitmapPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
     private var bitmapScaling: Float = 1f
     private var cutout: Bitmap? = null
     var foregroundColor = Color.MAGENTA
@@ -58,7 +57,7 @@ class CutoutTextView @JvmOverloads constructor(
     private var textSize: Float = 0f
     private var cutoutY: Float = 0f
     private var cutoutX: Float = 0f
-    private var drawable: Drawable? = null
+    var drawable: Drawable? = null
         set(value) {
             field = value
             if (value != null) cutoutType = TYPE_DRAWABLE
@@ -70,13 +69,13 @@ class CutoutTextView @JvmOverloads constructor(
 
     init {
         if (attrs != null) {
-            val a = context.obtainStyledAttributes(attrs, R.styleable.CutoutTextView, 0, 0)
-            if (a.hasValue(R.styleable.CutoutTextView_font))
-                textPaint.typeface = context.getFont(a.getString(R.styleable.CutoutTextView_font))
-            foregroundColor = a.getColor(R.styleable.CutoutTextView_foregroundColor, foregroundColor)
-            text = a.getString(R.styleable.CutoutTextView_android_text) ?: text
-            minHeight = a.getDimension(R.styleable.CutoutTextView_android_minHeight, minHeight)
-            heightPercentage = a.getFloat(R.styleable.CutoutTextView_heightPercentageToScreen, heightPercentage)
+            val a = context.obtainStyledAttributes(attrs, R.styleable.CutoutView, 0, 0)
+            if (a.hasValue(R.styleable.CutoutView_font))
+                paint.typeface = context.getFont(a.getString(R.styleable.CutoutView_font))
+            foregroundColor = a.getColor(R.styleable.CutoutView_foregroundColor, foregroundColor)
+            text = a.getString(R.styleable.CutoutView_android_text) ?: text
+            minHeight = a.getDimension(R.styleable.CutoutView_android_minHeight, minHeight)
+            heightPercentage = a.getFloat(R.styleable.CutoutView_heightPercentageToScreen, heightPercentage)
             a.recycle()
         }
         maxTextSize = context.dimenPixelSize(R.dimen.kau_display_4_text_size).toFloat()
@@ -97,14 +96,14 @@ class CutoutTextView @JvmOverloads constructor(
 
     private fun calculateTextPosition() {
         val targetWidth = width / PHI
-        textSize = getSingleLineTextSize(text!!, textPaint, targetWidth, 0f, maxTextSize,
+        textSize = getSingleLineTextSize(text!!, paint, targetWidth, 0f, maxTextSize,
                 0.5f, resources.displayMetrics)
-        textPaint.textSize = textSize
+        paint.textSize = textSize
 
         // measuring text is fun :] see: https://chris.banes.me/2014/03/27/measuring-text/
-        cutoutX = (width - textPaint.measureText(text)) / 2
+        cutoutX = (width - paint.measureText(text)) / 2
         val textBounds = Rect()
-        textPaint.getTextBounds(text, 0, text!!.length, textBounds)
+        paint.getTextBounds(text, 0, text!!.length, textBounds)
         val textHeight = textBounds.height().toFloat()
         cutoutY = (height + textHeight) / 2
     }
@@ -146,15 +145,10 @@ class CutoutTextView @JvmOverloads constructor(
         paint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, mid, metrics)
         val maxLineWidth = paint.measureText(text)
 
-        if (high - low < precision) {
-            return low
-        } else if (maxLineWidth > targetWidth) {
-            return getSingleLineTextSize(text, paint, targetWidth, low, mid, precision, metrics)
-        } else if (maxLineWidth < targetWidth) {
-            return getSingleLineTextSize(text, paint, targetWidth, mid, high, precision, metrics)
-        } else {
-            return mid
-        }
+        return if (high - low < precision) low
+        else if (maxLineWidth > targetWidth) getSingleLineTextSize(text, paint, targetWidth, low, mid, precision, metrics)
+        else if (maxLineWidth < targetWidth) getSingleLineTextSize(text, paint, targetWidth, mid, high, precision, metrics)
+        else mid
     }
 
     private fun createBitmap() {
@@ -165,16 +159,16 @@ class CutoutTextView @JvmOverloads constructor(
         cutout!!.setHasAlpha(true)
         val cutoutCanvas = Canvas(cutout!!)
         cutoutCanvas.drawColor(foregroundColor)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
         when (cutoutType) {
             TYPE_TEXT -> {
                 // this is the magic – Clear mode punches out the bitmap
-                textPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-                cutoutCanvas.drawText(text, cutoutX, cutoutY, textPaint)
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                cutoutCanvas.drawText(text, cutoutX, cutoutY, paint)
             }
             TYPE_DRAWABLE -> {
-                bitmapPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-                cutoutCanvas.drawBitmap(drawable!!.toBitmap(bitmapScaling), cutoutX, cutoutY, bitmapPaint)
+                cutoutCanvas.drawBitmap(drawable!!.toBitmap(bitmapScaling, Bitmap.Config.ALPHA_8), cutoutX, cutoutY, paint)
             }
 
         }

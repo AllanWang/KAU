@@ -47,7 +47,7 @@ class SearchItem(val key: String,
         styledContent!!.setSpan(StyleSpan(Typeface.BOLD), index, index + subText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
-    override fun getLayoutRes(): Int = R.layout.kau_search_item
+    override fun getLayoutRes(): Int = R.layout.kau_search_iitem
 
     override fun getType(): Int = R.id.kau_item_search
 

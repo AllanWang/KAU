@@ -60,7 +60,11 @@ annotation class KauUtils
     return formatter.format(this)
 }
 
-@KauUtils fun Drawable.toBitmap(scaling: Float = 1f): Bitmap {
+/**
+ * Extracts the bitmap of a drawable, and applies a scale if given
+ * For solid colors, a 1 x 1 pixel will be generated
+ */
+@KauUtils fun Drawable.toBitmap(scaling: Float = 1f, config: Bitmap.Config = Bitmap.Config.ARGB_8888): Bitmap {
     if (this is BitmapDrawable && bitmap != null) {
         if (scaling == 1f) return bitmap
         val width = (bitmap.width * scaling).toInt()
@@ -68,9 +72,9 @@ annotation class KauUtils
         return Bitmap.createScaledBitmap(bitmap, width, height, false)
     }
     val bitmap = if (intrinsicWidth <= 0 || intrinsicHeight <= 0)
-        Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888) // Single color bitmap will be created of 1x1 pixel
+        Bitmap.createBitmap(1, 1, config)
     else
-        Bitmap.createBitmap((intrinsicWidth * scaling).toInt(), (intrinsicHeight * scaling).toInt(), Bitmap.Config.ARGB_8888)
+        Bitmap.createBitmap((intrinsicWidth * scaling).toInt(), (intrinsicHeight * scaling).toInt(), config)
     val canvas = Canvas(bitmap)
     setBounds(0, 0, canvas.width, canvas.height)
     draw(canvas)

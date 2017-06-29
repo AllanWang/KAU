@@ -6,9 +6,14 @@ import android.graphics.Outline
 import android.graphics.Rect
 import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
+import android.support.annotation.TransitionRes
 import android.support.design.widget.Snackbar
 import android.support.transition.AutoTransition
+import android.support.transition.Transition
+import android.support.transition.TransitionInflater
 import android.support.transition.TransitionManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
@@ -77,6 +82,12 @@ fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, 
     TransitionManager.beginDelayedTransition(this, transition)
 }
 
+@KauUtils fun ViewGroup.transitionDelayed(@TransitionRes id: Int, builder: Transition.() -> Unit = {}) {
+    val transition = TransitionInflater.from(context).inflateTransition(id)
+    transition.builder()
+    TransitionManager.beginDelayedTransition(this, transition)
+}
+
 @KauUtils fun View.setRippleBackground(@ColorInt foregroundColor: Int, @ColorInt backgroundColor: Int) {
     background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }
@@ -98,5 +109,16 @@ val CIRCULAR_OUTLINE: ViewOutlineProvider = object : ViewOutlineProvider() {
                 view.paddingTop,
                 view.width - view.paddingRight,
                 view.height - view.paddingBottom)
+    }
+}
+
+/**
+ * Generates a recycler view with match parent and a linearlayoutmanager, since it's so commonly used
+ */
+fun Context.fullLinearRecycler(configs: RecyclerView.() -> Unit = {}): RecyclerView {
+    return RecyclerView(this).apply {
+        layoutManager = LinearLayoutManager(this@fullLinearRecycler)
+        layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
+        configs()
     }
 }

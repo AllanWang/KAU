@@ -82,6 +82,7 @@ fun Context.integer(@IntegerRes id: Int): Int = resources.getInteger(id)
 fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
 fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
 fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)
+fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {
