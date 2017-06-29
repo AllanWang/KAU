@@ -6,6 +6,7 @@ import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import ca.allanwang.kau.R
 import ca.allanwang.kau.utils.parentViewGroup
+import ca.allanwang.kau.utils.parentVisibleHeight
 
 
 /**
@@ -18,13 +19,6 @@ import ca.allanwang.kau.utils.parentViewGroup
 class KauBoundedCardView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
-
-    val parentVisibleHeight: Int
-        get() {
-            val r = Rect()
-            parentViewGroup.getWindowVisibleDisplayFrame(r)
-            return r.height()
-        }
 
     /**
      * Maximum height possible, defined in dp (will be converted to px)

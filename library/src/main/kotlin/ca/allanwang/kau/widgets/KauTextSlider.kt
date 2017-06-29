@@ -1,4 +1,4 @@
-package ca.allanwang.kau.views
+package ca.allanwang.kau.widgets
 
 import android.content.Context
 import android.graphics.Color

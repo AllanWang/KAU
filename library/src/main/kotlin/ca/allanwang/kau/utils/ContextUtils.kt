@@ -1,6 +1,7 @@
 package ca.allanwang.kau.utils
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -12,20 +13,28 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import ca.allanwang.kau.R
+import ca.allanwang.kau.logging.KL
 import com.afollestad.materialdialogs.MaterialDialog
 
 
 /**
  * Created by Allan Wang on 2017-06-03.
  */
-fun Context.startActivity(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundle: Bundle? = null) {
+fun Context.startActivity(
+        clazz: Class<out Activity>,
+        clearStack: Boolean = false,
+        transition: Boolean = false,
+        bundle: Bundle? = null,
+        intentBuilder: Intent.() -> Unit = {}) {
     val intent = (Intent(this, clazz))
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.intentBuilder()
-    ContextCompat.startActivity(this, intent, bundle)
+    val fullBundle = if (transition && this is Activity) ActivityOptions.makeSceneTransitionAnimation(this).toBundle() else Bundle()
+    if (transition && this !is Activity) KL.d("Cannot make scene transition when context is not an instance of an Activity")
+    if (bundle != null) fullBundle.putAll(bundle)
+    ContextCompat.startActivity(this, intent, if (fullBundle.isEmpty) null else fullBundle)
     if (this is Activity && clearStack) finish()
 }
 
@@ -35,7 +44,7 @@ fun Context.startActivity(clazz: Class<out Activity>, clearStack: Boolean = fals
 fun Context.startActivitySlideIn(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
     val bundle = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_slide_in_right, R.anim.kau_fade_out).toBundle()
     bundle.bundleBuilder()
-    startActivity(clazz, clearStack, intentBuilder, bundle)
+    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = bundle)
 }
 
 /**
@@ -47,7 +56,7 @@ fun Context.startActivitySlideIn(clazz: Class<out Activity>, clearStack: Boolean
 fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolean = true, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
     val bundle = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top).toBundle()
     bundle.bundleBuilder()
-    startActivity(clazz, clearStack, intentBuilder, bundle)
+    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = bundle)
 }
 
 fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))
@@ -71,6 +80,7 @@ fun Context.string(holder: StringHolder?): String? = holder?.getString(this)
 fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 fun Context.integer(@IntegerRes id: Int): Int = resources.getInteger(id)
 fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
+fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
 fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)
 
 //Attr retrievers
@@ -127,3 +137,15 @@ fun Context.getDip(value: Float): Float = TypedValue.applyDimension(TypedValue.C
 
 val Context.isRtl: Boolean
     get() = resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
+
+/**
+ * Determine if the navigation bar will be on the bottom of the screen, based on logic in
+ * PhoneWindowManager.
+ */
+val Context.isNavBarOnBottom: Boolean
+    get() {
+        val cfg = resources.configuration
+        val dm = resources.displayMetrics
+        val canMove = dm.widthPixels != dm.heightPixels && cfg.smallestScreenWidthDp < 600
+        return !canMove || dm.widthPixels < dm.heightPixels
+    }

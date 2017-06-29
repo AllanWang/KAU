@@ -1,84 +1,157 @@
 package ca.allanwang.kau.about
 
 import android.os.Bundle
+import android.support.v4.view.PagerAdapter
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import android.transition.TransitionInflater
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.TextView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.adapters.ChainedAdapters
-import ca.allanwang.kau.adapters.SectionAdapter
-import ca.allanwang.kau.animators.SlideUpAlphaAnimator
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.bindView
+import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.string
-import ca.allanwang.kau.views.KauTextSlider
+import ca.allanwang.kau.views.KauCutoutTextView
+import ca.allanwang.kau.widgets.KauElasticDragDismissFrameLayout
+import ca.allanwang.kau.widgets.KauInkPageIndicator
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
+import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.security.InvalidParameterException
 
 /**
- * Created by Allan Wang on 2017-06-26.
+ * Created by Allan Wang on 2017-06-28.
  *
- * Customizable About Activity
- * Will automatically include a section containing all of the libraries registered under About Libraries
- * Takes in [rClass], which is the R.string::class.java for your app
- * It is used to get the libs dynamically
- * Make sure to add the following if you are using proguard:
- * # About library
- *      -keep class .R
- *      -keep class **.R$* {
- *      <fields>;
- * }
- *
+ * Floating About Activity Panel for your app
+ * This contains all the necessary layouts, and can be extended and configured using the [configBuilder]
+ * The [rClass] is necessary to generate the list of libraries used in your app, and should point to your app's
+ * R.string::class.java
+ * Note that for the auto detection to work, the R fields must be excluded from Proguard
+ * Manual lib listings and other extra modifications can be done so by overriding the open functions
  */
-open class AboutActivityBase(val rClass: Class<*>) : AppCompatActivity() {
+abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Configs.() -> Unit = {}) : AppCompatActivity() {
 
-    val toolbar: Toolbar by bindView(R.id.kau_toolbar)
-    val toolbarText: KauTextSlider by bindView(R.id.kau_toolbar_text)
-    val recycler: RecyclerView by bindView(R.id.kau_recycler)
-    val libSection: Pair<String, SectionAdapter<LibraryItem>> by lazy { string(R.string.kau_dependencies_used) to SectionAdapter<LibraryItem>() }
-    val sectionsChain: ChainedAdapters<String> = ChainedAdapters()
-
-    fun addLibsAsync() {
-        doAsync {
-            val libs = Libs(this@AboutActivityBase, Libs.toStringArray(rClass.fields))
-            val items = getLibraries(libs)
-            uiThread { libSection.second.add(items.map { LibraryItem(it) }) }
-        }
-    }
-
-    /**
-     * By default, the libraries will be extracted dynamically and sorted
-     * Override this to define your own list
-     */
-    open fun getLibraries(libs: Libs): List<Library> = libs.prepareLibraries(this@AboutActivityBase, null, null, true, true)
+    val draggableFrame: KauElasticDragDismissFrameLayout by bindView(R.id.about_draggable_frame)
+    val pager: ViewPager by bindView(R.id.about_pager)
+    val indicator: KauInkPageIndicator by bindView(R.id.about_indicator)
+    val configs: Configs by lazy { Configs().apply { configBuilder() } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_activity_about)
-        val sections = onCreateSections()
-        sectionsChain.add(sections)
-        if (!sections.contains(libSection)) sectionsChain.add(libSection)
-        sectionsChain.bindRecyclerView(recycler) {
-            item, _, dy ->
-            if (dy > 0) toolbarText.setNextText(item)
-            else toolbarText.setPrevText()
+        with(pager) {
+            adapter = AboutPagerAdapter()
+            pageMargin = dimenPixelSize(R.dimen.kau_spacing_normal)
         }
-        recycler.itemAnimator = SlideUpAlphaAnimator()
-        toolbarText.setCurrentText(sectionsChain[0].first)
-        onPostCreate()
-        addLibsAsync()
+        indicator.setViewPager(pager)
+        draggableFrame.addListener(object : KauElasticDragDismissFrameLayout.SystemChromeFader(this) {
+            override fun onDragDismissed() {
+                // if we drag dismiss downward then the default reversal of the enter
+                // transition would slide content upward which looks weird. So reverse it.
+                if (draggableFrame.translationY > 0) {
+                    window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
+                            .inflateTransition(configs.transitionExitReversed)
+                }
+                finishAfterTransition()
+            }
+        })
     }
 
-
-    open fun onPostCreate() {
-
+    inner class Configs {
+        var cutoutTextRes: Int = -1
+        val cutoutText: String? = null
+        var mainPageTitleRes: Int = -1
+        var mainPageTitle: String = "Kau test"
+        var libPageTitleRes: Int = -1
+        var libPageTitle: String? = string(R.string.kau_about_libraries_intro)
+        var transitionExitReversed: Int = R.transition.kau_about_return_downward
     }
 
-    /**
-     * Get all the header adapters
-     * The adapters should be listed in the order that they appear,
-     * and if the [libSection] shouldn't be at the end, it should be added in this list
-     */
-    open fun onCreateSections(): List<Pair<String, SectionAdapter<*>>> = listOf(libSection)
+    open fun getLibraries(libs: Libs): List<Library> = libs.prepareLibraries(this, null, null, true, true)
+
+    open val pageCount: Int = 2
+
+    open fun getPage(position: Int, layoutInflater: LayoutInflater, parent: ViewGroup): View {
+        KL.e("Get page $position")
+        return when (position) {
+            0 -> inflateMainPage(layoutInflater, parent)
+            pageCount - 1 -> inflateLibPage(layoutInflater, parent)
+            else -> throw InvalidParameterException()
+        }
+    }
+
+    fun inflateMainPage(layoutInflater: LayoutInflater, parent: ViewGroup): View {
+        val v = layoutInflater.inflate(R.layout.kau_about_section_main, parent, false)
+        postInflateMainPage(
+                v.findViewById<KauCutoutTextView>(R.id.about_main_cutout),
+                v.findViewById<FrameLayout>(R.id.about_main_bottom_container),
+                v.findViewById<TextView>(R.id.about_main_bottom_text)
+        )
+        return v
+    }
+
+    open fun postInflateMainPage(cutout: KauCutoutTextView, bottomContainer: FrameLayout, bottomText: TextView) {
+        with (configs) {
+            cutout.text = string(cutoutTextRes, cutoutText)
+            bottomText.text = string(mainPageTitleRes, mainPageTitle)
+        }
+    }
+
+    fun inflateLibPage(layoutInflater: LayoutInflater, parent: ViewGroup): View {
+        val v = layoutInflater.inflate(R.layout.kau_about_section_libraries, parent, false)
+        postInflateLibPage(
+                v.findViewById<TextView>(R.id.about_library_title),
+                v.findViewById<RecyclerView>(R.id.about_library_recycler)
+        )
+        return v
+    }
+
+    open fun postInflateLibPage(title: TextView, recycler: RecyclerView) {
+        title.text = string(configs.libPageTitleRes, configs.libPageTitle)
+        val libAdapter = FastItemAdapter<LibraryItem>()
+        with(recycler) {
+            layoutManager = LinearLayoutManager(this@AboutActivityBase)
+            adapter = libAdapter
+        }
+        doAsync {
+            val libs = getLibraries(Libs(this@AboutActivityBase, Libs.toStringArray(rClass.fields))).map { LibraryItem(it) }
+            uiThread { libAdapter.add(libs) }
+        }
+    }
+
+    inner class AboutPagerAdapter : PagerAdapter() {
+
+        private val layoutInflater: LayoutInflater = LayoutInflater.from(this@AboutActivityBase)
+        private val views = Array<View?>(pageCount) { null }
+
+        override fun instantiateItem(collection: ViewGroup, position: Int): Any {
+            val layout = getPage(position, collection)
+            KL.e("Add view")
+            collection.addView(layout)
+            return layout
+        }
+
+        override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
+            collection.removeView(view as View)
+            views[position] = null
+        }
+
+        override fun getCount(): Int = pageCount
+
+        override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
+
+        private fun getPage(position: Int, parent: ViewGroup): View {
+            KL.e("Create page $position ${views[position] == null}")
+            if (views[position] == null) views[position] = getPage(position, layoutInflater, parent)
+            return views[position]!!
+        }
+    }
 }

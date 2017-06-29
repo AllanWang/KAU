@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rippleForegroundListenerView"
+    android:id="@+id/lib_item_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginTop="8dp"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp"
     android:clickable="true"
     android:foreground="?selectableItemBackground"
     android:layoutDirection="ltr">
@@ -25,7 +25,7 @@
             android:paddingRight="8dp">
 
             <TextView
-                android:id="@+id/libraryName"
+                android:id="@+id/lib_item_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -37,7 +37,7 @@
                 tools:text="Library name" />
 
             <TextView
-                android:id="@+id/libraryCreator"
+                android:id="@+id/lib_item_author"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -46,17 +46,17 @@
                 android:maxLines="2"
                 android:textSize="@dimen/textSizeSmall_openSource"
                 android:textStyle="normal"
-                tools:text="Creator" />
+                tools:text="Author" />
         </LinearLayout>
 
         <View
-            android:id="@+id/libraryDescriptionDivider"
+            android:id="@+id/lib_item_top_divider"
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="4dp" />
 
         <TextView
-            android:id="@+id/libraryDescription"
+            android:id="@+id/lib_item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="20"
@@ -66,13 +66,13 @@
             tools:text="Description"/>
 
         <View
-            android:id="@+id/libraryBottomDivider"
+            android:id="@+id/lib_item_bottom_divider"
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="4dp" />
 
         <LinearLayout
-            android:id="@+id/libraryBottomContainer"
+            android:id="@+id/lib_item_bottom_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -82,7 +82,7 @@
             android:paddingTop="4dp">
 
             <TextView
-                android:id="@+id/libraryVersion"
+                android:id="@+id/lib_item_version"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -93,7 +93,7 @@
                 tools:text="Version" />
 
             <TextView
-                android:id="@+id/libraryLicense"
+                android:id="@+id/lib_item_license"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

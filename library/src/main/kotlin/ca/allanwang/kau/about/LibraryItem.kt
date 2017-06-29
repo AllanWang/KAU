@@ -66,16 +66,16 @@ class LibraryItem(val lib: Library) : AbstractItem<LibraryItem, LibraryItem.View
     override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val card: CardView by bindView(R.id.rippleForegroundListenerView)
-        val name: TextView by bindView(R.id.libraryName)
-        val creator: TextView by bindView(R.id.libraryCreator)
-        val description: TextView by bindView(R.id.libraryDescription)
-        val version: TextView by bindView(R.id.libraryVersion)
-        val license: TextView by bindView(R.id.libraryLicense)
-        val bottomContainer: LinearLayout by bindView(R.id.libraryBottomContainer)
+        val card: CardView by bindView(R.id.lib_item_card)
+        val name: TextView by bindView(R.id.lib_item_name)
+        val creator: TextView by bindView(R.id.lib_item_author)
+        val description: TextView by bindView(R.id.lib_item_description)
+        val version: TextView by bindView(R.id.lib_item_version)
+        val license: TextView by bindView(R.id.lib_item_license)
+        val bottomContainer: LinearLayout by bindView(R.id.lib_item_bottom_container)
 
-        val divider: View by bindView(R.id.libraryDescriptionDivider)
-        val bottomDivider: View by bindView(R.id.libraryBottomDivider)
+        val divider: View by bindView(R.id.lib_item_top_divider)
+        val bottomDivider: View by bindView(R.id.lib_item_bottom_divider)
     }
 
 }

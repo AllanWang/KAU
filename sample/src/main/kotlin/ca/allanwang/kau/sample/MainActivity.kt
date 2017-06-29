@@ -3,7 +3,6 @@ package ca.allanwang.kau.sample
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import ca.allanwang.kau.about.AboutActivityBase
 import ca.allanwang.kau.email.sendEmail
 import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.KPrefActivity
@@ -150,7 +149,7 @@ class MainActivity : KPrefActivity() {
         plainText(R.string.kau_lorem_ipsum) {
             onClick = {
                 _, _, _ ->
-                startActivity(AboutActivity::class.java)
+                startActivity(AboutActivity2::class.java, transition = true)
                 false
             }
         }

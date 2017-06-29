@@ -9,7 +9,7 @@ import kotlin.reflect.KProperty
  * Lazy delegate that can be invalidated if needed
  * https://stackoverflow.com/a/37294840/4407321
  */
-private object UNINITIALIZED
+internal object UNINITIALIZED
 
 fun <T : Any> lazyResettable(initializer: () -> T): LazyResettable<T> = LazyResettable<T>(initializer)
 

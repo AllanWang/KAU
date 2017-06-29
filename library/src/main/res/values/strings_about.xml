@@ -7,8 +7,15 @@
     <string name="library_kau_authorWebsite" tools:ignore="ResourceName">https://www.allanwang.ca/dev/</string>
     <!-- Library section -->
     <string name="library_kau_libraryName" tools:ignore="ResourceName">KAU</string>
-    <string name="library_kau_libraryDescription" tools:ignore="ResourceName">An extensive collection of Kotlin Android Utilities.</string>
-    <string name="library_kau_libraryWebsite" tools:ignore="ResourceName">https://github.com/AllanWang/KAU</string>
+    <string name="library_kau_libraryDescription" tools:ignore="ResourceName">
+        <![CDATA[
+          An extensive collection of Kotlin Android Utilities.
+          <br/><br/>
+          KAU aims to make many common functions executable in one line. It adds numerous extensions to match Kotlin\'s DSL,
+          and supports completely customizable view groups that are used in almost any app project.
+          ]]>
+    </string>
+    <string name="library_kau_libraryWebsite" tools:ignore="ResourceName">https://allanwang.github.io/KAU/</string>
     <string name="library_kau_libraryVersion" tools:ignore="ResourceName">1.3</string>
     <!-- OpenSource section -->
     <string name="library_kau_isOpenSource" tools:ignore="ResourceName">true</string>

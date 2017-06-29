@@ -14,4 +14,27 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="KauInkPageIndicator">
+        <attr name="kau_dotDiameter" format="dimension" />
+        <attr name="kau_dotGap" format="dimension" />
+        <attr name="kau_animationDuration" format="integer" />
+        <attr name="kau_pageIndicatorColor" format="color" />
+        <attr name="kau_currentPageIndicatorColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="KauElasticDragDismissFrameLayout">
+        <attr name="kau_dragDismissDistance" format="dimension" />
+        <attr name="kau_dragDismissFraction" format="float" />
+        <attr name="kau_dragDismissScale" format="float" />
+        <attr name="kau_dragElasticity" format="float" />
+    </declare-styleable>
+
+    <declare-styleable name="KauCutoutTextView">
+        <attr name="kau_foregroundColor" format="color" />
+        <attr name="android:text" />
+        <attr name="android:minHeight" />
+        <attr name="kau_heightPercentageToScreen" format="float" />
+        <attr name="kau_font" format="string" />
+    </declare-styleable>
+
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:nestedScrollingEnabled="true"
+    tools:showIn="@layout/kau_activity_about">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/about_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ca.allanwang.kau.views.KauCutoutTextView
+            android:id="@+id/about_main_cutout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/kau_about_header_height"
+            android:minHeight="@dimen/kau_about_header_height"
+            app:kau_foregroundColor="?android:colorAccent"
+            app:kau_heightPercentageToScreen="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/about_main_bottom_container"
+            android:layout_width="0dp"
+            android:layout_height="2000dp"
+            android:background="?android:attr/colorBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/about_main_cutout">
+
+            <TextView
+                android:id="@+id/about_main_bottom_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/activity_horizontal_margin" />
+
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

@@ -5,21 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ca.allanwang.kau.views.RippleCanvas
-        android:id="@+id/kau_toolbar_ripple"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/kau_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <android.support.v7.widget.Toolbar
-        android:id="@id/kau_toolbar"
+        android:id="@+id/kau_toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="@dimen/kau_status_bar_height"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,21 +18,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:kau_animation_type="slide_horizontal" />
+            app:kau_animation_type="slide_vertical" />
 
     </android.support.v7.widget.Toolbar>
 
-    <ca.allanwang.kau.views.RippleCanvas
-        android:id="@+id/kau_ripple"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/kau_toolbar" />
-
-    <ViewAnimator
-        android:id="@+id/kau_holder"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/kau_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

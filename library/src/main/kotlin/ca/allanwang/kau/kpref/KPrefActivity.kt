@@ -17,7 +17,7 @@ import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.resolveColor
 import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.string
-import ca.allanwang.kau.views.KauTextSlider
+import ca.allanwang.kau.widgets.KauTextSlider
 import ca.allanwang.kau.views.RippleCanvas
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 

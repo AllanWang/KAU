@@ -2,13 +2,16 @@ package ca.allanwang.kau.utils
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Context
 import android.support.annotation.StringRes
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.Interpolator
 import android.widget.TextView
+import ca.allanwang.kau.kotlin.lazyContext
 
 /**
  * Created by Allan Wang on 2017-06-01.
@@ -18,7 +21,7 @@ import android.widget.TextView
 @KauUtils fun View.rootCircularReveal(x: Int = 0, y: Int = 0, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     this.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
         override @KauUtils fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
-                                    oldRight: Int, oldBottom: Int) {
+                                              oldRight: Int, oldBottom: Int) {
             v.removeOnLayoutChangeListener(this)
             var x2 = x
             var y2 = y
@@ -148,4 +151,3 @@ import android.widget.TextView
 }
 
 @KauUtils fun TextView.setTextWithFade(@StringRes textId: Int, duration: Long = 200, onFinish: (() -> Unit)? = null) = setTextWithFade(context.getString(textId), duration, onFinish)
-

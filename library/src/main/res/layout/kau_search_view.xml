@@ -8,7 +8,7 @@
         android:id="@+id/search_shadow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/kau_search_full_shadow"
+        android:background="@color/kau_shadow_overlay"
         android:visibility="gone" />
 
     <ca.allanwang.kau.views.KauBoundedCardView

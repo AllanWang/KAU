@@ -2,6 +2,8 @@ package ca.allanwang.kau.utils
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Outline
+import android.graphics.Rect
 import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -9,9 +11,11 @@ import android.support.transition.AutoTransition
 import android.support.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.views.createSimpleRippleDrawable
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
@@ -79,3 +83,20 @@ fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, 
 
 @KauUtils val View.parentViewGroup: ViewGroup
     get() = parent as ViewGroup
+
+@KauUtils val View.parentVisibleHeight: Int
+    get() {
+        val r = Rect()
+        parentViewGroup.getWindowVisibleDisplayFrame(r)
+        return r.height()
+    }
+
+val CIRCULAR_OUTLINE: ViewOutlineProvider = object : ViewOutlineProvider() {
+    override fun getOutline(view: View, outline: Outline) {
+        KL.d("CIRCULAR OUTLINE")
+        outline.setOval(view.paddingLeft,
+                view.paddingTop,
+                view.width - view.paddingRight,
+                view.height - view.paddingBottom)
+    }
+}
