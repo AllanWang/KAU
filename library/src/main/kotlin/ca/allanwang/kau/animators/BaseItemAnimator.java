@@ -63,7 +63,7 @@ public abstract class BaseItemAnimator extends SimpleItemAnimator {
     ArrayList<ViewHolder> mRemoveAnimations = new ArrayList<>();
     ArrayList<ViewHolder> mChangeAnimations = new ArrayList<>();
 
-    Interpolator interpolator;
+    public Interpolator interpolator;
 
     private static class MoveInfo {
         public ViewHolder holder;

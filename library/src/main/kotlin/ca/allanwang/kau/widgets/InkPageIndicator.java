@@ -27,6 +27,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -37,6 +38,7 @@ import java.util.Arrays;
 
 import ca.allanwang.kau.R;
 import ca.allanwang.kau.utils.AnimHolder;
+import ca.allanwang.kau.utils.ColorUtilsKt;
 
 /**
  * An ink inspired widget for indicating pages in a {@link ViewPager}.
@@ -61,6 +63,13 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     private long animDuration;
     private int unselectedColour;
     private int selectedColour;
+
+    public void setColour(@ColorInt int color) {
+        selectedColour = color;
+        unselectedColour = ColorUtilsKt.adjustAlpha(color, 0.5f);
+        selectedPaint.setColor(selectedColour);
+        unselectedPaint.setColor(unselectedColour);
+    }
 
     // derived from attributes
     private float dotRadius;

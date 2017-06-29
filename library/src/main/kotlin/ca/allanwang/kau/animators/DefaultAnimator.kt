@@ -7,6 +7,7 @@ import android.view.ViewPropertyAnimator
  * Created by Allan Wang on 2017-06-27.
  */
 open class DefaultAnimator : BaseItemAnimator() {
+
     override fun removeAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator {
         return holder.itemView.animate().apply {
             alpha(0f)

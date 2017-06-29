@@ -3,6 +3,8 @@ package ca.allanwang.kau.iitems
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import ca.allanwang.kau.R
+import ca.allanwang.kau.adapters.ThemableIItem
+import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.views.CutoutView
 import com.mikepenz.fastadapter.items.AbstractItem
@@ -12,7 +14,8 @@ import com.mikepenz.fastadapter.items.AbstractItem
  *
  * Just a cutout item with some defaults in [R.layout.kau_iitem_cutout]
  */
-class CutoutIItem(val config: CutoutView.() -> Unit = {}) : AbstractItem<CutoutIItem, CutoutIItem.ViewHolder>() {
+class CutoutIItem(val config: CutoutView.() -> Unit = {}
+) : AbstractItem<CutoutIItem, CutoutIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
 
     override fun getType(): Int = R.id.kau_item_cutout
 
@@ -23,6 +26,7 @@ class CutoutIItem(val config: CutoutView.() -> Unit = {}) : AbstractItem<CutoutI
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
         super.bindView(holder, payloads)
         with(holder) {
+            if (accentColor != null && themeEnabled) cutout.foregroundColor = accentColor!!
             cutout.config()
         }
     }

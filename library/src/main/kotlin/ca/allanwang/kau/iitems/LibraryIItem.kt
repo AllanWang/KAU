@@ -1,32 +1,29 @@
 package ca.allanwang.kau.iitems
 
-/**
- * Created by Allan Wang on 2017-06-27.
- */
-
 import android.os.Build
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.TextView
 import ca.allanwang.kau.R
+import ca.allanwang.kau.adapters.ThemableIItem
+import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.gone
 import ca.allanwang.kau.utils.visible
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.items.AbstractItem
 
-
 /**
- * Created by mikepenz on 28.12.15.
+ * Created by Allan Wang on 2017-06-27.
  */
-class LibraryIItem(val lib: Library) : AbstractItem<LibraryIItem, LibraryIItem.ViewHolder>() {
+class LibraryIItem(val lib: Library
+) : AbstractItem<LibraryIItem, LibraryIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
 
-    override fun getType(): Int = R.id.kau_item_about_library
+    override fun getType(): Int = R.id.kau_item_library
 
-    override fun getLayoutRes(): Int = R.layout.kau_about_iitem_library
+    override fun getLayoutRes(): Int = R.layout.kau_iitem_library
 
     override fun isSelectable(): Boolean = false
 
@@ -40,26 +37,31 @@ class LibraryIItem(val lib: Library) : AbstractItem<LibraryIItem, LibraryIItem.V
                 Html.fromHtml(lib.libraryDescription, Html.FROM_HTML_MODE_LEGACY)
             else Html.fromHtml(lib.libraryDescription)
             bottomDivider.gone()
-            bottomContainer.gone()
             if (lib.libraryVersion?.isNotBlank() ?: false) {
                 bottomDivider.visible()
-                bottomContainer.visible()
-                version.text = lib.libraryVersion
+                version.visible().text = lib.libraryVersion
             }
             if (lib.license?.licenseName?.isNotBlank() ?: false) {
                 bottomDivider.visible()
-                bottomContainer.visible()
-                license.text = lib.license?.licenseName
+                license.visible().text = lib.license?.licenseName
             }
+            bindTextColor(name, creator)
+            bindTextColorSecondary(description)
+            bindAccentColor(license, version)
+            bindDividerColor(divider, bottomDivider)
+            bindBackgroundColor(card)
         }
     }
 
     override fun unbindView(holder: ViewHolder) {
         super.unbindView(holder)
-        with (holder) {
+        with(holder) {
             name.text = null
             creator.text = null
             description.text = null
+            bottomDivider.gone()
+            version.gone().text = null
+            license.gone().text = null
         }
     }
 
@@ -72,8 +74,6 @@ class LibraryIItem(val lib: Library) : AbstractItem<LibraryIItem, LibraryIItem.V
         val description: TextView by bindView(R.id.lib_item_description)
         val version: TextView by bindView(R.id.lib_item_version)
         val license: TextView by bindView(R.id.lib_item_license)
-        val bottomContainer: LinearLayout by bindView(R.id.lib_item_bottom_container)
-
         val divider: View by bindView(R.id.lib_item_top_divider)
         val bottomDivider: View by bindView(R.id.lib_item_bottom_divider)
     }

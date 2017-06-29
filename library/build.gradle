@@ -40,7 +40,7 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
     compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_LIBS}"
@@ -67,12 +67,8 @@ dependencies {
 
     compile "io.reactivex.rxjava2:rxkotlin:${RX_JAVA}"
     compile "io.reactivex.rxjava2:rxandroid:${RX_ANDROID}"
-    compile ("com.jakewharton.rxbinding2:rxbinding-kotlin:${RX_BINDING}") {
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
-    }
-    compile ("com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:${RX_BINDING}") {
-        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'
-    }
+    compile "com.jakewharton.rxbinding2:rxbinding-kotlin:${RX_BINDING}"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:${RX_BINDING}"
 
     compile("com.mikepenz:aboutlibraries:${ABOUT_LIBRARIES}@aar") {
         transitive = true

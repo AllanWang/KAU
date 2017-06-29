@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Handler
 import android.os.Looper
 import android.support.annotation.IntRange
 import ca.allanwang.kau.R
@@ -79,4 +80,30 @@ annotation class KauUtils
     setBounds(0, 0, canvas.width, canvas.height)
     draw(canvas)
     return bitmap
+}
+
+/**
+ * Use block for autocloseables
+ */
+inline fun <T : AutoCloseable, R> T.use(block: (T) -> R): R {
+    var closed = false
+    try {
+        return block(this)
+    } catch (e: Exception) {
+        closed = true
+        try {
+            close()
+        } catch (closeException: Exception) {
+            e.addSuppressed(closeException)
+        }
+        throw e
+    } finally {
+        if (!closed) {
+            close()
+        }
+    }
+}
+
+fun postDelayed(delay: Long, action: () -> Unit) {
+    Handler().postDelayed(action, delay)
 }

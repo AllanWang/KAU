@@ -14,7 +14,11 @@ import android.widget.TextView
 import ca.allanwang.kau.R
 import ca.allanwang.kau.utils.bindOptionalView
 import ca.allanwang.kau.utils.bindView
+import ca.allanwang.kau.utils.materialDialog
+import ca.allanwang.kau.utils.use
 import com.afollestad.materialdialogs.MaterialDialog
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import org.xmlpull.v1.XmlPullParser
 import java.util.*
 
@@ -24,20 +28,17 @@ import java.util.*
  */
 
 fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null, customize: MaterialDialog.Builder.() -> Unit = {}) {
-    val mHandler = Handler()
-    Thread(Runnable {
-        val items = parse(this, xmlRes)
-        mHandler.post(object : TimerTask() {
-            override fun run() {
-                val builder = MaterialDialog.Builder(this@showChangelog)
-                        .title(R.string.kau_changelog)
-                        .positiveText(R.string.kau_great)
-                        .adapter(ChangelogAdapter(items, textColor), null)
-                builder.customize()
-                builder.show()
+    doAsync {
+        val items = parse(this@showChangelog, xmlRes)
+        uiThread {
+            materialDialog {
+                title(R.string.kau_changelog)
+                positiveText(R.string.kau_great)
+                adapter(ChangelogAdapter(items, textColor), null)
+                customize()
             }
-        })
-    }).start()
+        }
+    }
 }
 
 /**
@@ -72,7 +73,7 @@ internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @C
 internal fun parse(context: Context, @XmlRes xmlRes: Int): List<Pair<String, ChangelogType>> {
     val items = mutableListOf<Pair<String, ChangelogType>>()
     context.resources.getXml(xmlRes).use {
-        parser ->
+        parser: XmlResourceParser ->
         var eventType = parser.eventType
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG)

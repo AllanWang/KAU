@@ -1,7 +1,5 @@
 package ca.allanwang.kau.utils
 
-import android.view.animation.AnimationUtils
-import ca.allanwang.kau.kotlin.lazyContext
 import ca.allanwang.kau.kotlin.lazyInterpolator
 
 /**
@@ -12,5 +10,6 @@ import ca.allanwang.kau.kotlin.lazyInterpolator
 object AnimHolder {
 
     val fastOutSlowInInterpolator = lazyInterpolator(android.R.interpolator.fast_out_linear_in)
+    val decelerateInterpolator = lazyInterpolator(android.R.interpolator.decelerate_cubic)
 
 }

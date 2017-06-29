@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import ca.allanwang.kau.R
+import ca.allanwang.kau.adapters.ThemableIItem
+import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.items.AbstractItem
@@ -22,8 +24,8 @@ import com.mikepenz.iconics.typeface.IIcon
  * Simple generic card item with an icon, title, description and button
  * The icon and button are hidden by default unless values are given
  */
-class CardIItem(val builder: Config.() -> Unit = {}) : AbstractItem<CardIItem, CardIItem.ViewHolder>() {
-
+class CardIItem(val builder: Config.() -> Unit = {}
+) : AbstractItem<CardIItem, CardIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindClickEvents(fastAdapter: FastAdapter<CardIItem>) {
@@ -86,6 +88,13 @@ class CardIItem(val builder: Config.() -> Unit = {}) : AbstractItem<CardIItem, C
                         else image
                 )
                 holder.card.setOnClickListener(cardClick)
+            }
+            with(holder) {
+                bindTextColor(title)
+                bindTextColorSecondary(description)
+                bindAccentColor(button)
+                if (configs.imageIIcon != null) bindIconColor(icon)
+                bindBackgroundColor(card)
             }
         }
     }
