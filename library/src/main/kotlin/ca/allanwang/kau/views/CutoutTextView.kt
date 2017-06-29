@@ -18,16 +18,17 @@ package ca.allanwang.kau.views
 
 import android.content.Context
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
 import ca.allanwang.kau.R
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.getFont
 import ca.allanwang.kau.utils.parentVisibleHeight
+import ca.allanwang.kau.utils.toBitmap
 
 /**
  * A view which punches out some text from an opaque color block, allowing you to see through it.
@@ -35,14 +36,34 @@ import ca.allanwang.kau.utils.parentVisibleHeight
 class CutoutTextView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    companion object {
+        const val PHI = 1.6182f
+        const val TYPE_TEXT = 100
+        const val TYPE_DRAWABLE = 101
+    }
+
     private val textPaint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
+    private val bitmapPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var bitmapScaling: Float = 1f
     private var cutout: Bitmap? = null
     var foregroundColor = Color.MAGENTA
     var text: String? = "Text"
-    var overlayType: Int = 0 //todo add vector overlay options
+        set(value) {
+            field = value
+            if (value != null) cutoutType = TYPE_TEXT
+            else if (drawable != null) cutoutType = TYPE_DRAWABLE
+        }
+    var cutoutType: Int = TYPE_TEXT
     private var textSize: Float = 0f
-    private var textY: Float = 0f
-    private var textX: Float = 0f
+    private var cutoutY: Float = 0f
+    private var cutoutX: Float = 0f
+    private var drawable: Drawable? = null
+        set(value) {
+            field = value
+            if (value != null) cutoutType = TYPE_DRAWABLE
+            else if (text != null) cutoutType = TYPE_TEXT
+        }
     private var heightPercentage: Float = 0f
     private var minHeight: Float = 0f
     private val maxTextSize: Float
@@ -63,9 +84,15 @@ class CutoutTextView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        calculateTextPosition()
+        calculatePosition()
         createBitmap()
-        KL.d("Size changed")
+    }
+
+    private fun calculatePosition() {
+        when (cutoutType) {
+            TYPE_TEXT -> calculateTextPosition()
+            TYPE_DRAWABLE -> calculateImagePosition()
+        }
     }
 
     private fun calculateTextPosition() {
@@ -75,11 +102,20 @@ class CutoutTextView @JvmOverloads constructor(
         textPaint.textSize = textSize
 
         // measuring text is fun :] see: https://chris.banes.me/2014/03/27/measuring-text/
-        textX = (width - textPaint.measureText(text)) / 2
+        cutoutX = (width - textPaint.measureText(text)) / 2
         val textBounds = Rect()
         textPaint.getTextBounds(text, 0, text!!.length, textBounds)
         val textHeight = textBounds.height().toFloat()
-        textY = (height + textHeight) / 2
+        cutoutY = (height + textHeight) / 2
+    }
+
+    private fun calculateImagePosition() {
+        if (drawable!!.intrinsicHeight <= 0 || drawable!!.intrinsicWidth <= 0) throw IllegalArgumentException("Drawable's intrinsic size cannot be less than 0")
+        val targetWidth = width / PHI
+        val targetHeight = height / PHI
+        bitmapScaling = Math.min(targetHeight / drawable!!.intrinsicHeight, targetWidth / drawable!!.intrinsicWidth)
+        cutoutX = (width - drawable!!.intrinsicWidth * bitmapScaling) / 2
+        cutoutY = (height - drawable!!.intrinsicHeight * bitmapScaling) / 2
     }
 
     /**
@@ -130,9 +166,18 @@ class CutoutTextView @JvmOverloads constructor(
         val cutoutCanvas = Canvas(cutout!!)
         cutoutCanvas.drawColor(foregroundColor)
 
-        // this is the magic – Clear mode punches out the bitmap
-        textPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-        cutoutCanvas.drawText(text, textX, textY, textPaint)
+        when (cutoutType) {
+            TYPE_TEXT -> {
+                // this is the magic – Clear mode punches out the bitmap
+                textPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                cutoutCanvas.drawText(text, cutoutX, cutoutY, textPaint)
+            }
+            TYPE_DRAWABLE -> {
+                bitmapPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                cutoutCanvas.drawBitmap(drawable!!.toBitmap(bitmapScaling), cutoutX, cutoutY, bitmapPaint)
+            }
+
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -141,7 +186,4 @@ class CutoutTextView @JvmOverloads constructor(
 
     override fun hasOverlappingRendering(): Boolean = true
 
-    companion object {
-        val PHI = 1.6182f
-    }
 }

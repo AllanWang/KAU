@@ -150,7 +150,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
         unselectedPaint.setColor(unselectedColour);
         selectedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         selectedPaint.setColor(selectedColour);
-        interpolator = AnimHolder.INSTANCE.getFastOutSlowInInterpolator().get(context);
+        interpolator = AnimHolder.INSTANCE.getFastOutSlowInInterpolator().invoke(context);
 
         // create paths & rect now – reuse & rewind later
         combinedUnselectedPath = new Path();

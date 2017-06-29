@@ -28,7 +28,7 @@ class LazyContext<out T : Any>(private val initializer: (context: Context) -> T,
         _value = UNINITIALIZED
     }
 
-    operator fun get(context: Context): T {
+    operator fun invoke(context: Context): T {
         val _v1 = _value
         if (_v1 !== UNINITIALIZED)
             @Suppress("UNCHECKED_CAST")

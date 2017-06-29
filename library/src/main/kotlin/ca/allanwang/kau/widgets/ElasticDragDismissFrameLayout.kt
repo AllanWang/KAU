@@ -94,16 +94,17 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
 
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray) {
         // if we're in a drag gesture and the user reverses up the we should take those events
+        KL.e("Pre $dy ${consumed[1]}")
         if (draggingDown && dy > 0 || draggingUp && dy < 0) {
             dragScale(dy)
             consumed[1] = dy
+            KL.e("Pre consumed")
         }
     }
 
     override fun onNestedScroll(target: View, dxConsumed: Int, dyConsumed: Int,
                                 dxUnconsumed: Int, dyUnconsumed: Int) {
         dragScale(dyUnconsumed)
-        KL.e("On $dyUnconsumed")
     }
 
     override fun onStopNestedScroll(child: View) {
@@ -115,7 +116,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
                     .scaleX(1f)
                     .scaleY(1f)
                     .setDuration(200L)
-                    .setInterpolator(AnimHolder.fastOutSlowInInterpolator[context])
+                    .setInterpolator(AnimHolder.fastOutSlowInInterpolator(context))
                     .setListener(null)
                     .start()
             totalDrag = 0f
@@ -144,6 +145,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         if (scroll == 0) return
 
         totalDrag += scroll.toFloat()
+//        KL.e("Drag $scroll $totalDrag")
 
         // track the direction & set the pivot point for scaling
         // don't double track i.e. if start dragging down and then reverse, keep tracking as

@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.string
@@ -67,7 +66,7 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
 
     inner class Configs {
         var cutoutTextRes: Int = -1
-        val cutoutText: String? = null
+        val cutoutText: String? = "KAU" //todo make null
         var mainPageTitleRes: Int = -1
         var mainPageTitle: String = "Kau test"
         var libPageTitleRes: Int = -1
@@ -80,7 +79,6 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
     open val pageCount: Int = 2
 
     open fun getPage(position: Int, layoutInflater: LayoutInflater, parent: ViewGroup): View {
-        KL.e("Get page $position")
         return when (position) {
             0 -> inflateMainPage(layoutInflater, parent)
             pageCount - 1 -> inflateLibPage(layoutInflater, parent)
@@ -134,7 +132,6 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
 
         override fun instantiateItem(collection: ViewGroup, position: Int): Any {
             val layout = getPage(position, collection)
-            KL.e("Add view")
             collection.addView(layout)
             return layout
         }
@@ -149,7 +146,6 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
         override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
 
         private fun getPage(position: Int, parent: ViewGroup): View {
-            KL.e("Create page $position ${views[position] == null}")
             if (views[position] == null) views[position] = getPage(position, layoutInflater, parent)
             return views[position]!!
         }
