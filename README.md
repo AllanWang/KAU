@@ -215,7 +215,7 @@ About Activity aims to fix that by preparing a beautiful overlay activity that d
 <img src="https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_about_activity.gif">
 
 The overlay is heavily based off of the about section in [Plaid](https://github.com/nickbutcher/plaid),
-and adds on the power of [About Libraries](https://github.com/mikepenz/AboutLibraries) to automatically find the dependencies
+and adds on the power of [About Libraries](https://github.com/mikepenz/AboutLibraries) to automatically find the dependencies.
 
 This activity can be easily added by extending `AboutActivityBase`.
 Everything is already prepared, but you can modify the theme or other components through the config DSL or through the open functions.

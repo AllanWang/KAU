@@ -15,7 +15,6 @@ import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate
 import ca.allanwang.kau.animators.FadeScaleAnimator
-import ca.allanwang.kau.iitems.CardIItem
 import ca.allanwang.kau.iitems.CutoutIItem
 import ca.allanwang.kau.iitems.HeaderIItem
 import ca.allanwang.kau.iitems.LibraryIItem
@@ -107,7 +106,7 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
         var cutoutDrawable: Drawable? = null
         var cutoutForeground: Int? = null
         var libPageTitleRes: Int = -1
-        var libPageTitle: String? = string(R.string.kau_about_libraries_intro)
+        var libPageTitle: String? = string(R.string.kau_about_libraries_intro) //This is in the string by default since it's lower priority
         /**
          * Transition to be called if the view is dragged down
          */
@@ -152,6 +151,10 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
         return recycler
     }
 
+    /**
+     * Open hook called just before the main page view is returned
+     * Feel free to add your own items to the adapter in here
+     */
     open fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*, *>>) {
 
     }
@@ -216,7 +219,11 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
         }
     }
 
-    internal fun addLibItems() {
+    /**
+     * Function that is called when the view is ready to add the lib items
+     * Feel free to add your own items here
+     */
+    open fun addLibItems() {
         libAdapter.add(HeaderIItem(text = configs.libPageTitle, textRes = configs.libPageTitleRes))
                 .add(libItems)
     }
