@@ -7,11 +7,11 @@
     -->
 
     <version title="v1.4"/>
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
+    <item text="Added about activities" />
+    <item text="Added animated fast item adapter" />
+    <item text="Added chained adapter" />
+    <item text="Added item animators" />
+    <item text="Ported some views over from Plaid" />
     <item text="" />
     <item text="" />
 

@@ -42,6 +42,7 @@ dependencies {
 * [Changelog XML](#changelog)
 * [Search View](#search-view)
 * [Ripple Canvas](#ripple-canvas)
+* [About Activity](#about-activity)
 * [Timber Logger](#timber-logger)
 * [Extensions](#extensions)
 * [Email Builder](#email-builder)
@@ -203,6 +204,24 @@ They can be used as transitions, or as a toolbar background to replicate the loo
 
 Many ripples can be stacked on top of each other to run at the same time from different locations.
 The canvas also supports color fading and direct color setting so it can effectively replace any background.
+
+<a name="about-activity"></a>
+## About Activity
+
+Most apps could not be possible without the collective efforts of other developers and their libraries.
+It's always nice to give credit where credit is due, but it's not always at the top of ones agenda.
+About Activity aims to fix that by preparing a beautiful overlay activity that does just that.
+
+<img src="https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_about_activity.gif">
+
+The overlay is heavily based off of the about section in [Plaid](https://github.com/nickbutcher/plaid),
+and adds on the power of [About Libraries](https://github.com/mikepenz/AboutLibraries) to automatically find the dependencies
+
+This activity can be easily added by extending `AboutActivityBase`.
+Everything is already prepared, but you can modify the theme or other components through the config DSL or through the open functions.
+There are also numerous iitem cards already prepared if you wish to add that in your main view.
+
+Be sure to include the activity in your Manifest and have it extend `Kau.Translucent.About`, or any other style that achieves the same look.
 
 <a name="timber-logger"></a>
 ## Timber Logger
