@@ -18,7 +18,7 @@ import ca.allanwang.kau.utils.string
 /**
  * Created by Allan Wang on 2017-06-20.
  */
-class EmailBuilder(@StringRes val emailId: Int, @StringRes val subjectId: Int) {
+class EmailBuilder(val email: String, val subject: String) {
     var message: String = "Write here."
     var deviceDetails: Boolean = true
     var appInfo: Boolean = true
@@ -33,8 +33,8 @@ class EmailBuilder(@StringRes val emailId: Int, @StringRes val subjectId: Int) {
     data class Package(val packageName: String, val appName: String)
 
     fun execute(context: Context) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + context.string(emailId)))
-        intent.putExtra(Intent.EXTRA_SUBJECT, context.string(subjectId))
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:$email"))
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
         val emailBuilder = StringBuilder()
         emailBuilder.append(message).append("\n\n")
         if (deviceDetails) {
@@ -50,7 +50,7 @@ class EmailBuilder(@StringRes val emailId: Int, @StringRes val subjectId: Int) {
                 context.windowManager.defaultDisplay.getMetrics(metric)
                 deviceItems.put("Screen Dimensions", "${metric.widthPixels} x ${metric.heightPixels}")
             }
-            deviceItems.forEach { k, v -> emailBuilder.append("$k: $v\n") }
+            deviceItems.forEach { (k, v) -> emailBuilder.append("$k: $v\n") }
         }
         if (appInfo) {
             try {
@@ -70,7 +70,7 @@ class EmailBuilder(@StringRes val emailId: Int, @StringRes val subjectId: Int) {
         }
 
         if (pairs.isNotEmpty()) emailBuilder.append("\n")
-        pairs.forEach { k, v -> emailBuilder.append("$k: $v\n") }
+        pairs.forEach { (k, v) -> emailBuilder.append("$k: $v\n") }
 
         if (footer != null)
             emailBuilder.append("\n").append(footer)
@@ -80,8 +80,12 @@ class EmailBuilder(@StringRes val emailId: Int, @StringRes val subjectId: Int) {
     }
 }
 
-fun Context.sendEmail(@StringRes emailId: Int, @StringRes subjectId: Int, builder: EmailBuilder.() -> Unit = {}) {
-    EmailBuilder(emailId, subjectId).apply {
+fun Context.sendEmail(@StringRes emailId: Int, @StringRes subjectId: Int, builder: EmailBuilder.() -> Unit = {})
+        = sendEmail(string(emailId), string(subjectId), builder)
+
+
+fun Context.sendEmail(email: String, subject: String, builder: EmailBuilder.() -> Unit = {}) {
+    EmailBuilder(email, subject).apply {
         builder()
         execute(this@sendEmail)
     }
