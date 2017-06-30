@@ -31,8 +31,8 @@ class SearchItem(val key: String,
 ) : AbstractItem<SearchItem, SearchItem.ViewHolder>() {
 
     companion object {
-        var foregroundColor: Int = 0xdd000000.toInt()
-        var backgroundColor: Int = 0xfffafafa.toInt()
+        @JvmStatic var foregroundColor: Int = 0xdd000000.toInt()
+        @JvmStatic var backgroundColor: Int = 0xfffafafa.toInt()
     }
 
     var styledContent: SpannableStringBuilder? = null

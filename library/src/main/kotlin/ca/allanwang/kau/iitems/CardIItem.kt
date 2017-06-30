@@ -28,7 +28,7 @@ class CardIItem(val builder: Config.() -> Unit = {}
 ) : AbstractItem<CardIItem, CardIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        fun bindClickEvents(fastAdapter: FastAdapter<CardIItem>) {
+        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<CardIItem>) {
             fastAdapter.withEventHook(object : ClickEventHook<CardIItem>() {
                 override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
                     return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button) else null

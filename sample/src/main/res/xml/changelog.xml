@@ -12,6 +12,8 @@
     <item text="Added chained adapter" />
     <item text="Added item animators" />
     <item text="Ported some views over from Plaid" />
+    <item text="Add string arg option for sendEmail" />
+    <item text="" />
     <item text="" />
     <item text="" />
 
