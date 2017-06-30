@@ -2,11 +2,12 @@
 
 ## v1.4
 * Added about activities
-* Added animated fast item adapter
+* Added themed fast item adapter
 * Added chained adapter
 * Added item animators
 * Ported some views over from Plaid
 * Add string arg option for sendEmail
+* Add many iitems
 
 ## v1.3
 * Added kpref subitems

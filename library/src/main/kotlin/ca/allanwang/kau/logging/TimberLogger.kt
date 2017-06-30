@@ -11,8 +11,9 @@ import timber.log.Timber
 open class TimberLogger(tag: String) {
     internal val TAG = "$tag: %s"
     fun e(s: String) = Timber.e(TAG, s)
-    fun e(t: Throwable) = Timber.e(t, TAG, "error")
+    fun e(t: Throwable, s: String = "error") = Timber.e(t, TAG, s)
     fun d(s: String) = Timber.d(TAG, s)
     fun i(s: String) = Timber.i(TAG, s)
     fun v(s: String) = Timber.v(TAG, s)
+    fun eThrow(s: String) = e(Throwable(s))
 }
