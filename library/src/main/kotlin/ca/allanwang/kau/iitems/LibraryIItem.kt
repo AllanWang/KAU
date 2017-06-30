@@ -11,11 +11,13 @@ import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.gone
+import ca.allanwang.kau.utils.startLink
 import ca.allanwang.kau.utils.visible
+import ca.allanwang.kau.views.createSimpleRippleDrawable
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.items.AbstractItem
-import com.mikepenz.fastadapter.listeners.ClickEventHook
 
 /**
  * Created by Allan Wang on 2017-06-27.
@@ -24,23 +26,17 @@ class LibraryIItem(val lib: Library
 ) : AbstractItem<LibraryIItem, LibraryIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<CardIItem>) {
-            fastAdapter.withEventHook(object : ClickEventHook<CardIItem>() {
-                override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
-                    return if (viewHolder is CardIItem.ViewHolder) listOf(viewHolder.card, viewHolder.button) else null
-                }
-
-                override fun onClick(v: View, position: Int, adapter: FastAdapter<CardIItem>, item: CardIItem) {
-                    with(item.configs) {
-                        when (v.id) {
-                            R.id.kau_card_container -> cardClick?.onClick(v)
-                            R.id.kau_card_button -> buttonClick?.onClick(v)
-                            else -> {
-                            }
-                        }
+        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
+            fastAdapter.withOnClickListener { v, _, item, _ ->
+                if (item !is LibraryIItem) false
+                else {
+                    val c = v.context
+                    with(item.lib) {
+                        c.startLink(libraryWebsite, repositoryLink, authorWebsite)
                     }
+                    true
                 }
-            })
+            }
         }
     }
 
@@ -72,7 +68,7 @@ class LibraryIItem(val lib: Library
             bindTextColorSecondary(description)
             bindAccentColor(license, version)
             bindDividerColor(divider, bottomDivider)
-            bindBackgroundColor(card)
+            bindBackgroundRipple(card)
         }
     }
 

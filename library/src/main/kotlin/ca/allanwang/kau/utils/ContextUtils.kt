@@ -65,6 +65,16 @@ fun Context.startPlayStoreLink(packageId: String) {
     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageId")))
 }
 
+/**
+ * Starts a url
+ * If given a series of links, will open the first one that isn't null
+ */
+fun Context.startLink(vararg url: String?) {
+    val link = url.firstOrNull { !it.isNullOrBlank() } ?: return
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+    startActivity(browserIntent)
+}
+
 //Toast helpers
 fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = toast(this.string(id), duration)
 

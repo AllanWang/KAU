@@ -14,6 +14,7 @@ import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.iconics.typeface.IIcon
@@ -28,13 +29,14 @@ class CardIItem(val builder: Config.() -> Unit = {}
 ) : AbstractItem<CardIItem, CardIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<CardIItem>) {
-            fastAdapter.withEventHook(object : ClickEventHook<CardIItem>() {
+        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*,*>>) {
+            fastAdapter.withEventHook(object : ClickEventHook<IItem<*,*>>() {
                 override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
                     return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button) else null
                 }
 
-                override fun onClick(v: View, position: Int, adapter: FastAdapter<CardIItem>, item: CardIItem) {
+                override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*,*>>, item: IItem<*,*>) {
+                    if (item !is CardIItem) return
                     with(item.configs) {
                         when (v.id) {
                             R.id.kau_card_container -> cardClick?.onClick(v)
@@ -94,7 +96,7 @@ class CardIItem(val builder: Config.() -> Unit = {}
                 bindTextColorSecondary(description)
                 bindAccentColor(button)
                 if (configs.imageIIcon != null) bindIconColor(icon)
-                bindBackgroundColor(card)
+                bindBackgroundRipple(card)
             }
         }
     }

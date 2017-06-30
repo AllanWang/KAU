@@ -79,6 +79,7 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
         setContentView(R.layout.kau_activity_about)
         pageStatus = IntArray(pageCount)
         libAdapter = FastItemThemedAdapter(configs)
+        LibraryIItem.bindClickEvents(libAdapter)
         if (configs.textColor != null) indicator.setColour(configs.textColor!!)
         with(pager) {
             adapter = AboutPagerAdapter()

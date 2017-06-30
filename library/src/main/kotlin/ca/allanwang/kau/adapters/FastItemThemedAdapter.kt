@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import ca.allanwang.kau.utils.adjustAlpha
+import ca.allanwang.kau.views.createSimpleRippleDrawable
 import com.mikepenz.fastadapter.IExpandable
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.ISubItem
@@ -121,7 +122,7 @@ interface ThemableIItemColors {
     var accentColor: Int?
 }
 
-class ThemableIItemColorsDelegate: ThemableIItemColors {
+class ThemableIItemColorsDelegate : ThemableIItemColors {
     override var textColor: Int? = null
     override var backgroundColor: Int? = null
     override var accentColor: Int? = null
@@ -138,6 +139,7 @@ interface ThemableIItem : ThemableIItemColors {
     fun bindDividerColor(vararg views: View)
     fun bindAccentColor(vararg views: TextView)
     fun bindBackgroundColor(vararg views: View)
+    fun bindBackgroundRipple(vararg views: View)
     fun bindIconColor(vararg views: ImageView)
 }
 
@@ -170,6 +172,13 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
     override fun bindBackgroundColor(vararg views: View) {
         val color = backgroundColor ?: return
         views.forEach { it.setBackgroundColor(color) }
+    }
+
+    override fun bindBackgroundRipple(vararg views: View) {
+        val foreground = accentColor ?: textColor ?: return
+        val background = backgroundColor ?: return
+        val ripple = createSimpleRippleDrawable(foreground, background)
+        views.forEach { it.background = ripple }
     }
 
     override fun bindIconColor(vararg views: ImageView) {

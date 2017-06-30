@@ -6,6 +6,7 @@
 * Added chained adapter
 * Added item animators
 * Ported some views over from Plaid
+* Add string arg option for sendEmail
 
 ## v1.3
 * Added kpref subitems
