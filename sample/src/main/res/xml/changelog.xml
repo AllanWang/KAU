@@ -6,6 +6,13 @@
     <item text="" />
     -->
 
+    <version title="v1.5"/>
+    <item text="Change snackbar builder" />
+    <item text="Remove FragmentUtils since the same functionality can be done from ANKO" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+
     <version title="v1.4"/>
     <item text="Added about activities" />
     <item text="Added themed fast item adapter" />
@@ -14,8 +21,6 @@
     <item text="Ported some views over from Plaid" />
     <item text="Add string arg option for sendEmail" />
     <item text="Add many iitems" />
-    <item text="" />
-    <item text="" />
 
     <version title="v1.3"/>
     <item text="Added kpref subitems" />

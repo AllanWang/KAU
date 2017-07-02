@@ -1,3 +1,7 @@
+plugins {
+    id 'com.gladed.androidgitversion' version '0.3.4'
+}
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
@@ -8,11 +12,16 @@ android {
     compileSdkVersion Integer.parseInt(project.TARGET_SDK)
     buildToolsVersion project.BUILD_TOOLS
 
+    androidGitVersion {
+        codeFormat = 'MMNNPP'
+        prefix 'v'
+    }
+
     defaultConfig {
         minSdkVersion Integer.parseInt(project.MIN_SDK)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
-        versionCode Integer.parseInt(project.VERSION_CODE)
-        versionName project.VERSION_NAME
+        versionCode androidGitVersion.code()
+        versionName androidGitVersion.name()
         consumerProguardFiles 'progress-proguard.txt'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

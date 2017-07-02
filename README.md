@@ -232,6 +232,7 @@ Be sure to include the activity in your Manifest and have it extend `Kau.Translu
 ## Extension Functions
 
 > "[Extensions](https://kotlinlang.org/docs/reference/extensions.html) provide the ability to extend a class with new functionality without having to inherit from the class"
+Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of the extensions in its core package is also in KAU.
 
 ### AnimUtils
 > Extends View
