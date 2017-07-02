@@ -6,7 +6,7 @@ import org.jetbrains.anko.bundleOf
 /**
  * Created by Allan Wang on 2017-07-02.
  */
-fun Fragment.withArguments(vararg params:Pair<String, Any>):Fragment {
+fun <T : Fragment> T.withArguments(vararg params: Pair<String, Any>): T {
     arguments = bundleOf(*params)
     return this
 }
