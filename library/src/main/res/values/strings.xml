@@ -11,4 +11,5 @@
     <string name="kau_pref_icon">Pref Icon</string>
 
     <string name="kau_about_libraries_intro">This app would not be possible without the following great libraries.</string>
+    <string name="kau_dependencies_used">Dependencies Used</string>
 </resources>

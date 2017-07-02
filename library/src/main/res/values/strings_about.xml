@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="kau_dependencies_used">Dependencies Used</string>
+    <string name="library_kau_libraryVersion" tools:ignore="ResourceName">1.4</string>
 
     <string name="define_kau" tools:ignore="ResourceName" />
     <!-- Author section -->
@@ -16,7 +16,6 @@
           ]]>
     </string>
     <string name="library_kau_libraryWebsite" tools:ignore="ResourceName">https://allanwang.github.io/KAU/</string>
-    <string name="library_kau_libraryVersion" tools:ignore="ResourceName">1.3</string>
     <!-- OpenSource section -->
     <string name="library_kau_isOpenSource" tools:ignore="ResourceName">true</string>
     <string name="library_kau_repositoryLink" tools:ignore="ResourceName">https://github.com/AllanWang/KAU</string>
