@@ -261,10 +261,6 @@ Be sure to include the activity in your Manifest and have it extend `Kau.Translu
 * Show a Changelog by parsing an xml resource
 * Check if network is available
 
-### FragmentUtils
-> Extends Fragment
-* `withBundle` Directly put extras into a fragment; if a bundle does not exist, it will be created
-
 ### IIconUtils
 > Extends [IIcon](https://github.com/mikepenz/Android-Iconics)
 * `toDrawable` method that only requires a context; defaults to a white icon of size 24dp and uses a ColorStateList to allow for dimming

@@ -1,5 +1,6 @@
 package ca.allanwang.kau.adapters
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -183,6 +184,6 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
 
     override fun bindIconColor(vararg views: ImageView) {
         val color = accentColor ?: textColor ?: return
-        views.forEach { it.drawable.setTint(color) }
+        views.forEach { it.drawable.setTintList(ColorStateList.valueOf(color)) }
     }
 }

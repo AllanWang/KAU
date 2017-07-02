@@ -48,13 +48,13 @@ import com.mikepenz.iconics.typeface.IIcon
 @KauUtils fun View.isInvisible(): Boolean = visibility == View.INVISIBLE
 @KauUtils fun View.isGone(): Boolean = visibility == View.GONE
 
-fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: (Snackbar) -> Unit = {}) {
+fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) {
     val snackbar = Snackbar.make(this, text, duration)
-    builder.invoke(snackbar)
+    snackbar.builder()
     snackbar.show()
 }
 
-fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: (Snackbar) -> Unit = {})
+fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {})
         = snackbar(context.string(textId), duration, builder)
 
 @KauUtils fun TextView.setTextIfValid(@StringRes id: Int) {

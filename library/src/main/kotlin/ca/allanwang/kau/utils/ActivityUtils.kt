@@ -4,9 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.support.annotation.ColorInt
+import android.support.annotation.StringRes
+import android.support.design.widget.Snackbar
 import android.view.Menu
 import ca.allanwang.kau.R
 import com.mikepenz.iconics.typeface.IIcon
+import org.jetbrains.anko.contentView
 
 /**
  * Created by Allan Wang on 2017-06-21.
@@ -58,3 +61,9 @@ fun Activity.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg
 fun Activity.hideKeyboard() = currentFocus.hideKeyboard()
 
 fun Activity.showKeyboard() = currentFocus.showKeyboard()
+
+fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {})
+        = contentView!!.snackbar(text, duration, builder)
+
+fun Activity.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {})
+        = contentView!!.snackbar(textId, duration, builder)
