@@ -6,10 +6,12 @@ import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.view.Menu
 import ca.allanwang.kau.R
 import com.mikepenz.iconics.typeface.IIcon
 import org.jetbrains.anko.contentView
+import org.jetbrains.anko.withArguments
 
 /**
  * Created by Allan Wang on 2017-06-21.
