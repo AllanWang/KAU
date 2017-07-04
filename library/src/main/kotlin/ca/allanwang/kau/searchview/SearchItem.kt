@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import ca.allanwang.kau.R
+import ca.allanwang.kau.iitems.KotlinIItem
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
@@ -28,7 +29,11 @@ class SearchItem(val key: String,
                  val description: String? = null,
                  val iicon: IIcon? = GoogleMaterial.Icon.gmd_search,
                  val image: Drawable? = null
-) : AbstractItem<SearchItem, SearchItem.ViewHolder>() {
+) : KotlinIItem<SearchItem, SearchItem.ViewHolder>(
+        R.id.kau_item_search,
+        R.layout.kau_search_iitem,
+        {ViewHolder(it)}
+) {
 
     companion object {
         @JvmStatic var foregroundColor: Int = 0xdd000000.toInt()
@@ -46,12 +51,6 @@ class SearchItem(val key: String,
         styledContent = SpannableStringBuilder(content)
         styledContent!!.setSpan(StyleSpan(Typeface.BOLD), index, index + subText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
-
-    override fun getLayoutRes(): Int = R.layout.kau_search_iitem
-
-    override fun getType(): Int = R.id.kau_item_search
-
-    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
         super.bindView(holder, payloads)

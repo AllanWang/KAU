@@ -12,6 +12,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import ca.allanwang.kau.R
+import ca.allanwang.kau.adapters.ThemableIItem
+import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.kpref.GlobalOptions
 import ca.allanwang.kau.kpref.KPrefMarker
 import ca.allanwang.kau.utils.*
@@ -24,7 +26,8 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 
-abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>() {
+abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>(),
+        ThemableIItem by ThemableIItemDelegate() {
 
     override final fun getViewHolder(v: View) = ViewHolder(v)
 
@@ -50,6 +53,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
             if (accentColor != null) {
                 icon?.drawable?.setTint(accentColor)
             }
+            bindTextColor(title, desc)
             onPostBindView(this, textColor, accentColor)
         }
     }

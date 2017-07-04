@@ -135,13 +135,13 @@ class ThemableIItemColorsDelegate : ThemableIItemColors {
  */
 interface ThemableIItem : ThemableIItemColors {
     var themeEnabled: Boolean
-    fun bindTextColor(vararg views: TextView)
-    fun bindTextColorSecondary(vararg views: TextView)
-    fun bindDividerColor(vararg views: View)
-    fun bindAccentColor(vararg views: TextView)
-    fun bindBackgroundColor(vararg views: View)
-    fun bindBackgroundRipple(vararg views: View)
-    fun bindIconColor(vararg views: ImageView)
+    fun bindTextColor(vararg views: TextView?)
+    fun bindTextColorSecondary(vararg views: TextView?)
+    fun bindDividerColor(vararg views: View?)
+    fun bindAccentColor(vararg views: TextView?)
+    fun bindBackgroundColor(vararg views: View?)
+    fun bindBackgroundRipple(vararg views: View?)
+    fun bindIconColor(vararg views: ImageView?)
 }
 
 /**
@@ -150,40 +150,40 @@ interface ThemableIItem : ThemableIItemColors {
 class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIItemColorsDelegate() {
     override var themeEnabled: Boolean = true
 
-    override fun bindTextColor(vararg views: TextView) {
+    override fun bindTextColor(vararg views: TextView?) {
         val color = textColor ?: return
-        views.forEach { it.setTextColor(color) }
+        views.forEach { it?.setTextColor(color) }
     }
 
-    override fun bindTextColorSecondary(vararg views: TextView) {
+    override fun bindTextColorSecondary(vararg views: TextView?) {
         val color = textColor?.adjustAlpha(0.8f) ?: return
-        views.forEach { it.setTextColor(color) }
+        views.forEach { it?.setTextColor(color) }
     }
 
-    override fun bindAccentColor(vararg views: TextView) {
+    override fun bindAccentColor(vararg views: TextView?) {
         val color = accentColor ?: textColor ?: return
-        views.forEach { it.setTextColor(color) }
+        views.forEach { it?.setTextColor(color) }
     }
 
-    override fun bindDividerColor(vararg views: View) {
+    override fun bindDividerColor(vararg views: View?) {
         val color = (textColor ?: accentColor)?.adjustAlpha(0.1f) ?: return
-        views.forEach { it.setBackgroundColor(color) }
+        views.forEach { it?.setBackgroundColor(color) }
     }
 
-    override fun bindBackgroundColor(vararg views: View) {
+    override fun bindBackgroundColor(vararg views: View?) {
         val color = backgroundColor ?: return
-        views.forEach { it.setBackgroundColor(color) }
+        views.forEach { it?.setBackgroundColor(color) }
     }
 
-    override fun bindBackgroundRipple(vararg views: View) {
+    override fun bindBackgroundRipple(vararg views: View?) {
         val foreground = accentColor ?: textColor ?: return
         val background = backgroundColor ?: return
         val ripple = createSimpleRippleDrawable(foreground, background)
-        views.forEach { it.background = ripple }
+        views.forEach { it?.background = ripple }
     }
 
-    override fun bindIconColor(vararg views: ImageView) {
+    override fun bindIconColor(vararg views: ImageView?) {
         val color = accentColor ?: textColor ?: return
-        views.forEach { it.drawable.setTintList(ColorStateList.valueOf(color)) }
+        views.forEach { it?.drawable.setTintList(ColorStateList.valueOf(color)) }
     }
 }
