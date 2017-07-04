@@ -3,32 +3,6 @@ package ca.allanwang.kau.permissions
 import android.Manifest
 import android.app.Activity
 import android.content.Context
-import android.Manifest.permission
-import android.Manifest.permission.SYSTEM_ALERT_WINDOW
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.RECEIVE_MMS
-import android.Manifest.permission.RECEIVE_WAP_PUSH
-import android.Manifest.permission.READ_SMS
-import android.Manifest.permission.RECEIVE_SMS
-import android.Manifest.permission.SEND_SMS
-import android.Manifest.permission.BODY_SENSORS
-import android.Manifest.permission.PROCESS_OUTGOING_CALLS
-import android.Manifest.permission.USE_SIP
-import android.Manifest.permission.ADD_VOICEMAIL
-import android.Manifest.permission.WRITE_CALL_LOG
-import android.Manifest.permission.READ_CALL_LOG
-import android.Manifest.permission.CALL_PHONE
-import android.Manifest.permission.READ_PHONE_STATE
-import android.Manifest.permission.RECORD_AUDIO
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.Manifest.permission.GET_ACCOUNTS
-import android.Manifest.permission.WRITE_CONTACTS
-import android.Manifest.permission.READ_CONTACTS
-import android.Manifest.permission.WRITE_CALENDAR
-import android.Manifest.permission.READ_CALENDAR
-
 
 
 /**
@@ -50,7 +24,7 @@ fun Activity.kauOnRequestPermissionsResult(permissions: Array<out String>, grant
  * The [callback] returns [granted], which is true if all permissions are granted
  * [deniedPerm] is the first denied permission, if granted is false
  */
-fun Context.requestPermissions(vararg permissions: String, callback: (granted: Boolean, deniedPerm: String?) -> Unit)
+fun Context.kauRequestPermissions(vararg permissions: String, callback: (granted: Boolean, deniedPerm: String?) -> Unit)
         = PermissionManager(this, permissions, callback)
 
 /**

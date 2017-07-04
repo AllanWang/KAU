@@ -6,7 +6,7 @@ import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
-import ca.allanwang.kau.permissions.requestPermissions
+import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivitySlideOut
 import ca.allanwang.kau.utils.toast
@@ -30,7 +30,7 @@ class AnimActivity : AppCompatActivity() {
                 ).map{ PermissionCheckbox(it) })
         adapter.withOnClickListener { _, _, item, _ ->
             KL.d("Perm Click")
-            requestPermissions(item.permission) {
+            kauRequestPermissions(item.permission) {
                 granted, deniedPerm ->
                 toast("${item.permission} enabled: $granted")
                 adapter.notifyAdapterDataSetChanged()
