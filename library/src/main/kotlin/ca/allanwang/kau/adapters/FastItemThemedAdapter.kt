@@ -184,6 +184,6 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
 
     override fun bindIconColor(vararg views: ImageView?) {
         val color = accentColor ?: textColor ?: return
-        views.forEach { it?.drawable.setTintList(ColorStateList.valueOf(color)) }
+        views.forEach { it?.drawable?.setTintList(ColorStateList.valueOf(color)) }
     }
 }

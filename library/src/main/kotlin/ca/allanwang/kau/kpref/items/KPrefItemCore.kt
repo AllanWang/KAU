@@ -53,7 +53,6 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
             if (accentColor != null) {
                 icon?.drawable?.setTint(accentColor)
             }
-            bindTextColor(title, desc)
             onPostBindView(this, textColor, accentColor)
         }
     }
