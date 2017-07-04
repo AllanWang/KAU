@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -131,13 +132,13 @@ fun Context.resolveString(@AttrRes attr: Int, fallback: String = ""): String {
  * Wrapper function for the MaterialDialog adapterBuilder
  * There is no need to call build() or show() as those are done by default
  */
-fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): MaterialDialog {
+inline fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): MaterialDialog {
     val builder = MaterialDialog.Builder(this)
     builder.action()
     return builder.show()
 }
 
-val Context.isNetworkAvailable: Boolean
+inline val Context.isNetworkAvailable: Boolean
     get() {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
@@ -146,17 +147,19 @@ val Context.isNetworkAvailable: Boolean
 
 fun Context.getDip(value: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
 
-val Context.isRtl: Boolean
+inline val Context.isRtl: Boolean
     get() = resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
 
 /**
  * Determine if the navigation bar will be on the bottom of the screen, based on logic in
  * PhoneWindowManager.
  */
-val Context.isNavBarOnBottom: Boolean
+inline val Context.isNavBarOnBottom: Boolean
     get() {
         val cfg = resources.configuration
         val dm = resources.displayMetrics
         val canMove = dm.widthPixels != dm.heightPixels && cfg.smallestScreenWidthDp < 600
         return !canMove || dm.widthPixels < dm.heightPixels
     }
+
+fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || ContextCompat.checkSelfPermission(this, permissions) == PackageManager.PERMISSION_GRANTED

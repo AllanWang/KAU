@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5
+* Change snackbar builder
+* Change addBundle to withArguments to match ANKO
+
 ## v1.4
 * Added about activities
 * Added themed fast item adapter

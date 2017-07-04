@@ -107,3 +107,5 @@ inline fun <T : AutoCloseable, R> T.use(block: (T) -> R): R {
 fun postDelayed(delay: Long, action: () -> Unit) {
     Handler().postDelayed(action, delay)
 }
+
+class KauException(message: String) : RuntimeException(message)
