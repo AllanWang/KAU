@@ -1,12 +1,10 @@
 package ca.allanwang.kau.sample
 
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import ca.allanwang.kau.logging.KL
-import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
-import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
-import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
-import ca.allanwang.kau.permissions.kauRequestPermissions
+import ca.allanwang.kau.permissions.*
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivitySlideOut
 import ca.allanwang.kau.utils.toast
@@ -27,8 +25,8 @@ class AnimActivity : AppCompatActivity() {
         adapter.add(listOf(
                 PERMISSION_ACCESS_COARSE_LOCATION,
                 PERMISSION_ACCESS_FINE_LOCATION
-                ).map{ PermissionCheckbox(it) })
-        adapter.withOnClickListener { _, _, item, _ ->
+        ).map { PermissionCheckbox(it) })
+        val withOnClickListener = adapter.withOnClickListener { _, _, item, _ ->
             KL.d("Perm Click")
             kauRequestPermissions(item.permission) {
                 granted, deniedPerm ->
@@ -36,6 +34,18 @@ class AnimActivity : AppCompatActivity() {
                 adapter.notifyAdapterDataSetChanged()
             }
             true
+        }
+        kauRequestPermissions(PERMISSION_READ_EXTERNAL_STORAGE) {
+            granted, deniedPerm ->
+            if (!granted) return@kauRequestPermissions
+            val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA, MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.DATE_MODIFIED),
+                    null, null, MediaStore.Images.Media.DEFAULT_SORT_ORDER, null)
+            while (!cursor.isLast) {
+                cursor.moveToNext()
+                KL.d(cursor.getString(1))
+            }
+            cursor.close()
         }
     }
 

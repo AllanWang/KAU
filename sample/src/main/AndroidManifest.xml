@@ -3,6 +3,7 @@
     package="ca.allanwang.kau.sample">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".SampleApp"
