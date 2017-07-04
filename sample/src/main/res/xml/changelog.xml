@@ -9,6 +9,9 @@
     <version title="v1.5"/>
     <item text="Change snackbar builder" />
     <item text="Change addBundle to withArguments to match ANKO" />
+    <item text="Created KauIItem to replace AbstractItem" />
+    <item text="Created permission manager and permission constants" />
+    <item text="" />
     <item text="" />
     <item text="" />
     <item text="" />

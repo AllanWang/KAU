@@ -2,8 +2,14 @@ package ca.allanwang.kau.sample
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import ca.allanwang.kau.logging.KL
+import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
+import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
+import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
+import ca.allanwang.kau.permissions.requestPermissions
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivitySlideOut
+import ca.allanwang.kau.utils.toast
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
@@ -16,14 +22,29 @@ class AnimActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val adapter = FastItemAdapter<KP>
-        val recycler = fullLinearRecycler {
-
+        val adapter = FastItemAdapter<PermissionCheckbox>()
+        setContentView(fullLinearRecycler(adapter))
+        adapter.add(listOf(
+                PERMISSION_ACCESS_COARSE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION
+                ).map{ PermissionCheckbox(it) })
+        adapter.withOnClickListener { _, _, item, _ ->
+            KL.d("Perm Click")
+            requestPermissions(item.permission) {
+                granted, deniedPerm ->
+                toast("${item.permission} enabled: $granted")
+                adapter.notifyAdapterDataSetChanged()
+            }
+            true
         }
-        setContentView(R.layout.sample)
     }
 
     override fun onBackPressed() {
         startActivitySlideOut(MainActivity::class.java)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        kauOnRequestPermissionsResult(permissions, grantResults)
     }
 }

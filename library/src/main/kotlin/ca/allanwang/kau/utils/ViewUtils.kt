@@ -48,7 +48,7 @@ import com.mikepenz.iconics.typeface.IIcon
 @KauUtils fun View.isInvisible(): Boolean = visibility == View.INVISIBLE
 @KauUtils fun View.isGone(): Boolean = visibility == View.GONE
 
-fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}):Snackbar {
+fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}): Snackbar {
     val snackbar = Snackbar.make(this, text, duration)
     snackbar.builder()
     snackbar.show()
@@ -116,10 +116,11 @@ val CIRCULAR_OUTLINE: ViewOutlineProvider = object : ViewOutlineProvider() {
 /**
  * Generates a recycler view with match parent and a linearlayoutmanager, since it's so commonly used
  */
-fun Context.fullLinearRecycler(configs: RecyclerView.() -> Unit = {}): RecyclerView {
+fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, configs: RecyclerView.() -> Unit = {}): RecyclerView {
     return RecyclerView(this).apply {
         layoutManager = LinearLayoutManager(this@fullLinearRecycler)
         layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
+        if (rvAdapter != null) adapter = rvAdapter
         configs()
     }
 }

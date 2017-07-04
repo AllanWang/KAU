@@ -18,6 +18,7 @@ internal object PermissionManager {
     val pendingResults: MutableList<WeakReference<PermissionResult>> by lazy { mutableListOf<WeakReference<PermissionResult>>() }
 
     operator fun invoke(context: Context, permissions: Array<out String>, callback: (granted: Boolean, deniedPerm: String?) -> Unit) {
+        KL.d("Requesting permissions: ${permissions.contentToString()}")
         if (!buildIsMarshmallowAndUp) return callback(true, null)
         val missingPermissions = permissions.filter { !context.hasPermission(it) }
         if (missingPermissions.isEmpty()) return callback(true, null)
@@ -25,15 +26,15 @@ internal object PermissionManager {
         if (!requestInProgress) {
             requestInProgress = true
             requestPermissions(context, missingPermissions.toTypedArray())
-        } else KL.d("Request is postponed since another one is still in progress")
+        } else KL.d("Request is postponed since another one is still in progress; did you remember to override onRequestPermissionsResult?")
     }
 
-    @Synchronized internal fun requestPermissions(context: Context, permissions: Array<String>) {
+    @Synchronized internal fun requestPermissions(context: Context, permissions: Array<out String>) {
         val activity = (context as? Activity) ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
         ActivityCompat.requestPermissions(activity, permissions, 1)
     }
 
-    fun onRequestPermissionsResult(context: Context, permissions: Array<String>, grantResults: IntArray) {
+    fun onRequestPermissionsResult(context: Context, permissions: Array<out String>, grantResults: IntArray) {
         val count = Math.min(permissions.size, grantResults.size)
         val iter = pendingResults.iterator()
         while (iter.hasNext()) {

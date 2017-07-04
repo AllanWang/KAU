@@ -3,6 +3,7 @@
 ## v1.5
 * Change snackbar builder
 * Change addBundle to withArguments to match ANKO
+* Created KauIItem to replace AbstractItem
 
 ## v1.4
 * Added about activities

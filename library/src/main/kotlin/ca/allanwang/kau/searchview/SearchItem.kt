@@ -11,9 +11,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.iitems.KotlinIItem
+import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.utils.*
-import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
 
@@ -29,7 +28,7 @@ class SearchItem(val key: String,
                  val description: String? = null,
                  val iicon: IIcon? = GoogleMaterial.Icon.gmd_search,
                  val image: Drawable? = null
-) : KotlinIItem<SearchItem, SearchItem.ViewHolder>(
+) : KauIItem<SearchItem, SearchItem.ViewHolder>(
         R.id.kau_item_search,
         R.layout.kau_search_iitem,
         {ViewHolder(it)}

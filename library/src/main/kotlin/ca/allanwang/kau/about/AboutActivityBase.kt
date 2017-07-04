@@ -138,7 +138,7 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
      */
     open fun inflateMainPage(layoutInflater: LayoutInflater, parent: ViewGroup, position: Int): View {
         val fastAdapter = FastItemThemedAdapter<IItem<*, *>>(configs)
-        val recycler = fullLinearRecycler { adapter = fastAdapter }
+        val recycler = fullLinearRecycler(fastAdapter)
         fastAdapter.add(CutoutIItem {
             with(configs) {
                 text = string(cutoutTextRes, cutoutText)

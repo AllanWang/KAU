@@ -12,7 +12,7 @@ import com.mikepenz.fastadapter.items.AbstractItem
  *
  * Kotlin implementation of the [AbstractItem] to make things shorter
  */
-open class KotlinIItem<Item, VH : RecyclerView.ViewHolder>(
+open class KauIItem<Item, VH : RecyclerView.ViewHolder>(
         private val type: Int,
         @param:LayoutRes private val layoutRes: Int,
         private val viewHolder: (v: View) -> VH
