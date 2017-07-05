@@ -35,11 +35,15 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     // configurable attribs
-    private var dragDismissDistance = Float.MAX_VALUE
-    private var dragDismissFraction = -1f
-    private var dragDismissScale = 1f
+    var dragDismissDistance = context.dimen(R.dimen.kau_drag_dismiss_distance).dpToPx
+    var dragDismissFraction = -1f
+    var dragDismissScale = 1f
+        set(value) {
+            field = value
+            shouldScale = value != 1f
+        }
     private var shouldScale = false
-    private var dragElacticity = 0.8f
+    var dragElacticity = 0.8f
 
     // state
     private var totalDrag: Float = 0f
@@ -54,7 +58,6 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
             dragDismissDistance = a.getDimensionPixelSize(R.styleable.ElasticDragDismissFrameLayout_dragDismissDistance, Int.MAX_VALUE).toFloat()
             dragDismissFraction = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissFraction, dragDismissFraction)
             dragDismissScale = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissScale, dragDismissScale)
-            shouldScale = dragDismissScale != 1f
             dragElacticity = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragElasticity, dragElacticity)
             a.recycle()
         }
