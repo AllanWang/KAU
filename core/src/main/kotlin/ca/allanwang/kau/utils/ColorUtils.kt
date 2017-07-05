@@ -19,8 +19,8 @@ import com.afollestad.materialdialogs.R
 /**
  * Created by Allan Wang on 2017-06-08.
  */
-fun Int.isColorDark(): Boolean
-        = (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255.0 < 0.5
+val Int.isColorDark: Boolean
+    get() = (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255.0 < 0.5
 
 fun Int.toHexString(withAlpha: Boolean = false, withHexPrefix: Boolean = true): String {
     val hex = if (withAlpha) String.format("#%08X", this)
@@ -36,6 +36,9 @@ fun Int.toHSV(): FloatArray {
     return hsv
 }
 
+inline val Int.isColorOpaque: Boolean
+    get() = Color.alpha(this) == 255
+
 fun FloatArray.toColor(): Int = Color.HSVToColor(this)
 
 fun Int.isColorVisibleOn(@ColorInt color: Int, @IntRange(from = 0L, to = 255L) delta: Int = 25,
@@ -49,7 +52,7 @@ fun Int.isColorVisibleOn(@ColorInt color: Int, @IntRange(from = 0L, to = 255L) d
 @ColorInt
 fun Context.getDisabledColor(): Int {
     val primaryColor = resolveColor(android.R.attr.textColorPrimary)
-    val disabledColor = if (primaryColor.isColorDark()) Color.BLACK else Color.WHITE
+    val disabledColor = if (primaryColor.isColorDark) Color.BLACK else Color.WHITE
     return disabledColor.adjustAlpha(0.3f)
 }
 
@@ -86,11 +89,11 @@ fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int {
 
 @ColorInt
 fun Int.colorToBackground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int
-        = if (isColorDark()) darken(factor) else lighten(factor)
+        = if (isColorDark) darken(factor) else lighten(factor)
 
 @ColorInt
 fun Int.colorToForeground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int
-        = if (isColorDark()) lighten(factor) else darken(factor)
+        = if (isColorDark) lighten(factor) else darken(factor)
 
 @Throws(IllegalArgumentException::class)
 fun String.toColor(): Int {

@@ -1,10 +1,15 @@
 package ca.allanwang.kau.sample
 
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import ca.allanwang.kau.logging.KL
-import ca.allanwang.kau.permissions.*
+import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
+import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
+import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
+import ca.allanwang.kau.permissions.kauRequestPermissions
+import ca.allanwang.kau.swipe.kauSwipeOnCreate
+import ca.allanwang.kau.swipe.kauSwipeOnDestroy
+import ca.allanwang.kau.swipe.kauSwipeOnPostCreate
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivitySlideOut
 import ca.allanwang.kau.utils.toast
@@ -35,6 +40,21 @@ class AnimActivity : AppCompatActivity() {
             }
             true
         }
+        kauSwipeOnCreate()
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        kauSwipeOnPostCreate()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        kauSwipeOnDestroy()
+    }
+
+    override fun finish() {
+        super.finish()
     }
 
     override fun onBackPressed() {

@@ -31,7 +31,7 @@ internal class ColorPickerView @JvmOverloads constructor(
     var isInCustom: Boolean = false
     var circleSize: Int = context.dimen(R.dimen.kau_color_circle_size).toInt()
     val backgroundColor = context.resolveColor(R.attr.md_background_color,
-            if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark()) Color.WHITE else 0xff424242.toInt())
+            if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark) Color.WHITE else 0xff424242.toInt())
     val backgroundColorTint = backgroundColor.colorToForeground()
     lateinit var dialog: MaterialDialog
     lateinit var builder: ColorContract

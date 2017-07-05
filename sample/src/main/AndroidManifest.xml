@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name=".AnimActivity"
-            android:theme="@style/AppTheme.Slide" />
+            android:theme="@style/Kau.Translucent" />
         <activity
             android:name=".AboutActivity"
             android:theme="@style/Kau.Translucent.About" />

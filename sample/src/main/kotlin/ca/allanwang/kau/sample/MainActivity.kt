@@ -210,7 +210,7 @@ class MainActivity : KPrefActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_settings -> startActivity(AnimActivity::class.java, clearStack = true)
+            R.id.action_settings -> startActivity(AnimActivity::class.java)
             R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
             R.id.test -> startActivity(ImageActivity::class.java, transition = true)
             else -> return super.onOptionsItemSelected(item)
