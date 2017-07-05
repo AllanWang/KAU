@@ -46,7 +46,7 @@ class SwipeBackPage(activity: Activity) : SwipeBackPageContract by SwipeBackLayo
 
     //触发关闭Activity百分比
     fun setClosePercent(percent: Float): SwipeBackPage {
-        swipeBackLayout.scrollThreshold=percent
+        swipeBackLayout.scrollThreshold = percent
         return this
     }
 
@@ -54,11 +54,12 @@ class SwipeBackPage(activity: Activity) : SwipeBackPageContract by SwipeBackLayo
 
 interface SwipeBackPageContract {
     var swipeEnabled: Boolean
-    var scrimColor:Int
+    var scrimColor: Int
     val swipeBackLayout: SwipeBackLayout
-    var scrollThreshold:Float
-    var disallowIntercept:Boolean
-    fun setEdgeSize(swipeEdge: Int)
+    var edgeSize: Int
+    var edgeFlag:Int
+    var scrollThreshold: Float
+    var disallowIntercept: Boolean
     fun setEdgeSizePercent(swipeEdgePercent: Float)
     fun addListener(listener: SwipeListener)
     fun removeListener(listener: SwipeListener)

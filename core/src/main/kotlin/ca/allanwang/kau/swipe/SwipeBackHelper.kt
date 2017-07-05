@@ -16,8 +16,8 @@ object SwipeBackHelper {
     fun getCurrentPage(activity: Activity): SwipeBackPage = this[activity]
 
     fun onCreate(activity: Activity) {
+        activity.overridePendingTransition(0, 0)
         pageStack.firstOrNull { it.activity === activity } ?: pageStack.push(SwipeBackPage(activity))
-//        activity.window.exitTransition =
     }
 
     fun onPostCreate(activity: Activity) = this[activity].onPostCreate()
@@ -42,4 +42,3 @@ fun Activity.kauSwipeOnCreate() = SwipeBackHelper.onCreate(this)
 fun Activity.kauSwipeOnPostCreate() = SwipeBackHelper.onPostCreate(this)
 fun Activity.kauSwipeOnDestroy() = SwipeBackHelper.onDestroy(this)
 fun Activity.kauSwipeFinish() = SwipeBackHelper.finish(this)
-

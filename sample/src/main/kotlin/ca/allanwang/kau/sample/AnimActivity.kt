@@ -53,10 +53,6 @@ class AnimActivity : AppCompatActivity() {
         kauSwipeOnDestroy()
     }
 
-    override fun finish() {
-        super.finish()
-    }
-
     override fun onBackPressed() {
         startActivitySlideOut(MainActivity::class.java)
     }

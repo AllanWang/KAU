@@ -17,17 +17,34 @@ class RelativeSlider(var curPage: SwipeBackPage) : SwipeListener {
             else curPage.removeListener(this)
         }
 
-    override fun onScroll(percent: Float, px: Int) {
+    /**
+     * Set offset of previous page based on the edge flag and percentage scrolled
+     */
+    override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
         if (offset == 0f) return //relative slider is not enabled
         val page = SwipeBackHelper.getPrePage(curPage) ?: return
-        page.swipeBackLayout.x = Math.min(-offset * Math.max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
-        if (percent == 0f) page.swipeBackLayout.x = 0f
+        if (percent == 0f) {
+            page.swipeBackLayout.x = 0f
+            page.swipeBackLayout.y = 0f
+            return
+        }
+        when (edgeFlag) {
+            SwipeBackLayout.EDGE_LEFT -> page.swipeBackLayout.x = Math.min(-offset * Math.max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
+            SwipeBackLayout.EDGE_RIGHT -> page.swipeBackLayout.x = Math.min(offset * Math.max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
+            SwipeBackLayout.EDGE_TOP -> page.swipeBackLayout.y = Math.min(-offset * Math.max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
+            SwipeBackLayout.EDGE_BOTTOM -> page.swipeBackLayout.y = Math.min(offset * Math.max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
+        }
     }
 
     override fun onEdgeTouch() {}
 
-    override fun onScrollToClose() {
-       SwipeBackHelper.getPrePage(curPage)?.swipeBackLayout?.x = 0f
+    /**
+     * Reset offsets for previous page
+     */
+    override fun onScrollToClose(edgeFlag: Int) {
+        val prePage = SwipeBackHelper.getPrePage(curPage) ?: return
+        prePage.swipeBackLayout.x = 0f
+        prePage.swipeBackLayout.y = 0f
     }
 
     companion object {
