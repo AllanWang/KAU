@@ -8,8 +8,8 @@
 
 ## v1.4
 * Added about activities
-* Added themed fast item adapter
-* Added chained adapter
+* Added themed fast item imageAdapter
+* Added chained imageAdapter
 * Added item animators
 * Ported some views over from Plaid
 * Add string arg option for sendEmail

@@ -24,7 +24,7 @@
     <item
         android:id="@+id/test"
         android:orderInCategory="300"
-        android:title="@string/kau_menu"
+        android:title="Test"
         app:showAsAction="never" />
 
 </menu>

@@ -26,7 +26,7 @@ class AnimActivity : AppCompatActivity() {
                 PERMISSION_ACCESS_COARSE_LOCATION,
                 PERMISSION_ACCESS_FINE_LOCATION
         ).map { PermissionCheckbox(it) })
-        val withOnClickListener = adapter.withOnClickListener { _, _, item, _ ->
+        adapter.withOnClickListener { _, _, item, _ ->
             KL.d("Perm Click")
             kauRequestPermissions(item.permission) {
                 granted, deniedPerm ->
@@ -34,18 +34,6 @@ class AnimActivity : AppCompatActivity() {
                 adapter.notifyAdapterDataSetChanged()
             }
             true
-        }
-        kauRequestPermissions(PERMISSION_READ_EXTERNAL_STORAGE) {
-            granted, deniedPerm ->
-            if (!granted) return@kauRequestPermissions
-            val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    arrayOf(MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA, MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.DATE_MODIFIED),
-                    null, null, MediaStore.Images.Media.DEFAULT_SORT_ORDER, null)
-            while (!cursor.isLast) {
-                cursor.moveToNext()
-                KL.d(cursor.getString(1))
-            }
-            cursor.close()
         }
     }
 

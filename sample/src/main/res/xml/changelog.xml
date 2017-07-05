@@ -18,8 +18,8 @@
 
     <version title="v1.4"/>
     <item text="Added about activities" />
-    <item text="Added themed fast item adapter" />
-    <item text="Added chained adapter" />
+    <item text="Added themed fast item imageAdapter" />
+    <item text="Added chained imageAdapter" />
     <item text="Added item animators" />
     <item text="Ported some views over from Plaid" />
     <item text="Add string arg option for sendEmail" />

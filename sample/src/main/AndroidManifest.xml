@@ -28,6 +28,9 @@
         <activity
             android:name=".AboutActivity"
             android:theme="@style/Kau.Translucent.About" />
+        <activity
+            android:name=".ImageActivity"
+            android:theme="@style/Kau.Translucent.ImagePicker" />
     </application>
 
 </manifest>
