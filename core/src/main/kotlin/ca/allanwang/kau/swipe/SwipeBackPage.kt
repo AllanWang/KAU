@@ -7,7 +7,8 @@ import android.view.ViewGroup
 
 /**
  * Created by Mr.Jude on 2015/8/3.
- * 每个滑动页面的管理
+ *
+ * Updated by Allan Wang on 2017/07/05
  */
 class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(activity) {
 
@@ -41,8 +42,6 @@ class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(a
         else swipeBackLayout.removeFromActivity(activity!!)
     }
 
-
-    //触发关闭Activity百分比
     fun setClosePercent(percent: Float): SwipeBackPage {
         swipeBackLayout.scrollThreshold = percent
         return this

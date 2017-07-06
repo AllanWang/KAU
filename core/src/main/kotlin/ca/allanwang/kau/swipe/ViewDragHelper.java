@@ -1,9 +1,5 @@
 package ca.allanwang.kau.swipe;
 
-/**
- * Created by Allan Wang on 2017-07-05.
- */
-
 import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
@@ -18,6 +14,8 @@ import android.widget.OverScroller;
 import java.util.Arrays;
 
 /**
+ * Created by Allan Wang on 2017-07-05.
+ * <p>
  * ViewDragHelper is a utility class for writing custom ViewGroups. It offers a number
  * of useful operations and state tracking for allowing a user to drag and reposition
  * views within their parent ViewGroup.
