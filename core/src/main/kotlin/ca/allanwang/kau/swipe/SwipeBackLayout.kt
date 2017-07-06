@@ -132,6 +132,12 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             dragHelper.maxVelocity = value
         }
 
+    override var sensitivity: Float
+        get() = dragHelper.sensitivity
+        set(value) {
+            dragHelper.setSensitivity(context, value)
+        }
+
     init {
         dragHelper = ViewDragHelper.create(this, ViewDragCallback())
         val density = resources.displayMetrics.density
@@ -141,6 +147,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         minVelocity = minVel
 //        maxVelocity = 2.5f * minVel
         edgeFlag = edgeFlag
+        sensitivity = 0.3f
         addListener(chromeFadeListener)
     }
 

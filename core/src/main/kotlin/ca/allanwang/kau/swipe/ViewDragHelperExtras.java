@@ -1,5 +1,7 @@
 package ca.allanwang.kau.swipe;
 
+import android.content.Context;
+
 /**
  * Created by Allan Wang on 2017-07-05.
  * <p>
@@ -19,5 +21,9 @@ interface ViewDragHelperExtras {
     void setMaxVelocity(float maxVel);
 
     float getMaxVelocity();
+
+    void setSensitivity(Context context, float sensitivity);
+
+    float getSensitivity();
 
 }

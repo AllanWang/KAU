@@ -59,6 +59,7 @@ interface SwipeBackContract {
     var disallowIntercept: Boolean
     var minVelocity: Float
     var maxVelocity: Float
+    var sensitivity:Float
     fun setEdgeSizePercent(swipeEdgePercent: Float)
     fun addListener(listener: SwipeListener)
     fun removeListener(listener: SwipeListener)
