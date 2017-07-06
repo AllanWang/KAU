@@ -2,6 +2,8 @@ package ca.allanwang.kau.utils
 
 import android.app.Activity
 import android.app.ActivityOptions
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -163,3 +165,9 @@ inline val Context.isNavBarOnBottom: Boolean
     }
 
 fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || ContextCompat.checkSelfPermission(this, permissions) == PackageManager.PERMISSION_GRANTED
+
+fun Context.copyToClipboard(text: String, label: String = "Copied Text", showToast: Boolean = true) {
+    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    clipboard.primaryClip = ClipData.newPlainText(label, text)
+    if (showToast) toast(R.string.kau_text_copied)
+}
