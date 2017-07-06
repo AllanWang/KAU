@@ -139,7 +139,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         //allow touch from anywhere on the screen
         edgeSize = Math.max(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
         minVelocity = minVel
-        maxVelocity = 2.5f * minVel
+//        maxVelocity = 2.5f * minVel
         edgeFlag = edgeFlag
         addListener(chromeFadeListener)
     }
@@ -249,13 +249,8 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     fun attachToActivity(activity: Activity) {
         if (parent != null) return
         this.activity = activity
-        val a = activity.theme.obtainStyledAttributes(intArrayOf(android.R.attr.windowBackground))
-        val background = a.getResourceId(0, 0)
-        a.recycle()
-
         val content = activity.window.decorView.findViewById<ViewGroup>(android.R.id.content)
         val contentChild = content.getChildAt(0)
-        contentChild.setBackgroundResource(background)
         content.removeView(contentChild)
         addView(contentChild)
         setContentView(contentChild)
