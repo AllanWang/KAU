@@ -13,11 +13,11 @@ internal object UNINITIALIZED
 
 fun <T : Any> lazyResettable(initializer: () -> T): LazyResettable<T> = LazyResettable<T>(initializer)
 
-class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : Lazy<T>, Serializable {
+class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : ILazyResettable<T>, Serializable {
     @Volatile private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this
 
-    fun invalidate() {
+    override fun invalidate() {
         _value = UNINITIALIZED
     }
 
@@ -48,4 +48,8 @@ class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = nul
     operator fun setValue(any: Any, property: KProperty<*>, t: T) {
         _value = t
     }
+}
+
+interface ILazyResettable<T> : Lazy<T> {
+    fun invalidate()
 }

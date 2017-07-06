@@ -2,6 +2,7 @@ package ca.allanwang.kau.kpref
 
 import android.content.Context
 import android.content.SharedPreferences
+import ca.allanwang.kau.kotlin.ILazyResettable
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -24,12 +25,12 @@ open class KPref {
         c.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
     }
 
-    internal val prefMap: MutableMap<String, KPrefDelegate<*>> = mutableMapOf()
+    internal val prefMap: MutableMap<String, ILazyResettable<*>> = mutableMapOf()
 
     fun reset() {
         prefMap.values.forEach { it.invalidate() }
     }
 
-    operator fun get(key: String): KPrefDelegate<*>? = prefMap[key]
+    operator fun get(key: String): ILazyResettable<*>? = prefMap[key]
 
 }

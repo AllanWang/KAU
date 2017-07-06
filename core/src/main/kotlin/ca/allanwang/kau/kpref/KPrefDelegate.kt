@@ -1,17 +1,19 @@
 package ca.allanwang.kau.kpref
 
+import ca.allanwang.kau.kotlin.ILazyResettable
+
 /**
  * Created by Allan Wang on 2017-06-07.
  */
-private object UNINITIALIZED
+object UNINITIALIZED
 
-fun KPref.kpref(key: String, fallback: Boolean, postSetter: (value: Boolean) -> Unit = {}): KPrefDelegate<Boolean> = KPrefDelegate(key, fallback, this, postSetter)
-fun KPref.kpref(key: String, fallback: Double, postSetter: (value: Float) -> Unit = {}): KPrefDelegate<Float> = KPrefDelegate(key, fallback.toFloat(), this, postSetter)
-fun KPref.kpref(key: String, fallback: Float, postSetter: (value: Float) -> Unit = {}): KPrefDelegate<Float> = KPrefDelegate(key, fallback, this, postSetter)
-fun KPref.kpref(key: String, fallback: Int, postSetter: (value: Int) -> Unit = {}): KPrefDelegate<Int> = KPrefDelegate(key, fallback, this, postSetter)
-fun KPref.kpref(key: String, fallback: Long, postSetter: (value: Long) -> Unit = {}): KPrefDelegate<Long> = KPrefDelegate(key, fallback, this, postSetter)
-fun KPref.kpref(key: String, fallback: Set<String>, postSetter: (value: Set<String>) -> Unit = {}): KPrefDelegate<StringSet> = KPrefDelegate(key, StringSet(fallback), this, postSetter)
-fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Unit = {}): KPrefDelegate<String> = KPrefDelegate(key, fallback, this, postSetter)
+fun KPref.kpref(key: String, fallback: Boolean, postSetter: (value: Boolean) -> Unit = {}) = KPrefDelegate(key, fallback, this, postSetter)
+fun KPref.kpref(key: String, fallback: Double, postSetter: (value: Float) -> Unit = {}) = KPrefDelegate(key, fallback.toFloat(), this, postSetter)
+fun KPref.kpref(key: String, fallback: Float, postSetter: (value: Float) -> Unit = {}) = KPrefDelegate(key, fallback, this, postSetter)
+fun KPref.kpref(key: String, fallback: Int, postSetter: (value: Int) -> Unit = {}) = KPrefDelegate(key, fallback, this, postSetter)
+fun KPref.kpref(key: String, fallback: Long, postSetter: (value: Long) -> Unit = {}) = KPrefDelegate(key, fallback, this, postSetter)
+fun KPref.kpref(key: String, fallback: Set<String>, postSetter: (value: Set<String>) -> Unit = {}) = KPrefDelegate(key, StringSet(fallback), this, postSetter)
+fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Unit = {}) = KPrefDelegate(key, fallback, this, postSetter)
 
 class StringSet(set: Collection<String>) : LinkedHashSet<String>(set)
 
@@ -20,7 +22,9 @@ class StringSet(set: Collection<String>) : LinkedHashSet<String>(set)
  * Contains a unique key for the shared preference as well as a nonnull fallback item
  * Also contains an optional mutable postSetter that will be called every time a new value is given
  */
-class KPrefDelegate<T : Any> internal constructor(private val key: String, private val fallback: T, private val pref: KPref, var postSetter: (value: T) -> Unit = {}, lock: Any? = null) : Lazy<T>, java.io.Serializable {
+class KPrefDelegate<T : Any> internal constructor(
+        private val key: String, private val fallback: T, private val pref: KPref, var postSetter: (value: T) -> Unit = {}, lock: Any? = null
+) : ILazyResettable<T>, java.io.Serializable {
 
     @Volatile private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this
@@ -31,7 +35,7 @@ class KPrefDelegate<T : Any> internal constructor(private val key: String, priva
         pref.prefMap.put(key, this@KPrefDelegate)
     }
 
-    fun invalidate() {
+    override fun invalidate() {
         _value = UNINITIALIZED
     }
 
