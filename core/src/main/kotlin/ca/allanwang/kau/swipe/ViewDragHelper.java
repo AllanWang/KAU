@@ -23,7 +23,7 @@ import java.util.Arrays;
  * views within their parent ViewGroup.
  * <p>
  * This is an extension of {@link android.support.v4.widget.ViewDragHelper}
- * Along with additional methods defined in
+ * Along with additional methods defined in {@link ViewDragHelperExtras}
  */
 public class ViewDragHelper implements ViewDragHelperExtras {
     private static final String TAG = "ViewDragHelper";

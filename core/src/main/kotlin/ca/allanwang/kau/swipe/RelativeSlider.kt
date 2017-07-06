@@ -4,6 +4,10 @@ import ca.allanwang.kau.kotlin.nonReadable
 
 /**
  * Created by Mr.Jude on 2015/8/26.
+ *
+ * Updated by Allan Wang on 2017/07/05
+ *
+ * Helper class to give the previous activity an offset as the main page is pulled
  */
 class RelativeSlider(var curPage: SwipeBackPage) : SwipeListener {
 

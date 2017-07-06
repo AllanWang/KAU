@@ -4,7 +4,6 @@ import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
-import ca.allanwang.kau.logging.KL
 
 /**
  * Created by Mr.Jude on 2015/8/3.
@@ -38,7 +37,6 @@ class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(a
         }
 
     private fun handleLayout() {
-        KL.d("Handle layout")
         if (swipeEnabled) swipeBackLayout.attachToActivity(activity!!)
         else swipeBackLayout.removeFromActivity(activity!!)
     }
@@ -57,9 +55,11 @@ interface SwipeBackContract {
     var scrimColor: Int
     val swipeBackLayout: SwipeBackLayout
     var edgeSize: Int
-    var edgeFlag:Int
+    var edgeFlag: Int
     var scrollThreshold: Float
     var disallowIntercept: Boolean
+    var minVelocity: Float
+    var maxVelocity: Float
     fun setEdgeSizePercent(swipeEdgePercent: Float)
     fun addListener(listener: SwipeListener)
     fun removeListener(listener: SwipeListener)

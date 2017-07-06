@@ -6,8 +6,7 @@ package ca.allanwang.kau.swipe;
  * Collection of addition methods added into ViewDragHelper that weren't in the original
  */
 
-public interface ViewDragHelperExtras {
-
+interface ViewDragHelperExtras {
 
     /**
      * Sets the new size of a given edge

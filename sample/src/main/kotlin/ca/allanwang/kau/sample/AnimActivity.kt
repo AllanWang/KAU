@@ -7,7 +7,10 @@ import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
 import ca.allanwang.kau.permissions.kauRequestPermissions
-import ca.allanwang.kau.swipe.*
+import ca.allanwang.kau.swipe.SWIPE_EDGE_TOP
+import ca.allanwang.kau.swipe.kauSwipeOnCreate
+import ca.allanwang.kau.swipe.kauSwipeOnDestroy
+import ca.allanwang.kau.swipe.kauSwipeOnPostCreate
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivitySlideOut
 import ca.allanwang.kau.utils.toast
@@ -27,19 +30,73 @@ class AnimActivity : AppCompatActivity() {
         setContentView(fullLinearRecycler(adapter))
         adapter.add(listOf(
                 PERMISSION_ACCESS_COARSE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
                 PERMISSION_ACCESS_FINE_LOCATION
         ).map { PermissionCheckbox(it) })
         adapter.withOnClickListener { _, _, item, _ ->
             KL.d("Perm Click")
             kauRequestPermissions(item.permission) {
-                granted, deniedPerm ->
+                granted, _ ->
                 toast("${item.permission} enabled: $granted")
                 adapter.notifyAdapterDataSetChanged()
             }
             true
         }
         kauSwipeOnCreate {
-            edgeFlag = SWIPE_EDGE_ALL
+            edgeFlag = SWIPE_EDGE_TOP
         }
     }
 
