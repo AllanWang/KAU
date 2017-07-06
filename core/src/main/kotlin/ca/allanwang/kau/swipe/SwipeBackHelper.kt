@@ -23,11 +23,11 @@ object SwipeBackHelper {
 
     fun onCreate(activity: Activity, builder: SwipeBackContract.() -> Unit = {}) {
         val page = pageStack.firstOrNull { it.activity === activity } ?: pageStack.push(SwipeBackPage(activity).apply { builder() })
-        val startAnimation: Int = with(page.edgeFlag) {
-            if (this and SWIPE_EDGE_LEFT > 0) R.anim.kau_slide_in_right
-            else if (this and SWIPE_EDGE_RIGHT > 0) R.anim.kau_slide_in_left
-            else if (this and SWIPE_EDGE_TOP > 0) R.anim.kau_slide_in_bottom
-            else R.anim.kau_slide_in_top
+        val startAnimation: Int = when (page.edgeFlag) {
+            SWIPE_EDGE_LEFT -> R.anim.kau_slide_in_right
+            SWIPE_EDGE_RIGHT -> R.anim.kau_slide_in_left
+            SWIPE_EDGE_TOP -> R.anim.kau_slide_in_bottom
+            else -> R.anim.kau_slide_in_top
         }
         activity.overridePendingTransition(startAnimation, 0)
     }

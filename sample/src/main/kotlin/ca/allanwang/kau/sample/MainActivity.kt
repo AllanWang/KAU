@@ -1,6 +1,7 @@
 package ca.allanwang.kau.sample
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import ca.allanwang.kau.email.sendEmail
@@ -180,6 +181,13 @@ class MainActivity : KPrefActivity() {
         bgCanvas.set(KPrefSample.bgColor)
         toolbarCanvas.set(KPrefSample.accentColor)
         this.navigationBarColor = KPrefSample.accentColor
+
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onPostCreate(savedInstanceState, persistentState)
+        //TODO testing
+        startActivity(ImageActivity::class.java, transition = true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
