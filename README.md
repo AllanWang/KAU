@@ -30,10 +30,10 @@ And add the following dependencies (You can use a specific version, commit, or -
 ```gradle
 dependencies {
     
-    compile "ca.allanwang:kau:core:$KAU"
+    compile "ca.allanwang.kau:core:$KAU"
     
     //Optional addition for image picker
-    compile "ca.allanwang:kau:imagepicker:$KAU"
+    compile "ca.allanwang.kau:imagepicker:$KAU"
 }
 
 ```
