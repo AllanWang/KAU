@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.adjustAlpha
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.statusBarColor
@@ -83,7 +82,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     val chromeFadeListener: SwipeListener by lazy {
         object : SwipeListener {
             override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
-                KL.d("PER $percent")
+                if (!transitionSystemBars) return
                 activity?.apply {
                     statusBarColor = statusBarBase.adjustAlpha(scrimOpacity)
                     navigationBarColor = navBarBase.adjustAlpha(scrimOpacity)
@@ -138,6 +137,8 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             dragHelper.setSensitivity(context, value)
         }
 
+    override var transitionSystemBars: Boolean = true
+
     init {
         dragHelper = ViewDragHelper.create(this, ViewDragCallback())
         val density = resources.displayMetrics.density
@@ -162,7 +163,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     override fun setEdgeSizePercent(swipeEdgePercent: Float) {
-        edgeSize = (resources.displayMetrics.widthPixels * swipeEdgePercent).toInt()
+        edgeSize = ((if (horizontal) resources.displayMetrics.widthPixels else resources.displayMetrics.heightPixels) * swipeEdgePercent).toInt()
     }
 
     /**

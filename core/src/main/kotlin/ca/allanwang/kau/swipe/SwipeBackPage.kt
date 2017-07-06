@@ -50,16 +50,47 @@ class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(a
 }
 
 interface SwipeBackContract {
+    /**
+     * Toggle main touch intercept
+     */
     var swipeEnabled: Boolean
+    /**
+     * Set the background color for the outside of the page
+     * This dynamically fades as the page gets closer to exiting
+     */
     var scrimColor: Int
     val swipeBackLayout: SwipeBackLayout
     var edgeSize: Int
+    /**
+     * Set the flag for which edge the page is scrolling from
+     */
     var edgeFlag: Int
+    /**
+     * Set the scrolling threshold for wish a page is deemed closing
+     */
     var scrollThreshold: Float
     var disallowIntercept: Boolean
+    /**
+     * Set the min velocity of the view drag helper
+     */
     var minVelocity: Float
+    /**
+     * Set the max velocity of the view drag helper
+     */
     var maxVelocity: Float
-    var sensitivity:Float
+    /**
+     * Set the sensitivity of the view drag helper
+     */
+    var sensitivity: Float
+    /**
+     * Dynamically change the alpha for the status bar and nav bar
+     * as the page scrolls
+     */
+    var transitionSystemBars: Boolean
+
+    /**
+     * Sets edge size based on screen size
+     */
     fun setEdgeSizePercent(swipeEdgePercent: Float)
     fun addListener(listener: SwipeListener)
     fun removeListener(listener: SwipeListener)
