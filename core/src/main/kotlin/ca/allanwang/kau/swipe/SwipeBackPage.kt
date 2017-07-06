@@ -10,7 +10,7 @@ import ca.allanwang.kau.logging.KL
  * Created by Mr.Jude on 2015/8/3.
  * 每个滑动页面的管理
  */
-class SwipeBackPage(activity: Activity) : SwipeBackPageContract by SwipeBackLayout(activity) {
+class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(activity) {
 
     var activity: Activity? = activity
     var slider: RelativeSlider
@@ -52,7 +52,7 @@ class SwipeBackPage(activity: Activity) : SwipeBackPageContract by SwipeBackLayo
 
 }
 
-interface SwipeBackPageContract {
+interface SwipeBackContract {
     var swipeEnabled: Boolean
     var scrimColor: Int
     val swipeBackLayout: SwipeBackLayout

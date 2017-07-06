@@ -17,7 +17,7 @@ import ca.allanwang.kau.utils.withAlpha
 import java.lang.ref.WeakReference
 
 class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
-) : FrameLayout(context, attrs, defStyle), SwipeBackPageContract {
+) : FrameLayout(context, attrs, defStyle), SwipeBackContract {
 
     override val swipeBackLayout: SwipeBackLayout
         get() = this
@@ -48,7 +48,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private val dragHelper: ViewDragHelper
 
-    private var scrollPercent: Float = 0.toFloat()
+    private var scrollPercent: Float = 0f
 
     private var contentOffset: Int = 0
 
@@ -78,8 +78,8 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         object : SwipeListener {
             override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
                 activity?.apply {
-                    statusBarColor = statusBarColor.withAlpha((statusBarAlpha * (1 - percent)).toInt())
-                    navigationBarColor = navigationBarColor.withAlpha((navBarAlpha * (1 - percent)).toInt())
+                    if (edgeCurrentFlag != SWIPE_EDGE_TOP) statusBarColor = statusBarColor.withAlpha((statusBarAlpha * (1 - percent)).toInt())
+                    if (edgeCurrentFlag != SWIPE_EDGE_BOTTOM) navigationBarColor = navigationBarColor.withAlpha((navBarAlpha * (1 - percent)).toInt())
                 }
             }
 
@@ -93,37 +93,38 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     private var inLayout: Boolean = false
 
-    /**
-     * Edge being dragged
-     */
-    private var trackingEdge: Int = 0
-
     override var edgeSize: Int
         get() = dragHelper.edgeSize
         set(value) {
             dragHelper.edgeSize = value
         }
 
-    override var edgeFlag = EDGE_LEFT
+    override var edgeFlag = SWIPE_EDGE_LEFT
         /**
          * We will verify that only one axis is used at a time
          */
         set(value) {
-            val result = if (value and EDGE_HORIZONTAL > 0) value and EDGE_HORIZONTAL else value and EDGE_VERTICAL
             field = value
             dragHelper.setEdgeTrackingEnabled(value)
         }
 
     private val isHorizontal: Boolean
-        get() = edgeFlag and EDGE_HORIZONTAL > 0
+        get() = edgeFlag and SWIPE_EDGE_HORIZONTAL > 0
 
     private val isVertical: Boolean
-        get() = edgeFlag and EDGE_VERTICAL > 0
+        get() = edgeFlag and SWIPE_EDGE_VERTICAL > 0
+
 
     /**
      * Specifies the edge flag that should by considered at the current moment
      */
-    private var edgeChangeFlag: Int = -1
+    private var edgeCurrentFlag: Int = 0
+
+    private val isCurrentlyHorizontal: Boolean
+        get() = edgeCurrentFlag and SWIPE_EDGE_HORIZONTAL > 0
+
+    private val isCurrentlyVertical: Boolean
+        get() = edgeCurrentFlag and SWIPE_EDGE_VERTICAL > 0
 
     init {
         dragHelper = ViewDragHelper.create(this, ViewDragCallback())
@@ -211,8 +212,16 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         inLayout = true
-        //todo update
-        contentView?.layout(contentOffset, 0, contentOffset + contentView!!.measuredWidth, contentView!!.measuredHeight)
+        val xOffset: Int
+        val yOffset: Int
+        if (isCurrentlyHorizontal) {
+            xOffset = contentOffset
+            yOffset = 0
+        } else {
+            xOffset = 0
+            yOffset = contentOffset
+        }
+        contentView?.layout(xOffset, yOffset, xOffset + contentView!!.measuredWidth, yOffset + contentView!!.measuredHeight)
         inLayout = false
     }
 
@@ -232,7 +241,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         val baseAlpha = (scrimColor and 0xff000000.toInt()).ushr(24)
         val alpha = (baseAlpha * scrimOpacity).toInt()
         val color = alpha shl 24 or (scrimColor and 0xffffff)
-        canvas.clipRect(0, 0, child.left, height)
+        canvas.clipRect(0, 0, width, height)
         canvas.drawColor(color)
     }
 
@@ -301,28 +310,28 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             super.onViewPositionChanged(changedView, left, top, dx, dy)
             //make sure that we are using the proper axis
             val horizontal = (isHorizontal && (!isVertical || dy == 0))
-            edgeChangeFlag =
+            edgeCurrentFlag =
                     if (horizontal)
-                        if (left > 0) EDGE_LEFT else EDGE_RIGHT
+                        if (left > 0) SWIPE_EDGE_LEFT else SWIPE_EDGE_RIGHT
                     else
-                        if (top > 0) EDGE_BOTTOM else EDGE_TOP
+                        if (top > 0) SWIPE_EDGE_BOTTOM else SWIPE_EDGE_TOP
 
             scrollPercent = Math.abs(
                     if (horizontal) left.toFloat() / contentView!!.width
                     else (top.toFloat() / contentView!!.height))
-//            KL.d("horiz $horizontal scroll $scrollPercent")
             contentOffset = if (horizontal) left else top
+            KL.d("poz $horizontal $scrollPercent $contentOffset")
             invalidate()
             if (scrollPercent < scrollThreshold && !isScrollOverValid)
                 isScrollOverValid = true
 
-            listeners.forEach { it.get()?.onScroll(scrollPercent, contentOffset, edgeChangeFlag) }
+            listeners.forEach { it.get()?.onScroll(scrollPercent, contentOffset, edgeCurrentFlag) }
 
             if (scrollPercent >= 1) {
                 if (!(activity?.isFinishing ?: true)) {
                     if (scrollPercent >= scrollThreshold && isScrollOverValid) {
                         isScrollOverValid = false
-                        listeners.forEach { it.get()?.onScrollToClose(edgeChangeFlag) }
+                        listeners.forEach { it.get()?.onScrollToClose(edgeCurrentFlag) }
                     }
                     activity?.finish()
                     activity?.overridePendingTransition(0, 0)
@@ -332,40 +341,48 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
         override fun onViewReleased(releasedChild: View, xvel: Float, yvel: Float) {
             var result = Pair(0, 0)
+            KL.d("Release $edgeCurrentFlag $xvel $yvel")
             if (scrollPercent <= scrollThreshold) {
                 //threshold not met; check velocities
-                if ((edgeChangeFlag == EDGE_LEFT && xvel > MIN_FLING_VELOCITY)
-                        || (edgeChangeFlag == EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY)
-                        || (edgeChangeFlag == EDGE_TOP && yvel > MIN_FLING_VELOCITY)
-                        || (edgeChangeFlag == EDGE_BOTTOM && yvel < -MIN_FLING_VELOCITY))
-                    result = exitCaptureOffsets(edgeChangeFlag, releasedChild)
+                if ((edgeCurrentFlag == SWIPE_EDGE_LEFT && xvel > MIN_FLING_VELOCITY)
+                        || (edgeCurrentFlag == SWIPE_EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY)
+                        || (edgeCurrentFlag == SWIPE_EDGE_TOP && yvel < -MIN_FLING_VELOCITY)
+                        || (edgeCurrentFlag == SWIPE_EDGE_BOTTOM && yvel > MIN_FLING_VELOCITY))
+                    result = exitCaptureOffsets(edgeCurrentFlag, releasedChild)
             } else {
                 //threshold met; fling to designated side
-                result = exitCaptureOffsets(edgeChangeFlag, releasedChild)
+                result = exitCaptureOffsets(edgeCurrentFlag, releasedChild)
             }
             dragHelper.settleCapturedViewAt(result.first, result.second)
             invalidate()
+            edgeCurrentFlag = 0
         }
 
         private fun exitCaptureOffsets(edgeFlag: Int, view: View): Pair<Int, Int> {
             var top: Int = 0
             var left: Int = 0
             when (edgeFlag) {
-                EDGE_LEFT -> left = view.width + OVERSCROLL_DISTANCE
-                EDGE_RIGHT -> left = -(view.width + OVERSCROLL_DISTANCE)
-                EDGE_TOP -> top = -(view.height + OVERSCROLL_DISTANCE)
-                EDGE_BOTTOM -> top = view.height + OVERSCROLL_DISTANCE
-                else -> KL.e("Unknown edgeChangeFlag $edgeChangeFlag")
+                SWIPE_EDGE_LEFT -> left = view.width + OVERSCROLL_DISTANCE
+                SWIPE_EDGE_RIGHT -> left = -(view.width + OVERSCROLL_DISTANCE)
+                SWIPE_EDGE_TOP -> top = -(view.height + OVERSCROLL_DISTANCE)
+                SWIPE_EDGE_BOTTOM -> top = view.height + OVERSCROLL_DISTANCE
+                else -> KL.e("Unknown edgeCurrentFlag $edgeCurrentFlag")
             }
             return Pair(left, top)
         }
 
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
-            return if (isHorizontal) Math.min(child.width, Math.max(left, 0)) else 0
+            return if (!isHorizontal || isCurrentlyVertical) 0
+            else if (edgeFlag == SWIPE_EDGE_RIGHT) Math.min(0, Math.max(left, -child.width))
+            else if (edgeFlag == SWIPE_EDGE_LEFT) Math.min(child.width, Math.max(left, 0))
+            else Math.max(left, -child.width)
         }
 
         override fun clampViewPositionVertical(child: View, top: Int, dy: Int): Int {
-            return if (isVertical) Math.min(child.height, Math.max(top, 0)) else 0
+            return if (!isVertical || isCurrentlyHorizontal) 0
+            else if (edgeFlag == SWIPE_EDGE_BOTTOM) Math.min(0, Math.max(top, -child.height))
+            else if (edgeFlag == SWIPE_EDGE_TOP) Math.min(child.height, Math.max(top, 0))
+            else Math.max(top, -child.height)
         }
     }
 
@@ -373,29 +390,16 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         /**
          * Minimum velocity that will be detected as a fling
          */
-        private const val MIN_FLING_VELOCITY = 400 // dips per second
+        const val MIN_FLING_VELOCITY = 400 // dips per second
 
-        private const val DEFAULT_SCRIM_COLOR = 0x99000000.toInt()
+        const val DEFAULT_SCRIM_COLOR = 0x99000000.toInt()
 
         /**
          * Default threshold of scroll
          */
-        private const val DEFAULT_SCROLL_THRESHOLD = 0.3f
+        const val DEFAULT_SCROLL_THRESHOLD = 0.3f
 
-        private const val OVERSCROLL_DISTANCE = 10
+        const val OVERSCROLL_DISTANCE = 10
 
-        val EDGE_LEFT = ViewDragHelper.EDGE_LEFT
-
-        val EDGE_RIGHT = ViewDragHelper.EDGE_RIGHT
-
-        val EDGE_TOP = ViewDragHelper.EDGE_TOP
-
-        val EDGE_BOTTOM = ViewDragHelper.EDGE_BOTTOM
-
-        val EDGE_HORIZONTAL = EDGE_LEFT or EDGE_RIGHT
-
-        val EDGE_VERTICAL = EDGE_TOP or EDGE_BOTTOM
-
-        val EDGE_ALL = EDGE_HORIZONTAL or EDGE_VERTICAL
     }
 }
