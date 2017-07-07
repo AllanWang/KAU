@@ -72,7 +72,7 @@ class GlobalOptions(core: CoreAttributeContract, activity: KPrefActivityContract
  * The mandatory values are final so they cannot be edited in the builder
  */
 @KPrefMarker
-class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
+class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
 
     @KPrefMarker
     fun header(@StringRes title: Int)
