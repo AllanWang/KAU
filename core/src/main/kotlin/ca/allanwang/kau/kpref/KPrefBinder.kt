@@ -124,5 +124,5 @@ class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
             .apply { builder() }))
 
     @KPrefMarker
-    internal val list: MutableList<KPrefItemCore> = mutableListOf()
+    val list: MutableList<KPrefItemCore> = mutableListOf()
 }
