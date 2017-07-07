@@ -140,13 +140,6 @@ inline fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): Ma
     return builder.show()
 }
 
-inline val Context.isNetworkAvailable: Boolean
-    get() {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting
-    }
-
 fun Context.getDip(value: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
 
 inline val Context.isRtl: Boolean
