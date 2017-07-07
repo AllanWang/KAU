@@ -26,4 +26,6 @@ interface ViewDragHelperExtras {
 
     float getSensitivity();
 
+    int STATE_JUDGING = 3;
+
 }

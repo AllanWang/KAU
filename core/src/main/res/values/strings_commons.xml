@@ -56,4 +56,5 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_x_minutes">%d minutes</string>
     <string name="kau_yes">Yes</string>
     <string name="kau_text_copied">Text copied to clipboard.</string>
+    <string name="kau_copy">Copy</string>
 </resources>

@@ -202,13 +202,20 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         if (!swipeEnabled || disallowIntercept) return false
-        val s = dragHelper.shouldInterceptTouchEvent(event)
-        return s
+        try {
+            return dragHelper.shouldInterceptTouchEvent(event)
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (!swipeEnabled) return false
-        dragHelper.processTouchEvent(event)
+        try {
+            dragHelper.processTouchEvent(event)
+        } catch (e: Exception) {
+            return false
+        }
         return true
     }
 
