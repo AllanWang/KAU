@@ -7,9 +7,9 @@
     -->
 
     <version title="v1.6"/>
-    <item text="" />
-    <item text="" />
-    <item text="" />
+    <item text="Reorder KauIItem arguments to support optional id" />
+    <item text="Create KPrefSeekbar, which binds an int kpref to a seekbar" />
+    <item text="Open all kpref item binders so they may be extended" />
     <item text="" />
     <item text="" />
 
