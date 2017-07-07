@@ -12,7 +12,7 @@ import ca.allanwang.kau.kpref.GlobalOptions
  * and when the preference is completely handled by the click
  *
  */
-class KPrefPlainText(val builder: KPrefPlainTextBuilder) : KPrefItemBase<Unit>(builder) {
+open class KPrefPlainText(val builder: KPrefPlainTextBuilder) : KPrefItemBase<Unit>(builder) {
 
     override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
         //nothing

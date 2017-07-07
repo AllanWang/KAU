@@ -15,6 +15,7 @@
     <string name="color_custom_alpha">This selector allows for custom colors with alpha values</string>
     <string name="text">Text Pref</string>
     <string name="text_desc">Saves the text</string>
+    <string name="seekbar">Seekbar</string>
     <string name="sub_item">Sub Item Pref</string>
     <string name="sub_item_desc">Press this to view the next subset of preferences</string>
     <string name="your_email">your.email@here.com</string>

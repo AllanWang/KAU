@@ -116,5 +116,13 @@ class KPrefAdapterBuilder(internal val globalOptions: GlobalOptions) {
             .apply { builder() }))
 
     @KPrefMarker
+    fun seekbar(@StringRes title: Int,
+                getter: (() -> Int),
+                setter: ((value: Int) -> Unit),
+                builder: KPrefSeekbar.KPrefSeekbarContract.() -> Unit = {})
+            = list.add(KPrefSeekbar(KPrefSeekbar.KPrefSeekbarBuilder(globalOptions, title, getter, setter)
+            .apply { builder() }))
+
+    @KPrefMarker
     internal val list: MutableList<KPrefItemCore> = mutableListOf()
 }

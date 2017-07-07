@@ -4,6 +4,7 @@
     <item name="kau_item_pref_header" type="id" />
     <item name="kau_item_pref_text" type="id" />
     <item name="kau_item_pref_checkbox" type="id" />
+    <item name="kau_item_pref_seekbar" type="id" />
     <item name="kau_item_pref_color_picker" type="id" />
     <item name="kau_item_pref_sub_item" type="id" />
     <item name="kau_item_pref_plain_text" type="id" />
@@ -13,4 +14,6 @@
     <item name="kau_item_card" type="id" />
     <item name="kau_item_library" type="id" />
     <item name="kau_item_about_main" type="id" />
+    <item name="kau_pref_inner_content" type="id" />
+    <item name="kau_pref_lower_content" type="id" />
 </resources>

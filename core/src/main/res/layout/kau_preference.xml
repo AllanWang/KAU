@@ -40,7 +40,7 @@
             android:id="@+id/kau_pref_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/kau_padding_normal"
             android:ellipsize="marquee"
             android:textAppearance="?android:attr/textAppearanceListItem"
             android:textColor="?android:attr/textColorPrimary"
@@ -49,23 +49,36 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginBottom="16dp"
+            app:layout_goneMarginBottom="@dimen/kau_padding_normal"
             tools:layout_editor_absoluteX="-175dp" />
 
         <TextView
             android:id="@id/kau_pref_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:ellipsize="end"
             android:maxLines="10"
             android:textAppearance="?android:attr/textAppearanceListItemSecondary"
             android:textColor="?android:attr/textColorSecondary"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/kau_pref_lower_frame"
             app:layout_constraintEnd_toStartOf="@id/kau_pref_inner_frame"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
             app:layout_constraintTop_toBottomOf="@id/kau_pref_title"
+            app:layout_goneMarginBottom="@dimen/kau_padding_normal"
+            tools:layout_editor_absoluteX="-175dp" />
+
+        <LinearLayout
+            android:id="@id/kau_pref_lower_frame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/kau_padding_normal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/kau_pref_inner_frame"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
+            app:layout_constraintTop_toBottomOf="@id/kau_pref_desc"
             tools:layout_editor_absoluteX="-175dp" />
 
         <android.support.constraint.Barrier
@@ -73,7 +86,7 @@
             android:layout_width="1dp"
             android:layout_height="wrap_content"
             app:barrierDirection="end"
-            app:constraint_referenced_ids="kau_pref_title,kau_pref_desc"
+            app:constraint_referenced_ids="kau_pref_title,kau_pref_desc,kau_pref_lower_frame"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +96,7 @@
             android:layout_height="0dp"
             android:gravity="center_vertical|end"
             android:orientation="horizontal"
-            android:paddingStart="16dp"
+            android:paddingStart="@dimen/kau_padding_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

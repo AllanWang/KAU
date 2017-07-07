@@ -10,7 +10,7 @@ import ca.allanwang.kau.kpref.KPrefMarker
  * Header preference
  * This view just holds a title and is not clickable. It is styled using the accent color
  */
-class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
+open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
 
     override fun getLayoutRes(): Int = R.layout.kau_preference_header
 

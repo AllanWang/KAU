@@ -67,7 +67,8 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
             title.text = null
             desc?.text = null
             icon?.setImageDrawable(null)
-//            innerFrame?.removeAllViews()
+            innerFrame?.removeAllViews()
+            lowerFrame?.removeAllViews()
         }
     }
 
@@ -107,19 +108,35 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         val desc: TextView? by bindOptionalView(R.id.kau_pref_desc)
         val icon: ImageView? by bindOptionalView(R.id.kau_pref_icon)
         val innerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_inner_frame)
+        val lowerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_lower_frame)
         val innerContent: View?
             get() = itemView.findViewById(R.id.kau_pref_inner_content)
+        val lowerContent: View?
+            get() = itemView.findViewById(R.id.kau_pref_lower_content)
 
-        inline fun <reified T : View> bindInnerView(@LayoutRes id: Int): T {
+        inline fun <reified T : View> bindInnerView(@LayoutRes id: Int) = bindInnerView(id) { _: T -> }
+
+        inline fun <reified T : View> bindInnerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
             if (innerFrame == null) throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
             if (innerContent !is T) {
                 innerFrame!!.removeAllViews()
                 LayoutInflater.from(innerFrame!!.context).inflate(id, innerFrame)
+                onFirstBind(innerContent as T)
             }
             return innerContent as T
         }
 
-        inline fun <reified T : View> getInnerView() = innerContent as T
+        inline fun <reified T : View> bindLowerView(@LayoutRes id: Int) = bindLowerView(id) { _: T -> }
+
+        inline fun <reified T : View> bindLowerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
+            if (lowerFrame == null) throw IllegalStateException("Cannot bind inner view when lowerContent does not exist")
+            if (lowerContent !is T) {
+                lowerFrame!!.removeAllViews()
+                LayoutInflater.from(lowerFrame!!.context).inflate(id, lowerFrame)
+                onFirstBind(lowerContent as T)
+            }
+            return lowerContent as T
+        }
 
         operator fun get(@IdRes id: Int): View = itemView.findViewById(id)
     }

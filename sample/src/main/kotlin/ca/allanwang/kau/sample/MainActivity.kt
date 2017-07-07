@@ -143,6 +143,13 @@ class MainActivity : KPrefActivity() {
             }
         }
 
+        seekbar(R.string.seekbar, { KPrefSample.seekbar }, { KPrefSample.seekbar = it }) {
+            descRes = R.string.kau_lorem_ipsum
+            textViewConfigs = {
+                minEms = 2
+            }
+        }
+
         subItems(R.string.sub_item, subPrefs()) {
             descRes = R.string.sub_item_desc
         }
@@ -158,7 +165,7 @@ class MainActivity : KPrefActivity() {
     }
 
     fun subPrefs(): KPrefAdapterBuilder.() -> Unit = {
-        text<String>(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
+        text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
             descRes = R.string.text_desc
             onClick = {
                 itemView, _, item ->

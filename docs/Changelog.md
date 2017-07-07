@@ -1,26 +1,30 @@
 # Changelog
 
+## v1.6
+
 ## v1.5
 * Change snackbar builder
 * Change addBundle to withArguments to match ANKO
-* Created KauIItem to replace AbstractItem
-* Created permission manager and permission constants
+* Create KauIItem to replace AbstractItem
+* Create permission manager and permission constants
+* Create swipe, a very simple helper to allow for activities to be dismissed with gestures
+* Create network utils
 
 ## v1.4
-* Added about activities
-* Added themed fast item imageAdapter
-* Added chained imageAdapter
-* Added item animators
-* Ported some views over from Plaid
+* Add about activities
+* Add themed fast item imageAdapter
+* Add chained imageAdapter
+* Add item animators
+* Port some views over from Plaid
 * Add string arg option for sendEmail
 * Add many iitems
 
 ## v1.3
-* Added kpref subitems
-* Added DSL markers
-* Added transition utils and other utils
-* Added custom searchview with binders
-* Added KauBoundedCardView
+* Add kpref subitems
+* Add DSL markers
+* Add transition utils and other utils
+* Add custom searchview with binders
+* Add KauBoundedCardView
 
 ## v1.2
 * Fix title attribute in changelog
@@ -29,14 +33,14 @@
 * Add email builder
 
 ## v1.1
-* Created kpref items
-* Attached source files
-* Created color dialog
-* Added more utilities
-* Fixed indexStack clearing when starting activity
+* Create kpref items
+* Attach source files
+* Create color dialog
+* Add more utilities
+* Fix indexStack clearing when starting activity
 
 ## v1.0
 * Initial Changelog
-* Created many extension functions
-* Ported changelog builer
-* Ported ripple canvas
+* Create many extension functions
+* Port changelog builer
+* Port ripple canvas
