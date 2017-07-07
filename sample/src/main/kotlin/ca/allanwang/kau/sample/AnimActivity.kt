@@ -93,7 +93,7 @@ class AnimActivity : AppCompatActivity() {
             true
         }
         kauSwipeOnCreate {
-            edgeFlag = SWIPE_EDGE_LEFT
+            edgeFlag = SWIPE_EDGE_BOTTOM
         }
     }
 

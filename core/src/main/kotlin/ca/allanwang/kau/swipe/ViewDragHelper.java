@@ -13,6 +13,11 @@ import android.widget.OverScroller;
 
 import java.util.Arrays;
 
+import static ca.allanwang.kau.swipe.SwipeBackHelperKt.SWIPE_EDGE_BOTTOM;
+import static ca.allanwang.kau.swipe.SwipeBackHelperKt.SWIPE_EDGE_LEFT;
+import static ca.allanwang.kau.swipe.SwipeBackHelperKt.SWIPE_EDGE_RIGHT;
+import static ca.allanwang.kau.swipe.SwipeBackHelperKt.SWIPE_EDGE_TOP;
+
 /**
  * Created by Allan Wang on 2017-07-05.
  * <p>
@@ -98,6 +103,8 @@ public class ViewDragHelper implements ViewDragHelperExtras {
 
     // Distance to travel before a drag may begin
     private int mTouchSlop;
+
+    public int edgeFlag = SWIPE_EDGE_LEFT;
 
     // Last known position/pointer tracking
     private int mActivePointerId = INVALID_POINTER;
@@ -1221,24 +1228,64 @@ public class ViewDragHelper implements ViewDragHelperExtras {
      * @param child Child to check
      * @param dx    Motion since initial position along X axis
      * @param dy    Motion since initial position along Y axis
-     * @return 1 if the touch slop has been crossed on horizontal
+     * @return 1 if the touch slop has been crossed on our desired axis
      * -       0 if the touch slop has not been crossed
-     * -       -1 if the touch slop has been crossed on vertical
+     * -       -1 if the touch slop has been crossed on the other axis
      * -       2 if the touch slop has been crossed on both
      */
     private int checkTouchSlop(View child, float dx, float dy) {
         if (child == null) {
             return 0;
         }
-        if (dx <= mTouchSlop && Math.abs(dy) <= mTouchSlop) {
-            return 0;
-        } else if (dx > mTouchSlop && Math.abs(dy) <= mTouchSlop) {
-            mDragState = STATE_DRAGGING;
-            return 1;
-        } else if (dx <= mTouchSlop && Math.abs(dy) > mTouchSlop) {
-            mDragState = STATE_IDLE;
-            cancel();
-            return -1;
+        switch (edgeFlag) {
+            case SWIPE_EDGE_LEFT:
+                if (dx <= mTouchSlop && Math.abs(dy) <= mTouchSlop) {
+                    return 0;
+                } else if (dx > mTouchSlop && Math.abs(dy) <= mTouchSlop) {
+                    mDragState = STATE_DRAGGING;
+                    return 1;
+                } else if (dx <= mTouchSlop && Math.abs(dy) > mTouchSlop) {
+                    mDragState = STATE_IDLE;
+                    cancel();
+                    return -1;
+                }
+                break;
+            case SWIPE_EDGE_RIGHT:
+                if (dx >= -mTouchSlop && Math.abs(dy) <= mTouchSlop) {
+                    return 0;
+                } else if (dx < -mTouchSlop && Math.abs(dy) <= mTouchSlop) {
+                    mDragState = STATE_DRAGGING;
+                    return 1;
+                } else if (dx >= mTouchSlop && Math.abs(dy) > mTouchSlop) {
+                    mDragState = STATE_IDLE;
+                    cancel();
+                    return -1;
+                }
+                break;
+            case SWIPE_EDGE_TOP:
+                if (dy <= mTouchSlop && Math.abs(dx) <= mTouchSlop) {
+                    return 0;
+                } else if (dy > mTouchSlop && Math.abs(dx) <= mTouchSlop) {
+                    mDragState = STATE_DRAGGING;
+                    return 1;
+                } else if (dy <= mTouchSlop && Math.abs(dx) > mTouchSlop) {
+                    mDragState = STATE_IDLE;
+                    cancel();
+                    return -1;
+                }
+                break;
+            case SWIPE_EDGE_BOTTOM:
+                if (dy >= -mTouchSlop && Math.abs(dx) <= mTouchSlop) {
+                    return 0;
+                } else if (dy < -mTouchSlop && Math.abs(dx) <= mTouchSlop) {
+                    mDragState = STATE_DRAGGING;
+                    return 1;
+                } else if (dy >= mTouchSlop && Math.abs(dx) > mTouchSlop) {
+                    mDragState = STATE_IDLE;
+                    cancel();
+                    return -1;
+                }
+                break;
         }
         return 2;
     }

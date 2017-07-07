@@ -115,6 +115,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             field = value
             horizontal = edgeFlag == SWIPE_EDGE_LEFT || edgeFlag == SWIPE_EDGE_RIGHT
             dragHelper.setEdgeTrackingEnabled(value)
+            dragHelper.edgeFlag = value
         }
 
     private var horizontal = true
