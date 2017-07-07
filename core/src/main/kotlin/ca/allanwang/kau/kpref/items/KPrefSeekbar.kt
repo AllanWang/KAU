@@ -24,6 +24,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
         super.onPostBindView(viewHolder, textColor, accentColor)
         val text = viewHolder.bindInnerView<TextView>(R.layout.kau_preference_seekbar_text)
         if (textColor != null) text.setTextColor(textColor)
+
         val tvc = builder.textViewConfigs
 
         text.tvc()
@@ -35,18 +36,16 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
                     text.text = builder.toText(progress.fromProgress)
                 }
 
-                override fun onStartTrackingTouch(sb: SeekBar) {
-
-                }
+                override fun onStartTrackingTouch(sb: SeekBar) {}
 
                 override fun onStopTrackingTouch(sb: SeekBar) {
                     val trueProgress = sb.progress.fromProgress
                     pref = trueProgress
-                    KL.d("New pref $trueProgress")
                 }
             })
         }
         if (accentColor != null) seekbar.tint(accentColor)
+        text.text = builder.toText(seekbar.progress.fromProgress) //set initial text in case no change occurs
         seekbar.progress = pref.toProgress
     }
 
