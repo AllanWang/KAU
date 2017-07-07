@@ -29,9 +29,9 @@ class SearchItem(val key: String,
                  val iicon: IIcon? = GoogleMaterial.Icon.gmd_search,
                  val image: Drawable? = null
 ) : KauIItem<SearchItem, SearchItem.ViewHolder>(
-        R.id.kau_item_search,
         R.layout.kau_search_iitem,
-        {ViewHolder(it)}
+        { ViewHolder(it) },
+        R.id.kau_item_search
 ) {
 
     companion object {

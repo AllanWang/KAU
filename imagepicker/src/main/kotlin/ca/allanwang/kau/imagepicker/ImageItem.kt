@@ -10,9 +10,7 @@ import ca.allanwang.kau.utils.bindView
  * Created by Allan Wang on 2017-07-04.
  */
 class ImageItem(data:String)
-    : KauIItem<ImageItem, ImageItem.ViewHolder>(R.layout.kau_iitem_card, R.layout.kau_iitem_card, { ViewHolder(it) }) {
-
-
+    : KauIItem<ImageItem, ImageItem.ViewHolder>(R.layout.kau_iitem_card, { ViewHolder(it) }) {
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val image: ImageView by bindView(R.id.kau_image)

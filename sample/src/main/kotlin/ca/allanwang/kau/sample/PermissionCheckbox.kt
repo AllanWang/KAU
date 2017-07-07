@@ -12,7 +12,7 @@ import ca.allanwang.kau.utils.hasPermission
  * Created by Allan Wang on 2017-07-03.
  */
 class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox, PermissionCheckbox.ViewHolder>(
-        R.layout.permission_checkbox, R.layout.permission_checkbox, { ViewHolder(it) }) {
+        R.layout.permission_checkbox, { ViewHolder(it) }) {
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
         super.bindView(holder, payloads)
