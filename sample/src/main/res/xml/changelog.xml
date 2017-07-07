@@ -9,28 +9,28 @@
     <version title="v1.5"/>
     <item text="Change snackbar builder" />
     <item text="Change addBundle to withArguments to match ANKO" />
-    <item text="Created KauIItem to replace AbstractItem" />
-    <item text="Created permission manager and permission constants" />
-    <item text="" />
-    <item text="" />
+    <item text="Create KauIItem to replace AbstractItem" />
+    <item text="Create permission manager and permission constants" />
+    <item text="Create swipe, a very simple helper to allow for activities to be dismissed with gestures" />
+    <item text="Create network utils" />
     <item text="" />
     <item text="" />
 
     <version title="v1.4"/>
-    <item text="Added about activities" />
-    <item text="Added themed fast item imageAdapter" />
-    <item text="Added chained imageAdapter" />
-    <item text="Added item animators" />
-    <item text="Ported some views over from Plaid" />
+    <item text="Add about activities" />
+    <item text="Add themed fast item imageAdapter" />
+    <item text="Add chained imageAdapter" />
+    <item text="Add item animators" />
+    <item text="Port some views over from Plaid" />
     <item text="Add string arg option for sendEmail" />
     <item text="Add many iitems" />
 
     <version title="v1.3"/>
-    <item text="Added kpref subitems" />
-    <item text="Added DSL markers" />
-    <item text="Added transition utils and other utils" />
-    <item text="Added custom searchview with binders" />
-    <item text="Added KauBoundedCardView" />
+    <item text="Add kpref subitems" />
+    <item text="Add DSL markers" />
+    <item text="Add transition utils and other utils" />
+    <item text="Add custom searchview with binders" />
+    <item text="Add KauBoundedCardView" />
 
     <version title="v1.2"/>
     <item text="Fix title attribute in changelog" />
@@ -39,15 +39,15 @@
     <item text="Add email builder" />
 
     <version title="v1.1"/>
-    <item text="Created kpref items" />
-    <item text="Attached source files" />
-    <item text="Created color dialog" />
-    <item text="Added more utilities" />
-    <item text="Fixed indexStack clearing when starting activity" />
+    <item text="Create kpref items" />
+    <item text="Attach source files" />
+    <item text="Create color dialog" />
+    <item text="Add more utilities" />
+    <item text="Fix indexStack clearing when starting activity" />
 
     <version title="v1.0" />
     <item text="Initial Changelog" />
-    <item text="Created many extension functions" />
-    <item text="Ported changelog builer" />
-    <item text="Ported ripple canvas" />
+    <item text="Create many extension functions" />
+    <item text="Port changelog builer" />
+    <item text="Port ripple canvas" />
 </resources>
