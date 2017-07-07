@@ -49,7 +49,6 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginBottom="@dimen/kau_padding_normal"
             tools:layout_editor_absoluteX="-175dp" />
 
         <TextView
@@ -65,7 +64,6 @@
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
             app:layout_constraintTop_toBottomOf="@id/kau_pref_title"
-            app:layout_goneMarginBottom="@dimen/kau_padding_normal"
             tools:layout_editor_absoluteX="-175dp" />
 
         <LinearLayout
