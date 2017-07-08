@@ -4,6 +4,8 @@
 * Reorder KauIItem arguments to support optional id
 * Create KPrefSeekbar, which binds an int kpref to a seekbar
 * Open all kpref item binders so they may be extended
+* Fix scrolling issue on about dismiss
+* Make rClass optional in about activity
 
 ## v1.5
 * Change snackbar builder
