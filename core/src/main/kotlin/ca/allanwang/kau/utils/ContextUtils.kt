@@ -164,3 +164,10 @@ fun Context.copyToClipboard(text: String, label: String = "Copied Text", showToa
     clipboard.primaryClip = ClipData.newPlainText(label, text)
     if (showToast) toast(R.string.kau_text_copied)
 }
+
+fun Context.shareText(text: String) {
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.type = "text/plain"
+    intent.putExtra(Intent.EXTRA_TEXT, text)
+    startActivity(Intent.createChooser(intent, string(R.string.kau_share)))
+}
