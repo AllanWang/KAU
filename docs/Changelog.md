@@ -1,6 +1,9 @@
 # Changelog
 
 ## v1.6
+* Reorder KauIItem arguments to support optional id
+* Create KPrefSeekbar, which binds an int kpref to a seekbar
+* Open all kpref item binders so they may be extended
 
 ## v1.5
 * Change snackbar builder

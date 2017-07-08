@@ -35,10 +35,11 @@ import java.security.InvalidParameterException
  * This contains all the necessary layouts, and can be extended and configured using the [configBuilder]
  * The [rClass] is necessary to generate the list of libraries used in your app, and should point to your app's
  * R.string::class.java
+ * If you don't need auto detect, you can pass null instead
  * Note that for the auto detection to work, the R fields must be excluded from Proguard
  * Manual lib listings and other extra modifications can be done so by overriding the open functions
  */
-abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Configs.() -> Unit = {}) : AppCompatActivity(), ViewPager.OnPageChangeListener {
+abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Configs.() -> Unit = {}) : AppCompatActivity(), ViewPager.OnPageChangeListener {
 
     val draggableFrame: ElasticDragDismissFrameLayout by bindView(R.id.about_draggable_frame)
     val pager: ViewPager by bindView(R.id.about_pager)
@@ -73,6 +74,13 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
      * Holds the adapter for the library page; this is generated later because it uses the config colors
      */
     lateinit var libAdapter: FastItemThemedAdapter<IItem<*, *>>
+    /**
+     * Global reference of the library recycler
+     * This is set by default through [inflateLibPage] and is used to stop scrolling
+     * When the draggable frame exits
+     * It is not required, hence its nullability
+     */
+    private var libRecycler: RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +103,7 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
                     window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
                             .inflateTransition(configs.transitionExitReversed)
                 }
+                libRecycler?.stopScroll()
                 finishAfterTransition()
             }
         })
@@ -167,12 +176,15 @@ abstract class AboutActivityBase(val rClass: Class<*>, val configBuilder: Config
         libPage = position
         val v = layoutInflater.inflate(R.layout.kau_recycler_detached_background, parent, false)
         val recycler = v.findViewById<RecyclerView>(R.id.kau_recycler_detached)
+        libRecycler = recycler
         recycler.adapter = libAdapter
         recycler.itemAnimator = FadeScaleAnimator(itemDelayFactor = 0.2f).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(this@AboutActivityBase) }
         val background = v.findViewById<View>(R.id.kau_recycler_detached_background)
         if (configs.backgroundColor != null) background.setBackgroundColor(configs.backgroundColor!!.colorToForeground())
         doAsync {
-            libItems = getLibraries(Libs(this@AboutActivityBase, Libs.toStringArray(rClass.fields))).map { LibraryIItem(it) }
+            libItems = getLibraries(
+                    if (rClass == null) Libs(this@AboutActivityBase) else Libs(this@AboutActivityBase, Libs.toStringArray(rClass.fields))
+            ).map { LibraryIItem(it) }
             if (libPage >= 0 && pageStatus[libPage] == 1)
                 uiThread { addLibItems() }
         }
