@@ -1,4 +1,4 @@
-# Kau :core
+# KAU :core
 
 > The framework of everything
 

@@ -1,4 +1,5 @@
 <!doctype html>
+<!--https://help.github.com/articles/repository-metadata-on-github-pages/#available-repository-metadata-->
 <html>
 <head>
     <meta charset="utf-8">
@@ -14,8 +15,14 @@
 <body>
 <div class="wrapper">
     <header>
-        <h1><a href="{{ site.github.url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
+        <h1><a style="color: inherit" href="{{ site.github.url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
         <p>{{ site.description | default: site.github.project_tagline }}</p>
+
+        <!--{% if site. %}-->
+        {% assign test = 'Hello' %}
+        <p>{{ test }}</p>
+        <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
+        <!--{% endif %}-->
 
         {% if site.github.is_project_page %}
         <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
