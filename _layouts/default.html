@@ -28,7 +28,7 @@
         page.url == '/kpref-activity/' or
         page.url == '/searchview/' %}
 
-        {% assign size = page.url | size | minus: 1 %}
+        {% assign size = page.url | size | minus: 2 %}
         {% assign submodule = page.url | slice: 1, size %}
         {% assign submodule_url = site.github.repository_url | append: '/tree/master' | append: page.url %}
         <p class="view"><a href="{{ submodule_url }}">View {{ submodule }} on GitHub <small>{{ github_name }}</small></a></p>
