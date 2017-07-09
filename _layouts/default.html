@@ -31,7 +31,9 @@
         {% assign size = page.url | size | minus: 2 %}
         {% assign submodule = page.url | slice: 1, size %}
         {% assign submodule_url = site.github.repository_url | append: '/tree/master' | append: page.url %}
-        <p class="view"><a href="{{ submodule_url }}">View {{ submodule }} on GitHub <small>{{ github_name }}</small></a></p>
+        <p class="view"><a href="{{ submodule_url }}" target="_blank">View {{ submodule }} on GitHub <small>{{ github_name }}</small></a></p>
+        {% else %}
+        <p class="view"> </p>
         {% endif %}
 
         {% if site.github.is_user_page %}
