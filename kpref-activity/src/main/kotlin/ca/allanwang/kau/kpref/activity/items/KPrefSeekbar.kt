@@ -21,13 +21,13 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
-        val text = viewHolder.bindInnerView<TextView>(R.layout.kau_preference_seekbar_text)
+        val text = viewHolder.bindInnerView<TextView>(R.layout.kau_pref_seekbar_text)
         if (textColor != null) text.setTextColor(textColor)
 
         val tvc = builder.textViewConfigs
 
         text.tvc()
-        val seekbar = viewHolder.bindLowerView<SeekBar>(R.layout.kau_preference_seekbar) {
+        val seekbar = viewHolder.bindLowerView<SeekBar>(R.layout.kau_pref_seekbar) {
             it.max = builder.range
             it.incrementProgressBy(builder.increments)
             it.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

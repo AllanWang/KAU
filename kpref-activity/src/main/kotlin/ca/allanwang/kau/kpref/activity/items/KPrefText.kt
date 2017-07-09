@@ -33,7 +33,7 @@ open class KPrefText<T>(val builder: KPrefTextContract<T>) : KPrefItemBase<T>(bu
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
-        val textview = viewHolder.bindInnerView<TextView>(R.layout.kau_preference_text)
+        val textview = viewHolder.bindInnerView<TextView>(R.layout.kau_pref_text)
         if (textColor != null) textview.setTextColor(textColor)
         textview.text = builder.textGetter.invoke(pref)
     }

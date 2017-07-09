@@ -21,7 +21,7 @@ open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
-        val checkbox = viewHolder.bindInnerView<CheckBox>(R.layout.kau_preference_checkbox)
+        val checkbox = viewHolder.bindInnerView<CheckBox>(R.layout.kau_pref_checkbox)
         if (accentColor != null) checkbox.tint(accentColor)
         checkbox.isChecked = pref
         checkbox.jumpDrawablesToCurrentState() //Cancel the animation

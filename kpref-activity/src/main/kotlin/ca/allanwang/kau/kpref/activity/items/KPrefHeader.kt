@@ -11,7 +11,7 @@ import ca.allanwang.kau.kpref.activity.R
  */
 open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
 
-    override fun getLayoutRes(): Int = R.layout.kau_preference_header
+    override fun getLayoutRes(): Int = R.layout.kau_pref_header
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         if (accentColor != null) viewHolder.title.setTextColor(accentColor)

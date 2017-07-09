@@ -25,7 +25,7 @@ open class KPrefColorPicker(val builder: KPrefColorContract) : KPrefItemBase<Int
             }
         }
         if (builder.showPreview) {
-            val preview = viewHolder.bindInnerView<CircleView>(R.layout.kau_preference_color_preview)
+            val preview = viewHolder.bindInnerView<CircleView>(R.layout.kau_pref_color)
             preview.setBackgroundColor(pref)
             preview.withBorder = true
             builder.apply {

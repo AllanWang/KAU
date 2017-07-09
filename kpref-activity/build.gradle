@@ -1,7 +1,7 @@
 apply from: '../android-lib.gradle'
 
 android {
-    resourcePrefix "kau_"
+    resourcePrefix "kau_pref_"
 }
 
 dependencies {

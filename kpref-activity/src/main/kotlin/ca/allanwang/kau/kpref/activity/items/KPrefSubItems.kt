@@ -19,7 +19,7 @@ open class KPrefSubItems(val builder: KPrefSubItemsContract) : KPrefItemCore(bui
         return true
     }
 
-    override fun getLayoutRes(): Int = R.layout.kau_preference
+    override fun getLayoutRes(): Int = R.layout.kau_pref_core
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {}
     /**

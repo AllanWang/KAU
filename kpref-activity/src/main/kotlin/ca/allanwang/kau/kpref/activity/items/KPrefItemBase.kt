@@ -53,7 +53,7 @@ abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base)
         }
     }
 
-    override final fun getLayoutRes(): Int = R.layout.kau_preference
+    override final fun getLayoutRes(): Int = R.layout.kau_pref_core
 
     /**
      * Extension of the core contract
