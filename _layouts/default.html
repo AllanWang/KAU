@@ -19,7 +19,7 @@
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
         {% if page.url contains '#readme' %}
-        {% assign submodule = page.url | split: '/' &}
+        {% assign submodule = page.url | split: '/' %}
         <p class="view"><a href="{{ site.github.repository_url | append: page.url }}">View {{ submodule }} on GitHub <small>{{ github_name }}</small></a></p>
         {% endif %}
         <p>3 {{ page.url }}</p>
