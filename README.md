@@ -1,4 +1,4 @@
-![KAU](https://raw.githubusercontent.com/AllanWang/KAU/master/files/logo.svg)
+<img src="https://raw.githubusercontent.com/AllanWang/KAU/master/files/logo.svg" alt="KAU" />
 
 Kotlin Android Utils
 
