@@ -21,9 +21,9 @@
         {% if site.github.url contains '#readme' %}
         {% assign relative = site.url | split: '.io/' %}
         <p>{{ relative[1] }}</p>
-        <p>{{ site.github.url }}</p>
         <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
         {% endif %}
+        <p>1 {{ site.github.url }}</p>
 
         {% if site.github.is_project_page %}
         <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
