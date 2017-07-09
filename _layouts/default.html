@@ -18,9 +18,10 @@
         <h1><a href="{{ site.github.url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
-        {% if site.url contains '#readme' %}
+        {% if site.github.url contains '#readme' %}
         {% assign relative = site.url | split: '.io/' %}
         <p>{{ relative[1] }}</p>
+        <p>{{ site.github.url }}</p>
         <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
         {% endif %}
 
