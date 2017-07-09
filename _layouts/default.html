@@ -18,7 +18,7 @@
         <h1><a href="{{ site.github.url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
-        {% if page.url == '/core/' %}
+        {% if page.url == '/core/' or if page.url == '/core-ui/' %}
         <!--if page.url == '/core-ui/' or-->
         <!--if page.url == '/about/' or-->
         <!--if page.url == '/adapter/' or-->
@@ -29,7 +29,6 @@
         {% assign size = page.url | size | minus: 1 %}
         {% assign submodule = page.url | slice: 1, size %}
         {% assign submodule_url = site.github.repository_url | append: '/tree/master' | append: page.url %}
-        <p>{{ submodule }}</p>
         <p class="view"><a href="{{ submodule_url }}">View {{ submodule }} on GitHub <small>{{ github_name }}</small></a></p>
         {% endif %}
 
