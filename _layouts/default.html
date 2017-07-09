@@ -33,7 +33,7 @@
         {% assign submodule_url = site.github.repository_url | append: '/tree/master' | append: page.url %}
         <p class="view"><a href="{{ submodule_url }}" target="_blank">View {{ submodule }} on GitHub <small>{{ github_name }}</small></a></p>
         {% else %}
-        <p class="view"> </p>
+        <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
         {% endif %}
 
         {% if site.github.is_user_page %}
