@@ -117,25 +117,31 @@ Include your email and subject, along with other optional configurations such as
 Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of the extensions in its core package is also in KAU.
 
 ### AnimUtils
+
 > Extends View
 * Fade In/Fade Out/Circle Reveal with callbacks
 * Switch texts in a TextView with a fade transition
 
 ### ColorUtils
+
 > Extends Int
 * Check if color is dark or light
 * Check if color is visible against another color
 * Convert color to HSV (float[]) or hex (String)
 * Get the disabled color of a theme
 * Adjust alpha
+
 > Extends String
 * Parses color; adds onto the original parser by supporting #AAA values
+
 > Extends View
 * Various tinting for different views; taken from [MDTintHelper](https://github.com/afollestad/material-dialogs/blob/master/core/src/main/java/com/afollestad/materialdialogs/internal/MDTintHelper.java)
 
 ### ContextUtils
+
 > Extends Activity
 * Restart an activity
+
 > Extends Context
 * Start Activity using the class, with optional intents and stack clearing
 * Create a toast directly
@@ -145,16 +151,19 @@ Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of th
 * Check if network is available
 
 ### IIconUtils
+
 > Extends [IIcon](https://github.com/mikepenz/Android-Iconics)
 * `toDrawable` method that only requires a context; defaults to a white icon of size 24dp and uses a ColorStateList to allow for dimming
 
 ### Utils [Misc]
+
 > Extends Int
 * dpToPx & pxToDp conversions
 * Check sdk version
 * Check if app is installed
 
 ### ViewUtils
+
 > Extends View
 * `visible()`, `invisible()`, `gone()`, `isVisible()`, `isInvisible()`, `isGone()` methods
 * matchParent method to set the layout params to match_parent
