@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--due to animations, we need a wrapper viewgroup so our changes will stick-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:clipToPadding="false"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:orientation="horizontal">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@id/kau_pref_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart">
+
+        <!--As per Android N, icons (24dp) are aligned to the left rather than centered-->
+
+        <ImageView
+            android:id="@id/kau_pref_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@string/kau_pref_icon"
+            android:paddingEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@id/kau_pref_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/kau_padding_normal"
+            android:ellipsize="marquee"
+            android:textAppearance="?android:attr/textAppearanceListItem"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintBottom_toTopOf="@id/kau_pref_desc"
+            app:layout_constraintEnd_toStartOf="@id/kau_pref_inner_frame"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="-175dp" />
+
+        <TextView
+            android:id="@id/kau_pref_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="10"
+            android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintBottom_toTopOf="@id/kau_pref_lower_frame"
+            app:layout_constraintEnd_toStartOf="@id/kau_pref_inner_frame"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
+            app:layout_constraintTop_toBottomOf="@id/kau_pref_title"
+            tools:layout_editor_absoluteX="-175dp" />
+
+        <LinearLayout
+            android:id="@id/kau_pref_lower_frame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/kau_padding_normal"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/kau_pref_inner_frame"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/kau_pref_icon"
+            app:layout_constraintTop_toBottomOf="@id/kau_pref_desc"
+            tools:layout_editor_absoluteX="-175dp" />
+
+        <android.support.constraint.Barrier
+            android:id="@id/kau_pref_barrier"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="kau_pref_title,kau_pref_desc,kau_pref_lower_frame"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@id/kau_pref_inner_frame"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center_vertical|end"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/kau_padding_normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@id/kau_pref_barrier"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            tools:layout_editor_absoluteX="1dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

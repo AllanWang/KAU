@@ -8,9 +8,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/about" />
+            <option value="$PROJECT_DIR$/adapter" />
+            <option value="$PROJECT_DIR$/colorpicker" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core-ui" />
             <option value="$PROJECT_DIR$/imagepicker" />
+            <option value="$PROJECT_DIR$/kpref-activity" />
             <option value="$PROJECT_DIR$/sample" />
+            <option value="$PROJECT_DIR$/searchbar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

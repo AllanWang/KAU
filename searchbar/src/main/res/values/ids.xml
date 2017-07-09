@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="kau_search_cardview" type="id" />
+    <item name="kau_search_clear" type="id" />
+    <item name="kau_search_desc" type="id" />
+    <item name="kau_search_divider" type="id" />
+    <item name="kau_search_edit_text" type="id" />
+    <item name="kau_search_extra" type="id" />
+    <item name="kau_search_icon" type="id" />
+    <item name="kau_search_item_frame" type="id" />
+    <item name="kau_search_nav" type="id" />
+    <item name="kau_search_progress" type="id" />
+    <item name="kau_search_recycler" type="id" />
+    <item name="kau_search_shadow" type="id" />
+    <item name="kau_search_title" type="id" />
+</resources>

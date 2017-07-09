@@ -1,1 +1,10 @@
-include ':sample', ':core', ':imagepicker'
+include ':core',
+        ':sample',
+
+        ':about',
+        ':adapter',
+        ':colorpicker',
+        ':core-ui',
+        ':imagepicker',
+        ':kpref-activity',
+        ':searchbar'

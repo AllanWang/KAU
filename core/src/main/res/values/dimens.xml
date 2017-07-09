@@ -10,7 +10,6 @@
     <dimen name="kau_splash_logo">16dp</dimen>
     <dimen name="kau_progress_bar_height">1dip</dimen>
     <dimen name="kau_account_image_size">100dp</dimen>
-    <dimen name="kau_color_circle_size">56dp</dimen>
 
     <dimen name="kau_status_bar_height">24dp</dimen>
     <dimen name="kau_drag_dismiss_distance">112dp</dimen> <!-- 2 * ?android:actionBarSize -->

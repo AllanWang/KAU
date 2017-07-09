@@ -13,7 +13,7 @@ android {
     buildToolsVersion project.BUILD_TOOLS
 
     androidGitVersion {
-        codeFormat = 'MMNNPP'
+        codeFormat = 'MMNNPPBB'
         prefix 'v'
     }
 
@@ -43,7 +43,7 @@ android {
 }
 
 dependencies {
-    compile project(':core')
+    compile project(':core-ui')
     compile "com.github.bumptech.glide:glide:${GLIDE}"
     kapt "com.github.bumptech.glide:compiler:${GLIDE}"
 }

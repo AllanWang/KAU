@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@id/kau_search_item_frame"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/kau_search_item_height"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="start|center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@id/kau_search_icon"
+        android:layout_width="@dimen/kau_search_icon"
+        android:layout_height="0dp"
+        android:contentDescription="@string/kau_search"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@id/kau_search_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        android:paddingEnd="@dimen/kau_search_key_line_16"
+        android:paddingStart="@dimen/kau_search_key_line_8"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/kau_search_text_small"
+        app:layout_constraintBottom_toTopOf="@id/kau_search_desc"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/kau_search_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@id/kau_search_desc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:gravity="start|center_vertical"
+        android:maxLines="1"
+        android:paddingEnd="@dimen/kau_search_key_line_16"
+        android:paddingStart="@dimen/kau_search_key_line_8"
+        android:textIsSelectable="false"
+        android:textSize="@dimen/kau_search_text_micro"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/kau_search_icon"
+        app:layout_constraintTop_toBottomOf="@id/kau_search_title" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@id/kau_search_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/kau_shadow_overlay"
+        android:visibility="gone" />
+
+    <ca.allanwang.kau.ui.views.BoundedCardView
+        android:id="@id/kau_search_cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/kau_search_base_margin"
+        android:layout_marginStart="@dimen/kau_search_base_margin"
+        app:cardCornerRadius="@dimen/kau_search_base_corners"
+        app:maxHeightPercent="0.9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/kau_search_height"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="start|center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@id/kau_search_nav"
+                    android:layout_width="@dimen/kau_search_icon"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/kau_search"
+                    android:focusable="true"
+                    android:scaleType="centerInside" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@id/kau_search_edit_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="start|center_vertical"
+                    android:imeOptions="actionSearch|flagNoExtractUi"
+                    android:inputType="textNoSuggestions"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/kau_search_key_line_16"
+                    android:paddingStart="@dimen/kau_search_key_line_8"
+                    android:privateImeOptions="nm"
+                    android:textSize="@dimen/kau_search_text_medium"
+                    android:windowSoftInputMode="stateAlwaysHidden" />
+
+                <ProgressBar
+                    android:id="@id/kau_search_progress"
+                    style="?android:attr/indeterminateProgressStyle"
+                    android:layout_width="@dimen/kau_search_progress"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@id/kau_search_extra"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/kau_search"
+                    android:focusable="true"
+                    android:scaleType="center"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@id/kau_search_clear"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@string/kau_search"
+                    android:focusable="true"
+                    android:scaleType="center" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@id/kau_search_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/kau_search_divider"
+                android:background="?android:attr/listDivider" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@id/kau_search_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:overScrollMode="never"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </ca.allanwang.kau.ui.views.BoundedCardView>
+
+</merge>

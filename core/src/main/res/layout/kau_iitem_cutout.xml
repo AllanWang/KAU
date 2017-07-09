@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ca.allanwang.kau.views.CutoutView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/kau_cutout"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/kau_about_header_height"
-    android:minHeight="@dimen/kau_about_header_height"
-    app:foregroundColor="?android:colorAccent"
-    app:heightPercentageToScreen="0.5" />

@@ -2,7 +2,6 @@ package ca.allanwang.kau.changelog
 
 import android.content.Context
 import android.content.res.XmlResourceParser
-import android.os.Handler
 import android.support.annotation.ColorInt
 import android.support.annotation.LayoutRes
 import android.support.annotation.XmlRes
@@ -20,7 +19,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.xmlpull.v1.XmlPullParser
-import java.util.*
 
 
 /**

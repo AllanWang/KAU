@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="library_kau_libraryVersion" tools:ignore="ResourceName">1.4</string>
+    <string name="library_kau_libraryVersion" tools:ignore="ResourceName">1.5</string>
 
     <string name="define_kau" tools:ignore="ResourceName" />
     <!-- Author section -->

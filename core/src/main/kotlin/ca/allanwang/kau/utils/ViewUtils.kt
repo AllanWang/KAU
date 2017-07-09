@@ -21,7 +21,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 import ca.allanwang.kau.logging.KL
-import ca.allanwang.kau.views.createSimpleRippleDrawable
+import ca.allanwang.kau.ui.createSimpleRippleDrawable
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 

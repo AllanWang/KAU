@@ -1,0 +1,6 @@
+<ca.allanwang.kau.colorpicker.CircleView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/kau_pref_inner_content"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:focusable="false"
+    android:clickable="false" />

@@ -4,19 +4,12 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
-import ca.allanwang.kau.email.sendEmail
 import ca.allanwang.kau.kpref.CoreAttributeContract
 import ca.allanwang.kau.kpref.KPrefActivity
 import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.searchview.SearchItem
 import ca.allanwang.kau.searchview.SearchView
 import ca.allanwang.kau.searchview.bindSearchView
-import ca.allanwang.kau.utils.materialDialog
-import ca.allanwang.kau.utils.navigationBarColor
-import ca.allanwang.kau.utils.startActivity
-import ca.allanwang.kau.utils.toast
-import ca.allanwang.kau.views.RippleCanvas
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 
 class MainActivity : KPrefActivity() {
