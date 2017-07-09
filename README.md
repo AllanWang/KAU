@@ -26,17 +26,7 @@ allprojects {
 ```
 
 And add the following dependencies (You can use a specific version, commit, or -SNAPSHOT):
-
-```gradle
-dependencies {
-    compile "ca.allanwang:kau:$KAU"
-}
-
-```
-
-The dependency above will give the full KAU package in all its glory.
-However, if you wish to selectively choose what you want, most features are split into submodules.
-More information about each module can be found below and in their respective directories. 
+Note that only core is required if you want the basic features.
 
 ```gradle
 dependencies {
