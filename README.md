@@ -50,7 +50,7 @@ dependencies {
 # Submodules 
 (linked to their respective Docs)
 
-## [Core](/core/Docs.md)
+## [Core](/core/README.md)
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: KPrefs, Changelog XML, Ripple Canvas, Extensions, Email Builder
 * Includes 
@@ -61,7 +61,7 @@ dependencies {
 [`Timber`](https://github.com/JakeWharton/timber), 
 [`Kotlin stdlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
 
-## [Core UI](/core-ui/Docs.md)
+## [Core UI](/core-ui/README.md)
 * Collection of complex views and widgets
 * Includes `:core`, `:adapter`, 
 [`RxJava`](https://github.com/ReactiveX/RxJava), 
@@ -69,31 +69,31 @@ dependencies {
 [`RxKotlin`](https://github.com/ReactiveX/RxKotlin), 
 [`RxBinding`](https://github.com/JakeWharton/RxBinding)
 
-## [About](/about/Docs.md)
+## [About](/about/README.md)
 * Implementation of an overlaying about section, along with automatic lib detection; also includes the lib strings for KAU
 * Includes `:core-ui`, `:adapter`, 
 [`About Libraries`](https://github.com/mikepenz/AboutLibraries)
 
-## [Adapter](/adapter/Docs.md)
+## [Adapter](/adapter/README.md)
 * Kotlin bindings for the fast adapter, as well as RecyclerView animations
 * Includes `:core`, 
 [`Fast Adapter`](https://github.com/mikepenz/FastAdapter)
 
-## [Color Picker](/colorpicker/Docs.md)
+## [Color Picker](/colorpicker/README.md)
 * Implementation of a color picker dialog with subtle transitions and a decoupled callback
 * Includes `:core`, 
 [`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
 
-## [Image Picker](/imagepicker/Docs.md)
+## [Image Picker](/imagepicker/README.md)
 * WIP - Overlaying media chooser
 * Includes `:core-ui`, 
 [`Glide`](https://github.com/bumptech/glide)
 
-## [Kpref Activity](/kpref-activity/Docs.md)
+## [Kpref Activity](/kpref-activity/README.md)
 * Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
 * Includes `:core-ui`, `:adapter`, `colorpicker`
 
-## [SearchView](/searchview/Docs.md)
+## [SearchView](/searchview/README.md)
 * Material searchview with kotlin bindings
 * Includes `:core-ui`, `:adapter`
 
