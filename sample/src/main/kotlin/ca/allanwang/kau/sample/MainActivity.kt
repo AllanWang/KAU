@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
-import ca.allanwang.kau.kpref.CoreAttributeContract
-import ca.allanwang.kau.kpref.KPrefActivity
-import ca.allanwang.kau.kpref.KPrefAdapterBuilder
 import ca.allanwang.kau.searchview.SearchItem
 import ca.allanwang.kau.searchview.SearchView
-import ca.allanwang.kau.searchview.bindSearchView
 
 
 class MainActivity : KPrefActivity() {

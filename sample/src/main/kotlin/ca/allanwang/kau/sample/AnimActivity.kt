@@ -7,7 +7,10 @@ import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
 import ca.allanwang.kau.permissions.kauRequestPermissions
-import ca.allanwang.kau.swipe.*
+import ca.allanwang.kau.swipe.SWIPE_EDGE_BOTTOM
+import ca.allanwang.kau.swipe.kauSwipeOnCreate
+import ca.allanwang.kau.swipe.kauSwipeOnDestroy
+import ca.allanwang.kau.swipe.kauSwipeOnPostCreate
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivitySlideOut
 import ca.allanwang.kau.utils.toast

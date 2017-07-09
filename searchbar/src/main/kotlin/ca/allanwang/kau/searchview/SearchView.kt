@@ -20,8 +20,8 @@ import ca.allanwang.kau.R
 import ca.allanwang.kau.animators.NoAnimator
 import ca.allanwang.kau.kotlin.nonReadable
 import ca.allanwang.kau.searchview.SearchView.Configs
-import ca.allanwang.kau.utils.*
 import ca.allanwang.kau.ui.views.BoundedCardView
+import ca.allanwang.kau.utils.*
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial

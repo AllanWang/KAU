@@ -15,12 +15,10 @@ import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate
 import ca.allanwang.kau.animators.FadeScaleAnimator
-import ca.allanwang.kau.iitems.CutoutIItem
 import ca.allanwang.kau.iitems.HeaderIItem
-import ca.allanwang.kau.iitems.LibraryIItem
-import ca.allanwang.kau.utils.*
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.ui.widgets.InkPageIndicator
+import ca.allanwang.kau.utils.*
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.IItem

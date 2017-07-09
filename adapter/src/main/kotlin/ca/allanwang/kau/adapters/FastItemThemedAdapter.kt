@@ -4,8 +4,8 @@ import android.content.res.ColorStateList
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import ca.allanwang.kau.utils.adjustAlpha
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
+import ca.allanwang.kau.utils.adjustAlpha
 import com.mikepenz.fastadapter.IExpandable
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.ISubItem

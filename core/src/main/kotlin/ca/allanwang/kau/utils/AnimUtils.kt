@@ -2,16 +2,13 @@ package ca.allanwang.kau.utils
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.content.Context
 import android.support.annotation.StringRes
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
-import android.view.animation.Interpolator
 import android.widget.TextView
-import ca.allanwang.kau.kotlin.lazyContext
 
 /**
  * Created by Allan Wang on 2017-06-01.

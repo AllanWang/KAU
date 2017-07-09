@@ -3,7 +3,6 @@ package ca.allanwang.kau.utils
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
-import android.support.annotation.RequiresApi
 
 /**
  * Created by Allan Wang on 2017-06-23.

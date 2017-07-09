@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import ca.allanwang.kau.R
-import ca.allanwang.kau.colorpicker.CircleView
 import ca.allanwang.kau.utils.*
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog

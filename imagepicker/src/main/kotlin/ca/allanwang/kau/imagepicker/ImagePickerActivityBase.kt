@@ -12,8 +12,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
 import ca.allanwang.kau.logging.KL
-import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
+import ca.allanwang.kau.utils.bindView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 

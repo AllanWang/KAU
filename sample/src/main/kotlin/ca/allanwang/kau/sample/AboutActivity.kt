@@ -1,6 +1,5 @@
 package ca.allanwang.kau.sample
 
-import ca.allanwang.kau.ui.about.AboutActivityBase
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.iitems.CardIItem
 import com.mikepenz.fastadapter.IItem
