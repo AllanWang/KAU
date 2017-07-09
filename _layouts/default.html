@@ -19,7 +19,7 @@
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
         {% if page.url == '/core/' or
-        page.url == '/core-ui/'
+        page.url == '/core-ui/' or
         page.url == '/core-ui/' or
         page.url == '/about/' or
         page.url == '/adapter/' or
@@ -27,7 +27,7 @@
         page.url == '/imagepicker/' or
         page.url == '/kpref-activity/' or
         page.url == '/searchview/' %}
-        
+
         {% assign size = page.url | size | minus: 1 %}
         {% assign submodule = page.url | slice: 1, size %}
         {% assign submodule_url = site.github.repository_url | append: '/tree/master' | append: page.url %}
