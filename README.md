@@ -4,7 +4,7 @@ Kotlin Android Utils
 
 This library contains small helper functions used throughout almost all of my other projects. The goal is to make common interactions executable in a single line.
 
-[Changelog](docs/Changelog.md)
+[Changelog](https://github.com/AllanWang/KAU/tree/master/docs/Changelog.md)
 
 ------------
 
@@ -50,7 +50,7 @@ dependencies {
 # Submodules 
 (linked to their respective Docs)
 
-## [Core](core#readme)
+## [Core](core)
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: KPrefs, Changelog XML, Ripple Canvas, Extensions, Email Builder
 * Includes 
@@ -61,7 +61,7 @@ dependencies {
 [`Timber`](https://github.com/JakeWharton/timber), 
 [`Kotlin stdlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
 
-## [Core UI](core-ui#readme)
+## [Core UI](core-ui)
 * Collection of complex views and widgets
 * Includes `:core`, `:adapter`, 
 [`RxJava`](https://github.com/ReactiveX/RxJava), 
@@ -69,31 +69,31 @@ dependencies {
 [`RxKotlin`](https://github.com/ReactiveX/RxKotlin), 
 [`RxBinding`](https://github.com/JakeWharton/RxBinding)
 
-## [About](about#readme)
+## [About](about)
 * Implementation of an overlaying about section, along with automatic lib detection; also includes the lib strings for KAU
 * Includes `:core-ui`, `:adapter`, 
 [`About Libraries`](https://github.com/mikepenz/AboutLibraries)
 
-## [Adapter](adapter#readme)
+## [Adapter](adapter)
 * Kotlin bindings for the fast adapter, as well as RecyclerView animations
 * Includes `:core`, 
 [`Fast Adapter`](https://github.com/mikepenz/FastAdapter)
 
-## [Color Picker](colorpicker#readme)
+## [Color Picker](colorpicker)
 * Implementation of a color picker dialog with subtle transitions and a decoupled callback
 * Includes `:core`, 
 [`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
 
-## [Image Picker](imagepicker#readme)
+## [Image Picker](imagepicker)
 * WIP - Overlaying media chooser
 * Includes `:core-ui`, 
 [`Glide`](https://github.com/bumptech/glide)
 
-## [Kpref Activity](kpref-activity#readme)
+## [Kpref Activity](kpref-activity)
 * Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
 * Includes `:core-ui`, `:adapter`, `colorpicker`
 
-## [SearchView](searchview#readme)
+## [SearchView](searchview)
 * Material searchview with kotlin bindings
 * Includes `:core-ui`, `:adapter`
 
