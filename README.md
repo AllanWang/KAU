@@ -29,9 +29,7 @@ And add the following dependencies (You can use a specific version, commit, or -
 
 ```gradle
 dependencies {
-    
     compile "ca.allanwang:kau:$KAU"
-  
 }
 
 ```
@@ -42,7 +40,6 @@ More information about each module can be found below and in their respective di
 
 ```gradle
 dependencies {
-    
     //All submodules extend this
     compile "ca.allanwang.kau:core:$KAU"
     //All submodules with extensive ui extend this
