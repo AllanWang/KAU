@@ -11,7 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/imagepicker/imagepicker.iml" filepath="$PROJECT_DIR$/imagepicker/imagepicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/kpref-activity/kpref-activity.iml" filepath="$PROJECT_DIR$/kpref-activity/kpref-activity.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/searchbar/searchbar.iml" filepath="$PROJECT_DIR$/searchbar/searchbar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/searchview/searchview.iml" filepath="$PROJECT_DIR$/searchview/searchview.iml" />
     </modules>
   </component>
 </project>
