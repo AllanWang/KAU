@@ -1,7 +1,7 @@
 package ca.allanwang.kau.kpref.activity.items
 
 import android.view.View
-import ca.allanwang.kau.R
+import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 
 /**

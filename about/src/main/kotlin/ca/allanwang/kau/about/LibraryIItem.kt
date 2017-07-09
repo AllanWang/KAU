@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import android.widget.TextView
-import ca.allanwang.kau.R
+import ca.allanwang.kau.about.R
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.utils.bindView

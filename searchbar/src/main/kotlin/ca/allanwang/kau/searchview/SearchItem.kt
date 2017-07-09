@@ -10,7 +10,6 @@ import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import ca.allanwang.kau.R
 import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.utils.*
 import com.mikepenz.google_material_typeface_library.GoogleMaterial

@@ -2,7 +2,7 @@ package ca.allanwang.kau.kpref.activity.items
 
 import android.view.View
 import android.widget.TextView
-import ca.allanwang.kau.R
+import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.utils.toast
 

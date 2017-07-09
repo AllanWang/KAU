@@ -1,8 +1,8 @@
 <resources>
 
     <style name="Kau.Translucent.ImagePicker">
-        <item name="android:windowEnterTransition">@transition/kau_enter_slide_bottom</item>
-        <item name="android:windowReturnTransition">@transition/kau_about_return_downward</item>
+        <!--<item name="android:windowEnterTransition">@transition/kau_enter_slide_bottom</item>-->
+        <!--<item name="android:windowReturnTransition">@transition/kau_about_return_downward</item>-->
     </style>
 
 </resources>

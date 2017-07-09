@@ -16,7 +16,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
-import ca.allanwang.kau.R
 import ca.allanwang.kau.animators.NoAnimator
 import ca.allanwang.kau.kotlin.nonReadable
 import ca.allanwang.kau.searchview.SearchView.Configs

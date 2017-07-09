@@ -10,7 +10,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ca.allanwang.kau.R
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate

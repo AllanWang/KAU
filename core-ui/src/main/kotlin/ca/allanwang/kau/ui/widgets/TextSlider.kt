@@ -10,7 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextSwitcher
 import android.widget.TextView
-import ca.allanwang.kau.R
+import ca.allanwang.kau.ui.R
 import java.util.*
 
 /**

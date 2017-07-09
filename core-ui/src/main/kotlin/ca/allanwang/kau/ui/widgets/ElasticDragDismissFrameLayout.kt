@@ -22,7 +22,7 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import ca.allanwang.kau.R
+import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.utils.*
 
 /**

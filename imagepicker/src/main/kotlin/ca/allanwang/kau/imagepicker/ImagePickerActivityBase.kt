@@ -39,8 +39,8 @@ abstract class ImagePickerActivityBase : AppCompatActivity(), LoaderManager.Load
         draggableFrame.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 if (draggableFrame.translationY < 0) {
-                    window.returnTransition = TransitionInflater.from(this@ImagePickerActivityBase)
-                            .inflateTransition(R.transition.kau_about_return_upwards)
+//                    window.returnTransition = TransitionInflater.from(this@ImagePickerActivityBase)
+//                            .inflateTransition(R.transition.kau_about_return_upwards)
                 }
                 finishAfterTransition()
             }

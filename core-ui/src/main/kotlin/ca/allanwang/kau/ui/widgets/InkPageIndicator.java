@@ -36,7 +36,7 @@ import android.view.animation.Interpolator;
 
 import java.util.Arrays;
 
-import ca.allanwang.kau.R;
+import ca.allanwang.kau.ui.R;
 import ca.allanwang.kau.utils.AnimHolder;
 import ca.allanwang.kau.utils.ColorUtilsKt;
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.support.annotation.DimenRes
 import android.support.annotation.StringRes
-import ca.allanwang.kau.R
 import ca.allanwang.kau.utils.string
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme

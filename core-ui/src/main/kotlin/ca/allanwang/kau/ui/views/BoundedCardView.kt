@@ -3,7 +3,8 @@ package ca.allanwang.kau.ui.views
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
-import ca.allanwang.kau.R
+import ca.allanwang.kau.ui.R
+import ca.allanwang.kau.utils.parentVisibleHeight
 
 
 /**

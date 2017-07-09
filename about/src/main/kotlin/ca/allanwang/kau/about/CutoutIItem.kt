@@ -2,7 +2,7 @@ package ca.allanwang.kau.about
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import ca.allanwang.kau.R
+import ca.allanwang.kau.about.R
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.ui.views.CutoutView

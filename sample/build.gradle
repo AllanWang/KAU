@@ -1,9 +1,15 @@
 plugins {
     id 'com.gladed.androidgitversion' version '0.3.4'
 }
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+    maven { url "https://maven.google.com" }
+}
 
 android {
     compileSdkVersion Integer.parseInt(project.TARGET_SDK)
@@ -15,18 +21,23 @@ android {
     }
 
     defaultConfig {
-        applicationId "${project.APP_GROUP}." + project.APP_ID.toLowerCase() + ".sample"
         minSdkVersion Integer.parseInt(project.MIN_SDK)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
         versionCode androidGitVersion.code()
         versionName androidGitVersion.name()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
     }
 
     sourceSets {
@@ -50,8 +61,5 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
-repositories {
-    mavenCentral()
+    compile "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
 }

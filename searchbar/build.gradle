@@ -1,45 +1,7 @@
-plugins {
-    id 'com.gladed.androidgitversion' version '0.3.4'
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
-
-group = project.APP_GROUP
+apply from: '../android.gradle'
 
 android {
-    compileSdkVersion Integer.parseInt(project.TARGET_SDK)
-    buildToolsVersion project.BUILD_TOOLS
-
-    androidGitVersion {
-        codeFormat = 'MMNNPPBB'
-        prefix 'v'
-    }
-
-    defaultConfig {
-        minSdkVersion Integer.parseInt(project.MIN_SDK)
-        targetSdkVersion Integer.parseInt(project.TARGET_SDK)
-        versionCode androidGitVersion.code()
-        versionName androidGitVersion.name()
-        consumerProguardFiles 'progress-proguard.txt'
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    lintOptions {
-        abortOnError false
-        checkReleaseBuilds false
-    }
-    resourcePrefix "kau_search_"
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-    }
+    resourcePrefix "kau_"
 }
 
 dependencies {
@@ -52,8 +14,8 @@ dependencies {
     compile project(':core-ui')
     compile project(':adapter')
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
 
 }
 

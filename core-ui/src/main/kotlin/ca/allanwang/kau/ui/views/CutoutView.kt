@@ -24,7 +24,7 @@ import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
-import ca.allanwang.kau.R
+import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.getFont
 import ca.allanwang.kau.utils.parentVisibleHeight

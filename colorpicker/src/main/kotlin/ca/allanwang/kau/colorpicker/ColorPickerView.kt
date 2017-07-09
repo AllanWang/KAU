@@ -11,7 +11,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import ca.allanwang.kau.R
 import ca.allanwang.kau.utils.*
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
@@ -29,7 +28,7 @@ internal class ColorPickerView @JvmOverloads constructor(
     var selectedColor: Int = -1
     var isInSub: Boolean = false
     var isInCustom: Boolean = false
-    var circleSize: Int = context.dimen(R.dimen.kau_cp_circle_size).toInt()
+    var circleSize: Int = context.dimen(R.dimen.kau_color_circle_size).toInt()
     val backgroundColor = context.resolveColor(R.attr.md_background_color,
             if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark) Color.WHITE else 0xff424242.toInt())
     val backgroundColorTint = backgroundColor.colorToForeground()

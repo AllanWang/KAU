@@ -11,7 +11,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ViewAnimator
-import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.activity.items.KPrefItemCore
 import ca.allanwang.kau.ui.views.RippleCanvas
 import ca.allanwang.kau.ui.widgets.TextSlider
@@ -55,7 +54,7 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setup layout
-        setContentView(R.layout.kau_activity_kpref)
+        setContentView(R.layout.kau_pref_activity)
         setSupportActionBar(toolbar)
         if (supportActionBar != null)
             with(supportActionBar!!) {
