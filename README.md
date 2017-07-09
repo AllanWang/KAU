@@ -27,6 +27,7 @@ allprojects {
 
 And add the following dependencies (You can use a specific version, commit, or -SNAPSHOT):
 Note that only core is required if you want the basic features.
+Note that if you use any particular submodule, it will automatically include all of its necessary submodules.
 
 ```gradle
 dependencies {
