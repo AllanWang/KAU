@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ca.allanwang.kau.views.CutoutView
+        <ca.allanwang.kau.ui.views.CutoutView
             android:id="@+id/about_main_cutout"
             android:layout_width="0dp"
             android:layout_height="@dimen/kau_about_header_height"

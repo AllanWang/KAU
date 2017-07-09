@@ -5,3 +5,5 @@ KAU's colorpicker decouples the two, so it only needs a context and a separate c
 The color picker also animates the selection, and uses Kotlin's DSL to provide easy calling.
 
 To use it, call `Context.colorPickerDialog` and specify and configs as required through the builder.
+
+![Color Picker Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker.gif)
