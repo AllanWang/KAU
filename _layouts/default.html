@@ -20,9 +20,12 @@
 
         {% if page.url contains '#readme' %}
         {% assign submodule = page.url | split: '/' %}
-        <p class="view"><a href="{{ site.github.repository_url | append: page.url }}">View {{ submodule }} on GitHub <small>{{ github_name }}</small></a></p>
+        <p>{{ submodule[0] }}</p>
+        <p>{{ submodule[1] }}</p>
+        <p>{{ submodule[2] }}</p>
+        <p class="view"><a href="{{ site.github.repository_url | append: page.url }}">View {{ submodule[1] }} on GitHub <small>{{ github_name }}</small></a></p>
         {% endif %}
-        <p>3 {{ page.url }}</p>
+        <p>4 {{ page.url }}</p>
 
         {% if site.github.is_project_page %}
         <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
