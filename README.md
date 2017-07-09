@@ -49,14 +49,15 @@ dependencies {
     compile "ca.allanwang.kau:colorpicker:$KAU"
     compile "ca.allanwang.kau:imagepicker:$KAU"
     compile "ca.allanwang.kau:kpref-activity:$KAU"
-    compile "ca.allanwang.kau:searchbar:$KAU"
+    compile "ca.allanwang.kau:searchview:$KAU"
 }
 
 ```
 
 -----------
 
-# Submodules (linked to their respective Docs)
+# Submodules 
+(linked to their respective Docs)
 
 ## [Core](/core/Docs.md)
 * Collection of extension functions and small helper methods applicable in almost any application.
@@ -87,8 +88,8 @@ dependencies {
 * Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
 * Includes `:core-ui`, `:adapter`, `colorpicker`
 
-## [Searchbar](/searchbar/Docs.md)
-* Material searchbar with kotlin bindings
+## [SearchView](/searchview/Docs.md)
+* Material searchview with kotlin bindings
 * Includes `:core-ui`, `:adapter`
 
 -----------
