@@ -68,17 +68,15 @@ dependencies {
 [`Iconics`](https://github.com/mikepenz/Android-Iconics), 
 [`Anko`](https://github.com/Kotlin/anko),
 [`Timber`](https://github.com/JakeWharton/timber), 
-[`Kotlin stlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
+[`Kotlin stdlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
 
 ## [Core UI](/core-ui/Docs.md)
 * Collection of complex views and widgets
 * Includes `:core`, `:adapter`, 
-`Reactive libs (`
-[`Java`](https://github.com/ReactiveX/RxJava), 
-[`Android`](https://github.com/ReactiveX/RxAndroid), 
-[`Kotlin`](https://github.com/ReactiveX/RxKotlin), 
-[`Binding`](https://github.com/JakeWharton/RxBinding)
-`)`
+[`RxJava`](https://github.com/ReactiveX/RxJava), 
+[`RxAndroid`](https://github.com/ReactiveX/RxAndroid), 
+[`RxKotlin`](https://github.com/ReactiveX/RxKotlin), 
+[`RxBinding`](https://github.com/JakeWharton/RxBinding)
 
 ## [About](/about/Docs.md)
 * Implementation of an overlaying about section, along with automatic lib detection; also includes the lib strings for KAU
