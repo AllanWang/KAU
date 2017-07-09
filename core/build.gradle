@@ -1,4 +1,4 @@
-apply from: '../android.gradle'
+apply from: '../android-lib.gradle'
 
 android {
     resourcePrefix "kau_"

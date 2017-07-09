@@ -1,19 +1,11 @@
-apply from: '../android.gradle'
+apply from: '../android-lib.gradle'
 
 android {
     resourcePrefix "kau_color_"
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
     compile project(':core')
-
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
 
     compile "com.afollestad.material-dialogs:commons:${MATERIAL_DIALOG}"
 }

@@ -17,8 +17,6 @@ android {
     defaultConfig {
         minSdkVersion Integer.parseInt(project.MIN_SDK)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
-//            versionCode androidGitVersion.code()
-//            versionName androidGitVersion.name()
         consumerProguardFiles 'progress-proguard.txt'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -29,7 +27,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    
+
     lintOptions {
         abortOnError false
         checkReleaseBuilds false

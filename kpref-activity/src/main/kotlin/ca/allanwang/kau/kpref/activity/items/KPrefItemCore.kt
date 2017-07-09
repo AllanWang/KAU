@@ -11,11 +11,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KPrefMarker
+import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon

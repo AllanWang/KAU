@@ -1,8 +1,8 @@
 package ca.allanwang.kau.kpref.activity.items
 
 import android.view.View
-import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.R
 
 /**
  * Created by Allan Wang on 2017-06-14.

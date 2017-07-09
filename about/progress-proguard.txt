@@ -1,1 +1,3 @@
-
+-keepclasseswithmembers class **.R$* {
+    public static final int define_*;
+}

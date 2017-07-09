@@ -2,8 +2,8 @@ package ca.allanwang.kau.kpref.activity.items
 
 import android.support.annotation.CallSuper
 import android.view.View
-import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.resolveDrawable
 
 /**
