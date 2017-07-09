@@ -25,6 +25,7 @@ android {
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
         versionCode androidGitVersion.code()
         versionName androidGitVersion.name()
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
