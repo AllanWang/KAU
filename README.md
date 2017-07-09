@@ -62,30 +62,43 @@ dependencies {
 ## [Core](/core/Docs.md)
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: KPrefs, Changelog XML, Ripple Canvas, Extensions, Email Builder
-* Includes `[AppCompat](https://developer.android.com/topic/libraries/support-library/index.html)`, 
-`[Material Dialogs (core)](https://github.com/afollestad/material-dialogs)`,
-`[Iconics](https://github.com/mikepenz/Android-Iconics)`, `[Anko](https://github.com/Kotlin/anko)`,
-`[Timber](https://github.com/JakeWharton/timber)`, `[Kotlin stlib](https://kotlinlang.org/api/latest/jvm/stdlib/)`
+* Includes 
+[`AppCompat`](https://developer.android.com/topic/libraries/support-library/index.html), 
+[`Material Dialogs (core)`](https://github.com/afollestad/material-dialogs),
+[`Iconics`](https://github.com/mikepenz/Android-Iconics), 
+[`Anko`](https://github.com/Kotlin/anko),
+[`Timber`](https://github.com/JakeWharton/timber), 
+[`Kotlin stlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
 
 ## [Core UI](/core-ui/Docs.md)
 * Collection of complex views and widgets
-* Includes `:core`, `:adapter`, `Reactive libs ([Java](https://github.com/ReactiveX/RxJava), [Android](https://github.com/ReactiveX/RxAndroid), [Kotlin](https://github.com/ReactiveX/RxKotlin), [Binding](https://github.com/JakeWharton/RxBinding))`
+* Includes `:core`, `:adapter`, 
+`Reactive libs (`
+[`Java`](https://github.com/ReactiveX/RxJava), 
+[`Android`](https://github.com/ReactiveX/RxAndroid), 
+[`Kotlin`](https://github.com/ReactiveX/RxKotlin), 
+[`Binding`](https://github.com/JakeWharton/RxBinding)
+`)`
 
 ## [About](/about/Docs.md)
 * Implementation of an overlaying about section, along with automatic lib detection; also includes the lib strings for KAU
-* Includes `:core-ui`, `:adapter`, `[About Libraries](https://github.com/mikepenz/AboutLibraries)`
+* Includes `:core-ui`, `:adapter`, 
+[`About Libraries`](https://github.com/mikepenz/AboutLibraries)
 
 ## [Adapter](/adapter/Docs.md)
 * Kotlin bindings for the fast adapter, as well as RecyclerView animations
-* Includes `:core`, Fast Adapter
+* Includes `:core`, 
+[`Fast Adapter`](https://github.com/mikepenz/FastAdapter)
 
 ## [Color Picker](/colorpicker/Docs.md)
 * Implementation of a color picker dialog with subtle transitions and a decoupled callback
-* Includes `:core`, `[Material Dialogs (commons)](https://github.com/afollestad/material-dialogs)`
+* Includes `:core`, 
+[`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
 
 ## [Image Picker](/imagepicker/Docs.md)
 * WIP - Overlaying media chooser
-* Includes `:core-ui`, Glide
+* Includes `:core-ui`, 
+[`Glide`](https://github.com/bumptech/glide)
 
 ## [Kpref Activity](/kpref-activity/Docs.md)
 * Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
