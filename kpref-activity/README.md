@@ -3,7 +3,7 @@
 KAU supports Preferences that are created without xmls and through AppCompat. 
 The items are backed by a [FastAdapter](https://github.com/mikepenz/FastAdapter) and support [iicons](https://github.com/mikepenz/Android-Iconics)
 
-![KPref Items Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_kpref_items.gif)
+![KPref Items Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_kpref_items.gif)
 
 The easiest way to create the settings is to extend `KPrefActivity`.
 

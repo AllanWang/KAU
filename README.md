@@ -101,7 +101,7 @@ dependencies {
 
 # Showcase
 
-![About Activity Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_about_activity.gif)
-![KPref Accent Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_kpref_accent.gif)
-![KPref Items Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_kpref_items.gif)
-![SearchView Gif](https://github.com/AllanWang/Storage-Hub/blob/master/kau/kau_search_view.gif)
+![About Activity Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_about_activity.gif)
+![KPref Accent Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_kpref_accent.gif)
+![KPref Items Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_kpref_items.gif)
+![SearchView Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_search_view.gif)
