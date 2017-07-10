@@ -25,6 +25,7 @@ android {
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
         versionCode androidGitVersion.code()
         versionName androidGitVersion.name()
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -54,7 +55,7 @@ dependencies {
     compile project(':core')
     compile project(':core-ui')
     compile project(':kpref-activity')
-    compile project(':searchbar')
+    compile project(':searchview')
     compile project(':imagepicker')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
