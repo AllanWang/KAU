@@ -15,12 +15,11 @@ import android.os.Build
  */
 @KauUtils fun Context.isAppInstalled(packageName: String): Boolean {
     val pm = packageManager
-    var installed: Boolean
+    var installed = false
     try {
         pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
         installed = true
-    } catch (e: PackageManager.NameNotFoundException) {
-        installed = false
+    } catch (e: Exception) {
     }
     return installed
 }
@@ -44,4 +43,13 @@ val Context.isFromGooglePlay: Boolean
     get() {
         val installer = installerPackageName
         return arrayOf(INSTALLER_GOOGLE_PLAY_FEEDBACK, INSTALLER_GOOGLE_PLAY_VENDING).any { it == installer }
+    }
+
+val Context.appVersion: String
+    get(){
+        try {
+            return packageManager.getPackageInfo(packageName, 0).versionName
+        } catch (e:Exception) {
+            return "Unknown"
+        }
     }

@@ -19,8 +19,8 @@ import com.afollestad.materialdialogs.R
 /**
  * Created by Allan Wang on 2017-06-08.
  */
-val Int.isColorDark: Boolean
-    get() = (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255.0 < 0.5
+fun Int.isColorDark(minDarkness: Float = 0.5F): Boolean =
+        ((0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255.0) < minDarkness
 
 fun Int.toHexString(withAlpha: Boolean = false, withHexPrefix: Boolean = true): String {
     val hex = if (withAlpha) String.format("#%08X", this)
@@ -52,7 +52,7 @@ fun Int.isColorVisibleOn(@ColorInt color: Int, @IntRange(from = 0L, to = 255L) d
 @ColorInt
 fun Context.getDisabledColor(): Int {
     val primaryColor = resolveColor(android.R.attr.textColorPrimary)
-    val disabledColor = if (primaryColor.isColorDark) Color.BLACK else Color.WHITE
+    val disabledColor = if (primaryColor.isColorDark()) Color.BLACK else Color.WHITE
     return disabledColor.adjustAlpha(0.3f)
 }
 
@@ -64,6 +64,19 @@ fun Int.adjustAlpha(factor: Float): Int {
 
 val Int.isColorTransparent: Boolean
     get() = Color.alpha(this) != 255
+
+@ColorInt
+fun Int.blendWith(@ColorInt color:Int, @FloatRange(from = 0.0, to = 1.0) ratio:Float):Int {
+    val inverseRatio = 1f - ratio
+    val a = Color.alpha(this) * inverseRatio + Color.alpha(color) * ratio
+    val r = Color.red(this) * inverseRatio + Color.red(color) * ratio
+    val g = Color.green(this) * inverseRatio + Color.green(color) * ratio
+    val b = Color.blue(this) * inverseRatio + Color.blue(color) * ratio
+    return Color.argb(a.toInt(), r.toInt(), g.toInt(), b.toInt())
+}
+
+@ColorInt
+fun Int.withAlpha(@FloatRange(from = 0.0, to = 1.0) alpha:Float) = withAlpha((255 * alpha).toInt())
 
 @ColorInt
 fun Int.withAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int
@@ -89,11 +102,11 @@ fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int {
 
 @ColorInt
 fun Int.colorToBackground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int
-        = if (isColorDark) darken(factor) else lighten(factor)
+        = if (isColorDark()) darken(factor) else lighten(factor)
 
 @ColorInt
 fun Int.colorToForeground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int
-        = if (isColorDark) lighten(factor) else darken(factor)
+        = if (isColorDark()) lighten(factor) else darken(factor)
 
 @Throws(IllegalArgumentException::class)
 fun String.toColor(): Int {

@@ -3,10 +3,13 @@ package ca.allanwang.kau.utils
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.support.annotation.ColorInt
+import android.support.annotation.RequiresApi
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.view.Menu
+import android.view.View
 import ca.allanwang.kau.R
 import com.mikepenz.iconics.typeface.IIcon
 import org.jetbrains.anko.contentView
@@ -19,15 +22,15 @@ import org.jetbrains.anko.contentView
  * Restarts an activity from itself without animations
  * Keeps its existing extra bundles and has a builder to accept other parameters
  */
-fun Activity.restart(builder: Intent.() -> Unit = {}) {
+fun Activity.restart(clearTransitions: Boolean = true, builder: Intent.() -> Unit = {}) {
     val i = Intent(this, this::class.java)
-    i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+    if (clearTransitions) i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
     i.putExtras(intent.extras)
     i.builder()
     startActivity(i)
-    overridePendingTransition(0, 0) //No transitions
+    if (clearTransitions) overridePendingTransition(0, 0) //No transitions
     finish()
-    overridePendingTransition(0, 0)
+    if (clearTransitions) overridePendingTransition(0, 0)
 }
 
 fun Activity.finishSlideOut() {
@@ -45,6 +48,20 @@ var Activity.statusBarColor: Int
     get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
     set(value) {
         if (buildIsLollipopAndUp) window.statusBarColor = value
+    }
+
+var Activity.statusBarMode: Boolean
+    get() = if (buildIsMarshmallowAndUp) window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR > 0 else false
+    set(value) {
+        if (buildIsMarshmallowAndUp) {
+            var flags = window.decorView.systemUiVisibility
+            if (value) {
+                flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                flags = flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+            }
+            window.decorView.systemUiVisibility = flags
+        }
     }
 
 /**

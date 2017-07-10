@@ -9,6 +9,7 @@ import android.support.annotation.StringRes
 import android.support.annotation.TransitionRes
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.design.widget.TextInputEditText
 import android.support.transition.AutoTransition
 import android.support.transition.Transition
 import android.support.transition.TransitionInflater
@@ -20,6 +21,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import ca.allanwang.kau.logging.KL
@@ -86,13 +88,13 @@ fun FloatingActionButton.hideIf(hide:Boolean) = if (hide) hide() else show()
 fun ViewGroup.inflate(layoutId:Int, attachToRoot:Boolean = false):View =
         LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
-fun View.updateLeftMargin(left:Int = -1) = updateMargins(left)
+fun View.updateLeftMargin(left:Int) = updateMargins(left)
 
-fun View.updateTopMargin(top:Int = -1) = updateMargins(-1, top)
+fun View.updateTopMargin(top:Int) = updateMargins(-1, top)
 
-fun View.updateRightMargin(right:Int = -1) = updateMargins(-1, -1, right)
+fun View.updateRightMargin(right:Int) = updateMargins(-1, -1, right)
 
-fun View.updateBottomMargin(bottom:Int = -1) = updateMargins(-1, -1, -1, bottom)
+fun View.updateBottomMargin(bottom:Int) = updateMargins(-1, -1, -1, bottom)
 
 fun View.updateMargins(left:Int = -1, top:Int = -1, right:Int = -1, bottom:Int = -1) {
     if (layoutParams is ViewGroup.MarginLayoutParams) {
@@ -141,6 +143,10 @@ fun View.updateMargins(left:Int = -1, top:Int = -1, right:Int = -1, bottom:Int =
         parentViewGroup.getWindowVisibleDisplayFrame(r)
         return r.height()
     }
+
+val EditText.value:String get() = text.toString().trim()
+
+val TextInputEditText.value:String get() = text.toString().trim()
 
 val CIRCULAR_OUTLINE: ViewOutlineProvider = object : ViewOutlineProvider() {
     override fun getOutline(view: View, outline: Outline) {
