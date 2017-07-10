@@ -1,5 +1,6 @@
 package ca.allanwang.kau.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -19,18 +20,17 @@ import org.jetbrains.anko.contentView
  */
 
 /**
- * Restarts an activity from itself without animations
+ * Restarts an activity from itself with a fade animation
  * Keeps its existing extra bundles and has a builder to accept other parameters
  */
-fun Activity.restart(clearTransitions: Boolean = true, builder: Intent.() -> Unit = {}) {
+fun Activity.restart(builder: Intent.() -> Unit = {}) {
     val i = Intent(this, this::class.java)
-    if (clearTransitions) i.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
     i.putExtras(intent.extras)
     i.builder()
     startActivity(i)
-    if (clearTransitions) overridePendingTransition(0, 0) //No transitions
+    overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out) //No transitions
     finish()
-    if (clearTransitions) overridePendingTransition(0, 0)
+    overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out)
 }
 
 fun Activity.finishSlideOut() {
@@ -50,17 +50,16 @@ var Activity.statusBarColor: Int
         if (buildIsLollipopAndUp) window.statusBarColor = value
     }
 
-var Activity.statusBarMode: Boolean
+var Activity.statusBarLight: Boolean
+    @SuppressLint("InlinedApi")
     get() = if (buildIsMarshmallowAndUp) window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR > 0 else false
+    @SuppressLint("InlinedApi")
     set(value) {
         if (buildIsMarshmallowAndUp) {
-            var flags = window.decorView.systemUiVisibility
-            if (value) {
-                flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            } else {
-                flags = flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-            }
-            window.decorView.systemUiVisibility = flags
+            val flags = window.decorView.systemUiVisibility
+            window.decorView.systemUiVisibility =
+                    if (value) flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                    else flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
         }
     }
 
