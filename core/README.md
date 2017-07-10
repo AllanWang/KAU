@@ -117,4 +117,4 @@ Include your email and subject, along with other optional configurations such as
 Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of the extensions in its core package is also in KAU.
 
 KAU's vast collection of extensions is one of its strongest features. 
-There are too many to explain here, but you may check out the [utils package](core/src/main/kotlin/ca/allanwang/kau/utils)
+There are too many to explain here, but you may check out the [utils package](https://github.com/AllanWang/KAU/tree/master/core/src/main/kotlin/ca/allanwang/kau/utils)
