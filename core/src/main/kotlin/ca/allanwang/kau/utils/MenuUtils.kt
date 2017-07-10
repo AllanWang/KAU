@@ -12,9 +12,7 @@ fun Menu.setItemTitle(id:Int, title:String) {
     findItem(id)?.title = title
 }
 
-fun Menu.setOptionIcon(id:Int, @DrawableRes iconRes:Int) {
-    findItem(id)?.setIcon(iconRes)
-}
+fun Menu.setOptionIcon(id:Int, @DrawableRes iconRes:Int) = findItem(id)?.setIcon(iconRes)
 
 fun Menu.setOptionIcon(id:Int, iconRes:Drawable) {
     findItem(id)?.icon = iconRes
