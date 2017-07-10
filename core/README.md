@@ -165,7 +165,7 @@ Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of th
 ### ViewUtils
 
 > Extends View
-* `visible()`, `invisible()`, `gone()`, `isVisible`, `isInvisible()`, `isGone()` methods
+* `visible()`, `invisible()`, `gone()`, `isVisible`, `isInvisible, `isGone methods
 * matchParent method to set the layout params to match_parent
 * Create snackbar directly
 * Set IIcon into ImageView directly
