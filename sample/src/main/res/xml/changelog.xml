@@ -6,7 +6,9 @@
     <item text="" />
     -->
 
-    <version title="v1.6"/>
+    <version title="v2.0"/>
+    <item text="Huge refactoring to separate functions to their own submodules" />
+    <item text="Huge Docs update" />
     <item text="Reorder KauIItem arguments to support optional id" />
     <item text="Create KPrefSeekbar, which binds an int kpref to a seekbar" />
     <item text="Open all kpref item binders so they may be extended" />

@@ -9,7 +9,7 @@ import com.mikepenz.fastadapter.IItem
  * Created by Allan Wang on 2017-06-27.
  */
 class AboutActivity : AboutActivityBase(R.string::class.java, {
-    cutoutText = "KAU"
+    cutoutDrawableRes = R.drawable.kau
     textColor = 0xde000000.toInt()
     backgroundColor = 0xfffafafa.toInt()
     accentColor = 0xff00838F.toInt()

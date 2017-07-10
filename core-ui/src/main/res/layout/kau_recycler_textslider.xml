@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ca.allanwang.kau.widgets.TextSlider
+        <ca.allanwang.kau.ui.widgets.TextSlider
             android:id="@+id/kau_toolbar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

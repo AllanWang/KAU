@@ -16,7 +16,7 @@ import java.lang.ref.WeakReference
 
 /**
  * The layout that handles all the touch events
- * Note that this differs from [ca.allanwang.kau.widgets.ElasticDragDismissFrameLayout]
+ * Note that this differs from [ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout]
  * in that nested scrolling isn't considered
  * If an edge detection occurs, this layout consumes all the touch events
  * Use the [swipeEnabled] toggle if you need the scroll events on the same axis

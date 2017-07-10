@@ -16,7 +16,7 @@
             <option value="$PROJECT_DIR$/imagepicker" />
             <option value="$PROJECT_DIR$/kpref-activity" />
             <option value="$PROJECT_DIR$/sample" />
-            <option value="$PROJECT_DIR$/searchbar" />
+            <option value="$PROJECT_DIR$/searchview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -42,8 +42,11 @@ class KPrefSingleDelegate internal constructor(private val key:String, private v
                     _v2
                 } else {
                     _value = pref.sp.getBoolean(key, true)
-                    if (_value!!) pref.sp.edit().putBoolean(key, false).apply()
-                    _value!!
+                    if (_value!!) {
+                        pref.sp.edit().putBoolean(key, false).apply()
+                        _value = false
+                        true
+                    } else false
                 }
             }
         }

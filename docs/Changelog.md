@@ -1,6 +1,8 @@
 # Changelog
 
-## v1.6
+## v2.0
+* Huge refactoring to separate functions to their own submodules
+* Huge Docs update
 * Reorder KauIItem arguments to support optional id
 * Create KPrefSeekbar, which binds an int kpref to a seekbar
 * Open all kpref item binders so they may be extended
