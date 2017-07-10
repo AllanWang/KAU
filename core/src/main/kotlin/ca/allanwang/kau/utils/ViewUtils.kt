@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
 import android.support.annotation.TransitionRes
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.transition.AutoTransition
 import android.support.transition.Transition
@@ -14,6 +15,7 @@ import android.support.transition.TransitionInflater
 import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
@@ -44,6 +46,13 @@ import com.mikepenz.iconics.typeface.IIcon
     return this
 }
 
+fun <T : View> T.invisibleIf(invisible:Boolean):T =
+        if (invisible) invisible() else visible()
+
+fun <T : View> T.visibleIf(visible:Boolean):T = if (visible) visible() else gone()
+
+fun <T : View> T.goneIf(gone:Boolean):T = visibleIf(!gone)
+
 @KauUtils fun View.isVisible(): Boolean = visibility == View.VISIBLE
 @KauUtils fun View.isInvisible(): Boolean = visibility == View.INVISIBLE
 @KauUtils fun View.isGone(): Boolean = visibility == View.GONE
@@ -65,6 +74,36 @@ fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, 
 @KauUtils fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
     if (icon == null) return
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
+}
+
+val FloatingActionButton.isHidden
+    get() = !isShown
+
+fun FloatingActionButton.showIf(show:Boolean) = if (show) show() else hide()
+
+fun FloatingActionButton.hideIf(hide:Boolean) = if (hide) hide() else show()
+
+fun ViewGroup.inflate(layoutId:Int, attachToRoot:Boolean = false):View =
+        LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
+
+fun View.updateLeftMargin(left:Int = -1) = updateMargins(left)
+
+fun View.updateTopMargin(top:Int = -1) = updateMargins(-1, top)
+
+fun View.updateRightMargin(right:Int = -1) = updateMargins(-1, -1, right)
+
+fun View.updateBottomMargin(bottom:Int = -1) = updateMargins(-1, -1, -1, bottom)
+
+fun View.updateMargins(left:Int = -1, top:Int = -1, right:Int = -1, bottom:Int = -1) {
+    if (layoutParams is ViewGroup.MarginLayoutParams) {
+        val p = layoutParams as ViewGroup.MarginLayoutParams
+        val newLeft = if (left >= 0) left else p.leftMargin
+        val newTop = if (top >= 0) top else p.topMargin
+        val newRight = if (right >= 0) right else p.rightMargin
+        val newBottom = if (bottom >= 0) bottom else p.bottomMargin
+        p.setMargins(newLeft, newTop, newRight, newBottom)
+        requestLayout()
+    }
 }
 
 @KauUtils fun View.hideKeyboard() {

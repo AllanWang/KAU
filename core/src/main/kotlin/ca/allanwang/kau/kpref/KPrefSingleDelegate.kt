@@ -5,7 +5,7 @@ import ca.allanwang.kau.kotlin.ILazyResettable
 /**
  * Created by Allan Wang on 2017-06-07.
  */
-fun KPref.kprefSingle(key: String) = KPrefSingleDelegate(key, this)
+fun KPref.kprefSingle(key:String) = KPrefSingleDelegate(key, this)
 
 /**
  * Singular KPref Delegate for booleans
@@ -13,14 +13,16 @@ fun KPref.kprefSingle(key: String) = KPrefSingleDelegate(key, this)
  * All subsequent retrievals will be false
  * This is useful for one time toggles such as showcasing items
  */
-class KPrefSingleDelegate internal constructor(private val key: String, private val pref: KPref, lock: Any? = null) : ILazyResettable<Boolean> {
+class KPrefSingleDelegate internal constructor(private val key:String, private val pref:KPref,
+                                               lock:Any? = null):ILazyResettable<Boolean> {
 
-    @Volatile private var _value: Boolean? = null
+    @Volatile private var _value:Boolean? = null
     private val lock = lock ?: this
 
     init {
         if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
+            throw KPrefException(
+                    "$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
         pref.prefMap.put(key, this@KPrefSingleDelegate)
     }
 
@@ -28,7 +30,7 @@ class KPrefSingleDelegate internal constructor(private val key: String, private 
         _value = null
     }
 
-    override val value: Boolean
+    override val value:Boolean
         get() {
             val _v1 = _value
             if (_v1 != null)
@@ -46,8 +48,8 @@ class KPrefSingleDelegate internal constructor(private val key: String, private 
             }
         }
 
-    override fun isInitialized(): Boolean = _value != null
+    override fun isInitialized():Boolean = _value != null
 
-    override fun toString(): String = if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+    override fun toString():String = if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 
 }
