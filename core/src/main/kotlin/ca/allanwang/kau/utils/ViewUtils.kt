@@ -2,7 +2,6 @@ package ca.allanwang.kau.utils
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Outline
 import android.graphics.Rect
 import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
@@ -19,12 +18,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewOutlineProvider
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
@@ -55,14 +52,11 @@ import com.mikepenz.iconics.typeface.IIcon
 
 @KauUtils inline fun <T : View> T.goneIf(gone: Boolean): T = visibleIf(!gone)
 
-@KauUtils inline val View.isVisible: Boolean
-    get() = visibility == View.VISIBLE
+@KauUtils inline val View.isVisible: Boolean get() = visibility == View.VISIBLE
 
-@KauUtils inline val View.isInvisible: Boolean
-    get() = visibility == View.INVISIBLE
+@KauUtils inline val View.isInvisible: Boolean get() = visibility == View.INVISIBLE
 
-@KauUtils inline val View.isGone: Boolean
-    get() = visibility == View.GONE
+@KauUtils inline val View.isGone: Boolean get() = visibility == View.GONE
 
 fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}): Snackbar {
     val snackbar = Snackbar.make(this, text, duration)
@@ -83,8 +77,7 @@ fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, 
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
 }
 
-@KauUtils inline val FloatingActionButton.isHidden
-    get() = !isShown
+@KauUtils inline val FloatingActionButton.isHidden get() = !isShown
 
 fun FloatingActionButton.showIf(show: Boolean) = if (show) show() else hide()
 
@@ -137,8 +130,7 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
     background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }
 
-@KauUtils val View.parentViewGroup: ViewGroup
-    get() = parent as ViewGroup
+@KauUtils val View.parentViewGroup: ViewGroup get() = parent as ViewGroup
 
 @KauUtils val View.parentVisibleHeight: Int
     get() {
@@ -150,16 +142,6 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
 val EditText.value: String get() = text.toString().trim()
 
 val TextInputEditText.value: String get() = text.toString().trim()
-
-val CIRCULAR_OUTLINE: ViewOutlineProvider = object : ViewOutlineProvider() {
-    override fun getOutline(view: View, outline: Outline) {
-        KL.d("CIRCULAR OUTLINE")
-        outline.setOval(view.paddingLeft,
-                view.paddingTop,
-                view.width - view.paddingRight,
-                view.height - view.paddingBottom)
-    }
-}
 
 /**
  * Generates a recycler view with match parent and a linearlayoutmanager, since it's so commonly used
