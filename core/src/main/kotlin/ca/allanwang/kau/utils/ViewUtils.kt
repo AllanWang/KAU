@@ -33,31 +33,36 @@ import com.mikepenz.iconics.typeface.IIcon
 /**
  * Created by Allan Wang on 2017-05-31.
  */
-@KauUtils fun <T : View> T.visible(): T {
+
+@KauUtils inline fun <T : View> T.visible(): T {
     visibility = View.VISIBLE
     return this
 }
 
-@KauUtils fun <T : View> T.invisible(): T {
+@KauUtils inline fun <T : View> T.invisible(): T {
     visibility = View.INVISIBLE
     return this
 }
 
-@KauUtils fun <T : View> T.gone(): T {
+@KauUtils inline fun <T : View> T.gone(): T {
     visibility = View.GONE
     return this
 }
 
-fun <T : View> T.invisibleIf(invisible:Boolean):T =
-        if (invisible) invisible() else visible()
+@KauUtils inline fun <T : View> T.invisibleIf(invisible: Boolean): T = if (invisible) invisible() else visible()
 
-fun <T : View> T.visibleIf(visible:Boolean):T = if (visible) visible() else gone()
+@KauUtils inline fun <T : View> T.visibleIf(visible: Boolean): T = if (visible) visible() else gone()
 
-fun <T : View> T.goneIf(gone:Boolean):T = visibleIf(!gone)
+@KauUtils inline fun <T : View> T.goneIf(gone: Boolean): T = visibleIf(!gone)
 
-@KauUtils fun View.isVisible(): Boolean = visibility == View.VISIBLE
-@KauUtils fun View.isInvisible(): Boolean = visibility == View.INVISIBLE
-@KauUtils fun View.isGone(): Boolean = visibility == View.GONE
+@KauUtils inline val View.isVisible: Boolean
+    get() = visibility == View.VISIBLE
+
+@KauUtils inline val View.isInvisible: Boolean
+    get() = visibility == View.INVISIBLE
+
+@KauUtils inline val View.isGone: Boolean
+    get() = visibility == View.GONE
 
 fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}): Snackbar {
     val snackbar = Snackbar.make(this, text, duration)
@@ -78,34 +83,32 @@ fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, 
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
 }
 
-val FloatingActionButton.isHidden
+@KauUtils inline val FloatingActionButton.isHidden
     get() = !isShown
 
-fun FloatingActionButton.showIf(show:Boolean) = if (show) show() else hide()
+fun FloatingActionButton.showIf(show: Boolean) = if (show) show() else hide()
 
-fun FloatingActionButton.hideIf(hide:Boolean) = if (hide) hide() else show()
+fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
 
-fun ViewGroup.inflate(layoutId:Int, attachToRoot:Boolean = false):View =
-        LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
+@KauUtils fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View = LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
-fun View.updateLeftMargin(left:Int) = updateMargins(left)
+@KauUtils fun View.updateLeftMargin(margin: Int) = updateMargins(margin, KAU_LEFT)
 
-fun View.updateTopMargin(top:Int) = updateMargins(-1, top)
+@KauUtils fun View.updateTopMargin(margin: Int) = updateMargins(margin, KAU_TOP)
 
-fun View.updateRightMargin(right:Int) = updateMargins(-1, -1, right)
+@KauUtils fun View.updateRightMargin(margin: Int) = updateMargins(margin, KAU_RIGHT)
 
-fun View.updateBottomMargin(bottom:Int) = updateMargins(-1, -1, -1, bottom)
+@KauUtils fun View.updateBottomMargin(margin: Int) = updateMargins(margin, KAU_BOTTOM)
 
-fun View.updateMargins(left:Int = -1, top:Int = -1, right:Int = -1, bottom:Int = -1) {
-    if (layoutParams is ViewGroup.MarginLayoutParams) {
-        val p = layoutParams as ViewGroup.MarginLayoutParams
-        val newLeft = if (left >= 0) left else p.leftMargin
-        val newTop = if (top >= 0) top else p.topMargin
-        val newRight = if (right >= 0) right else p.rightMargin
-        val newBottom = if (bottom >= 0) bottom else p.bottomMargin
-        p.setMargins(newLeft, newTop, newRight, newBottom)
-        requestLayout()
-    }
+@KauUtils private fun View.updateMargins(margin: Int, flag: Int) {
+    val p = (layoutParams as? ViewGroup.MarginLayoutParams) ?: return
+    p.setMargins(
+            if (flag == KAU_LEFT) margin else p.leftMargin,
+            if (flag == KAU_TOP) margin else p.topMargin,
+            if (flag == KAU_RIGHT) margin else p.rightMargin,
+            if (flag == KAU_BOTTOM) margin else p.bottomMargin
+    )
+    requestLayout()
 }
 
 @KauUtils fun View.hideKeyboard() {
@@ -144,9 +147,9 @@ fun View.updateMargins(left:Int = -1, top:Int = -1, right:Int = -1, bottom:Int =
         return r.height()
     }
 
-val EditText.value:String get() = text.toString().trim()
+val EditText.value: String get() = text.toString().trim()
 
-val TextInputEditText.value:String get() = text.toString().trim()
+val TextInputEditText.value: String get() = text.toString().trim()
 
 val CIRCULAR_OUTLINE: ViewOutlineProvider = object : ViewOutlineProvider() {
     override fun getOutline(view: View, outline: Outline) {
