@@ -2,9 +2,6 @@ package ca.allanwang.kau.kpref
 
 import ca.allanwang.kau.kotlin.ILazyResettable
 
-/**
- * Created by Allan Wang on 2017-06-07.
- */
 object UNINITIALIZED
 
 fun KPref.kpref(key: String, fallback: Boolean, postSetter: (value: Boolean) -> Unit = {}) = KPrefDelegate(key, fallback, this, postSetter)
@@ -18,6 +15,8 @@ fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Un
 class StringSet(set: Collection<String>) : LinkedHashSet<String>(set)
 
 /**
+ * Created by Allan Wang on 2017-06-07.
+ *
  * Implementation of a kpref data item
  * Contains a unique key for the shared preference as well as a nonnull fallback item
  * Also contains an optional mutable postSetter that will be called every time a new value is given

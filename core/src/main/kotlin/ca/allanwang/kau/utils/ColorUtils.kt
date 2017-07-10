@@ -19,8 +19,11 @@ import com.afollestad.materialdialogs.R
 /**
  * Created by Allan Wang on 2017-06-08.
  */
-val Int.isColorDark: Boolean
-    get() = (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255.0 < 0.5
+inline val Int.isColorDark: Boolean
+    get() = isColorDark(0.5f)
+
+fun Int.isColorDark(minDarkness: Float): Boolean =
+        ((0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255.0) < minDarkness
 
 fun Int.toHexString(withAlpha: Boolean = false, withHexPrefix: Boolean = true): String {
     val hex = if (withAlpha) String.format("#%08X", this)
@@ -64,6 +67,16 @@ fun Int.adjustAlpha(factor: Float): Int {
 
 val Int.isColorTransparent: Boolean
     get() = Color.alpha(this) != 255
+
+@ColorInt
+fun Int.blendWith(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) ratio: Float): Int {
+    val inverseRatio = 1f - ratio
+    val a = Color.alpha(this) * inverseRatio + Color.alpha(color) * ratio
+    val r = Color.red(this) * inverseRatio + Color.red(color) * ratio
+    val g = Color.green(this) * inverseRatio + Color.green(color) * ratio
+    val b = Color.blue(this) * inverseRatio + Color.blue(color) * ratio
+    return Color.argb(a.toInt(), r.toInt(), g.toInt(), b.toInt())
+}
 
 @ColorInt
 fun Int.withAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int

@@ -14,15 +14,12 @@ import android.os.Build
  * @return true if installed with activity, false otherwise
  */
 @KauUtils fun Context.isAppInstalled(packageName: String): Boolean {
-    val pm = packageManager
-    var installed: Boolean
     try {
-        pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-        installed = true
+        packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+        return true
     } catch (e: PackageManager.NameNotFoundException) {
-        installed = false
+        return false
     }
-    return installed
 }
 
 val buildIsLollipopAndUp: Boolean

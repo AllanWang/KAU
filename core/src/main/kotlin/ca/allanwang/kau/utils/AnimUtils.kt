@@ -13,7 +13,7 @@ import android.widget.TextView
 /**
  * Created by Allan Wang on 2017-06-01.
  *
- * Animation extension @KauUtils functions for Views
+ * Animation extension functions for Views
  */
 @KauUtils fun View.rootCircularReveal(x: Int = 0, y: Int = 0, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     this.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {

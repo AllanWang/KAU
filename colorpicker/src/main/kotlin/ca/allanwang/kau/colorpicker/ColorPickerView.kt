@@ -133,7 +133,7 @@ internal class ColorPickerView @JvmOverloads constructor(
                     }
 
                     customColorIndicator.setBackgroundColor(selectedColor)
-                    if (alphaSeekbar.isVisible()) {
+                    if (alphaSeekbar.isVisible) {
                         val alpha = Color.alpha(selectedColor)
                         alphaSeekbar.progress = alpha
                         alphaValue.text = String.format(Locale.CANADA, "%d", alpha)
@@ -178,9 +178,9 @@ internal class ColorPickerView @JvmOverloads constructor(
             redSeekbar.setOnSeekBarChangeListener(customRgbListener)
             greenSeekbar.setOnSeekBarChangeListener(customRgbListener)
             blueSeekbar.setOnSeekBarChangeListener(customRgbListener)
-            if (alphaSeekbar.isVisible())
+            if (alphaSeekbar.isVisible)
                 alphaSeekbar.setOnSeekBarChangeListener(customRgbListener)
-            hexInput.setText(selectedColor.toHexString(alphaSeekbar.isVisible(), false))
+            hexInput.setText(selectedColor.toHexString(alphaSeekbar.isVisible, false))
             gridView.fadeOut(onFinish = { gridView.gone() })
             customFrame.fadeIn()
         } else {
