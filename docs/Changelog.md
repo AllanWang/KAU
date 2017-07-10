@@ -1,5 +1,7 @@
 # Changelog
 
+## v2.1
+
 ## v2.0
 * Huge refactoring to separate functions to their own submodules
 * Huge Docs update

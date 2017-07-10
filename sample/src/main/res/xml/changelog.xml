@@ -6,6 +6,14 @@
     <item text="" />
     -->
 
+    <version title="v2.1"/>
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+
     <version title="v2.0"/>
     <item text="Huge refactoring to separate functions to their own submodules" />
     <item text="Huge Docs update" />
@@ -14,9 +22,6 @@
     <item text="Open all kpref item binders so they may be extended" />
     <item text="Fix scrolling issue on about dismiss" />
     <item text="Make rClass optional in about activity" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
 
     <version title="v1.5"/>
     <item text="Change snackbar builder" />
