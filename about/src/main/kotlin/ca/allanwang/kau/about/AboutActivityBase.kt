@@ -13,7 +13,8 @@ import android.view.ViewGroup
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate
-import ca.allanwang.kau.animators.FadeScaleAnimator
+import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
+import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.iitems.HeaderIItem
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.ui.widgets.InkPageIndicator
@@ -175,7 +176,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
         val recycler = v.findViewById<RecyclerView>(R.id.kau_recycler_detached)
         libRecycler = recycler
         recycler.adapter = libAdapter
-        recycler.itemAnimator = FadeScaleAnimator(itemDelayFactor = 0.2f).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(this@AboutActivityBase) }
+        recycler.itemAnimator = KauAnimator(addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f)).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(this@AboutActivityBase) }
         val background = v.findViewById<View>(R.id.kau_recycler_detached_background)
         if (configs.backgroundColor != null) background.setBackgroundColor(configs.backgroundColor!!.colorToForeground())
         doAsync {

@@ -700,7 +700,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
             setDuration(animHalfDuration);
             setInterpolator(interpolator);
 
-            // work out the start/end values of the retreating join from the direction we're
+            // work out the start/end values of the retreating join from the fromEdge we're
             // travelling in.  Also look at the current selected dot position, i.e. we're moving on
             // before a prior anim has finished.
             final float initialX1 = now > was ? Math.min(dotCenterX[was], selectedDotX) - dotRadius
