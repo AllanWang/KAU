@@ -175,6 +175,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
         val v = layoutInflater.inflate(R.layout.kau_recycler_detached_background, parent, false)
         val recycler = v.findViewById<RecyclerView>(R.id.kau_recycler_detached)
         libRecycler = recycler
+        recycler.withMarginDecoration(16, KAU_BOTTOM)
         recycler.adapter = libAdapter
         recycler.itemAnimator = KauAnimator(addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f)).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(this@AboutActivityBase) }
         val background = v.findViewById<View>(R.id.kau_recycler_detached_background)

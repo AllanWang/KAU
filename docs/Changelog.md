@@ -1,6 +1,7 @@
 # Changelog
 
 ## v2.1
+* :adapter: Modularized kau animators
 
 ## v2.0
 * Huge refactoring to separate functions to their own submodules
