@@ -11,14 +11,14 @@ import ca.allanwang.kau.utils.KAU_TOP
 /**
  * Created by Allan Wang on 2017-07-11.
  */
-class SlideAnimatorAdd(val fromEdge: Int, override var itemDelayFactor: Float = 0.125f) : KauAnimatorAdd {
+class SlideAnimatorAdd(val fromEdge: Int, val slideFactor: Float = 1f, override var itemDelayFactor: Float = 0.125f) : KauAnimatorAdd {
 
     override fun animationPrepare(holder: RecyclerView.ViewHolder): View.() -> Unit = {
         when (fromEdge) {
-            KAU_TOP -> translationY = -height.toFloat()
-            KAU_LEFT -> translationX = -width.toFloat()
-            KAU_BOTTOM -> translationY = height.toFloat()
-            KAU_RIGHT -> translationX = width.toFloat()
+            KAU_TOP -> translationY = slideFactor * -height
+            KAU_LEFT -> translationX = slideFactor * -width
+            KAU_BOTTOM -> translationY = slideFactor * height
+            KAU_RIGHT -> translationX = slideFactor * width
             else -> throw KauAnimatorException("Invalid edge flag used in Slide Animator; use one of KAU_*")
         }
         alpha = 0f
@@ -40,14 +40,14 @@ class SlideAnimatorAdd(val fromEdge: Int, override var itemDelayFactor: Float = 
 
 }
 
-class SlideAnimatorRemove(val fromEdge: Int, override var itemDelayFactor: Float = 0.125f) : KauAnimatorRemove {
+class SlideAnimatorRemove(val fromEdge: Int, val slideFactor: Float = 1f, override var itemDelayFactor: Float = 0.125f) : KauAnimatorRemove {
     override fun animation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = {
         with(holder.itemView) {
             when (fromEdge) {
-                KAU_TOP -> translationY(-height.toFloat())
-                KAU_LEFT -> translationX(-width.toFloat())
-                KAU_BOTTOM -> translationY(height.toFloat())
-                KAU_RIGHT -> translationX(width.toFloat())
+                KAU_TOP -> translationY(slideFactor * -height)
+                KAU_LEFT -> translationX(slideFactor * -width)
+                KAU_BOTTOM -> translationY(slideFactor * height)
+                KAU_RIGHT -> translationX(slideFactor * width)
                 else -> throw KauAnimatorException("Invalid edge flag used in Slide Animator; use one of KAU_*")
             }
         }
