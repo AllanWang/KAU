@@ -8,7 +8,7 @@
 
     <version title="v2.1"/>
     <item text=":adapter: Modularized kau animators" />
-    <item text="" />
+    <item text=":adapter: Switched from mutablelist to list inputs for themed animator" />
     <item text="" />
     <item text="" />
     <item text="" />

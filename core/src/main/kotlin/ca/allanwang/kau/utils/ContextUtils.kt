@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
@@ -95,6 +96,8 @@ fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
 fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
 fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)
 fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
+fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)
+fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {

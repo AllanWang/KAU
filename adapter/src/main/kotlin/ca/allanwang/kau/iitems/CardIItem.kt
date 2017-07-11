@@ -29,18 +29,18 @@ class CardIItem(val builder: Config.() -> Unit = {}
 ) : AbstractItem<CardIItem, CardIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*,*>>) {
-            fastAdapter.withEventHook(object : ClickEventHook<IItem<*,*>>() {
+        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
+            fastAdapter.withEventHook(object : ClickEventHook<IItem<*, *>>() {
                 override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
                     return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button) else null
                 }
 
-                override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*,*>>, item: IItem<*,*>) {
+                override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*, *>>, item: IItem<*, *>) {
                     if (item !is CardIItem) return
                     with(item.configs) {
                         when (v.id) {
-                            R.id.kau_card_container -> cardClick?.onClick(v)
-                            R.id.kau_card_button -> buttonClick?.onClick(v)
+                            R.id.kau_card_container -> cardClick?.invoke()
+                            R.id.kau_card_button -> buttonClick?.invoke()
                             else -> {
                             }
                         }
@@ -59,8 +59,8 @@ class CardIItem(val builder: Config.() -> Unit = {}
         var descRes: Int = -1
         var button: String? = null
         var buttonRes: Int = -1
-        var buttonClick: View.OnClickListener? = null
-        var cardClick: View.OnClickListener? = null
+        var buttonClick: (() -> Unit)? = null
+        var cardClick: (() -> Unit)? = null
         var image: Drawable? = null
         var imageIIcon: IIcon? = null
         var imageIIconColor: Int = Color.WHITE
@@ -82,14 +82,12 @@ class CardIItem(val builder: Config.() -> Unit = {}
                 if (buttonText != null) {
                     holder.bottomRow.visible()
                     holder.button.text = buttonText
-                    holder.button.setOnClickListener(buttonClick)
                 }
                 holder.icon.setImageDrawable(
                         if (imageRes > 0) drawable(imageRes)
                         else if (imageIIcon != null) imageIIcon!!.toDrawable(this@context, sizeDp = 40, color = imageIIconColor)
                         else image
                 )
-                holder.card.setOnClickListener(cardClick)
             }
             with(holder) {
                 bindTextColor(title)

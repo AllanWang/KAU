@@ -22,6 +22,14 @@ import android.os.Build
     }
 }
 
+@KauUtils fun Context.isAppEnabled(packageName: String): Boolean {
+    try {
+        return packageManager.getApplicationInfo(packageName, 0).enabled
+    } catch (e: Exception) {
+        return false
+    }
+}
+
 val buildIsLollipopAndUp: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
