@@ -132,13 +132,6 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
 
 @KauUtils val View.parentViewGroup: ViewGroup get() = parent as ViewGroup
 
-@KauUtils val View.parentVisibleHeight: Int
-    get() {
-        val r = Rect()
-        parentViewGroup.getWindowVisibleDisplayFrame(r)
-        return r.height()
-    }
-
 val EditText.value: String get() = text.toString().trim()
 
 val TextInputEditText.value: String get() = text.toString().trim()

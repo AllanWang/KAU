@@ -1,10 +1,11 @@
 package ca.allanwang.kau.ui.views
 
 import android.content.Context
+import android.graphics.Rect
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import ca.allanwang.kau.ui.R
-import ca.allanwang.kau.utils.parentVisibleHeight
+import ca.allanwang.kau.utils.parentViewGroup
 
 
 /**
@@ -29,6 +30,8 @@ class BoundedCardView @JvmOverloads constructor(
      */
     var maxHeightPercent: Float = -1.0f
 
+    private val parentFrame = Rect()
+
     init {
         if (attrs != null) {
             val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.BoundedCardView)
@@ -39,7 +42,8 @@ class BoundedCardView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var maxMeasureHeight = if (maxHeight > 0) maxHeight else parentVisibleHeight
+        parentViewGroup.getWindowVisibleDisplayFrame(parentFrame)
+        var maxMeasureHeight = if (maxHeight > 0) maxHeight else parentFrame.height()
         if (maxHeightPercent > 0f) maxMeasureHeight = (maxMeasureHeight * maxHeightPercent).toInt()
         val trueHeightMeasureSpec = MeasureSpec.makeMeasureSpec(maxMeasureHeight, MeasureSpec.AT_MOST)
         super.onMeasure(widthMeasureSpec, trueHeightMeasureSpec)

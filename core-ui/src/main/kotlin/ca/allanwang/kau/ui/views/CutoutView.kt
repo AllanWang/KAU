@@ -27,7 +27,7 @@ import android.view.View
 import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.getFont
-import ca.allanwang.kau.utils.parentVisibleHeight
+import ca.allanwang.kau.utils.parentViewGroup
 import ca.allanwang.kau.utils.toBitmap
 
 /**
@@ -66,6 +66,7 @@ class CutoutView @JvmOverloads constructor(
     private var heightPercentage: Float = 0f
     private var minHeight: Float = 0f
     private val maxTextSize: Float
+    private val parentFrame = Rect()
 
     init {
         if (attrs != null) {
@@ -121,7 +122,8 @@ class CutoutView @JvmOverloads constructor(
      * If height percent is specified, ensure it is met
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val minHeight = Math.max(minHeight, heightPercentage * parentVisibleHeight)
+        parentViewGroup.getWindowVisibleDisplayFrame(parentFrame)
+        val minHeight = Math.max(minHeight, heightPercentage * parentFrame.height())
         val trueHeightMeasureSpec = if (minHeight > 0)
             MeasureSpec.makeMeasureSpec(Math.max(minHeight.toInt(), measuredHeight), MeasureSpec.EXACTLY)
         else heightMeasureSpec

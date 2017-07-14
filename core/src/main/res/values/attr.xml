@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+
+    <declare-styleable name="MeasureSpecDelegate">
+        <attr name="relativeWidth" format="float" />
+        <attr name="relativeWidthToParent" format="float" />
+        <attr name="postRelativeWidth" format="float" />
+        <attr name="relativeHeight" format="float" />
+        <attr name="relativeHeightToParent" format="float" />
+        <attr name="postRelativeHeight" format="float" />
+    </declare-styleable>
+
+</resources>
