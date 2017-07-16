@@ -86,18 +86,18 @@ fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG) {
 }
 
 //Resource retrievers
-fun Context.string(@StringRes id: Int): String = getString(id)
+inline fun Context.string(@StringRes id: Int): String = getString(id)
 
-fun Context.string(@StringRes id: Int, fallback: String?): String? = if (id > 0) string(id) else fallback
-fun Context.string(holder: StringHolder?): String? = holder?.getString(this)
-fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
-fun Context.integer(@IntegerRes id: Int): Int = resources.getInteger(id)
-fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
-fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
-fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)
-fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
-fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)
-fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)
+inline fun Context.string(@StringRes id: Int, fallback: String?): String? = if (id > 0) string(id) else fallback
+inline fun Context.string(holder: StringHolder?): String? = holder?.getString(this)
+inline fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
+inline fun Context.integer(@IntegerRes id: Int): Int = resources.getInteger(id)
+inline fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
+inline fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
+inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)
+inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
+inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)
+inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {

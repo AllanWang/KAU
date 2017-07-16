@@ -19,15 +19,14 @@
         android:contentDescription="@string/kau_blurrable_imageview"
         android:scaleType="centerCrop" />
 
-    <ca.allanwang.kau.ui.views.MeasuredImageView
+    <ImageView
         android:id="@+id/image_foreground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:alpha="0"
+        android:background="@color/kau_blurred_image_selection_overlay"
         android:contentDescription="@string/kau_blurrable_imageview"
-        android:scaleType="centerInside"
-        app:postRelativeWidth="1"
-        app:relativeHeight="0.5" />
+        android:scaleType="centerInside" />
 
 </merge>

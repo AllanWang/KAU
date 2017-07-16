@@ -2,8 +2,8 @@ package ca.allanwang.kau.utils
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Rect
 import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import android.support.annotation.TransitionRes
 import android.support.design.widget.FloatingActionButton
@@ -57,6 +57,8 @@ import com.mikepenz.iconics.typeface.IIcon
 @KauUtils inline val View.isInvisible: Boolean get() = visibility == View.INVISIBLE
 
 @KauUtils inline val View.isGone: Boolean get() = visibility == View.GONE
+
+@KauUtils inline fun View.setBackgroundColorRes(@ColorRes color: Int) = setBackgroundColor(context.color(color))
 
 fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}): Snackbar {
     val snackbar = Snackbar.make(this, text, duration)

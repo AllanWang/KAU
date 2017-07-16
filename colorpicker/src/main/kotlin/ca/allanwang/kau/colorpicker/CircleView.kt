@@ -24,10 +24,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.Toast
-import ca.allanwang.kau.utils.color
-import ca.allanwang.kau.utils.getDip
-import ca.allanwang.kau.utils.toColor
-import ca.allanwang.kau.utils.toHSV
+import ca.allanwang.kau.utils.*
 
 /**
  * Created by Allan Wang on 2017-06-10.
@@ -82,7 +79,7 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     override fun setBackgroundResource(@ColorRes color: Int) {
-        setBackgroundColor(context.color(color))
+        setBackgroundColorRes(color)
     }
 
 
