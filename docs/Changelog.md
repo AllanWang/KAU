@@ -3,6 +3,8 @@
 ## v2.1
 * :adapter: Modularized kau animators
 * :adapter: Switched from mutablelist to list inputs for themed animator
+* :core: Update utils and remove StringHolder
+* :imagepicker: Create full image picker with blurrable selections
 
 ## v2.0
 * Huge refactoring to separate functions to their own submodules
