@@ -89,7 +89,6 @@ fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG) {
 inline fun Context.string(@StringRes id: Int): String = getString(id)
 
 inline fun Context.string(@StringRes id: Int, fallback: String?): String? = if (id > 0) string(id) else fallback
-inline fun Context.string(holder: StringHolder?): String? = holder?.getString(this)
 inline fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 inline fun Context.integer(@IntegerRes id: Int): Int = resources.getInteger(id)
 inline fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
