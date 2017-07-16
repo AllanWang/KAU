@@ -146,7 +146,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
 
         totalDrag += scroll.toFloat()
 
-        // track the fromEdge & set the pivot point for scaling
+        // track the direction & set the pivot point for scaling
         // don't double track i.e. if start dragging down and then reverse, keep tracking as
         // dragging down until they reach the 'natural' position
         if (scroll < 0 && !draggingUp && !draggingDown) {
@@ -165,7 +165,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
 
         if (draggingUp) {
             // as we use the absolute magnitude when calculating the drag fraction, need to
-            // re-apply the drag fromEdge
+            // re-apply the drag direction
             dragTo *= -1f
         }
         translationY = dragTo
@@ -176,7 +176,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
             scaleY = scale
         }
 
-        // if we've reversed fromEdge and gone past the settle point then clear the flags to
+        // if we've reversed direction and gone past the settle point then clear the flags to
         // allow the list to get the scroll events & reset any transforms
         if (draggingDown && totalDrag >= 0 || draggingUp && totalDrag <= 0) {
             dragFraction = 0f
