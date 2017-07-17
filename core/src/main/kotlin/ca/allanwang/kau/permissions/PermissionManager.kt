@@ -35,6 +35,7 @@ internal object PermissionManager {
     }
 
     fun onRequestPermissionsResult(context: Context, permissions: Array<out String>, grantResults: IntArray) {
+        KL.d("On permission result: pending ${pendingResults.size}")
         val count = Math.min(permissions.size, grantResults.size)
         val iter = pendingResults.iterator()
         while (iter.hasNext()) {
@@ -53,6 +54,7 @@ internal object PermissionManager {
             }
             requestPermissions(context, action.permissions.toTypedArray())
         }
+        KL.d("Post on permission result: pending ${pendingResults.size}")
     }
 
 }
