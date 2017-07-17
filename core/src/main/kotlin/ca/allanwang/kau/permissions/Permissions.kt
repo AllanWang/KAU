@@ -9,6 +9,12 @@ import android.content.Context
  * Created by Allan Wang on 2017-07-02.
  *
  * Bindings for the permission manager
+ * This is the only class you need to worry about when using KAU's manager
+ *
+ * MAKE SURE [kauOnRequestPermissionsResult] is added to your activities,
+ * and don't forget to request the permissions in your manifest.
+ * A collection of constants redirecting to the [Manifest.permission] counterparts
+ * are added for your convenience
  */
 
 /**

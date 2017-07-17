@@ -18,7 +18,7 @@ internal object PermissionManager {
     val pendingResults: MutableList<WeakReference<PermissionResult>> by lazy { mutableListOf<WeakReference<PermissionResult>>() }
 
     operator fun invoke(context: Context, permissions: Array<out String>, callback: (granted: Boolean, deniedPerm: String?) -> Unit) {
-        KL.d("Requesting permissions: ${permissions.contentToString()}")
+        KL.d("Permission manager for: ${permissions.contentToString()}")
         if (!buildIsMarshmallowAndUp) return callback(true, null)
         val missingPermissions = permissions.filter { !context.hasPermission(it) }
         if (missingPermissions.isEmpty()) return callback(true, null)
@@ -31,6 +31,7 @@ internal object PermissionManager {
 
     @Synchronized internal fun requestPermissions(context: Context, permissions: Array<out String>) {
         val activity = (context as? Activity) ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
+        KL.d("Requesting permissions ${permissions.contentToString()}")
         ActivityCompat.requestPermissions(activity, permissions, 1)
     }
 
