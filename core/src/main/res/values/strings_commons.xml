@@ -38,8 +38,22 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_no_results_found">No Results Found</string>
     <string name="kau_none">None</string>
     <string name="kau_ok">@android:string/ok</string>
-    <string name="kau_one_day">1 day</string>
-    <string name="kau_one_hour">1 hour</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
     <string name="kau_play_store">Play Store</string>
     <string name="kau_rate">Rate</string>
     <string name="kau_report_bug">Report A Bug</string>
@@ -51,9 +65,6 @@ Most resources are verbatim and x represents a formatted item
     <string name="kau_thank_you">Thank You</string>
     <string name="kau_uh_oh">Uh Oh</string>
     <string name="kau_warning">Warning</string>
-    <string name="kau_x_days">%d days</string>
-    <string name="kau_x_hours">%d hours</string>
-    <string name="kau_x_minutes">%d minutes</string>
     <string name="kau_yes">Yes</string>
     <string name="kau_text_copied">Text copied to clipboard.</string>
     <string name="kau_copy">Copy</string>

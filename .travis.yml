@@ -12,7 +12,7 @@ android:
   - extra-google-m2repository
   licenses:
   - '.+'
-script: ./gradlew clean test
+script: ./gradlew lintRelease test
 branches:
   except:
   - gh-pages

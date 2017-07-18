@@ -29,8 +29,14 @@ android {
     }
 
     lintOptions {
-        abortOnError false
-        checkReleaseBuilds false
+        warningsAsErrors true
+        disable 'LogNotTimber',
+                'UnusedResources',
+                'ContentDescription',
+                'RtlSymmetry',
+                'RtlHardcoded',
+                'RtlEnabled',
+                'Overdraw'
     }
 
     sourceSets {
