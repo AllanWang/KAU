@@ -40,9 +40,9 @@ class EmailBuilder(val email: String, val subject: String) {
         if (deviceDetails) {
             val deviceItems = mutableMapOf(
                     "OS Version" to "${System.getProperty("os.version")} (${Build.VERSION.INCREMENTAL})",
-                    "OS API Level" to Build.DEVICE,
-                    "Manufacturer" to Build.MANUFACTURER,
-                    "Model (and Product)" to "${Build.MODEL} (${Build.PRODUCT})",
+                    "OS SDK" to Build.VERSION.SDK_INT,
+                    "Device (Manufacturer)" to "${Build.DEVICE} (${Build.MANUFACTURER})",
+                    "Model (Product)" to "${Build.MODEL} (${Build.PRODUCT})",
                     "Package Installer" to (context.installerPackageName ?: "None")
             )
             if (context is Activity) {
