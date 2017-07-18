@@ -95,12 +95,9 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
         indicator.setViewPager(pager)
         draggableFrame.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
-                // if we drag dismiss downward then the default reversal of the enter
-                // transition would slide content upward which looks weird. So reverse it.
-                if (draggableFrame.translationY > 0) {
-                    window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
-                            .inflateTransition(configs.transitionExitReversed)
-                }
+                window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
+                        .inflateTransition(if (draggableFrame.translationY > 0) configs.transitionExitBottom else configs.transitionExitTop)
+
                 libRecycler?.stopScroll()
                 finishAfterTransition()
             }
@@ -115,10 +112,9 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
         var cutoutForeground: Int? = null
         var libPageTitleRes: Int = -1
         var libPageTitle: String? = string(R.string.kau_about_libraries_intro) //This is in the string by default since it's lower priority
-        /**
-         * Transition to be called if the view is dragged down
-         */
-        var transitionExitReversed: Int = R.transition.kau_about_return_downward
+
+        var transitionExitTop: Int = R.transition.kau_exit_slide_top
+        var transitionExitBottom: Int = R.transition.kau_exit_slide_bottom
     }
 
     /**

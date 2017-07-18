@@ -154,12 +154,12 @@ class MainActivity : KPrefActivity() {
             descRes = R.string.sub_item_desc
         }
 
-        plainText(R.string.kau_lorem_ipsum) {
-            onClick = {
-                _, _, _ ->
-                startActivity(AboutActivity::class.java, transition = true)
-                false
-            }
+        plainText(R.string.adapter_showcase) {
+            onClick = { _,_,_ -> startActivity(AdapterActivity::class.java, transition = true); false }
+        }
+
+        plainText(R.string.kau_about_app) {
+            onClick = { _, _, _ -> startActivity(AboutActivity::class.java, transition = true); false }
         }
 
     }

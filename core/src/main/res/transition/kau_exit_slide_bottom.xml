@@ -2,17 +2,18 @@
 <transitionSet
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:transitionOrdering="together"
-    android:duration="400"
-    android:interpolator="@android:interpolator/linear_out_slow_in">
+    android:interpolator="@android:interpolator/fast_out_linear_in">
 
-    <slide android:slideEdge="bottom">
+    <slide
+        android:slideEdge="bottom"
+        android:duration="400">
         <targets>
             <target android:excludeId="@android:id/navigationBarBackground" />
             <target android:excludeId="@android:id/statusBarBackground" />
         </targets>
     </slide>
 
-    <fade android:duration="@android:integer/config_mediumAnimTime">
+    <fade android:duration="400">
         <targets>
             <target android:targetId="@android:id/navigationBarBackground" />
             <target android:targetId="@android:id/statusBarBackground" />

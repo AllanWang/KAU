@@ -71,17 +71,15 @@ class CardIItem(val builder: Config.() -> Unit = {}) : KauIItem<CardIItem, CardI
         with(holder.itemView.context) context@ {
             with(configs) {
                 holder.title.text = string(titleRes, title)
-                holder.description.text = string(descRes, desc)
+                val descText = string(descRes, desc)
+                if (descText != null) holder.description.visible().text = descText
                 val buttonText = string(buttonRes, button)
                 if (buttonText != null) {
                     holder.bottomRow.visible()
                     holder.button.text = buttonText
                 }
                 val icon = if (imageRes > 0) drawable(imageRes)
-                else if (imageIIcon != null) imageIIcon!!.toDrawable(this@context, color = imageIIconColor) {
-                    sizeDp(40)
-                    paddingDp(8)
-                } else image
+                else imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor) ?: image
                 if (icon != null) holder.icon.visible().setImageDrawable(icon)
             }
             with(holder) {
@@ -99,7 +97,7 @@ class CardIItem(val builder: Config.() -> Unit = {}) : KauIItem<CardIItem, CardI
         with(holder) {
             icon.gone().setImageDrawable(null)
             title.text = null
-            description.text = null
+            description.gone().text = null
             bottomRow.gone()
             button.setOnClickListener(null)
             card.setOnClickListener(null)

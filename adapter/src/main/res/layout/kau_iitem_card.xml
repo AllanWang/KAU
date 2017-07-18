@@ -14,22 +14,21 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/kau_padding_normal"
-        android:paddingEnd="@dimen/kau_padding_normal"
-        android:paddingTop="@dimen/kau_padding_normal">
+        android:padding="@dimen/kau_padding_normal">
 
         <ImageView
             android:id="@+id/kau_card_image"
-            android:layout_width="@dimen/kau_avatar_bounds"
-            android:layout_height="@dimen/kau_avatar_bounds"
-            android:layout_marginEnd="@dimen/kau_avatar_margin"
-            android:layout_marginStart="@dimen/kau_avatar_margin"
-            android:padding="@dimen/kau_avatar_padding"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:scaleType="fitCenter"
             android:visibility="gone"
+            android:paddingEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
             android:id="@+id/kau_card_title"
@@ -38,18 +37,17 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/kau_card_image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginStart="@dimen/kau_padding_normal" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/kau_card_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/kau_card_image"
-            app:layout_constraintTop_toBottomOf="@id/kau_card_title"
-            app:layout_goneMarginStart="@dimen/kau_padding_normal" />
+            app:layout_constraintTop_toBottomOf="@id/kau_card_title" />
 
         <LinearLayout
             android:id="@+id/kau_card_bottom_row"
@@ -60,8 +58,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/kau_card_image"
-            app:layout_constraintTop_toBottomOf="@id/kau_card_description"
-            app:layout_goneMarginStart="@dimen/kau_padding_normal">
+            app:layout_constraintTop_toBottomOf="@id/kau_card_description">
 
             <Button
                 android:id="@+id/kau_card_button"
