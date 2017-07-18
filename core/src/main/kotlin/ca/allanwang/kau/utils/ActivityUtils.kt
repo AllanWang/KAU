@@ -38,19 +38,19 @@ fun Activity.finishSlideOut() {
     overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_slide_out_right_top)
 }
 
-var Activity.navigationBarColor: Int
+inline var Activity.navigationBarColor: Int
     get() = if (buildIsLollipopAndUp) window.navigationBarColor else Color.BLACK
     set(value) {
         if (buildIsLollipopAndUp) window.navigationBarColor = value
     }
 
-var Activity.statusBarColor: Int
+inline var Activity.statusBarColor: Int
     get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
     set(value) {
         if (buildIsLollipopAndUp) window.statusBarColor = value
     }
 
-var Activity.statusBarLight: Boolean
+inline var Activity.statusBarLight: Boolean
     @SuppressLint("InlinedApi")
     get() = if (buildIsMarshmallowAndUp) window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR > 0 else false
     @SuppressLint("InlinedApi")

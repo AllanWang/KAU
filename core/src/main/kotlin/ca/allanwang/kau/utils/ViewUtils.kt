@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package ca.allanwang.kau.utils
 
 import android.animation.ValueAnimator
@@ -145,11 +147,11 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
     background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }
 
-@KauUtils val View.parentViewGroup: ViewGroup get() = parent as ViewGroup
+@KauUtils inline val View.parentViewGroup: ViewGroup get() = parent as ViewGroup
 
-val EditText.value: String get() = text.toString().trim()
+inline val EditText.value: String get() = text.toString().trim()
 
-val TextInputEditText.value: String get() = text.toString().trim()
+inline val TextInputEditText.value: String get() = text.toString().trim()
 
 /**
  * Generates a recycler view with match parent and a linearlayoutmanager, since it's so commonly used

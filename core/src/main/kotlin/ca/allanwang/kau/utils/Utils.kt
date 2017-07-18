@@ -26,16 +26,16 @@ import java.text.DecimalFormat
 @DslMarker
 annotation class KauUtils
 
-@KauUtils val Float.dpToPx: Float
+@KauUtils inline val Float.dpToPx: Float
     get() = this * Resources.getSystem().displayMetrics.density
 
-@KauUtils val Int.dpToPx: Int
+@KauUtils inline val Int.dpToPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-@KauUtils val Float.pxToDp: Float
+@KauUtils inline val Float.pxToDp: Float
     get() = this / Resources.getSystem().displayMetrics.density
 
-@KauUtils val Int.pxToDp: Int
+@KauUtils inline val Int.pxToDp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
 /**

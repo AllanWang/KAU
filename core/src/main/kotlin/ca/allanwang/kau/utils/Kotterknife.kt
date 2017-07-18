@@ -114,21 +114,21 @@ fun <V : View> android.support.v4.app.Fragment.bindOptionalViews(vararg ids: Int
 fun <V : View> ViewHolder.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<ViewHolder, List<V>> = optional(ids, viewFinder)
 
-private val View.viewFinder: View.(Int) -> View?
+private inline val View.viewFinder: View.(Int) -> View?
     get() = { findViewById(it) }
-private val Activity.viewFinder: Activity.(Int) -> View?
+private inline val Activity.viewFinder: Activity.(Int) -> View?
     get() = { findViewById(it) }
-private val Dialog.viewFinder: Dialog.(Int) -> View?
+private inline val Dialog.viewFinder: Dialog.(Int) -> View?
     get() = { findViewById(it) }
-private val DialogFragment.viewFinder: DialogFragment.(Int) -> View?
+private inline val DialogFragment.viewFinder: DialogFragment.(Int) -> View?
     get() = { dialog.findViewById(it) }
-private val android.support.v4.app.DialogFragment.viewFinder: android.support.v4.app.DialogFragment.(Int) -> View?
+private inline val android.support.v4.app.DialogFragment.viewFinder: android.support.v4.app.DialogFragment.(Int) -> View?
     get() = { dialog.findViewById(it) }
-private val Fragment.viewFinder: Fragment.(Int) -> View?
+private inline val Fragment.viewFinder: Fragment.(Int) -> View?
     get() = { view.findViewById(it) }
-private val android.support.v4.app.Fragment.viewFinder: android.support.v4.app.Fragment.(Int) -> View?
+private inline val android.support.v4.app.Fragment.viewFinder: android.support.v4.app.Fragment.(Int) -> View?
     get() = { view!!.findViewById(it) }
-private val ViewHolder.viewFinder: ViewHolder.(Int) -> View?
+private inline val ViewHolder.viewFinder: ViewHolder.(Int) -> View?
     get() = { itemView.findViewById(it) }
 
 private fun viewNotFound(id: Int, desc: KProperty<*>): Nothing =

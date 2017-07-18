@@ -219,7 +219,7 @@ class MainActivity : KPrefActivity() {
             noResultsFound = R.string.kau_no_results_found
             shouldClearOnClose = false
             onItemClick = {
-                position, key, content, searchView ->
+                _, _, content, searchView ->
                 toast(content)
                 searchView.revealClose()
             }

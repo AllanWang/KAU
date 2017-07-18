@@ -29,7 +29,7 @@ class ImageItem(val data: ImageModel)
     fun bindEvents(fastAdapter: FastAdapter<ImageItem>) {
         fastAdapter.withMultiSelect(true)
         fastAdapter.withSelectable(true)
-        fastAdapter.withOnClickListener { v, adapter, item, position ->
+        fastAdapter.withOnClickListener { v, _, _, _ ->
             val image = v as BlurredImageView
             image.toggleBlur()
             true
@@ -64,7 +64,7 @@ class ImageItem(val data: ImageModel)
                 .paddingPx(sizePx / 3)
                 .color(Color.WHITE))
         //todo add background
-//        imageBase.setBackgroundColor(ColorUtils.getColorAccent(c))
+        imageBase.setBackgroundColor(ImagePickerActivityBase.accentColor)
         imageForeground.gone()
     }
 

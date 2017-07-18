@@ -42,6 +42,8 @@ abstract class ImagePickerActivityBase : AppCompatActivity(), LoaderManager.Load
             val screenWidthPx = context.resources.displayMetrics.widthPixels
             return screenWidthPx / minImageSizePx
         }
+
+        var accentColor: Int = 0xff666666.toInt()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
