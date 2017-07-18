@@ -1,8 +1,16 @@
 # Changelog
 
 ## v2.1
+* :adapter: Fix up CardIItem
 * :adapter: Modularized kau animators
 * :adapter: Switched from mutablelist to list inputs for themed animator
+* :core-ui: Create ElasticRecyclerActivity
+* :core-ui: Create MeasuredImageView
+* :core: Create MeasureSpecDelegate
+* :core: Improve PermissionManager logging
+* :core: Inline all util variables with getters
+* :core: Introduce fade animation style templates
+* :core: Introduce slide transition style templates
 * :core: Update utils and remove StringHolder
 * :imagepicker: Create full image picker with blurrable selections
 

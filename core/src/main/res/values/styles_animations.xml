@@ -1,4 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <style name="KauFadeIn" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/kau_fade_in</item>
+        <item name="android:activityCloseEnterAnimation">@anim/kau_fade_in</item>
+        <item name="android:taskOpenEnterAnimation">@anim/kau_fade_in</item>
+        <item name="android:taskCloseEnterAnimation">@anim/kau_fade_in</item>
+        <item name="android:taskToFrontEnterAnimation">@anim/kau_fade_in</item>
+        <item name="android:windowEnterAnimation">@anim/kau_fade_in</item>
+    </style>
+
+    <style name="KauFadeInFadeOut" parent="@style/KauFadeIn">
+        <item name="android:activityOpenExitAnimation">@anim/kau_fade_out</item>
+        <item name="android:activityCloseExitAnimation">@anim/kau_fade_out</item>
+        <item name="android:taskOpenExitAnimation">@anim/kau_fade_out</item>
+        <item name="android:taskCloseExitAnimation">@anim/kau_fade_out</item>
+        <item name="android:taskToFrontExitAnimation">@anim/kau_fade_out</item>
+        <item name="android:windowExitAnimation">@anim/kau_fade_out</item>
+    </style>
 
     <style name="KauSlideIn" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/kau_slide_in_right</item>
@@ -7,15 +25,6 @@
         <item name="android:taskCloseEnterAnimation">@anim/kau_slide_in_right</item>
         <item name="android:taskToFrontEnterAnimation">@anim/kau_slide_in_right</item>
         <item name="android:windowEnterAnimation">@anim/kau_slide_in_right</item>
-    </style>
-
-    <style name="KauSlideInSlideOut" parent="@style/KauSlideIn">
-        <item name="android:activityOpenExitAnimation">@anim/kau_slide_out_right</item>
-        <item name="android:activityCloseExitAnimation">@anim/kau_slide_out_right</item>
-        <item name="android:taskOpenExitAnimation">@anim/kau_slide_out_right</item>
-        <item name="android:taskCloseExitAnimation">@anim/kau_slide_out_right</item>
-        <item name="android:taskToFrontExitAnimation">@anim/kau_slide_out_right</item>
-        <item name="android:windowExitAnimation">@anim/kau_slide_out_right</item>
     </style>
 
     <style name="KauSlideInFadeOut" parent="@style/KauSlideIn">
@@ -27,22 +36,12 @@
         <item name="android:windowExitAnimation">@anim/kau_fade_out</item>
     </style>
 
-    <style name="KauFadeIn" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/kau_fade_in</item>
-        <item name="android:activityCloseEnterAnimation">@anim/kau_fade_in</item>
-        <item name="android:taskOpenEnterAnimation">@anim/kau_fade_in</item>
-        <item name="android:taskCloseEnterAnimation">@anim/kau_fade_in</item>
-        <item name="android:taskToFrontEnterAnimation">@anim/kau_fade_in</item>
-        <item name="android:windowEnterAnimation">@anim/kau_fade_in</item>
+    <style name="KauSlideInSlideOut" parent="@style/KauSlideIn">
+        <item name="android:activityOpenExitAnimation">@anim/kau_slide_out_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/kau_slide_out_right</item>
+        <item name="android:taskOpenExitAnimation">@anim/kau_slide_out_right</item>
+        <item name="android:taskCloseExitAnimation">@anim/kau_slide_out_right</item>
+        <item name="android:taskToFrontExitAnimation">@anim/kau_slide_out_right</item>
+        <item name="android:windowExitAnimation">@anim/kau_slide_out_right</item>
     </style>
-
-    <style name="KauFadeInFadeOut" parent="@style/KauFadeIn" >
-        <item name="android:activityOpenExitAnimation">@anim/kau_fade_out</item>
-        <item name="android:activityCloseExitAnimation">@anim/kau_fade_out</item>
-        <item name="android:taskOpenExitAnimation">@anim/kau_fade_out</item>
-        <item name="android:taskCloseExitAnimation">@anim/kau_fade_out</item>
-        <item name="android:taskToFrontExitAnimation">@anim/kau_fade_out</item>
-        <item name="android:windowExitAnimation">@anim/kau_fade_out</item>
-    </style>
-
 </resources>

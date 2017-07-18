@@ -1,41 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
-
     <declare-styleable name="BoundedCardView">
-        <attr name="maxHeight" format="dimension" />
-        <attr name="maxHeightPercent" format="float" />
-    </declare-styleable>
-
-    <declare-styleable name="TextSlider">
-        <attr name="animation_type" format="enum">
-            <enum name="none" value="1000" />
-            <enum name="slide_horizontal" value="1001" />
-            <enum name="slide_vertical" value="1002" />
-        </attr>
-    </declare-styleable>
-
-    <declare-styleable name="InkPageIndicator">
-        <attr name="dotDiameter" format="dimension" />
-        <attr name="dotGap" format="dimension" />
-        <attr name="animationDuration" format="integer" />
-        <attr name="pageIndicatorColor" format="color" />
-        <attr name="currentPageIndicatorColor" format="color" />
-    </declare-styleable>
-
-    <declare-styleable name="ElasticDragDismissFrameLayout">
-        <attr name="dragDismissDistance" format="dimension" />
-        <attr name="dragDismissFraction" format="float" />
-        <attr name="dragDismissScale" format="float" />
-        <attr name="dragElasticity" format="float" />
+        <attr format="dimension" name="maxHeight"/>
+        <attr format="float" name="maxHeightPercent"/>
     </declare-styleable>
 
     <declare-styleable name="CutoutView">
-        <attr name="foregroundColor" format="color" />
-        <attr name="android:text" />
-        <attr name="android:drawable" />
-        <attr name="android:minHeight" />
-        <attr name="heightPercentageToScreen" format="float" />
+        <attr format="color" name="foregroundColor"/>
+        <attr name="android:text"/>
+        <attr name="android:drawable"/>
+        <attr name="android:minHeight"/>
+        <attr format="float" name="heightPercentageToScreen"/>
         <attr name="font"/>
     </declare-styleable>
 
+    <declare-styleable name="ElasticDragDismissFrameLayout">
+        <attr format="dimension" name="dragDismissDistance"/>
+        <attr format="float" name="dragDismissFraction"/>
+        <attr format="float" name="dragDismissScale"/>
+        <attr format="float" name="dragElasticity"/>
+    </declare-styleable>
+
+    <declare-styleable name="InkPageIndicator">
+        <attr format="dimension" name="dotDiameter"/>
+        <attr format="dimension" name="dotGap"/>
+        <attr format="integer" name="animationDuration"/>
+        <attr format="color" name="pageIndicatorColor"/>
+        <attr format="color" name="currentPageIndicatorColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="TextSlider">
+        <attr format="enum" name="animation_type">
+            <enum name="none" value="1000"/>
+            <enum name="slide_horizontal" value="1001"/>
+            <enum name="slide_vertical" value="1002"/>
+        </attr>
+    </declare-styleable>
 </resources>

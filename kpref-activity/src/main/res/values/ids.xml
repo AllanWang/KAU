@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <item name="kau_pref_barrier" type="id" />
-    <item name="kau_pref_container" type="id" />
-    <item name="kau_pref_desc" type="id" />
-    <item name="kau_pref_icon" type="id" />
-    <item name="kau_pref_inner_content" type="id" />
-    <item name="kau_pref_inner_frame" type="id" />
-    <item name="kau_pref_item_checkbox" type="id" />
-    <item name="kau_pref_item_color_picker" type="id" />
-    <item name="kau_pref_item_header" type="id" />
-    <item name="kau_pref_item_plain_text" type="id" />
-    <item name="kau_pref_item_seekbar" type="id" />
-    <item name="kau_pref_item_sub_item" type="id" />
-    <item name="kau_pref_item_text" type="id" />
-    <item name="kau_pref_lower_content" type="id" />
-    <item name="kau_pref_lower_frame" type="id" />
-    <item name="kau_pref_title" type="id" />
+    <item name="kau_pref_barrier" type="id"/>
+    <item name="kau_pref_container" type="id"/>
+    <item name="kau_pref_desc" type="id"/>
+    <item name="kau_pref_icon" type="id"/>
+    <item name="kau_pref_inner_content" type="id"/>
+    <item name="kau_pref_inner_frame" type="id"/>
+    <item name="kau_pref_item_checkbox" type="id"/>
+    <item name="kau_pref_item_color_picker" type="id"/>
+    <item name="kau_pref_item_header" type="id"/>
+    <item name="kau_pref_item_plain_text" type="id"/>
+    <item name="kau_pref_item_seekbar" type="id"/>
+    <item name="kau_pref_item_sub_item" type="id"/>
+    <item name="kau_pref_item_text" type="id"/>
+    <item name="kau_pref_lower_content" type="id"/>
+    <item name="kau_pref_lower_frame" type="id"/>
+    <item name="kau_pref_title" type="id"/>
 </resources>
