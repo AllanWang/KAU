@@ -83,11 +83,10 @@ class CardIItem(val builder: Config.() -> Unit = {}
                     holder.bottomRow.visible()
                     holder.button.text = buttonText
                 }
-                holder.icon.setImageDrawable(
-                        if (imageRes > 0) drawable(imageRes)
-                        else if (imageIIcon != null) imageIIcon!!.toDrawable(this@context, sizeDp = 40, color = imageIIconColor)
-                        else image
-                )
+                val icon = if (imageRes > 0) drawable(imageRes)
+                else if (imageIIcon != null) imageIIcon!!.toDrawable(this@context, sizeDp = 40, color = imageIIconColor)
+                else image
+                if (icon != null) holder.icon.visible().setImageDrawable(icon)
             }
             with(holder) {
                 bindTextColor(title)
