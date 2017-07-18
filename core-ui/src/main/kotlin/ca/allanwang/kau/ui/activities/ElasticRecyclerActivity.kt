@@ -1,6 +1,7 @@
 package ca.allanwang.kau.ui.activities
 
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
@@ -24,6 +25,7 @@ import ca.allanwang.kau.utils.bindView
  */
 abstract class ElasticRecyclerActivity() : AppCompatActivity() {
 
+    val appBar: AppBarLayout by bindView(R.id.kau_appbar)
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)
     val coordinator: CoordinatorLayout by bindView(R.id.kau_coordinator)
     val draggableFrame: ElasticDragDismissFrameLayout by bindView(R.id.kau_draggable)
@@ -64,6 +66,15 @@ abstract class ElasticRecyclerActivity() : AppCompatActivity() {
      */
     fun setOutsideTapListener(listener: () -> Unit) {
         draggableFrame.setOnClickListener { listener() }
+    }
+
+    fun hideFabOnUpwardsScroll() {
+        recycler.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                if (dy > 0 && fab.isShown) fab.hide()
+                else if (dy < 0 && !fab.isShown) fab.show()
+            }
+        })
     }
 
 }

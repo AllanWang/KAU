@@ -13,6 +13,7 @@
 
     <dimen name="kau_status_bar_height">24dp</dimen>
     <dimen name="kau_drag_dismiss_distance">112dp</dimen> <!-- 2 * ?android:actionBarSize -->
+    <dimen name="kau_drag_dismiss_distance_large">168dp</dimen> <!-- 3 * ?android:actionBarSize -->
 
     <dimen name="kau_spacing_normal">8dp</dimen>
     <dimen name="kau_spacing_micro">4dp</dimen>
