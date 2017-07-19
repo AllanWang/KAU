@@ -86,6 +86,23 @@ There is an optional `customize` argument to modify the builder before showing t
 
 As mentioned, blank items will be ignored, so feel free to create a bunch of empty lines to facilitate updating the items in the future.
 
+Here is a template xml changelog file:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    <version title="v"/>
+    <item text="" />
+    -->
+
+    <version title="v0.1" />
+    <item text="Initial Changelog" />
+    <item text="" />
+</resources>
+```
+
 <a name="ripple-canvas"></a>
 ## Ripple Canvas
 

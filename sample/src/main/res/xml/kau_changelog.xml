@@ -19,9 +19,7 @@
     <item text=":core: Introduce slide transition style templates" />
     <item text=":core: Update utils and remove StringHolder" />
     <item text=":imagepicker: Create full image picker with blurrable selections" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
+    <item text="Update dependencies" />
 
     <version title="v2.0"/>
     <item text="Huge refactoring to separate functions to their own submodules" />
