@@ -100,7 +100,7 @@ inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(th
 /**
  * Returns plural form of res. By default, the quantity is passed as the argument
  */
-inline fun Context.plural(@PluralsRes id: Int, quantity: Number, vararg args: Any = arrayOf(quantity))
+inline fun Context.plural(@PluralsRes id: Int, quantity: Number, vararg args: Any = arrayOf(quantity.toLong()))
         = resources.getQuantityString(id, quantity.toInt(), args)
 
 //Attr retrievers
