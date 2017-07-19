@@ -13,6 +13,7 @@
 * :core: Introduce slide transition style templates
 * :core: Update utils and remove StringHolder
 * :imagepicker: Create full image picker with blurrable selections
+* Update dependencies
 
 ## v2.0
 * Huge refactoring to separate functions to their own submodules

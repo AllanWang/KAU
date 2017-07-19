@@ -97,7 +97,11 @@ inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getD
 inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
 inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)
 inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)
-inline fun Context.plural(@PluralsRes id: Int, quantity: Number) = resources.getQuantityString(id, quantity.toInt())
+/**
+ * Returns plural form of res. By default, the quantity is passed as the argument
+ */
+inline fun Context.plural(@PluralsRes id: Int, quantity: Number, vararg args: Any = arrayOf(quantity))
+        = resources.getQuantityString(id, quantity.toInt(), args)
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {
