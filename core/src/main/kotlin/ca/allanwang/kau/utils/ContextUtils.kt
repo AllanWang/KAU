@@ -98,7 +98,7 @@ inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable
 inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)
 inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)
 /**
- * Returns plural form of res. By default, the quantity is passed as the argument
+ * Returns plural form of res. The quantity is also passed to the formatter as an int
  */
 inline fun Context.plural(@PluralsRes id: Int, quantity: Number)
         = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
