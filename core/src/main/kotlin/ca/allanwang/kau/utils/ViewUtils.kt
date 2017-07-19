@@ -1,9 +1,12 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package ca.allanwang.kau.utils
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
-import android.graphics.Rect
 import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import android.support.annotation.TransitionRes
 import android.support.design.widget.FloatingActionButton
@@ -58,6 +61,8 @@ import com.mikepenz.iconics.typeface.IIcon
 
 @KauUtils inline val View.isGone: Boolean get() = visibility == View.GONE
 
+@KauUtils inline fun View.setBackgroundColorRes(@ColorRes color: Int) = setBackgroundColor(context.color(color))
+
 fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}): Snackbar {
     val snackbar = Snackbar.make(this, text, duration)
     snackbar.builder()
@@ -85,12 +90,24 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
 
 @KauUtils fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View = LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
+/**
+ * Set left margin to a value in px
+ */
 @KauUtils fun View.updateLeftMargin(margin: Int) = updateMargins(margin, KAU_LEFT)
 
+/**
+ * Set top margin to a value in px
+ */
 @KauUtils fun View.updateTopMargin(margin: Int) = updateMargins(margin, KAU_TOP)
 
+/**
+ * Set right margin to a value in px
+ */
 @KauUtils fun View.updateRightMargin(margin: Int) = updateMargins(margin, KAU_RIGHT)
 
+/**
+ * Set bottom margin to a value in px
+ */
 @KauUtils fun View.updateBottomMargin(margin: Int) = updateMargins(margin, KAU_BOTTOM)
 
 @KauUtils private fun View.updateMargins(margin: Int, flag: Int) {
@@ -130,18 +147,11 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
     background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }
 
-@KauUtils val View.parentViewGroup: ViewGroup get() = parent as ViewGroup
+@KauUtils inline val View.parentViewGroup: ViewGroup get() = parent as ViewGroup
 
-@KauUtils val View.parentVisibleHeight: Int
-    get() {
-        val r = Rect()
-        parentViewGroup.getWindowVisibleDisplayFrame(r)
-        return r.height()
-    }
+inline val EditText.value: String get() = text.toString().trim()
 
-val EditText.value: String get() = text.toString().trim()
-
-val TextInputEditText.value: String get() = text.toString().trim()
+inline val TextInputEditText.value: String get() = text.toString().trim()
 
 /**
  * Generates a recycler view with match parent and a linearlayoutmanager, since it's so commonly used
@@ -152,5 +162,34 @@ fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, confi
         layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
         if (rvAdapter != null) adapter = rvAdapter
         configs()
+    }
+}
+
+/**
+ * Animate a transition for a FloatinActionButton
+ * If it is not shown, the action will be invoked directly and the fab will be shown
+ * If it is already shown, scaling and alpha animations will be added to the action
+ */
+inline fun FloatingActionButton.transition(crossinline action: FloatingActionButton.() -> Unit) {
+    if (isHidden) {
+        action()
+        show()
+    } else {
+        var transitioned = false
+        ValueAnimator.ofFloat(1.0f, 0.0f, 1.0f).apply {
+            duration = 500L
+            addUpdateListener {
+                val x = it.animatedValue as Float
+                val scale = x * 0.3f + 0.7f
+                scaleX = scale
+                scaleY = scale
+                imageAlpha = (x * 255).toInt()
+                if (it.animatedFraction > 0.5f && !transitioned) {
+                    transitioned = true
+                    action()
+                }
+            }
+            start()
+        }
     }
 }

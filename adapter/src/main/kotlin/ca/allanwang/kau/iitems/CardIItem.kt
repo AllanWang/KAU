@@ -15,7 +15,6 @@ import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.iconics.typeface.IIcon
 
@@ -25,22 +24,22 @@ import com.mikepenz.iconics.typeface.IIcon
  * Simple generic card item with an icon, title, description and button
  * The icon and button are hidden by default unless values are given
  */
-class CardIItem(val builder: Config.() -> Unit = {}
-) : AbstractItem<CardIItem, CardIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
+class CardIItem(val builder: Config.() -> Unit = {}) : KauIItem<CardIItem, CardIItem.ViewHolder>(R.layout.kau_iitem_card, { ViewHolder(it) }, R.id.kau_item_card),
+        ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*,*>>) {
-            fastAdapter.withEventHook(object : ClickEventHook<IItem<*,*>>() {
+        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
+            fastAdapter.withEventHook(object : ClickEventHook<IItem<*, *>>() {
                 override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
                     return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button) else null
                 }
 
-                override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*,*>>, item: IItem<*,*>) {
+                override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*, *>>, item: IItem<*, *>) {
                     if (item !is CardIItem) return
                     with(item.configs) {
                         when (v.id) {
-                            R.id.kau_card_container -> cardClick?.onClick(v)
-                            R.id.kau_card_button -> buttonClick?.onClick(v)
+                            R.id.kau_card_container -> cardClick?.invoke()
+                            R.id.kau_card_button -> buttonClick?.invoke()
                             else -> {
                             }
                         }
@@ -59,37 +58,29 @@ class CardIItem(val builder: Config.() -> Unit = {}
         var descRes: Int = -1
         var button: String? = null
         var buttonRes: Int = -1
-        var buttonClick: View.OnClickListener? = null
-        var cardClick: View.OnClickListener? = null
+        var buttonClick: (() -> Unit)? = null
+        var cardClick: (() -> Unit)? = null
         var image: Drawable? = null
         var imageIIcon: IIcon? = null
         var imageIIconColor: Int = Color.WHITE
         var imageRes: Int = -1
     }
 
-
-    override fun getType(): Int = R.id.kau_item_card
-
-    override fun getLayoutRes(): Int = R.layout.kau_iitem_card
-
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
         super.bindView(holder, payloads)
         with(holder.itemView.context) context@ {
             with(configs) {
                 holder.title.text = string(titleRes, title)
-                holder.description.text = string(descRes, desc)
+                val descText = string(descRes, desc)
+                if (descText != null) holder.description.visible().text = descText
                 val buttonText = string(buttonRes, button)
                 if (buttonText != null) {
                     holder.bottomRow.visible()
                     holder.button.text = buttonText
-                    holder.button.setOnClickListener(buttonClick)
                 }
-                holder.icon.setImageDrawable(
-                        if (imageRes > 0) drawable(imageRes)
-                        else if (imageIIcon != null) imageIIcon!!.toDrawable(this@context, sizeDp = 40, color = imageIIconColor)
-                        else image
-                )
-                holder.card.setOnClickListener(cardClick)
+                val icon = if (imageRes > 0) drawable(imageRes)
+                else imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor) ?: image
+                if (icon != null) holder.icon.visible().setImageDrawable(icon)
             }
             with(holder) {
                 bindTextColor(title)
@@ -106,14 +97,12 @@ class CardIItem(val builder: Config.() -> Unit = {}
         with(holder) {
             icon.gone().setImageDrawable(null)
             title.text = null
-            description.text = null
+            description.gone().text = null
             bottomRow.gone()
             button.setOnClickListener(null)
             card.setOnClickListener(null)
         }
     }
-
-    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val card: CardView by bindView(R.id.kau_card_container)

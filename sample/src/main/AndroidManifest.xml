@@ -31,6 +31,9 @@
         <activity
             android:name=".ImageActivity"
             android:theme="@style/Kau.Translucent.ImagePicker" />
+        <activity
+            android:name=".AdapterActivity"
+            android:theme="@style/Kau.Translucent.SlideBottom" />
     </application>
 
 </manifest>

@@ -26,16 +26,16 @@ import java.text.DecimalFormat
 @DslMarker
 annotation class KauUtils
 
-@KauUtils val Float.dpToPx: Float
+@KauUtils inline val Float.dpToPx: Float
     get() = this * Resources.getSystem().displayMetrics.density
 
-@KauUtils val Int.dpToPx: Int
+@KauUtils inline val Int.dpToPx: Int
     get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
-@KauUtils val Float.pxToDp: Float
+@KauUtils inline val Float.pxToDp: Float
     get() = this / Resources.getSystem().displayMetrics.density
 
-@KauUtils val Int.pxToDp: Int
+@KauUtils inline val Int.pxToDp: Int
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
 /**
@@ -52,11 +52,9 @@ annotation class KauUtils
  */
 @KauUtils fun Context.minuteToText(minutes: Long): String = with(minutes) {
     if (this < 0L) string(R.string.kau_none)
-    else if (this == 60L) string(R.string.kau_one_hour)
-    else if (this == 1440L) string(R.string.kau_one_day)
-    else if (this % 1440L == 0L) String.format(string(R.string.kau_x_days), this / 1440L)
-    else if (this % 60L == 0L) String.format(string(R.string.kau_x_hours), this / 60L)
-    else String.format(string(R.string.kau_x_minutes), this)
+    else if (this % 1440L == 0L) plural(R.plurals.kau_x_days, this / 1440L)
+    else if (this % 60L == 0L) plural(R.plurals.kau_x_hours, this / 60L)
+    else plural(R.plurals.kau_x_minutes, this)
 }
 
 @KauUtils fun Number.round(@IntRange(from = 1L) decimalCount: Int): String {

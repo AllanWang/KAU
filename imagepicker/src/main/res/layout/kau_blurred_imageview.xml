@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_base"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/kau_blurrable_imageview"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/image_blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:contentDescription="@string/kau_blurrable_imageview"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/image_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:alpha="0"
+        android:background="@color/kau_blurred_image_selection_overlay"
+        android:contentDescription="@string/kau_blurrable_imageview"
+        android:scaleType="centerInside" />
+
+</merge>

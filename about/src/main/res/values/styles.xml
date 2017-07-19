@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Kau.Translucent.About">
-        <item name="android:windowEnterTransition">@transition/kau_enter_slide_top</item>
-        <item name="android:windowReturnTransition">@transition/kau_about_return_upwards</item>
-    </style>
+    <style name="Kau.Translucent.About" parent="Kau.Translucent.SlideTop"/>
 
 </resources>

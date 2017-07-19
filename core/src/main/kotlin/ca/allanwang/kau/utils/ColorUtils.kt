@@ -65,7 +65,7 @@ fun Int.adjustAlpha(factor: Float): Int {
     return Color.argb(alpha, Color.red(this), Color.green(this), Color.blue(this))
 }
 
-val Int.isColorTransparent: Boolean
+inline val Int.isColorTransparent: Boolean
     get() = Color.alpha(this) != 255
 
 @ColorInt

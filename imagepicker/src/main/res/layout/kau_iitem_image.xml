@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ca.allanwang.kau.imagepicker.BlurredImageView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/kau_image"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/kau_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:background="#f0f"
-        app:layout_constraintDimensionRatio="1:1" />
-
-</android.support.constraint.ConstraintLayout>
+    android:layout_height="match_parent"
+    android:layout_margin="2dp"
+    android:foreground="@drawable/kau_selectable_white"
+    app:relativeHeight="1" />

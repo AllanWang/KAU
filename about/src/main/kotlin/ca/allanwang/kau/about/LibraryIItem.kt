@@ -49,6 +49,7 @@ class LibraryIItem(val lib: Library
         with(holder) {
             name.text = lib.libraryName
             creator.text = lib.author
+            @Suppress("DEPRECATION")
             description.text = if (lib.libraryDescription.isBlank()) lib.libraryDescription
             else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                 Html.fromHtml(lib.libraryDescription, Html.FROM_HTML_MODE_LEGACY)

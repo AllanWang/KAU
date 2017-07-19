@@ -9,7 +9,7 @@ dependencies {
     compile project(':adapter')
 
     compile("com.mikepenz:aboutlibraries:${ABOUT_LIBRARIES}@aar") {
-        transitive = true
+        transitive = false
     }
 }
 

@@ -22,22 +22,30 @@ import android.os.Build
     }
 }
 
-val buildIsLollipopAndUp: Boolean
+@KauUtils fun Context.isAppEnabled(packageName: String): Boolean {
+    try {
+        return packageManager.getApplicationInfo(packageName, 0).enabled
+    } catch (e: Exception) {
+        return false
+    }
+}
+
+inline val buildIsLollipopAndUp: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
-val buildIsMarshmallowAndUp: Boolean
+inline val buildIsMarshmallowAndUp: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
-val buildIsNougatAndUp: Boolean
+inline val buildIsNougatAndUp: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
 
 const val INSTALLER_GOOGLE_PLAY_VENDING = "com.android.vending"
 const val INSTALLER_GOOGLE_PLAY_FEEDBACK = "com.google.android.feedback"
 
-val Context.installerPackageName: String?
+inline val Context.installerPackageName: String?
     get() = packageManager.getInstallerPackageName(packageName)
 
-val Context.isFromGooglePlay: Boolean
+inline val Context.isFromGooglePlay: Boolean
     get() {
         val installer = installerPackageName
         return arrayOf(INSTALLER_GOOGLE_PLAY_FEEDBACK, INSTALLER_GOOGLE_PLAY_VENDING).any { it == installer }

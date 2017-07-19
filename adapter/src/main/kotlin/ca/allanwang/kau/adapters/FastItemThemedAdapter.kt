@@ -58,7 +58,7 @@ class FastItemThemedAdapter<Item : IItem<*, *>>(
         notifyAdapterDataSetChanged()
     }
 
-    override fun add(position: Int, items: MutableList<Item>): FastItemAdapter<Item> {
+    override fun add(position: Int, items: List<Item>): FastItemAdapter<Item> {
         injectTheme(items)
         return super.add(position, items)
     }
@@ -73,13 +73,12 @@ class FastItemThemedAdapter<Item : IItem<*, *>>(
         return super.add(item)
     }
 
-    override fun add(items: MutableList<Item>): FastItemAdapter<Item> {
-        injectTheme(items)
+    override fun add(items: List<Item>?): FastItemAdapter<Item> {
         injectTheme(items)
         return super.add(items)
     }
 
-    override fun set(items: MutableList<Item>?): FastItemAdapter<Item> {
+    override fun set(items: List<Item>?): FastItemAdapter<Item> {
         injectTheme(items)
         return super.set(items)
     }
@@ -89,17 +88,17 @@ class FastItemThemedAdapter<Item : IItem<*, *>>(
         return super.set(position, item)
     }
 
-    override fun setNewList(items: MutableList<Item>?, retainFilter: Boolean): FastItemAdapter<Item> {
+    override fun setNewList(items: List<Item>?, retainFilter: Boolean): FastItemAdapter<Item> {
         injectTheme(items)
         return super.setNewList(items, retainFilter)
     }
 
-    override fun setNewList(items: MutableList<Item>?): FastItemAdapter<Item> {
+    override fun setNewList(items: List<Item>?): FastItemAdapter<Item> {
         injectTheme(items)
         return super.setNewList(items)
     }
 
-    override fun <T, S> setSubItems(collapsible: T, subItems: MutableList<S>?): T where S : IItem<*, *>?, T : IItem<*, *>?, T : IExpandable<T, S>?, S : ISubItem<Item, T>? {
+    override fun <T, S> setSubItems(collapsible: T, subItems: List<S>?): T where S : IItem<*, *>?, T : IItem<*, *>?, T : IExpandable<T, S>?, S : ISubItem<Item, T>? {
         injectTheme(subItems)
         return super.setSubItems(collapsible, subItems)
     }
@@ -176,8 +175,8 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
     }
 
     override fun bindBackgroundRipple(vararg views: View?) {
-        val foreground = accentColor ?: textColor ?: return
         val background = backgroundColor ?: return
+        val foreground = accentColor ?: textColor ?: backgroundColor ?: return //default to normal background
         val ripple = createSimpleRippleDrawable(foreground, background)
         views.forEach { it?.background = ripple }
     }
