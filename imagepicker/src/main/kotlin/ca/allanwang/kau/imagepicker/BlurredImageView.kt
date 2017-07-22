@@ -17,7 +17,7 @@ import jp.wasabeef.blurry.internal.BlurTask
 /**
  * Created by Allan Wang on 2017-07-14.
  *
- * ImageView that is can be blurred and selected
+ * ImageView that can be blurred and selected
  * The frame is composed of three layers: the base, the blur, and the foreground
  * Images should be placed in the base view, and the blur view should not be touched
  * as the class will handle it
@@ -36,11 +36,6 @@ class BlurredImageView @JvmOverloads constructor(
         inflate(R.layout.kau_blurred_imageview, true)
         initAttrs(context, attrs)
         imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30)
-    }
-
-    companion object {
-        const val ANIMATION_DURATION = 200L
-        const val ANIMATION_SCALE = 0.95f
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -73,13 +68,12 @@ class BlurredImageView @JvmOverloads constructor(
         val factor = BlurFactor()
         factor.width = width
         factor.height = height
-        val task = BlurTask(imageBase, factor) {
+       BlurTask(imageBase, factor) {
             imageBlur.setImageDrawable(it)
             scaleAnimate(ANIMATION_SCALE).start()
             imageBlur.alphaAnimate(1f).start()
             imageForeground.alphaAnimate(1f).start()
-        }
-        task.execute()
+        }.execute()
     }
 
     /**

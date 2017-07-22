@@ -5,6 +5,18 @@
     <version title="v"/>
     <item text="" />
     -->
+	
+	<version title="v2.2"/>
+    <item text=":imagepicker: Fully implement picker" />
+    <item text=":core: [breaking] Replace update[x]Margin to setMargin[x]" />
+    <item text=":core: Add setPadding[x]" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
 
     <version title="v2.1"/>
     <item text=":adapter: Fix up CardIItem" />

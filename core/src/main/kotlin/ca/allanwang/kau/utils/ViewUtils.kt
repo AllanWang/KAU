@@ -93,30 +93,98 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
 /**
  * Set left margin to a value in px
  */
-@KauUtils fun View.updateLeftMargin(margin: Int) = updateMargins(margin, KAU_LEFT)
+@KauUtils fun View.setMarginLeft(margin: Int) = setMargins(margin, KAU_LEFT)
 
 /**
  * Set top margin to a value in px
  */
-@KauUtils fun View.updateTopMargin(margin: Int) = updateMargins(margin, KAU_TOP)
+@KauUtils fun View.setMarginTop(margin: Int) = setMargins(margin, KAU_TOP)
 
 /**
  * Set right margin to a value in px
  */
-@KauUtils fun View.updateRightMargin(margin: Int) = updateMargins(margin, KAU_RIGHT)
+@KauUtils fun View.setMarginRight(margin: Int) = setMargins(margin, KAU_RIGHT)
 
 /**
  * Set bottom margin to a value in px
  */
-@KauUtils fun View.updateBottomMargin(margin: Int) = updateMargins(margin, KAU_BOTTOM)
+@KauUtils fun View.setMarginBottom(margin: Int) = setMargins(margin, KAU_BOTTOM)
 
-@KauUtils private fun View.updateMargins(margin: Int, flag: Int) {
-    val p = (layoutParams as? ViewGroup.MarginLayoutParams) ?: return
+/**
+ * Set left and right margins to a value in px
+ */
+@KauUtils fun View.setMarginHorizontal(margin: Int) = setMargins(margin, KAU_HORIZONTAL)
+
+/**
+ * Set top and bottom margins to a value in px
+ */
+@KauUtils fun View.setMarginVertical(margin: Int) = setMargins(margin, KAU_VERTICAL)
+
+/**
+ * Set all margins to a value in px
+ */
+@KauUtils fun View.setMargin(margin: Int) = setMargins(margin, KAU_ALL)
+
+/**
+ * Base margin setter
+ * returns true if setting is successful, false otherwise
+ */
+@KauUtils private fun View.setMargins(margin: Int, flag: Int):Boolean {
+    val p = (layoutParams as? ViewGroup.MarginLayoutParams) ?: return false
     p.setMargins(
-            if (flag == KAU_LEFT) margin else p.leftMargin,
-            if (flag == KAU_TOP) margin else p.topMargin,
-            if (flag == KAU_RIGHT) margin else p.rightMargin,
-            if (flag == KAU_BOTTOM) margin else p.bottomMargin
+            if (flag and KAU_LEFT > 0) margin else p.leftMargin,
+            if (flag and KAU_TOP > 0) margin else p.topMargin,
+            if (flag and KAU_RIGHT > 0) margin else p.rightMargin,
+            if (flag and KAU_BOTTOM > 0) margin else p.bottomMargin
+    )
+    requestLayout()
+    return true
+}
+
+/**
+ * Set left padding to a value in px
+ */
+@KauUtils fun View.setPaddingLeft(padding: Int) = setPadding(padding, KAU_LEFT)
+
+/**
+ * Set top padding to a value in px
+ */
+@KauUtils fun View.setPaddingTop(padding: Int) = setPadding(padding, KAU_TOP)
+
+/**
+ * Set right padding to a value in px
+ */
+@KauUtils fun View.setPaddingRight(padding: Int) = setPadding(padding, KAU_RIGHT)
+
+/**
+ * Set bottom padding to a value in px
+ */
+@KauUtils fun View.setPaddingBottom(padding: Int) = setPadding(padding, KAU_BOTTOM)
+
+/**
+ * Set left and right padding to a value in px
+ */
+@KauUtils fun View.setPaddingHorizontal(padding: Int) = setPadding(padding, KAU_HORIZONTAL)
+
+/**
+ * Set top and bottom padding to a value in px
+ */
+@KauUtils fun View.setPaddingVertical(padding: Int) = setPadding(padding, KAU_VERTICAL)
+
+/**
+ * Set all padding to a value in px
+ */
+@KauUtils fun View.setPadding(padding: Int) = setPadding(padding, KAU_ALL)
+
+/**
+ * Base padding setter
+ */
+@KauUtils private fun View.setPadding(padding: Int, flag: Int) {
+    setPadding(
+            if (flag and KAU_LEFT > 0) padding else paddingLeft,
+            if (flag and KAU_TOP > 0) padding else paddingTop,
+            if (flag and KAU_RIGHT > 0) padding else paddingRight,
+            if (flag and KAU_BOTTOM > 0) padding else paddingBottom
     )
     requestLayout()
 }

@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.2
+* :imagepicker: Fully implement picker
+* :core: [breaking] Replace update[x]Margin to setMargin[x]
+* :core: Add setPadding[x]
+
 ## v2.1
 * :adapter: Fix up CardIItem
 * :adapter: Modularized kau animators

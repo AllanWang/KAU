@@ -1,10 +1,13 @@
 package ca.allanwang.kau.sample
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import ca.allanwang.kau.email.sendEmail
+import ca.allanwang.kau.imagepicker.kauLaunchImagePicker
+import ca.allanwang.kau.imagepicker.kauOnImagePickerResult
 import ca.allanwang.kau.kpref.activity.CoreAttributeContract
 import ca.allanwang.kau.kpref.activity.KPrefActivity
 import ca.allanwang.kau.kpref.activity.KPrefAdapterBuilder
@@ -231,7 +234,7 @@ class MainActivity : KPrefActivity() {
         when (item.itemId) {
             R.id.action_settings -> startActivity(AnimActivity::class.java)
             R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
-            R.id.test -> startActivity(ImageActivity::class.java, transition = true)
+            R.id.test -> kauLaunchImagePicker(ImageActivity::class.java, 27)
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -239,5 +242,12 @@ class MainActivity : KPrefActivity() {
 
     override fun onBackPressed() {
         if (!(searchView?.onBackPressed() ?: false)) super.onBackPressed()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            27 -> toast("${kauOnImagePickerResult(resultCode, data)} images selected")
+        }
     }
 }

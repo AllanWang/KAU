@@ -25,33 +25,42 @@ class ImageItem(val data: ImageModel)
     : KauIItem<ImageItem, ImageItem.ViewHolder>(R.layout.kau_iitem_image, { ViewHolder(it) }) {
 
     private var failedToLoad = false
+    var withFade = true
 
-    fun bindEvents(fastAdapter: FastAdapter<ImageItem>) {
-        fastAdapter.withMultiSelect(true)
-        fastAdapter.withSelectable(true)
-        fastAdapter.withOnClickListener { v, _, _, _ ->
-            val image = v as BlurredImageView
-            image.toggleBlur()
-            true
+    companion object {
+        fun bindEvents(fastAdapter: FastAdapter<ImageItem>) {
+            fastAdapter.withMultiSelect(true)
+                    .withSelectable(true)
+                    //adapter selector occurs before the on click event
+                    .withOnClickListener { v, _, item, _ ->
+                        val image = v as BlurredImageView
+                        if (item.isSelected) image.blur()
+                        else image.removeBlur()
+                        true
+                    }
         }
     }
 
+    override fun isSelectable(): Boolean = !failedToLoad
+
     override fun bindView(holder: ViewHolder, payloads: List<Any>?) {
         super.bindView(holder, payloads)
-        holder.container.alpha = 0f
+        if (withFade) holder.container.alpha = 0f
         Glide.with(holder.itemView)
                 .load(data.data)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         failedToLoad = true;
                         holder.container.setIcon(GoogleMaterial.Icon.gmd_error);
-                        holder.container.animate().alpha(1f).start();
+                        if (withFade) holder.container.animate().alpha(1f).start();
                         return true;
                     }
 
                     override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                        holder.container.animate().alpha(1f).start();
-                        return false;
+                        holder.container.imageBase.setImageDrawable(resource)
+                        if (isSelected) holder.container.blurInstantly()
+                        if (withFade) holder.container.animate().alpha(1f).start();
+                        return true;
                     }
                 })
                 .into(holder.container.imageBase)
@@ -63,7 +72,6 @@ class ImageItem(val data: ImageModel)
                 .sizePx(sizePx)
                 .paddingPx(sizePx / 3)
                 .color(Color.WHITE))
-        //todo add background
         imageBase.setBackgroundColor(ImagePickerActivityBase.accentColor)
         imageForeground.gone()
     }
@@ -81,6 +89,7 @@ class ImageItem(val data: ImageModel)
         } else {
             holder.container.fullReset()
         }
+        failedToLoad = false
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
