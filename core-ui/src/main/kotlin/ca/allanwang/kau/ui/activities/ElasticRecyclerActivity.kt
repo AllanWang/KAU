@@ -1,6 +1,8 @@
 package ca.allanwang.kau.ui.activities
 
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
@@ -23,7 +25,8 @@ import ca.allanwang.kau.utils.bindView
  *
  * The exit animation is set to slide out, but the entrance must be defined yourself
  */
-abstract class ElasticRecyclerActivity() : AppCompatActivity() {
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+abstract class ElasticRecyclerActivity : AppCompatActivity() {
 
     val appBar: AppBarLayout by bindView(R.id.kau_appbar)
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)

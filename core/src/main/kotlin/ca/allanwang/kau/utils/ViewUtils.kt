@@ -5,10 +5,8 @@ package ca.allanwang.kau.utils
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
-import android.support.annotation.StringRes
-import android.support.annotation.TransitionRes
+import android.os.Build
+import android.support.annotation.*
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
@@ -199,18 +197,8 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
 
-@KauUtils fun ViewGroup.transitionAuto(builder: AutoTransition.() -> Unit = {}) {
-    val transition = AutoTransition()
-    transition.builder()
-    TransitionManager.beginDelayedTransition(this, transition)
-}
 
-@KauUtils fun ViewGroup.transitionDelayed(@TransitionRes id: Int, builder: Transition.() -> Unit = {}) {
-    val transition = TransitionInflater.from(context).inflateTransition(id)
-    transition.builder()
-    TransitionManager.beginDelayedTransition(this, transition)
-}
-
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @KauUtils fun View.setRippleBackground(@ColorInt foregroundColor: Int, @ColorInt backgroundColor: Int) {
     background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }
