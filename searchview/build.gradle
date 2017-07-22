@@ -1,8 +1,6 @@
-apply from: '../android-lib.gradle'
+ext.kauSubModuleResourcePrefix = "kau_search_"
 
-android {
-    resourcePrefix "kau_search_"
-}
+apply from: '../android-lib.gradle'
 
 dependencies {
 

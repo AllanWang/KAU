@@ -14,8 +14,18 @@ android {
     compileSdkVersion Integer.parseInt(project.TARGET_SDK)
     buildToolsVersion project.BUILD_TOOLS
 
+    def kauMinSdk = project.MIN_SDK
+    if (project.hasProperty('kauSubModuleMinSdk'))
+        kauMinSdk = kauSubModuleMinSdk
+
+    def kauResourcePrefix = "kau_"
+    if (project.hasProperty('kauSubModuleResourcePrefix'))
+        kauResourcePrefix = kauSubModuleResourcePrefix
+
+    resourcePrefix kauResourcePrefix
+
     defaultConfig {
-        minSdkVersion Integer.parseInt(project.MIN_SDK)
+        minSdkVersion Integer.parseInt(kauMinSdk)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
         consumerProguardFiles 'progress-proguard.txt'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
