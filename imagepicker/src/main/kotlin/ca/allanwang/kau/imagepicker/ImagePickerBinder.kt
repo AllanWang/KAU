@@ -1,7 +1,6 @@
 package ca.allanwang.kau.imagepicker
 
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
 
 /**
@@ -14,16 +13,18 @@ import android.content.Intent
 /**
  * Image picker launcher
  */
-fun Activity.kauLaunchImagePicker(clazz: Class<out ImagePickerActivityBase>, requestCode: Int) {
-    startActivityForResult(Intent(this, clazz), requestCode, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+fun Activity.kauLaunchImagePicker(clazz: Class<out ImagePickerActivity>, requestCode: Int) {
+    startActivityForResult(Intent(this, clazz), requestCode)
 }
+
+fun Activity.kauLaunchImagePicker(requestCode: Int) = kauLaunchImagePicker(ImagePickerActivity::class.java, requestCode)
 
 /**
  * Image picker result
  * call under [Activity.onActivityResult]
  * and make sure that the requestCode matches first
  */
-fun Activity.kauOnImagePickerResult(resultCode: Int, data: Intent?) = ImagePickerActivityBase.onImagePickerResult(resultCode, data)
+fun Activity.kauOnImagePickerResult(resultCode: Int, data: Intent?) = ImagePickerActivity.onImagePickerResult(resultCode, data)
 
 internal const val LOADER_ID = 42
 internal const val IMAGE_PICKER_RESULT = "image_picker_result"

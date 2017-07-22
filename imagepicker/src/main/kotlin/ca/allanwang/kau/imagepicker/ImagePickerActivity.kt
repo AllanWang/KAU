@@ -7,17 +7,21 @@ import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.MediaStore
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.view.Gravity
 import android.widget.TextView
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.permissions.kauRequestPermissions
-import ca.allanwang.kau.ui.activities.ElasticRecyclerActivity
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
@@ -28,10 +32,15 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
  *
  * Base activity for selecting images from storage
  */
-abstract class ImagePickerActivityBase : ElasticRecyclerActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+open class ImagePickerActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     val imageAdapter = FastItemAdapter<ImageItem>()
-    lateinit var selectionCount: TextView
+
+    val coordinator: CoordinatorLayout by bindView(R.id.kau_coordinator)
+    val toolbar: Toolbar by bindView(R.id.kau_toolbar)
+    val selectionCount: TextView by bindView(R.id.kau_selection_count)
+    val recycler: RecyclerView by bindView(R.id.kau_recyclerview)
+    val fab: FloatingActionButton by bindView(R.id.kau_fab)
 
     companion object {
         /**
@@ -55,26 +64,22 @@ abstract class ImagePickerActivityBase : ElasticRecyclerActivity(), LoaderManage
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        selectionCount = TextView(this)
+        setContentView(R.layout.kau_activity_image_picker)
 
-        with(selectionCount) {
-            layoutParams = Toolbar.LayoutParams(
-                    Toolbar.LayoutParams.WRAP_CONTENT,
-                    Toolbar.LayoutParams.WRAP_CONTENT,
-                    Gravity.CENTER_VERTICAL or Gravity.END
-            )
-            setPaddingHorizontal(dimenPixelSize(R.dimen.kau_padding_normal))
-            compoundDrawablePadding = dimenPixelSize(R.dimen.kau_padding_small)
-            setCompoundDrawables(null, null, GoogleMaterial.Icon.gmd_image.toDrawable(context, 18), null)
-            text = "0"
+        selectionCount.setCompoundDrawables(null, null, GoogleMaterial.Icon.gmd_image.toDrawable(this, 18), null)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            setHomeAsUpIndicator(GoogleMaterial.Icon.gmd_close.toDrawable(this@ImagePickerActivity, 18))
         }
+        toolbar.setNavigationOnClickListener { onBackPressed() }
 
-        toolbar.addView(selectionCount)
-        toolbar.setOnClickListener { recycler.scrollToPosition(0) }
-
-        with(recycler) {
+        recycler.apply {
             layoutManager = GridLayoutManager(context, computeColumnCount(context))
             adapter = imageAdapter
             setHasFixedSize(true)
@@ -84,7 +89,7 @@ abstract class ImagePickerActivityBase : ElasticRecyclerActivity(), LoaderManage
         ImageItem.bindEvents(imageAdapter)
         imageAdapter.withSelectionListener({ _, _ -> selectionCount.text = imageAdapter.selections.size.toString() })
 
-        with(fab) {
+        fab.apply {
             show()
             setIcon(GoogleMaterial.Icon.gmd_send)
             setOnClickListener {
@@ -99,13 +104,10 @@ abstract class ImagePickerActivityBase : ElasticRecyclerActivity(), LoaderManage
                     finish()
                 }
             }
+            hideOnDownwardsScroll(recycler)
         }
-        hideFabOnUpwardsScroll()
 
-        //If we have a transition, finish it first before loading images
-        window.enterTransition?.addEndListener { loadImages() } ?: loadImages()
-
-        return true
+        loadImages()
     }
 
     /**
@@ -117,9 +119,30 @@ abstract class ImagePickerActivityBase : ElasticRecyclerActivity(), LoaderManage
     private fun loadImages() {
         kauRequestPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
             granted, _ ->
-            if (granted) supportLoaderManager.initLoader(LOADER_ID, null, this)
-            else toast(R.string.kau_permission_denied)
+            if (granted) {
+                supportLoaderManager.initLoader(LOADER_ID, null, this)
+                setToolbarScrollable(true)
+            } else {
+                toast(R.string.kau_permission_denied)
+                setToolbarScrollable(false)
+            }
         }
+    }
+
+    /**
+     * Decide whether the toolbar can hide itself
+     * We typically want this behaviour unless we don't have enough images
+     * to fill the entire screen. In that case we don't want the recyclerview to be scrollable
+     * which means the toolbar shouldn't scroll either
+
+     * @param scrollable true if scroll flags are enabled, false otherwise
+     */
+    private fun setToolbarScrollable(scrollable: Boolean) {
+        val params = toolbar.layoutParams as AppBarLayout.LayoutParams
+        if (scrollable)
+            params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+        else
+            params.scrollFlags = 0
     }
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
@@ -144,6 +167,7 @@ abstract class ImagePickerActivityBase : ElasticRecyclerActivity(), LoaderManage
         reset()
         if (data == null || !data.moveToFirst()) {
             toast(R.string.kau_no_images_found)
+            setToolbarScrollable(false)
             return
         }
         do {
@@ -151,6 +175,7 @@ abstract class ImagePickerActivityBase : ElasticRecyclerActivity(), LoaderManage
             if (!shouldLoad(model)) continue
             imageAdapter.add(ImageItem(model))
         } while (data.moveToNext())
+        setToolbarScrollable((recycler.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() < imageAdapter.getItemCount() - 1)
     }
 
     /**

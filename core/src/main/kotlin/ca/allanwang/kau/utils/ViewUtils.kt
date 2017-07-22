@@ -129,7 +129,7 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
  * Base margin setter
  * returns true if setting is successful, false otherwise
  */
-@KauUtils private fun View.setMargins(margin: Int, flag: Int):Boolean {
+@KauUtils private fun View.setMargins(margin: Int, flag: Int): Boolean {
     val p = (layoutParams as? ViewGroup.MarginLayoutParams) ?: return false
     p.setMargins(
             if (flag and KAU_LEFT > 0) margin else p.leftMargin,
@@ -260,4 +260,22 @@ inline fun FloatingActionButton.transition(crossinline action: FloatingActionBut
             start()
         }
     }
+}
+
+/**
+ * Attaches a listener to the recyclerview to hide the fab when it is scrolling downwards
+ * The fab will reappear when scrolling has stopped or if the user scrolls up
+ */
+fun FloatingActionButton.hideOnDownwardsScroll(recycler: RecyclerView) {
+    recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            if (newState == android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE && !isShown) show();
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (dy > 0 && isShown) hide()
+            else if (dy < 0 && isHidden) show()
+        }
+    })
 }

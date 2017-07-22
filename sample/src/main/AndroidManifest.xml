@@ -27,10 +27,10 @@
             android:theme="@style/Kau.Translucent" />
         <activity
             android:name=".AboutActivity"
-            android:theme="@style/Kau.Translucent.About" />
+            android:theme="@style/Kau.About" />
         <activity
-            android:name=".ImageActivity"
-            android:theme="@style/Kau.Translucent.ImagePicker" />
+            android:name="ca.allanwang.kau.imagepicker.ImagePickerActivity"
+            android:theme="@style/Kau.ImagePicker" />
         <activity
             android:name=".AdapterActivity"
             android:theme="@style/Kau.Translucent.SlideBottom" />

@@ -121,7 +121,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
      * Method to fetch the library list
      * This is fetched asynchronously and you may override it to customize the list
      */
-    open fun getLibraries(libs: Libs): List<Library> = libs.prepareLibraries(this, null, null, true, true)
+    open fun getLibraries(libs: Libs): List<Library> = libs.prepareLibraries(this, null, null, true, true)!!
 
     /**
      * Gets the view associated with the given page position

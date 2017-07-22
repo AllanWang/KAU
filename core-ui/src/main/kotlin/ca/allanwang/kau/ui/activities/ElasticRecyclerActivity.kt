@@ -68,19 +68,5 @@ abstract class ElasticRecyclerActivity() : AppCompatActivity() {
         draggableFrame.setOnClickListener { listener() }
     }
 
-    fun hideFabOnUpwardsScroll() {
-        recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && !fab.isShown()) fab.show();
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0 && fab.isShown) fab.hide()
-                else if (dy < 0 && !fab.isShown) fab.show()
-            }
-        })
-    }
-
 }
 
