@@ -1,6 +1,8 @@
 package ca.allanwang.kau.adapters
 
 import android.content.res.ColorStateList
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -174,6 +176,7 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
         views.forEach { it?.setBackgroundColor(color) }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun bindBackgroundRipple(vararg views: View?) {
         val background = backgroundColor ?: return
         val foreground = accentColor ?: textColor ?: backgroundColor ?: return //default to normal background
@@ -181,6 +184,7 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
         views.forEach { it?.background = ripple }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun bindIconColor(vararg views: ImageView?) {
         val color = accentColor ?: textColor ?: return
         views.forEach { it?.drawable?.setTintList(ColorStateList.valueOf(color)) }

@@ -2,12 +2,12 @@ package ca.allanwang.kau.utils
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.annotation.SuppressLint
 import android.support.annotation.StringRes
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 
 /**
@@ -15,33 +15,8 @@ import android.widget.TextView
  *
  * Animation extension functions for Views
  */
-@KauUtils fun View.rootCircularReveal(x: Int = 0, y: Int = 0, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
-    this.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-        override @KauUtils fun onLayoutChange(v: View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int,
-                                              oldRight: Int, oldBottom: Int) {
-            v.removeOnLayoutChangeListener(this)
-            var x2 = x
-            var y2 = y
-            if (x2 > right) x2 = 0
-            if (y2 > bottom) y2 = 0
-            val radius = Math.hypot(Math.max(x2, right - x2).toDouble(), Math.max(y2, bottom - y2).toDouble()).toInt()
-            val reveal = ViewAnimationUtils.createCircularReveal(v, x2, y2, 0f, radius.toFloat())
-            reveal.interpolator = DecelerateInterpolator(1f)
-            reveal.duration = duration
-            reveal.addListener(object : AnimatorListenerAdapter() {
-                override @KauUtils fun onAnimationStart(animation: Animator?) {
-                    visible()
-                    onStart?.invoke()
-                }
 
-                override @KauUtils fun onAnimationEnd(animation: Animator?) = onFinish?.invoke() ?: Unit
-                override @KauUtils fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
-            })
-            reveal.start()
-        }
-    })
-}
-
+@SuppressLint("NewApi")
 @KauUtils fun View.circularReveal(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
@@ -49,10 +24,11 @@ import android.widget.TextView
         onFinish?.invoke()
         return
     }
-    var r = radius
-    if (r < 0.0f) {
-        r = Math.max(Math.hypot(x.toDouble(), y.toDouble()), Math.hypot((width - x.toDouble()), (height - y.toDouble()))).toFloat()
-    }
+    if (!buildIsLollipopAndUp) return fadeIn(offset, duration, onStart, onFinish)
+
+    val r = if (radius >= 0) radius
+    else Math.max(Math.hypot(x.toDouble(), y.toDouble()), Math.hypot((width - x.toDouble()), (height - y.toDouble()))).toFloat()
+
     val anim = ViewAnimationUtils.createCircularReveal(this, x, y, 0f, r).setDuration(duration)
     anim.startDelay = offset
     anim.addListener(object : AnimatorListenerAdapter() {
@@ -67,6 +43,7 @@ import android.widget.TextView
     anim.start()
 }
 
+@SuppressLint("NewApi")
 @KauUtils fun View.circularHide(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
@@ -74,10 +51,11 @@ import android.widget.TextView
         onFinish?.invoke()
         return
     }
-    var r = radius
-    if (r < 0.0f) {
-        r = Math.max(Math.hypot(x.toDouble(), y.toDouble()), Math.hypot((width - x.toDouble()), (height - y.toDouble()))).toFloat()
-    }
+    if (!buildIsLollipopAndUp) return fadeOut(offset, duration, onStart, onFinish)
+
+    val r = if (radius >= 0) radius
+    else Math.max(Math.hypot(x.toDouble(), y.toDouble()), Math.hypot((width - x.toDouble()), (height - y.toDouble()))).toFloat()
+
     val anim = ViewAnimationUtils.createCircularReveal(this, x, y, r, 0f).setDuration(duration)
     anim.startDelay = offset
     anim.addListener(object : AnimatorListenerAdapter() {
@@ -100,20 +78,18 @@ import android.widget.TextView
         onFinish?.invoke()
         return
     }
-    if (isAttachedToWindow) {
-        val anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in)
-        anim.startOffset = offset
-        anim.duration = duration
-        anim.setAnimationListener(object : Animation.AnimationListener {
-            override @KauUtils fun onAnimationRepeat(animation: Animation?) {}
-            override @KauUtils fun onAnimationEnd(animation: Animation?) = onFinish?.invoke() ?: Unit
-            override @KauUtils fun onAnimationStart(animation: Animation?) {
-                visible()
-                onStart?.invoke()
-            }
-        })
-        startAnimation(anim)
-    }
+    val anim = AnimationUtils.loadAnimation(context, android.R.anim.fade_in)
+    anim.startOffset = offset
+    anim.duration = duration
+    anim.setAnimationListener(object : Animation.AnimationListener {
+        override @KauUtils fun onAnimationRepeat(animation: Animation?) {}
+        override @KauUtils fun onAnimationEnd(animation: Animation?) = onFinish?.invoke() ?: Unit
+        override @KauUtils fun onAnimationStart(animation: Animation?) {
+            visible()
+            onStart?.invoke()
+        }
+    })
+    startAnimation(anim)
 }
 
 @KauUtils fun View.fadeOut(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {

@@ -1,5 +1,6 @@
 package ca.allanwang.kau.swipe
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Canvas
@@ -37,6 +38,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         }
 
     var activity: Activity? = null
+        @SuppressLint("NewApi")
         set(value) {
             field = value
             if (value != null) {
@@ -81,6 +83,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     val chromeFadeListener: SwipeListener by lazy {
         object : SwipeListener {
+            @SuppressLint("NewApi")
             override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
                 if (!transitionSystemBars) return
                 activity?.apply {

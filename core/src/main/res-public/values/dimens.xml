@@ -27,8 +27,6 @@
     <dimen name="kau_fab_radius">28dp</dimen>
     <dimen name="kau_display_4_text_size">112sp</dimen>
 
-    <dimen name="kau_about_header_height">224dp</dimen>
-
     <!-- avatar should be a 40dp asset in a 48dp touch target & optically aligned with standard padding -->
     <dimen name="kau_avatar_size">40dp</dimen>
     <dimen name="kau_avatar_bounds">48dp</dimen>

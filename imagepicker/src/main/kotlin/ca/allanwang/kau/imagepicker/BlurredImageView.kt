@@ -2,6 +2,7 @@ package ca.allanwang.kau.imagepicker
 
 import android.content.Context
 import android.graphics.Color
+import android.support.annotation.StyleRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -24,8 +25,8 @@ import jp.wasabeef.blurry.internal.BlurTask
  * The foreground by default contains a white checkmark, but can be customized or hidden depending on the situation
  */
 class BlurredImageView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr, defStyleRes), MeasureSpecContract by MeasureSpecDelegate() {
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
     private var blurred = false
     val imageBase: ImageView by bindView(R.id.image_base)

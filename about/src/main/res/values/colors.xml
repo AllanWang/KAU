@@ -2,5 +2,4 @@
 <resources>
     <color name="kau_about_page_indicator_dark">#80ffffff</color>
     <color name="kau_about_page_indicator_dark_selected">#fff</color>
-    <color name="kau_shadow_overlay">#80000000</color>
 </resources>

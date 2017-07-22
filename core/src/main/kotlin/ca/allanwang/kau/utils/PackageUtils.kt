@@ -30,11 +30,13 @@ import android.os.Build
     }
 }
 
-inline val buildIsLollipopAndUp: Boolean
-    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-
 inline val buildIsMarshmallowAndUp: Boolean
+
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+
+inline val buildIsLollipopAndUp: Boolean
+    @SuppressWarnings("NewApi")
+    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
 inline val buildIsNougatAndUp: Boolean
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
