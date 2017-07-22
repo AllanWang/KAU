@@ -2,6 +2,7 @@ package ca.allanwang.kau.imagepicker
 
 import android.content.Context
 import android.graphics.Color
+import android.support.annotation.StyleRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -17,15 +18,15 @@ import jp.wasabeef.blurry.internal.BlurTask
 /**
  * Created by Allan Wang on 2017-07-14.
  *
- * ImageView that is can be blurred and selected
+ * ImageView that can be blurred and selected
  * The frame is composed of three layers: the base, the blur, and the foreground
  * Images should be placed in the base view, and the blur view should not be touched
  * as the class will handle it
  * The foreground by default contains a white checkmark, but can be customized or hidden depending on the situation
  */
 class BlurredImageView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr, defStyleRes), MeasureSpecContract by MeasureSpecDelegate() {
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
     private var blurred = false
     val imageBase: ImageView by bindView(R.id.image_base)
@@ -36,11 +37,6 @@ class BlurredImageView @JvmOverloads constructor(
         inflate(R.layout.kau_blurred_imageview, true)
         initAttrs(context, attrs)
         imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30)
-    }
-
-    companion object {
-        const val ANIMATION_DURATION = 200L
-        const val ANIMATION_SCALE = 0.95f
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -73,13 +69,12 @@ class BlurredImageView @JvmOverloads constructor(
         val factor = BlurFactor()
         factor.width = width
         factor.height = height
-        val task = BlurTask(imageBase, factor) {
+       BlurTask(imageBase, factor) {
             imageBlur.setImageDrawable(it)
             scaleAnimate(ANIMATION_SCALE).start()
             imageBlur.alphaAnimate(1f).start()
             imageForeground.alphaAnimate(1f).start()
-        }
-        task.execute()
+        }.execute()
     }
 
     /**

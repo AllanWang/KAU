@@ -13,7 +13,12 @@ This activity can be easily added by extending `AboutActivityBase`.
 Everything is already prepared, but you can modify the theme or other components through the config DSL or through the open functions.
 There are also numerous iitem cards already prepared (in this submodule and from `:adapter`)if you wish to add that in your main view.
 
-Be sure to include the activity in your Manifest and have it extend `Kau.Translucent.About`, or any other style that achieves the same look.
+You may also easily launch the activity through the simple binder:
+```
+Activity.kauLaunchAbout(YourClass::class.java)
+```
+
+Be sure to include the activity in your Manifest and have it extend `Kau.About`, or any other style that achieves the same look.
 
 ## Proguard
 

@@ -20,7 +20,7 @@
     </style>
 
     <style name="AppTheme.Slide" parent="AppTheme">
-        <item name="android:windowAnimationStyle">@style/KauSlideInSlideOut</item>
+        <item name="android:windowAnimationStyle">@style/KauSlideInSlideOutRight</item>
     </style>
 
 </resources>

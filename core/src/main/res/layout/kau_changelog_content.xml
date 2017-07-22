@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.6"
         android:paddingRight="5dp"
-        android:text="@string/kau_u2022"
+        android:text="@string/kau_bullet_point"
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView

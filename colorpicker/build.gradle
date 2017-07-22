@@ -1,8 +1,8 @@
-apply from: '../android-lib.gradle'
+ext.kauSubModuleResourcePrefix = "kau_color_"
 
-android {
-    resourcePrefix "kau_color_"
-}
+ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
+
+apply from: '../android-lib.gradle'
 
 dependencies {
     compile project(':core')

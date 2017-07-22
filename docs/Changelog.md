@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.2
+* :imagepicker: Fully implement picker
+* :core: [breaking] Replace update[x]Margin to setMargin[x]
+* :core: Add setPadding[x]
+
 ## v2.1
 * :adapter: Fix up CardIItem
 * :adapter: Modularized kau animators
@@ -13,6 +18,7 @@
 * :core: Introduce slide transition style templates
 * :core: Update utils and remove StringHolder
 * :imagepicker: Create full image picker with blurrable selections
+* Update dependencies
 
 ## v2.0
 * Huge refactoring to separate functions to their own submodules

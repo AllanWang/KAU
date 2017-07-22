@@ -1,5 +1,7 @@
 <resources>
 
-    <style name="Kau.Translucent.ImagePicker" parent="Kau.Translucent.SlideBottom" />
+    <style name="Kau.ImagePicker">
+        <item name="android:windowAnimationStyle">@style/KauSlideInSlideOutBottom</item>
+    </style>
 
 </resources>

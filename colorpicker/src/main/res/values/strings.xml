@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+    <string name="kau_md_color_palette">Color Palette</string>
+    <string name="kau_md_custom">Custom</string>
+    <string name="kau_md_presets">Presets</string>
+</resources>

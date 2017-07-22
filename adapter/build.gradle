@@ -1,8 +1,6 @@
-apply from: '../android-lib.gradle'
+ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
 
-android {
-    resourcePrefix "kau_"
-}
+apply from: '../android-lib.gradle'
 
 dependencies {
 

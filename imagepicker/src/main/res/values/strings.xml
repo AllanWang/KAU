@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kau_no_images_found">No images found</string>
+    <string name="kau_no_images_selected">No images have been selected</string>
+    <string name="kau_blurrable_imageview">Blurrable ImageView</string>
+</resources>

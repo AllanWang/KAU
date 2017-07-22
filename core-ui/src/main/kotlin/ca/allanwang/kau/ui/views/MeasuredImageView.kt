@@ -1,6 +1,7 @@
 package ca.allanwang.kau.ui.views
 
 import android.content.Context
+import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
 import android.widget.ImageView
 
@@ -8,8 +9,8 @@ import android.widget.ImageView
  * Created by Allan Wang on 2017-07-14.
  */
 class MeasuredImageView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
-) : ImageView(context, attrs, defStyleAttr, defStyleRes), MeasureSpecContract by MeasureSpecDelegate() {
+        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : AppCompatImageView(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
     init {
         initAttrs(context, attrs)

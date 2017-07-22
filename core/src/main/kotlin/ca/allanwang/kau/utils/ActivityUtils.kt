@@ -39,13 +39,17 @@ fun Activity.finishSlideOut() {
 }
 
 inline var Activity.navigationBarColor: Int
+    @SuppressLint("NewApi")
     get() = if (buildIsLollipopAndUp) window.navigationBarColor else Color.BLACK
+    @SuppressLint("NewApi")
     set(value) {
         if (buildIsLollipopAndUp) window.navigationBarColor = value
     }
 
 inline var Activity.statusBarColor: Int
+    @SuppressLint("NewApi")
     get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
+    @SuppressLint("NewApi")
     set(value) {
         if (buildIsLollipopAndUp) window.statusBarColor = value
     }

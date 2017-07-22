@@ -18,7 +18,7 @@
         <item name="android:windowExitAnimation">@anim/kau_fade_out</item>
     </style>
 
-    <style name="KauSlideIn" parent="@android:style/Animation.Activity">
+    <style name="KauSlideInRight" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/kau_slide_in_right</item>
         <item name="android:activityCloseEnterAnimation">@anim/kau_slide_in_right</item>
         <item name="android:taskOpenEnterAnimation">@anim/kau_slide_in_right</item>
@@ -27,7 +27,16 @@
         <item name="android:windowEnterAnimation">@anim/kau_slide_in_right</item>
     </style>
 
-    <style name="KauSlideInFadeOut" parent="@style/KauSlideIn">
+    <style name="KauSlideInBottom" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/kau_slide_in_bottom</item>
+        <item name="android:activityCloseEnterAnimation">@anim/kau_slide_in_bottom</item>
+        <item name="android:taskOpenEnterAnimation">@anim/kau_slide_in_bottom</item>
+        <item name="android:taskCloseEnterAnimation">@anim/kau_slide_in_bottom</item>
+        <item name="android:taskToFrontEnterAnimation">@anim/kau_slide_in_bottom</item>
+        <item name="android:windowEnterAnimation">@anim/kau_slide_in_bottom</item>
+    </style>
+
+    <style name="KauSlideInFadeOut" parent="@style/KauSlideInRight">
         <item name="android:activityOpenExitAnimation">@anim/kau_fade_out</item>
         <item name="android:activityCloseExitAnimation">@anim/kau_fade_out</item>
         <item name="android:taskOpenExitAnimation">@anim/kau_fade_out</item>
@@ -36,12 +45,21 @@
         <item name="android:windowExitAnimation">@anim/kau_fade_out</item>
     </style>
 
-    <style name="KauSlideInSlideOut" parent="@style/KauSlideIn">
+    <style name="KauSlideInSlideOutRight" parent="@style/KauSlideInRight">
         <item name="android:activityOpenExitAnimation">@anim/kau_slide_out_right</item>
         <item name="android:activityCloseExitAnimation">@anim/kau_slide_out_right</item>
         <item name="android:taskOpenExitAnimation">@anim/kau_slide_out_right</item>
         <item name="android:taskCloseExitAnimation">@anim/kau_slide_out_right</item>
         <item name="android:taskToFrontExitAnimation">@anim/kau_slide_out_right</item>
         <item name="android:windowExitAnimation">@anim/kau_slide_out_right</item>
+    </style>
+
+    <style name="KauSlideInSlideOutBottom" parent="@style/KauSlideInBottom">
+        <item name="android:activityOpenExitAnimation">@anim/kau_slide_out_bottom</item>
+        <item name="android:activityCloseExitAnimation">@anim/kau_slide_out_bottom</item>
+        <item name="android:taskOpenExitAnimation">@anim/kau_slide_out_bottom</item>
+        <item name="android:taskCloseExitAnimation">@anim/kau_slide_out_bottom</item>
+        <item name="android:taskToFrontExitAnimation">@anim/kau_slide_out_bottom</item>
+        <item name="android:windowExitAnimation">@anim/kau_slide_out_bottom</item>
     </style>
 </resources>

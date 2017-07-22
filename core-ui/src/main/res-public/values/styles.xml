@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <style name="Kau" parent="Theme.AppCompat.NoActionBar"/>
-
     <style name="Kau.Translucent">
         <item name="android:windowBackground">@color/kau_shadow_overlay</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -9,20 +7,13 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 
     <style name="Kau.Translucent.NoAnimation">
         <item name="android:windowAnimationStyle">@null</item>
     </style>
 
-    <style name="Kau.Translucent.SlideBottom">
-        <item name="android:windowEnterTransition">@transition/kau_enter_slide_bottom</item>
-        <item name="android:windowReturnTransition">@transition/kau_exit_slide_bottom</item>
-    </style>
+    <style name="Kau.Translucent.SlideBottom" />
 
-    <style name="Kau.Translucent.SlideTop">
-        <item name="android:windowEnterTransition">@transition/kau_enter_slide_top</item>
-        <item name="android:windowReturnTransition">@transition/kau_exit_slide_top</item>
-    </style>
+    <style name="Kau.Translucent.SlideTop" />
 </resources>

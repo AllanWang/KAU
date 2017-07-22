@@ -68,4 +68,7 @@ Most resources are verbatim and x represents a formatted item
         <item quantity="other">%d seconds</item>
     </plurals>
     <string name="kau_yes">Yes</string>
+    <string name="kau_permission_denied">Permission denied</string>
+    <string name="kau_0">0</string>
+    <string name="kau_bullet_point">•</string>
 </resources>

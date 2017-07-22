@@ -1,5 +1,6 @@
 package ca.allanwang.kau.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.ClipData
@@ -25,6 +26,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 /**
  * Created by Allan Wang on 2017-06-03.
  */
+@SuppressLint("NewApi")
 fun Context.startActivity(
         clazz: Class<out Activity>,
         clearStack: Boolean = false,
@@ -34,7 +36,9 @@ fun Context.startActivity(
     val intent = (Intent(this, clazz))
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.intentBuilder()
-    val fullBundle = if (transition && this is Activity) ActivityOptions.makeSceneTransitionAnimation(this).toBundle() else Bundle()
+    val fullBundle = if (transition && this is Activity && buildIsLollipopAndUp)
+        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+    else Bundle()
     if (transition && this !is Activity) KL.d("Cannot make scene transition when context is not an instance of an Activity")
     if (bundle != null) fullBundle.putAll(bundle)
     ContextCompat.startActivity(this, intent, if (fullBundle.isEmpty) null else fullBundle)
@@ -97,7 +101,11 @@ inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getD
 inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
 inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)
 inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)
-inline fun Context.plural(@PluralsRes id: Int, quantity: Number) = resources.getQuantityString(id, quantity.toInt())
+/**
+ * Returns plural form of res. The quantity is also passed to the formatter as an int
+ */
+inline fun Context.plural(@PluralsRes id: Int, quantity: Number)
+        = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {

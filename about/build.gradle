@@ -1,9 +1,5 @@
 apply from: '../android-lib.gradle'
 
-android {
-    resourcePrefix "kau_"
-}
-
 dependencies {
     compile project(':core-ui')
     compile project(':adapter')

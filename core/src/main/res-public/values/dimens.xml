@@ -20,13 +20,12 @@
     <dimen name="kau_spacing_large">32dp</dimen>
     <dimen name="kau_spacing_xlarge">48dp</dimen>
     <dimen name="kau_spacing_huge">64dp</dimen>
+    <dimen name="kau_padding_small">8dp</dimen>
     <dimen name="kau_padding_normal">16dp</dimen>
     <dimen name="kau_padding_large">24dp</dimen>
     <dimen name="kau_fab_size">56dp</dimen>
     <dimen name="kau_fab_radius">28dp</dimen>
     <dimen name="kau_display_4_text_size">112sp</dimen>
-
-    <dimen name="kau_about_header_height">224dp</dimen>
 
     <!-- avatar should be a 40dp asset in a 48dp touch target & optically aligned with standard padding -->
     <dimen name="kau_avatar_size">40dp</dimen>

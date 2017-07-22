@@ -19,6 +19,8 @@ package ca.allanwang.kau.ui.widgets
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -30,6 +32,7 @@ import ca.allanwang.kau.utils.*
  * Applies an elasticity factor to reduce movement as you approach the given dismiss distance.
  * Optionally also scales down content during drag.
  */
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
