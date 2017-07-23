@@ -16,7 +16,7 @@ android {
     buildToolsVersion project.BUILD_TOOLS
 
     androidGitVersion {
-        codeFormat = 'MMNNBBBB'
+        codeFormat = 'MMNNPPBB'
     }
 
     defaultConfig {
