@@ -72,13 +72,13 @@ class ImageItem(val data: ImageModel)
                 .sizePx(sizePx)
                 .paddingPx(sizePx / 3)
                 .color(Color.WHITE))
-        imageBase.setBackgroundColor(ImagePickerActivity.accentColor)
+        imageBase.setBackgroundColor(ImagePickerActivityBase.accentColor)
         imageForeground.gone()
     }
 
     private fun computeViewSize(context: Context): Int {
         val screenWidthPx = context.resources.displayMetrics.widthPixels
-        return screenWidthPx / ImagePickerActivity.computeColumnCount(context)
+        return screenWidthPx / ImagePickerActivityBase.computeColumnCount(context)
     }
 
     override fun unbindView(holder: ViewHolder) {

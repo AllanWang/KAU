@@ -165,7 +165,7 @@ class MainActivity : KPrefActivity() {
         }
 
         plainText(R.string.gallery_showcase) {
-            onClick = { _, _, _ -> kauLaunchImagePicker(REQUEST_IMAGE); false }
+            onClick = { _, _, _ -> kauLaunchImagePicker(ImagePickerActivity::class.java, REQUEST_IMAGE); false }
         }
 
         plainText(R.string.adapter_showcase) {
@@ -235,7 +235,6 @@ class MainActivity : KPrefActivity() {
         when (item.itemId) {
             R.id.action_settings -> startActivity(AnimActivity::class.java)
             R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
-            R.id.test -> kauLaunchImagePicker(REQUEST_IMAGE)
             else -> return super.onOptionsItemSelected(item)
         }
         return true

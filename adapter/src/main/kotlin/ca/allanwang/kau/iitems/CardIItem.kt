@@ -24,8 +24,11 @@ import com.mikepenz.iconics.typeface.IIcon
  * Simple generic card item with an icon, title, description and button
  * The icon and button are hidden by default unless values are given
  */
-class CardIItem(val builder: Config.() -> Unit = {}) : KauIItem<CardIItem, CardIItem.ViewHolder>(R.layout.kau_iitem_card, { ViewHolder(it) }, R.id.kau_item_card),
-        ThemableIItem by ThemableIItemDelegate() {
+class CardIItem(
+        val builder: Config.() -> Unit = {}
+) : KauIItem<CardIItem, CardIItem.ViewHolder>(
+        R.layout.kau_iitem_card, { ViewHolder(it) }, R.id.kau_item_card
+), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*, *>>) {

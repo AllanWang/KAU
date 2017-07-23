@@ -1,5 +1,6 @@
 package ca.allanwang.kau.kpref.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.constraint.ConstraintLayout
@@ -51,6 +52,7 @@ abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
      */
     abstract fun kPrefCoreAttributes(): CoreAttributeContract.() -> Unit
 
+    @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setup layout

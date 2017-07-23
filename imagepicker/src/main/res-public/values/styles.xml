@@ -1,4 +1,4 @@
-<resources>
+    <resources>
 
     <style name="Kau.ImagePicker">
         <item name="android:windowAnimationStyle">@style/KauSlideInSlideOutBottom</item>

@@ -22,7 +22,7 @@
 
         <!--As per Android N, icons (24dp) are aligned to the left rather than centered-->
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@id/kau_pref_icon"
             android:layout_width="56dp"
             android:layout_height="56dp"
@@ -36,7 +36,7 @@
             app:layout_constraintVertical_bias="0.5"
             tools:layout_editor_absoluteX="0dp" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@id/kau_pref_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,13 +51,13 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="-175dp" />
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@id/kau_pref_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="10"
-            android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+            android:textAppearance="?textAppearanceListItemSecondary"
             android:textColor="?android:attr/textColorSecondary"
             app:layout_constraintBottom_toTopOf="@id/kau_pref_lower_frame"
             app:layout_constraintEnd_toStartOf="@id/kau_pref_inner_frame"

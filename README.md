@@ -109,3 +109,13 @@ dependencies {
 ![Color Picker Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker.gif)
 ![KPref Items Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_kpref_items.gif)
 ![SearchView Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_search_view.gif)
+
+# Proguard/MultiDex
+
+Given that the core module contains a lot of extension functions, you may run into a dex error (over 64k methods)
+
+To resolve that, add `multiDexEnabled true` under your `app.gradle > android > defaultConfig`
+
+Likewise, it is highly recommended to use proguard to clean up your project upon release.
+All KAU components support proguard out of the box. 
+Some may have extra requirements for certain features, which will be detailed in their respective README.

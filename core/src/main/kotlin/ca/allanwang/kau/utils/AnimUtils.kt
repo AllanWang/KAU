@@ -32,13 +32,13 @@ import android.widget.TextView
     val anim = ViewAnimationUtils.createCircularReveal(this, x, y, 0f, r).setDuration(duration)
     anim.startDelay = offset
     anim.addListener(object : AnimatorListenerAdapter() {
-        override @KauUtils fun onAnimationStart(animation: Animator?) {
+        override fun onAnimationStart(animation: Animator?) {
             visible()
             onStart?.invoke()
         }
 
-        override @KauUtils fun onAnimationEnd(animation: Animator?) = onFinish?.invoke() ?: Unit
-        override @KauUtils fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
+        override fun onAnimationEnd(animation: Animator?) = onFinish?.invoke() ?: Unit
+        override fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
     })
     anim.start()
 }
@@ -59,14 +59,14 @@ import android.widget.TextView
     val anim = ViewAnimationUtils.createCircularReveal(this, x, y, r, 0f).setDuration(duration)
     anim.startDelay = offset
     anim.addListener(object : AnimatorListenerAdapter() {
-        override @KauUtils fun onAnimationStart(animation: Animator?) = onStart?.invoke() ?: Unit
+        override fun onAnimationStart(animation: Animator?) = onStart?.invoke() ?: Unit
 
-        override @KauUtils fun onAnimationEnd(animation: Animator?) {
+        override fun onAnimationEnd(animation: Animator?) {
             invisible()
             onFinish?.invoke() ?: Unit
         }
 
-        override @KauUtils fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
+        override fun onAnimationCancel(animation: Animator?) = onFinish?.invoke() ?: Unit
     })
     anim.start()
 }
@@ -82,9 +82,9 @@ import android.widget.TextView
     anim.startOffset = offset
     anim.duration = duration
     anim.setAnimationListener(object : Animation.AnimationListener {
-        override @KauUtils fun onAnimationRepeat(animation: Animation?) {}
-        override @KauUtils fun onAnimationEnd(animation: Animation?) = onFinish?.invoke() ?: Unit
-        override @KauUtils fun onAnimationStart(animation: Animation?) {
+        override fun onAnimationRepeat(animation: Animation?) {}
+        override fun onAnimationEnd(animation: Animation?) = onFinish?.invoke() ?: Unit
+        override fun onAnimationStart(animation: Animation?) {
             visible()
             onStart?.invoke()
         }
@@ -103,13 +103,13 @@ import android.widget.TextView
     anim.startOffset = offset
     anim.duration = duration
     anim.setAnimationListener(object : Animation.AnimationListener {
-        override @KauUtils fun onAnimationRepeat(animation: Animation?) {}
-        override @KauUtils fun onAnimationEnd(animation: Animation?) {
+        override fun onAnimationRepeat(animation: Animation?) {}
+        override fun onAnimationEnd(animation: Animation?) {
             invisible()
             onFinish?.invoke()
         }
 
-        override @KauUtils fun onAnimationStart(animation: Animation?) {
+        override fun onAnimationStart(animation: Animation?) {
             onStart?.invoke()
         }
     })
