@@ -6,18 +6,22 @@
     <item text="" />
     -->
 	
-	<version title="v2.2"/>
-    <item text=":imagepicker: Fully implement picker" />
-    <item text=":core: [breaking] Replace update[x]Margin to setMargin[x]" />
+	<version title="v3.1"/>
+    <item text=":core: Allow for nullable throwables when logging" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+	
+	<version title="v3.0"/>
     <item text=":core: Add setPadding[x]" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-
+    <item text=":core: [breaking] Replace update[x]Margin to setMargin[x]" />
+    <item text=":imagepicker: Fully implement picker" />
+	<item text="Make resources private where possible" />
+	<item text="Reduce minSdk to 19 where possible" />
+	
     <version title="v2.1"/>
     <item text=":adapter: Fix up CardIItem" />
     <item text=":adapter: Modularized kau animators" />
