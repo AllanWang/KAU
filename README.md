@@ -110,7 +110,7 @@ dependencies {
 ![KPref Items Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_kpref_items.gif)
 ![SearchView Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_search_view.gif)
 
-# Proguard/MultiDEX
+# Proguard/MultiDex
 
 Given that the core module contains a lot of extension functions, you may run into a dex error (over 64k methods)
 
