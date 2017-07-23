@@ -1,10 +1,12 @@
 package ca.allanwang.kau.imagepicker
 
 import android.database.Cursor
+import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.support.annotation.NonNull
+import java.io.File
 
 
 /**
@@ -33,6 +35,8 @@ data class ImageModel(val size: Long, val dateModified: Long, val data: String, 
         parcel.writeString(this.data)
         parcel.writeString(this.displayName)
     }
+
+    val uri: Uri by lazy { Uri.fromFile(File(data)) }
 
     override fun describeContents(): Int {
         return 0
