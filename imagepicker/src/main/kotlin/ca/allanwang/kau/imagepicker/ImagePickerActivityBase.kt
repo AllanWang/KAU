@@ -32,7 +32,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
  *
  * Base activity for selecting images from storage
  */
-open class ImagePickerActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+abstract class ImagePickerActivityBase : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     val imageAdapter = FastItemAdapter<ImageItem>()
 
@@ -75,7 +75,7 @@ open class ImagePickerActivity : AppCompatActivity(), LoaderManager.LoaderCallba
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setHomeAsUpIndicator(GoogleMaterial.Icon.gmd_close.toDrawable(this@ImagePickerActivity, 18))
+            setHomeAsUpIndicator(GoogleMaterial.Icon.gmd_close.toDrawable(this@ImagePickerActivityBase, 18))
         }
         toolbar.setNavigationOnClickListener { onBackPressed() }
 

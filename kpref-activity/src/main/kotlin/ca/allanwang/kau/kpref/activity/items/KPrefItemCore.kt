@@ -1,5 +1,6 @@
 package ca.allanwang.kau.kpref.activity.items
 
+import android.annotation.SuppressLint
 import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
@@ -31,6 +32,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
 
     override final fun getViewHolder(v: View) = ViewHolder(v)
 
+    @SuppressLint("NewApi")
     @CallSuper
     override fun bindView(viewHolder: ViewHolder, payloads: List<Any>) {
         super.bindView(viewHolder, payloads)
@@ -50,7 +52,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
                 desc?.setTextColor(textColor)
             }
             val accentColor = core.globalOptions.accentColor?.invoke()
-            if (accentColor != null) {
+            if (accentColor != null && buildIsLollipopAndUp) {
                 icon?.drawable?.setTint(accentColor)
             }
             onPostBindView(this, textColor, accentColor)

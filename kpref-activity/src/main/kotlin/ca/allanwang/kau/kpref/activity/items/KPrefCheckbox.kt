@@ -1,5 +1,6 @@
 package ca.allanwang.kau.kpref.activity.items
 
+import android.support.v7.widget.AppCompatCheckBox
 import android.view.View
 import android.widget.CheckBox
 import ca.allanwang.kau.kpref.activity.R
@@ -15,7 +16,7 @@ open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean
 
     override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
         pref = !pref
-        (innerContent as CheckBox).isChecked = pref
+        (innerContent as AppCompatCheckBox).isChecked = pref
         return true
     }
 

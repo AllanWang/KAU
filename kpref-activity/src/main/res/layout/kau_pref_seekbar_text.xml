@@ -1,6 +1,6 @@
 <!--TextView that aligns to the bottom-->
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/kau_pref_inner_content"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

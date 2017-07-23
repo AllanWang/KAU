@@ -1,9 +1,14 @@
 # Changelog
 
-## v2.2
-* :imagepicker: Fully implement picker
-* :core: [breaking] Replace update[x]Margin to setMargin[x]
+## v3.1
+* :core: Allow for nullable throwables when logging
+
+## v3.0
 * :core: Add setPadding[x]
+* :core: [breaking] Replace update[x]Margin to setMargin[x]
+* :imagepicker: Fully implement picker
+* Make resources private where possible
+* Reduce minSdk to 19 where possible
 
 ## v2.1
 * :adapter: Fix up CardIItem

@@ -3,15 +3,13 @@
 ImagePicker is a beautiful gallery activity that allows you to pick images
 from your storage. It is backed by FastAdapter and Glide, and offers blur and fade transitions.
 
-`ImagePickerActivity` is already fully functional, so you may directly add it to your manifest.
-However, you can also extend it to change the package name.
+`ImagePickerActivityBase` is already fully functional, so you may directly extend it with no further changes
+and add the activity to your manifest
 
 You may also easily launch the activity through the simple binder:
 ```
 Activity.kauLaunchImagePicker(YourClass::class.java, yourRequestCode)
 ```
-
-If you are using the built in activity, you may omit the class argument.
 
 Note that this launches the activity through a `startActivityForResult` call
 

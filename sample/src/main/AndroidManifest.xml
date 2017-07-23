@@ -29,7 +29,7 @@
             android:name=".AboutActivity"
             android:theme="@style/Kau.About" />
         <activity
-            android:name="ca.allanwang.kau.imagepicker.ImagePickerActivity"
+            android:name=".ImagePickerActivity"
             android:theme="@style/Kau.ImagePicker" />
         <activity
             android:name=".AdapterActivity"

@@ -169,13 +169,14 @@ inline val Context.isNavBarOnBottom: Boolean
 
 fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || ContextCompat.checkSelfPermission(this, permissions) == PackageManager.PERMISSION_GRANTED
 
-fun Context.copyToClipboard(text: String, label: String = "Copied Text", showToast: Boolean = true) {
+fun Context.copyToClipboard(text: String?, label: String = "Copied Text", showToast: Boolean = true) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clipboard.primaryClip = ClipData.newPlainText(label, text)
+    clipboard.primaryClip = ClipData.newPlainText(label, text ?: "")
     if (showToast) toast(R.string.kau_text_copied)
 }
 
-fun Context.shareText(text: String) {
+fun Context.shareText(text: String?) {
+    if (text == null) return toast(R.string.kau_text_is_null)
     val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"
     intent.putExtra(Intent.EXTRA_TEXT, text)
