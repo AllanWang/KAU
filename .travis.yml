@@ -11,8 +11,10 @@ android:
   - extra-android-m2repository
   - extra-google-m2repository
   licenses:
-  - '.+'
-script: ./gradlew lintRelease test
+  - ".+"
+script:
+- ./gradlew --quiet androidGitVersion
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then ./gradlew lintRelease publishRelease; else ./gradlew lintRelease test; fi
 branches:
   except:
   - gh-pages
@@ -26,6 +28,9 @@ notifications:
 sudo: false
 cache:
   directories:
-  - $HOME/.m2
+  - "$HOME/.m2"
 before_script:
 - chmod +x gradlew
+before_install:
+- openssl aes-256-cbc -K $encrypted_12e8842891a3_key -iv $encrypted_12e8842891a3_iv
+  -in files/kau.tar.enc -out kau.tar -d
