@@ -3,12 +3,21 @@ plugins {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.triplet.play'
 
 repositories {
     jcenter()
     mavenCentral()
     maven { url "https://jitpack.io" }
     maven { url "https://maven.google.com" }
+}
+
+play {
+    jsonFile = file('../files/gplay-keys.json')
+    track = 'beta'
+    errorOnSizeLimit = true
+    uploadImages = false
+    untrackOld = true
 }
 
 android {
@@ -28,9 +37,24 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+
+        def releaseProps = new Properties()
+        file("../files/kau.properties").withInputStream { releaseProps.load(it) }
+
+        release {
+            storeFile file("../files/kau.keystore")
+            storePassword releaseProps.getProperty('storePassword')
+            keyAlias releaseProps.getProperty('keyAlias')
+            keyPassword releaseProps.getProperty('keyPassword')
+        }
+
+    }
+
     buildTypes {
         release {
             minifyEnabled true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
