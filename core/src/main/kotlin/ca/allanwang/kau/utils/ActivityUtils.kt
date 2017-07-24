@@ -2,11 +2,11 @@ package ca.allanwang.kau.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
+import android.os.Bundle
 import android.support.annotation.ColorInt
-import android.support.annotation.RequiresApi
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.view.Menu
@@ -18,6 +18,27 @@ import org.jetbrains.anko.contentView
 /**
  * Created by Allan Wang on 2017-06-21.
  */
+
+/**
+ * Helper class to launch an activity for result
+ * Counterpart of [Activity.startActivityForResult]
+ * For starting activities without result, see [startActivity]
+ */
+@SuppressLint("NewApi")
+fun Activity.startActivityForResult(
+        clazz: Class<out Activity>,
+        requestCode: Int,
+        transition: Boolean = false,
+        bundle: Bundle? = null,
+        intentBuilder: Intent.() -> Unit = {}) {
+    val intent = Intent(this, clazz)
+    val fullBundle = if (transition && buildIsLollipopAndUp)
+        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+    else Bundle()
+    if (bundle != null) fullBundle.putAll(bundle)
+    intent.intentBuilder()
+    startActivityForResult(intent, requestCode, if (fullBundle.isEmpty) null else fullBundle)
+}
 
 /**
  * Restarts an activity from itself with a fade animation

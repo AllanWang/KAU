@@ -7,13 +7,14 @@ import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
 import ca.allanwang.kau.permissions.kauRequestPermissions
-import ca.allanwang.kau.swipe.SWIPE_EDGE_BOTTOM
+import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.kauSwipeOnCreate
 import ca.allanwang.kau.swipe.kauSwipeOnDestroy
 import ca.allanwang.kau.swipe.kauSwipeOnPostCreate
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivitySlideOut
 import ca.allanwang.kau.utils.toast
+import ca.allanwang.kau.utils.withAlpha
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
@@ -27,63 +28,10 @@ class AnimActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val adapter = FastItemAdapter<PermissionCheckbox>()
-        setContentView(fullLinearRecycler(adapter))
+        setContentView(fullLinearRecycler(adapter).apply { setBackgroundColor(KPrefSample.bgColor.withAlpha(255)) })
+
         adapter.add(listOf(
                 PERMISSION_ACCESS_COARSE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
                 PERMISSION_ACCESS_FINE_LOCATION
         ).map { PermissionCheckbox(it) })
         adapter.withOnClickListener { _, _, item, _ ->
@@ -96,7 +44,7 @@ class AnimActivity : AppCompatActivity() {
             true
         }
         kauSwipeOnCreate {
-            edgeFlag = SWIPE_EDGE_BOTTOM
+            edgeFlag = SWIPE_EDGE_LEFT
         }
     }
 

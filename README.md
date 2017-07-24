@@ -90,7 +90,8 @@ dependencies {
 ## [Image Picker](imagepicker#readme)
 * WIP - Overlaying media chooser
 * Includes `:core-ui`, 
-[`Glide`](https://github.com/bumptech/glide)
+[`Glide`](https://github.com/bumptech/glide),
+[`Blurry`](https://github.com/wasabeef/Blurry)
 
 ## [Kpref Activity](kpref-activity#readme)
 * Fully programmatic implementation of a Preference Activity, backed by RecyclerViews

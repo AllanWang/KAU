@@ -6,14 +6,21 @@
     <item text="" />
     -->
 	
-	<version title="v3.1"/>
+	<version title="v3.1.1"/>
+    <item text=":imagepicker: Add uri val to ImageModel" />
+    <item text=":imagepicker: Create bindings and overlay activity" />
+    <item text="Add showcase app to play store" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+	
+	<version title="v3.1.0"/>
     <item text=":core: Allow for nullable throwables when logging" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
+    <item text=":core: Remove some extra DSL annotations" />
+    <item text=":kpref-activity: Bring down to minSdk 19 and fix compatibility" />
+    <item text=":adapter: Update readme for iitems and animators" />
+    <item text=":about: Move strings to private" />	
 	
 	<version title="v3.0"/>
     <item text=":core: Add setPadding[x]" />

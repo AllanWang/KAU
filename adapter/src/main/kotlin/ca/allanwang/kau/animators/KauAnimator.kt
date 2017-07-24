@@ -8,13 +8,13 @@ import ca.allanwang.kau.utils.KAU_RIGHT
 /**
  * Created by Allan Wang on 2017-06-27.
  */
-class KauAnimator(
+open class KauAnimator(
         val addAnimator: KauAnimatorAdd = SlideAnimatorAdd(KAU_BOTTOM),
         val removeAnimator: KauAnimatorRemove = SlideAnimatorRemove(KAU_RIGHT),
         val changeAnimator: KauAnimatorChange = FadeAnimatorChange()
 ) : BaseItemAnimator() {
 
-    fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float)
+    open fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float)
             = Math.max(0L, (holder.adapterPosition * duration * factor).toLong())
 
     override fun removeAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator {
