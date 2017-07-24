@@ -26,6 +26,12 @@ import com.afollestad.materialdialogs.MaterialDialog
 /**
  * Created by Allan Wang on 2017-06-03.
  */
+
+/**
+ * Helper class to launch an activity from a context
+ * Counterpart of [ContextCompat.startActivity]
+ * For starting activities for results, see [startActivityForResult]
+ */
 @SuppressLint("NewApi")
 fun Context.startActivity(
         clazz: Class<out Activity>,
@@ -33,14 +39,14 @@ fun Context.startActivity(
         transition: Boolean = false,
         bundle: Bundle? = null,
         intentBuilder: Intent.() -> Unit = {}) {
-    val intent = (Intent(this, clazz))
+    val intent = Intent(this, clazz)
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-    intent.intentBuilder()
     val fullBundle = if (transition && this is Activity && buildIsLollipopAndUp)
         ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
     else Bundle()
     if (transition && this !is Activity) KL.d("Cannot make scene transition when context is not an instance of an Activity")
     if (bundle != null) fullBundle.putAll(bundle)
+    intent.intentBuilder()
     ContextCompat.startActivity(this, intent, if (fullBundle.isEmpty) null else fullBundle)
     if (this is Activity && clearStack) finish()
 }

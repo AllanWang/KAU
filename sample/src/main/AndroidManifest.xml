@@ -32,6 +32,9 @@
             android:name=".ImagePickerActivity"
             android:theme="@style/Kau.ImagePicker" />
         <activity
+            android:name=".ImagePickerActivityOverlay"
+            android:theme="@style/Kau.ImagePicker.Overlay" />
+        <activity
             android:name=".AdapterActivity"
             android:theme="@style/Kau.Translucent.SlideBottom" />
     </application>

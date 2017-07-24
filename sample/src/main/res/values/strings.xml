@@ -21,6 +21,7 @@
     <string name="your_email">your.email@here.com</string>
     <string name="your_subject">Your subject</string>
     <string name="gallery_showcase">Gallery Showcase</string>
+    <string name="gallery_overlay_showcase">Gallery Overlay Showcase</string>
     <string name="adapter_showcase">Adapter Showcase</string>
     <string name="about_kau">KAU (Kotlin Android Utils) is a collection of common extension functions and complex UIs that can be used in almost all apps. It is meant to implement the shared components, so you can focus on what makes your app unique.</string>
 </resources>

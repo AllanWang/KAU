@@ -2,6 +2,7 @@ package ca.allanwang.kau.imagepicker
 
 import android.app.Activity
 import android.content.Intent
+import ca.allanwang.kau.utils.startActivityForResult
 
 /**
  * Created by Allan Wang on 2017-07-21.
@@ -11,10 +12,11 @@ import android.content.Intent
  */
 
 /**
- * Image picker launcher
+ * Image picker launchers
  */
-fun Activity.kauLaunchImagePicker(clazz: Class<out ImagePickerActivityBase>, requestCode: Int) {
-    startActivityForResult(Intent(this, clazz), requestCode)
+fun Activity.kauLaunchImagePicker(clazz: Class<out ImagePickerCore<*>>, requestCode: Int) {
+//    startActivityForResult(clazz, requestCode, true)
+    startActivityForResult(clazz, requestCode, transition = ImagePickerActivityOverlayBase::class.java.isAssignableFrom(clazz))
 }
 
 /**
@@ -22,7 +24,7 @@ fun Activity.kauLaunchImagePicker(clazz: Class<out ImagePickerActivityBase>, req
  * call under [Activity.onActivityResult]
  * and make sure that the requestCode matches first
  */
-fun Activity.kauOnImagePickerResult(resultCode: Int, data: Intent?) = ImagePickerActivityBase.onImagePickerResult(resultCode, data)
+fun Activity.kauOnImagePickerResult(resultCode: Int, data: Intent?) = ImagePickerCore.onImagePickerResult(resultCode, data)
 
 internal const val LOADER_ID = 42
 internal const val IMAGE_PICKER_RESULT = "image_picker_result"

@@ -168,6 +168,10 @@ class MainActivity : KPrefActivity() {
             onClick = { _, _, _ -> kauLaunchImagePicker(ImagePickerActivity::class.java, REQUEST_IMAGE); false }
         }
 
+        plainText(R.string.gallery_overlay_showcase) {
+            onClick = { _, _, _ -> kauLaunchImagePicker(ImagePickerActivityOverlay::class.java, REQUEST_IMAGE); false }
+        }
+
         plainText(R.string.adapter_showcase) {
             onClick = { _, _, _ -> startActivity(AdapterActivity::class.java, transition = true); false }
         }

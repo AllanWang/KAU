@@ -73,3 +73,13 @@ abstract class ElasticRecyclerActivity : AppCompatActivity() {
 
 }
 
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+interface ElasticRecyclerActivityContract {
+
+}
+
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+class ElasticRecyclerActivityDelegate {
+
+}
+

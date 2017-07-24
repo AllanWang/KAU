@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/fast_out_linear_in"
+    android:transitionOrdering="together">
+
+    <slide
+        android:duration="400"
+        android:slideEdge="bottom">
+        <targets android:targetId="@id/kau_draggable" />
+    </slide>
+
+    <fade
+        android:duration="200"
+        android:startDelay="200" />
+
+</transitionSet>

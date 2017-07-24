@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+
     <style name="Kau.Translucent">
         <item name="android:windowBackground">@color/kau_shadow_overlay</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -12,6 +13,8 @@
     <style name="Kau.Translucent.NoAnimation">
         <item name="android:windowAnimationStyle">@null</item>
     </style>
+
+    <!--Transitions are only v21+-->
 
     <style name="Kau.Translucent.SlideBottom" />
 

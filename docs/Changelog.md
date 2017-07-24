@@ -1,7 +1,14 @@
 # Changelog
 
-## v3.1
+## v3.1.1
+* :imagepicker: Add uri val to ImageModel
+
+## v3.1.0
 * :core: Allow for nullable throwables when logging
+* :core: Remove some extra DSL annotations
+* :kpref-activity: Bring down to minSdk 19 and fix compatibility
+* :adapter: Update readme for iitems and animators
+* :about: Move strings to private
 
 ## v3.0
 * :core: Add setPadding[x]

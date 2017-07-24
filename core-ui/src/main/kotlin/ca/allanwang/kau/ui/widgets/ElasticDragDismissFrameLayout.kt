@@ -21,9 +21,12 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.v7.widget.RecyclerView
+import android.transition.TransitionInflater
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.utils.*
 
@@ -235,6 +238,17 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         public override fun onDragDismissed() {
             activity.finishAfterTransition()
         }
+    }
+
+    fun addExitListener(activity: Activity, transitionBottom: Int = R.transition.kau_exit_slide_bottom, transitionTop: Int = R.transition.kau_exit_slide_top) {
+        addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(activity) {
+            override fun onDragDismissed() {
+                KL.d("New transition")
+                activity.window.returnTransition = TransitionInflater.from(activity)
+                        .inflateTransition(if (translationY > 0) transitionBottom else transitionTop)
+                activity.finishAfterTransition()
+            }
+        })
     }
 
 }

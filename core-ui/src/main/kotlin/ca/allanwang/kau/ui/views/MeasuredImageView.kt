@@ -3,7 +3,6 @@ package ca.allanwang.kau.ui.views
 import android.content.Context
 import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
-import android.widget.ImageView
 
 /**
  * Created by Allan Wang on 2017-07-14.
