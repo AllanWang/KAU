@@ -29,6 +29,7 @@ android {
     }
 
     defaultConfig {
+        applicationId "ca.allanwang.kau.sample"
         minSdkVersion Integer.parseInt(project.MIN_SDK)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
         versionCode androidGitVersion.code()

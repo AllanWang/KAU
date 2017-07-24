@@ -2,6 +2,8 @@
 
 ## v3.1.1
 * :imagepicker: Add uri val to ImageModel
+* :imagepicker: Create bindings and overlay activity
+* Add showcase app to play store
 
 ## v3.1.0
 * :core: Allow for nullable throwables when logging
