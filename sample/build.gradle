@@ -38,24 +38,28 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs {
+    def releaseSigning = file("../files/kau.properties")
+    def hasSigning = releaseSigning.exists()
 
-        def releaseProps = new Properties()
-        file("../files/kau.properties").withInputStream { releaseProps.load(it) }
+    if (hasSigning) {
+        signingConfigs {
 
-        release {
-            storeFile file("../files/kau.keystore")
-            storePassword releaseProps.getProperty('storePassword')
-            keyAlias releaseProps.getProperty('keyAlias')
-            keyPassword releaseProps.getProperty('keyPassword')
+            def releaseProps = new Properties()
+            releaseSigning.withInputStream { releaseProps.load(it) }
+
+            release {
+                storeFile file("../files/kau.keystore")
+                storePassword releaseProps.getProperty('storePassword')
+                keyAlias releaseProps.getProperty('keyAlias')
+                keyPassword releaseProps.getProperty('keyPassword')
+            }
         }
-
     }
 
     buildTypes {
         release {
             minifyEnabled true
-            signingConfig signingConfigs.release
+            if (hasSigning) signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
