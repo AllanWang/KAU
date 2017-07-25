@@ -10,8 +10,10 @@
     <item text=":imagepicker: Add uri val to ImageModel" />
     <item text=":imagepicker: Create bindings and overlay activity" />
     <item text="Add showcase app to play store" />
-    <item text="" />
-    <item text="" />
+    <item text="Update dependencies" />
+    <item text="Update build tools to 26.0.1" />
+	<item text=":adapter: Make KauAnimator extensible" />
+    <item text=":imagepicker: Create single image picker counterpart with overlay" />
     <item text="" />
     <item text="" />
 	

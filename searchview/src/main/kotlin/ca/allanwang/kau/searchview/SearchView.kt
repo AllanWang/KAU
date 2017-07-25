@@ -246,7 +246,7 @@ class SearchView @JvmOverloads constructor(
                 }
             })
             adapter = this@SearchView.adapter
-            itemAnimator = NoAnimator()
+            itemAnimator = null
         }
         with(adapter) {
             withSelectable(true)

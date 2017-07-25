@@ -4,6 +4,10 @@
 * :imagepicker: Add uri val to ImageModel
 * :imagepicker: Create bindings and overlay activity
 * Add showcase app to play store
+* Update dependencies
+* Update build tools to 26.0.1
+* :adapter: Make KauAnimator extensible
+* :imagepicker: Create single image picker counterpart with overlay
 
 ## v3.1.0
 * :core: Allow for nullable throwables when logging
