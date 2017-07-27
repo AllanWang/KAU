@@ -1,13 +1,14 @@
 # Changelog
 
-## v3.1.1
+## v3.2.0
+* :adapter: Make KauAnimator extensible
 * :imagepicker: Add uri val to ImageModel
 * :imagepicker: Create bindings and overlay activity
-* Add showcase app to play store
-* Update dependencies
-* Update build tools to 26.0.1
-* :adapter: Make KauAnimator extensible
 * :imagepicker: Create single image picker counterpart with overlay
+* :searchview: Remove item animator so nonchanging items don\'t blink
+* Add showcase app to play store
+* Update build tools to 26.0.1
+* Update dependencies
 
 ## v3.1.0
 * :core: Allow for nullable throwables when logging

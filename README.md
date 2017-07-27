@@ -1,4 +1,4 @@
-<img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/logo.svg" alt="KAU" width="30%"/>
+<img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
 
 Kotlin Android Utils
 

@@ -6,16 +6,15 @@
     <item text="" />
     -->
 	
-	<version title="v3.1.1"/>
+	<version title="v3.2.0"/>
+	<item text=":adapter: Make KauAnimator extensible" />
     <item text=":imagepicker: Add uri val to ImageModel" />
     <item text=":imagepicker: Create bindings and overlay activity" />
-    <item text="Add showcase app to play store" />
-    <item text="Update dependencies" />
-    <item text="Update build tools to 26.0.1" />
-	<item text=":adapter: Make KauAnimator extensible" />
     <item text=":imagepicker: Create single image picker counterpart with overlay" />
-    <item text="" />
-    <item text="" />
+    <item text=":searchview: Remove item animator so nonchanging items don\'t blink" />
+    <item text="Add showcase app to play store" />
+    <item text="Update build tools to 26.0.1" />
+    <item text="Update dependencies" />    
 	
 	<version title="v3.1.0"/>
     <item text=":core: Allow for nullable throwables when logging" />
