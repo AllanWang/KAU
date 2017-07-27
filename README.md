@@ -90,7 +90,7 @@ dependencies {
 [`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
 
 ## [Image Picker](imagepicker#readme)
-* WIP - Overlaying media chooser
+* Fully functional image picker, both as an overlay and as a requested activity.
 * Includes `:core-ui`, 
 [`Glide`](https://github.com/bumptech/glide),
 [`Blurry`](https://github.com/wasabeef/Blurry)
