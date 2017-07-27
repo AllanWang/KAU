@@ -29,7 +29,7 @@ class ImageItemBasic(val data: ImageModel)
         fun bindEvents(activity: Activity, fastAdapter: FastAdapter<ImageItemBasic>) {
             fastAdapter.withSelectable(false)
                     //add image data and return right away
-                    .withOnClickListener { v, _, item, _ ->
+                    .withOnClickListener { _, _, item, _ ->
                         val intent = Intent()
                         val data = arrayListOf(item.data)
                         intent.putParcelableArrayListExtra(IMAGE_PICKER_RESULT, data)
