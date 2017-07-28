@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import ca.allanwang.kau.utils.adjustAlpha
 
 /**
  * Created by Allan Wang on 2016-11-17.
@@ -35,7 +34,8 @@ class RippleCanvas @JvmOverloads constructor(
      * To support transparent ripples, we simply erase the overlapping base before adding a new circle
      */
     override fun onDraw(canvas: Canvas) {
-        canvas.drawColor(baseColor)
+        paint.color = baseColor
+        canvas.drawRect(0f, 0f, canvas.width.toFloat(), canvas.height.toFloat(), paint)
         val itr = ripples.iterator()
         while (itr.hasNext()) {
             val r = itr.next()
