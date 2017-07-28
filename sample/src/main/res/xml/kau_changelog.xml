@@ -9,7 +9,7 @@
 	 <version title="v3.2.1"/>
     <item text=":core: Remove requestLayout call from setMargin and setPadding" />
     <item text=":core: Fix kau direction bits" />
-    <item text="" />
+    <item text=":core: Greatly simplify ripple canvas and truly support transparent ripples" />
     <item text="" />
     <item text="" />
     <item text="" />

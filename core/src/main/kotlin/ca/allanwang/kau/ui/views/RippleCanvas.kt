@@ -32,7 +32,7 @@ class RippleCanvas @JvmOverloads constructor(
 
     /**
      * Draw ripples one at a time in the order given
-     * To support transparent ripples, we simply erase the base before adding a new circle
+     * To support transparent ripples, we simply erase the overlapping base before adding a new circle
      */
     override fun onDraw(canvas: Canvas) {
         canvas.drawColor(baseColor)
