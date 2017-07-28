@@ -135,7 +135,6 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
             if (flag and KAU_RIGHT > 0) margin else p.rightMargin,
             if (flag and KAU_BOTTOM > 0) margin else p.bottomMargin
     )
-    requestLayout()
     return true
 }
 
@@ -184,7 +183,6 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
             if (flag and KAU_RIGHT > 0) padding else paddingRight,
             if (flag and KAU_BOTTOM > 0) padding else paddingBottom
     )
-    requestLayout()
 }
 
 @KauUtils fun View.hideKeyboard() {
