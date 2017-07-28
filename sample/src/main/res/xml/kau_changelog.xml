@@ -6,6 +6,15 @@
     <item text="" />
     -->
 	
+	 <version title="v3.2.1"/>
+    <item text=":core: Remove requestLayout call from setMargin and setPadding" />
+    <item text=":core: Fix kau direction bits" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+	
 	<version title="v3.2.0"/>
 	<item text=":adapter: Make KauAnimator extensible" />
     <item text=":imagepicker: Add uri val to ImageModel" />
