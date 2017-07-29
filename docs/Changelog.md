@@ -7,6 +7,7 @@
 * :core: Generalize fab transition to fade scale transition for all imageviews
 * :core: Create ViewPropertyAnimator.scaleXY() and View.scaleXY
 * :core: Create View.setOnSingleTapListener()
+* :core: Create rndColor, which generates a random opaque color for testing
 
 ## v3.2.0
 * :adapter: Make KauAnimator extensible
