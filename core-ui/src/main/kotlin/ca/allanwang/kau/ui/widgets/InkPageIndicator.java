@@ -36,6 +36,7 @@ import android.view.animation.Interpolator;
 
 import java.util.Arrays;
 
+import ca.allanwang.kau.logging.KL;
 import ca.allanwang.kau.ui.R;
 import ca.allanwang.kau.utils.AnimHolder;
 import ca.allanwang.kau.utils.ColorUtilsKt;
@@ -384,7 +385,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
 
         if ((joiningFraction == 0f || joiningFraction == INVALID_FRACTION)
                 && dotRevealFraction == 0f
-                && !(page == currentPage && selectedDotInPosition == true)) {
+                && !(page == currentPage && selectedDotInPosition)) {
 
             // case #1 – At rest
             unselectedDotPath.addCircle(dotCenterX[page], dotCenterY, dotRadius, Path.Direction.CW);
@@ -632,8 +633,8 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
         });
         // slightly delay the start to give the joins a chance to run
         // unless dot isn't in position yet – then don't delay!
-        moveSelected.setStartDelay(selectedDotInPosition ? animDuration / 4l : 0l);
-        moveSelected.setDuration(animDuration * 3l / 4l);
+        moveSelected.setStartDelay(selectedDotInPosition ? animDuration / 4L : 0L);
+        moveSelected.setDuration(animDuration * 3L / 4L);
         moveSelected.setInterpolator(interpolator);
         return moveSelected;
     }
@@ -641,9 +642,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     private void setJoiningFraction(int leftDot, float fraction) {
         if (leftDot < joiningFractions.length) {
 
-            if (leftDot == 1) {
-                Log.d("PageIndicator", "dot 1 fraction:\t" + fraction);
-            }
+            if (leftDot == 1) KL.INSTANCE.v("PageIndicator dot 1 fraction:\t$fraction");
 
             joiningFractions[leftDot] = fraction;
             postInvalidateOnAnimation();
