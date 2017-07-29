@@ -88,6 +88,8 @@ class RippleCanvas @JvmOverloads constructor(
         invalidate()
     }
 
+    override fun setBackgroundColor(color: Int) = set(color)
+
     /**
      * Sets a color directly but with a transition
      */

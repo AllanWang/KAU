@@ -220,15 +220,13 @@ fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, confi
 }
 
 /**
- * Animate a transition for a FloatinActionButton
+ * Animate a transition a given imageview
  * If it is not shown, the action will be invoked directly and the fab will be shown
  * If it is already shown, scaling and alpha animations will be added to the action
  */
-inline fun FloatingActionButton.transition(crossinline action: FloatingActionButton.() -> Unit) {
-    if (isHidden) {
-        action()
-        show()
-    } else {
+inline fun <T : ImageView> T.fadeScaleTransition(crossinline action: T.() -> Unit) {
+    if (!isVisible) action()
+    else {
         var transitioned = false
         ValueAnimator.ofFloat(1.0f, 0.0f, 1.0f).apply {
             duration = 500L
