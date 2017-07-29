@@ -3,6 +3,7 @@
 package ca.allanwang.kau.utils
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
@@ -272,6 +273,7 @@ inline var View.scaleXY
 /**
  * Creates an on touch listener that only emits on a short single tap
  */
+@SuppressLint("ClickableViewAccessibility")
 inline fun View.setOnSingleTapListener(crossinline onSingleTap: (v: View, event: MotionEvent) -> Unit) {
     setOnTouchListener { v, event ->
         when (event.actionMasked) {

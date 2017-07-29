@@ -5,7 +5,8 @@
 * :core: Fix kau direction bits
 * :core: Greatly simplify ripple canvas and truly support transparent ripples
 * :core: Generalize fab transition to fade scale transition for all imageviews
-* :core: Create scaleXY() fun and scaleXY attribute
+* :core: Create ViewPropertyAnimator.scaleXY() and View.scaleXY
+* :core: Create View.setOnSingleTapListener()
 
 ## v3.2.0
 * :adapter: Make KauAnimator extensible
