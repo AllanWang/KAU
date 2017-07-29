@@ -16,6 +16,7 @@ import android.support.design.widget.TextInputEditText
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -267,3 +268,20 @@ inline var View.scaleXY
         scaleX = value
         scaleY = value
     }
+
+/**
+ * Creates an on touch listener that only emits on a short single tap
+ */
+inline fun View.setOnSingleTapListener(crossinline onSingleTap: (v: View, event: MotionEvent) -> Unit) {
+    setOnTouchListener { v, event ->
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> true
+            MotionEvent.ACTION_UP -> {
+                if (event.eventTime - event.downTime < 100)
+                    onSingleTap(v, event)
+                true
+            }
+            else -> false
+        }
+    }
+}
