@@ -2,7 +2,6 @@ package ca.allanwang.kau.imagepicker
 
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.StyleRes
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
@@ -11,7 +10,6 @@ import ca.allanwang.kau.ui.views.MeasureSpecContract
 import ca.allanwang.kau.ui.views.MeasureSpecDelegate
 import ca.allanwang.kau.utils.*
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
-import com.mikepenz.iconics.IconicsDrawable
 import jp.wasabeef.blurry.internal.BlurFactor
 import jp.wasabeef.blurry.internal.BlurTask
 
@@ -51,7 +49,7 @@ class BlurredImageView @JvmOverloads constructor(
         imageForeground.clearAnimation()
     }
 
-    private fun View.scaleAnimate(scale: Float) = animate().scaleX(scale).scaleY(scale).setDuration(ANIMATION_DURATION)
+    private fun View.scaleAnimate(scale: Float) = animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
     private fun View.alphaAnimate(alpha: Float) = animate().alpha(alpha).setDuration(ANIMATION_DURATION)
 
 
@@ -69,7 +67,7 @@ class BlurredImageView @JvmOverloads constructor(
         val factor = BlurFactor()
         factor.width = width
         factor.height = height
-       BlurTask(imageBase, factor) {
+        BlurTask(imageBase, factor) {
             imageBlur.setImageDrawable(it)
             scaleAnimate(ANIMATION_SCALE).start()
             imageBlur.alphaAnimate(1f).start()
@@ -90,8 +88,7 @@ class BlurredImageView @JvmOverloads constructor(
         factor.height = height
         BlurTask(imageBase, factor) { drawable ->
             imageBlur.setImageDrawable(drawable)
-            scaleX = ANIMATION_SCALE
-            scaleY = ANIMATION_SCALE
+            scaleXY = ANIMATION_SCALE
             imageBlur.alpha = 1f
             imageForeground.alpha = 1f
         }.execute()

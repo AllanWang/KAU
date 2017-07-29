@@ -4,6 +4,8 @@
 * :core: Remove requestLayout call from setMargin and setPadding
 * :core: Fix kau direction bits
 * :core: Greatly simplify ripple canvas and truly support transparent ripples
+* :core: Generalize fab transition to fade scale transition for all imageviews
+* :core: Create scaleXY() fun and scaleXY attribute
 
 ## v3.2.0
 * :adapter: Make KauAnimator extensible

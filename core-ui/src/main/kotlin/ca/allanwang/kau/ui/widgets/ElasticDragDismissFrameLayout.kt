@@ -119,8 +119,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         } else { // settle back to natural position
             animate()
                     .translationY(0f)
-                    .scaleX(1f)
-                    .scaleY(1f)
+                    .scaleXY(1f)
                     .setDuration(200L)
                     .setInterpolator(AnimHolder.fastOutSlowInInterpolator(context))
                     .setListener(null)
@@ -176,11 +175,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         }
         translationY = dragTo
 
-        if (shouldScale) {
-            val scale = 1 - (1 - dragDismissScale) * dragFraction
-            scaleX = scale
-            scaleY = scale
-        }
+        if (shouldScale) scaleXY = 1 - (1 - dragDismissScale) * dragFraction
 
         // if we've reversed direction and gone past the settle point then clear the flags to
         // allow the list to get the scroll events & reset any transforms
@@ -191,8 +186,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
             draggingUp = false
             draggingDown = draggingUp
             translationY = 0f
-            scaleX = 1f
-            scaleY = 1f
+            scaleXY = 1f
         }
         dispatchDragCallback(dragFraction, dragTo,
                 Math.min(1f, Math.abs(totalDrag) / dragDismissDistance), totalDrag)

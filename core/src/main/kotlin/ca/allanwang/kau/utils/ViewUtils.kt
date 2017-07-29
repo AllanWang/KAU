@@ -6,14 +6,13 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.*
+import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
+import android.support.annotation.RequiresApi
+import android.support.annotation.StringRes
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
-import android.support.transition.AutoTransition
-import android.support.transition.Transition
-import android.support.transition.TransitionInflater
-import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -232,9 +231,7 @@ inline fun <T : ImageView> T.fadeScaleTransition(crossinline action: T.() -> Uni
             duration = 500L
             addUpdateListener {
                 val x = it.animatedValue as Float
-                val scale = x * 0.3f + 0.7f
-                scaleX = scale
-                scaleY = scale
+                scaleXY = x * 0.3f + 0.7f
                 imageAlpha = (x * 255).toInt()
                 if (it.animatedFraction > 0.5f && !transitioned) {
                     transitioned = true
@@ -263,3 +260,10 @@ fun FloatingActionButton.hideOnDownwardsScroll(recycler: RecyclerView) {
         }
     })
 }
+
+inline var View.scaleXY
+    get() = Math.max(scaleX, scaleY)
+    set(value) {
+        scaleX = value
+        scaleY = value
+    }

@@ -10,8 +10,8 @@
     <item text=":core: Remove requestLayout call from setMargin and setPadding" />
     <item text=":core: Fix kau direction bits" />
     <item text=":core: Greatly simplify ripple canvas and truly support transparent ripples" />
-    <item text="" />
-    <item text="" />
+    <item text=":core: Generalize fab transition to fade scale transition for all imageviews" />
+    <item text=":core: Create scaleXY() fun and scaleXY attribute" />
     <item text="" />
     <item text="" />
 	
