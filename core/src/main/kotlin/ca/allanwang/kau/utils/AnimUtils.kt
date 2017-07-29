@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.support.annotation.StringRes
 import android.view.View
 import android.view.ViewAnimationUtils
+import android.view.ViewPropertyAnimator
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
@@ -124,3 +125,5 @@ import android.widget.TextView
 }
 
 @KauUtils fun TextView.setTextWithFade(@StringRes textId: Int, duration: Long = 200, onFinish: (() -> Unit)? = null) = setTextWithFade(context.getString(textId), duration, onFinish)
+
+@KauUtils fun ViewPropertyAnimator.scaleXY(value: Float) = scaleX(value).scaleY(value)
