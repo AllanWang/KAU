@@ -14,7 +14,7 @@
     <item text=":core: Create ViewPropertyAnimator.scaleXY() and View.scaleXY" />
     <item text=":core: Create View.setOnSingleTapListener()" />
     <item text=":core: Create rndColor, which generates a random opaque color for testing" />
-    <item text="" />
+    <item text=":core: Add resettable view binding variants to Kotterknife" />
     <item text="" />
     <item text="" />
     <item text="" />

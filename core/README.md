@@ -6,6 +6,7 @@
 
 * [KPrefs](#kprefs)
 * [Changelog XML](#changelog)
+* [Kotterknife](#kotterknife)
 * [Ripple Canvas](#ripple-canvas)
 * [Timber Logger](#timber-logger)
 * [Email Builder](#email-builder)
@@ -102,6 +103,17 @@ Here is a template xml changelog file:
     <item text="" />
 </resources>
 ```
+
+<a name="kotterknife"></a>
+## Kotterknife
+
+KAU comes shipped with [Kotterknife](https://github.com/JakeWharton/kotterknife) by Jake Wharton.
+It is a powerful collection of lazy view bindings that only calls the expensive `findViewById` once.
+
+In KAU, there are also resettable versions (suffixed with `Resettable`) for all bindings.
+These variants are weakly held in the private `KotterknifeRegistry` object, and can be used to invalidate the lazy
+values through the `Kotterknife.reset` method. This is typically useful for Fragments, as they do not follow
+the same lifecycle as Activities and Views.
 
 <a name="ripple-canvas"></a>
 ## Ripple Canvas

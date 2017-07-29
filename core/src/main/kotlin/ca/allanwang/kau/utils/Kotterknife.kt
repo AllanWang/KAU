@@ -293,6 +293,12 @@ private class LazyResettable<in T, out V>(initializer: (T, KProperty<*>) -> V) :
     }
 }
 
+object Kotterknife {
+    fun reset(target: Any) {
+        KotterknifeRegistry.reset(target)
+    }
+}
+
 private object KotterknifeRegistry {
     private val lazyMap = WeakHashMap<Any, MutableCollection<LazyResettable<*, *>>>()
 
