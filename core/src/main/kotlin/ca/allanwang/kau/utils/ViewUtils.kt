@@ -223,15 +223,15 @@ fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, confi
  * If it is not shown, the action will be invoked directly and the fab will be shown
  * If it is already shown, scaling and alpha animations will be added to the action
  */
-inline fun <T : ImageView> T.fadeScaleTransition(crossinline action: T.() -> Unit) {
+inline fun <T : ImageView> T.fadeScaleTransition(duration: Long = 500L, minScale: Float = 0.7f, crossinline action: T.() -> Unit) {
     if (!isVisible) action()
     else {
         var transitioned = false
         ValueAnimator.ofFloat(1.0f, 0.0f, 1.0f).apply {
-            duration = 500L
+            this.duration = duration
             addUpdateListener {
                 val x = it.animatedValue as Float
-                scaleXY = x * 0.3f + 0.7f
+                scaleXY = x * (1 - minScale) + minScale
                 imageAlpha = (x * 255).toInt()
                 if (it.animatedFraction > 0.5f && !transitioned) {
                     transitioned = true
