@@ -8,9 +8,11 @@
 * [Changelog XML](#changelog)
 * [Kotterknife](#kotterknife)
 * [Ripple Canvas](#ripple-canvas)
+* [MeasureSpecDelegate](#measure-spec-delegate)
 * [Timber Logger](#timber-logger)
 * [Email Builder](#email-builder)
 * [Extensions](#extensions)
+* [Lazy Resettable](#lazy-resettable)
 
 <a name="kprefs"></a>
 ## KPrefs
@@ -126,6 +128,13 @@ They can be used as transitions, or as a toolbar background to replicate the loo
 Many ripples can be stacked on top of each other to run at the same time from different locations.
 The canvas also supports color fading and direct color setting so it can effectively replace any background.
 
+<a name="measure-spec-delegate"></a>
+## Measure Spec Delegate
+
+If you ever have a view needing exact aspect ratios with its parent and/or itself, this delegate is here to help.
+Implementing this in any view class unlocks its attributes, giving you three layers of view measuring to ensure exact sizing.
+More information can be found in the [klass file](https://github.com/AllanWang/KAU/blob/master/core/src/main/kotlin/ca/allanwang/kau/ui/views/MeasureSpecDelegate.kt)
+
 <a name="timber-logger"></a>
 ## Timber Logger
 
@@ -147,3 +156,13 @@ Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of th
 
 KAU's vast collection of extensions is one of its strongest features. 
 There are too many to explain here, but you may check out the [utils package](https://github.com/AllanWang/KAU/tree/master/core/src/main/kotlin/ca/allanwang/kau/utils)
+
+<a name="lazy-resettable></a>
+## Lazy Resettable
+
+In the spirit of Kotlin's Lazy delegate, KAU supports a resettable version. Calling `lazyResettable` produces the same delegate,
+but with an additional `invalidate` method.
+
+To further simplify this, any class can implement the `LazyResettableRegistry` interface by `LazyResettableRegistryDelegate`.
+This will allow you to call `lazyResettableRegistered`, and then `invalidateLazyResettables` to invalidate all registered lazy delegates.
+The registry is weakly held, so you may pass the delegate to other classes if necessary.
