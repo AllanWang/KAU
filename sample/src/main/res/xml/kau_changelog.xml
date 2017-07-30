@@ -15,7 +15,7 @@
     <item text=":core: Create View.setOnSingleTapListener()" />
     <item text=":core: Create rndColor, which generates a random opaque color for testing" />
     <item text=":core: Add resettable view binding variants to Kotterknife" />
-    <item text="" />
+    <item text=":core: Create lazy resettable registry" />
     <item text="" />
     <item text="" />
     <item text="" />

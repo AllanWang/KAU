@@ -163,6 +163,6 @@ There are too many to explain here, but you may check out the [utils package](ht
 In the spirit of Kotlin's Lazy delegate, KAU supports a resettable version. Calling `lazyResettable` produces the same delegate,
 but with an additional `invalidate` method.
 
-To further simplify this, any class can implement the `LazyResettableRegistry` interface by `LazyResettableRegistryDelegate`.
-This will allow you to call `lazyResettableRegistered`, and then `invalidateLazyResettables` to invalidate all registered lazy delegates.
-The registry is weakly held, so you may pass the delegate to other classes if necessary.
+To further simplify this, there is also a `LazyResettableRegistry` class that can be used to hold all resettables.
+The instance can be passed through the `lazyResettable` method, or classes can provide their own extension functions to 
+register the delegates by default.
