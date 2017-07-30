@@ -57,8 +57,7 @@ interface ILazyResettable<T> : Lazy<T> {
 interface ILazyResettableRegistry {
     fun <T : Any> lazy(initializer: () -> T): LazyResettable<T>
     fun <T : Any> add(resettable: LazyResettable<T>): LazyResettable<T>
-    fun cleanDuplicates()
-    fun invalidateLazyResettables()
+    fun invalidateAll()
     fun clear()
 }
 
@@ -81,12 +80,8 @@ class LazyResettableRegistry : ILazyResettableRegistry {
         return resettable
     }
 
-    override fun invalidateLazyResettables() {
+    override fun invalidateAll() {
         lazyRegistry.forEach { it.invalidate() }
-    }
-
-    override fun cleanDuplicates() {
-        lazyRegistry = lazyRegistry.toSet().toMutableList()
     }
 
     override fun clear() {

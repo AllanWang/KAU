@@ -25,7 +25,7 @@ class LazyResettableTest {
         val t1 = time
         Thread.sleep(5)
         val t2 = time
-        registry.invalidateLazyResettables()
+        registry.invalidateAll()
         Thread.sleep(5)
         val t3 = time
         assertEquals(t1, t2, "Lazy resettable not returning same value after second call")
