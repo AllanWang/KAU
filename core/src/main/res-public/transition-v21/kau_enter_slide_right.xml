@@ -4,7 +4,7 @@
     android:interpolator="@android:interpolator/linear_out_slow_in"
     android:transitionOrdering="together">
 
-    <slide android:slideEdge="top">
+    <slide android:slideEdge="right">
         <targets>
             <target android:excludeId="@android:id/navigationBarBackground" />
             <target android:excludeId="@android:id/statusBarBackground" />

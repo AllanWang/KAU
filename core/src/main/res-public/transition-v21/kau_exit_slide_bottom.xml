@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<transitionSet
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:transitionOrdering="together"
-    android:interpolator="@android:interpolator/fast_out_linear_in">
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:interpolator/fast_out_linear_in"
+    android:transitionOrdering="together">
 
     <slide
-        android:slideEdge="bottom"
-        android:duration="400">
+        android:duration="400"
+        android:slideEdge="bottom">
         <targets>
             <target android:excludeId="@android:id/navigationBarBackground" />
             <target android:excludeId="@android:id/statusBarBackground" />
