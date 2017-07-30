@@ -1,5 +1,7 @@
 package ca.allanwang.kau.ui.views
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
@@ -51,10 +53,12 @@ class RippleCanvas @JvmOverloads constructor(
 
     /**
      * Creates a ripple effect from the given starting values
-     * [fade] will gradually transition previous ripples to a transparent color so the resulting background is what we want
-     * this is typically only necessary if the ripple color has transparency
      */
-    fun ripple(color: Int, startX: Float = 0f, startY: Float = 0f, duration: Long = 600L, fade: Boolean = Color.alpha(color) != 255) {
+    fun ripple(color: Int,
+               startX: Float = 0f,
+               startY: Float = 0f,
+               duration: Long = 600L,
+               callback: (() -> Unit)? = null) {
         val w = width.toFloat()
         val h = height.toFloat()
         val x = when (startX) {
@@ -68,7 +72,7 @@ class RippleCanvas @JvmOverloads constructor(
             else -> startY
         }
         val maxRadius = Math.hypot(Math.max(x, w - x).toDouble(), Math.max(y, h - y).toDouble()).toFloat()
-        val ripple = Ripple(color, x, y, 0f, maxRadius, fade)
+        val ripple = Ripple(color, x, y, 0f, maxRadius)
         ripples.add(ripple)
         val animator = ValueAnimator.ofFloat(0f, maxRadius)
         animator.duration = duration
@@ -76,6 +80,11 @@ class RippleCanvas @JvmOverloads constructor(
             ripple.radius = animation.animatedValue as Float
             invalidate()
         }
+        if (callback != null)
+            animator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationCancel(animation: Animator?) = callback()
+                override fun onAnimationEnd(animation: Animator?)  = callback()
+            })
         animator.start()
     }
 
@@ -108,8 +117,7 @@ class RippleCanvas @JvmOverloads constructor(
                           val x: Float,
                           val y: Float,
                           var radius: Float,
-                          val maxRadius: Float,
-                          val fade: Boolean)
+                          val maxRadius: Float)
 
     companion object {
         const val MIDDLE = -1.0f

@@ -69,22 +69,15 @@ class LazyResettableRegistry : ILazyResettableRegistry {
 
     var lazyRegistry: MutableList<LazyResettable<*>> = mutableListOf()
 
-    override fun <T : Any> lazy(initializer: () -> T): LazyResettable<T> {
-        val lazy = lazyResettable(initializer)
-        lazyRegistry.add(lazy)
-        return lazy
-    }
+    override fun <T : Any> lazy(initializer: () -> T): LazyResettable<T>
+            = add(lazyResettable(initializer))
 
     override fun <T : Any> add(resettable: LazyResettable<T>): LazyResettable<T> {
         lazyRegistry.add(resettable)
         return resettable
     }
 
-    override fun invalidateAll() {
-        lazyRegistry.forEach { it.invalidate() }
-    }
+    override fun invalidateAll() = lazyRegistry.forEach { it.invalidate() }
 
-    override fun clear() {
-        lazyRegistry.clear()
-    }
+    override fun clear() = lazyRegistry.clear()
 }
