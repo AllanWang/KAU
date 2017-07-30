@@ -1,6 +1,7 @@
 package ca.allanwang.kau.kotlin
 
 import java.io.Serializable
+import java.lang.ref.WeakReference
 import kotlin.reflect.KProperty
 
 /**
@@ -13,7 +14,7 @@ internal object UNINITIALIZED
 
 fun <T : Any> lazyResettable(initializer: () -> T): LazyResettable<T> = LazyResettable<T>(initializer)
 
-class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : ILazyResettable<T>, Serializable {
+open class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : ILazyResettable<T>, Serializable {
     @Volatile private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this
 
@@ -52,4 +53,32 @@ class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = nul
 
 interface ILazyResettable<T> : Lazy<T> {
     fun invalidate()
+}
+
+/*
+ * The following below is a variant where lazy resettables are automatically registered to a class
+ * This enables all lazy delegates to be invalidated at once
+ */
+
+interface LazyResettableRegistry {
+    fun invalidateLazyResettables()
+    fun <T : Any> lazyResettableRegistered(initializer: () -> T): LazyResettable<T>
+}
+
+class LazyResettableRegistryDelegate : LazyResettableRegistry {
+
+    var lazyRegistry: WeakReference<MutableList<LazyResettable<*>>> = WeakReference(mutableListOf())
+
+    override fun <T : Any> lazyResettableRegistered(initializer: () -> T): LazyResettable<T> {
+        val lazy = lazyResettable(initializer)
+       if (lazyRegistry.get() == null)
+           lazyRegistry = WeakReference(mutableListOf())
+        lazyRegistry.get()!!.add(lazy)
+        return lazy
+    }
+
+    override fun invalidateLazyResettables() {
+        lazyRegistry.get()?.forEach { it.invalidate() }
+    }
+
 }
