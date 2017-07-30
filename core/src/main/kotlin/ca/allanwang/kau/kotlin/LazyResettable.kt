@@ -1,7 +1,6 @@
 package ca.allanwang.kau.kotlin
 
 import java.io.Serializable
-import java.lang.ref.WeakReference
 import kotlin.reflect.KProperty
 
 /**
@@ -58,11 +57,9 @@ interface ILazyResettable<T> : Lazy<T> {
 interface ILazyResettableRegistry {
     fun <T : Any> lazy(initializer: () -> T): LazyResettable<T>
     fun <T : Any> add(resettable: LazyResettable<T>): LazyResettable<T>
-    /**
-     * Removes duplicates from our registry
-     */
-    fun clean()
+    fun cleanDuplicates()
     fun invalidateLazyResettables()
+    fun clear()
 }
 
 /**
@@ -71,39 +68,28 @@ interface ILazyResettableRegistry {
  */
 class LazyResettableRegistry : ILazyResettableRegistry {
 
-    private var lazyRegistry: WeakReference<MutableList<LazyResettable<*>>> = WeakReference(mutableListOf())
-
-    //ensure that our list is valid
-    private val registryList: MutableList<LazyResettable<*>>
-        get() {
-            if (lazyRegistry.get() == null)
-                lazyRegistry = WeakReference(mutableListOf())
-            return lazyRegistry.get()!!
-        }
+    var lazyRegistry: MutableList<LazyResettable<*>> = mutableListOf()
 
     override fun <T : Any> lazy(initializer: () -> T): LazyResettable<T> {
         val lazy = lazyResettable(initializer)
-        registryList.add(lazy)
+        lazyRegistry.add(lazy)
         return lazy
     }
 
     override fun <T : Any> add(resettable: LazyResettable<T>): LazyResettable<T> {
-        if (!registryList.contains(resettable))
-            registryList.add(resettable)
+        lazyRegistry.add(resettable)
         return resettable
     }
 
     override fun invalidateLazyResettables() {
-        lazyRegistry.get()?.forEach { it.invalidate() }
+        lazyRegistry.forEach { it.invalidate() }
     }
 
-    override fun clean() {
-        lazyRegistry = WeakReference(registryList.toSet().toMutableList())
+    override fun cleanDuplicates() {
+        lazyRegistry = lazyRegistry.toSet().toMutableList()
     }
-}
 
-fun <T : Any> lazyResettable(initializer: () -> T, registry: ILazyResettableRegistry): LazyResettable<T> {
-    val lazy = LazyResettable<T>(initializer)
-    registry.add(lazy)
-    return lazy
+    override fun clear() {
+        lazyRegistry.clear()
+    }
 }

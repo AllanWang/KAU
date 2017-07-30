@@ -1,8 +1,6 @@
-package ca.allanwang.kprefs.library
+package ca.allanwang.kau.utils
 
 import android.graphics.Color
-import ca.allanwang.kau.utils.round
-import ca.allanwang.kau.utils.toHexString
 import org.junit.Test
 import kotlin.test.assertEquals
 
