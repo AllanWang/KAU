@@ -6,6 +6,19 @@ import ca.allanwang.kau.kotlin.ILazyResettable
 
 /**
  * Created by Allan Wang on 2017-06-07.
+ *
+ * Base class for shared preferences
+ * All objects extending this class must be called in
+ * the app's [android.app.Application] class
+ *
+ * See the [KPref.kpref] extensions for more details
+ *
+ * Furthermore, all kprefs are held in the [prefMap],
+ * so if you wish to reset a preference, you must also invalidate the kpref
+ * from that map
+ *
+ * You may optionally override [deleteKeys]. This will be called on initialization
+ * And delete all keys returned from that method
  */
 open class KPref {
 
@@ -18,6 +31,12 @@ open class KPref {
         initialized = true
         this.c = c.applicationContext
         PREFERENCE_NAME = preferenceName
+        val toDelete = deleteKeys()
+        if (toDelete.isNotEmpty()) {
+            val edit = sp.edit()
+            toDelete.forEach { edit.remove(it) }
+            edit.apply()
+        }
     }
 
     internal val sp: SharedPreferences by lazy {
@@ -32,5 +51,7 @@ open class KPref {
     }
 
     operator fun get(key: String): ILazyResettable<*>? = prefMap[key]
+
+    open fun deleteKeys(): Array<String> = arrayOf()
 
 }

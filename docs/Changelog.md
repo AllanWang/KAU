@@ -10,6 +10,8 @@
 * :core: Create rndColor, which generates a random opaque color for testing
 * :core: Add resettable view binding variants to Kotterknife
 * :core: Create lazy resettable registry
+* :core: Add more transitions and anims
+* :kpref-activity: Reduce alpha color for desc
 
 ## v3.2.0
 * :adapter: Make KauAnimator extensible
