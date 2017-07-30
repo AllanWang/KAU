@@ -3,7 +3,6 @@ ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
 apply from: '../android-lib.gradle'
 
 dependencies {
-
     compile project(':core')
 
     compile "com.mikepenz:fastadapter:${FAST_ADAPTER}@aar"

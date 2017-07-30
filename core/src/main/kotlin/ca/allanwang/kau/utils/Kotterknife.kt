@@ -158,7 +158,7 @@ private open class Lazy<in T, out V>(private val initializer: (T, KProperty<*>) 
     override fun getValue(thisRef: T, property: KProperty<*>): V {
         if (value == EMPTY)
             value = initializer(thisRef, property)
-        
+
         return value as V
     }
 }
@@ -303,7 +303,7 @@ private object KotterknifeRegistry {
     private val lazyMap = WeakHashMap<Any, MutableCollection<LazyResettable<*, *>>>()
 
     fun register(target: Any, lazy: LazyResettable<*, *>)
-       = lazyMap.getOrPut(target, { Collections.newSetFromMap(WeakHashMap()) }).add(lazy)
+            = lazyMap.getOrPut(target, { Collections.newSetFromMap(WeakHashMap()) }).add(lazy)
 
-    fun reset(target: Any)=lazyMap[target]?.forEach { it.reset() }
+    fun reset(target: Any) = lazyMap[target]?.forEach { it.reset() }
 }
