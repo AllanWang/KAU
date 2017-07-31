@@ -12,6 +12,7 @@
 * :core: Create lazy resettable registry
 * :core: Add more transitions and anims
 * :kpref-activity: Reduce alpha color for desc
+* :imagepicker: [breaking] Rename to mediapicker and add support for videos
 
 ## v3.2.0
 * :adapter: Make KauAnimator extensible
