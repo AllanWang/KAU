@@ -1,4 +1,4 @@
-package ca.allanwang.kau.changelog
+package ca.allanwang.kau.xml
 
 import android.content.Context
 import android.content.res.XmlResourceParser
