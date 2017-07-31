@@ -14,9 +14,8 @@ import ca.allanwang.kau.utils.startActivityForResult
 /**
  * Image picker launchers
  */
-fun Activity.kauLaunchImagePicker(clazz: Class<out ImagePickerCore<*>>, requestCode: Int) {
-//    startActivityForResult(clazz, requestCode, true)
-    startActivityForResult(clazz, requestCode, transition = ImagePickerActivityOverlayBase::class.java.isAssignableFrom(clazz))
+fun Activity.kauLaunchMediaPicker(clazz: Class<out MediaPickerCore<*>>, requestCode: Int) {
+    startActivityForResult(clazz, requestCode, transition = MediaPickerActivityOverlayBase::class.java.isAssignableFrom(clazz))
 }
 
 /**
@@ -24,10 +23,10 @@ fun Activity.kauLaunchImagePicker(clazz: Class<out ImagePickerCore<*>>, requestC
  * call under [Activity.onActivityResult]
  * and make sure that the requestCode matches first
  */
-fun Activity.kauOnImagePickerResult(resultCode: Int, data: Intent?) = ImagePickerCore.onImagePickerResult(resultCode, data)
+fun Activity.kauOnMediaPickerResult(resultCode: Int, data: Intent?) = MediaPickerCore.onMediaPickerResult(resultCode, data)
 
 internal const val LOADER_ID = 42
-internal const val IMAGE_PICKER_RESULT = "image_picker_result"
+internal const val MEDIA_PICKER_RESULT = "media_picker_result"
 
 internal const val ANIMATION_DURATION = 200L
 internal const val ANIMATION_SCALE = 0.95f

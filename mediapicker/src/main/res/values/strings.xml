@@ -3,5 +3,5 @@
     <string name="kau_no_items_found">No items found</string>
     <string name="kau_no_items_selected">No items have been selected</string>
     <string name="kau_blurrable_imageview">Blurrable ImageView</string>
-    <string name="kau_no_images_loaded">No images loaded</string>
+    <string name="kau_no_items_loaded">No items loaded</string>
 </resources>

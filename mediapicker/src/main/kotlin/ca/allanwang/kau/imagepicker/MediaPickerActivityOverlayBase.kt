@@ -13,11 +13,11 @@ import ca.allanwang.kau.utils.toast
  *
  * Base activity for selecting images from storage
  * This variant is an overlay and selects one image only before returning directly
- * It is more efficient than [ImagePickerActivityBase], as all images are one layer deep
+ * It is more efficient than [MediaPickerActivityBase], as all images are one layer deep
  * as opposed to three layers deep
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-abstract class ImagePickerActivityOverlayBase : ImagePickerCore<ImageItemBasic>() {
+abstract class MediaPickerActivityOverlayBase(mediaType: MediaType) : MediaPickerCore<MediaItemBasic>(mediaType) {
 
     val draggable: ElasticDragDismissFrameLayout by bindView(R.id.kau_draggable)
     val recycler: RecyclerView by bindView(R.id.kau_recyclerview)
@@ -26,7 +26,7 @@ abstract class ImagePickerActivityOverlayBase : ImagePickerCore<ImageItemBasic>(
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_activity_image_picker_overlay)
         initializeRecycler(recycler)
-        ImageItemBasic.bindEvents(this, adapter)
+        MediaItemBasic.bindEvents(this, adapter)
 
         draggable.addExitListener(this, R.transition.kau_image_exit_bottom, R.transition.kau_image_exit_top)
         draggable.setOnClickListener { finishAfterTransition() }
@@ -40,10 +40,10 @@ abstract class ImagePickerActivityOverlayBase : ImagePickerCore<ImageItemBasic>(
     }
 
     override fun onStatusChange(loaded: Boolean) {
-        if (!loaded) toast(R.string.kau_no_images_loaded)
+        if (!loaded) toast(R.string.kau_no_items_loaded)
     }
 
-    override fun converter(model: ImageModel): ImageItemBasic = ImageItemBasic(model)
+    override fun converter(model: MediaModel): MediaItemBasic = MediaItemBasic(model)
 
     override fun onBackPressed() {
         finishAfterTransition()

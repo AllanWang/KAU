@@ -30,10 +30,16 @@
             android:theme="@style/Kau.About" />
         <activity
             android:name=".ImagePickerActivity"
-            android:theme="@style/Kau.ImagePicker" />
+            android:theme="@style/Kau.MediaPicker" />
         <activity
             android:name=".ImagePickerActivityOverlay"
-            android:theme="@style/Kau.ImagePicker.Overlay" />
+            android:theme="@style/Kau.MediaPicker.Overlay" />
+        <activity
+            android:name=".VideoPickerActivity"
+            android:theme="@style/Kau.MediaPicker" />
+        <activity
+            android:name=".VideoPickerActivityOverlay"
+            android:theme="@style/Kau.MediaPicker.Overlay" />
         <activity
             android:name=".AdapterActivity"
             android:theme="@style/Kau.Translucent.SlideBottom" />

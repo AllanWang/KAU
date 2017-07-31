@@ -21,18 +21,18 @@ import com.mikepenz.fastadapter.FastAdapter
 /**
  * Created by Allan Wang on 2017-07-04.
  */
-class ImageItemBasic(val data: ImageModel)
-    : KauIItem<ImageItem, ImageItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { ViewHolder(it) }) {
+class MediaItemBasic(val data: MediaModel)
+    : KauIItem<MediaItem, MediaItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { ViewHolder(it) }) {
 
     companion object {
         @SuppressLint("NewApi")
-        fun bindEvents(activity: Activity, fastAdapter: FastAdapter<ImageItemBasic>) {
+        fun bindEvents(activity: Activity, fastAdapter: FastAdapter<MediaItemBasic>) {
             fastAdapter.withSelectable(false)
                     //add image data and return right away
                     .withOnClickListener { _, _, item, _ ->
                         val intent = Intent()
                         val data = arrayListOf(item.data)
-                        intent.putParcelableArrayListExtra(IMAGE_PICKER_RESULT, data)
+                        intent.putParcelableArrayListExtra(MEDIA_PICKER_RESULT, data)
                         activity.setResult(AppCompatActivity.RESULT_OK, intent)
                         if (buildIsLollipopAndUp) activity.finishAfterTransition()
                         else activity.finish()
@@ -49,7 +49,7 @@ class ImageItemBasic(val data: ImageModel)
                 .load(data.data)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
-                        holder.image.setImageDrawable(PickerCore.getErrorDrawable(holder.itemView.context))
+                        holder.image.setImageDrawable(MediaPickerCore.getErrorDrawable(holder.itemView.context))
                         return true;
                     }
 

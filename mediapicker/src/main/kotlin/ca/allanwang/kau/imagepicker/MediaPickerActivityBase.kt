@@ -19,9 +19,9 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
  *
  * Base activity for selecting images from storage
  * Images are blurred when selected, and multiple images can be selected at a time.
- * Having three layered images makes this slightly slower than [ImagePickerActivityOverlayBase]
+ * Having three layered images makes this slightly slower than [MediaPickerActivityOverlayBase]
  */
-abstract class ImagePickerActivityBase : ImagePickerCore<ImageItem>() {
+abstract class MediaPickerActivityBase(mediaType: MediaType) : MediaPickerCore<MediaItem>(mediaType) {
 
     val coordinator: CoordinatorLayout by bindView(R.id.kau_coordinator)
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)
@@ -40,13 +40,13 @@ abstract class ImagePickerActivityBase : ImagePickerCore<ImageItem>() {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setHomeAsUpIndicator(GoogleMaterial.Icon.gmd_close.toDrawable(this@ImagePickerActivityBase, 18))
+            setHomeAsUpIndicator(GoogleMaterial.Icon.gmd_close.toDrawable(this@MediaPickerActivityBase, 18))
         }
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
         initializeRecycler(recycler)
 
-        ImageItem.bindEvents(adapter)
+        MediaItem.bindEvents(adapter)
         adapter.withSelectionListener({ _, _ -> selectionCount.text = adapter.selections.size.toString() })
 
         fab.apply {
@@ -59,7 +59,7 @@ abstract class ImagePickerActivityBase : ImagePickerCore<ImageItem>() {
                 } else {
                     val intent = Intent()
                     val data = ArrayList(selection.map { it.data })
-                    intent.putParcelableArrayListExtra(IMAGE_PICKER_RESULT, data)
+                    intent.putParcelableArrayListExtra(MEDIA_PICKER_RESULT, data)
                     setResult(RESULT_OK, intent)
                     finish()
                 }
@@ -70,7 +70,7 @@ abstract class ImagePickerActivityBase : ImagePickerCore<ImageItem>() {
         loadItems()
     }
 
-    override fun converter(model: ImageModel): ImageItem = ImageItem(model)
+    override fun converter(model: MediaModel): MediaItem = MediaItem(model)
 
     /**
      * Decide whether the toolbar can hide itself

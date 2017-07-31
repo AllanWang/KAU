@@ -7,7 +7,10 @@ import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v4.app.LoaderManager
+import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -27,7 +30,7 @@ import com.mikepenz.iconics.IconicsDrawable
  *
  * Container for the main logic behind the both pickers
  */
-abstract class PickerCore<T : IItem<*, *>, V> : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
         /**
@@ -54,7 +57,7 @@ abstract class PickerCore<T : IItem<*, *>, V> : AppCompatActivity(), LoaderManag
          * Create error tile for a given item
          */
         fun getErrorDrawable(context: Context): Drawable {
-            val sizePx = PickerCore.computeViewSize(context)
+            val sizePx = MediaPickerCore.computeViewSize(context)
             return IconicsDrawable(context, GoogleMaterial.Icon.gmd_error)
                     .sizePx(sizePx)
                     .backgroundColor(accentColor)
@@ -65,26 +68,20 @@ abstract class PickerCore<T : IItem<*, *>, V> : AppCompatActivity(), LoaderManag
         var accentColor: Int = 0xff666666.toInt()
 
         /**
-         * Helper method to retrieve the images from our iamge picker
+         * Helper method to retrieve the media from our media picker
          * This is used for both single and multiple photo picks
          */
-        fun onImagePickerResult(resultCode: Int, data: Intent?): List<ImageModel> {
-            if (resultCode != Activity.RESULT_OK || data == null || !data.hasExtra(IMAGE_PICKER_RESULT))
+        fun onMediaPickerResult(resultCode: Int, data: Intent?): List<MediaModel> {
+            if (resultCode != Activity.RESULT_OK || data == null || !data.hasExtra(MEDIA_PICKER_RESULT))
                 return emptyList()
-            return data.getParcelableArrayListExtra(IMAGE_PICKER_RESULT)
+            return data.getParcelableArrayListExtra(MEDIA_PICKER_RESULT)
         }
 
         /**
-         * Number of loaded images we should cache
+         * Number of loaded items we should cache
          * This is arbitrary
          */
         const val CACHE_SIZE = 80
-
-        /**
-         * We know that Glide takes a while to initially fetch the images
-         * My as well make it look pretty
-         */
-        const val INITIAL_LOAD_DELAY = 600L
     }
 
     val adapter: FastItemAdapter<T> = FastItemAdapter()
@@ -98,24 +95,27 @@ abstract class PickerCore<T : IItem<*, *>, V> : AppCompatActivity(), LoaderManag
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
                 override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
-                    return extraSpace
+                    return if (mediaType != MediaType.VIDEO) extraSpace else super.getExtraLayoutSpace(state)
                 }
             }
             setItemViewCacheSize(CACHE_SIZE)
             isDrawingCacheEnabled = true
             layoutManager = manager
-            adapter = this@PickerCore.adapter
+            adapter = this@MediaPickerCore.adapter
             setHasFixedSize(true)
-            itemAnimator = object : KauAnimator(FadeScaleAnimatorAdd(0.8f)) {
-                override fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float): Long {
-                    return super.startDelay(holder, duration, factor) + INITIAL_LOAD_DELAY
-                }
-            }
+            itemAnimator = KauAnimator(FadeScaleAnimatorAdd(0.8f))
         }
     }
 
+    //Sort by descending date
+    var sortQuery = MediaStore.MediaColumns.DATE_MODIFIED + " DESC"
+
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
+        return CursorLoader(this, mediaType.contentUri, MediaModel.projection, null, null, sortQuery)
+    }
+
     /**
-     * Request read permissions and load all external images
+     * Request read permissions and load all external items
      * The result will be filtered through {@link #onLoadFinished(Loader, Cursor)}
      * Call this to make sure that we request permissions each time
      * The adapter will be cleared on each successful call
@@ -142,16 +142,14 @@ abstract class PickerCore<T : IItem<*, *>, V> : AppCompatActivity(), LoaderManag
         }
         val items = mutableListOf<T>()
         do {
-            val model = factory(data)
+            val model = MediaModel(data)
             if (!shouldLoad(model)) continue
             items.add(converter(model))
         } while (data.moveToNext())
         addItems(items)
     }
 
-    abstract fun factory(data: Cursor): V
-
-    abstract fun converter(model: V): T
+    abstract fun converter(model: MediaModel): T
 
     override fun onLoaderReset(loader: Loader<Cursor>?) = reset()
 
@@ -170,7 +168,14 @@ abstract class PickerCore<T : IItem<*, *>, V> : AppCompatActivity(), LoaderManag
         adapter.clear()
     }
 
-    abstract fun shouldLoad(model: V): Boolean
+    /**
+     * Optional filter to decide which items get displayed
+     * Defaults to checking their sizes to filter out
+     * very small items such as lurking drawables/icons
+     *
+     * Returns true if model should be displayed, false otherwise
+     */
+    open fun shouldLoad(model: MediaModel): Boolean = model.size > 10000L
 
     open fun onStatusChange(loaded: Boolean) {}
 

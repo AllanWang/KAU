@@ -15,13 +15,13 @@ import com.mikepenz.fastadapter.FastAdapter
 /**
  * Created by Allan Wang on 2017-07-04.
  */
-class ImageItem(val data: ImageModel)
-    : KauIItem<ImageItem, ImageItem.ViewHolder>(R.layout.kau_iitem_image, { ViewHolder(it) }) {
+class MediaItem(val data: MediaModel)
+    : KauIItem<MediaItem, MediaItem.ViewHolder>(R.layout.kau_iitem_image, { ViewHolder(it) }) {
 
     private var failedToLoad = false
 
     companion object {
-        fun bindEvents(fastAdapter: FastAdapter<ImageItem>) {
+        fun bindEvents(fastAdapter: FastAdapter<MediaItem>) {
             fastAdapter.withMultiSelect(true)
                     .withSelectable(true)
                     //adapter selector occurs before the on click event
@@ -43,7 +43,7 @@ class ImageItem(val data: ImageModel)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         failedToLoad = true
-                        holder.container.imageBase.setImageDrawable(PickerCore.getErrorDrawable(holder.itemView.context))
+                        holder.container.imageBase.setImageDrawable(MediaPickerCore.getErrorDrawable(holder.itemView.context))
                         return true;
                     }
 
