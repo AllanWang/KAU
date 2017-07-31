@@ -15,7 +15,7 @@ import java.io.File
  */
 
 data class MediaModel(
-        val data: String, val mimeType: String, val size: Long, val dateModified: Long, val displayName: String
+        val data: String, val mimeType: String, val size: Long, val dateModified: Long, val displayName: String?
 ) : Parcelable {
 
     @Throws(SQLException::class)
@@ -76,6 +76,3 @@ data class MediaModel(
     }
 
 }
-
-private fun Cursor.getString(name: String) = getString(getColumnIndex(name))
-private fun Cursor.getLong(name: String) = getLong(getColumnIndex(name))
