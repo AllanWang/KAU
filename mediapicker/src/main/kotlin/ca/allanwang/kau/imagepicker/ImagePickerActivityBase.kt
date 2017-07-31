@@ -46,16 +46,16 @@ abstract class ImagePickerActivityBase : ImagePickerCore<ImageItem>() {
 
         initializeRecycler(recycler)
 
-        ImageItem.bindEvents(imageAdapter)
-        imageAdapter.withSelectionListener({ _, _ -> selectionCount.text = imageAdapter.selections.size.toString() })
+        ImageItem.bindEvents(adapter)
+        adapter.withSelectionListener({ _, _ -> selectionCount.text = adapter.selections.size.toString() })
 
         fab.apply {
             show()
             setIcon(GoogleMaterial.Icon.gmd_send)
             setOnClickListener {
-                val selection = imageAdapter.selectedItems
+                val selection = adapter.selectedItems
                 if (selection.isEmpty()) {
-                    toast(R.string.kau_no_images_selected)
+                    toast(R.string.kau_no_items_selected)
                 } else {
                     val intent = Intent()
                     val data = ArrayList(selection.map { it.data })
@@ -67,7 +67,7 @@ abstract class ImagePickerActivityBase : ImagePickerCore<ImageItem>() {
             hideOnDownwardsScroll(recycler)
         }
 
-        loadImages()
+        loadItems()
     }
 
     override fun converter(model: ImageModel): ImageItem = ImageItem(model)
@@ -90,7 +90,7 @@ abstract class ImagePickerActivityBase : ImagePickerCore<ImageItem>() {
 
     override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
         super.onLoadFinished(loader, data)
-        setToolbarScrollable((recycler.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() < imageAdapter.getItemCount() - 1)
+        setToolbarScrollable((recycler.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() < adapter.getItemCount() - 1)
     }
 
     override fun onStatusChange(loaded: Boolean) {

@@ -43,7 +43,7 @@ dependencies {
     
     compile "ca.allanwang.kau:about:$KAU"
     compile "ca.allanwang.kau:colorpicker:$KAU"
-    compile "ca.allanwang.kau:imagepicker:$KAU"
+    compile "ca.allanwang.kau:mediapicker:$KAU"
     compile "ca.allanwang.kau:kpref-activity:$KAU"
     compile "ca.allanwang.kau:searchview:$KAU"
 }
@@ -89,8 +89,8 @@ dependencies {
 * Includes `:core`, 
 [`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
 
-## [Image Picker](imagepicker#readme)
-* Fully functional image picker, both as an overlay and as a requested activity.
+## [Media Picker](mediapicker#readme)
+* Fully functional image and video pickers, both as an overlay and as a requested activity.
 * Includes `:core-ui`, 
 [`Glide`](https://github.com/bumptech/glide),
 [`Blurry`](https://github.com/wasabeef/Blurry)

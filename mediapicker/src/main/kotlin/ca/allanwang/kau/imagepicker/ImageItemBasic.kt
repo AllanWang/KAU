@@ -1,10 +1,16 @@
 package ca.allanwang.kau.imagepicker
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import ca.allanwang.kau.iitems.KauIItem
+import ca.allanwang.kau.ui.views.MeasuredImageView
 import ca.allanwang.kau.utils.bindView
+import ca.allanwang.kau.utils.buildIsLollipopAndUp
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -15,26 +21,27 @@ import com.mikepenz.fastadapter.FastAdapter
 /**
  * Created by Allan Wang on 2017-07-04.
  */
-class ImageItem(val data: ImageModel)
-    : KauIItem<ImageItem, ImageItem.ViewHolder>(R.layout.kau_iitem_image, { ViewHolder(it) }) {
-
-    private var failedToLoad = false
+class ImageItemBasic(val data: ImageModel)
+    : KauIItem<ImageItem, ImageItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { ViewHolder(it) }) {
 
     companion object {
-        fun bindEvents(fastAdapter: FastAdapter<ImageItem>) {
-            fastAdapter.withMultiSelect(true)
-                    .withSelectable(true)
-                    //adapter selector occurs before the on click event
-                    .withOnClickListener { v, _, item, _ ->
-                        val image = v as BlurredImageView
-                        if (item.isSelected) image.blur()
-                        else image.removeBlur()
+        @SuppressLint("NewApi")
+        fun bindEvents(activity: Activity, fastAdapter: FastAdapter<ImageItemBasic>) {
+            fastAdapter.withSelectable(false)
+                    //add image data and return right away
+                    .withOnClickListener { _, _, item, _ ->
+                        val intent = Intent()
+                        val data = arrayListOf(item.data)
+                        intent.putParcelableArrayListExtra(IMAGE_PICKER_RESULT, data)
+                        activity.setResult(AppCompatActivity.RESULT_OK, intent)
+                        if (buildIsLollipopAndUp) activity.finishAfterTransition()
+                        else activity.finish()
                         true
                     }
         }
     }
 
-    override fun isSelectable(): Boolean = !failedToLoad
+    override fun isSelectable(): Boolean = false
 
     override fun bindView(holder: ViewHolder, payloads: List<Any>?) {
         super.bindView(holder, payloads)
@@ -42,28 +49,23 @@ class ImageItem(val data: ImageModel)
                 .load(data.data)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
-                        failedToLoad = true
-                        holder.container.imageBase.setImageDrawable(ImagePickerCore.getErrorDrawable(holder.itemView.context))
+                        holder.image.setImageDrawable(PickerCore.getErrorDrawable(holder.itemView.context))
                         return true;
                     }
 
                     override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                        holder.container.imageBase.setImageDrawable(resource)
-                        if (isSelected) holder.container.blurInstantly()
-                        return true;
+                        return false
                     }
                 })
-                .into(holder.container.imageBase)
+                .into(holder.image)
     }
 
     override fun unbindView(holder: ViewHolder) {
         super.unbindView(holder)
-        Glide.with(holder.itemView).clear(holder.container.imageBase)
-        holder.container.removeBlurInstantly()
-        failedToLoad = false
+        Glide.with(holder.itemView).clear(holder.image)
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val container: BlurredImageView by bindView(R.id.kau_image)
+        val image: MeasuredImageView by bindView(R.id.kau_image)
     }
 }

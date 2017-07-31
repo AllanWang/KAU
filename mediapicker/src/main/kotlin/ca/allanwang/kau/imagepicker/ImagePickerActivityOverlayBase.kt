@@ -26,12 +26,12 @@ abstract class ImagePickerActivityOverlayBase : ImagePickerCore<ImageItemBasic>(
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_activity_image_picker_overlay)
         initializeRecycler(recycler)
-        ImageItemBasic.bindEvents(this, imageAdapter)
+        ImageItemBasic.bindEvents(this, adapter)
 
         draggable.addExitListener(this, R.transition.kau_image_exit_bottom, R.transition.kau_image_exit_top)
         draggable.setOnClickListener { finishAfterTransition() }
 
-        loadImages()
+        loadItems()
     }
 
     override fun finishAfterTransition() {

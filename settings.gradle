@@ -5,6 +5,6 @@ include ':core',
         ':adapter',
         ':colorpicker',
         ':core-ui',
-        ':imagepicker',
+        ':mediapicker',
         ':kpref-activity',
         ':searchview'

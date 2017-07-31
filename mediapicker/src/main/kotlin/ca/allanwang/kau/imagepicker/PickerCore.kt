@@ -7,10 +7,7 @@ import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.os.Bundle
-import android.provider.MediaStore
 import android.support.v4.app.LoaderManager
-import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -28,9 +25,9 @@ import com.mikepenz.iconics.IconicsDrawable
 /**
  * Created by Allan Wang on 2017-07-23.
  *
- * Container for the main logic behind the image pickers
+ * Container for the main logic behind the both pickers
  */
-abstract class ImagePickerCore<T : IItem<*, *>> : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+abstract class PickerCore<T : IItem<*, *>, V> : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
         /**
@@ -57,7 +54,7 @@ abstract class ImagePickerCore<T : IItem<*, *>> : AppCompatActivity(), LoaderMan
          * Create error tile for a given item
          */
         fun getErrorDrawable(context: Context): Drawable {
-            val sizePx = ImagePickerCore.computeViewSize(context)
+            val sizePx = PickerCore.computeViewSize(context)
             return IconicsDrawable(context, GoogleMaterial.Icon.gmd_error)
                     .sizePx(sizePx)
                     .backgroundColor(accentColor)
@@ -90,7 +87,7 @@ abstract class ImagePickerCore<T : IItem<*, *>> : AppCompatActivity(), LoaderMan
         const val INITIAL_LOAD_DELAY = 600L
     }
 
-    val imageAdapter: FastItemAdapter<T> = FastItemAdapter()
+    val adapter: FastItemAdapter<T> = FastItemAdapter()
 
     /**
      * Further improve preloading by extending the layout space
@@ -107,7 +104,7 @@ abstract class ImagePickerCore<T : IItem<*, *>> : AppCompatActivity(), LoaderMan
             setItemViewCacheSize(CACHE_SIZE)
             isDrawingCacheEnabled = true
             layoutManager = manager
-            adapter = imageAdapter
+            adapter = this@PickerCore.adapter
             setHasFixedSize(true)
             itemAnimator = object : KauAnimator(FadeScaleAnimatorAdd(0.8f)) {
                 override fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float): Long {
@@ -117,16 +114,13 @@ abstract class ImagePickerCore<T : IItem<*, *>> : AppCompatActivity(), LoaderMan
         }
     }
 
-    //Sort by descending date
-    var sortQuery = MediaStore.Images.Media.DATE_MODIFIED + " DESC"
-
     /**
      * Request read permissions and load all external images
      * The result will be filtered through {@link #onLoadFinished(Loader, Cursor)}
      * Call this to make sure that we request permissions each time
      * The adapter will be cleared on each successful call
      */
-    open fun loadImages() {
+    open fun loadItems() {
         kauRequestPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
             granted, _ ->
             if (granted) {
@@ -139,35 +133,25 @@ abstract class ImagePickerCore<T : IItem<*, *>> : AppCompatActivity(), LoaderMan
         }
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-        val columns = arrayOf(
-                MediaStore.Images.Media._ID,
-                MediaStore.Images.Media.TITLE,
-                MediaStore.Images.Media.DATA,
-                MediaStore.Images.Media.SIZE,
-                MediaStore.Images.Media.DISPLAY_NAME,
-                MediaStore.Images.Media.DATE_MODIFIED
-        )
-        return CursorLoader(this, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, columns, null, null, sortQuery)
-    }
-
     override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
         reset()
         if (data == null || !data.moveToFirst()) {
-            toast(R.string.kau_no_images_found)
+            toast(R.string.kau_no_items_found)
             onStatusChange(false)
             return
         }
         val items = mutableListOf<T>()
         do {
-            val model = ImageModel(data)
+            val model = factory(data)
             if (!shouldLoad(model)) continue
             items.add(converter(model))
         } while (data.moveToNext())
         addItems(items)
     }
 
-    abstract fun converter(model: ImageModel): T
+    abstract fun factory(data: Cursor): V
+
+    abstract fun converter(model: V): T
 
     override fun onLoaderReset(loader: Loader<Cursor>?) = reset()
 
@@ -176,24 +160,17 @@ abstract class ImagePickerCore<T : IItem<*, *>> : AppCompatActivity(), LoaderMan
      * when the adapter should add the items
      */
     open fun addItems(items: List<T>) {
-        imageAdapter.add(items)
+        adapter.add(items)
     }
 
     /**
      * Clears the adapter to prepare for a new load
      */
     open fun reset() {
-        imageAdapter.clear()
+        adapter.clear()
     }
 
-    /**
-     * Optional filter to decide which images get displayed
-     * Defaults to checking their sizes to filter out
-     * very small images such as lurking drawables/icons
-     *
-     * Returns true if model should be displayed, false otherwise
-     */
-    open fun shouldLoad(model: ImageModel): Boolean = model.size > 10000L
+    abstract fun shouldLoad(model: V): Boolean
 
     open fun onStatusChange(loaded: Boolean) {}
 

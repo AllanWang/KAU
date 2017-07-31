@@ -1,7 +1,7 @@
-# KAU :imagepicker
+# KAU :mediapicker
 
-ImagePicker is a beautiful gallery activity that allows you to pick images
-from your storage. It is backed by FastAdapter and Glide, and stems from the ImagePickerCore model
+MediaPicker is a beautiful collection of gallery activities that allow you to pick images or videos
+from your storage. It is backed by FastAdapter and Glide, and stems from the PickerCore model
 
 Currently, there are two options:
 
