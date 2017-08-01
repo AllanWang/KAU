@@ -55,7 +55,7 @@ dependencies {
 # Submodules 
 (linked to their respective Docs)
 
-## [Core](core#readme)
+## [Core](core#readme)****
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: KPrefs, Changelog XML, Kotterknife, Ripple Canvas, Delegates, Lazy Resettables, Extensions, Email Builder
 * Includes 
