@@ -1,4 +1,4 @@
-package ca.allanwang.kau.imagepicker
+package ca.allanwang.kau.mediapicker
 
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView

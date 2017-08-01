@@ -1,4 +1,4 @@
-package ca.allanwang.kau.imagepicker
+package ca.allanwang.kau.mediapicker
 
 import android.net.Uri
 import android.provider.MediaStore
