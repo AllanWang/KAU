@@ -2,13 +2,12 @@ package ca.allanwang.kau.sample
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
 import ca.allanwang.kau.about.kauLaunchAbout
 import ca.allanwang.kau.email.sendEmail
-import ca.allanwang.kau.imagepicker.kauLaunchImagePicker
-import ca.allanwang.kau.imagepicker.kauOnImagePickerResult
+import ca.allanwang.kau.imagepicker.kauLaunchMediaPicker
+import ca.allanwang.kau.imagepicker.kauOnMediaPickerResult
 import ca.allanwang.kau.kpref.activity.CoreAttributeContract
 import ca.allanwang.kau.kpref.activity.KPrefActivity
 import ca.allanwang.kau.kpref.activity.KPrefAdapterBuilder
@@ -78,7 +77,7 @@ class MainActivity : KPrefActivity() {
                     "fill", "table", "east", "travel", "weight", "less", "language", "morning", "among")
         }
 
-        const val REQUEST_IMAGE = 27
+        const val REQUEST_MEDIA = 27
     }
 
     override fun kPrefCoreAttributes(): CoreAttributeContract.() -> Unit = {
@@ -164,12 +163,12 @@ class MainActivity : KPrefActivity() {
             descRes = R.string.sub_item_desc
         }
 
-        plainText(R.string.gallery_showcase) {
-            onClick = { _, _, _ -> kauLaunchImagePicker(ImagePickerActivity::class.java, REQUEST_IMAGE); false }
+        plainText(R.string.image_showcase) {
+            onClick = { _, _, _ -> kauLaunchMediaPicker(ImagePickerActivity::class.java, REQUEST_MEDIA); false }
         }
 
-        plainText(R.string.gallery_overlay_showcase) {
-            onClick = { _, _, _ -> kauLaunchImagePicker(ImagePickerActivityOverlay::class.java, REQUEST_IMAGE); false }
+        plainText(R.string.video_overlay_showcase) {
+            onClick = { _, _, _ -> kauLaunchMediaPicker(VideoPickerActivityOverlay::class.java, REQUEST_MEDIA); false }
         }
 
         plainText(R.string.adapter_showcase) {
@@ -251,7 +250,7 @@ class MainActivity : KPrefActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            REQUEST_IMAGE -> toast("${kauOnImagePickerResult(resultCode, data).size} images selected")
+            REQUEST_MEDIA -> toast("${kauOnMediaPickerResult(resultCode, data).size} items selected")
         }
     }
 }

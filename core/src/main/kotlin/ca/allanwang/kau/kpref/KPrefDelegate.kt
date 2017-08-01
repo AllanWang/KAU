@@ -2,7 +2,6 @@ package ca.allanwang.kau.kpref
 
 import ca.allanwang.kau.kotlin.ILazyResettable
 
-object UNINITIALIZED
 
 fun KPref.kpref(key: String, fallback: Boolean, postSetter: (value: Boolean) -> Unit = {}) = KPrefDelegate(key, fallback, this, postSetter)
 fun KPref.kpref(key: String, fallback: Double, postSetter: (value: Float) -> Unit = {}) = KPrefDelegate(key, fallback.toFloat(), this, postSetter)
@@ -24,6 +23,8 @@ class StringSet(set: Collection<String>) : LinkedHashSet<String>(set)
 class KPrefDelegate<T : Any> internal constructor(
         private val key: String, private val fallback: T, private val pref: KPref, var postSetter: (value: T) -> Unit = {}, lock: Any? = null
 ) : ILazyResettable<T>, java.io.Serializable {
+
+    private object UNINITIALIZED
 
     @Volatile private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this

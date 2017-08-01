@@ -8,14 +8,19 @@
     <public name='kau_slide_in_top' type='anim' />
     <public name='kau_slide_out_bottom' type='anim' />
     <public name='kau_slide_out_left' type='anim' />
+    <public name='kau_slide_out_left_top' type='anim' />
     <public name='kau_slide_out_right' type='anim' />
     <public name='kau_slide_out_right_top' type='anim' />
     <public name='kau_slide_out_top' type='anim' />
     <public name='kau_selectable_white' type='drawable' />
     <public name='kau_transparent' type='drawable' />
     <public name='kau_enter_slide_bottom' type='transition' />
+    <public name='kau_enter_slide_left' type='transition' />
+    <public name='kau_enter_slide_right' type='transition' />
     <public name='kau_enter_slide_top' type='transition' />
     <public name='kau_exit_slide_bottom' type='transition' />
+    <public name='kau_exit_slide_left' type='transition' />
+    <public name='kau_exit_slide_right' type='transition' />
     <public name='kau_exit_slide_top' type='transition' />
     <public name='kau_activity_horizontal_margin' type='dimen' />
     <public name='kau_activity_vertical_margin' type='dimen' />

@@ -1,5 +1,6 @@
 package ca.allanwang.kau.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -31,11 +32,9 @@ import android.os.Build
 }
 
 inline val buildIsMarshmallowAndUp: Boolean
-
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
 inline val buildIsLollipopAndUp: Boolean
-    @SuppressWarnings("NewApi")
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
 inline val buildIsNougatAndUp: Boolean

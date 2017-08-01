@@ -1,0 +1,9 @@
+<resources>
+
+    <style name="Kau.MediaPicker.Overlay" parent="Kau.Translucent">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowEnterTransition">@transition/kau_image_enter</item>
+        <item name="android:windowReturnTransition">@transition/kau_image_exit_bottom</item>
+    </style>
+
+</resources>

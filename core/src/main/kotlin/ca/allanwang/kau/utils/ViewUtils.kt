@@ -3,20 +3,21 @@
 package ca.allanwang.kau.utils
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.*
+import android.support.annotation.ColorInt
+import android.support.annotation.ColorRes
+import android.support.annotation.RequiresApi
+import android.support.annotation.StringRes
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
-import android.support.transition.AutoTransition
-import android.support.transition.Transition
-import android.support.transition.TransitionInflater
-import android.support.transition.TransitionManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -135,7 +136,6 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
             if (flag and KAU_RIGHT > 0) margin else p.rightMargin,
             if (flag and KAU_BOTTOM > 0) margin else p.bottomMargin
     )
-    requestLayout()
     return true
 }
 
@@ -184,7 +184,6 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
             if (flag and KAU_RIGHT > 0) padding else paddingRight,
             if (flag and KAU_BOTTOM > 0) padding else paddingBottom
     )
-    requestLayout()
 }
 
 @KauUtils fun View.hideKeyboard() {
@@ -222,23 +221,19 @@ fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, confi
 }
 
 /**
- * Animate a transition for a FloatinActionButton
+ * Animate a transition a given imageview
  * If it is not shown, the action will be invoked directly and the fab will be shown
  * If it is already shown, scaling and alpha animations will be added to the action
  */
-inline fun FloatingActionButton.transition(crossinline action: FloatingActionButton.() -> Unit) {
-    if (isHidden) {
-        action()
-        show()
-    } else {
+inline fun <T : ImageView> T.fadeScaleTransition(duration: Long = 500L, minScale: Float = 0.7f, crossinline action: T.() -> Unit) {
+    if (!isVisible) action()
+    else {
         var transitioned = false
         ValueAnimator.ofFloat(1.0f, 0.0f, 1.0f).apply {
-            duration = 500L
+            this.duration = duration
             addUpdateListener {
                 val x = it.animatedValue as Float
-                val scale = x * 0.3f + 0.7f
-                scaleX = scale
-                scaleY = scale
+                scaleXY = x * (1 - minScale) + minScale
                 imageAlpha = (x * 255).toInt()
                 if (it.animatedFraction > 0.5f && !transitioned) {
                     transitioned = true
@@ -266,4 +261,29 @@ fun FloatingActionButton.hideOnDownwardsScroll(recycler: RecyclerView) {
             else if (dy < 0 && isHidden) show()
         }
     })
+}
+
+inline var View.scaleXY
+    get() = Math.max(scaleX, scaleY)
+    set(value) {
+        scaleX = value
+        scaleY = value
+    }
+
+/**
+ * Creates an on touch listener that only emits on a short single tap
+ */
+@SuppressLint("ClickableViewAccessibility")
+inline fun View.setOnSingleTapListener(crossinline onSingleTap: (v: View, event: MotionEvent) -> Unit) {
+    setOnTouchListener { v, event ->
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> true
+            MotionEvent.ACTION_UP -> {
+                if (event.eventTime - event.downTime < 100)
+                    onSingleTap(v, event)
+                true
+            }
+            else -> false
+        }
+    }
 }

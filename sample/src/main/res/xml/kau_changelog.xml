@@ -6,6 +6,24 @@
     <item text="" />
     -->
 	
+	 <version title="v3.2.1"/>
+    <item text=":core: Remove requestLayout call from setMargin and setPadding" />
+    <item text=":core: Fix kau direction bits" />
+    <item text=":core: Greatly simplify ripple canvas and truly support transparent ripples" />
+    <item text=":core: Generalize fab transition to fade scale transition for all imageviews" />
+    <item text=":core: Create ViewPropertyAnimator.scaleXY() and View.scaleXY" />
+    <item text=":core: Create View.setOnSingleTapListener()" />
+    <item text=":core: Create rndColor, which generates a random opaque color for testing" />
+    <item text=":core: Add resettable view binding variants to Kotterknife" />
+    <item text=":core: Create lazy resettable registry" />
+    <item text=":core: Add more transitions and anims" />
+    <item text=":kpref-activity: Reduce alpha color for desc" />
+    <item text=":imagepicker: [breaking] Rename to mediapicker and add support for videos" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+	
 	<version title="v3.2.0"/>
 	<item text=":adapter: Make KauAnimator extensible" />
     <item text=":imagepicker: Add uri val to ImageModel" />

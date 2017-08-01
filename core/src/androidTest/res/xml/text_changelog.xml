@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <version title="title1"/>
+    <item text="test case" />
+    <item text="" />
+
+    <version title="title2"/>
+    <item text="potato" />
+
+</resources>

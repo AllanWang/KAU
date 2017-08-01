@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="Kau.MediaPicker">
+        <item name="android:windowAnimationStyle">@style/KauSlideInSlideOutBottom</item>
+    </style>
+
+    <!--Just as a placeholder for public.xml-->
+    <style name="Kau.MediaPicker.Overlay" parent="Kau.Translucent">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+</resources>

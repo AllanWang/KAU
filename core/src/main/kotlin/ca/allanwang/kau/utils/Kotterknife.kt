@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package ca.allanwang.kau.utils
 
 /**
@@ -13,6 +15,7 @@ import android.app.DialogFragment
 import android.app.Fragment
 import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.View
+import java.util.*
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 import android.support.v4.app.DialogFragment as SupportDialogFragment
@@ -30,13 +33,13 @@ fun <V : View> Dialog.bindView(id: Int)
 fun <V : View> DialogFragment.bindView(id: Int)
         : ReadOnlyProperty<DialogFragment, V> = required(id, viewFinder)
 
-fun <V : View> android.support.v4.app.DialogFragment.bindView(id: Int)
+fun <V : View> SupportDialogFragment.bindView(id: Int)
         : ReadOnlyProperty<android.support.v4.app.DialogFragment, V> = required(id, viewFinder)
 
 fun <V : View> Fragment.bindView(id: Int)
         : ReadOnlyProperty<Fragment, V> = required(id, viewFinder)
 
-fun <V : View> android.support.v4.app.Fragment.bindView(id: Int)
+fun <V : View> SupportFragment.bindView(id: Int)
         : ReadOnlyProperty<android.support.v4.app.Fragment, V> = required(id, viewFinder)
 
 fun <V : View> ViewHolder.bindView(id: Int)
@@ -54,13 +57,13 @@ fun <V : View> Dialog.bindOptionalView(id: Int)
 fun <V : View> DialogFragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<DialogFragment, V?> = optional(id, viewFinder)
 
-fun <V : View> android.support.v4.app.DialogFragment.bindOptionalView(id: Int)
+fun <V : View> SupportDialogFragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<android.support.v4.app.DialogFragment, V?> = optional(id, viewFinder)
 
 fun <V : View> Fragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<Fragment, V?> = optional(id, viewFinder)
 
-fun <V : View> android.support.v4.app.Fragment.bindOptionalView(id: Int)
+fun <V : View> SupportFragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<android.support.v4.app.Fragment, V?> = optional(id, viewFinder)
 
 fun <V : View> ViewHolder.bindOptionalView(id: Int)
@@ -78,13 +81,13 @@ fun <V : View> Dialog.bindViews(vararg ids: Int)
 fun <V : View> DialogFragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<DialogFragment, List<V>> = required(ids, viewFinder)
 
-fun <V : View> android.support.v4.app.DialogFragment.bindViews(vararg ids: Int)
+fun <V : View> SupportDialogFragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = required(ids, viewFinder)
 
 fun <V : View> Fragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<Fragment, List<V>> = required(ids, viewFinder)
 
-fun <V : View> android.support.v4.app.Fragment.bindViews(vararg ids: Int)
+fun <V : View> SupportFragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = required(ids, viewFinder)
 
 fun <V : View> ViewHolder.bindViews(vararg ids: Int)
@@ -102,13 +105,13 @@ fun <V : View> Dialog.bindOptionalViews(vararg ids: Int)
 fun <V : View> DialogFragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<DialogFragment, List<V>> = optional(ids, viewFinder)
 
-fun <V : View> android.support.v4.app.DialogFragment.bindOptionalViews(vararg ids: Int)
+fun <V : View> SupportDialogFragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = optional(ids, viewFinder)
 
 fun <V : View> Fragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<Fragment, List<V>> = optional(ids, viewFinder)
 
-fun <V : View> android.support.v4.app.Fragment.bindOptionalViews(vararg ids: Int)
+fun <V : View> SupportFragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = optional(ids, viewFinder)
 
 fun <V : View> ViewHolder.bindOptionalViews(vararg ids: Int)
@@ -122,11 +125,11 @@ private inline val Dialog.viewFinder: Dialog.(Int) -> View?
     get() = { findViewById(it) }
 private inline val DialogFragment.viewFinder: DialogFragment.(Int) -> View?
     get() = { dialog.findViewById(it) }
-private inline val android.support.v4.app.DialogFragment.viewFinder: android.support.v4.app.DialogFragment.(Int) -> View?
+private inline val SupportDialogFragment.viewFinder: SupportDialogFragment.(Int) -> View?
     get() = { dialog.findViewById(it) }
 private inline val Fragment.viewFinder: Fragment.(Int) -> View?
     get() = { view.findViewById(it) }
-private inline val android.support.v4.app.Fragment.viewFinder: android.support.v4.app.Fragment.(Int) -> View?
+private inline val SupportFragment.viewFinder: SupportFragment.(Int) -> View?
     get() = { view!!.findViewById(it) }
 private inline val ViewHolder.viewFinder: ViewHolder.(Int) -> View?
     get() = { itemView.findViewById(it) }
@@ -134,33 +137,173 @@ private inline val ViewHolder.viewFinder: ViewHolder.(Int) -> View?
 private fun viewNotFound(id: Int, desc: KProperty<*>): Nothing =
         throw IllegalStateException("View ID $id for '${desc.name}' not found.")
 
-@Suppress("UNCHECKED_CAST")
 private fun <T, V : View> required(id: Int, finder: T.(Int) -> View?)
         = Lazy { t: T, desc -> (t.finder(id) as V?)?.apply { } ?: viewNotFound(id, desc) }
 
-@Suppress("UNCHECKED_CAST")
 private fun <T, V : View> optional(id: Int, finder: T.(Int) -> View?)
         = Lazy { t: T, _ -> t.finder(id) as V? }
 
-@Suppress("UNCHECKED_CAST")
 private fun <T, V : View> required(ids: IntArray, finder: T.(Int) -> View?)
         = Lazy { t: T, desc -> ids.map { t.finder(it) as V? ?: viewNotFound(it, desc) } }
 
-@Suppress("UNCHECKED_CAST")
 private fun <T, V : View> optional(ids: IntArray, finder: T.(Int) -> View?)
         = Lazy { t: T, _ -> ids.map { t.finder(it) as V? }.filterNotNull() }
 
 // Like Kotlin's lazy delegate but the initializer gets the target and metadata passed to it
-private class Lazy<T, V>(private val initializer: (T, KProperty<*>) -> V) : ReadOnlyProperty<T, V> {
-    private object EMPTY
+private open class Lazy<in T, out V>(private val initializer: (T, KProperty<*>) -> V) : ReadOnlyProperty<T, V> {
+    protected object EMPTY
 
-    private var value: Any? = EMPTY
+    protected var value: Any? = EMPTY
 
     override fun getValue(thisRef: T, property: KProperty<*>): V {
-        if (value == EMPTY) {
+        if (value == EMPTY)
             value = initializer(thisRef, property)
-        }
-        @Suppress("UNCHECKED_CAST")
+
         return value as V
     }
+}
+
+/*
+ * The components below are a variant of the view bindings with lazy resettables
+ * All bindings are weakly held so that they may be reset through KotterknifeRegistry.reset
+ *
+ * This is typically only needed in cases such as Fragments,
+ * where their lifecycle doesn't match that of an Activity or View
+ *
+ * Credits to <a href="https://github.com/MichaelRocks">MichaelRocks</a>
+ */
+
+fun <V : View> View.bindViewResettable(id: Int)
+        : ReadOnlyProperty<View, V> = requiredResettable(id, viewFinder)
+
+fun <V : View> Activity.bindViewResettable(id: Int)
+        : ReadOnlyProperty<Activity, V> = requiredResettable(id, viewFinder)
+
+fun <V : View> Dialog.bindViewResettable(id: Int)
+        : ReadOnlyProperty<Dialog, V> = requiredResettable(id, viewFinder)
+
+fun <V : View> DialogFragment.bindViewResettable(id: Int)
+        : ReadOnlyProperty<DialogFragment, V> = requiredResettable(id, viewFinder)
+
+fun <V : View> SupportDialogFragment.bindViewResettable(id: Int)
+        : ReadOnlyProperty<android.support.v4.app.DialogFragment, V> = requiredResettable(id, viewFinder)
+
+fun <V : View> Fragment.bindViewResettable(id: Int)
+        : ReadOnlyProperty<Fragment, V> = requiredResettable(id, viewFinder)
+
+fun <V : View> SupportFragment.bindViewResettable(id: Int)
+        : ReadOnlyProperty<android.support.v4.app.Fragment, V> = requiredResettable(id, viewFinder)
+
+fun <V : View> ViewHolder.bindViewResettable(id: Int)
+        : ReadOnlyProperty<ViewHolder, V> = requiredResettable(id, viewFinder)
+
+fun <V : View> View.bindOptionalViewResettable(id: Int)
+        : ReadOnlyProperty<View, V?> = optionalResettable(id, viewFinder)
+
+fun <V : View> Activity.bindOptionalViewResettable(id: Int)
+        : ReadOnlyProperty<Activity, V?> = optionalResettable(id, viewFinder)
+
+fun <V : View> Dialog.bindOptionalViewResettable(id: Int)
+        : ReadOnlyProperty<Dialog, V?> = optionalResettable(id, viewFinder)
+
+fun <V : View> DialogFragment.bindOptionalViewResettable(id: Int)
+        : ReadOnlyProperty<DialogFragment, V?> = optionalResettable(id, viewFinder)
+
+fun <V : View> SupportDialogFragment.bindOptionalViewResettable(id: Int)
+        : ReadOnlyProperty<android.support.v4.app.DialogFragment, V?> = optionalResettable(id, viewFinder)
+
+fun <V : View> Fragment.bindOptionalViewResettable(id: Int)
+        : ReadOnlyProperty<Fragment, V?> = optionalResettable(id, viewFinder)
+
+fun <V : View> SupportFragment.bindOptionalViewResettable(id: Int)
+        : ReadOnlyProperty<android.support.v4.app.Fragment, V?> = optionalResettable(id, viewFinder)
+
+fun <V : View> ViewHolder.bindOptionalViewResettable(id: Int)
+        : ReadOnlyProperty<ViewHolder, V?> = optionalResettable(id, viewFinder)
+
+fun <V : View> View.bindViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<View, List<V>> = requiredResettable(ids, viewFinder)
+
+fun <V : View> Activity.bindViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<Activity, List<V>> = requiredResettable(ids, viewFinder)
+
+fun <V : View> Dialog.bindViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<Dialog, List<V>> = requiredResettable(ids, viewFinder)
+
+fun <V : View> DialogFragment.bindViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<DialogFragment, List<V>> = requiredResettable(ids, viewFinder)
+
+fun <V : View> SupportDialogFragment.bindViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = requiredResettable(ids, viewFinder)
+
+fun <V : View> Fragment.bindViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<Fragment, List<V>> = requiredResettable(ids, viewFinder)
+
+fun <V : View> SupportFragment.bindViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = requiredResettable(ids, viewFinder)
+
+fun <V : View> ViewHolder.bindViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<ViewHolder, List<V>> = requiredResettable(ids, viewFinder)
+
+fun <V : View> View.bindOptionalViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<View, List<V>> = optionalResettable(ids, viewFinder)
+
+fun <V : View> Activity.bindOptionalViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<Activity, List<V>> = optionalResettable(ids, viewFinder)
+
+fun <V : View> Dialog.bindOptionalViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<Dialog, List<V>> = optionalResettable(ids, viewFinder)
+
+fun <V : View> DialogFragment.bindOptionalViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<DialogFragment, List<V>> = optionalResettable(ids, viewFinder)
+
+fun <V : View> SupportDialogFragment.bindOptionalViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = optionalResettable(ids, viewFinder)
+
+fun <V : View> Fragment.bindOptionalViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<Fragment, List<V>> = optionalResettable(ids, viewFinder)
+
+fun <V : View> SupportFragment.bindOptionalViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = optionalResettable(ids, viewFinder)
+
+fun <V : View> ViewHolder.bindOptionalViewsResettable(vararg ids: Int)
+        : ReadOnlyProperty<ViewHolder, List<V>> = optionalResettable(ids, viewFinder)
+
+private fun <T, V : View> requiredResettable(id: Int, finder: T.(Int) -> View?)
+        = LazyResettable { t: T, desc -> (t.finder(id) as V?)?.apply { } ?: viewNotFound(id, desc) }
+
+private fun <T, V : View> optionalResettable(id: Int, finder: T.(Int) -> View?)
+        = LazyResettable { t: T, _ -> t.finder(id) as V? }
+
+private fun <T, V : View> requiredResettable(ids: IntArray, finder: T.(Int) -> View?)
+        = LazyResettable { t: T, desc -> ids.map { t.finder(it) as V? ?: viewNotFound(it, desc) } }
+
+private fun <T, V : View> optionalResettable(ids: IntArray, finder: T.(Int) -> View?)
+        = LazyResettable { t: T, _ -> ids.map { t.finder(it) as V? }.filterNotNull() }
+
+//Like Kotterknife's lazy delegate but is resettable
+private class LazyResettable<in T, out V>(initializer: (T, KProperty<*>) -> V) : Lazy<T, V>(initializer) {
+    override fun getValue(thisRef: T, property: KProperty<*>): V {
+        KotterknifeRegistry.register(thisRef!!, this)
+        return super.getValue(thisRef, property)
+    }
+
+    fun reset() {
+        value = EMPTY
+    }
+}
+
+object Kotterknife {
+    fun reset(target: Any) {
+        KotterknifeRegistry.reset(target)
+    }
+}
+
+private object KotterknifeRegistry {
+    private val lazyMap = WeakHashMap<Any, MutableCollection<LazyResettable<*, *>>>()
+
+    fun register(target: Any, lazy: LazyResettable<*, *>)
+            = lazyMap.getOrPut(target, { Collections.newSetFromMap(WeakHashMap()) }).add(lazy)
+
+    fun reset(target: Any) = lazyMap[target]?.forEach { it.reset() }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kau_no_items_found">No items found</string>
+    <string name="kau_no_items_selected">No items have been selected</string>
+    <string name="kau_blurrable_imageview">Blurrable ImageView</string>
+    <string name="kau_no_items_loaded">No items loaded</string>
+</resources>

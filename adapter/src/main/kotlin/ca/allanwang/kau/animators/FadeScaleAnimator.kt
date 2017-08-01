@@ -3,6 +3,7 @@ package ca.allanwang.kau.animators
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewPropertyAnimator
+import ca.allanwang.kau.utils.scaleXY
 
 /**
  * Created by Allan Wang on 2017-07-11.
@@ -10,20 +11,17 @@ import android.view.ViewPropertyAnimator
 class FadeScaleAnimatorAdd(val scaleFactor: Float = 1.0f, override var itemDelayFactor: Float = 0.125f) : KauAnimatorAdd {
 
     override fun animationPrepare(holder: RecyclerView.ViewHolder): View.() -> Unit = {
-        scaleX = scaleFactor
-        scaleY = scaleFactor
+        scaleXY = scaleFactor
         alpha = 0f
     }
 
     override fun animation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = {
-        scaleX(1f)
-        scaleY(1f)
+        scaleXY(1f)
         alpha(1f)
     }
 
     override fun animationCleanup(holder: RecyclerView.ViewHolder): View.() -> Unit = {
-        scaleX = 1f
-        scaleY = 1f
+        scaleXY = 1f
         alpha = 1f
     }
 
@@ -34,14 +32,12 @@ class FadeScaleAnimatorAdd(val scaleFactor: Float = 1.0f, override var itemDelay
 class FadeScaleAnimatorRemove(val scaleFactor: Float = 1.0f, override var itemDelayFactor: Float = 0.125f) : KauAnimatorRemove {
 
     override fun animation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = {
-        scaleX(scaleFactor)
-        scaleY(scaleFactor)
+        scaleXY(scaleFactor)
         alpha(0f)
     }
 
     override fun animationCleanup(holder: RecyclerView.ViewHolder): View.() -> Unit = {
-        scaleX = 1f
-        scaleY = 1f
+        scaleXY = 1f
         alpha = 1f
     }
 

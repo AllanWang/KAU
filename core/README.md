@@ -6,10 +6,13 @@
 
 * [KPrefs](#kprefs)
 * [Changelog XML](#changelog)
+* [Kotterknife](#kotterknife)
 * [Ripple Canvas](#ripple-canvas)
+* [MeasureSpecDelegate](#measure-spec-delegate)
 * [Timber Logger](#timber-logger)
 * [Email Builder](#email-builder)
 * [Extensions](#extensions)
+* [Lazy Resettable](#lazy-resettable)
 
 <a name="kprefs"></a>
 ## KPrefs
@@ -103,6 +106,17 @@ Here is a template xml changelog file:
 </resources>
 ```
 
+<a name="kotterknife"></a>
+## Kotterknife
+
+KAU comes shipped with [Kotterknife](https://github.com/JakeWharton/kotterknife) by Jake Wharton.
+It is a powerful collection of lazy view bindings that only calls the expensive `findViewById` once.
+
+In KAU, there are also resettable versions (suffixed with `Resettable`) for all bindings.
+These variants are weakly held in the private `KotterknifeRegistry` object, and can be used to invalidate the lazy
+values through the `Kotterknife.reset` method. This is typically useful for Fragments, as they do not follow
+the same lifecycle as Activities and Views.
+
 <a name="ripple-canvas"></a>
 ## Ripple Canvas
 
@@ -113,6 +127,13 @@ They can be used as transitions, or as a toolbar background to replicate the loo
 
 Many ripples can be stacked on top of each other to run at the same time from different locations.
 The canvas also supports color fading and direct color setting so it can effectively replace any background.
+
+<a name="measure-spec-delegate"></a>
+## Measure Spec Delegate
+
+If you ever have a view needing exact aspect ratios with its parent and/or itself, this delegate is here to help.
+Implementing this in any view class unlocks its attributes, giving you three layers of view measuring to ensure exact sizing.
+More information can be found in the [klass file](https://github.com/AllanWang/KAU/blob/master/core/src/main/kotlin/ca/allanwang/kau/ui/views/MeasureSpecDelegate.kt)
 
 <a name="timber-logger"></a>
 ## Timber Logger
@@ -135,3 +156,13 @@ Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of th
 
 KAU's vast collection of extensions is one of its strongest features. 
 There are too many to explain here, but you may check out the [utils package](https://github.com/AllanWang/KAU/tree/master/core/src/main/kotlin/ca/allanwang/kau/utils)
+
+<a name="lazy-resettable></a>
+## Lazy Resettable
+
+In the spirit of Kotlin's Lazy delegate, KAU supports a resettable version. Calling `lazyResettable` produces the same delegate,
+but with an additional `invalidate` method.
+
+To further simplify this, there is also a `LazyResettableRegistry` class that can be used to hold all resettables.
+The instance can be passed through the `lazyResettable` method, or classes can provide their own extension functions to 
+register the delegates by default.

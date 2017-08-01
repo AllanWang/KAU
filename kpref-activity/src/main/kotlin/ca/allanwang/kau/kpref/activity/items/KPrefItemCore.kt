@@ -49,7 +49,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
             val textColor = core.globalOptions.textColor?.invoke()
             if (textColor != null) {
                 title.setTextColor(textColor)
-                desc?.setTextColor(textColor)
+                desc?.setTextColor(textColor.adjustAlpha(0.65f))
             }
             val accentColor = core.globalOptions.accentColor?.invoke()
             if (accentColor != null && buildIsLollipopAndUp) {

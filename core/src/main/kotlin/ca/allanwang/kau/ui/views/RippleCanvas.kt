@@ -1,14 +1,13 @@
 package ca.allanwang.kau.ui.views
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import ca.allanwang.kau.utils.adjustAlpha
 
 /**
  * Created by Allan Wang on 2016-11-17.
@@ -21,63 +20,45 @@ import ca.allanwang.kau.utils.adjustAlpha
 class RippleCanvas @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-    private val paint: Paint = Paint()
+    private val paint: Paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL
+    }
+    private val eraser: Paint = Paint().apply {
+        style = Paint.Style.FILL
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+    }
     private var baseColor = Color.TRANSPARENT
     private val ripples: MutableList<Ripple> = mutableListOf()
 
-    init {
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.FILL
-    }
-
     /**
-     * Drawing the ripples involves having access to the next layer if it exists,
-     * and using its values to decide on the current color.
-     * If the next layer requests a fade, we will adjust the alpha of our current layer before drawing.
-     * Otherwise we will just draw the color as intended
+     * Draw ripples one at a time in the order given
+     * To support transparent ripples, we simply erase the overlapping base before adding a new circle
      */
     override fun onDraw(canvas: Canvas) {
-        val itr = ripples.listIterator()
-        if (!itr.hasNext()) return canvas.drawColor(baseColor)
-        var next = itr.next()
-        canvas.drawColor(colorToDraw(baseColor, next.fade, next.radius, next.maxRadius))
-        var last = false
-        while (!last) {
-            val current = next
-            if (itr.hasNext()) next = itr.next()
-            else last = true
-            //We may fade any layer except for the last one
-            paint.color = colorToDraw(current.color, next.fade && !last, next.radius, next.maxRadius)
-            canvas.drawCircle(current.x, current.y, current.radius, paint)
-            if (current.radius == current.maxRadius) {
-                if (!last) {
-                    itr.previous()
-                    itr.remove()
-                    itr.next()
-                } else {
-                    itr.remove()
-                }
-                baseColor = current.color
+        paint.color = baseColor
+        canvas.drawRect(0f, 0f, canvas.width.toFloat(), canvas.height.toFloat(), paint)
+        val itr = ripples.iterator()
+        while (itr.hasNext()) {
+            val r = itr.next()
+            paint.color = r.color
+            canvas.drawCircle(r.x, r.y, r.radius, eraser)
+            canvas.drawCircle(r.x, r.y, r.radius, paint)
+            if (r.radius == r.maxRadius) {
+                itr.remove()
+                baseColor = r.color
             }
         }
     }
 
     /**
-     * Given our current color and next layer's radius & max,
-     * we will decide on the alpha of our current layer
-     */
-    internal fun colorToDraw(color: Int, fade: Boolean, current: Float, goal: Float): Int {
-        if (!fade || (current / goal <= FADE_PIVOT)) return color
-        val factor = (goal - current) / (goal - FADE_PIVOT * goal)
-        return color.adjustAlpha(factor)
-    }
-
-    /**
      * Creates a ripple effect from the given starting values
-     * [fade] will gradually transition previous ripples to a transparent color so the resulting background is what we want
-     * this is typically only necessary if the ripple color has transparency
      */
-    fun ripple(color: Int, startX: Float = 0f, startY: Float = 0f, duration: Long = 600L, fade: Boolean = Color.alpha(color) != 255) {
+    fun ripple(color: Int,
+               startX: Float = 0f,
+               startY: Float = 0f,
+               duration: Long = 600L,
+               callback: (() -> Unit)? = null) {
         val w = width.toFloat()
         val h = height.toFloat()
         val x = when (startX) {
@@ -91,7 +72,7 @@ class RippleCanvas @JvmOverloads constructor(
             else -> startY
         }
         val maxRadius = Math.hypot(Math.max(x, w - x).toDouble(), Math.max(y, h - y).toDouble()).toFloat()
-        val ripple = Ripple(color, x, y, 0f, maxRadius, fade)
+        val ripple = Ripple(color, x, y, 0f, maxRadius)
         ripples.add(ripple)
         val animator = ValueAnimator.ofFloat(0f, maxRadius)
         animator.duration = duration
@@ -99,6 +80,11 @@ class RippleCanvas @JvmOverloads constructor(
             ripple.radius = animation.animatedValue as Float
             invalidate()
         }
+        if (callback != null)
+            animator.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationCancel(animation: Animator?) = callback()
+                override fun onAnimationEnd(animation: Animator?)  = callback()
+            })
         animator.start()
     }
 
@@ -110,6 +96,8 @@ class RippleCanvas @JvmOverloads constructor(
         ripples.clear()
         invalidate()
     }
+
+    override fun setBackgroundColor(color: Int) = set(color)
 
     /**
      * Sets a color directly but with a transition
@@ -129,12 +117,10 @@ class RippleCanvas @JvmOverloads constructor(
                           val x: Float,
                           val y: Float,
                           var radius: Float,
-                          val maxRadius: Float,
-                          val fade: Boolean)
+                          val maxRadius: Float)
 
     companion object {
         const val MIDDLE = -1.0f
         const val END = -2.0f
-        const val FADE_PIVOT = 0.5f
     }
 }

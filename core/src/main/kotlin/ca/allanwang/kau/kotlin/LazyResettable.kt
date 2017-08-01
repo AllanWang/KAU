@@ -13,7 +13,7 @@ internal object UNINITIALIZED
 
 fun <T : Any> lazyResettable(initializer: () -> T): LazyResettable<T> = LazyResettable<T>(initializer)
 
-class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : ILazyResettable<T>, Serializable {
+open class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : ILazyResettable<T>, Serializable {
     @Volatile private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this
 
@@ -52,4 +52,32 @@ class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = nul
 
 interface ILazyResettable<T> : Lazy<T> {
     fun invalidate()
+}
+
+interface ILazyResettableRegistry {
+    fun <T : Any> lazy(initializer: () -> T): LazyResettable<T>
+    fun <T : Any> add(resettable: LazyResettable<T>): LazyResettable<T>
+    fun invalidateAll()
+    fun clear()
+}
+
+/**
+ * The following below is a helper class that registers all resettables into a weakly held list
+ * All resettables can therefore be invalidated at once
+ */
+class LazyResettableRegistry : ILazyResettableRegistry {
+
+    var lazyRegistry: MutableList<LazyResettable<*>> = mutableListOf()
+
+    override fun <T : Any> lazy(initializer: () -> T): LazyResettable<T>
+            = add(lazyResettable(initializer))
+
+    override fun <T : Any> add(resettable: LazyResettable<T>): LazyResettable<T> {
+        lazyRegistry.add(resettable)
+        return resettable
+    }
+
+    override fun invalidateAll() = lazyRegistry.forEach { it.invalidate() }
+
+    override fun clear() = lazyRegistry.clear()
 }

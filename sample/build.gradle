@@ -84,7 +84,7 @@ dependencies {
     compile project(':core-ui')
     compile project(':kpref-activity')
     compile project(':searchview')
-    compile project(':imagepicker')
+    compile project(':mediapicker')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

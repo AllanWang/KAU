@@ -15,10 +15,25 @@ import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.Toolbar
 import android.widget.*
 import com.afollestad.materialdialogs.R
+import java.util.*
 
 /**
  * Created by Allan Wang on 2017-06-08.
  */
+
+/**
+ * Generates a random opaque color
+ * Note that this is mainly for testing
+ * Should you require this method often, consider
+ * rewriting the method and storing the [Random] instance
+ * rather than generating one each time
+ */
+inline val rndColor: Int
+    get() {
+        val rnd = Random()
+        return Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+    }
+
 inline val Int.isColorDark: Boolean
     get() = isColorDark(0.5f)
 

@@ -16,7 +16,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
-import ca.allanwang.kau.animators.NoAnimator
 import ca.allanwang.kau.kotlin.nonReadable
 import ca.allanwang.kau.searchview.SearchView.Configs
 import ca.allanwang.kau.ui.views.BoundedCardView
@@ -286,7 +285,7 @@ class SearchView @JvmOverloads constructor(
     fun bind(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
         config(config)
         configs.textObserver(textEvents.filter { it.isNotBlank() }, this)
-        menuItem = menu.findItem(id)
+        menuItem = menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
         if (menuItem!!.icon == null) menuItem!!.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         card.gone()
         menuItem!!.setOnMenuItemClickListener { configureCoords(it); revealOpen(); true }
@@ -294,9 +293,11 @@ class SearchView @JvmOverloads constructor(
         return this
     }
 
-    fun unBind(replacementMenuItemClickListener: MenuItem.OnMenuItemClickListener? = null) {
+    fun unBind(replacementMenuItemClickListener: ((item: MenuItem) -> Boolean)? = null) {
         parentViewGroup.removeView(this)
-        menuItem?.setOnMenuItemClickListener(replacementMenuItemClickListener)
+        if (replacementMenuItemClickListener != null)
+            menuItem?.setOnMenuItemClickListener(replacementMenuItemClickListener)
+        menuItem = null
     }
 
     fun configureCoords(item: MenuItem) {
@@ -309,11 +310,7 @@ class SearchView @JvmOverloads constructor(
         card.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 view.viewTreeObserver.removeOnPreDrawListener(this)
-                val topAlignment = menuY - card.height / 2
-                val params = (card.layoutParams as MarginLayoutParams).apply {
-                    topMargin = topAlignment
-                }
-                card.layoutParams = params
+                card.setMarginTop(menuY - card.height / 2)
                 return false
             }
         })
@@ -376,7 +373,6 @@ class SearchView @JvmOverloads constructor(
                         onFinish = {
                             configs.closeListener?.invoke(this@SearchView)
                             if (configs.shouldClearOnClose) editText.text.clear()
-                            recycler.gone()
                         })
             }
         }

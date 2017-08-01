@@ -43,7 +43,7 @@ dependencies {
     
     compile "ca.allanwang.kau:about:$KAU"
     compile "ca.allanwang.kau:colorpicker:$KAU"
-    compile "ca.allanwang.kau:imagepicker:$KAU"
+    compile "ca.allanwang.kau:mediapicker:$KAU"
     compile "ca.allanwang.kau:kpref-activity:$KAU"
     compile "ca.allanwang.kau:searchview:$KAU"
 }
@@ -89,8 +89,8 @@ dependencies {
 * Includes `:core`, 
 [`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
 
-## [Image Picker](imagepicker#readme)
-* WIP - Overlaying media chooser
+## [Media Picker](mediapicker#readme)
+* Fully functional image and video pickers, both as an overlay and as a requested activity.
 * Includes `:core-ui`, 
 [`Glide`](https://github.com/bumptech/glide),
 [`Blurry`](https://github.com/wasabeef/Blurry)
@@ -110,6 +110,7 @@ dependencies {
 ![About Activity Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_about_activity.gif)
 ![Ink Indicator Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_ink_indicator.gif)
 ![Color Picker Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker.gif)
+![Color Picker Custom Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker_custom.gif)
 ![KPref Items Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_kpref_items.gif)
 ![SearchView Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_search_view.gif)
 

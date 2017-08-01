@@ -3,11 +3,7 @@ ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
 apply from: '../android-lib.gradle'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-
     compile "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
 
     compile "com.android.support:appcompat-v7:${ANDROID_SUPPORT_LIBS}"
     compile "com.android.support:support-v13:${ANDROID_SUPPORT_LIBS}"
