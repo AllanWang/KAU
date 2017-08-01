@@ -6,13 +6,9 @@ import android.view.Menu
 import android.view.MenuItem
 import ca.allanwang.kau.about.kauLaunchAbout
 import ca.allanwang.kau.email.sendEmail
-<<<<<<< HEAD
+
 import ca.allanwang.kau.mediapicker.kauLaunchMediaPicker
 import ca.allanwang.kau.mediapicker.kauOnMediaPickerResult
-=======
-import ca.allanwang.kau.imagepicker.kauLaunchMediaPicker
-import ca.allanwang.kau.imagepicker.kauOnMediaPickerResult
->>>>>>> master
 import ca.allanwang.kau.kpref.activity.CoreAttributeContract
 import ca.allanwang.kau.kpref.activity.KPrefActivity
 import ca.allanwang.kau.kpref.activity.KPrefAdapterBuilder
