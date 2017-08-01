@@ -1,4 +1,4 @@
-package ca.allanwang.kau.imagepicker
+package ca.allanwang.kau.mediapicker
 
 import android.os.Build
 import android.os.Bundle

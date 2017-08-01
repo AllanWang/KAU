@@ -1,4 +1,4 @@
-package ca.allanwang.kau.imagepicker
+package ca.allanwang.kau.mediapicker
 
 import android.content.Context
 import android.graphics.Color

@@ -1,8 +1,8 @@
 package ca.allanwang.kau.sample
 
-import ca.allanwang.kau.imagepicker.MediaPickerActivityBase
-import ca.allanwang.kau.imagepicker.MediaPickerActivityOverlayBase
-import ca.allanwang.kau.imagepicker.MediaType
+import ca.allanwang.kau.mediapicker.MediaPickerActivityBase
+import ca.allanwang.kau.mediapicker.MediaPickerActivityOverlayBase
+import ca.allanwang.kau.mediapicker.MediaType
 
 /**
  * Created by Allan Wang on 2017-07-23.
