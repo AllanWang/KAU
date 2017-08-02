@@ -6,6 +6,7 @@
 
 * [KPrefs](#kprefs)
 * [Changelog XML](#changelog)
+* [FAQ XML](#faq-xml)
 * [Kotterknife](#kotterknife)
 * [Ripple Canvas](#ripple-canvas)
 * [MeasureSpecDelegate](#measure-spec-delegate)
@@ -105,6 +106,20 @@ Here is a template xml changelog file:
     <item text="" />
 </resources>
 ```
+
+<a name="faq-xml"></a>
+## FAQ XML
+
+There is another parser for a FAQ list with the following format:
+
+```xml
+<question>This is a question</question>
+<answer>This is an answer</answer>
+```
+
+Calling `kauParseFaq` will give you a `List<Pair<Spanned, Spanned>` that you can work with.
+By default, the questions are numbered, and the content is formatted with HTML. 
+You may still need to add your own methods to allow interaction with certain elements such as links.
 
 <a name="kotterknife"></a>
 ## Kotterknife

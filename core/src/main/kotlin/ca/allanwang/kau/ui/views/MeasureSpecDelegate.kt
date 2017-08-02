@@ -11,6 +11,8 @@ import ca.allanwang.kau.utils.parentViewGroup
  * Created by Allan Wang on 2017-07-14.
  *
  * Handles relative sizes for any view
+ * You may delegate all methods to [MeasureSpecDelegate]
+ * and call the two methods: [initAttrs] and [onMeasure]
  */
 interface MeasureSpecContract {
 
@@ -53,6 +55,16 @@ interface MeasureSpecContract {
      * Calculates the final measure specs
      * Call this from [View.onMeasure] and send the Pair result as the specs
      * The pair is of the format (width, height)
+     *
+     * Example:
+     * <pre>
+     * {@code
+     * override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+     *     val result = onMeasure(this, widthMeasureSpec, heightMeasureSpec)
+     *     super.onMeasure(result.first, result.second)
+     * }
+     * }
+     * </pre>
      */
     fun onMeasure(view: View, widthMeasureSpec: Int, heightMeasureSpec: Int): Pair<Int, Int>
 }

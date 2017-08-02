@@ -2,6 +2,7 @@
 
 ## v3.2.2
 * :core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented
+* :core: The permission manager will now notify you if you try to request a permission that isn\'t added to your manifest
 
 ## v3.2.1
 * :core: Remove requestLayout call from setMargin and setPadding
