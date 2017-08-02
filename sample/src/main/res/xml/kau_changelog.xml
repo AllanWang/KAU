@@ -10,7 +10,7 @@
     <item text=":core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented" />
     <item text=":core: The permission manager will now notify you if you try to request a permission that isn\'t added to your manifest" />
     <item text=":core: Create faq parser" />
-    <item text="" />
+    <item text="Begin writing android tests" />
     <item text="" />
     <item text="" />
 	
