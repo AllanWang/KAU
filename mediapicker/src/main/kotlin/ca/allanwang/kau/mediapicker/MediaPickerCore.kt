@@ -35,9 +35,7 @@ import java.util.concurrent.Future
  *
  * Container for the main logic behind the both pickers
  */
-abstract class MediaPickerCore<T : IItem<*, *>>(
-        val mediaType: MediaType, val preload: Boolean = mediaType == MediaType.VIDEO
-) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
         val viewSize = lazyContext { computeViewSize(it) }
@@ -158,7 +156,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             models.add(model)
         } while (data.moveToNext())
         addItems(models.map { converter(it) })
-        if (!hasPreloaded && preload) {
+        if (!hasPreloaded && mediaType == MediaType.VIDEO) {
             hasPreloaded = true
             prefetcher = doAsync {
                 models.subList(0, Math.min(models.size, 50)).map { it.data }.forEach {
