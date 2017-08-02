@@ -6,7 +6,15 @@
     <item text="" />
     -->
 	
-	 <version title="v3.2.1"/>
+	<version title="v3.2.2"/>
+    <item text=":core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+	
+	<version title="v3.2.1"/>
     <item text=":core: Remove requestLayout call from setMargin and setPadding" />
     <item text=":core: Fix kau direction bits" />
     <item text=":core: Greatly simplify ripple canvas and truly support transparent ripples" />

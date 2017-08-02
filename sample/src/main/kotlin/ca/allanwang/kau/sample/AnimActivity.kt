@@ -1,12 +1,11 @@
 package ca.allanwang.kau.sample
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
-import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
+import ca.allanwang.kau.permissions.PERMISSION_CAMERA
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.kauSwipeOnCreate
@@ -33,7 +32,8 @@ class AnimActivity : KauBaseActivity() {
 
         adapter.add(listOf(
                 PERMISSION_ACCESS_COARSE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_CAMERA
         ).map { PermissionCheckbox(it) })
         adapter.withOnClickListener { _, _, item, _ ->
             KL.d("Perm Click")
@@ -62,5 +62,5 @@ class AnimActivity : KauBaseActivity() {
     override fun onBackPressed() {
         startActivitySlideOut(MainActivity::class.java)
     }
-    
+
 }

@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.2.2
+* :core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented
+
 ## v3.2.1
 * :core: Remove requestLayout call from setMargin and setPadding
 * :core: Fix kau direction bits

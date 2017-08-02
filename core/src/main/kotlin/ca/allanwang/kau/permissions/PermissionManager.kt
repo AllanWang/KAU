@@ -2,12 +2,16 @@ package ca.allanwang.kau.permissions
 
 import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.support.v4.app.ActivityCompat
+import ca.allanwang.kau.kotlin.lazyContext
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.KauException
 import ca.allanwang.kau.utils.buildIsMarshmallowAndUp
 import ca.allanwang.kau.utils.hasPermission
+import ca.allanwang.kau.utils.toast
 import java.lang.ref.WeakReference
+
 
 /**
  * Created by Allan Wang on 2017-07-03.
@@ -16,6 +20,17 @@ internal object PermissionManager {
 
     var requestInProgress = false
     val pendingResults: MutableList<WeakReference<PermissionResult>> by lazy { mutableListOf<WeakReference<PermissionResult>>() }
+
+    /**
+     * Retrieve permissions requested in our manifest
+     */
+    val manifestPermission = lazyContext<Array<String>> {
+        try {
+            it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions ?: emptyArray()
+        } catch (e: Exception) {
+            emptyArray()
+        }
+    }
 
     operator fun invoke(context: Context, permissions: Array<out String>, callback: (granted: Boolean, deniedPerm: String?) -> Unit) {
         KL.d("Permission manager for: ${permissions.contentToString()}")
@@ -30,6 +45,13 @@ internal object PermissionManager {
     }
 
     @Synchronized internal fun requestPermissions(context: Context, permissions: Array<out String>) {
+        permissions.forEach {
+            if (!manifestPermission(context).contains(it)) {
+                KL.e("Requested permission $it is not stated in the manifest")
+                context.toast("$it is not in the manifest")
+                //we'll let the request pass through so it can be denied and so the callback can be triggered
+            }
+        }
         val activity = (context as? Activity) ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
         KL.d("Requesting permissions ${permissions.contentToString()}")
         ActivityCompat.requestPermissions(activity, permissions, 1)

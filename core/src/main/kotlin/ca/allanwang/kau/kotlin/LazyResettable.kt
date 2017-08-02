@@ -50,7 +50,7 @@ open class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? 
     }
 }
 
-interface ILazyResettable<T> : Lazy<T> {
+interface ILazyResettable<out T> : Lazy<T> {
     fun invalidate()
 }
 
