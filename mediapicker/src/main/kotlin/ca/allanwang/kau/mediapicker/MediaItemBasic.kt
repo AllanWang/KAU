@@ -8,16 +8,13 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import ca.allanwang.kau.iitems.KauIItem
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.ui.views.MeasuredImageView
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.buildIsLollipopAndUp
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.mikepenz.fastadapter.FastAdapter
 
@@ -50,8 +47,7 @@ class MediaItemBasic(val data: MediaModel)
         super.bindView(holder, payloads)
         Glide.with(holder.itemView)
                 .load(data.data)
-                .apply(RequestOptions().override(MediaPickerCore.viewSize(holder.itemView.context)))
-//                .thumbnail(0.5f)
+                .applyMediaOptions(holder.itemView.context)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         holder.image.setImageDrawable(MediaPickerCore.getErrorDrawable(holder.itemView.context))
@@ -59,7 +55,6 @@ class MediaItemBasic(val data: MediaModel)
                     }
 
                     override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {
-                        KL.d("Holder height ${holder.itemView.height} ${resource.intrinsicHeight}")
                         return false
                     }
                 })

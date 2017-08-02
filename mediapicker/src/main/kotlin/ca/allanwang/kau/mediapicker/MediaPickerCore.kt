@@ -18,13 +18,10 @@ import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.kotlin.lazyContext
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.dimenPixelSize
-import ca.allanwang.kau.utils.dpToPx
 import ca.allanwang.kau.utils.toast
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
@@ -165,18 +162,15 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             hasPreloaded = true
             prefetcher = doAsync {
                 models.subList(0, Math.min(models.size, 50)).map { it.data }.forEach {
-                    val target = Glide.with(this@MediaPickerCore).downloadOnly().load(it)
-                            .apply(RequestOptions().override(MediaPickerCore.viewSize(this@MediaPickerCore)))
+                    val target = Glide.with(this@MediaPickerCore).load(it)
+                            .applyMediaOptions(this@MediaPickerCore)
                             .submit()
                     try {
                         target.get()
-                    } catch (e: InterruptedException) {
-                        KL.e(e, "MediaPickerCore preload interrupted")
-                    } catch (e: ExecutionException) {
-                        KL.e(e, "MediaPickerCore preload execution exception")
+                    } catch (ignored: InterruptedException) {
+                    } catch (ignored: ExecutionException) {
                     } finally {
                         Glide.with(this@MediaPickerCore).clear(target)
-                        KL.i("MediaPickerCore prefetched $it")
                     }
                 }
             }

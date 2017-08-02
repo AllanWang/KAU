@@ -1,8 +1,12 @@
 package ca.allanwang.kau.mediapicker
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import ca.allanwang.kau.utils.startActivityForResult
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 
 /**
  * Created by Allan Wang on 2017-07-21.
@@ -30,4 +34,7 @@ internal const val MEDIA_PICKER_RESULT = "media_picker_result"
 
 internal const val ANIMATION_DURATION = 200L
 internal const val ANIMATION_SCALE = 0.95f
+
+internal fun <T> RequestBuilder<T>.applyMediaOptions(context: Context)
+        = apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).centerCrop().override(MediaPickerCore.viewSize(context)))
 
