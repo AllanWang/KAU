@@ -12,7 +12,6 @@
     <item text=":core: Create faq parser" />
     <item text="Begin writing android tests" />
     <item text="" />
-    <item text="" />
 	
 	<version title="v3.2.1"/>
     <item text=":core: Remove requestLayout call from setMargin and setPadding" />
