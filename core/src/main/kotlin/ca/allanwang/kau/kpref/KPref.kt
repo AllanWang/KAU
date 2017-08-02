@@ -39,7 +39,8 @@ open class KPref {
         }
     }
 
-    internal val sp: SharedPreferences by lazy {
+    //todo hide this
+    val sp: SharedPreferences by lazy {
         if (!initialized) throw KPrefException("KPref object has not yet been initialized; please initialize it with a context and preference name")
         c.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
     }

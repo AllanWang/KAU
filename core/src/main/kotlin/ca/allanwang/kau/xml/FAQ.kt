@@ -22,16 +22,28 @@ fun Context.kauParseFaq(@XmlRes xmlRes: Int, withNumbering: Boolean = true): Lis
         parser: XmlResourceParser ->
         var eventType = parser.eventType
         var question: Spanned? = null
+        var flag = -1 //-1, 0, 1 -> invalid, question, answer
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG) {
-                if (parser.name == "question") {
-                    var q = parser.text.replace("\n", "<br/>")
-                    if (withNumbering) q = "${items.size + 1}. $q"
-                    question = Html.fromHtml(q)
-                } else if (parser.name == "answer") {
-                    items.add(Pair(question ?: throw IllegalArgumentException("KAU FAQ answer found without a question"),
-                            Html.fromHtml(parser.text.replace("\n", "<br/>"))))
-                    question = null
+                flag = when (parser.name) {
+                    "question" -> 0
+                    "answer" -> 1
+                    else -> -1
+                }
+            } else if (eventType == XmlPullParser.TEXT) {
+                when (flag) {
+                    0 -> {
+                        var q = parser.text.replace("\n", "<br/>")
+                        if (withNumbering) q = "${items.size + 1}. $q"
+                        question = Html.fromHtml(q)
+                        flag = -1
+                    }
+                    1 -> {
+                        items.add(Pair(question ?: throw IllegalArgumentException("KAU FAQ answer found without a question"),
+                                Html.fromHtml(parser.text.replace("\n", "<br/>"))))
+                        question = null
+                        flag = -1
+                    }
                 }
             }
 

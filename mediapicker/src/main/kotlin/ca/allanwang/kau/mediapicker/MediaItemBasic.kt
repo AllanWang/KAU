@@ -47,6 +47,7 @@ class MediaItemBasic(val data: MediaModel)
         super.bindView(holder, payloads)
         Glide.with(holder.itemView)
                 .load(data.data)
+                .applyMediaOptions(holder.itemView.context)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         holder.image.setImageDrawable(MediaPickerCore.getErrorDrawable(holder.itemView.context))

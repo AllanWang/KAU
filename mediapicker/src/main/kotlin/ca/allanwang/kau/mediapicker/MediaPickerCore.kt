@@ -12,34 +12,42 @@ import android.provider.MediaStore
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
+import ca.allanwang.kau.internal.KauBaseActivity
+import ca.allanwang.kau.kotlin.lazyContext
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.toast
+import com.bumptech.glide.Glide
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
+import org.jetbrains.anko.doAsync
+import java.util.concurrent.ExecutionException
+import java.util.concurrent.Future
 
 /**
  * Created by Allan Wang on 2017-07-23.
  *
  * Container for the main logic behind the both pickers
  */
-abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+abstract class MediaPickerCore<T : IItem<*, *>>(
+        val mediaType: MediaType, val preload: Boolean = mediaType == MediaType.VIDEO
+) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
+        val viewSize = lazyContext { computeViewSize(it) }
         /**
          * Given the dimensions of our device and a minimum image size,
          * Computer the optimal column count for our grid layout
          *
          * @return column count
          */
-        fun computeColumnCount(context: Context): Int {
+        private fun computeColumnCount(context: Context): Int {
             val minImageSizePx = context.dimenPixelSize(R.dimen.kau_image_minimum_size)
             val screenWidthPx = context.resources.displayMetrics.widthPixels
             return screenWidthPx / minImageSizePx
@@ -48,7 +56,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : AppC
         /**
          * Compute our resulting image size
          */
-        fun computeViewSize(context: Context): Int {
+        private fun computeViewSize(context: Context): Int {
             val screenWidthPx = context.resources.displayMetrics.widthPixels
             return screenWidthPx / computeColumnCount(context)
         }
@@ -83,6 +91,9 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : AppC
          */
         const val CACHE_SIZE = 80
     }
+
+    private var hasPreloaded = false
+    private var prefetcher: Future<*>? = null
 
     val adapter: FastItemAdapter<T> = FastItemAdapter()
 
@@ -140,13 +151,30 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : AppC
             onStatusChange(false)
             return
         }
-        val items = mutableListOf<T>()
+        val models = mutableListOf<MediaModel>()
         do {
             val model = MediaModel(data)
             if (!shouldLoad(model)) continue
-            items.add(converter(model))
+            models.add(model)
         } while (data.moveToNext())
-        addItems(items)
+        addItems(models.map { converter(it) })
+        if (!hasPreloaded && preload) {
+            hasPreloaded = true
+            prefetcher = doAsync {
+                models.subList(0, Math.min(models.size, 50)).map { it.data }.forEach {
+                    val target = Glide.with(this@MediaPickerCore).load(it)
+                            .applyMediaOptions(this@MediaPickerCore)
+                            .submit()
+                    try {
+                        target.get()
+                    } catch (ignored: InterruptedException) {
+                    } catch (ignored: ExecutionException) {
+                    } finally {
+                        Glide.with(this@MediaPickerCore).clear(target)
+                    }
+                }
+            }
+        }
     }
 
     abstract fun converter(model: MediaModel): T
@@ -179,4 +207,8 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : AppC
 
     open fun onStatusChange(loaded: Boolean) {}
 
+    override fun onDestroy() {
+        prefetcher?.cancel(true)
+        super.onDestroy()
+    }
 }

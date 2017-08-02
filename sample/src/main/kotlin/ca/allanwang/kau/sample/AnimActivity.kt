@@ -1,11 +1,11 @@
 package ca.allanwang.kau.sample
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
-import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
+import ca.allanwang.kau.permissions.PERMISSION_CAMERA
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.kauSwipeOnCreate
@@ -23,7 +23,7 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
  * Activity for animations
  * Now also showcases permissions
  */
-class AnimActivity : AppCompatActivity() {
+class AnimActivity : KauBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,8 @@ class AnimActivity : AppCompatActivity() {
 
         adapter.add(listOf(
                 PERMISSION_ACCESS_COARSE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_CAMERA
         ).map { PermissionCheckbox(it) })
         adapter.withOnClickListener { _, _, item, _ ->
             KL.d("Perm Click")
@@ -62,8 +63,4 @@ class AnimActivity : AppCompatActivity() {
         startActivitySlideOut(MainActivity::class.java)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        kauOnRequestPermissionsResult(permissions, grantResults)
-    }
 }

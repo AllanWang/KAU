@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <version title="v1.1"/>
+    <item text="This is version 1.1" />
+    <item text="This is the last line to be displayed" />
+    <item text="" />
+
+    <version title="v1.0"/>
+    <item text="potato 1.0" />
+
+</resources>

@@ -1,10 +1,12 @@
 include ':core',
-        ':sample',
+        ':core-ui',
 
         ':about',
         ':adapter',
         ':colorpicker',
-        ':core-ui',
         ':mediapicker',
         ':kpref-activity',
         ':searchview'
+
+if (!System.env.JITPACK)
+    include ':sample'

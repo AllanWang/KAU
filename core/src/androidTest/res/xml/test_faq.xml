@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <question>This is a question</question>
+    <answer>This is an answer</answer>
+    <question>This is another question</question>
+    <answer>This is another answer</answer>
+
+</resources>

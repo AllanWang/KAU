@@ -6,7 +6,14 @@
     <item text="" />
     -->
 	
-	 <version title="v3.2.1"/>
+	<version title="v3.2.2"/>
+    <item text=":core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented" />
+    <item text=":core: The permission manager will now notify you if you try to request a permission that isn\'t added to your manifest" />
+    <item text=":core: Create faq parser" />
+    <item text="Begin writing android tests" />
+    <item text="" />
+	
+	<version title="v3.2.1"/>
     <item text=":core: Remove requestLayout call from setMargin and setPadding" />
     <item text=":core: Fix kau direction bits" />
     <item text=":core: Greatly simplify ripple canvas and truly support transparent ripples" />
