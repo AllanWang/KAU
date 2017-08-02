@@ -17,6 +17,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
+import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.toast
@@ -30,7 +31,7 @@ import com.mikepenz.iconics.IconicsDrawable
  *
  * Container for the main logic behind the both pickers
  */
-abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
         /**
@@ -178,5 +179,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : AppC
     open fun shouldLoad(model: MediaModel): Boolean = model.size > 10000L
 
     open fun onStatusChange(loaded: Boolean) {}
+
+
 
 }

@@ -16,6 +16,7 @@ import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.iitems.HeaderIItem
+import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.ui.widgets.InkPageIndicator
 import ca.allanwang.kau.utils.*
@@ -37,7 +38,7 @@ import java.security.InvalidParameterException
  * Note that for the auto detection to work, the R fields must be excluded from Proguard
  * Manual lib listings and other extra modifications can be done so by overriding the open functions
  */
-abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Configs.() -> Unit = {}) : AppCompatActivity(), ViewPager.OnPageChangeListener {
+abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Configs.() -> Unit = {}) : KauBaseActivity(), ViewPager.OnPageChangeListener {
 
     val draggableFrame: ElasticDragDismissFrameLayout by bindView(R.id.about_draggable_frame)
     val pager: ViewPager by bindView(R.id.about_pager)

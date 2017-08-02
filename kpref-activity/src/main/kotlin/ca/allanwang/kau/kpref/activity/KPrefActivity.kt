@@ -12,6 +12,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ViewAnimator
+import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.kpref.activity.items.KPrefItemCore
 import ca.allanwang.kau.ui.views.RippleCanvas
 import ca.allanwang.kau.ui.widgets.TextSlider
@@ -21,7 +22,7 @@ import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.string
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
-abstract class KPrefActivity : AppCompatActivity(), KPrefActivityContract {
+abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
 
     val adapter: FastItemAdapter<KPrefItemCore>
         @Suppress("UNCHECKED_CAST")

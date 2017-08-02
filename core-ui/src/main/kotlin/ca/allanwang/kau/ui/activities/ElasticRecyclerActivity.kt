@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
+import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.utils.bindView
@@ -26,7 +27,7 @@ import ca.allanwang.kau.utils.bindView
  * The exit animation is set to slide out, but the entrance must be defined yourself
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-abstract class ElasticRecyclerActivity : AppCompatActivity() {
+abstract class ElasticRecyclerActivity : KauBaseActivity() {
 
     val appBar: AppBarLayout by bindView(R.id.kau_appbar)
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)
