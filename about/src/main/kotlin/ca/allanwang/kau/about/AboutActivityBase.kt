@@ -70,6 +70,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         with(pager) {
             adapter = AboutPagerAdapter()
             pageMargin = dimenPixelSize(R.dimen.kau_spacing_normal)
+            offscreenPageLimit = panels.size - 1
             addOnPageChangeListener(this@AboutActivityBase)
         }
         indicator.setViewPager(pager)
@@ -81,6 +82,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
                 finishAfterTransition()
             }
         })
+        panels.forEachIndexed { index, contract -> contract.loadItems(this, index) }
     }
 
     class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {
@@ -102,6 +104,10 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
                 field = value
                 faqPageTitleRes = -1 //reset res so we don't use our default
             }
+        /**
+         * Whether new lines should be included
+         */
+        var faqParseNewLine: Boolean = true
     }
 
     /**

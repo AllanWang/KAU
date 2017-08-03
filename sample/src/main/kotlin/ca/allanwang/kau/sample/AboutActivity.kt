@@ -15,6 +15,7 @@ class AboutActivity : AboutActivityBase(R.string::class.java, {
     accentColor = 0xff00838F.toInt()
     cutoutForeground = 0xff18FFFF.toInt()
     faqXmlRes = R.xml.kau_faq
+    faqParseNewLine = false
 }) {
 
     override fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*, *>>) {

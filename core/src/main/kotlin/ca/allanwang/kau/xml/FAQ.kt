@@ -21,6 +21,10 @@ import org.xmlpull.v1.XmlPullParser
 @Suppress("DEPRECATION")
 fun Context.kauParseFaq(
         @XmlRes xmlRes: Int,
+        /**
+         * If \n is used, it will automatically be converted to </br>
+         */
+        parseNewLine: Boolean = true,
         callback: (items: List<FaqItem>) -> Unit) {
     doAsync {
         val items = mutableListOf<FaqItem>()
@@ -39,13 +43,13 @@ fun Context.kauParseFaq(
                 } else if (eventType == XmlPullParser.TEXT) {
                     when (flag) {
                         0 -> {
-                            question = Html.fromHtml(parser.text.replace("\n", "<br/>"))
+                            question = Html.fromHtml(parser.text.replace("\n", if (parseNewLine) "<br/>" else ""))
                             flag = -1
                         }
                         1 -> {
                             items.add(FaqItem(items.size + 1,
                                     question ?: throw IllegalArgumentException("KAU FAQ answer found without a question"),
-                                    Html.fromHtml(parser.text.replace("\n", "<br/>"))))
+                                    Html.fromHtml(parser.text.replace("\n", if (parseNewLine) "<br/>" else ""))))
                             question = null
                             flag = -1
                         }

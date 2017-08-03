@@ -11,9 +11,12 @@ and adds on the power of [About Libraries](https://github.com/mikepenz/AboutLibr
 
 This activity can be easily added by extending `AboutActivityBase`.
 Everything is already prepared, but you can modify the theme or other components through the config DSL or through the open functions.
-There are also numerous iitem cards already prepared (in this submodule and from `:adapter`)if you wish to add that in your main view.
 
-You may also easily launch the activity through the simple binder:
+If you wish to add custom panels, you will need to implement `AboutPanelContract`. 
+The most common usage is with a recyclerview, so there is a simplified class `AboutPanelRecycler` that you may extend as well.
+Note that the viewpager by default will keep all panels in memory, so it's best to not have too many pages with expensive interactions.
+
+You may easily launch the activity through the binder:
 ```
 Activity.kauLaunchAbout(YourClass::class.java)
 ```
@@ -22,7 +25,7 @@ Be sure to include the activity in your Manifest and have it extend `Kau.About`,
 
 ## Proguard
 
-Without auto detect, KAU about will retain the classes containing the lib strings by default.
+Without auto detection, KAU about will retain the classes containing the lib strings by default.
 If you use proguard with auto detect, make sure to retain all R classes to make it possible
 
 ```

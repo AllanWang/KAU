@@ -59,7 +59,8 @@ interface AboutPanelContract {
      * This typically happens once the user has scroll to the page,
      * so they may see a transition
      *
-     * Add items should only be called once [items] is nonnull
+     * [AboutActivityBase.pageStatus] should be updated accordingly,
+     * as triggering this does not necessarily mean that the items are added
      */
     fun addItems(activity: AboutActivityBase, position: Int)
 }
@@ -179,7 +180,7 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
 
     override fun loadItems(activity: AboutActivityBase, position: Int) {
         with(activity) {
-            kauParseFaq(configs.faqXmlRes) {
+            kauParseFaq(configs.faqXmlRes, configs.faqParseNewLine) {
                 items = it.map { FaqIItem(it) }
                 if (pageStatus[position] == 1)
                     addItems(activity, position)
@@ -189,7 +190,7 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
 
     override fun addItemsImpl(activity: AboutActivityBase, position: Int) {
         with(activity.configs) {
-            adapter.add(HeaderIItem(text = libPageTitle, textRes = libPageTitleRes))
+            adapter.add(HeaderIItem(text = faqPageTitle, textRes = faqPageTitleRes))
                     .add(items)
         }
     }

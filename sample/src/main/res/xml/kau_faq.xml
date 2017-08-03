@@ -5,4 +5,10 @@
     <answer>This is a FAQ answer</answer>
     <question><![CDATA[Supports <b>HTML</b> <i>tags</i>]]></question>
     <answer><![CDATA[Both <u>questions</u> and <u>answers</u> are automatically parsed with <b>HTML</b>]]></answer>
+    <question>Links</question>
+    <answer><![CDATA[<ul>
+    <li><a href="https://github.com/AllanWang/KAU">Github</a><li>
+    <li><a href="https://allanwang.github.io/KAU">Page</a><li>
+    <li><a href="https://play.google.com/store/apps/details?id=ca.allanwang.kau.sample&utm_source=sample">Play Store</a><li>
+    </ul>]]></answer>
 </resources>
