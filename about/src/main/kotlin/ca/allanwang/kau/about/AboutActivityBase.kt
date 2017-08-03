@@ -4,8 +4,6 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
@@ -13,19 +11,15 @@ import android.view.ViewGroup
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate
-import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
-import ca.allanwang.kau.animators.KauAnimator
-import ca.allanwang.kau.iitems.HeaderIItem
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.ui.widgets.InkPageIndicator
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.AnimHolder
+import ca.allanwang.kau.utils.bindView
+import ca.allanwang.kau.utils.dimenPixelSize
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.IItem
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import java.security.InvalidParameterException
 
 /**
  * Created by Allan Wang on 2017-06-28.
@@ -38,26 +32,21 @@ import java.security.InvalidParameterException
  * Note that for the auto detection to work, the R fields must be excluded from Proguard
  * Manual lib listings and other extra modifications can be done so by overriding the open functions
  */
-abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Configs.() -> Unit = {}) : KauBaseActivity(), ViewPager.OnPageChangeListener {
+abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilder: Configs.() -> Unit = {}) : KauBaseActivity(), ViewPager.OnPageChangeListener {
 
-    val draggableFrame: ElasticDragDismissFrameLayout by bindView(R.id.about_draggable_frame)
-    val pager: ViewPager by bindView(R.id.about_pager)
-    val indicator: InkPageIndicator by bindView(R.id.about_indicator)
+    private val draggableFrame: ElasticDragDismissFrameLayout by bindView(R.id.about_draggable_frame)
+    private val pager: ViewPager by bindView(R.id.about_pager)
+    private val indicator: InkPageIndicator by bindView(R.id.about_indicator)
+
+    val currentPage
+        get() = pager.currentItem
+
     /**
      * Holds some common configurations that may be added directly from the constructor
      * Applied lazily since it needs the context to fetch resources
      */
     val configs: Configs by lazy { Configs().apply { configBuilder() } }
-    /**
-     * Number of pages in the adapter
-     * Defaults to just the main view and lib view
-     */
-    open val pageCount: Int = 2
-    /**
-     * Page position for the libs
-     * This is generated automatically if [inflateLibPage] is called
-     */
-    private var libPage: Int = -2
+
     /**
      * Holds that status of each page
      * 0 means nothing has happened
@@ -65,28 +54,18 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
      * The rest is up to you
      */
     lateinit var pageStatus: IntArray
-    /**
-     * Holds the lib items once they are fetched asynchronously
-     */
-    var libItems: List<LibraryIItem>? = null
-    /**
-     * Holds the adapter for the library page; this is generated later because it uses the config colors
-     */
-    lateinit var libAdapter: FastItemThemedAdapter<IItem<*, *>>
-    /**
-     * Global reference of the library recycler
-     * This is set by default through [inflateLibPage] and is used to stop scrolling
-     * When the draggable frame exits
-     * It is not required, hence its nullability
-     */
-    private var libRecycler: RecyclerView? = null
+
+    val panels: List<AboutPanelContract> by lazy {
+        val defaultPanels = mutableListOf(AboutPanelMain(), AboutPanelLibs())
+        if (configs.faqXmlRes != -1) defaultPanels.add(AboutPanelFaqs())
+        defaultPanels
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_activity_about)
-        pageStatus = IntArray(pageCount)
-        libAdapter = FastItemThemedAdapter(configs)
-        LibraryIItem.bindClickEvents(libAdapter)
+        pageStatus = IntArray(panels.size)
+        pageStatus[0] = 2 //the first page is instantly visible
         if (configs.textColor != null) indicator.setColour(configs.textColor!!)
         with(pager) {
             adapter = AboutPagerAdapter()
@@ -97,66 +76,31 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
         draggableFrame.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
-                        .inflateTransition(if (draggableFrame.translationY > 0) configs.transitionExitBottom else configs.transitionExitTop)
-
-                libRecycler?.stopScroll()
+                        .inflateTransition(if (draggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
+                panels[currentPage].recycler?.stopScroll()
                 finishAfterTransition()
             }
         })
     }
 
-    inner class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {
+    class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {
         var cutoutTextRes: Int = -1
         var cutoutText: String? = null
         var cutoutDrawableRes: Int = -1
         var cutoutDrawable: Drawable? = null
         var cutoutForeground: Int? = null
-        var libPageTitleRes: Int = -1
-        var libPageTitle: String? = string(R.string.kau_about_libraries_intro) //This is in the string by default since it's lower priority
-
-        var transitionExitTop: Int = R.transition.kau_exit_slide_top
-        var transitionExitBottom: Int = R.transition.kau_exit_slide_bottom
-    }
-
-    /**
-     * Method to fetch the library list
-     * This is fetched asynchronously and you may override it to customize the list
-     */
-    open fun getLibraries(libs: Libs): List<Library> = libs.prepareLibraries(this, null, null, true, true)!!
-
-    /**
-     * Gets the view associated with the given page position
-     * Keep in mind that when inflating, do NOT add the view to the viewgroup
-     * Use layoutInflater.inflate(id, parent, false)
-     */
-    open fun getPage(position: Int, layoutInflater: LayoutInflater, parent: ViewGroup): View {
-        return when (position) {
-            0 -> inflateMainPage(layoutInflater, parent, position)
-            pageCount - 1 -> inflateLibPage(layoutInflater, parent, position)
-            else -> throw InvalidParameterException()
-        }
-    }
-
-    /**
-     * Create the main view with the cutout
-     */
-    open fun inflateMainPage(layoutInflater: LayoutInflater, parent: ViewGroup, position: Int): View {
-        val fastAdapter = FastItemThemedAdapter<IItem<*, *>>(configs)
-        val recycler = fullLinearRecycler(fastAdapter)
-        fastAdapter.add(CutoutIItem {
-            with(configs) {
-                text = string(cutoutTextRes, cutoutText)
-                drawable = drawable(cutoutDrawableRes, cutoutDrawable)
-                if (configs.cutoutForeground != null) foregroundColor = configs.cutoutForeground!!
+        var libPageTitleRes: Int = R.string.kau_about_libraries_intro
+        var libPageTitle: String? = null
+            set(value) {
+                field = value
+                libPageTitleRes = -1 //reset res so we don't use our default
             }
-        }.apply {
-            themeEnabled = configs.cutoutForeground == null
-        })
-        postInflateMainPage(fastAdapter)
-        return recycler
+        var faqXmlRes: Int = -1
     }
 
     /**
+     * For [mainPanel]
+     *
      * Open hook called just before the main page view is returned
      * Feel free to add your own items to the adapter in here
      */
@@ -165,32 +109,23 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
     }
 
     /**
-     * Create the lib view with the list of libraries
+     * For [libPanel]
+     *
+     * Method to fetch the library list
+     * This is fetched asynchronously and you may override it to customize the list
      */
-    open fun inflateLibPage(layoutInflater: LayoutInflater, parent: ViewGroup, position: Int): View {
-        libPage = position
-        val v = layoutInflater.inflate(R.layout.kau_recycler_detached_background, parent, false)
-        val recycler = v.findViewById<RecyclerView>(R.id.kau_recycler_detached)
-        libRecycler = recycler
-        recycler.withMarginDecoration(16, KAU_BOTTOM)
-        recycler.adapter = libAdapter
-        recycler.itemAnimator = KauAnimator(addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f)).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(this@AboutActivityBase) }
-        val background = v.findViewById<View>(R.id.kau_recycler_detached_background)
-        if (configs.backgroundColor != null) background.setBackgroundColor(configs.backgroundColor!!.colorToForeground())
-        doAsync {
-            libItems = getLibraries(
-                    if (rClass == null) Libs(this@AboutActivityBase) else Libs(this@AboutActivityBase, Libs.toStringArray(rClass.fields))
-            ).map { LibraryIItem(it) }
-            if (libPage >= 0 && pageStatus[libPage] == 1)
-                uiThread { addLibItems() }
-        }
-        return v
-    }
+    open fun getLibraries(libs: Libs): List<Library> = libs.prepareLibraries(this, null, null, true, true)!!
 
-    inner class AboutPagerAdapter : PagerAdapter() {
+    /*
+     * -------------------------------------------------------------------
+     * Page 3: FAQ
+     * -------------------------------------------------------------------
+     */
+
+    private inner class AboutPagerAdapter : PagerAdapter() {
 
         private val layoutInflater: LayoutInflater = LayoutInflater.from(this@AboutActivityBase)
-        private val views = Array<View?>(pageCount) { null }
+        private val views = Array<View?>(panels.size) { null }
 
         override fun instantiateItem(collection: ViewGroup, position: Int): Any {
             val layout = getPage(position, collection)
@@ -203,7 +138,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
             views[position] = null
         }
 
-        override fun getCount(): Int = pageCount
+        override fun getCount(): Int = panels.size
 
         override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
 
@@ -211,7 +146,8 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
          * Only get page if view does not exist
          */
         private fun getPage(position: Int, parent: ViewGroup): View {
-            if (views[position] == null) views[position] = getPage(position, layoutInflater, parent)
+            if (views[position] == null) views[position] = panels[position]
+                    .inflatePage(this@AboutActivityBase, parent, position)
             return views[position]!!
         }
     }
@@ -222,19 +158,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, val configBuilder: Confi
 
     override fun onPageSelected(position: Int) {
         if (pageStatus[position] == 0) pageStatus[position] = 1 // mark as seen if previously null
-        if (position == libPage && libItems != null && pageStatus[position] == 1) {
-            pageStatus[position] = 2            //add libs and mark as such
-            postDelayed(300) { addLibItems() }  //delay so that the animations occur once the page is fully switched
-        }
-    }
-
-    /**
-     * Function that is called when the view is ready to add the lib items
-     * Feel free to add your own items here
-     */
-    open fun addLibItems() {
-        libAdapter.add(HeaderIItem(text = configs.libPageTitle, textRes = configs.libPageTitleRes))
-                .add(libItems)
+        if (pageStatus[position] == 1) panels[position].addItems(this, position)
     }
 
     override fun onDestroy() {
