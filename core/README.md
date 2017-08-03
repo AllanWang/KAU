@@ -117,7 +117,7 @@ There is another parser for a FAQ list with the following format:
 <answer>This is an answer</answer>
 ```
 
-Calling `kauParseFaq` will give you a `List<Pair<Spanned, Spanned>` that you can work with.
+Call `kauParseFaq` and pass a callback taking in a `List<Pair<Spanned, Spanned>` that you can work with.
 By default, the questions are numbered, and the content is formatted with HTML. 
 You may still need to add your own methods to allow interaction with certain elements such as links.
 
