@@ -43,8 +43,8 @@ dependencies {
     
     compile "ca.allanwang.kau:about:$KAU"
     compile "ca.allanwang.kau:colorpicker:$KAU"
-    compile "ca.allanwang.kau:mediapicker:$KAU"
     compile "ca.allanwang.kau:kpref-activity:$KAU"
+    compile "ca.allanwang.kau:mediapicker:$KAU"
     compile "ca.allanwang.kau:searchview:$KAU"
 }
 
@@ -53,9 +53,10 @@ dependencies {
 -----------
 
 # Submodules 
-(linked to their respective Docs)
+> linked to their respective Docs
+> included dependencies are only those with exposed APIs. See [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations)
 
-## [Core](core#readme)****
+## [Core](core#readme)
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: KPrefs, Changelog XML, Kotterknife, Ripple Canvas, Delegates, Lazy Resettables, Extensions, Email Builder
 * Includes 
@@ -89,15 +90,15 @@ dependencies {
 * Includes `:core`, 
 [`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
 
+## [Kpref Activity](kpref-activity#readme)
+* Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
+* Includes `:core-ui`, `:adapter`, `colorpicker`
+
 ## [Media Picker](mediapicker#readme)
 * Fully functional image and video pickers, both as an overlay and as a requested activity.
 * Includes `:core-ui`, 
 [`Glide`](https://github.com/bumptech/glide),
 [`Blurry`](https://github.com/wasabeef/Blurry)
-
-## [Kpref Activity](kpref-activity#readme)
-* Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
-* Includes `:core-ui`, `:adapter`, `colorpicker`
 
 ## [SearchView](searchview#readme)
 * Material searchview with kotlin bindings

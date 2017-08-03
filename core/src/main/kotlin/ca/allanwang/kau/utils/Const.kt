@@ -12,3 +12,8 @@ const val KAU_BOTTOM = 8
 const val KAU_HORIZONTAL = KAU_LEFT or KAU_RIGHT
 const val KAU_VERTICAL = KAU_TOP or KAU_BOTTOM
 const val KAU_ALL = KAU_HORIZONTAL or KAU_VERTICAL
+
+const val KAU_COLLAPSED = 0
+const val KAU_COLLAPSING = 1
+const val KAU_EXPANDING = 2
+const val KAU_EXPANDED = 3

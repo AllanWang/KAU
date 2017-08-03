@@ -6,14 +6,17 @@
     <item text="" />
     -->
 	
-	<version title="v3.2.2"/>
-    <item text=":core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented" />
-    <item text=":core: The permission manager will now notify you if you try to request a permission that isn\'t added to your manifest" />
+	<version title="v3.2.3"/>
+    <item text=":about: Modularize everything" />
+    <item text=":about: Create faq panel" />
     <item text=":core: Create faq parser" />
+    <item text=":core: Create collapsible view delegate" />
     <item text=":mediapicker: Allow for prefetching by default for videos" />
+	
+	<version title="v3.2.2"/>
+	<item text=":core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented" />
+    <item text=":core: The permission manager will now notify you if you try to request a permission that isn\'t added to your manifest" />
     <item text="Begin writing android tests" />
-    <item text="" />
-    <item text="" />
 	
 	<version title="v3.2.1"/>
     <item text=":core: Remove requestLayout call from setMargin and setPadding" />

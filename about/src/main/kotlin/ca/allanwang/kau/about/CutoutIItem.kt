@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
+import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.ui.views.CutoutView
 import ca.allanwang.kau.utils.bindView
 import com.mikepenz.fastadapter.items.AbstractItem
@@ -13,12 +14,9 @@ import com.mikepenz.fastadapter.items.AbstractItem
  *
  * Just a cutout item with some defaults in [R.layout.kau_iitem_cutout]
  */
-class CutoutIItem(val config: CutoutView.() -> Unit = {}
-) : AbstractItem<CutoutIItem, CutoutIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
-
-    override fun getType(): Int = R.id.kau_item_cutout
-
-    override fun getLayoutRes(): Int = R.layout.kau_iitem_cutout
+class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem, CutoutIItem.ViewHolder>(
+        R.layout.kau_iitem_cutout, {ViewHolder(it)}, R.id.kau_item_cutout
+), ThemableIItem by ThemableIItemDelegate() {
 
     override fun isSelectable(): Boolean = false
 
@@ -37,8 +35,6 @@ class CutoutIItem(val config: CutoutView.() -> Unit = {}
             cutout.text = "Text" //back to default
         }
     }
-
-    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val cutout: CutoutView by bindView(R.id.kau_cutout)

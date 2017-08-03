@@ -59,13 +59,12 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         //setup layout
         setContentView(R.layout.kau_pref_activity)
         setSupportActionBar(toolbar)
-        if (supportActionBar != null)
-            with(supportActionBar!!) {
-                setDisplayHomeAsUpEnabled(true)
-                setDisplayShowHomeEnabled(true)
-                toolbar.setNavigationOnClickListener { onBackPressed() }
-                setDisplayShowTitleEnabled(false)
-            }
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            toolbar.setNavigationOnClickListener { onBackPressed() }
+            setDisplayShowTitleEnabled(false)
+        }
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         statusBarColor = 0x30000000
         toolbarCanvas.set(resolveColor(R.attr.colorPrimary))

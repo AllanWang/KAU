@@ -1,41 +1,39 @@
 package ca.allanwang.kau.animators
 
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.view.ViewPropertyAnimator
 
 /**
- * Created by Allan Wang on 2017-06-27.
- *
- * Truly have no animation
+ * Created by Allan Wang on 2017-08-02.
  */
-class NoAnimator : DefaultAnimator() {
-    override fun addAnimationPrepare(holder: RecyclerView.ViewHolder) {}
+class NoAnimatorAdd(override var itemDelayFactor: Float = 0f) : KauAnimatorAdd {
 
-    override fun addAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator = holder.itemView.animate().apply { duration = 0 }
+    override fun animationPrepare(holder: RecyclerView.ViewHolder): View.() -> Unit = {}
 
-    override fun addAnimationCleanup(holder: RecyclerView.ViewHolder) {}
+    override fun animation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = {}
 
-    override fun changeOldAnimation(holder: RecyclerView.ViewHolder, changeInfo: ChangeInfo): ViewPropertyAnimator = holder.itemView.animate().apply { duration = 0 }
+    override fun animationCleanup(holder: RecyclerView.ViewHolder): View.() -> Unit = { }
 
-    override fun changeNewAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator = holder.itemView.animate().apply { duration = 0 }
+    override fun getDelay(remove: Long, move: Long, change: Long): Long = 0L
 
-    override fun changeAnimationCleanup(holder: RecyclerView.ViewHolder) {}
+}
 
-    override fun changeAnimation(oldHolder: RecyclerView.ViewHolder, newHolder: RecyclerView.ViewHolder?, fromX: Int, fromY: Int, toX: Int, toY: Int) {}
+class NoAnimatorRemove(override var itemDelayFactor: Float = 0f) : KauAnimatorRemove {
 
-    override fun getAddDelay(remove: Long, move: Long, change: Long): Long = 0
+    override fun animation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = { }
 
-    override fun getAddDuration(): Long = 0
+    override fun animationCleanup(holder: RecyclerView.ViewHolder): View.() -> Unit = {}
 
-    override fun getMoveDuration(): Long = 0
+    override fun getDelay(remove: Long, move: Long, change: Long): Long = 0L
+}
 
-    override fun getRemoveDuration(): Long = 0
+class NoAnimatorChange : KauAnimatorChange {
 
-    override fun getChangeDuration(): Long = 0
+    override fun changeOldAnimation(holder: RecyclerView.ViewHolder, changeInfo: BaseItemAnimator.ChangeInfo): ViewPropertyAnimator.() -> Unit = { }
 
-    override fun getRemoveDelay(remove: Long, move: Long, change: Long): Long = 0
+    override fun changeNewAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = { }
 
-    override fun removeAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator = holder.itemView.animate().apply { duration = 0 }
+    override fun changeAnimationCleanup(holder: RecyclerView.ViewHolder): View.() -> Unit = { alpha = 1f }
 
-    override fun removeAnimationCleanup(holder: RecyclerView.ViewHolder) {}
 }

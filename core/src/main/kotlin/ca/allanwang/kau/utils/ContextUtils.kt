@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package ca.allanwang.kau.utils
 
 import android.annotation.SuppressLint
@@ -89,9 +91,12 @@ fun Context.startLink(vararg url: String?) {
 }
 
 //Toast helpers
-fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = toast(this.string(id), duration)
+inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = context.toast(id, duration)
 
-fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG) {
+inline fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = toast(this.string(id), duration)
+
+inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG) = context.toast(text, duration)
+inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(this, text, duration).show()
 }
 

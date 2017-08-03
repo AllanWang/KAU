@@ -1,9 +1,15 @@
 # Changelog
 
+## v3.2.3
+* :about: Modularize everything
+* :about: Create faq panel
+* :core: Create faq parser
+* :core: Create collapsible view delegate
+* :mediapicker: Allow for prefetching by default for videos
+
 ## v3.2.2
 * :core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented
 * :core: The permission manager will now notify you if you try to request a permission that isn\'t added to your manifest
-* :core: Create faq parser
 * Begin writing android tests
 
 ## v3.2.1

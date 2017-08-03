@@ -6,12 +6,11 @@ import android.view.Menu
 import android.view.MenuItem
 import ca.allanwang.kau.about.kauLaunchAbout
 import ca.allanwang.kau.email.sendEmail
-
-import ca.allanwang.kau.mediapicker.kauLaunchMediaPicker
-import ca.allanwang.kau.mediapicker.kauOnMediaPickerResult
 import ca.allanwang.kau.kpref.activity.CoreAttributeContract
 import ca.allanwang.kau.kpref.activity.KPrefActivity
 import ca.allanwang.kau.kpref.activity.KPrefAdapterBuilder
+import ca.allanwang.kau.mediapicker.kauLaunchMediaPicker
+import ca.allanwang.kau.mediapicker.kauOnMediaPickerResult
 import ca.allanwang.kau.searchview.SearchItem
 import ca.allanwang.kau.searchview.SearchView
 import ca.allanwang.kau.searchview.bindSearchView
@@ -20,6 +19,7 @@ import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.startActivity
 import ca.allanwang.kau.utils.toast
+import ca.allanwang.kau.xml.showChangelog
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 
@@ -206,7 +206,18 @@ class MainActivity : KPrefActivity() {
         bgCanvas.set(KPrefSample.bgColor)
         toolbarCanvas.set(KPrefSample.accentColor)
         this.navigationBarColor = KPrefSample.accentColor
-
+        if (KPrefSample.version < BuildConfig.VERSION_CODE) {
+            KPrefSample.version = BuildConfig.VERSION_CODE
+            showChangelog(R.xml.kau_changelog, KPrefSample.textColor) {
+                titleColor(KPrefSample.textColor)
+                backgroundColor(KPrefSample.bgColor)
+                positiveColor(KPrefSample.accentColor)
+            }
+        }
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(false)
+            setDisplayShowHomeEnabled(false)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -237,6 +248,11 @@ class MainActivity : KPrefActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_changelog -> showChangelog(R.xml.kau_changelog, KPrefSample.textColor) {
+                titleColor(KPrefSample.textColor)
+                backgroundColor(KPrefSample.bgColor)
+                positiveColor(KPrefSample.accentColor)
+            }
             R.id.action_settings -> startActivity(AnimActivity::class.java)
             R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
             else -> return super.onOptionsItemSelected(item)

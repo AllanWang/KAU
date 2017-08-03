@@ -1,13 +1,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.pitchedapps.myapplication.MainActivity">
+    tools:context="ca.allanwang.kau.sample.MainActivity">
 
     <item
         android:id="@+id/action_search"
         android:orderInCategory="90"
         android:title="@string/kau_search"
-        app:showAsAction="always|collapseActionView" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_changelog"
+        android:orderInCategory="95"
+        android:title="@string/kau_changelog"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_settings"
@@ -19,12 +25,6 @@
         android:id="@+id/action_email"
         android:orderInCategory="200"
         android:title="@string/kau_send_feedback"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/test"
-        android:orderInCategory="300"
-        android:title="Test"
         app:showAsAction="never" />
 
 </menu>

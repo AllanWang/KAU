@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
+import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.gone
 import ca.allanwang.kau.utils.startLink
@@ -15,32 +16,29 @@ import ca.allanwang.kau.utils.visible
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.items.AbstractItem
 
 /**
  * Created by Allan Wang on 2017-06-27.
  */
-class LibraryIItem(val lib: Library
-) : AbstractItem<LibraryIItem, LibraryIItem.ViewHolder>(), ThemableIItem by ThemableIItemDelegate() {
+class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewHolder>(
+        R.layout.kau_iitem_library, { ViewHolder(it) }, R.id.kau_item_library
+), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
-            fastAdapter.withOnClickListener { v, _, item, _ ->
-                if (item !is LibraryIItem) false
-                else {
-                    val c = v.context
-                    with(item.lib) {
-                        c.startLink(libraryWebsite, repositoryLink, authorWebsite)
+        @JvmStatic fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
+            fastAdapter.withSelectable(false)
+                    .withOnClickListener { v, _, item, _ ->
+                        if (item !is LibraryIItem) false
+                        else {
+                            val c = v.context
+                            with(item.lib) {
+                                c.startLink(libraryWebsite, repositoryLink, authorWebsite)
+                            }
+                            true
+                        }
                     }
-                    true
-                }
-            }
         }
     }
-
-    override fun getType(): Int = R.id.kau_item_library
-
-    override fun getLayoutRes(): Int = R.layout.kau_iitem_library
 
     override fun isSelectable(): Boolean = false
 
@@ -82,8 +80,6 @@ class LibraryIItem(val lib: Library
             license.gone().text = null
         }
     }
-
-    override fun getViewHolder(v: View): ViewHolder = ViewHolder(v)
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val card: CardView by bindView(R.id.lib_item_card)

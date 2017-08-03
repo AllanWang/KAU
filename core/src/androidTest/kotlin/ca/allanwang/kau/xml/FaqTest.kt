@@ -17,22 +17,26 @@ class FaqTest {
 
     @Test
     fun simpleTest() {
-        val data = InstrumentationRegistry.getTargetContext().kauParseFaq(R.xml.test_faq)
-        assertEquals(2, data.size, "FAQ size is incorrect")
-        assertEquals("1. This is a question", data.first().first.toString(), "First question does not match")
-        assertEquals("This is an answer", data.first().second.toString(), "First answer does not match")
-        assertEquals("2. This is another question", data.last().first.toString(), "Second question does not match")
-        assertEquals("This is another answer", data.last().second.toString(), "Second answer does not match")
+        InstrumentationRegistry.getTargetContext().kauParseFaq(R.xml.test_faq) {
+            data ->
+            assertEquals(2, data.size, "FAQ size is incorrect")
+            assertEquals("1. This is a question", data.first().first.toString(), "First question does not match")
+            assertEquals("This is an answer", data.first().second.toString(), "First answer does not match")
+            assertEquals("2. This is another question", data.last().first.toString(), "Second question does not match")
+            assertEquals("This is another answer", data.last().second.toString(), "Second answer does not match")
+        }
     }
 
     @Test
     fun withoutNumbering() {
-        val data = InstrumentationRegistry.getTargetContext().kauParseFaq(R.xml.test_faq, false)
-        assertEquals(2, data.size, "FAQ size is incorrect")
-        assertEquals("This is a question", data.first().first.toString(), "First question does not match")
-        assertEquals("This is an answer", data.first().second.toString(), "First answer does not match")
-        assertEquals("This is another question", data.last().first.toString(), "Second question does not match")
-        assertEquals("This is another answer", data.last().second.toString(), "Second answer does not match")
+        InstrumentationRegistry.getTargetContext().kauParseFaq(R.xml.test_faq, false) {
+            data ->
+            assertEquals(2, data.size, "FAQ size is incorrect")
+            assertEquals("This is a question", data.first().first.toString(), "First question does not match")
+            assertEquals("This is an answer", data.first().second.toString(), "First answer does not match")
+            assertEquals("This is another question", data.last().first.toString(), "Second question does not match")
+            assertEquals("This is another answer", data.last().second.toString(), "Second answer does not match")
+        }
     }
 
 }
