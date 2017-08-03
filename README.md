@@ -53,9 +53,10 @@ dependencies {
 -----------
 
 # Submodules 
-(linked to their respective Docs)
+> linked to their respective Docs
+> included dependencies are only those with exposed APIs. See [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations)
 
-## [Core](core#readme)****
+## [Core](core#readme)
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: KPrefs, Changelog XML, Kotterknife, Ripple Canvas, Delegates, Lazy Resettables, Extensions, Email Builder
 * Includes 
