@@ -10,6 +10,7 @@
 * [Kotterknife](#kotterknife)
 * [Ripple Canvas](#ripple-canvas)
 * [MeasureSpecDelegate](#measure-spec-delegate)
+* [CollapsibleViewDelegate](#collapsible-view-delegate)
 * [Timber Logger](#timber-logger)
 * [Email Builder](#email-builder)
 * [Extensions](#extensions)
@@ -149,6 +150,13 @@ The canvas also supports color fading and direct color setting so it can effecti
 If you ever have a view needing exact aspect ratios with its parent and/or itself, this delegate is here to help.
 Implementing this in any view class unlocks its attributes, giving you three layers of view measuring to ensure exact sizing.
 More information can be found in the [klass file](https://github.com/AllanWang/KAU/blob/master/core/src/main/kotlin/ca/allanwang/kau/ui/views/MeasureSpecDelegate.kt)
+
+< a name="collapsible-view-delegate"></a>
+## Collapsible View Delegate
+
+A common animation is having a view that can smoothly enter and exit by changing its height.
+This delegate will implement everything for you and give you the methods `expand`, `collapse`, etc.
+See the [kclass file](https://github.com/AllanWang/KAU/blob/master/core/src/main/kotlin/ca/allanwang/kau/ui/views/CollapsibleViewDelegate.kt) for more details.
 
 <a name="timber-logger"></a>
 ## Timber Logger
