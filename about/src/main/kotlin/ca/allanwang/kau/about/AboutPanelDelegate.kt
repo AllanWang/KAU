@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
+import ca.allanwang.kau.animators.NoAnimatorChange
 import ca.allanwang.kau.iitems.HeaderIItem
 import ca.allanwang.kau.utils.*
 import ca.allanwang.kau.xml.kauParseFaq
@@ -74,7 +75,8 @@ abstract class AboutPanelRecycler : AboutPanelContract {
     override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {
         recycler.adapter = adapter
         recycler.itemAnimator = KauAnimator(
-                addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f)
+                addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f),
+                changeAnimator = NoAnimatorChange()
         ).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(recycler.context) }
     }
 
@@ -146,7 +148,7 @@ open class AboutPanelLibs : AboutPanelRecycler() {
     override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {
         super.onInflatingPage(activity, recycler, position)
         recycler.withMarginDecoration(16, KAU_BOTTOM)
-        LibraryIItem.bindClickEvents(adapter)
+        LibraryIItem.bindEvents(adapter)
     }
 
     override fun loadItems(activity: AboutActivityBase, position: Int) {
@@ -169,9 +171,16 @@ open class AboutPanelLibs : AboutPanelRecycler() {
 }
 
 open class AboutPanelFaqs : AboutPanelRecycler() {
+
+    override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {
+        super.onInflatingPage(activity, recycler, position)
+        FaqIItem.bindEvents(adapter)
+    }
+
     override fun loadItems(activity: AboutActivityBase, position: Int) {
         with(activity) {
             kauParseFaq(configs.faqXmlRes) {
+                items = it.map { FaqIItem(it) }
                 if (pageStatus[position] == 1)
                     addItems(activity, position)
             }
@@ -179,7 +188,10 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
     }
 
     override fun addItemsImpl(activity: AboutActivityBase, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        with(activity.configs) {
+            adapter.add(HeaderIItem(text = libPageTitle, textRes = libPageTitleRes))
+                    .add(items)
+        }
     }
 
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/faq_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:selectableItemBackground"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/faq_item_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/kau_padding_normal"
+        android:paddingEnd="@dimen/kau_padding_small"
+        android:paddingStart="@dimen/kau_padding_normal"
+        android:paddingTop="@dimen/kau_padding_normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/faq_item_question"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/kau_padding_normal"
+        android:paddingEnd="@dimen/kau_padding_normal"
+        android:paddingStart="0dp"
+        android:paddingTop="@dimen/kau_padding_normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/faq_item_number"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ca.allanwang.kau.about.CollapsibleTextView
+        android:id="@+id/faq_item_answer"
+        android:layout_width="0dp"
+        android:paddingBottom="@dimen/kau_padding_normal"
+        android:paddingEnd="@dimen/kau_padding_normal"
+        android:paddingStart="0dp"
+        android:paddingTop="@dimen/kau_padding_normal"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/faq_item_question" />
+
+
+</android.support.constraint.ConstraintLayout>

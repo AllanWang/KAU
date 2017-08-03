@@ -6,6 +6,8 @@
     <item name="kau_item_cutout" type="id"/>
     <item name="kau_item_header_big_margin_top" type="id"/>
     <item name="kau_item_library" type="id"/>
+    <item name="kau_item_faq" type="id"/>
+
     <item name="kau_item_pref_checkbox" type="id"/>
     <item name="kau_item_pref_color_picker" type="id"/>
     <item name="kau_item_pref_header" type="id"/>

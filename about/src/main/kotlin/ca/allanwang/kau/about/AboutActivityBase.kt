@@ -96,6 +96,12 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
                 libPageTitleRes = -1 //reset res so we don't use our default
             }
         var faqXmlRes: Int = -1
+        var faqPageTitleRes: Int = R.string.kau_about_faq_intro
+        var faqPageTitle: String? = null
+            set(value) {
+                field = value
+                faqPageTitleRes = -1 //reset res so we don't use our default
+            }
     }
 
     /**

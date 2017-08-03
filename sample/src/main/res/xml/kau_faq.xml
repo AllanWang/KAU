@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <question>This is a FAQ question</question>
+    <answer>This is a FAQ answer</answer>
+    <question><![CDATA[Supports <b>HTML</b> <i>tags</i>]]></question>
+    <answer><![CDATA[Both <u>questions</u> and <u>answers</u> are automatically parsed with <b>HTML</b>]]></answer>
+</resources>
