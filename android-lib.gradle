@@ -27,6 +27,8 @@ android {
     defaultConfig {
         minSdkVersion Integer.parseInt(kauMinSdk)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
+        versionName project.VERSION_NAME
+        versionCode project.VERSION_CODE
         consumerProguardFiles 'progress-proguard.txt'
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
