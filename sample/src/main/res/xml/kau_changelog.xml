@@ -6,10 +6,16 @@
     <item text="" />
     -->
 	
+	<version title="v3.2.4"/>
+    <item text=":core: Fix FAQ background" />
+    <item text=":core-ui: Move reactive libs to :searchview:" />
+    <item text="" />
+    <item text="" />
+	
 	<version title="v3.2.3"/>
     <item text=":about: Modularize everything" />
-    <item text=":about: Create faq panel" />
-    <item text=":core: Create faq parser" />
+    <item text=":about: Create FAQ panel" />
+    <item text=":core: Create FAQ parser" />
     <item text=":core: Create collapsible view delegate" />
     <item text=":mediapicker: Allow for prefetching by default for videos" />
 	
