@@ -2,6 +2,8 @@
 
 ## v3.2.4
 * :core: Fix FAQ background
+* :core: Create FileUtils
+* :core: Create NotificationUtils
 * :core-ui: Move reactive libs to :searchview:
 
 ## v3.2.3
