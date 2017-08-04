@@ -15,6 +15,7 @@ KAU is available on JitPack
 [![](https://jitpack.io/v/ca.allanwang/kau.svg)](https://jitpack.io/#ca.allanwang/kau) 
 [![Build Status](https://travis-ci.org/AllanWang/KAU.svg?branch=master)](https://travis-ci.org/AllanWang/KAU)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
+[![Stories in Ready](https://badge.waffle.io/AllanWang/KAU.png?label=ready&title=Ready)](https://waffle.io/AllanWang/KAU?utm_source=badge)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/AllanWang/KAU/master/LICENSE)
 
 To apply, add the following to your root build.gradle:
