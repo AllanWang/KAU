@@ -1,6 +1,5 @@
 package ca.allanwang.kau.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
 import java.io.File
@@ -16,7 +15,7 @@ fun createMediaFile(prefix: String, extension: String): File {
     val timeStamp = SimpleDateFormat.getDateInstance().parse("yyyyMMdd_HHmmss")
     val imageFileName = "${prefix}_${timeStamp}_"
     val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-    val frostDir = File(storageDir, "Frost")
+    val frostDir = File(storageDir, prefix)
     if (!frostDir.exists()) frostDir.mkdirs()
     return File.createTempFile(imageFileName, extension, frostDir)
 }

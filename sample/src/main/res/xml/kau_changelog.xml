@@ -8,6 +8,8 @@
 	
 	<version title="v3.2.4"/>
     <item text=":core: Fix FAQ background" />
+    <item text=":core: Create FileUtils" />
+    <item text=":core: Create NotificationUtils" />
     <item text=":core-ui: Move reactive libs to :searchview:" />
     <item text="" />
     <item text="" />
