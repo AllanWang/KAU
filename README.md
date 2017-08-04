@@ -1,6 +1,6 @@
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
 
-Kotlin Android Utils
+An extensive collection of <b>Kotlin Android Utils</b>
 
 This library contains small helper functions used throughout almost all of my other projects. The goal is to make common interactions executable in a single line.
 
