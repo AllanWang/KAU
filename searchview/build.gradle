@@ -6,6 +6,9 @@ dependencies {
     compile project(':core-ui')
     compile project(':adapter')
 
+    compile "io.reactivex.rxjava2:rxkotlin:${RX_KOTLIN}"
+    compile "io.reactivex.rxjava2:rxandroid:${RX_ANDROID}"
+    compile "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:${RX_BINDING}"
 }
 
 apply from: '../artifacts.gradle'

@@ -71,11 +71,7 @@ dependencies {
 
 ## [Core UI](core-ui#readme)
 * Collection of complex views and widgets
-* Includes `:core`, `:adapter`, 
-[`RxJava`](https://github.com/ReactiveX/RxJava), 
-[`RxAndroid`](https://github.com/ReactiveX/RxAndroid), 
-[`RxKotlin`](https://github.com/ReactiveX/RxKotlin), 
-[`RxBinding`](https://github.com/JakeWharton/RxBinding)
+* Includes `:core`, `:adapter`
 
 ## [About](about#readme)
 * Implementation of an overlaying about section, along with automatic lib detection; also includes the lib strings for KAU
@@ -104,7 +100,10 @@ dependencies {
 
 ## [SearchView](searchview#readme)
 * Material searchview with kotlin bindings
-* Includes `:core-ui`, `:adapter`
+* Includes `:core-ui`, `:adapter`, 
+[`RxAndroid`](https://github.com/ReactiveX/RxAndroid), 
+[`RxKotlin`](https://github.com/ReactiveX/RxKotlin), 
+[`RxBinding`](https://github.com/JakeWharton/RxBinding)
 
 -----------
 

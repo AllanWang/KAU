@@ -2,7 +2,7 @@ apply from: '../android-lib.gradle'
 
 android {
     defaultConfig {
-        resValue "string", "library_kau_libraryVersion", project.VERSION_NAME
+        resValue "string", "kau_version_code", project.VERSION_NAME
     }
 }
 

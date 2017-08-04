@@ -2,6 +2,7 @@
     <string name="define_kau"/>
     <string name="library_kau_author">Allan Wang</string>
     <string name="library_kau_authorWebsite">https://www.allanwang.ca/dev/</string>
+    <string name="library_kau_libraryVersion">@string/kau_version_code</string>
     <string name="library_kau_libraryName">KAU</string>
     <string name="library_kau_libraryDescription">
         <![CDATA[
