@@ -8,10 +8,7 @@ import android.widget.TextView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.iitems.KauIItem
-import ca.allanwang.kau.utils.bindView
-import ca.allanwang.kau.utils.dpToPx
-import ca.allanwang.kau.utils.parentViewGroup
-import ca.allanwang.kau.utils.setPaddingLeft
+import ca.allanwang.kau.utils.*
 import ca.allanwang.kau.xml.FaqItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
@@ -57,7 +54,9 @@ class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolde
             answer.post { answer.setPaddingLeft(16.dpToPx + number.width) }
             bindTextColor(number, question)
             bindTextColorSecondary(answer)
-            bindDividerColor(answer)
+            val bg2 = backgroundColor?.colorToForeground(0.1f)
+            if (bg2 != null)
+                answer.setBackgroundColor(bg2)
             bindBackgroundRipple(questionContainer)
         }
     }
