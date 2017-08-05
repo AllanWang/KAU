@@ -4,6 +4,8 @@
 * :core: Fix FAQ background
 * :core: Create FileUtils
 * :core: Create NotificationUtils
+* :core: Update swipe to remove most exceptions
+* :core: Make logging class functions inline
 * :core-ui: Move reactive libs to :searchview:
 
 ## v3.2.3

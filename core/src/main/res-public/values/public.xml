@@ -22,6 +22,7 @@
     <public name='kau_exit_slide_left' type='transition' />
     <public name='kau_exit_slide_right' type='transition' />
     <public name='kau_exit_slide_top' type='transition' />
+    <public name='kau_shadow_overlay' type='color' />
     <public name='kau_activity_horizontal_margin' type='dimen' />
     <public name='kau_activity_vertical_margin' type='dimen' />
     <public name='kau_dialog_margin' type='dimen' />
@@ -106,6 +107,7 @@
     <public name='kau_0' type='string' />
     <public name='kau_bullet_point' type='string' />
     <public name='Kau' type='style' />
+    <public name='Kau.Translucent' type='style' />
     <public name='KauFadeIn' type='style' />
     <public name='KauFadeInFadeOut' type='style' />
     <public name='KauSlideInRight' type='style' />
