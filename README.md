@@ -26,7 +26,8 @@ allprojects {
         ...
         jcenter()
         maven { url "https://jitpack.io" }
-        maven { url "https://maven.google.com" }
+        maven { url "https://maven.google.com" } //for gradle < 4.0
+        google()                                 //for gradle >= 4.0
     }
 }
 ```
@@ -55,8 +56,8 @@ dependencies {
 -----------
 
 # Submodules 
-> linked to their respective Docs
-> included dependencies are only those with exposed APIs. See [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations)
+> Linked to their respective Docs<br/>
+> Included dependencies are only those with exposed APIs. See [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations).
 
 ## [Core](core#readme)
 * Collection of extension functions and small helper methods applicable in almost any application.
@@ -115,6 +116,7 @@ dependencies {
 ![Color Picker Custom Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker_custom.gif)
 ![KPref Items Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_kpref_items.gif)
 ![SearchView Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_search_view.gif)
+![Swipe Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_swipe.gif)
 
 # Proguard/MultiDex
 
