@@ -93,10 +93,12 @@ dependencies {
     compile "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
     compile "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
 
-    androidTestCompile("com.android.support.test.espresso:espresso-core:${ESPRESSO}", {
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${ESPRESSO}") {
         exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    androidTestCompile "com.android.support.test:runner:${TEST_RUNNER}"
+    }
+    androidTestCompile("com.android.support.test:runner:${TEST_RUNNER}") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
     androidTestCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
     testCompile "junit:junit:${JUNIT}"
