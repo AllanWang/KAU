@@ -2,27 +2,27 @@ package ca.allanwang.kau.swipe
 
 import android.app.Activity
 import ca.allanwang.kau.R
+import ca.allanwang.kau.kotlin.kauRemoveIf
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.swipe.SwipeBackHelper.onDestroy
 import java.util.*
 
-class SwipeBackException(message: String = "You Should call kauSwipeOnCreate() first") : RuntimeException(message)
+internal class SwipeBackException(message: String = "You Should call kauSwipeOnCreate() first") : RuntimeException(message)
 
 /**
  * Singleton to hold our swipe stack
  * All activity pages held with strong references, so it is crucial to call
  * [onDestroy] whenever an activity should be disposed
  */
-object SwipeBackHelper {
+internal object SwipeBackHelper {
 
     private val pageStack = Stack<SwipeBackPage>()
 
-    private operator fun get(activity: Activity): SwipeBackPage
-            = pageStack.firstOrNull { it.activity === activity } ?: throw SwipeBackException()
-
-    fun getCurrentPage(activity: Activity): SwipeBackPage = this[activity]
+    private operator fun get(activity: Activity): SwipeBackPage?
+            = pageStack.firstOrNull { it.activityRef.get() === activity }
 
     fun onCreate(activity: Activity, builder: SwipeBackContract.() -> Unit = {}) {
-        val page = pageStack.firstOrNull { it.activity === activity } ?: pageStack.push(SwipeBackPage(activity).apply { builder() })
+        val page = this[activity] ?: pageStack.push(SwipeBackPage(activity).apply { builder() })
         val startAnimation: Int = when (page.edgeFlag) {
             SWIPE_EDGE_LEFT -> R.anim.kau_slide_in_right
             SWIPE_EDGE_RIGHT -> R.anim.kau_slide_in_left
@@ -30,23 +30,28 @@ object SwipeBackHelper {
             else -> R.anim.kau_slide_in_top
         }
         activity.overridePendingTransition(startAnimation, 0)
+        KL.v("KauSwipe onCreate ${activity.localClassName}")
     }
 
-    fun onPostCreate(activity: Activity) = this[activity].onPostCreate()
+    fun onPostCreate(activity: Activity) {
+        this[activity]?.onPostCreate() ?: throw SwipeBackException()
+        KL.v("KauSwipe onPostCreate ${activity.localClassName}")
+    }
 
     fun onDestroy(activity: Activity) {
-        val page: SwipeBackPage = this[activity]
-        pageStack.remove(page)
-        page.activity = null
+        val page: SwipeBackPage? = this[activity]
+        pageStack.kauRemoveIf { it.activityRef.get() == null || it === page }
+        page?.activityRef?.clear()
+        KL.v("KauSwipe onDestroy ${activity.localClassName}")
     }
 
-    fun finish(activity: Activity) = this[activity].scrollToFinishActivity()
+    fun finish(activity: Activity) = this[activity]?.scrollToFinishActivity()
 
-    internal fun getPrePage(activity: SwipeBackPage): SwipeBackPage? {
-        val index = pageStack.indexOf(activity)
-        return if (index > 0) pageStack[index - 1] else null
+    internal fun getPrePage(page: SwipeBackPage): SwipeBackPage? {
+        //clean invalid pages
+        pageStack.kauRemoveIf { it.activityRef.get() == null }
+        return pageStack.getOrNull(pageStack.indexOf(page) - 1)
     }
-
 }
 
 /**

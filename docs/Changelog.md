@@ -1,9 +1,15 @@
 # Changelog
 
+## v3.2.4
+* :core: Fix FAQ background
+* :core: Create FileUtils
+* :core: Create NotificationUtils
+* :core-ui: Move reactive libs to :searchview:
+
 ## v3.2.3
 * :about: Modularize everything
-* :about: Create faq panel
-* :core: Create faq parser
+* :about: Create FAQ panel
+* :core: Create FAQ parser
 * :core: Create collapsible view delegate
 * :mediapicker: Allow for prefetching by default for videos
 

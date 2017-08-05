@@ -1,6 +1,6 @@
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
 
-Kotlin Android Utils
+An extensive collection of <b>Kotlin Android Utils</b>
 
 This library contains small helper functions used throughout almost all of my other projects. The goal is to make common interactions executable in a single line.
 
@@ -14,6 +14,8 @@ KAU is available on JitPack
 
 [![](https://jitpack.io/v/ca.allanwang/kau.svg)](https://jitpack.io/#ca.allanwang/kau) 
 [![Build Status](https://travis-ci.org/AllanWang/KAU.svg?branch=master)](https://travis-ci.org/AllanWang/KAU)
+[![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
+[![Stories in Ready](https://badge.waffle.io/AllanWang/KAU.png?label=ready&title=Ready)](https://waffle.io/AllanWang/KAU?utm_source=badge)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/AllanWang/KAU/master/LICENSE)
 
 To apply, add the following to your root build.gradle:
@@ -69,11 +71,7 @@ dependencies {
 
 ## [Core UI](core-ui#readme)
 * Collection of complex views and widgets
-* Includes `:core`, `:adapter`, 
-[`RxJava`](https://github.com/ReactiveX/RxJava), 
-[`RxAndroid`](https://github.com/ReactiveX/RxAndroid), 
-[`RxKotlin`](https://github.com/ReactiveX/RxKotlin), 
-[`RxBinding`](https://github.com/JakeWharton/RxBinding)
+* Includes `:core`, `:adapter`
 
 ## [About](about#readme)
 * Implementation of an overlaying about section, along with automatic lib detection; also includes the lib strings for KAU
@@ -90,7 +88,7 @@ dependencies {
 * Includes `:core`, 
 [`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
 
-## [Kpref Activity](kpref-activity#readme)
+## [KPref Activity](kpref-activity#readme)
 * Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
 * Includes `:core-ui`, `:adapter`, `colorpicker`
 
@@ -102,7 +100,10 @@ dependencies {
 
 ## [SearchView](searchview#readme)
 * Material searchview with kotlin bindings
-* Includes `:core-ui`, `:adapter`
+* Includes `:core-ui`, `:adapter`, 
+[`RxAndroid`](https://github.com/ReactiveX/RxAndroid), 
+[`RxKotlin`](https://github.com/ReactiveX/RxKotlin), 
+[`RxBinding`](https://github.com/JakeWharton/RxBinding)
 
 -----------
 

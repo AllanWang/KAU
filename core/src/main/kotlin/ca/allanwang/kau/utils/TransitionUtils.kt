@@ -6,9 +6,9 @@ import android.support.annotation.TransitionRes
 import android.support.transition.AutoTransition
 import android.support.transition.TransitionInflater
 import android.support.transition.TransitionManager
-import android.support.transition.Transition as SupportTransition
 import android.transition.Transition
 import android.view.ViewGroup
+import android.support.transition.Transition as SupportTransition
 
 /**
  * Created by Allan Wang on 2017-06-24.

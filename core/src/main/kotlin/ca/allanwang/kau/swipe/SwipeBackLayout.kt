@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.adjustAlpha
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.statusBarColor
@@ -22,8 +23,8 @@ import java.lang.ref.WeakReference
  * If an edge detection occurs, this layout consumes all the touch events
  * Use the [swipeEnabled] toggle if you need the scroll events on the same axis
  */
-class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
-) : FrameLayout(context, attrs, defStyle), SwipeBackContract {
+internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
+) : FrameLayout(context, attrs, defStyle), SwipeBackContract, SwipeBackContractInternal {
 
     override val swipeBackLayout: SwipeBackLayout
         get() = this
@@ -51,7 +52,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     override var disallowIntercept = false
 
-    private var contentView: View? = null
+    private lateinit var contentViewRef: WeakReference<View>
 
     private val dragHelper: ViewDragHelper
 
@@ -156,16 +157,6 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         addListener(chromeFadeListener)
     }
 
-
-    /**
-     * Set up contentView which will be moved by user gesture
-
-     * @param view
-     */
-    private fun setContentView(view: View) {
-        contentView = view
-    }
-
     override fun setEdgeSizePercent(swipeEdgePercent: Float) {
         edgeSize = ((if (horizontal) resources.displayMetrics.widthPixels else resources.displayMetrics.heightPixels) * swipeEdgePercent).toInt()
     }
@@ -181,6 +172,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     /**
      * Removes a listener from the set of listeners
+     * and scans our list for invalid ones
 
      * @param listener
      */
@@ -194,10 +186,27 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     /**
+     * Checks if a listener exists in our list,
+     * and remove invalid ones at the same time
+     */
+    override fun hasListener(listener: SwipeListener): Boolean {
+        val iter = listeners.iterator()
+        while (iter.hasNext()) {
+            val l = iter.next().get()
+            if (l == null)
+                iter.remove()
+            else if (l == listener)
+                return true
+        }
+        return false
+    }
+
+    /**
      * Scroll out contentView and finish the activity
      */
     override fun scrollToFinishActivity() {
-        val childWidth = contentView!!.width
+        val contentView = contentViewRef.get() ?: return KL.e("KauSwipe cannot scroll to finish as contentView is null. Is onPostCreate called?")
+        val childWidth = contentView.width
         val top = 0
         val left = childWidth + OVERSCROLL_DISTANCE
         dragHelper.smoothSlideViewTo(contentView, left, top)
@@ -224,6 +233,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        val contentView = contentViewRef.get() ?: return KL.e("KauSwipe cannot change layout as contentView is null. Is onPostCreate called?")
         inLayout = true
         val xOffset: Int
         val yOffset: Int
@@ -234,7 +244,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             xOffset = 0
             yOffset = contentOffset
         }
-        contentView?.layout(xOffset, yOffset, xOffset + contentView!!.measuredWidth, yOffset + contentView!!.measuredHeight)
+        contentView.layout(xOffset, yOffset, xOffset + contentView.measuredWidth, yOffset + contentView.measuredHeight)
         inLayout = false
     }
 
@@ -243,7 +253,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     override fun drawChild(canvas: Canvas, child: View, drawingTime: Long): Boolean {
-        val drawContent = child === contentView
+        val drawContent = child === contentViewRef.get()
         val ret = super.drawChild(canvas, child, drawingTime)
         if (scrimOpacity > 0 && drawContent && dragHelper.viewDragState != ViewDragHelper.STATE_IDLE)
             drawScrim(canvas, child)
@@ -272,7 +282,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         val contentChild = content.getChildAt(0)
         content.removeView(contentChild)
         addView(contentChild)
-        setContentView(contentChild)
+        contentViewRef = WeakReference(contentChild)
         content.addView(this)
     }
 
@@ -286,6 +296,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         content.removeView(this)
         removeView(contentChild)
         content.addView(contentChild)
+        contentViewRef.clear()
     }
 
     override fun computeScroll() {
@@ -324,10 +335,11 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
         override fun onViewPositionChanged(changedView: View, left: Int, top: Int, dx: Int, dy: Int) {
             super.onViewPositionChanged(changedView, left, top, dx, dy)
+            val contentView = contentViewRef.get() ?: return KL.e("KauSwipe cannot change view position as contentView is null; is onPostCreate called?")
             //make sure that we are using the proper axis
             scrollPercent = Math.abs(
-                    if (horizontal) left.toFloat() / contentView!!.width
-                    else (top.toFloat() / contentView!!.height))
+                    if (horizontal) left.toFloat() / contentView.width
+                    else (top.toFloat() / contentView.height))
             contentOffset = if (horizontal) left else top
             invalidate()
             if (scrollPercent < scrollThreshold && !isScrollOverValid)

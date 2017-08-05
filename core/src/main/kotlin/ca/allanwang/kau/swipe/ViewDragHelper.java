@@ -28,7 +28,7 @@ import static ca.allanwang.kau.swipe.SwipeBackHelperKt.SWIPE_EDGE_TOP;
  * This is an extension of {@link android.support.v4.widget.ViewDragHelper}
  * Along with additional methods defined in {@link ViewDragHelperExtras}
  */
-public class ViewDragHelper implements ViewDragHelperExtras {
+class ViewDragHelper implements ViewDragHelperExtras {
     private static final String TAG = "ViewDragHelper";
 
     /**

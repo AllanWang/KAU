@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
-    <string name="library_kau_libraryVersion">3.2.3</string>
     <string name="define_kau"/>
     <string name="library_kau_author">Allan Wang</string>
     <string name="library_kau_authorWebsite">https://www.allanwang.ca/dev/</string>
+    <string name="library_kau_libraryVersion">@string/kau_version_code</string>
     <string name="library_kau_libraryName">KAU</string>
     <string name="library_kau_libraryDescription">
         <![CDATA[

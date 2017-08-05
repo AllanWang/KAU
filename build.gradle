@@ -1,6 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+//        google()
+//        maven { url "https://maven.google.com" }
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
@@ -13,6 +15,18 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
+def portions = project.VERSION_NAME.tokenize('.')
+int code = 0
+for (i in 1..4) {
+    if (portions.size() >= i && portions[i - 1].isInteger())
+        code += portions[i - 1].toInteger()
+    code *= 100
+}
+code /= 100
+println "KAU Project Version Name: " + project.VERSION_NAME
+println "KAU Project Version Code: " + code
+project.ext.VERSION_CODE = code
 
 task clean(type: Delete) {
     delete rootProject.buildDir
@@ -34,4 +48,13 @@ task generateChangelogMd {
     }
     def changelogMd = new File("$project.rootDir/docs/Changelog.md")
     changelogMd.write(sw.toString())
+}
+
+subprojects {
+    repositories {
+//        google()
+        maven { url "https://maven.google.com" }
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
 }

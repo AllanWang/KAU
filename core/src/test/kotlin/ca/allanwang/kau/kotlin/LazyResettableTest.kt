@@ -7,6 +7,8 @@ import kotlin.test.assertNotEquals
 
 /**
  * Created by Allan Wang on 2017-07-29.
+ *
+ * Test code for [LazyResettable]
  */
 class LazyResettableTest {
 

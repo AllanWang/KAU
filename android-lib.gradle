@@ -3,13 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 group = project.APP_GROUP
 
-repositories {
-    jcenter()
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-    maven { url "https://maven.google.com" }
-}
-
 android {
     compileSdkVersion Integer.parseInt(project.TARGET_SDK)
     buildToolsVersion project.BUILD_TOOLS
@@ -27,6 +20,8 @@ android {
     defaultConfig {
         minSdkVersion Integer.parseInt(kauMinSdk)
         targetSdkVersion Integer.parseInt(project.TARGET_SDK)
+        versionName project.VERSION_NAME
+        versionCode project.VERSION_CODE
         consumerProguardFiles 'progress-proguard.txt'
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -50,6 +45,11 @@ android {
                 'Overdraw'
     }
 
+    packagingOptions {
+        pickFirst 'META-INF/core_release.kotlin_module'
+        pickFirst 'META-INF/library_release.kotlin_module'
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
@@ -71,8 +71,10 @@ android {
 }
 
 dependencies {
-    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile("com.android.support.test:runner:${TEST_RUNNER}") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
     androidTestCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testCompile 'junit:junit:4.12'
+    testCompile "junit:junit:${JUNIT}"
 }

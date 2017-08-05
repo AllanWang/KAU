@@ -1,7 +1,5 @@
 package ca.allanwang.kau.swipe
 
-import ca.allanwang.kau.kotlin.nonReadable
-
 /**
  * Created by Mr.Jude on 2015/8/26.
  *
@@ -9,13 +7,12 @@ import ca.allanwang.kau.kotlin.nonReadable
  *
  * Helper class to give the previous activity an offset as the main page is pulled
  */
-class RelativeSlider(var curPage: SwipeBackPage) : SwipeListener {
+internal class RelativeSlider(var curPage: SwipeBackPage) : SwipeListener {
 
     var offset = 0f
 
     var enabled: Boolean
-        @Deprecated(level = DeprecationLevel.ERROR, message = "Cannot use enabled as getter")
-        get() = nonReadable()
+        get() = curPage.hasListener(this)
         set(value) {
             if (value) curPage.addListener(this)
             else curPage.removeListener(this)

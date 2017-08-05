@@ -1,5 +1,11 @@
 apply from: '../android-lib.gradle'
 
+android {
+    defaultConfig {
+        resValue "string", "kau_version_code", project.VERSION_NAME
+    }
+}
+
 dependencies {
     compile project(':core-ui')
     compile project(':adapter')
