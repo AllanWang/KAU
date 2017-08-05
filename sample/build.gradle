@@ -4,7 +4,6 @@ apply plugin: 'com.github.triplet.play'
 
 repositories {
     jcenter()
-    mavenCentral()
     maven { url "https://jitpack.io" }
     maven { url "https://maven.google.com" }
 }
@@ -78,10 +77,14 @@ dependencies {
     compile project(':kpref-activity')
     compile project(':searchview')
     compile project(':mediapicker')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
     compile "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
     compile "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
+
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${ESPRESSO}", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile "com.android.support.test:runner:${TEST_RUNNER}"
+    androidTestCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
+    testCompile "junit:junit:${JUNIT}"
 }
