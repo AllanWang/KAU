@@ -41,8 +41,11 @@ object SwipeBackHelper {
 
     fun finish(activity: Activity) = this[activity]?.scrollToFinishActivity()
 
-    internal fun getPrePage(page: SwipeBackPage): SwipeBackPage?
-            = pageStack.getOrNull(pageStack.indexOf(page) - 1)
+    internal fun getPrePage(page: SwipeBackPage): SwipeBackPage? {
+        //clean invalid pages
+        pageStack.kauRemoveIf { it.activityRef.get() == null }
+        return pageStack.getOrNull(pageStack.indexOf(page) - 1)
+    }
 }
 
 /**
@@ -51,6 +54,7 @@ object SwipeBackHelper {
  * finish is there as a helper method to animate the transaction
  */
 fun Activity.kauSwipeOnCreate(builder: SwipeBackContract.() -> Unit = {}) = SwipeBackHelper.onCreate(this, builder)
+
 fun Activity.kauSwipeOnPostCreate() = SwipeBackHelper.onPostCreate(this)
 fun Activity.kauSwipeOnDestroy() = SwipeBackHelper.onDestroy(this)
 fun Activity.kauSwipeFinish() = SwipeBackHelper.finish(this)

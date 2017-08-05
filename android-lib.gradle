@@ -45,6 +45,11 @@ android {
                 'Overdraw'
     }
 
+    packagingOptions {
+        pickFirst 'META-INF/core_release.kotlin_module'
+        pickFirst 'META-INF/library_release.kotlin_module'
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'

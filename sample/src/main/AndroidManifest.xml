@@ -26,6 +26,9 @@
             android:name=".AnimActivity"
             android:theme="@style/Kau.Translucent" />
         <activity
+            android:name=".SwipeActivity"
+            android:theme="@style/Kau.Translucent" />
+        <activity
             android:name=".AboutActivity"
             android:theme="@style/Kau.About" />
         <activity

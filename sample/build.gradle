@@ -55,9 +55,28 @@ android {
         checkReleaseBuilds false
     }
 
+    packagingOptions {
+        pickFirst 'META-INF/core_release.kotlin_module'
+        pickFirst 'META-INF/library_release.kotlin_module'
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+        main.res.srcDirs += 'src/main/res-public'
+    }
+
+    testOptions.unitTests {
+        // Don't throw runtime exceptions for android calls that are not mocked
+        returnDefaultValues = true
+
+        // Always show the result of every unit test, even if it passes.
+        all {
+            testLogging {
+                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            }
+        }
     }
 }
 
