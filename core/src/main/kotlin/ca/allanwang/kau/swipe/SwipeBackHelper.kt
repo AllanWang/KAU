@@ -2,6 +2,7 @@ package ca.allanwang.kau.swipe
 
 import android.app.Activity
 import ca.allanwang.kau.R
+import ca.allanwang.kau.kotlin.kauRemoveIf
 import ca.allanwang.kau.swipe.SwipeBackHelper.onDestroy
 import java.util.*
 
@@ -16,13 +17,11 @@ object SwipeBackHelper {
 
     private val pageStack = Stack<SwipeBackPage>()
 
-    private operator fun get(activity: Activity): SwipeBackPage
-            = pageStack.firstOrNull { it.activity === activity } ?: throw SwipeBackException()
-
-    fun getCurrentPage(activity: Activity): SwipeBackPage = this[activity]
+    private operator fun get(activity: Activity): SwipeBackPage?
+            = pageStack.firstOrNull { it.activityRef.get() === activity }
 
     fun onCreate(activity: Activity, builder: SwipeBackContract.() -> Unit = {}) {
-        val page = pageStack.firstOrNull { it.activity === activity } ?: pageStack.push(SwipeBackPage(activity).apply { builder() })
+        val page = this[activity] ?: pageStack.push(SwipeBackPage(activity).apply { builder() })
         val startAnimation: Int = when (page.edgeFlag) {
             SWIPE_EDGE_LEFT -> R.anim.kau_slide_in_right
             SWIPE_EDGE_RIGHT -> R.anim.kau_slide_in_left
@@ -32,21 +31,18 @@ object SwipeBackHelper {
         activity.overridePendingTransition(startAnimation, 0)
     }
 
-    fun onPostCreate(activity: Activity) = this[activity].onPostCreate()
+    fun onPostCreate(activity: Activity) = this[activity]?.onPostCreate() ?: throw SwipeBackException()
 
     fun onDestroy(activity: Activity) {
-        val page: SwipeBackPage = this[activity]
-        pageStack.remove(page)
-        page.activity = null
+        val page: SwipeBackPage? = this[activity]
+        pageStack.kauRemoveIf { it.activityRef.get() == null || it === page }
+        page?.activityRef?.clear()
     }
 
-    fun finish(activity: Activity) = this[activity].scrollToFinishActivity()
+    fun finish(activity: Activity) = this[activity]?.scrollToFinishActivity()
 
-    internal fun getPrePage(activity: SwipeBackPage): SwipeBackPage? {
-        val index = pageStack.indexOf(activity)
-        return if (index > 0) pageStack[index - 1] else null
-    }
-
+    internal fun getPrePage(page: SwipeBackPage): SwipeBackPage?
+            = pageStack.getOrNull(pageStack.indexOf(page) - 1)
 }
 
 /**
@@ -55,7 +51,6 @@ object SwipeBackHelper {
  * finish is there as a helper method to animate the transaction
  */
 fun Activity.kauSwipeOnCreate(builder: SwipeBackContract.() -> Unit = {}) = SwipeBackHelper.onCreate(this, builder)
-
 fun Activity.kauSwipeOnPostCreate() = SwipeBackHelper.onPostCreate(this)
 fun Activity.kauSwipeOnDestroy() = SwipeBackHelper.onDestroy(this)
 fun Activity.kauSwipeFinish() = SwipeBackHelper.finish(this)
