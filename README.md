@@ -26,8 +26,8 @@ allprojects {
         ...
         jcenter()
         maven { url "https://jitpack.io" }
-        maven { url "https://maven.google.com" } //for gradle < 4.0
-        google()                                 //for gradle >= 4.0
+        maven { url "https://maven.google.com" }  //for gradle < 4.0
+        google()                                  //for gradle >= 4.0
     }
 }
 ```
@@ -56,12 +56,12 @@ dependencies {
 -----------
 
 # Submodules 
-> Linked to their respective Docs<br/>
-> Included dependencies are only those with exposed APIs. See [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations).
+> Linked to their respective docs.<br/>
+> Included dependencies are only those with exposed APIs; see [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations).
 
 ## [Core](core#readme)
 * Collection of extension functions and small helper methods applicable in almost any application.
-* Notable features: KPrefs, Changelog XML, Kotterknife, Ripple Canvas, Delegates, Lazy Resettables, Extensions, Email Builder
+* Notable features: KPrefs, Changelog XML, Kotterknife, Ripple Canvas, Delegates, Swipe, Lazy Resettables, Extensions, Email Builder
 * Includes 
 [`AppCompat`](https://developer.android.com/topic/libraries/support-library/index.html), 
 [`Material Dialogs (core)`](https://github.com/afollestad/material-dialogs),
