@@ -6,6 +6,8 @@ import kotlin.test.assertEquals
 
 /**
  * Created by Allan Wang on 2017-06-23.
+ *
+ * Misc test code
  */
 class UtilsTest {
 
