@@ -2,12 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.triplet.play'
 
-repositories {
-    jcenter()
-    maven { url "https://jitpack.io" }
-    maven { url "https://maven.google.com" }
-}
-
 play {
     jsonFile = file('../files/gplay-keys.json')
     track = 'beta'

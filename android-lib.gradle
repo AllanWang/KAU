@@ -3,12 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 group = project.APP_GROUP
 
-repositories {
-    jcenter()
-    maven { url "https://jitpack.io" }
-    maven { url "https://maven.google.com" }
-}
-
 android {
     compileSdkVersion Integer.parseInt(project.TARGET_SDK)
     buildToolsVersion project.BUILD_TOOLS

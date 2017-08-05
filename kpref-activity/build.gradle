@@ -8,7 +8,6 @@ dependencies {
     compile project(':core-ui')
     compile project(':adapter')
     compile project(':colorpicker')
-
 }
 
 apply from: '../artifacts.gradle'
