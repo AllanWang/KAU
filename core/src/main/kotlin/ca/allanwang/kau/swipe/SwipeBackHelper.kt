@@ -7,14 +7,14 @@ import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.swipe.SwipeBackHelper.onDestroy
 import java.util.*
 
-class SwipeBackException(message: String = "You Should call kauSwipeOnCreate() first") : RuntimeException(message)
+internal class SwipeBackException(message: String = "You Should call kauSwipeOnCreate() first") : RuntimeException(message)
 
 /**
  * Singleton to hold our swipe stack
  * All activity pages held with strong references, so it is crucial to call
  * [onDestroy] whenever an activity should be disposed
  */
-object SwipeBackHelper {
+internal object SwipeBackHelper {
 
     private val pageStack = Stack<SwipeBackPage>()
 
@@ -34,8 +34,8 @@ object SwipeBackHelper {
     }
 
     fun onPostCreate(activity: Activity) {
-        KL.v("KauSwipe onPostCreate ${activity.localClassName}")
         this[activity]?.onPostCreate() ?: throw SwipeBackException()
+        KL.v("KauSwipe onPostCreate ${activity.localClassName}")
     }
 
     fun onDestroy(activity: Activity) {

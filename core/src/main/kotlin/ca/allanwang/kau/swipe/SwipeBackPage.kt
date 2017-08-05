@@ -12,7 +12,7 @@ import java.lang.ref.WeakReference
  *
  * Updated by Allan Wang on 2017/07/05
  */
-class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(activity) {
+internal class SwipeBackPage(activity: Activity) : SwipeBackContractInternal by SwipeBackLayout(activity) {
 
     var activityRef = WeakReference(activity)
     var slider: RelativeSlider
@@ -40,7 +40,7 @@ class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(a
         }
 
     private fun handleLayout() {
-        val activity = activityRef.get() ?: return KL.v("KauSwipe activity ref gone during hangle layout")
+        val activity = activityRef.get() ?: return KL.v("KauSwipe activity ref gone during handleLayout")
         if (swipeEnabled) swipeBackLayout.attachToActivity(activity)
         else swipeBackLayout.removeFromActivity(activity)
     }
@@ -50,6 +50,10 @@ class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(a
         return this
     }
 
+}
+
+internal interface SwipeBackContractInternal : SwipeBackContract {
+    val swipeBackLayout: SwipeBackLayout
 }
 
 interface SwipeBackContract {
@@ -62,7 +66,6 @@ interface SwipeBackContract {
      * This dynamically fades as the page gets closer to exiting
      */
     var scrimColor: Int
-    val swipeBackLayout: SwipeBackLayout
     var edgeSize: Int
     /**
      * Set the flag for which edge the page is scrolling from
@@ -98,5 +101,6 @@ interface SwipeBackContract {
 
     fun addListener(listener: SwipeListener)
     fun removeListener(listener: SwipeListener)
+    fun hasListener(listener: SwipeListener): Boolean
     fun scrollToFinishActivity()
 }

@@ -23,8 +23,8 @@ import java.lang.ref.WeakReference
  * If an edge detection occurs, this layout consumes all the touch events
  * Use the [swipeEnabled] toggle if you need the scroll events on the same axis
  */
-class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
-) : FrameLayout(context, attrs, defStyle), SwipeBackContract {
+internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
+) : FrameLayout(context, attrs, defStyle), SwipeBackContract, SwipeBackContractInternal {
 
     override val swipeBackLayout: SwipeBackLayout
         get() = this
@@ -157,16 +157,6 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         addListener(chromeFadeListener)
     }
 
-
-    /**
-     * Set up contentView which will be moved by user gesture
-
-     * @param view
-     */
-    private fun setContentView(view: View) {
-        contentViewRef = WeakReference(view)
-    }
-
     override fun setEdgeSizePercent(swipeEdgePercent: Float) {
         edgeSize = ((if (horizontal) resources.displayMetrics.widthPixels else resources.displayMetrics.heightPixels) * swipeEdgePercent).toInt()
     }
@@ -182,6 +172,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
 
     /**
      * Removes a listener from the set of listeners
+     * and scans our list for invalid ones
 
      * @param listener
      */
@@ -192,6 +183,22 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
             if (l == null || l == listener)
                 iter.remove()
         }
+    }
+
+    /**
+     * Checks if a listener exists in our list,
+     * and remove invalid ones at the same time
+     */
+    override fun hasListener(listener: SwipeListener): Boolean {
+        val iter = listeners.iterator()
+        while (iter.hasNext()) {
+            val l = iter.next().get()
+            if (l == null)
+                iter.remove()
+            else if (l == listener)
+                return true
+        }
+        return false
     }
 
     /**
@@ -275,7 +282,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         val contentChild = content.getChildAt(0)
         content.removeView(contentChild)
         addView(contentChild)
-        setContentView(contentChild)
+        contentViewRef = WeakReference(contentChild)
         content.addView(this)
     }
 
@@ -289,6 +296,7 @@ class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         content.removeView(this)
         removeView(contentChild)
         content.addView(contentChild)
+        contentViewRef.clear()
     }
 
     override fun computeScroll() {
