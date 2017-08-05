@@ -176,6 +176,8 @@ kauSwipeOnDestroy()     //in the onDestroy method
 kauSwipeFinish()        //optional; replace onBackPressed with this to animate the activity finish
 ```
 
+For the best results, activities should be translucent. See `Kau.Transparent` for a base style example.
+
 Special thanks goes to the original project, [SwipeBackHelper](https://github.com/Jude95/SwipeBackHelper)
 
 KAU's swipe is a Kotlin rewrite, along with support for all directions and weakly referenced contexts.

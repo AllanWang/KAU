@@ -10,6 +10,9 @@
     <item text=":core: Fix FAQ background" />
     <item text=":core: Create FileUtils" />
     <item text=":core: Create NotificationUtils" />
+	<item text=":core: Update swipe to remove most exceptions" />
+	<item text=":core: Make logging class functions inline" />
+	<item text=":core: Create removeIf for mutableIteratables" />
     <item text=":core-ui: Move reactive libs to :searchview:" />
     <item text="" />
     <item text="" />
