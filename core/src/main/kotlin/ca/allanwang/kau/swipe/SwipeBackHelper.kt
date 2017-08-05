@@ -3,6 +3,7 @@ package ca.allanwang.kau.swipe
 import android.app.Activity
 import ca.allanwang.kau.R
 import ca.allanwang.kau.kotlin.kauRemoveIf
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.swipe.SwipeBackHelper.onDestroy
 import java.util.*
 
@@ -29,14 +30,19 @@ object SwipeBackHelper {
             else -> R.anim.kau_slide_in_top
         }
         activity.overridePendingTransition(startAnimation, 0)
+        KL.v("KauSwipe onCreate ${activity.localClassName}")
     }
 
-    fun onPostCreate(activity: Activity) = this[activity]?.onPostCreate() ?: throw SwipeBackException()
+    fun onPostCreate(activity: Activity) {
+        KL.v("KauSwipe onPostCreate ${activity.localClassName}")
+        this[activity]?.onPostCreate() ?: throw SwipeBackException()
+    }
 
     fun onDestroy(activity: Activity) {
         val page: SwipeBackPage? = this[activity]
         pageStack.kauRemoveIf { it.activityRef.get() == null || it === page }
         page?.activityRef?.clear()
+        KL.v("KauSwipe onDestroy ${activity.localClassName}")
     }
 
     fun finish(activity: Activity) = this[activity]?.scrollToFinishActivity()

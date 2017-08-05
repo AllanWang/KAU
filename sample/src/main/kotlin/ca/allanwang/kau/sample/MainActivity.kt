@@ -14,6 +14,7 @@ import ca.allanwang.kau.mediapicker.kauOnMediaPickerResult
 import ca.allanwang.kau.searchview.SearchItem
 import ca.allanwang.kau.searchview.SearchView
 import ca.allanwang.kau.searchview.bindSearchView
+import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.ui.views.RippleCanvas
 import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.navigationBarColor
@@ -164,8 +165,8 @@ class MainActivity : KPrefActivity() {
             descRes = R.string.sub_item_desc
         }
 
-        plainText(R.string.image_showcase) {
-            onClick = { _, _, _ -> kauLaunchMediaPicker(ImagePickerActivity::class.java, REQUEST_MEDIA); false }
+        plainText(R.string.swipe_showcase) {
+            onClick = { _, _, _ -> startActivityWithEdge(SWIPE_EDGE_LEFT); false }
         }
 
         plainText(R.string.video_overlay_showcase) {

@@ -19,6 +19,7 @@
     <string name="sub_item_desc">Press this to view the next subset of preferences</string>
     <string name="your_email">your.email@here.com</string>
     <string name="your_subject">Your subject</string>
+    <string name="swipe_showcase">Swipe Showcase</string>
     <string name="image_showcase">Image Showcase</string>
     <string name="video_overlay_showcase">Video Overlay Showcase</string>
     <string name="adapter_showcase">Adapter Showcase</string>

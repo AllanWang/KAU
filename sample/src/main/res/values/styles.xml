@@ -23,4 +23,9 @@
         <item name="android:windowAnimationStyle">@style/KauSlideInSlideOutRight</item>
     </style>
 
+    <style name="ClearButton">
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:padding">@dimen/kau_padding_normal</item>
+    </style>
+
 </resources>

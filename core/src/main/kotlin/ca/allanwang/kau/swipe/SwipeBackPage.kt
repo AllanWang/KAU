@@ -4,6 +4,7 @@ import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.ViewGroup
+import ca.allanwang.kau.logging.KL
 import java.lang.ref.WeakReference
 
 /**
@@ -39,7 +40,7 @@ class SwipeBackPage(activity: Activity) : SwipeBackContract by SwipeBackLayout(a
         }
 
     private fun handleLayout() {
-        val activity = activityRef.get()?:return
+        val activity = activityRef.get() ?: return KL.v("KauSwipe activity ref gone during hangle layout")
         if (swipeEnabled) swipeBackLayout.attachToActivity(activity)
         else swipeBackLayout.removeFromActivity(activity)
     }
@@ -94,6 +95,7 @@ interface SwipeBackContract {
      * Sets edge size based on screen size
      */
     fun setEdgeSizePercent(swipeEdgePercent: Float)
+
     fun addListener(listener: SwipeListener)
     fun removeListener(listener: SwipeListener)
     fun scrollToFinishActivity()
