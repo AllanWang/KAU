@@ -1,4 +1,6 @@
+<a href="https://allanwang.github.io/KAU/">
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
+</a>
 
 An extensive collection of <b>Kotlin Android Utils</b>
 
