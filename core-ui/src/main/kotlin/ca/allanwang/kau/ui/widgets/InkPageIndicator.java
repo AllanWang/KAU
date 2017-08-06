@@ -30,7 +30,6 @@ import android.graphics.RectF;
 import android.support.annotation.ColorInt;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Interpolator;
 
@@ -642,7 +641,7 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
     private void setJoiningFraction(int leftDot, float fraction) {
         if (leftDot < joiningFractions.length) {
 
-            if (leftDot == 1) KL.INSTANCE.v("PageIndicator dot 1 fraction:\t$fraction");
+            if (leftDot == 1) KL.INSTANCE.v("PageIndicator dot 1 fraction:\t" + fraction, null);
 
             joiningFractions[leftDot] = fraction;
             postInvalidateOnAnimation();
