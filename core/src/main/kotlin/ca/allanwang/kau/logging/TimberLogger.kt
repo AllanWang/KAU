@@ -2,46 +2,64 @@
 
 package ca.allanwang.kau.logging
 
+import android.os.Looper
 import android.util.Log
 
 
 /**
  * Created by Allan Wang on 2017-05-28.
+ *
+ * Base logger class with a predefined tag
+ * This may be extended by an object to effectively replace [Log]
  */
 open class KauLogger(val tag: String) {
 
     var enabled = true
+    var showPrivateText = false
 
     /**
      * Filter pass-through to decide what we wish to log
      * By default, we will ignore verbose and debug logs
+     * @returns {@code true} to log the message, {@code false} to ignore
      */
     var filter: (Int) -> Boolean = { it != Log.VERBOSE && it != Log.DEBUG }
 
-    fun disable(): KauLogger {
-        enabled = false
+    fun disable(disable: Boolean = true): KauLogger {
+        enabled = !disable
         return this
     }
 
     fun debug(enable: Boolean) {
         filter = if (enable) { _ -> true } else { i -> i != Log.VERBOSE && i != Log.DEBUG }
+        showPrivateText = enable
     }
 
-    protected fun log(priority: Int, message: String?, t: Throwable? = null) {
+    protected fun log(priority: Int, message: String?, privateMessage: String?, t: Throwable? = null) {
         if (!enabled || !filter(priority)) return
-        if (t != null) Log.e(tag, message, t)
-        else if (message != null) Log.println(priority, tag, message)
+        var text = message ?: ""
+        if (showPrivateText && privateMessage != null)
+            text += "\n-\t$privateMessage"
+        if (t != null) Log.e(tag, text, t)
+        else if (text.isNotBlank()) Log.println(priority, tag, text)
     }
 
-    fun v(text: String?) = log(Log.VERBOSE, text)
-    fun d(text: String?) = log(Log.DEBUG, text)
-    fun d(text: String?, info: String?) {
-        d(text)
-        i(info)
+    fun v(text: String?, privateText: String? = null) = log(Log.VERBOSE, text, privateText)
+    fun d(text: String?, privateText: String? = null) = log(Log.DEBUG, text, privateText)
+    fun i(text: String?, privateText: String? = null) = log(Log.INFO, text, privateText)
+    fun e(text: String?, privateText: String? = null) = log(Log.ERROR, text, privateText)
+    fun a(text: String?, privateText: String? = null) = log(Log.ASSERT, text, privateText)
+    fun e(text: String?, t: Throwable? = null, privateText: String? = null) = log(Log.ERROR, text, privateText, t)
+    fun eThrow(text: String?) {
+        if (text != null)
+            e(text, Throwable(text))
     }
 
-    fun i(text: String?) = log(Log.INFO, text)
-    fun e(text: String?, t: Throwable? = null) = log(Log.ERROR, text, t)
-    fun eThrow(text: String?) = e(text, Throwable(text))
-    fun a(text: String?) = log(Log.ASSERT, text)
+    /**
+     * Log the looper
+     */
+    fun checkThread(id: Int) {
+        val name = Thread.currentThread().name
+        val status = if (Looper.myLooper() == Looper.getMainLooper()) "is" else "is not"
+        d("$id $status in the main thread - thread name: $name")
+    }
 }
