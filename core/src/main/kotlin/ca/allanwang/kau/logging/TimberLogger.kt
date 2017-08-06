@@ -18,4 +18,7 @@ open class TimberLogger(tag: String) {
     inline fun i(s: String) = Timber.i(TAG, s)
     inline fun v(s: String) = Timber.v(TAG, s)
     inline fun eThrow(s: String) = e(Throwable(s))
+//    fun plant() {
+//     Timber.plant(Timber.Tree())
+//    }
 }

@@ -13,7 +13,7 @@ internal object UNINITIALIZED
 
 fun <T : Any> lazyResettable(initializer: () -> T): LazyResettable<T> = LazyResettable<T>(initializer)
 
-open class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : ILazyResettable<T>, Serializable {
+class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : ILazyResettable<T>, Serializable {
     @Volatile private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this
 

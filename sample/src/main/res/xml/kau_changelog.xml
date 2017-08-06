@@ -6,7 +6,13 @@
     <item text="" />
     -->
 	
-	<version title="v3.2.4"/>
+	<version title="v3.3.0"/>
+    <item text=":core: Create debounce methods" />
+    <item text=":searchview: [Breaking] remove reactive dependencies and stick with basic callbacks" />
+    <item text="" />
+    <item text="" />
+	
+	<version title="v3.2.5"/>
     <item text=":core: Fix FAQ background" />
     <item text=":core: Create FileUtils" />
     <item text=":core: Create NotificationUtils" />
@@ -14,8 +20,6 @@
 	<item text=":core: Make logging class functions inline" />
 	<item text=":core: Create removeIf for mutableIteratables" />
     <item text=":core-ui: Move reactive libs to :searchview:" />
-    <item text="" />
-    <item text="" />
 	
 	<version title="v3.2.3"/>
     <item text=":about: Modularize everything" />

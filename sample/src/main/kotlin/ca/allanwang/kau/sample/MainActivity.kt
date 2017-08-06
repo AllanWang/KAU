@@ -224,18 +224,13 @@ class MainActivity : KPrefActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         if (searchView == null) searchView = bindSearchView(menu, R.id.action_search) {
-            textObserver = {
-                observable, searchView ->
-                /*
-                 * Notice that this function is automatically executed in a new thread
-                 * and that the results will automatically be set on the ui thread
-                 */
-                observable.subscribe {
-                    text ->
-                    val items = wordBank.filter { it.contains(text) }.sorted().map { SearchItem(it) }
-                    searchView.results = items
-                }
+
+            textCallback = {
+                query, searchView ->
+                val items = wordBank.filter { it.contains(query) }.sorted().map { SearchItem(it) }
+                searchView.results = items
             }
+            textDebounceInterval = 0
             noResultsFound = R.string.kau_no_results_found
             shouldClearOnClose = false
             onItemClick = {
