@@ -63,7 +63,7 @@ dependencies {
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: 
 [KPrefs](core#kprefs),
-[Changelog XML](core#changelog),
+[Changelog XML](core#changelog-xml),
 [FAQ XML](core#faq-xml),
 [Kotterknife](core#kotterknife),
 [Ripple Canvas](core#ripple-canvas),
@@ -73,7 +73,7 @@ dependencies {
 [Debounce](core#debounce),
 [Timber Logger](core#timber-logger),
 [Email Builder](core#email-builder),
-[Extensions](core#extensions),
+[Extension Functions](core#extension-functions),
 [Lazy Resettable](core#lazy-resettable)
 * Includes 
 [`AppCompat`](https://developer.android.com/topic/libraries/support-library/index.html), 

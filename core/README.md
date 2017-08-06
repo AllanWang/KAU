@@ -5,7 +5,7 @@
 ## Contents
 
 * [KPrefs](#kprefs)
-* [Changelog XML](#changelog)
+* [Changelog XML](#changelog-xml)
 * [FAQ XML](#faq-xml)
 * [Kotterknife](#kotterknife)
 * [Ripple Canvas](#ripple-canvas)
@@ -15,7 +15,7 @@
 * [Debounce](#debounce)
 * [Timber Logger](#timber-logger)
 * [Email Builder](#email-builder)
-* [Extensions](#extensions)
+* [Extension Functions](#extension-functions)
 * [Lazy Resettable](#lazy-resettable)
 
 ## KPrefs
