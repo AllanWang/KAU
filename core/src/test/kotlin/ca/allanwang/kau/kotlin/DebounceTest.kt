@@ -1,5 +1,6 @@
 package ca.allanwang.kau.kotlin
 
+import org.jetbrains.anko.doAsync
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -11,7 +12,7 @@ class DebounceTest {
     @Test
     fun basic() {
         var i = 0
-        val debounce = EmptyDebouncer(20) { i++ }
+        val debounce = debounce(20) { i++ }
         assertEquals(0, i, "i should start as 0")
         (1..5).forEach { debounce() }
         Thread.sleep(50)
@@ -21,7 +22,7 @@ class DebounceTest {
     @Test
     fun basicExtension() {
         var i = 0
-        val increment = { i++ }
+        val increment: () -> Unit = { i++ }
         (1..5).forEach { increment() }
         assertEquals(5, i, "i should be 5")
         val debounce = increment.debounce(50)
@@ -29,6 +30,24 @@ class DebounceTest {
         assertEquals(5, i, "i should not have changed")
         Thread.sleep(100)
         assertEquals(6, i, "i should increment to 6")
+    }
+
+    @Test
+    fun multipleDebounces() {
+        var i = 0
+        val debounce = debounce<Int>(10) { i += it }
+        debounce(1) //ignore -> i = 0
+        Thread.sleep(5)
+        assertEquals(0, i)
+        debounce(2) //accept -> i = 2
+        Thread.sleep(15)
+        assertEquals(2, i)
+        debounce(4) //ignore -> i = 2
+        Thread.sleep(5)
+        assertEquals(2, i)
+        debounce(8) //accept -> i = 10
+        Thread.sleep(15)
+        assertEquals(10, i)
     }
 
 }

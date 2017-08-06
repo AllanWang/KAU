@@ -10,18 +10,26 @@ import java.util.concurrent.TimeUnit
  * Thread safe function wrapper to allow for debouncing
  * With reference to <a href="https://stackoverflow.com/a/20978973/4407321">Stack Overflow</a>
  */
-class Debouncer<T>(var interval: Long, val callback: (T) -> Any) {
+
+/**
+ * The debouncer base
+ * Implements everything except for the callback,
+ * as the number of variables is different between implementations
+ * You may still use this without extending it, but you'll have to pass a callback each time
+ */
+open class Debouncer(var interval: Long) {
     private val sched = Executors.newScheduledThreadPool(1)
-    private var task: TimerTask? = null
+    private var task: DebounceTask? = null
 
     /**
-     * Pass a new key to the debouncer
-     * If an existing task exists, it will be invalidated
+     * Generic invocation to pass a callback to the new task
+     * Pass a new callback for the task
+     * If another task is pending, it will be invalidated
      */
-    operator fun invoke(key: T) {
+    operator fun invoke(callback: () -> Unit) {
         synchronized(this) {
             task?.invalidate()
-            val newTask = TimerTask(key)  //ensure we are passing a nonnull command
+            val newTask = DebounceTask(callback)  //ensure we are passing a nonnull command
             sched.schedule(newTask, interval, TimeUnit.MILLISECONDS)
             task = newTask
         }
@@ -32,84 +40,71 @@ class Debouncer<T>(var interval: Long, val callback: (T) -> Any) {
      */
     fun terminate() = sched.shutdownNow()
 
-    // The task that wakes up when the wait time elapses
-    private inner class TimerTask(private val key: T) : Runnable {
-        private var valid = true
+}
 
-        fun invalidate() {
-            synchronized(this) {
-                valid = false
-            }
-        }
+/*
+ * Helper extensions for functions with 0 to 3 arguments
+ */
 
-        override fun run() {
-            synchronized(this) {
-                if (valid) {
-                    try {
-                        callback(key)
-                    } catch (e: Exception) {
-                        KL.e(e, "Debouncer exception")
-                    }
-                }
-            }
+/**
+ * The debounced task
+ * Holds a callback to execute if the time has come and it is still valid
+ * All methods can be viewed as synchronous as the invocation is synchronous
+ */
+private class DebounceTask(inline val callback: () -> Unit) : Runnable {
+    private var valid = true
+
+    fun invalidate() {
+        valid = false
+    }
+
+    override fun run() {
+        if (!valid) return
+        valid = false
+        try {
+            callback()
+        } catch (e: Exception) {
+            KL.e(e, "DebouncerTask exception")
         }
     }
 }
 
 /**
- * A debouncing variant with no arguments
+ * A zero input debouncer
  */
-class EmptyDebouncer(var interval: Long, val callback: () -> Any) {
-    private val sched = Executors.newScheduledThreadPool(1)
-    private var task: TimerTask? = null
-
-    /**
-     * Pass a new key to the debouncer
-     * If an existing task exists, it will be invalidated
-     */
-    operator fun invoke() {
-        synchronized(this) {
-            task?.invalidate()
-            val newTask = TimerTask()  //ensure we are passing a nonnull command
-            sched.schedule(newTask, interval, TimeUnit.MILLISECONDS)
-            task = newTask
-        }
-    }
-
-    /**
-     * Call to cancel all pending requests and shutdown the thread pool
-     */
-    fun terminate() = sched.shutdownNow()
-
-    // The task that wakes up when the wait time elapses
-    private inner class TimerTask : Runnable {
-        private var valid = true
-
-        fun invalidate() {
-            synchronized(this) {
-                valid = false
-            }
-        }
-
-        override fun run() {
-            synchronized(this) {
-                if (valid) {
-                    try {
-                        callback()
-                    } catch (e: Exception) {
-                        KL.e(e, "EmptyDebouncer exception")
-                    }
-                }
-            }
-        }
-    }
+class Debouncer0 internal constructor(interval: Long, val callback: () -> Unit) : Debouncer(interval) {
+    operator fun invoke() = invoke(callback)
 }
 
-/**
- * Wraps a function so that it can be debounced
- */
-fun <T> ((T) -> Any).debounce(interval: Long)
-        = Debouncer<T>(interval, this)
+fun debounce(interval: Long, callback: () -> Unit) = Debouncer0(interval, callback)
+fun (() -> Unit).debounce(interval: Long) = debounce(interval, this)
 
-fun (() -> Any).debounce(interval: Long)
-        = EmptyDebouncer(interval, this)
+/**
+ * A one argument input debouncer
+ */
+class Debouncer1<T> internal constructor(interval: Long, val callback: (T) -> Unit) : Debouncer(interval) {
+    operator fun invoke(key: T) = invoke { callback(key) }
+}
+
+fun <T> debounce(interval: Long, callback: (T) -> Unit) = Debouncer1(interval, callback)
+fun <T> ((T) -> Unit).debounce(interval: Long) = debounce(interval, this)
+
+/**
+ * A two argument input debouncer
+ */
+class Debouncer2<T, V> internal constructor(interval: Long, val callback: (T, V) -> Unit) : Debouncer(interval) {
+    operator fun invoke(arg0: T, arg1: V) = invoke { callback(arg0, arg1) }
+}
+
+fun <T, V> debounce(interval: Long, callback: (T, V) -> Unit) = Debouncer2(interval, callback)
+fun <T, V> ((T, V) -> Unit).debounce(interval: Long) = debounce(interval, this)
+
+/**
+ * A three argument input debouncer
+ */
+class Debouncer3<T, U, V> internal constructor(interval: Long, val callback: (T, U, V) -> Unit) : Debouncer(interval) {
+    operator fun invoke(arg0: T, arg1: U, arg2: V) = invoke { callback(arg0, arg1, arg2) }
+}
+
+fun <T, U, V> debounce(interval: Long, callback: ((T, U, V) -> Unit)) = Debouncer3(interval, callback)
+fun <T, U, V> ((T, U, V) -> Unit).debounce(interval: Long) = debounce(interval, this)

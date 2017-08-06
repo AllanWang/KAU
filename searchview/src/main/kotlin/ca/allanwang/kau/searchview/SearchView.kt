@@ -6,10 +6,14 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
-import android.support.transition.AutoTransition
+import android.support.transition.ChangeBounds
+import android.support.transition.TransitionManager
+import android.support.transition.TransitionSet
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.*
 import android.widget.FrameLayout
@@ -18,19 +22,16 @@ import android.widget.ProgressBar
 import ca.allanwang.kau.searchview.SearchView.Configs
 import ca.allanwang.kau.ui.views.BoundedCardView
 import ca.allanwang.kau.utils.*
-import com.jakewharton.rxbinding2.widget.RxTextView
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import org.jetbrains.anko.runOnUiThread
 
 
 /**
  * Created by Allan Wang on 2017-06-23.
  *
- * A materialized SearchView with complete theming and observables
+ * A materialized SearchView with complete theming and customization
  * This view can be added programmatically and configured using the [Configs] DSL
  * It is preferred to add the view through an activity, but it can be attached to any ViewGroup
  * Beware of where specifically this is added, as its view or the keyboard may affect positioning
@@ -115,11 +116,9 @@ class SearchView @JvmOverloads constructor(
          */
         var noResultsFound: Int = -1
         /**
-         * Text watcher configurations on init
-         * By default, the observable is on a separate thread, so you may directly execute background processes
-         * This builder acts on an observable, so you may switch threads, debounce, and do anything else that you require
+         * Callback for when the query changes
          */
-        var textObserver: (observable: Observable<String>, searchView: SearchView) -> Unit = { _, _ -> }
+        var textCallback: (query: String, searchView: SearchView) -> Unit = { _, _ -> }
         /**
          * Click event for suggestion items
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
@@ -188,9 +187,8 @@ class SearchView @JvmOverloads constructor(
     private val card: BoundedCardView by bindView(R.id.kau_search_cardview)
     private val iconNav: ImageView by bindView(R.id.kau_search_nav)
     private val editText: AppCompatEditText by bindView(R.id.kau_search_edit_text)
-    val textEvents: Observable<String>
     private val progress: ProgressBar by bindView(R.id.kau_search_progress)
-    val iconExtra: ImageView by bindView(R.id.kau_search_extra)
+    private val iconExtra: ImageView by bindView(R.id.kau_search_extra)
     private val iconClear: ImageView by bindView(R.id.kau_search_clear)
     private val divider: View by bindView(R.id.kau_search_divider)
     private val recycler: RecyclerView by bindView(R.id.kau_search_recycler)
@@ -236,12 +234,18 @@ class SearchView @JvmOverloads constructor(
                 if (item.key.isNotBlank()) configs.onItemLongClick(position, item.key, item.content, this@SearchView); true
             }
         }
-        textEvents = RxTextView.textChangeEvents(editText)
-                .skipInitialValue()
-                .observeOn(Schedulers.newThread())
-                .map { it.text().toString().trim() }
-        textEvents.filter { it.isBlank() }
-                .subscribe { clearResults() }
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val valid = !s.isNullOrBlank()
+                if (valid) configs.textCallback(s.toString().trim(), this@SearchView)
+                else clearResults()
+            }
+
+        })
     }
 
     internal fun ImageView.setSearchIcon(iicon: IIcon?): ImageView {
@@ -249,8 +253,14 @@ class SearchView @JvmOverloads constructor(
         return this
     }
 
-    internal fun cardTransition(builder: AutoTransition.() -> Unit = {}) {
-        card.transitionAuto { duration = configs.transitionDuration; builder() }
+    internal fun cardTransition(builder: TransitionSet.() -> Unit = {}) {
+        TransitionManager.beginDelayedTransition(card,
+                //we are only using change bounds, as the recyclerview items may be animated as well,
+                //which causes a measure IllegalStateException
+                TransitionSet().addTransition(ChangeBounds()).apply {
+                    duration = configs.transitionDuration
+                    builder()
+                })
     }
 
     /**
@@ -268,7 +278,6 @@ class SearchView @JvmOverloads constructor(
      */
     fun bind(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
         config(config)
-        configs.textObserver(textEvents.debounce().filter { it.isNotBlank() }, this)
         menuItem = menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
         if (menuItem!!.icon == null) menuItem!!.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         card.gone()
