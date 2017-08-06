@@ -48,10 +48,10 @@ open class KauLogger(val tag: String) {
     fun i(text: String?, privateText: String? = null) = log(Log.INFO, text, privateText)
     fun e(text: String?, privateText: String? = null) = log(Log.ERROR, text, privateText)
     fun a(text: String?, privateText: String? = null) = log(Log.ASSERT, text, privateText)
-    fun e(text: String?, t: Throwable? = null, privateText: String? = null) = log(Log.ERROR, text, privateText, t)
+    fun e(t: Throwable?, text: String?, privateText: String? = null) = log(Log.ERROR, text, privateText, t)
     fun eThrow(text: String?) {
         if (text != null)
-            e(text, Throwable(text))
+            e(Throwable(text), text)
     }
 
     /**

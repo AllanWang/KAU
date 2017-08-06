@@ -13,7 +13,7 @@
 * [CollapsibleViewDelegate](#collapsible-view-delegate)
 * [Swipe](#swipe)
 * [Debounce](#debounce)
-* [Timber Logger](#timber-logger)
+* [KAU Logger](#kau-logger)
 * [Email Builder](#email-builder)
 * [Extension Functions](#extension-functions)
 * [Lazy Resettable](#lazy-resettable)
@@ -193,10 +193,14 @@ KAU offers extensions to easily convert or create functions into debouncables.
 Simply call `debounce` and specify your interval on an existing function, or with a new function. 
 
 
-## Timber Logger
+## KAU Logger
 
-`KauLoggerTree` can be extended by an object to implement a tree with a permanent tag prefix.
-Keep in mind that you'll still have to plant the tree to see the output.
+`KauLogger` can be extended by an object to implement a logger with a permanent tag.
+It's methods are the same as the main logger, along with the following:
+* Logging methods have two inputs, the main text and private text. 
+If private text is disabled (default), it will not be logged.
+* The loggers have toggles to enable logging as a whole and to filter out priorities that we wish to ignore.
+* Has some other functions, like logging the current thread.
 
 ## Email Builder
 

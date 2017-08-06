@@ -72,7 +72,7 @@ dependencies {
   * [CollapsibleViewDelegate](core#collapsible-view-delegate)
   * [Swipe](core#swipe)
   * [Debounce](core#debounce)
-  * [Timber Logger](core#timber-logger)
+  * [KAU Logger](core#kau-logger)
   * [Email Builder](core#email-builder)
   * [Extension Functions](core#extension-functions)
   * [Lazy Resettable](core#lazy-resettable)
@@ -81,7 +81,6 @@ dependencies {
 [`Material Dialogs (core)`](https://github.com/afollestad/material-dialogs),
 [`Iconics`](https://github.com/mikepenz/Android-Iconics), 
 [`Anko`](https://github.com/Kotlin/anko),
-[`Timber`](https://github.com/JakeWharton/timber), 
 [`Kotlin stdlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
 
 ## [Core UI](core-ui#readme)
