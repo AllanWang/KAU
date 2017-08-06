@@ -4,7 +4,7 @@
 
 ## Contents
 
-* [KPrefs](/core#kprefs)
+* [KPrefs](#kprefs)
 * [Changelog XML](#changelog-xml)
 * [FAQ XML](#faq-xml)
 * [Kotterknife](#kotterknife)

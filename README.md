@@ -57,12 +57,13 @@ dependencies {
 
 # Submodules 
 > Linked to their respective docs.<br/>
-> Included dependencies are only those with exposed APIs; see [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations).
+> Included dependencies are only those with exposed APs; see [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations).<br/>
+> Implemented dependencies are wrapped in parentheses.
 
 ## [Core](core#readme)
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: 
-  * [KPrefs](/core#kprefs)
+  * [KPrefs](core#kprefs)
   * [Changelog XML](core#changelog-xml)
   * [FAQ XML](core#faq-xml)
   * [Kotterknife](core#kotterknife)
@@ -100,7 +101,7 @@ dependencies {
 ## [Color Picker](colorpicker#readme)
 * Implementation of a color picker dialog with subtle transitions and a decoupled callback
 * Includes `:core`, 
-[`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs)
+([`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs))
 
 ## [KPref Activity](kpref-activity#readme)
 * Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
@@ -110,14 +111,11 @@ dependencies {
 * Fully functional image and video pickers, both as an overlay and as a requested activity.
 * Includes `:core-ui`, 
 [`Glide`](https://github.com/bumptech/glide),
-[`Blurry`](https://github.com/wasabeef/Blurry)
+([`Blurry`](https://github.com/wasabeef/Blurry))
 
 ## [SearchView](searchview#readme)
 * Material searchview with kotlin bindings
-* Includes `:core-ui`, `:adapter`, 
-[`RxAndroid`](https://github.com/ReactiveX/RxAndroid), 
-[`RxKotlin`](https://github.com/ReactiveX/RxKotlin), 
-[`RxBinding`](https://github.com/JakeWharton/RxBinding)
+* Includes `:core-ui`, `:adapter`
 
 -----------
 
