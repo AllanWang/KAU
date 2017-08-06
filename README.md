@@ -61,7 +61,20 @@ dependencies {
 
 ## [Core](core#readme)
 * Collection of extension functions and small helper methods applicable in almost any application.
-* Notable features: KPrefs, Changelog XML, Kotterknife, Ripple Canvas, Delegates, Swipe, Lazy Resettables, Extensions, Email Builder
+* Notable features: 
+[KPrefs](core#kprefs),
+[Changelog XML](core#changelog),
+[FAQ XML](core#faq-xml),
+[Kotterknife](core#kotterknife),
+[Ripple Canvas](core#ripple-canvas),
+[MeasureSpecDelegate](core#measure-spec-delegate),
+[CollapsibleViewDelegate](core#collapsible-view-delegate),
+[Swipe](core#swipe),
+[Debounce](core#debounce),
+[Timber Logger](core#timber-logger),
+[Email Builder](core#email-builder),
+[Extensions](core#extensions),
+[Lazy Resettable](core#lazy-resettable)
 * Includes 
 [`AppCompat`](https://developer.android.com/topic/libraries/support-library/index.html), 
 [`Material Dialogs (core)`](https://github.com/afollestad/material-dialogs),
