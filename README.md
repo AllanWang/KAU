@@ -62,7 +62,7 @@ dependencies {
 ## [Core](core#readme)
 * Collection of extension functions and small helper methods applicable in almost any application.
 * Notable features: 
-  * [KPrefs](core#kprefs)
+  * [KPrefs](/core#kprefs)
   * [Changelog XML](core#changelog-xml)
   * [FAQ XML](core#faq-xml)
   * [Kotterknife](core#kotterknife)
