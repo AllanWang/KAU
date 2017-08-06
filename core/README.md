@@ -18,7 +18,6 @@
 * [Extensions](#extensions)
 * [Lazy Resettable](#lazy-resettable)
 
-<a name="kprefs"></a>
 ## KPrefs
 
 A typical SharedPreference contains items that look like so:
@@ -72,7 +71,6 @@ object MyPrefs : KPref() {
 
 Notice that it is a `val` and takes no default. It will return true the first time and false for all subsequent calls.
 
-<a name="changelog"></a>
 ## Changelog XML
 
 Create an xml resource with the following structure:
@@ -110,7 +108,6 @@ Here is a template xml changelog file:
 </resources>
 ```
 
-<a name="faq-xml"></a>
 ## FAQ XML
 
 There is another parser for a FAQ list with the following format:
@@ -124,7 +121,6 @@ Call `kauParseFaq` and pass a callback taking in a `List<Pair<Spanned, Spanned>`
 By default, the questions are numbered, and the content is formatted with HTML. 
 You may still need to add your own methods to allow interaction with certain elements such as links.
 
-<a name="kotterknife"></a>
 ## Kotterknife
 
 KAU comes shipped with [Kotterknife](https://github.com/JakeWharton/kotterknife) by Jake Wharton.
@@ -135,7 +131,6 @@ These variants are weakly held in the private `KotterknifeRegistry` object, and 
 values through the `Kotterknife.reset` method. This is typically useful for Fragments, as they do not follow
 the same lifecycle as Activities and Views.
 
-<a name="ripple-canvas"></a>
 ## Ripple Canvas
 
 Ripple canvas provides a way to create simultaneous ripples against a background color. 
@@ -146,21 +141,18 @@ They can be used as transitions, or as a toolbar background to replicate the loo
 Many ripples can be stacked on top of each other to run at the same time from different locations.
 The canvas also supports color fading and direct color setting so it can effectively replace any background.
 
-<a name="measure-spec-delegate"></a>
 ## Measure Spec Delegate
 
 If you ever have a view needing exact aspect ratios with its parent and/or itself, this delegate is here to help.
 Implementing this in any view class unlocks its attributes, giving you three layers of view measuring to ensure exact sizing.
 More information can be found in the [klass file](https://github.com/AllanWang/KAU/blob/master/core/src/main/kotlin/ca/allanwang/kau/ui/views/MeasureSpecDelegate.kt)
 
-<a name="collapsible-view-delegate"></a>
 ## Collapsible View Delegate
 
 A common animation is having a view that can smoothly enter and exit by changing its height.
 This delegate will implement everything for you and give you the methods `expand`, `collapse`, etc.
 See the [kclass file](https://github.com/AllanWang/KAU/blob/master/core/src/main/kotlin/ca/allanwang/kau/ui/views/CollapsibleViewDelegate.kt) for more details.
 
-<a name="swipe"></a>
 # Swipe
 
 A collection of activity extension methods to easily make any activity swipable:
@@ -183,7 +175,6 @@ Special thanks goes to the original project, [SwipeBackHelper](https://github.co
 
 KAU's swipe is a Kotlin rewrite, along with support for all directions and weakly referenced contexts.
 
-<a name="debounce"></a>
 # Debounce
 
 Debouncing is a means of throttling a function so that it is called no more than once in a given instance of time.
@@ -202,20 +193,17 @@ KAU offers extensions to easily convert or create functions into debouncables.
 Simply call `debounce` and specify your interval on an existing function, or with a new function. 
 
 
-<a name="timber-logger"></a>
 ## Timber Logger
 
 [Timber](https://github.com/JakeWharton/timber)'s DebugTree uses the tag to specify the current class that is being logged. 
 To add the tag directly in the message, create an object that extends the TimberLogger class with the tag name as the argument.
 Along with the timber methods (`v`, `i`, `d`, `e`), Timber Logger also supports `eThrow` to wrap a String in a throwable
 
-<a name="email-builder"></a>
 ## Email Builder
 
 Easily send an email through `Context.sendEmail`. 
 Include your email and subject, along with other optional configurations such as retrieving device info.
 
-<a name="extensions"></a>
 ## Extension Functions
 
 > "[Extensions](https://kotlinlang.org/docs/reference/extensions.html) provide the ability to extend a class with new functionality without having to inherit from the class"
@@ -224,7 +212,6 @@ Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of th
 KAU's vast collection of extensions is one of its strongest features. 
 There are too many to explain here, but you may check out the [utils package](https://github.com/AllanWang/KAU/tree/master/core/src/main/kotlin/ca/allanwang/kau/utils)
 
-<a name="lazy-resettable></a>
 ## Lazy Resettable
 
 In the spirit of Kotlin's Lazy delegate, KAU supports a resettable version. Calling `lazyResettable` produces the same delegate,
