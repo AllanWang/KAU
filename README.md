@@ -1,4 +1,4 @@
-<a href="https://allanwang.github.io/KAU/">
+<a href="https://allanwang.github.io/KAU/" target="_blank">
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
 </a>
 
