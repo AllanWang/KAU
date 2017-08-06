@@ -2,6 +2,7 @@
 
 ## v3.3.0
 * :core: Create debounce methods
+* :core: [Breaking] Logging base has been renamed to KauLogger and no longer depends on timber
 * :searchview: [Breaking] remove reactive dependencies and stick with basic callbacks
 
 ## v3.2.5
