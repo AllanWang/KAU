@@ -195,9 +195,8 @@ Simply call `debounce` and specify your interval on an existing function, or wit
 
 ## Timber Logger
 
-[Timber](https://github.com/JakeWharton/timber)'s DebugTree uses the tag to specify the current class that is being logged. 
-To add the tag directly in the message, create an object that extends the TimberLogger class with the tag name as the argument.
-Along with the timber methods (`v`, `i`, `d`, `e`), Timber Logger also supports `eThrow` to wrap a String in a throwable
+`KauLoggerTree` can be extended by an object to implement a tree with a permanent tag prefix.
+Keep in mind that you'll still have to plant the tree to see the output.
 
 ## Email Builder
 
