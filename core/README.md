@@ -193,8 +193,8 @@ Instead, you can wait until a user finishes their query, then search for the res
 
 Example:
 
-![Debounce 0](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_debounce_0.gif)
-![Debounce 500](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_debounce_500.gif)
+![Debounce 0](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_search_debounce_0.gif)
+![Debounce 500](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_search_debounce_500.gif)
 
 The first case is an example of no debouncing, whereas the second case is an example with a 500ms debounce.
 
