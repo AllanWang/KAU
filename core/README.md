@@ -4,19 +4,19 @@
 
 ## Contents
 
-* [KPrefs](#kprefs)
-* [Changelog XML](#changelog-xml)
-* [FAQ XML](#faq-xml)
-* [Kotterknife](#kotterknife)
-* [Ripple Canvas](#ripple-canvas)
-* [MeasureSpecDelegate](#measure-spec-delegate)
-* [CollapsibleViewDelegate](#collapsible-view-delegate)
-* [Swipe](#swipe)
-* [Debounce](#debounce)
-* [Timber Logger](#timber-logger)
-* [Email Builder](#email-builder)
-* [Extension Functions](#extension-functions)
-* [Lazy Resettable](#lazy-resettable)
+* [KPrefs](core#kprefs)
+* [Changelog XML](core#changelog-xml)
+* [FAQ XML](core#faq-xml)
+* [Kotterknife](core#kotterknife)
+* [Ripple Canvas](core#ripple-canvas)
+* [MeasureSpecDelegate](core#measure-spec-delegate)
+* [CollapsibleViewDelegate](core#collapsible-view-delegate)
+* [Swipe](core#swipe)
+* [Debounce](core#debounce)
+* [Timber Logger](core#timber-logger)
+* [Email Builder](core#email-builder)
+* [Extension Functions](core#extension-functions)
+* [Lazy Resettable](core#lazy-resettable)
 
 ## KPrefs
 
