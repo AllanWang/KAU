@@ -6,7 +6,6 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.support.annotation.ColorInt
 import android.support.annotation.IdRes
-import android.support.annotation.StringRes
 import android.support.transition.AutoTransition
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
-import ca.allanwang.kau.kotlin.nonReadable
 import ca.allanwang.kau.searchview.SearchView.Configs
 import ca.allanwang.kau.ui.views.BoundedCardView
 import ca.allanwang.kau.utils.*
@@ -46,63 +44,34 @@ class SearchView @JvmOverloads constructor(
 
     /**
      * Collection of all possible arguments when building the SearchView
-     * Everything is made as opened as possible so other components may be found in the [SearchView]
-     * However, these are the notable options put together an an inner class for better visibility
+     * Everything is made as opened as possible, so additional components may be found in the [SearchView]
+     * However, these are the main config options
      */
-    inner class Configs {
+    class Configs {
         /**
-         * In the searchview, foreground color accounts for all text colors and icon colors
+         * The foreground color accounts for all text colors and icon colors
          * Various alpha levels may be used for sub texts/dividers etc
          */
-        var foregroundColor: Int
-            get() = SearchItem.foregroundColor
-            set(value) {
-                if (SearchItem.foregroundColor == value) return
-                SearchItem.foregroundColor = value
-                tintForeground(value)
-            }
+        var foregroundColor: Int = SearchItem.foregroundColor
         /**
          * Namely the background for the card and recycler view
          */
-        var backgroundColor: Int
-            get() = SearchItem.backgroundColor
-            set(value) {
-                if (SearchItem.backgroundColor == value) return
-                SearchItem.backgroundColor = value
-                tintBackground(value)
-            }
+        var backgroundColor: Int = SearchItem.backgroundColor
         /**
          * Icon for the leftmost ImageView, which typically contains the hamburger menu/back arror
          */
         var navIcon: IIcon? = GoogleMaterial.Icon.gmd_arrow_back
-            set(value) {
-                field = value
-                iconNav.setSearchIcon(value)
-                if (value == null) iconNav.gone()
-            }
-
         /**
          * Optional icon just to the left of the clear icon
          * This is not implemented by default, but can be used for anything, such as mic or redirects
          * Returns the extra imageview
          * Set the iicon as null to hide the extra icon
          */
-        fun setExtraIcon(iicon: IIcon?, onClick: OnClickListener?): ImageView {
-            iconExtra.setSearchIcon(iicon)
-            if (iicon == null) iconClear.gone()
-            iconExtra.setOnClickListener(onClick)
-            return iconExtra
-        }
-
+        var extraIcon: Pair<IIcon, OnClickListener>? = null
         /**
          * Icon for the rightmost ImageView, which typically contains a close icon
          */
         var clearIcon: IIcon? = GoogleMaterial.Icon.gmd_clear
-            set(value) {
-                field = value
-                iconClear.setSearchIcon(value)
-                if (value == null) iconClear.gone()
-            }
         /**
          * Duration for the circular reveal animation
          */
@@ -128,27 +97,14 @@ class SearchView @JvmOverloads constructor(
          * The divider is colored based on the [foregroundColor]
          */
         var withDivider: Boolean = true
-            set(value) {
-                field = value
-                if (value) divider.visible() else divider.invisible()
-            }
         /**
          * Hint string to be set in the searchView
          */
-        var hintText: String?
-            get() = editText.hint?.toString()
-            set(value) {
-                editText.hint = value
-            }
+        var hintText: String? = null
         /**
          * Hint string res to be set in the searchView
          */
-        var hintTextRes: Int
-            @Deprecated(level = DeprecationLevel.ERROR, message = "Non readable property")
-            get() = nonReadable()
-            @StringRes set(value) {
-                hintText = context.string(value)
-            }
+        var hintTextRes: Int = -1
         /**
          * StringRes for a "no results found" item
          * If [results] is ever set to an empty list, it will default to
@@ -179,6 +135,30 @@ class SearchView @JvmOverloads constructor(
          * See [SearchItem.withHighlights]
          */
         var highlightQueryText: Boolean = true
+
+        /**
+         * Sets config attributes to the given searchView
+         */
+        internal fun apply(searchView: SearchView) {
+            with(searchView) {
+                if (SearchItem.foregroundColor != foregroundColor) {
+                    SearchItem.foregroundColor = foregroundColor
+                    tintForeground(foregroundColor)
+                }
+                if (SearchItem.backgroundColor != backgroundColor) {
+                    SearchItem.backgroundColor = backgroundColor
+                    tintForeground(backgroundColor)
+                }
+                val icons = mutableListOf(navIcon to iconNav, clearIcon to iconClear)
+                val extra = extraIcon
+                if (extra != null) icons.add(extra.first to iconExtra)
+                icons.forEach { (iicon, view) -> view.goneIf(iicon == null).setSearchIcon(iicon) }
+
+                if (extra != null) iconExtra.setOnClickListener(extra.second)
+                divider.invisibleIf(!withDivider)
+                editText.hint = context.string(hintTextRes, hintText)
+            }
+        }
     }
 
     /**
@@ -273,8 +253,12 @@ class SearchView @JvmOverloads constructor(
         card.transitionAuto { duration = configs.transitionDuration; builder() }
     }
 
+    /**
+     * Update the base configurations and apply them to the searchView
+     */
     fun config(config: Configs.() -> Unit) {
         configs.config()
+        configs.apply(this)
     }
 
     /**
@@ -284,7 +268,7 @@ class SearchView @JvmOverloads constructor(
      */
     fun bind(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
         config(config)
-        configs.textObserver(textEvents.filter { it.isNotBlank() }, this)
+        configs.textObserver(textEvents.debounce().filter { it.isNotBlank() }, this)
         menuItem = menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
         if (menuItem!!.icon == null) menuItem!!.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         card.gone()
@@ -293,14 +277,17 @@ class SearchView @JvmOverloads constructor(
         return this
     }
 
+    /**
+     * Call to remove the searchView from the original menuItem,
+     * with the option to replace the item click listener
+     */
     fun unBind(replacementMenuItemClickListener: ((item: MenuItem) -> Boolean)? = null) {
         parentViewGroup.removeView(this)
-        if (replacementMenuItemClickListener != null)
-            menuItem?.setOnMenuItemClickListener(replacementMenuItemClickListener)
+        menuItem?.setOnMenuItemClickListener(replacementMenuItemClickListener)
         menuItem = null
     }
 
-    fun configureCoords(item: MenuItem) {
+    private fun configureCoords(item: MenuItem) {
         val view = parentViewGroup.findViewById<View>(item.itemId) ?: return
         val locations = IntArray(2)
         view.getLocationOnScreen(locations)

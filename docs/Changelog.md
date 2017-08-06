@@ -1,11 +1,12 @@
 # Changelog
 
-## v3.2.4
+## v3.2.5
 * :core: Fix FAQ background
 * :core: Create FileUtils
 * :core: Create NotificationUtils
 * :core: Update swipe to remove most exceptions
 * :core: Make logging class functions inline
+* :core: Create removeIf for mutableIteratables
 * :core-ui: Move reactive libs to :searchview:
 
 ## v3.2.3
