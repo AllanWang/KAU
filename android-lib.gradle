@@ -36,8 +36,7 @@ android {
 
     lintOptions {
         warningsAsErrors true
-        disable 'LogNotTimber',
-                'UnusedResources',
+        disable 'UnusedResources',
                 'ContentDescription',
                 'RtlSymmetry',
                 'RtlHardcoded',
