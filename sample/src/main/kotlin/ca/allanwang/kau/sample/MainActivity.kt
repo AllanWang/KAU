@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import ca.allanwang.kau.about.kauLaunchAbout
 import ca.allanwang.kau.email.sendEmail
-import ca.allanwang.kau.kotlin.debounce
 import ca.allanwang.kau.kpref.activity.CoreAttributeContract
 import ca.allanwang.kau.kpref.activity.KPrefActivity
 import ca.allanwang.kau.kpref.activity.KPrefAdapterBuilder
@@ -225,11 +224,13 @@ class MainActivity : KPrefActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         if (searchView == null) searchView = bindSearchView(menu, R.id.action_search) {
+
             textCallback = {
                 query, searchView ->
                 val items = wordBank.filter { it.contains(query) }.sorted().map { SearchItem(it) }
                 searchView.results = items
             }
+            textDebounceInterval = 0
             noResultsFound = R.string.kau_no_results_found
             shouldClearOnClose = false
             onItemClick = {

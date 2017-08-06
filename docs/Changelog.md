@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.3.0
+* :core: Create debounce methods
+* :searchview: [Breaking] remove reactive dependencies and stick with basic callbacks
+
 ## v3.2.5
 * :core: Fix FAQ background
 * :core: Create FileUtils

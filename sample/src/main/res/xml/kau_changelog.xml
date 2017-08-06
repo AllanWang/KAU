@@ -6,6 +6,12 @@
     <item text="" />
     -->
 	
+	<version title="v3.3.0"/>
+    <item text=":core: Create debounce methods" />
+    <item text=":searchview: [Breaking] remove reactive dependencies and stick with basic callbacks" />
+    <item text="" />
+    <item text="" />
+	
 	<version title="v3.2.5"/>
     <item text=":core: Fix FAQ background" />
     <item text=":core: Create FileUtils" />

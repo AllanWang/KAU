@@ -19,6 +19,9 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
+import ca.allanwang.kau.kotlin.Debouncer2
+import ca.allanwang.kau.kotlin.debounce
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.searchview.SearchView.Configs
 import ca.allanwang.kau.ui.views.BoundedCardView
 import ca.allanwang.kau.utils.*
@@ -120,6 +123,10 @@ class SearchView @JvmOverloads constructor(
          */
         var textCallback: (query: String, searchView: SearchView) -> Unit = { _, _ -> }
         /**
+         * Debouncing interval between callbacks
+         */
+        var textDebounceInterval: Long = 0
+        /**
          * Click event for suggestion items
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
          */
@@ -156,6 +163,8 @@ class SearchView @JvmOverloads constructor(
                 if (extra != null) iconExtra.setOnClickListener(extra.second)
                 divider.invisibleIf(!withDivider)
                 editText.hint = context.string(hintTextRes, hintText)
+                textCallback.terminate()
+                textCallback = debounce(textDebounceInterval, this@Configs.textCallback)
             }
         }
     }
@@ -179,7 +188,10 @@ class SearchView @JvmOverloads constructor(
      * Empties the list on the UI thread
      * The noResults item will not be added
      */
-    internal fun clearResults() = context.runOnUiThread { cardTransition(); adapter.clear() }
+    internal fun clearResults() {
+        textCallback.cancel()
+        context.runOnUiThread { cardTransition(); adapter.clear() }
+    }
 
     val configs = Configs()
     //views
@@ -192,6 +204,8 @@ class SearchView @JvmOverloads constructor(
     private val iconClear: ImageView by bindView(R.id.kau_search_clear)
     private val divider: View by bindView(R.id.kau_search_divider)
     private val recycler: RecyclerView by bindView(R.id.kau_search_recycler)
+    private var textCallback: Debouncer2<String, SearchView>
+            = debounce(0) { query, _ -> KL.d("Search query $query found; set your own textCallback") }
     val adapter = FastItemAdapter<SearchItem>()
     var menuItem: MenuItem? = null
     val isOpen: Boolean
@@ -241,7 +255,7 @@ class SearchView @JvmOverloads constructor(
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val valid = !s.isNullOrBlank()
-                if (valid) configs.textCallback(s.toString().trim(), this@SearchView)
+                if (valid) textCallback(s.toString().trim(), this@SearchView)
                 else clearResults()
             }
 

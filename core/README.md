@@ -12,6 +12,7 @@
 * [MeasureSpecDelegate](#measure-spec-delegate)
 * [CollapsibleViewDelegate](#collapsible-view-delegate)
 * [Swipe](#swipe)
+* [Debounce](#debounce)
 * [Timber Logger](#timber-logger)
 * [Email Builder](#email-builder)
 * [Extensions](#extensions)
@@ -181,6 +182,25 @@ For the best results, activities should be translucent. See `Kau.Transparent` fo
 Special thanks goes to the original project, [SwipeBackHelper](https://github.com/Jude95/SwipeBackHelper)
 
 KAU's swipe is a Kotlin rewrite, along with support for all directions and weakly referenced contexts.
+
+<a name="debounce"></a>
+# Debounce
+
+Debouncing is a means of throttling a function so that it is called no more than once in a given instance of time.
+An example where you'd like this behaviour is the searchview; you want to deliver search results quickly, 
+but you don't want to update your response with each new character.
+Instead, you can wait until a user finishes their query, then search for the results.
+
+Example:
+
+![Debounce 0](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_debounce_0.gif)
+![Debounce 500](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_debounce_500.gif)
+
+The first case is an example of no debouncing, whereas the second case is an example with a 500ms debounce.
+
+KAU offers extensions to easily convert or create functions into debouncables.
+Simply call `debounce` and specify your interval on an existing function, or with a new function. 
+
 
 <a name="timber-logger"></a>
 ## Timber Logger
