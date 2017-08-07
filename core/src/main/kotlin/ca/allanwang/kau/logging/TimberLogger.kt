@@ -34,8 +34,15 @@ open class KauLogger(val tag: String) {
         showPrivateText = enable
     }
 
-    protected fun log(priority: Int, message: String?, privateMessage: String?, t: Throwable? = null) {
-        if (!enabled || !filter(priority)) return
+    fun log(priority: Int, message: String?, privateMessage: String?, t: Throwable? = null) {
+        if (!shouldLog(priority, message, privateMessage, t)) return
+        logImpl(priority, message, privateMessage, t)
+    }
+
+    protected open fun shouldLog(priority: Int, message: String?, privateMessage: String?, t: Throwable?): Boolean
+            = enabled && filter(priority)
+
+    protected open fun logImpl(priority: Int, message: String?, privateMessage: String?, t: Throwable?) {
         var text = message ?: ""
         if (showPrivateText && privateMessage != null)
             text += "\n-\t$privateMessage"
