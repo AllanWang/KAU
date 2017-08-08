@@ -229,14 +229,13 @@ class SearchView @JvmOverloads constructor(
         tintBackground(configs.backgroundColor)
         with(recycler) {
             isNestedScrollingEnabled = false
-            layoutManager = LinearLayoutManager(context)
+            withLinearAdapter(this@SearchView.adapter)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING) hideKeyboard()
                 }
             })
-            adapter = this@SearchView.adapter
             itemAnimator = null
         }
         with(adapter) {

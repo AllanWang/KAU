@@ -10,8 +10,10 @@
     <item text=":core: Create debounce methods" />
     <item text=":core: Create zip methods" />
     <item text=":core: [Breaking] Logging base has been renamed to KauLogger and no longer depends on timber" />
+    <item text=":kpref-activity: Rewrote binding logic to use only one recyclerview" />
+    <item text=":kpref-activity: Removed sliding toolbar and use normal toolbar title" />
+    <item text=":kpref-activity: Remove :core-ui: dependency" />
     <item text=":searchview: [Breaking] remove reactive dependencies and stick with basic callbacks" />
-    <item text="" />
     <item text="" />
     <item text="" />
     <item text="" />

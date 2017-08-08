@@ -3,49 +3,43 @@ package ca.allanwang.kau.kpref.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.annotation.StringRes
-import android.support.constraint.ConstraintLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import android.widget.ViewAnimator
+import ca.allanwang.kau.animators.KauAnimator
+import ca.allanwang.kau.animators.SlideAnimatorAdd
+import ca.allanwang.kau.animators.SlideAnimatorRemove
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.kpref.activity.items.KPrefItemCore
 import ca.allanwang.kau.ui.views.RippleCanvas
-import ca.allanwang.kau.ui.widgets.TextSlider
-import ca.allanwang.kau.utils.bindView
-import ca.allanwang.kau.utils.resolveColor
-import ca.allanwang.kau.utils.statusBarColor
-import ca.allanwang.kau.utils.string
+import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
+import java.util.*
 
 abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
 
-    val adapter: FastItemAdapter<KPrefItemCore>
-        @Suppress("UNCHECKED_CAST")
-        get() = recycler.adapter as FastItemAdapter<KPrefItemCore>
-    val recycler: RecyclerView
-        get() = prefHolder.currentView as RecyclerView
-    val container: ConstraintLayout by bindView(R.id.kau_container)
+    private val adapter: FastItemAdapter<KPrefItemCore> = FastItemAdapter()
+    private val recycler: RecyclerView by bindView(R.id.kau_recycler)
     val bgCanvas: RippleCanvas by bindView(R.id.kau_ripple)
     val toolbarCanvas: RippleCanvas by bindView(R.id.kau_toolbar_ripple)
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)
-    val toolbarTitle: TextSlider by bindView(R.id.kau_toolbar_text)
-    val prefHolder: ViewAnimator by bindView(R.id.kau_holder)
     private lateinit var globalOptions: GlobalOptions
+    private val kprefStack = Stack<Pair<Int, List<KPrefItemCore>>>()
+    /**
+     * Toggle sliding animations for the kpref items
+     */
     var animate: Boolean = true
-        set(value) {
-            field = value
-            toolbarTitle.animationType = if (value) TextSlider.ANIMATION_SLIDE_HORIZONTAL else TextSlider.ANIMATION_NONE
-        }
 
-    private val SLIDE_IN_LEFT_ITEMS: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.kau_slide_in_left) }
-    private val SLIDE_IN_RIGHT_ITEMS: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.kau_slide_in_right) }
-    private val SLIDE_OUT_LEFT_ITEMS: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.kau_slide_out_left) }
-    private val SLIDE_OUT_RIGHT_ITEMS: Animation by lazy { AnimationUtils.loadAnimation(this, R.anim.kau_slide_out_right) }
+    private val recyclerAnimatorNext: KauAnimator by lazy {
+        KauAnimator(SlideAnimatorAdd(KAU_RIGHT, itemDelayFactor = 0f),
+                SlideAnimatorRemove(KAU_LEFT, itemDelayFactor = 0f))
+    }
+    private val recyclerAnimatorPrev: KauAnimator by lazy {
+        KauAnimator(SlideAnimatorAdd(KAU_LEFT, itemDelayFactor = 0f),
+                SlideAnimatorRemove(KAU_RIGHT, itemDelayFactor = 0f))
+    }
 
     /**
      * Core attribute builder that is consistent throughout all items
@@ -69,43 +63,41 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         statusBarColor = 0x30000000
         toolbarCanvas.set(resolveColor(R.attr.colorPrimary))
         bgCanvas.set(resolveColor(android.R.attr.colorBackground))
-        prefHolder.animateFirstView = false
         //setup prefs
         val core = CoreAttributeBuilder()
         val builder = kPrefCoreAttributes()
         core.builder()
         globalOptions = GlobalOptions(core, this)
-        showNextPrefs(R.string.kau_settings, onCreateKPrefs(savedInstanceState))
+        recycler.withLinearAdapter(adapter)
+        adapter.withSelectable(false)
+                .withOnClickListener { v, _, item, _ -> item.onClick(v, v.findViewById(R.id.kau_pref_inner_content)) }
+        showNextPrefs(R.string.kau_settings, onCreateKPrefs(savedInstanceState), true)
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-    }
+    override fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit)
+            = showNextPrefs(toolbarTitleRes, builder, false)
 
-    override fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit) {
-        val rv = RecyclerView(this).apply {
-            layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
-            setKPrefAdapter(globalOptions, builder)
+    private fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit, first: Boolean) {
+        doAsync {
+            val items = KPrefAdapterBuilder(globalOptions)
+            builder(items)
+            kprefStack.push(toolbarTitleRes to items.list)
+            recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
+            uiThread {
+                adapter.clear()
+                adapter.add(items.list)
+                toolbar.setTitle(toolbarTitleRes)
+            }
         }
-        with(prefHolder) {
-            inAnimation = if (animate) SLIDE_IN_RIGHT_ITEMS else null
-            outAnimation = if (animate) SLIDE_OUT_LEFT_ITEMS else null
-            addView(rv)
-            showNext()
-        }
-        toolbarTitle.setNextText(string(toolbarTitleRes))
     }
 
     override fun showPrevPrefs() {
-        val current = prefHolder.currentView
-        with(prefHolder) {
-            inAnimation = if (animate) SLIDE_IN_LEFT_ITEMS else null
-            outAnimation = if (animate) SLIDE_OUT_RIGHT_ITEMS else null
-            showPrevious()
-            removeView(current)
-            adapter.notifyAdapterDataSetChanged()
-        }
-        toolbarTitle.setPrevText()
+        kprefStack.pop()
+        val (title, list) = kprefStack.peek()
+        recycler.itemAnimator = if (animate) recyclerAnimatorPrev else null
+        adapter.clear()
+        adapter.add(list)
+        toolbar.setTitle(title)
     }
 
     fun reload(vararg index: Int) {
@@ -128,7 +120,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
     }
 
     fun backPress(): Boolean {
-        if (!toolbarTitle.isRoot) {
+        if (kprefStack.size > 1) {
             showPrevPrefs()
             return true
         }
