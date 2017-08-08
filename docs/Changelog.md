@@ -2,6 +2,11 @@
 
 ## v3.3.0
 * :core: Create debounce methods
+* :core: Create zip methods
+* :core: [Breaking] Logging base has been renamed to KauLogger and no longer depends on timber
+* :kpref-activity: Rewrote binding logic to use only one recyclerview
+* :kpref-activity: [Breaking] Removed sliding toolbar and use normal toolbar title
+* :kpref-activity: Remove :core-ui: dependency
 * :searchview: [Breaking] remove reactive dependencies and stick with basic callbacks
 
 ## v3.2.5

@@ -16,9 +16,7 @@ dependencies {
     compile "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
 
     compile "com.afollestad.material-dialogs:core:${MATERIAL_DIALOG}"
-
-    compile "com.jakewharton.timber:timber:${TIMBER}"
-
+    
     compile "org.jetbrains.anko:anko-commons:${ANKO}"
 }
 

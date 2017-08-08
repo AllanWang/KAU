@@ -39,14 +39,6 @@ annotation class KauUtils
     get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 
 /**
- * Log whether current state is in the main thread
- */
-@KauUtils fun checkThread(id: Int) {
-    val status = if (Looper.myLooper() == Looper.getMainLooper()) "is" else "is not"
-    KL.d("$id $status in the main thread")
-}
-
-/**
  * Converts minute value to string
  * Whole hours and days will be converted as such, otherwise it will default to x minutes
  */

@@ -211,13 +211,19 @@ inline val TextInputEditText.value: String get() = text.toString().trim()
 /**
  * Generates a recycler view with match parent and a linearlayoutmanager, since it's so commonly used
  */
-fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, configs: RecyclerView.() -> Unit = {}): RecyclerView {
-    return RecyclerView(this).apply {
-        layoutManager = LinearLayoutManager(this@fullLinearRecycler)
-        layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
-        if (rvAdapter != null) adapter = rvAdapter
-        configs()
-    }
+fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, configs: RecyclerView.() -> Unit = {}) = RecyclerView(this).apply {
+    layoutManager = LinearLayoutManager(this@fullLinearRecycler)
+    layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
+    if (rvAdapter != null) adapter = rvAdapter
+    configs()
+}
+
+/**
+ * Sets a linear layout manager along with an adapter
+ */
+fun RecyclerView.withLinearAdapter(rvAdapter: RecyclerView.Adapter<*>) = apply {
+    layoutManager = LinearLayoutManager(context)
+    adapter = rvAdapter
 }
 
 /**

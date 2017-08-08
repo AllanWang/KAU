@@ -1,4 +1,6 @@
+<a href="https://allanwang.github.io/KAU/" target="_blank">
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
+</a>
 
 An extensive collection of <b>Kotlin Android Utils</b>
 
@@ -72,7 +74,7 @@ dependencies {
   * [CollapsibleViewDelegate](core#collapsible-view-delegate)
   * [Swipe](core#swipe)
   * [Debounce](core#debounce)
-  * [Timber Logger](core#timber-logger)
+  * [KAU Logger](core#kau-logger)
   * [Email Builder](core#email-builder)
   * [Extension Functions](core#extension-functions)
   * [Lazy Resettable](core#lazy-resettable)
@@ -81,7 +83,6 @@ dependencies {
 [`Material Dialogs (core)`](https://github.com/afollestad/material-dialogs),
 [`Iconics`](https://github.com/mikepenz/Android-Iconics), 
 [`Anko`](https://github.com/Kotlin/anko),
-[`Timber`](https://github.com/JakeWharton/timber), 
 [`Kotlin stdlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
 
 ## [Core UI](core-ui#readme)
@@ -89,12 +90,12 @@ dependencies {
 * Includes `:core`, `:adapter`
 
 ## [About](about#readme)
-* Implementation of an overlaying about section, along with automatic lib detection; also includes the lib strings for KAU
+* Modularized overlaying about section. Comes with a main panel, automatic lib detection, and a FAQ parser; also includes the lib strings for KAU.
 * Includes `:core-ui`, `:adapter`, 
 [`About Libraries`](https://github.com/mikepenz/AboutLibraries)
 
 ## [Adapter](adapter#readme)
-* Kotlin bindings for the fast adapter, as well as RecyclerView animations
+* Kotlin bindings for the fast adapter, as well as modularized RecyclerView animations
 * Includes `:core`, 
 [`Fast Adapter`](https://github.com/mikepenz/FastAdapter)
 
@@ -104,8 +105,8 @@ dependencies {
 ([`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs))
 
 ## [KPref Activity](kpref-activity#readme)
-* Fully programmatic implementation of a Preference Activity, backed by RecyclerViews
-* Includes `:core-ui`, `:adapter`, `colorpicker`
+* Fully programmatic implementation of a Preference Activity, backed by a RecyclerView
+* Includes `:core`, `:adapter`, `:colorpicker`
 
 ## [Media Picker](mediapicker#readme)
 * Fully functional image and video pickers, both as an overlay and as a requested activity.

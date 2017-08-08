@@ -5,7 +5,6 @@ ext.kauSubModuleResourcePrefix = "kau_pref_"
 apply from: '../android-lib.gradle'
 
 dependencies {
-    compile project(':core-ui')
     compile project(':adapter')
     compile project(':colorpicker')
 }

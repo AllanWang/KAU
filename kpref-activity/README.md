@@ -39,9 +39,6 @@ An example of the adapter builder:
  
 ```kotlin
 override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
-	
-	textColor = { KPrefSample.textColor } // getter function so the new text color will be retrieved for every reload
-	accentColor = { KPrefSample.accentColor }
 
 	header(R.string.header)
 
@@ -66,4 +63,17 @@ override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapte
 		}
 	}
 }
+```
+
+On top of per item configurations, `KPrefActivity` has some core attributes that you can define on creation.
+It is done through the abstract function:
+
+```kotlin
+
+    override fun kPrefCoreAttributes(): CoreAttributeContract.() -> Unit = {
+        textColor = { Prefs.textColor }       // text color getter; refreshes automatically on reload
+        accentColor = { Prefs.accentColor }   // accent color getter
+        // background color does not exist as it is done through the ripple canvas
+    }
+    
 ```
