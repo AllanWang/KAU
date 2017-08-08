@@ -153,7 +153,7 @@ class SearchView @JvmOverloads constructor(
                 }
                 if (SearchItem.backgroundColor != backgroundColor) {
                     SearchItem.backgroundColor = backgroundColor
-                    tintForeground(backgroundColor)
+                    tintBackground(backgroundColor)
                 }
                 val icons = mutableListOf(navIcon to iconNav, clearIcon to iconClear)
                 val extra = extraIcon
