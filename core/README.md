@@ -58,7 +58,7 @@ The object inherits the initializer method `fun initialize(c: Context, preferenc
 There is also a `reset()` method to clear the local values and have them retrieve from the SharedPreference again.
 
 In shared preferences, we often require a boolean that returns true once, so we can use it to showcase views or display prompts on the first load.
-Kpref supports special preferences like these through the `KPrefSingleDelgate`
+KPref supports special preferences like these through the `KPrefSingleDelgate`
 
 It can be used in a KPref like so:
 
