@@ -16,6 +16,7 @@ open class KauLogger(val tag: String) {
 
     open var enabled = true
     open var showPrivateText = false
+    open var messageJoiner: (msg: String, privMsg: String) -> String = { msg, privMsg -> "$msg: $privMsg" }
 
     /**
      * Filter pass-through to decide what we wish to log
@@ -45,7 +46,7 @@ open class KauLogger(val tag: String) {
     protected open fun logImpl(priority: Int, message: String?, privateMessage: String?, t: Throwable?) {
         var text = message ?: ""
         if (showPrivateText && privateMessage != null)
-            text += "\n-\t$privateMessage"
+            text = messageJoiner(text, privateMessage)
         if (t != null) Log.e(tag, text, t)
         else if (text.isNotBlank()) Log.println(priority, tag, text)
     }
