@@ -6,6 +6,13 @@
     <item text="" />
     -->
 	
+	<version title="v3.3.1"/>
+    <item text=":searchview: Fix background tint" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+	
 	<version title="v3.3.0"/>
     <item text=":core: Create debounce methods" />
     <item text=":core: Create zip methods" />
@@ -14,9 +21,6 @@
     <item text=":kpref-activity: [Breaking] Removed sliding toolbar and use normal toolbar title" />
     <item text=":kpref-activity: Remove :core-ui: dependency" />
     <item text=":searchview: [Breaking] remove reactive dependencies and stick with basic callbacks" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
 	
 	<version title="v3.2.5"/>
     <item text=":core: Fix FAQ background" />
