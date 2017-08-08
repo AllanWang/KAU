@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/kau_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,16 +21,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ca.allanwang.kau.ui.widgets.TextSlider
-            android:id="@+id/kau_toolbar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            app:animation_type="slide_horizontal" />
-
-    </android.support.v7.widget.Toolbar>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ca.allanwang.kau.ui.views.RippleCanvas
         android:id="@+id/kau_ripple"
@@ -42,8 +32,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/kau_toolbar" />
 
-    <ViewAnimator
-        android:id="@+id/kau_holder"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/kau_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

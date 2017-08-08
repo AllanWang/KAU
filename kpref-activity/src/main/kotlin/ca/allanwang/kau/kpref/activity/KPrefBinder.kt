@@ -1,39 +1,13 @@
 package ca.allanwang.kau.kpref.activity
 
 import android.support.annotation.StringRes
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import ca.allanwang.kau.R
 import ca.allanwang.kau.kpref.activity.items.*
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 
 /**
  * Created by Allan Wang on 2017-06-08.
  *
  * Houses all the components that can be called externally to setup the kpref mainAdapter
  */
-
-/**
- * Base extension that will register the layout manager and mainAdapter with the given items
- * Returns FastAdapter
- */
-fun RecyclerView.setKPrefAdapter(globalOptions: GlobalOptions, builder: KPrefAdapterBuilder.() -> Unit): FastItemAdapter<KPrefItemCore> {
-    layoutManager = LinearLayoutManager(context)
-    val adapter = FastItemAdapter<KPrefItemCore>()
-    adapter.withOnClickListener { v, _, item, _ -> item.onClick(v, v.findViewById(R.id.kau_pref_inner_content)) }
-    this.adapter = adapter
-    doAsync {
-        val items = KPrefAdapterBuilder(globalOptions)
-        builder.invoke(items)
-        uiThread {
-            adapter.add(items.list)
-        }
-    }
-    return adapter
-}
-
 @DslMarker
 annotation class KPrefMarker
 
@@ -70,6 +44,9 @@ class GlobalOptions(core: CoreAttributeContract, activity: KPrefActivityContract
  * Contains DSLs for every possible item
  * The arguments are all the mandatory values plus an optional builder housing all the possible configurations
  * The mandatory values are final so they cannot be edited in the builder
+ *
+ * This function will be called asynchronously, so don't worry about blocking the thread
+ * The recycler will only animate once this is completed though
  */
 @KPrefMarker
 class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {

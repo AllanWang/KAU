@@ -485,7 +485,7 @@ public abstract class BaseItemAnimator extends SimpleItemAnimator {
     public abstract ViewPropertyAnimator changeNewAnimation(ViewHolder holder);
 
     /**
-     * the cleanup method if the animation needs to be stopped. and tro prepare for the next view
+     * the cleanup method if the animation needs to be stopped. and to prepare for the next view
      *
      * @param holder
      */

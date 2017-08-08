@@ -2,6 +2,7 @@ package ca.allanwang.kau.adapters
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import ca.allanwang.kau.utils.withLinearAdapter
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.HeaderAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
@@ -55,8 +56,7 @@ class ChainedAdapters<T>(vararg items: Pair<T, SectionAdapter<*>>) {
         recycler = recyclerView
         indexStack.push(0)
         with(recyclerView) {
-            layoutManager = LinearLayoutManager(context)
-            adapter = chain.first().second
+            withLinearAdapter(chain.first().second)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(rv, dx, dy)
