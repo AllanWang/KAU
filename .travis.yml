@@ -42,5 +42,3 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_12e8842891a3_key -iv $encrypted_12e8842891a3_iv
   -in files/kau.tar.enc -out kau.tar -d
 - tar xvf kau.tar
-after_success:
-- bash <(curl -s https://codecov.io/bash)

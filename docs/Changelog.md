@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.3.1
+* :searchview: Fix background tint
+
 ## v3.3.0
 * :core: Create debounce methods
 * :core: Create zip methods
