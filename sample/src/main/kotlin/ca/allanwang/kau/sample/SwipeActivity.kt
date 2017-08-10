@@ -40,9 +40,6 @@ class SwipeActivity : KauBaseActivity() {
             it.setOnClickListener { startActivityWithEdge(swipeEdge) }
         }
         val flag = intent.getIntExtra(SWIPE_EDGE, -1)
-        kauSwipeOnCreate {
-            edgeFlag = flag
-        }
         toolbar.title = when (flag) {
             SWIPE_EDGE_LEFT -> "Left Edge Swipe"
             SWIPE_EDGE_RIGHT -> "Right Edge Swipe"
@@ -57,6 +54,9 @@ class SwipeActivity : KauBaseActivity() {
         val bg = headerColor.darken(0.2f)
         container.setBackgroundColor(bg)
         navigationBarColor = bg
+        kauSwipeOnCreate {
+            edgeFlag = flag
+        }
     }
 
     override fun onDestroy() {

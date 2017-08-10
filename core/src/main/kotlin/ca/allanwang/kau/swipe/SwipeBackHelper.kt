@@ -7,8 +7,6 @@ import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.swipe.SwipeBackHelper.onDestroy
 import java.util.*
 
-internal class SwipeBackException(message: String = "You Should call kauSwipeOnCreate() first") : RuntimeException(message)
-
 /**
  * Singleton to hold our swipe stack
  * All activity pages held with strong references, so it is crucial to call
@@ -53,10 +51,11 @@ internal object SwipeBackHelper {
 /**
  * The creation binder, which adds the swipe functionality to an activity.
  * Call this during [Activity.onCreate] after all views are added.
- * Don't forget to call [kauSwipeOnDestroy] as well when the activity is destroyed.
- * The following are the activity bindings to add an activity to the stack
- * onCreate, onPostCreate, and onDestroy are mandatory
- * finish is there as a helper method to animate the transaction
+ * Preferably, this should be the last line in the onCreate method.
+ * Note that this will also capture your statusbar color and nav bar color,
+ * so be sure to assign those beforehand if at all.
+ *
+ * Lastly, don't forget to call [kauSwipeOnDestroy] as well when the activity is destroyed.
  */
 fun Activity.kauSwipeOnCreate(builder: SwipeBackContract.() -> Unit = {}) = SwipeBackHelper.onCreate(this, builder)
 
