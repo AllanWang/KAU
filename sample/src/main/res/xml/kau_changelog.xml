@@ -8,6 +8,7 @@
 	
 	<version title="v3.3.1"/>
     <item text=":core: Open up all logger functions" />
+    <item text=":core: Deprecate kauSwipeOnPostCreate and move functionality to onCreate" />
     <item text=":searchview: Fix background tint" />
     <item text="" />
     <item text="" />

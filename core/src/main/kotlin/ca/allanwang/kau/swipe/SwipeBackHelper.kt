@@ -51,6 +51,7 @@ internal object SwipeBackHelper {
 /**
  * The creation binder, which adds the swipe functionality to an activity.
  * Call this during [Activity.onCreate] after all views are added.
+ *
  * Preferably, this should be the last line in the onCreate method.
  * Note that this will also capture your statusbar color and nav bar color,
  * so be sure to assign those beforehand if at all.
@@ -60,8 +61,20 @@ internal object SwipeBackHelper {
 fun Activity.kauSwipeOnCreate(builder: SwipeBackContract.() -> Unit = {}) = SwipeBackHelper.onCreate(this, builder)
 
 /**
+ * Deprecated as onPostCreate seems unreliable.
+ * We will instead initialize everything during [kauSwipeOnCreate]
+ */
+@Deprecated(level = DeprecationLevel.WARNING, message = "All functionality has been moved to kauSwipeOnCreate")
+fun Activity.kauSwipeOnPostCreate() {
+}
+
+/**
  * The unbinder, which removes our layouts, releases our weak references, and cleans our page stack
  * Call this during [Activity.onDestroy]
+ *
+ * Given that our references are held weakly, we allow failures and missing pages to pass silently
+ * as they should be destroyed anyways.
+ *
  * Don't forget to call [kauSwipeOnCreate] when the activity is created to enable swipe functionality.
  */
 fun Activity.kauSwipeOnDestroy() = SwipeBackHelper.onDestroy(this)
@@ -72,7 +85,7 @@ fun Activity.kauSwipeOnDestroy() = SwipeBackHelper.onDestroy(this)
  */
 fun Activity.kauSwipeFinish() = SwipeBackHelper.finish(this)
 
-/**
+/*
  * Constants used for the swipe edge flags
  */
 const val SWIPE_EDGE_LEFT = ViewDragHelper.EDGE_LEFT
