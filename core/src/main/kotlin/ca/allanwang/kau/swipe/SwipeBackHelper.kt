@@ -7,8 +7,6 @@ import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.swipe.SwipeBackHelper.onDestroy
 import java.util.*
 
-internal class SwipeBackException(message: String = "You Should call kauSwipeOnCreate() first") : RuntimeException(message)
-
 /**
  * Singleton to hold our swipe stack
  * All activity pages held with strong references, so it is crucial to call
@@ -30,12 +28,8 @@ internal object SwipeBackHelper {
             else -> R.anim.kau_slide_in_top
         }
         activity.overridePendingTransition(startAnimation, 0)
+        page.onPostCreate()
         KL.v("KauSwipe onCreate ${activity.localClassName}")
-    }
-
-    fun onPostCreate(activity: Activity) {
-        this[activity]?.onPostCreate() ?: throw SwipeBackException()
-        KL.v("KauSwipe onPostCreate ${activity.localClassName}")
     }
 
     fun onDestroy(activity: Activity) {
@@ -55,17 +49,43 @@ internal object SwipeBackHelper {
 }
 
 /**
- * The following are the activity bindings to add an activity to the stack
- * onCreate, onPostCreate, and onDestroy are mandatory
- * finish is there as a helper method to animate the transaction
+ * The creation binder, which adds the swipe functionality to an activity.
+ * Call this during [Activity.onCreate] after all views are added.
+ *
+ * Preferably, this should be the last line in the onCreate method.
+ * Note that this will also capture your statusbar color and nav bar color,
+ * so be sure to assign those beforehand if at all.
+ *
+ * Lastly, don't forget to call [kauSwipeOnDestroy] as well when the activity is destroyed.
  */
 fun Activity.kauSwipeOnCreate(builder: SwipeBackContract.() -> Unit = {}) = SwipeBackHelper.onCreate(this, builder)
 
-fun Activity.kauSwipeOnPostCreate() = SwipeBackHelper.onPostCreate(this)
-fun Activity.kauSwipeOnDestroy() = SwipeBackHelper.onDestroy(this)
-fun Activity.kauSwipeFinish() = SwipeBackHelper.finish(this)
+/**
+ * Deprecated as onPostCreate seems unreliable.
+ * We will instead initialize everything during [kauSwipeOnCreate]
+ */
+@Deprecated(level = DeprecationLevel.WARNING, message = "All functionality has been moved to kauSwipeOnCreate")
+fun Activity.kauSwipeOnPostCreate() {
+}
 
 /**
+ * The unbinder, which removes our layouts, releases our weak references, and cleans our page stack
+ * Call this during [Activity.onDestroy]
+ *
+ * Given that our references are held weakly, we allow failures and missing pages to pass silently
+ * as they should be destroyed anyways.
+ *
+ * Don't forget to call [kauSwipeOnCreate] when the activity is created to enable swipe functionality.
+ */
+fun Activity.kauSwipeOnDestroy() = SwipeBackHelper.onDestroy(this)
+
+/**
+ * Helper function for activities to animate the finish transaction with a pseudo swipe
+ * The activity will automatically be finished afterwards
+ */
+fun Activity.kauSwipeFinish() = SwipeBackHelper.finish(this)
+
+/*
  * Constants used for the swipe edge flags
  */
 const val SWIPE_EDGE_LEFT = ViewDragHelper.EDGE_LEFT

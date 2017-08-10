@@ -10,7 +10,6 @@ import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.kauSwipeOnCreate
 import ca.allanwang.kau.swipe.kauSwipeOnDestroy
-import ca.allanwang.kau.swipe.kauSwipeOnPostCreate
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivitySlideOut
 import ca.allanwang.kau.utils.toast
@@ -49,14 +48,9 @@ class AnimActivity : KauBaseActivity() {
         }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        kauSwipeOnPostCreate()
-    }
-
     override fun onDestroy() {
-        super.onDestroy()
         kauSwipeOnDestroy()
+        super.onDestroy()
     }
 
     override fun onBackPressed() {
