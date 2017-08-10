@@ -59,14 +59,9 @@ class SwipeActivity : KauBaseActivity() {
         navigationBarColor = bg
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        kauSwipeOnPostCreate()
-    }
-
     override fun onDestroy() {
-        super.onDestroy()
         kauSwipeOnDestroy()
+        super.onDestroy()
     }
 
     override fun onBackPressed() {

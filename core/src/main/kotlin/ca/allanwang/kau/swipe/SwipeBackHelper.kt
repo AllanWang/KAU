@@ -30,12 +30,8 @@ internal object SwipeBackHelper {
             else -> R.anim.kau_slide_in_top
         }
         activity.overridePendingTransition(startAnimation, 0)
+        page.onPostCreate()
         KL.v("KauSwipe onCreate ${activity.localClassName}")
-    }
-
-    fun onPostCreate(activity: Activity) {
-        this[activity]?.onPostCreate() ?: throw SwipeBackException()
-        KL.v("KauSwipe onPostCreate ${activity.localClassName}")
     }
 
     fun onDestroy(activity: Activity) {
@@ -55,14 +51,26 @@ internal object SwipeBackHelper {
 }
 
 /**
+ * The creation binder, which adds the swipe functionality to an activity.
+ * Call this during [Activity.onCreate] after all views are added.
+ * Don't forget to call [kauSwipeOnDestroy] as well when the activity is destroyed.
  * The following are the activity bindings to add an activity to the stack
  * onCreate, onPostCreate, and onDestroy are mandatory
  * finish is there as a helper method to animate the transaction
  */
 fun Activity.kauSwipeOnCreate(builder: SwipeBackContract.() -> Unit = {}) = SwipeBackHelper.onCreate(this, builder)
 
-fun Activity.kauSwipeOnPostCreate() = SwipeBackHelper.onPostCreate(this)
+/**
+ * The unbinder, which removes our layouts, releases our weak references, and cleans our page stack
+ * Call this during [Activity.onDestroy]
+ * Don't forget to call [kauSwipeOnCreate] when the activity is created to enable swipe functionality.
+ */
 fun Activity.kauSwipeOnDestroy() = SwipeBackHelper.onDestroy(this)
+
+/**
+ * Helper function for activities to animate the finish transaction with a pseudo swipe
+ * The activity will automatically be finished afterwards
+ */
 fun Activity.kauSwipeFinish() = SwipeBackHelper.finish(this)
 
 /**

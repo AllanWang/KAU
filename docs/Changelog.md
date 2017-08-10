@@ -1,6 +1,7 @@
 # Changelog
 
 ## v3.3.1
+* :core: Open up all logger functions
 * :searchview: Fix background tint
 
 ## v3.3.0

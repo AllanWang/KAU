@@ -49,14 +49,9 @@ class AnimActivity : KauBaseActivity() {
         }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        kauSwipeOnPostCreate()
-    }
-
     override fun onDestroy() {
-        super.onDestroy()
         kauSwipeOnDestroy()
+        super.onDestroy()
     }
 
     override fun onBackPressed() {
