@@ -115,7 +115,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
          */
         set(value) {
             if (value !in arrayOf(SWIPE_EDGE_TOP, SWIPE_EDGE_BOTTOM, SWIPE_EDGE_LEFT, SWIPE_EDGE_RIGHT))
-                throw SwipeBackException("Edge flag is not valid; use one of the SWIPE_EDGE_* values")
+                throw IllegalArgumentException("Edge flag is not valid; use one of the SWIPE_EDGE_* values")
             field = value
             horizontal = edgeFlag == SWIPE_EDGE_LEFT || edgeFlag == SWIPE_EDGE_RIGHT
             dragHelper.setEdgeTrackingEnabled(value)

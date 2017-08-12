@@ -7,10 +7,8 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Handler
-import android.os.Looper
 import android.support.annotation.IntRange
 import ca.allanwang.kau.R
-import ca.allanwang.kau.logging.KL
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -30,13 +28,25 @@ annotation class KauUtils
     get() = this * Resources.getSystem().displayMetrics.density
 
 @KauUtils inline val Int.dpToPx: Int
-    get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+    get() = toFloat().dpToPx.toInt()
 
 @KauUtils inline val Float.pxToDp: Float
     get() = this / Resources.getSystem().displayMetrics.density
 
 @KauUtils inline val Int.pxToDp: Int
-    get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+    get() = toFloat().pxToDp.toInt()
+
+@KauUtils inline val Float.dpToSp: Float
+    get() = this * Resources.getSystem().displayMetrics.scaledDensity
+
+@KauUtils inline val Int.dpToSp: Int
+    get() = toFloat().dpToSp.toInt()
+
+@KauUtils inline val Float.spToDp: Float
+    get() = this / Resources.getSystem().displayMetrics.scaledDensity
+
+@KauUtils inline val Int.spToDp: Int
+    get() = toFloat().spToDp.toInt()
 
 /**
  * Converts minute value to string

@@ -16,6 +16,7 @@ open class KauLogger(val tag: String) {
 
     open var enabled = true
     open var showPrivateText = false
+    open var messageJoiner: (msg: String, privMsg: String) -> String = { msg, privMsg -> "$msg: $privMsg" }
 
     /**
      * Filter pass-through to decide what we wish to log
@@ -43,11 +44,14 @@ open class KauLogger(val tag: String) {
             = enabled && filter(priority)
 
     protected open fun logImpl(priority: Int, message: String?, privateMessage: String?, t: Throwable?) {
-        var text = message ?: ""
-        if (showPrivateText && privateMessage != null)
-            text += "\n-\t$privateMessage"
-        if (t != null) Log.e(tag, text, t)
-        else if (text.isNotBlank()) Log.println(priority, tag, text)
+        val text = if (showPrivateText) {
+            if (message == null) privateMessage
+            else if (privateMessage == null) message
+            else messageJoiner(message, privateMessage)
+        } else message
+
+        if (t != null) Log.e(tag, text ?: "Error", t)
+        else if (!text.isNullOrBlank()) Log.println(priority, tag, text)
     }
 
     open fun v(text: String?, privateText: String? = null) = log(Log.VERBOSE, text, privateText)

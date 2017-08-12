@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.3.1
+* :core: Open up all logger functions
+* :core: Deprecate kauSwipeOnPostCreate and move functionality to onCreate
+* :searchview: Fix background tint
+
 ## v3.3.0
 * :core: Create debounce methods
 * :core: Create zip methods

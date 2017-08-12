@@ -10,7 +10,6 @@ import android.support.transition.ChangeBounds
 import android.support.transition.TransitionManager
 import android.support.transition.TransitionSet
 import android.support.v7.widget.AppCompatEditText
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
@@ -153,7 +152,7 @@ class SearchView @JvmOverloads constructor(
                 }
                 if (SearchItem.backgroundColor != backgroundColor) {
                     SearchItem.backgroundColor = backgroundColor
-                    tintForeground(backgroundColor)
+                    tintBackground(backgroundColor)
                 }
                 val icons = mutableListOf(navIcon to iconNav, clearIcon to iconClear)
                 val extra = extraIcon
@@ -291,11 +290,12 @@ class SearchView @JvmOverloads constructor(
      */
     fun bind(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
         config(config)
-        menuItem = menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
-        if (menuItem!!.icon == null) menuItem!!.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
+        val menuItem = menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
+        if (menuItem.icon == null) menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         card.gone()
-        menuItem!!.setOnMenuItemClickListener { configureCoords(it); revealOpen(); true }
+        menuItem.setOnMenuItemClickListener { configureCoords(it); revealOpen(); true }
         shadow.setOnClickListener { revealClose() }
+        this.menuItem = menuItem
         return this
     }
 
@@ -310,6 +310,7 @@ class SearchView @JvmOverloads constructor(
     }
 
     private fun configureCoords(item: MenuItem) {
+        if (parent !is ViewGroup) return
         val view = parentViewGroup.findViewById<View>(item.itemId) ?: return
         val locations = IntArray(2)
         view.getLocationOnScreen(locations)
