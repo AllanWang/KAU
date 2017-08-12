@@ -59,7 +59,7 @@ dependencies {
 
 # Submodules 
 > Linked to their respective docs.<br/>
-> Included dependencies are only those with exposed APs; see [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations).<br/>
+> Included dependencies are only those with exposed APIs; see [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations).<br/>
 > Implemented dependencies are wrapped in parentheses.
 
 ## [Core](core#readme)
