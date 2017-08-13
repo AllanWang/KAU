@@ -28,7 +28,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
         text.tvc()
         val seekbar = viewHolder.bindLowerView<SeekBar>(R.layout.kau_pref_seekbar) {
-            it.max = builder.range
+            it.max = builder.max - builder.min
             it.incrementProgressBy(builder.increments)
             it.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(sb: SeekBar, progress: Int, fromUser: Boolean) {
@@ -55,7 +55,6 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
         var min: Int
         var max: Int
         var increments: Int
-        var range: Int
         /**
          * Once a seekbar is let go, calculates what text to show in the text view
          */
@@ -74,23 +73,10 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
     ) : KPrefSeekbarContract, BaseContract<Int> by BaseBuilder(globalOptions, titleRes, getter, setter) {
 
         override var min: Int = 0
-            set(value) {
-                field = value
-                range = -1
-            }
-        override var max: Int = 100
-            set(value) {
-                field = value
-                range = -1
-            }
-        override var increments: Int = 1
 
-        override var range: Int = max - min
-                //value doesn't matter; setting will prompt the check
-            set(value) {
-                if (max <= min) throw KPrefException("Range min ($min) must be smaller than max ($max)")
-                field = max - min
-            }
+        override var max: Int = 100
+
+        override var increments: Int = 1
 
         override var toText: (Int) -> String = { it.toString() }
 
