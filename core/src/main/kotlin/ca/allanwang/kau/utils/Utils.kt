@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Handler
+import android.os.Looper
 import android.support.annotation.IntRange
 import ca.allanwang.kau.R
 import java.math.RoundingMode
@@ -113,5 +114,8 @@ inline fun <T : AutoCloseable, R> T.use(block: (T) -> R): R {
 fun postDelayed(delay: Long, action: () -> Unit) {
     Handler().postDelayed(action, delay)
 }
+
+inline val kauIsMainThread: Boolean
+    get() = Looper.myLooper() == Looper.getMainLooper()
 
 class KauException(message: String) : RuntimeException(message)

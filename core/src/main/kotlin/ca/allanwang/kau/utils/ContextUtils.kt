@@ -90,6 +90,11 @@ fun Context.startLink(vararg url: String?) {
     startActivity(browserIntent)
 }
 
+fun Context.startLink(@StringRes url: Int) {
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(string(url)))
+    startActivity(browserIntent)
+}
+
 //Toast helpers
 inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = context.toast(id, duration)
 
