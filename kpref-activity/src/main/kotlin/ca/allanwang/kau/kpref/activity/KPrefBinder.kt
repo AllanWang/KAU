@@ -30,6 +30,7 @@ class CoreAttributeBuilder : CoreAttributeContract {
 
 interface KPrefActivityContract {
     fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit)
+    val hasPrevPrefs: Boolean
     fun showPrevPrefs()
     fun reloadByTitle(@StringRes vararg title: Int)
 }
