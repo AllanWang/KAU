@@ -85,7 +85,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
             recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
             uiThread {
                 adapter.clear()
-                adapter.add(items.list)
+                adapter.add(items.list.filter { it.core.visible() })
                 toolbar.setTitle(toolbarTitleRes)
             }
         }
@@ -96,8 +96,18 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         val (title, list) = kprefStack.peek()
         recycler.itemAnimator = if (animate) recyclerAnimatorPrev else null
         adapter.clear()
-        adapter.add(list)
+        adapter.add(list.filter { it.core.visible() })
         toolbar.setTitle(title)
+    }
+
+    /**
+     * Reload the current pref list from the stack.
+     * This will adjust the list of items change in visibility
+     */
+    fun reloadList() {
+        recycler.itemAnimator = null
+        val list = kprefStack.peek().second
+        adapter.setNewList(list.filter { it.core.visible() })
     }
 
     fun reload(vararg index: Int) {

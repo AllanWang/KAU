@@ -84,6 +84,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         var descRes: Int
             @StringRes get
         var iicon: IIcon?
+        var visible: () -> Boolean
 
         /**
          * Attempts to reload current item by identifying it with its [titleRes]
@@ -98,6 +99,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
                       override @param:StringRes val titleRes: Int) : CoreContract {
         override var descRes: Int = -1
         override var iicon: IIcon? = null
+        override var visible: () -> Boolean = { true }
 
         override fun reloadSelf() {
             globalOptions.reloadByTitle(titleRes)
