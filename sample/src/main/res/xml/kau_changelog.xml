@@ -6,13 +6,13 @@
     <item text="" />
     -->
 	
+	<version title="v3.3.2"/>
+    <item text=":kpref-activity: Add visibility toggle to Core contract. Items can override this to show/hide given preferences based on boolean callbacks." />
+	
 	<version title="v3.3.1"/>
     <item text=":core: Open up all logger functions" />
     <item text=":core: Deprecate kauSwipeOnPostCreate and move functionality to onCreate" />
     <item text=":searchview: Fix background tint" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
 	
 	<version title="v3.3.0"/>
     <item text=":core: Create debounce methods" />

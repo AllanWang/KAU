@@ -85,26 +85,57 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
             recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
             uiThread {
                 adapter.clear()
-                adapter.add(items.list)
+                adapter.add(items.list.filter { it.core.visible() })
                 toolbar.setTitle(toolbarTitleRes)
             }
         }
     }
 
+    /**
+     * Pops the stack and loads the next kpref list
+     * Indices are not checked so ensure that this is possible first
+     */
     override fun showPrevPrefs() {
         kprefStack.pop()
         val (title, list) = kprefStack.peek()
         recycler.itemAnimator = if (animate) recyclerAnimatorPrev else null
         adapter.clear()
-        adapter.add(list)
+        adapter.add(list.filter { it.core.visible() })
         toolbar.setTitle(title)
     }
 
+    /**
+     * Check if it's possible to go back a stack
+     */
+    override val hasPrevPrefs
+        get() = kprefStack.size > 1
+
+    /**
+     * Reload the current pref list from the stack.
+     * This will adjust the list of items change in visibility
+     */
+    fun reloadList() {
+        recycler.itemAnimator = null
+        val list = kprefStack.peek().second
+        adapter.setNewList(list.filter { it.core.visible() })
+    }
+
+    /**
+     * Selectively reload an item based on its index.
+     * Note that this might not behave as expected if certain items are not visible,
+     * as those items aren't sent to the adapter.
+     *
+     * For those cases, consider using [reloadByTitle]
+     */
     fun reload(vararg index: Int) {
         if (index.isEmpty()) adapter.notifyAdapterDataSetChanged()
         else index.forEach { adapter.notifyItemChanged(it) }
     }
 
+    /**
+     * Iterate through all items and reload if it matches any of the titles
+     * If multiple items have the same title, they will all be reloaded
+     */
     override fun reloadByTitle(@StringRes vararg title: Int) {
         if (title.isEmpty()) return
         adapter.adapterItems.forEachIndexed { index, item ->
@@ -120,7 +151,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
     }
 
     fun backPress(): Boolean {
-        if (kprefStack.size > 1) {
+        if (hasPrevPrefs) {
             showPrevPrefs()
             return true
         }
