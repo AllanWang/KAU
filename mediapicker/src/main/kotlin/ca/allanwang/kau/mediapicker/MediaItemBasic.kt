@@ -30,12 +30,7 @@ class MediaItemBasic(val data: MediaModel)
             fastAdapter.withSelectable(false)
                     //add image data and return right away
                     .withOnClickListener { _, _, item, _ ->
-                        val intent = Intent()
-                        val data = arrayListOf(item.data)
-                        intent.putParcelableArrayListExtra(MEDIA_PICKER_RESULT, data)
-                        activity.setResult(AppCompatActivity.RESULT_OK, intent)
-                        if (buildIsLollipopAndUp) activity.finishAfterTransition()
-                        else activity.finish()
+                        activity.finish(arrayListOf(item.data))
                         true
                     }
         }

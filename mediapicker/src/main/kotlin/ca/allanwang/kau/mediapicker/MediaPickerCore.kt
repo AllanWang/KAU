@@ -2,12 +2,16 @@ package ca.allanwang.kau.mediapicker
 
 import android.Manifest
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.BaseColumns
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.CursorLoader
@@ -18,15 +22,19 @@ import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.kotlin.lazyContext
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.toast
 import com.bumptech.glide.Glide
 import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.adapters.HeaderAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.typeface.IIcon
 import org.jetbrains.anko.doAsync
+import java.io.File
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
 
@@ -35,7 +43,10 @@ import java.util.concurrent.Future
  *
  * Container for the main logic behind the both pickers
  */
-abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
+abstract class MediaPickerCore<T : IItem<*, *>>(
+        val mediaType: MediaType,
+        val mediaActions: List<MediaAction>
+) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
         val viewSize = lazyContext { computeViewSize(it) }
@@ -62,11 +73,13 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : KauB
         /**
          * Create error tile for a given item
          */
-        fun getErrorDrawable(context: Context): Drawable {
+        fun getErrorDrawable(context: Context) = getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
+
+        fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
             val sizePx = MediaPickerCore.computeViewSize(context)
-            return IconicsDrawable(context, GoogleMaterial.Icon.gmd_error)
+            return IconicsDrawable(context, iicon)
                     .sizePx(sizePx)
-                    .backgroundColor(accentColor)
+                    .backgroundColor(color)
                     .paddingPx(sizePx / 3)
                     .color(Color.WHITE)
         }
@@ -101,6 +114,9 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : KauB
     val extraSpace: Int by lazy { resources.displayMetrics.heightPixels }
 
     fun initializeRecycler(recycler: RecyclerView) {
+        val adapterWrapper = HeaderAdapter<MediaActionItem>()
+        adapterWrapper.wrap(adapter)
+        adapterWrapper.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
                 override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
@@ -110,7 +126,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : KauB
             setItemViewCacheSize(CACHE_SIZE)
             isDrawingCacheEnabled = true
             layoutManager = manager
-            adapter = this@MediaPickerCore.adapter
+            adapter = adapterWrapper
             setHasFixedSize(true)
             itemAnimator = KauAnimator(FadeScaleAnimatorAdd(0.8f))
         }
@@ -208,5 +224,88 @@ abstract class MediaPickerCore<T : IItem<*, *>>(val mediaType: MediaType) : KauB
     override fun onDestroy() {
         prefetcher?.cancel(true)
         super.onDestroy()
+    }
+
+    /**
+     * Method used to retrieve uri data for API 19+
+     * See <a href="http://hmkcode.com/android-display-selected-image-and-its-real-path/"></a>
+     */
+    private fun <R> ContentResolver.query(baseUri: Uri, uris: List<Uri>, block: (cursor: Cursor) -> R) {
+        val ids = uris.map {
+            DocumentsContract.getDocumentId(it).split(":").getOrNull(1)
+        }.filterNotNull().joinToString(prefix = "(", separator = ",", postfix = ")")
+        //? query replacements are done for one arg at a time
+        //since we potentially have a list of ids, we'll just format the WHERE clause ourself
+        query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(block)
+    }
+
+    internal var tempPath: String? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != RESULT_OK) {
+            if (tempPath != null) {
+                val f = File(tempPath)
+                if (f.exists()) f.delete()
+                tempPath = null
+            }
+            return super.onActivityResult(requestCode, resultCode, data)
+        }
+        KL.d("Media result received")
+        if (data == null) {
+            KL.d("Media null intent")
+            return super.onActivityResult(requestCode, resultCode, data)
+        }
+        when (requestCode) {
+            MEDIA_ACTION_REQUEST_CAMERA -> onCameraResult(data)
+            MEDIA_ACTION_REQUEST_PICKER -> onPickerResult(data)
+            else -> super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun onCameraResult(data: Intent) {
+        val f: File
+        if (tempPath != null) {
+            f = File(tempPath)
+            tempPath = null
+        } else if (data.data != null) {
+            f = File(data.data.path)
+        } else {
+            KL.d("Media camera no file found")
+            return
+        }
+        if (f.exists()) {
+            KL.v("Media camera path found", f.absolutePath)
+            scanMedia(f)
+            finish(arrayListOf(MediaModel(f)))
+        } else {
+            KL.d("Media camera file not found")
+        }
+    }
+
+    private fun onPickerResult(data: Intent) {
+        val items = mutableListOf<Uri>()
+        if (data.data != null) {
+            KL.v("Media picker data uri", data.data.path)
+            items.add(data.data)
+        } else {
+            val clip = data.clipData
+            if (clip != null) {
+                items.addAll((0 until clip.itemCount).map {
+                    clip.getItemAt(it).uri.apply {
+                        KL.v("Media picker clip uri", path)
+                    }
+                })
+            }
+        }
+        if (items.isEmpty()) return KL.d("Media picker empty intent")
+        contentResolver.query(mediaType.contentUri, items) {
+            if (it.moveToFirst()) {
+                val models = arrayListOf<MediaModel>()
+                do {
+                    models.add(MediaModel(it))
+                } while (it.moveToNext())
+                finish(models)
+            }
+        }
     }
 }
