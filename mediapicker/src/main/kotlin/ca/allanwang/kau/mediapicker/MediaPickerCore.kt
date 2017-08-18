@@ -236,14 +236,20 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         }.filterNotNull().joinToString(prefix = "(", separator = ",", postfix = ")")
         //? query replacements are done for one arg at a time
         //since we potentially have a list of ids, we'll just format the WHERE clause ourself
-        query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery).use(block)
+        query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(block)
     }
 
     internal var tempPath: String? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK) {
+            if (tempPath != null) {
+                val f = File(tempPath)
+                if (f.exists()) f.delete()
+                tempPath = null
+            }
             return super.onActivityResult(requestCode, resultCode, data)
+        }
         KL.d("Media result received")
         if (data == null) {
             KL.d("Media null intent")
@@ -256,17 +262,42 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         }
     }
 
+    private fun onCameraResult(data: Intent) {
+        val f: File
+        if (tempPath != null) {
+            f = File(tempPath)
+            tempPath = null
+        } else if (data.data != null) {
+            f = File(data.data.path)
+        } else {
+            KL.d("Media camera no file found")
+            return
+        }
+        if (f.exists()) {
+            KL.v("Media camera path found", f.absolutePath)
+            scanMedia(f)
+            finish(arrayListOf(MediaModel(f)))
+        } else {
+            KL.d("Media camera file not found")
+        }
+    }
+
     private fun onPickerResult(data: Intent) {
         val items = mutableListOf<Uri>()
         if (data.data != null) {
+            KL.v("Media picker data uri", data.data.path)
             items.add(data.data)
         } else {
             val clip = data.clipData
             if (clip != null) {
-                items.addAll((0 until clip.itemCount).map { clip.getItemAt(it).uri })
+                items.addAll((0 until clip.itemCount).map {
+                    clip.getItemAt(it).uri.apply {
+                        KL.v("Media picker clip uri", path)
+                    }
+                })
             }
         }
-        if (items.isEmpty()) return KL.d("Media empty intent")
+        if (items.isEmpty()) return KL.d("Media picker empty intent")
         contentResolver.query(mediaType.contentUri, items) {
             if (it.moveToFirst()) {
                 val models = arrayListOf<MediaModel>()
@@ -275,17 +306,6 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
                 } while (it.moveToNext())
                 finish(models)
             }
-        }
-    }
-
-    private fun onCameraResult(data: Intent) {
-        if (tempPath == null) return
-        val f = File(tempPath)
-        scanMedia(f)
-        val uri = Uri.fromFile(f)
-        tempPath = null
-        contentResolver.query(uri, MediaModel.projection, null, null, sortQuery).use {
-            if (it.moveToFirst()) finish(arrayListOf(MediaModel(it)))
         }
     }
 }

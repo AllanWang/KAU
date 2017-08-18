@@ -1,15 +1,28 @@
 package ca.allanwang.kau.sample
 
+import android.content.Context
+import android.net.Uri
+import android.support.v4.content.FileProvider
 import ca.allanwang.kau.mediapicker.*
+import java.io.File
 
 /**
  * Created by Allan Wang on 2017-07-23.
  */
-class ImagePickerActivity : MediaPickerActivityBase(MediaType.IMAGE,
-        mediaActions = listOf(MediaActionItem(MediaActionGallery(true))))
+private fun actions(multiple: Boolean) = listOf(object : MediaActionCamera() {
 
-class ImagePickerActivityOverlay : MediaPickerActivityOverlayBase(MediaType.IMAGE)
+    override fun createFile(context: Context): File
+            = createMediaFile("KAU", ".jpg")
 
-class VideoPickerActivity : MediaPickerActivityBase(MediaType.VIDEO)
+    override fun createUri(context: Context, file: File): Uri
+            = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file)
 
-class VideoPickerActivityOverlay : MediaPickerActivityOverlayBase(MediaType.VIDEO)
+}, MediaActionGallery(multiple))
+
+class ImagePickerActivity : MediaPickerActivityBase(MediaType.IMAGE, actions(true))
+
+class ImagePickerActivityOverlay : MediaPickerActivityOverlayBase(MediaType.IMAGE, actions(false))
+
+class VideoPickerActivity : MediaPickerActivityBase(MediaType.VIDEO, actions(true))
+
+class VideoPickerActivityOverlay : MediaPickerActivityOverlayBase(MediaType.VIDEO, actions(false))

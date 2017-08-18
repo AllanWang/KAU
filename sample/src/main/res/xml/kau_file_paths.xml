@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <external-path
+        name="KAU_images"
+        path="Android/data/ca.allanwang.kau.sample/files/Pictures" />
+    <external-path
+        name="KAU_public_images"
+        path="Pictures/KAU" />
+</paths>

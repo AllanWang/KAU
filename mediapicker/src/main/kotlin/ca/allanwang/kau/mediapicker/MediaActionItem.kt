@@ -29,7 +29,7 @@ class MediaActionItem(
     override fun bindView(holder: MediaItemBasic.ViewHolder, payloads: MutableList<Any>?) {
         super.bindView(holder, payloads)
         holder.image.apply {
-            setImageDrawable(MediaPickerCore.getIconDrawable(context, frame.iicon, frame.color))
+            setImageDrawable(MediaPickerCore.getIconDrawable(context, frame.iicon(this@MediaActionItem), frame.color))
             setOnClickListener { frame.invoke(context, this@MediaActionItem) }
         }
     }
@@ -44,14 +44,21 @@ class MediaActionItem(
 }
 
 interface MediaActionFrame {
-    val iicon: IIcon
     var color: Int
+    fun iicon(item: MediaActionItem): IIcon
     fun invoke(c: Context, item: MediaActionItem)
 }
 
 internal const val MEDIA_ACTION_REQUEST_CAMERA = 100
 internal const val MEDIA_ACTION_REQUEST_PICKER = 101
 
+/**
+ * Dynamic camera items for both images and videos
+ * Given that images require a uri to save the file, they must be implemented on top
+ * of this abstract class.
+ *
+ * If you just wish to use videos, see [MediaActionCameraVideo]
+ */
 abstract class MediaActionCamera(
         override var color: Int = MediaPickerCore.accentColor
 ) : MediaActionFrame {
@@ -59,34 +66,59 @@ abstract class MediaActionCamera(
     abstract fun createFile(context: Context): File
     abstract fun createUri(context: Context, file: File): Uri
 
-    override val iicon = GoogleMaterial.Icon.gmd_photo_camera
+    override fun iicon(item: MediaActionItem) = when (item.mediaType) {
+        MediaType.IMAGE -> GoogleMaterial.Icon.gmd_photo_camera
+        MediaType.VIDEO -> GoogleMaterial.Icon.gmd_videocam
+    }
 
     override fun invoke(c: Context, item: MediaActionItem) {
         c.kauRequestPermissions(PERMISSION_WRITE_EXTERNAL_STORAGE) {
             granted, _ ->
             if (granted) {
-                val camera = Intent(item.mediaType.captureType)
-                if (camera.resolveActivity(c.packageManager) == null) {
+                val intent = Intent(item.mediaType.captureType)
+                if (intent.resolveActivity(c.packageManager) == null) {
                     c.materialDialog {
                         title(R.string.kau_no_camera_found)
                         content(R.string.kau_no_camera_found_content)
                     }
                     return@kauRequestPermissions
                 }
-                val file: File = try {
-                    createFile(c)
-                } catch (e: java.io.IOException) {
-                    c.materialDialog {
-                        title(R.string.kau_error)
-                        content(R.string.kau_temp_file_creation_failed)
+                if (item.mediaType == MediaType.IMAGE) {
+                    val file: File = try {
+                        createFile(c)
+                    } catch (e: java.io.IOException) {
+                        c.materialDialog {
+                            title(R.string.kau_error)
+                            content(R.string.kau_temp_file_creation_failed)
+                        }
+                        return@kauRequestPermissions
                     }
-                    return@kauRequestPermissions
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, createUri(c, file))
+                    (c as? MediaPickerCore<*>)?.tempPath = file.absolutePath
                 }
-                camera.putExtra(MediaStore.EXTRA_OUTPUT, createUri(c, file))
-                (c as? MediaPickerCore<*>)?.tempPath = file.absolutePath
-                (c as Activity).startActivityForResult(camera, MEDIA_ACTION_REQUEST_CAMERA)
+                (c as Activity).startActivityForResult(intent, MEDIA_ACTION_REQUEST_CAMERA)
             }
         }
+    }
+}
+
+/**
+ * Basic camera action just for videos
+ */
+class MediaActionCameraVideo(
+        override var color: Int = MediaPickerCore.accentColor
+) : MediaActionFrame {
+    override fun iicon(item: MediaActionItem) = GoogleMaterial.Icon.gmd_videocam
+    override fun invoke(c: Context, item: MediaActionItem) {
+        val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
+        if (intent.resolveActivity(c.packageManager) == null) {
+            c.materialDialog {
+                title(R.string.kau_no_camera_found)
+                content(R.string.kau_no_camera_found_content)
+            }
+            return
+        }
+        (c as Activity).startActivityForResult(intent, MEDIA_ACTION_REQUEST_CAMERA)
     }
 }
 
@@ -98,7 +130,12 @@ class MediaActionGallery(
         val multiple: Boolean = false,
         override var color: Int = MediaPickerCore.accentColor
 ) : MediaActionFrame {
-    override val iicon = GoogleMaterial.Icon.gmd_photo
+
+    override fun iicon(item: MediaActionItem) = when (item.mediaType) {
+        MediaType.IMAGE -> if (multiple) GoogleMaterial.Icon.gmd_photo_library else GoogleMaterial.Icon.gmd_photo
+        MediaType.VIDEO -> GoogleMaterial.Icon.gmd_video_library
+    }
+
     override fun invoke(c: Context, item: MediaActionItem) {
         c.kauRequestPermissions(PERMISSION_READ_EXTERNAL_STORAGE) {
             granted, _ ->
