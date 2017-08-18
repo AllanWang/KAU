@@ -15,6 +15,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.*
+import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -121,6 +122,11 @@ class SearchView @JvmOverloads constructor(
          * Callback for when the query changes
          */
         var textCallback: (query: String, searchView: SearchView) -> Unit = { _, _ -> }
+        /**
+         * Callback for when the search action key is detected from the keyboard
+         * Returns true if the searchbar should close afterwards, and false otherwise
+         */
+        var searchCallback: (query: String, searchView: SearchView) -> Boolean = { _, _ -> false }
         /**
          * Debouncing interval between callbacks
          */
@@ -249,15 +255,21 @@ class SearchView @JvmOverloads constructor(
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val valid = !s.isNullOrBlank()
-                if (valid) textCallback(s.toString().trim(), this@SearchView)
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.isNotBlank()) textCallback(s.toString().trim(), this@SearchView)
                 else clearResults()
             }
-
         })
+        editText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (configs.searchCallback(editText.text.toString(), this)) revealClose()
+                else editText.hideKeyboard()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
     }
 
     internal fun ImageView.setSearchIcon(iicon: IIcon?): ImageView {
@@ -389,6 +401,7 @@ class SearchView @JvmOverloads constructor(
         recycler.gone()
         editText.hideKeyboard()
     }
+
 }
 
 @DslMarker
