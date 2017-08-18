@@ -169,6 +169,10 @@ class MainActivity : KPrefActivity() {
             onClick = { _, _, _ -> startActivityWithEdge(SWIPE_EDGE_LEFT); false }
         }
 
+        plainText(R.string.image_showcase) {
+            onClick = { _, _, _ -> kauLaunchMediaPicker(ImagePickerActivity::class.java, REQUEST_MEDIA); false }
+        }
+
         plainText(R.string.video_overlay_showcase) {
             onClick = { _, _, _ -> kauLaunchMediaPicker(VideoPickerActivityOverlay::class.java, REQUEST_MEDIA); false }
         }

@@ -4,4 +4,11 @@
     <string name="kau_no_items_selected">No items have been selected</string>
     <string name="kau_blurrable_imageview">Blurrable ImageView</string>
     <string name="kau_no_items_loaded">No items loaded</string>
+
+    <string name="kau_no_camera_found">No camera found</string>
+    <string name="kau_no_camera_found_content">There is no package that can take a photo. Please install a camera app and try again.</string>
+
+    <string name="kau_temp_file_creation_failed">Failed to create a temporary file.</string>
+
+    <string name="kau_select_media">Select Media</string>
 </resources>

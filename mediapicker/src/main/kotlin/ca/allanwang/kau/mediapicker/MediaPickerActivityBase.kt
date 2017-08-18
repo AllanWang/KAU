@@ -1,6 +1,5 @@
 package ca.allanwang.kau.mediapicker
 
-import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
@@ -21,7 +20,10 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
  * Images are blurred when selected, and multiple images can be selected at a time.
  * Having three layered images makes this slightly slower than [MediaPickerActivityOverlayBase]
  */
-abstract class MediaPickerActivityBase(mediaType: MediaType) : MediaPickerCore<MediaItem>(mediaType) {
+abstract class MediaPickerActivityBase(
+        mediaType: MediaType,
+        mediaActions: List<MediaActionItem> = emptyList()
+) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
     val coordinator: CoordinatorLayout by bindView(R.id.kau_coordinator)
     val toolbar: Toolbar by bindView(R.id.kau_toolbar)
@@ -57,11 +59,7 @@ abstract class MediaPickerActivityBase(mediaType: MediaType) : MediaPickerCore<M
                 if (selection.isEmpty()) {
                     toast(R.string.kau_no_items_selected)
                 } else {
-                    val intent = Intent()
-                    val data = ArrayList(selection.map { it.data })
-                    intent.putParcelableArrayListExtra(MEDIA_PICKER_RESULT, data)
-                    setResult(RESULT_OK, intent)
-                    finish()
+                    finish(ArrayList(selection.map { it.data }))
                 }
             }
             hideOnDownwardsScroll(recycler)
