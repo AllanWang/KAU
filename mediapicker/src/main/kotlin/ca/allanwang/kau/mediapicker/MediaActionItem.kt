@@ -52,11 +52,12 @@ interface MediaActionFrame {
 internal const val MEDIA_ACTION_REQUEST_CAMERA = 100
 internal const val MEDIA_ACTION_REQUEST_PICKER = 101
 
-class MediaActionCamera(
-        val fileCreator: (Context) -> File,
-        val uriCreator: (File) -> Uri,
+abstract class MediaActionCamera(
         override var color: Int = MediaPickerCore.accentColor
 ) : MediaActionFrame {
+
+    abstract fun createFile(context: Context): File
+    abstract fun createUri(context: Context, file: File): Uri
 
     override val iicon = GoogleMaterial.Icon.gmd_photo_camera
 
@@ -73,7 +74,7 @@ class MediaActionCamera(
                     return@kauRequestPermissions
                 }
                 val file: File = try {
-                    fileCreator(c)
+                    createFile(c)
                 } catch (e: java.io.IOException) {
                     c.materialDialog {
                         title(R.string.kau_error)
@@ -81,7 +82,7 @@ class MediaActionCamera(
                     }
                     return@kauRequestPermissions
                 }
-                camera.putExtra(MediaStore.EXTRA_OUTPUT, uriCreator(file))
+                camera.putExtra(MediaStore.EXTRA_OUTPUT, createUri(c, file))
                 (c as? MediaPickerCore<*>)?.tempPath = file.absolutePath
                 (c as Activity).startActivityForResult(camera, MEDIA_ACTION_REQUEST_CAMERA)
             }
