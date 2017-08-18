@@ -230,6 +230,11 @@ class MainActivity : KPrefActivity() {
                 val items = wordBank.filter { it.contains(query) }.sorted().map { SearchItem(it) }
                 searchView.results = items
             }
+            searchCallback = {
+                query, _ ->
+                toast("Enter pressed for $query")
+                true
+            }
             textDebounceInterval = 0
             noResultsFound = R.string.kau_no_results_found
             shouldClearOnClose = false
