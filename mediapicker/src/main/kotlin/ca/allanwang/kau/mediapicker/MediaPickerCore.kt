@@ -34,6 +34,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import org.jetbrains.anko.doAsync
+import java.io.File
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Future
 
@@ -44,7 +45,7 @@ import java.util.concurrent.Future
  */
 abstract class MediaPickerCore<T : IItem<*, *>>(
         val mediaType: MediaType,
-        val mediaActions: List<MediaActionItem>
+        val mediaActions: List<MediaActionFrame>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
@@ -115,8 +116,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterWrapper = HeaderAdapter<MediaActionItem>()
         adapterWrapper.wrap(adapter)
-        mediaActions.forEach { it.mediaType = mediaType }
-        adapterWrapper.add(mediaActions)
+        adapterWrapper.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
                 override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
@@ -239,14 +239,24 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery).use(block)
     }
 
+    internal var tempPath: String? = null
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode != MEDIA_ACTION_REQUEST || resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK)
             return super.onActivityResult(requestCode, resultCode, data)
         KL.d("Media result received")
         if (data == null) {
             KL.d("Media null intent")
             return super.onActivityResult(requestCode, resultCode, data)
         }
+        when (requestCode) {
+            MEDIA_ACTION_REQUEST_CAMERA -> onCameraResult(data)
+            MEDIA_ACTION_REQUEST_PICKER -> onPickerResult(data)
+            else -> super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun onPickerResult(data: Intent) {
         val items = mutableListOf<Uri>()
         if (data.data != null) {
             items.add(data.data)
@@ -256,18 +266,26 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
                 items.addAll((0 until clip.itemCount).map { clip.getItemAt(it).uri })
             }
         }
-        if (items.isNotEmpty())
-            contentResolver.query(mediaType.contentUri, items) {
-                if (it.moveToFirst()) {
-                    val models = arrayListOf<MediaModel>()
-                    do {
-                        models.add(MediaModel(it))
-                    } while (it.moveToNext())
-                    finish(models)
-                }
+        if (items.isEmpty()) return KL.d("Media empty intent")
+        contentResolver.query(mediaType.contentUri, items) {
+            if (it.moveToFirst()) {
+                val models = arrayListOf<MediaModel>()
+                do {
+                    models.add(MediaModel(it))
+                } while (it.moveToNext())
+                finish(models)
             }
-        else
-            KL.d("Media empty intent")
-        super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun onCameraResult(data: Intent) {
+        if (tempPath == null) return
+        val f = File(tempPath)
+        scanMedia(f)
+        val uri = Uri.fromFile(f)
+        tempPath = null
+        contentResolver.query(uri, MediaModel.projection, null, null, sortQuery).use {
+            if (it.moveToFirst()) finish(arrayListOf(MediaModel(it)))
+        }
     }
 }

@@ -22,7 +22,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
  */
 abstract class MediaPickerActivityBase(
         mediaType: MediaType,
-        mediaActions: List<MediaActionItem> = emptyList()
+        mediaActions: List<MediaActionFrame> = emptyList()
 ) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
     val coordinator: CoordinatorLayout by bindView(R.id.kau_coordinator)

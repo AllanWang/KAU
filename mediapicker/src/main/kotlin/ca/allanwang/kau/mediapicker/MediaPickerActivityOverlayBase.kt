@@ -19,7 +19,7 @@ import ca.allanwang.kau.utils.toast
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 abstract class MediaPickerActivityOverlayBase(
         mediaType: MediaType,
-        mediaActions: List<MediaActionItem> = emptyList()
+        mediaActions: List<MediaActionFrame> = emptyList()
 ) : MediaPickerCore<MediaItemBasic>(mediaType, mediaActions) {
 
     val draggable: ElasticDragDismissFrameLayout by bindView(R.id.kau_draggable)
