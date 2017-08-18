@@ -45,7 +45,7 @@ import java.util.concurrent.Future
  */
 abstract class MediaPickerCore<T : IItem<*, *>>(
         val mediaType: MediaType,
-        val mediaActions: List<MediaActionFrame>
+        val mediaActions: List<MediaAction>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {

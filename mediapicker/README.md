@@ -41,3 +41,22 @@ Note that this launches the activity through a `startActivityForResult` call
 You may get the activity response by overriding your `onActivityResult` method
 to first verify that the request code matches and then call `kauOnMediaPickerResult`,
 which will return the list of MediaModels.
+
+## MediaActions
+
+On top of retrieving your media file, you may also add action items to the start
+of the grid. All actions will return their results immediately, and retrieve media types based on the activity.
+
+### MediaActionCamera
+
+Gets an image or a video from the default camera. No permissions are necessary.
+Note that since api 24, passing general uris may throw a [FileUriExposedException](https://developer.android.com/reference/android/os/FileUriExposedException.html),
+so your own resolvers need to be passed for this to work. See the sample xml folder for an example.
+
+### MediaActionCameraVideo
+
+Given that getting videos do not require resolvers, this item can be used for videos only without any required arguments.
+
+### MediaActionGallery
+
+Defines whether you want to pick one or more media items from the default gallery app.

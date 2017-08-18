@@ -20,7 +20,7 @@ import java.io.File
  * Created by Allan Wang on 2017-08-17.
  */
 class MediaActionItem(
-        val frame: MediaActionFrame,
+        val action: MediaAction,
         val mediaType: MediaType
 ) : KauIItem<MediaActionItem, MediaItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { MediaItemBasic.ViewHolder(it) }, R.id.kau_item_media_action) {
 
@@ -29,8 +29,8 @@ class MediaActionItem(
     override fun bindView(holder: MediaItemBasic.ViewHolder, payloads: MutableList<Any>?) {
         super.bindView(holder, payloads)
         holder.image.apply {
-            setImageDrawable(MediaPickerCore.getIconDrawable(context, frame.iicon(this@MediaActionItem), frame.color))
-            setOnClickListener { frame.invoke(context, this@MediaActionItem) }
+            setImageDrawable(MediaPickerCore.getIconDrawable(context, action.iicon(this@MediaActionItem), action.color))
+            setOnClickListener { action.invoke(context, this@MediaActionItem) }
         }
     }
 
@@ -43,7 +43,7 @@ class MediaActionItem(
     }
 }
 
-interface MediaActionFrame {
+interface MediaAction {
     var color: Int
     fun iicon(item: MediaActionItem): IIcon
     fun invoke(c: Context, item: MediaActionItem)
@@ -61,7 +61,7 @@ internal const val MEDIA_ACTION_REQUEST_PICKER = 101
  */
 abstract class MediaActionCamera(
         override var color: Int = MediaPickerCore.accentColor
-) : MediaActionFrame {
+) : MediaAction {
 
     abstract fun createFile(context: Context): File
     abstract fun createUri(context: Context, file: File): Uri
@@ -107,7 +107,7 @@ abstract class MediaActionCamera(
  */
 class MediaActionCameraVideo(
         override var color: Int = MediaPickerCore.accentColor
-) : MediaActionFrame {
+) : MediaAction {
     override fun iicon(item: MediaActionItem) = GoogleMaterial.Icon.gmd_videocam
     override fun invoke(c: Context, item: MediaActionItem) {
         val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
@@ -129,7 +129,7 @@ class MediaActionCameraVideo(
 class MediaActionGallery(
         val multiple: Boolean = false,
         override var color: Int = MediaPickerCore.accentColor
-) : MediaActionFrame {
+) : MediaAction {
 
     override fun iicon(item: MediaActionItem) = when (item.mediaType) {
         MediaType.IMAGE -> if (multiple) GoogleMaterial.Icon.gmd_photo_library else GoogleMaterial.Icon.gmd_photo
