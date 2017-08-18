@@ -27,6 +27,14 @@ data class MediaModel(
             cursor.getString(4)
     )
 
+    constructor(f: File) : this(
+            f.absolutePath,
+            f.extension, // this isn't a mime type, but it does give some info
+            f.length(),
+            f.lastModified(),
+            f.nameWithoutExtension
+    )
+
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),

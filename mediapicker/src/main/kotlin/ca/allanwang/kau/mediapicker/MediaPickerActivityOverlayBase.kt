@@ -17,7 +17,10 @@ import ca.allanwang.kau.utils.toast
  * as opposed to three layers deep
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-abstract class MediaPickerActivityOverlayBase(mediaType: MediaType) : MediaPickerCore<MediaItemBasic>(mediaType) {
+abstract class MediaPickerActivityOverlayBase(
+        mediaType: MediaType,
+        mediaActions: List<MediaAction> = emptyList()
+) : MediaPickerCore<MediaItemBasic>(mediaType, mediaActions) {
 
     val draggable: ElasticDragDismissFrameLayout by bindView(R.id.kau_draggable)
     val recycler: RecyclerView by bindView(R.id.kau_recyclerview)
