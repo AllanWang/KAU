@@ -251,10 +251,6 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             return super.onActivityResult(requestCode, resultCode, data)
         }
         KL.d("Media result received")
-        if (data == null) {
-            KL.d("Media null intent")
-            return super.onActivityResult(requestCode, resultCode, data)
-        }
         when (requestCode) {
             MEDIA_ACTION_REQUEST_CAMERA -> onCameraResult(data)
             MEDIA_ACTION_REQUEST_PICKER -> onPickerResult(data)
@@ -262,12 +258,12 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         }
     }
 
-    private fun onCameraResult(data: Intent) {
+    private fun onCameraResult(data: Intent?) {
         val f: File
         if (tempPath != null) {
             f = File(tempPath)
             tempPath = null
-        } else if (data.data != null) {
+        } else if (data?.data != null) {
             f = File(data.data.path)
         } else {
             KL.d("Media camera no file found")
@@ -282,12 +278,12 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         }
     }
 
-    private fun onPickerResult(data: Intent) {
+    private fun onPickerResult(data: Intent?) {
         val items = mutableListOf<Uri>()
-        if (data.data != null) {
+        if (data?.data != null) {
             KL.v("Media picker data uri", data.data.path)
             items.add(data.data)
-        } else {
+        } else if (data != null) {
             val clip = data.clipData
             if (clip != null) {
                 items.addAll((0 until clip.itemCount).map {
