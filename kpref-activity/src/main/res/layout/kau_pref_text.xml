@@ -2,6 +2,8 @@
     android:id="@id/kau_pref_inner_content"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:focusable="false"
+    android:background="@null"
     android:clickable="false"
-    android:background="@null" />
+    android:focusable="false"
+    android:maxLines="3"
+    android:scrollHorizontally="true" />

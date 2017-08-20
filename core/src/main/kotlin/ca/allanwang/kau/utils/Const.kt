@@ -19,3 +19,5 @@ const val KAU_COLLAPSED = 0
 const val KAU_COLLAPSING = 1
 const val KAU_EXPANDING = 2
 const val KAU_EXPANDED = 3
+
+const val KAU_ELLIPSIS = '\u2026'
