@@ -16,10 +16,7 @@ import ca.allanwang.kau.searchview.SearchView
 import ca.allanwang.kau.searchview.bindSearchView
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.ui.views.RippleCanvas
-import ca.allanwang.kau.utils.materialDialog
-import ca.allanwang.kau.utils.navigationBarColor
-import ca.allanwang.kau.utils.startActivity
-import ca.allanwang.kau.utils.toast
+import ca.allanwang.kau.utils.*
 import ca.allanwang.kau.xml.showChangelog
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -183,6 +180,17 @@ class MainActivity : KPrefActivity() {
 
         plainText(R.string.kau_about_app) {
             onClick = { _, _, _ -> kauLaunchAbout(AboutActivity::class.java); false }
+        }
+
+        header(R.string.long_prefs)
+
+        checkbox(R.string.checkbox_3, { KPrefSample.check2 }, { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) }) {
+            descRes = R.string.kau_lorem_ipsum
+        }
+
+        text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
+            descRes = R.string.kau_lorem_ipsum
+            textGetter = { string(R.string.kau_lorem_ipsum) }
         }
 
     }

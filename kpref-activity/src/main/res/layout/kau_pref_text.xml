@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@null"
     android:clickable="false"
+    android:ellipsize="end"
     android:focusable="false"
     android:maxLines="3"
-    android:scrollHorizontally="true" />
+    android:maxWidth="150dp" />
