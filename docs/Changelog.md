@@ -2,6 +2,7 @@
 
 ## v3.3.2
 * :kpref-activity: Add visibility toggle to Core contract. Items can override this to show/hide given preferences based on boolean callbacks.
+* :kpref-activity: Add width constraint for long text items
 
 ## v3.3.1
 * :core: Open up all logger functions
