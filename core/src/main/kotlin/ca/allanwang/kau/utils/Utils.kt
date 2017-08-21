@@ -119,3 +119,7 @@ inline val kauIsMainThread: Boolean
     get() = Looper.myLooper() == Looper.getMainLooper()
 
 class KauException(message: String) : RuntimeException(message)
+
+fun String.withMaxLength(n: Int): String =
+        if (length <= n) this
+        else substring(0, n-1) + KAU_ELLIPSIS

@@ -81,10 +81,10 @@
 
         <android.support.constraint.Barrier
             android:id="@id/kau_pref_barrier"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:barrierDirection="end"
-            app:constraint_referenced_ids="kau_pref_title,kau_pref_desc,kau_pref_lower_frame"
+            app:constraint_referenced_ids="kau_pref_title,kau_pref_desc"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
