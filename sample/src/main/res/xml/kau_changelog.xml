@@ -5,13 +5,16 @@
     <version title="v"/>
     <item text="" />
     -->
-	
+
+    <version title="v3.4.0"/>
+    <item text="Update to gradle 4.x; api and implementation rather than compile" />
+    <item text="Update dependencies" />
+    <item text="" />
+    <item text="" />
+
 	<version title="v3.3.2"/>
     <item text=":kpref-activity: Add visibility toggle to Core contract. Items can override this to show/hide given preferences based on boolean callbacks." />
 	<item text=":kpref-activity: Add width constraint for long text items" />
-	<item text="" />
-	<item text="" />
-	<item text="" />
 	
 	<version title="v3.3.1"/>
     <item text=":core: Open up all logger functions" />
