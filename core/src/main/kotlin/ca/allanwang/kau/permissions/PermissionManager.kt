@@ -53,12 +53,12 @@ internal object PermissionManager {
             }
         }
         val activity = (context as? Activity) ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
-        KL.d("Requesting permissions ${permissions.contentToString()}")
+        KL.i("Requesting permissions ${permissions.contentToString()}")
         ActivityCompat.requestPermissions(activity, permissions, 1)
     }
 
     fun onRequestPermissionsResult(context: Context, permissions: Array<out String>, grantResults: IntArray) {
-        KL.d("On permission result: pending ${pendingResults.size}")
+        KL.i("On permission result: pending ${pendingResults.size}")
         val count = Math.min(permissions.size, grantResults.size)
         val iter = pendingResults.iterator()
         while (iter.hasNext()) {
@@ -77,7 +77,7 @@ internal object PermissionManager {
             }
             requestPermissions(context, action.permissions.toTypedArray())
         }
-        KL.d("Post on permission result: pending ${pendingResults.size}")
+        KL.i("Post on permission result: pending ${pendingResults.size}")
     }
 
 }
