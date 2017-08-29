@@ -61,6 +61,8 @@ dependencies {
 > Linked to their respective docs.<br/>
 > Included dependencies are only those with exposed APIs; see [new dependency configurations](https://developer.android.com/studio/build/gradle-plugin-3-0-0-migration.html#new_configurations).<br/>
 > Implemented dependencies are wrapped in parentheses.
+> All submodule dependencies are implemented, with the exception of `core` in `core-ui`.
+This means that you'll need to explicitly include each submodule you'd like to use, even if another declared submodule depends on it.
 
 ## [Core](core#readme)
 * Collection of extension functions and small helper methods applicable in almost any application.
