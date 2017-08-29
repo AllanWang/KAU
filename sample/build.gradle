@@ -81,25 +81,24 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':about')
-    compile project(':adapter')
-    compile project(':colorpicker')
-    compile project(':core')
-    compile project(':core-ui')
-    compile project(':kpref-activity')
-    compile project(':searchview')
-    compile project(':mediapicker')
-    compile "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
+    implementation project(':about')
+    implementation project(':adapter')
+    implementation project(':colorpicker')
+    implementation project(':core')
+    implementation project(':core-ui')
+    implementation project(':kpref-activity')
+    implementation project(':searchview')
+    implementation project(':mediapicker')
+    implementation "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
 
-    androidTestCompile("com.android.support.test.espresso:espresso-core:${ESPRESSO}") {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${ESPRESSO}") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile("com.android.support.test:runner:${TEST_RUNNER}") {
+    androidTestImplementation("com.android.support.test:runner:${TEST_RUNNER}") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testCompile "junit:junit:${JUNIT}"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
+    testImplementation "junit:junit:${JUNIT}"
 }
