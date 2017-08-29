@@ -3,8 +3,8 @@ ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
 apply from: '../android-lib.gradle'
 
 dependencies {
-    compile project(':core')
-    compile project(':adapter')
+    api project(':core')
+    implementation project(':adapter')
 
 }
 

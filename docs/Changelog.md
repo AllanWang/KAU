@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.4.0
+* Update to gradle 4.x; api and implementation rather than compile
+* Update dependencies
+
 ## v3.3.2
 * :kpref-activity: Add visibility toggle to Core contract. Items can override this to show/hide given preferences based on boolean callbacks.
 * :kpref-activity: Add width constraint for long text items

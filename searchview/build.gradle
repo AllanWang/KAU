@@ -3,8 +3,8 @@ ext.kauSubModuleResourcePrefix = "kau_search_"
 apply from: '../android-lib.gradle'
 
 dependencies {
-    compile project(':core-ui')
-    compile project(':adapter')
+    implementation project(':core-ui')
+    implementation project(':adapter')
 }
 
 apply from: '../artifacts.gradle'

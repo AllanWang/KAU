@@ -3,11 +3,12 @@ ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
 apply from: '../android-lib.gradle'
 
 dependencies {
-    compile project(':core-ui')
+    implementation project(':core-ui')
+    implementation project(':adapter')
 
-    compile "com.github.bumptech.glide:glide:${GLIDE}"
+    api "com.github.bumptech.glide:glide:${GLIDE}"
     kapt "com.github.bumptech.glide:compiler:${GLIDE}"
-    compile "jp.wasabeef:blurry:${BLURRY}"
+    implementation "jp.wasabeef:blurry:${BLURRY}"
 }
 
 apply from: '../artifacts.gradle'
