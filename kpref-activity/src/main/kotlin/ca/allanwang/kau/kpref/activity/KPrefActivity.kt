@@ -115,6 +115,8 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
      * This will adjust the list of items change in visibility
      */
     fun reloadList() {
+        // If for some reason we are calling a reload before fetching our first kpref list, we will ignore it
+        if (kprefStack.size < 1) return
         recycler.itemAnimator = null
         val list = kprefStack.peek().second
         adapter.setNewList(list.filter { it.core.visible() })
