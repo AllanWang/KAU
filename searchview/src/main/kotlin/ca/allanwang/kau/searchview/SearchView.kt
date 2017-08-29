@@ -214,7 +214,7 @@ class SearchView @JvmOverloads constructor(
     val adapter = FastItemAdapter<SearchItem>()
     var menuItem: MenuItem? = null
     val isOpen: Boolean
-        get() = card.isVisible
+        get() = isAttachedToWindow && card.isVisible
 
     /*
      * Ripple start points and search view offset
