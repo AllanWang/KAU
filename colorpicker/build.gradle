@@ -5,9 +5,9 @@ ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
 apply from: '../android-lib.gradle'
 
 dependencies {
-    compile project(':core')
+    implementation project(':core')
 
-    compile "com.afollestad.material-dialogs:commons:${MATERIAL_DIALOG}"
+    implementation "com.afollestad.material-dialogs:commons:${MATERIAL_DIALOG}"
 }
 
 apply from: '../artifacts.gradle'

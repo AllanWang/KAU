@@ -7,10 +7,10 @@ android {
 }
 
 dependencies {
-    compile project(':core-ui')
-    compile project(':adapter')
+    implementation project(':core-ui')
+    implementation project(':adapter')
 
-    compile("com.mikepenz:aboutlibraries:${ABOUT_LIBRARIES}@aar") {
+    api("com.mikepenz:aboutlibraries:${ABOUT_LIBRARIES}@aar") {
         transitive = false
     }
 }
