@@ -22,7 +22,7 @@ import com.mikepenz.fastadapter.FastAdapter
  * Created by Allan Wang on 2017-07-04.
  */
 class MediaItemBasic(val data: MediaModel)
-    : KauIItem<MediaItem, MediaItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { ViewHolder(it) }) {
+    : KauIItem<MediaItem, MediaItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { ViewHolder(it) }), GlideContract by GlideDelegate() {
 
     companion object {
         @SuppressLint("NewApi")
@@ -40,7 +40,7 @@ class MediaItemBasic(val data: MediaModel)
 
     override fun bindView(holder: ViewHolder, payloads: List<Any>?) {
         super.bindView(holder, payloads)
-        Glide.with(holder.itemView)
+        glide(holder.itemView)
                 .load(data.data)
                 .applyMediaOptions(holder.itemView.context)
                 .listener(object : RequestListener<Drawable> {
@@ -58,7 +58,7 @@ class MediaItemBasic(val data: MediaModel)
 
     override fun unbindView(holder: ViewHolder) {
         super.unbindView(holder)
-        Glide.with(holder.itemView).clear(holder.image)
+        glide(holder.itemView).clear(holder.image)
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
