@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
 import android.support.annotation.IdRes
 import android.support.transition.ChangeBounds
 import android.support.transition.TransitionManager
@@ -215,7 +214,7 @@ class SearchView @JvmOverloads constructor(
     val adapter = FastItemAdapter<SearchItem>()
     var menuItem: MenuItem? = null
     val isOpen: Boolean
-        get() = isAttachedToWindow && card.isVisible
+        get() = parent != null && card.isVisible
 
     /*
      * Ripple start points and search view offset
@@ -372,39 +371,35 @@ class SearchView @JvmOverloads constructor(
     }
 
     fun revealOpen() {
-        if (isOpen) return
-        post {
-            /**
-             * The y component is relative to the cardView, but it hasn't been drawn yet so its own height is 0
-             * We therefore use half the menuItem height, which is a close approximation to our intended value
-             * The cardView matches the parent's width, so menuX is correct
-             */
-            configs.openListener?.invoke(this)
-            shadow.fadeIn()
-            editText.showKeyboard()
-            card.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration) {
-                cardTransition()
-                recycler.visible()
-            }
+        if (parent == null || isOpen) return
+        /**
+         * The y component is relative to the cardView, but it hasn't been drawn yet so its own height is 0
+         * We therefore use half the menuItem height, which is a close approximation to our intended value
+         * The cardView matches the parent's width, so menuX is correct
+         */
+        configs.openListener?.invoke(this)
+        shadow.fadeIn()
+        editText.showKeyboard()
+        card.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration) {
+            cardTransition()
+            recycler.visible()
         }
     }
 
     fun revealClose() {
-        if (!isOpen) return
-        post {
-            shadow.fadeOut(duration = configs.transitionDuration)
-            cardTransition {
-                addEndListener {
-                    card.circularHide(menuX, menuHalfHeight, duration = configs.revealDuration,
-                            onFinish = {
-                                configs.closeListener?.invoke(this@SearchView)
-                                if (configs.shouldClearOnClose) editText.text.clear()
-                            })
-                }
+        if (parent == null || !isOpen) return
+        shadow.fadeOut(duration = configs.transitionDuration)
+        cardTransition {
+            addEndListener {
+                card.circularHide(menuX, menuHalfHeight, duration = configs.revealDuration,
+                        onFinish = {
+                            configs.closeListener?.invoke(this@SearchView)
+                            if (configs.shouldClearOnClose) editText.text.clear()
+                        })
             }
-            recycler.gone()
-            editText.hideKeyboard()
         }
+        recycler.gone()
+        editText.hideKeyboard()
     }
 
 }
