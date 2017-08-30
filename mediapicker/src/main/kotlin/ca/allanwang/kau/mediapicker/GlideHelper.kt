@@ -6,13 +6,13 @@ import com.bumptech.glide.RequestManager
 
 /**
  * Created by Allan Wang on 29/08/2017.
+ *
+ * Basic helper to fetch the [RequestManager] from the activity if it exists, before creating another one
  */
-interface GlideContract {
-
+internal interface GlideContract {
     fun glide(v: View): RequestManager
-
 }
 
-class GlideDelegate : GlideContract {
+internal class GlideDelegate : GlideContract {
     override fun glide(v: View) = ((v.context as? MediaPickerCore<*>)?.glide ?: Glide.with(v))!!
 }
