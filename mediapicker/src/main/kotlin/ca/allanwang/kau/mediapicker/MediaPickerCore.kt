@@ -27,6 +27,7 @@ import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.HeaderAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
@@ -103,6 +104,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         const val CACHE_SIZE = 80
     }
 
+    lateinit var glide: RequestManager
     private var hasPreloaded = false
     private var prefetcher: Future<*>? = null
 
@@ -112,6 +114,11 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
      * Further improve preloading by extending the layout space
      */
     val extraSpace: Int by lazy { resources.displayMetrics.heightPixels }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        glide = Glide.with(this)
+    }
 
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterWrapper = HeaderAdapter<MediaActionItem>()
@@ -176,7 +183,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             hasPreloaded = true
             prefetcher = doAsync {
                 models.subList(0, Math.min(models.size, 50)).map { it.data }.forEach {
-                    val target = Glide.with(this@MediaPickerCore).load(it)
+                    val target = glide.load(it)
                             .applyMediaOptions(this@MediaPickerCore)
                             .submit()
                     try {
@@ -184,7 +191,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
                     } catch (ignored: InterruptedException) {
                     } catch (ignored: ExecutionException) {
                     } finally {
-                        Glide.with(this@MediaPickerCore).clear(target)
+                       glide.clear(target)
                     }
                 }
             }
