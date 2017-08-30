@@ -3,6 +3,9 @@
 ## v3.4.0
 * Update to gradle 4.x; api and implementation rather than compile
 * Update dependencies
+* :searchview: Ensure reveals are called on the UI thread
+* :searchview: Check that searchview has a parent before checking card state
+* :mediapicker: Reuse request manager from activity
 
 ## v3.3.2
 * :kpref-activity: Add visibility toggle to Core contract. Items can override this to show/hide given preferences based on boolean callbacks.
