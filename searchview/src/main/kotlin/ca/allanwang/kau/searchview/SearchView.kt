@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
 import android.support.annotation.IdRes
 import android.support.transition.ChangeBounds
 import android.support.transition.TransitionManager
@@ -215,7 +214,7 @@ class SearchView @JvmOverloads constructor(
     val adapter = FastItemAdapter<SearchItem>()
     var menuItem: MenuItem? = null
     val isOpen: Boolean
-        get() = isAttachedToWindow && card.isVisible
+        get() = parent != null && card.isVisible
 
     /*
      * Ripple start points and search view offset
@@ -306,7 +305,7 @@ class SearchView @JvmOverloads constructor(
         val menuItem = menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
         if (menuItem.icon == null) menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         card.gone()
-        menuItem.setOnMenuItemClickListener { configureCoords(it); revealOpen(); true }
+        menuItem.setOnMenuItemClickListener { revealOpen(); true }
         shadow.setOnClickListener { revealClose() }
         this.menuItem = menuItem
         return this
@@ -322,7 +321,8 @@ class SearchView @JvmOverloads constructor(
         menuItem = null
     }
 
-    private fun configureCoords(item: MenuItem) {
+    private fun configureCoords(item: MenuItem?) {
+        item ?: return
         if (parent !is ViewGroup) return
         val view = parentViewGroup.findViewById<View>(item.itemId) ?: return
         val locations = IntArray(2)
@@ -334,7 +334,7 @@ class SearchView @JvmOverloads constructor(
             override fun onPreDraw(): Boolean {
                 view.viewTreeObserver.removeOnPreDrawListener(this)
                 card.setMarginTop(menuY - card.height / 2)
-                return false
+                return true
             }
         })
     }
@@ -372,14 +372,15 @@ class SearchView @JvmOverloads constructor(
     }
 
     fun revealOpen() {
-        if (isOpen) return
-        post {
+        if (parent == null || isOpen) return
+        context.runOnUiThread {
             /**
              * The y component is relative to the cardView, but it hasn't been drawn yet so its own height is 0
              * We therefore use half the menuItem height, which is a close approximation to our intended value
              * The cardView matches the parent's width, so menuX is correct
              */
-            configs.openListener?.invoke(this)
+            configureCoords(menuItem)
+            configs.openListener?.invoke(this@SearchView)
             shadow.fadeIn()
             editText.showKeyboard()
             card.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration) {
@@ -390,8 +391,8 @@ class SearchView @JvmOverloads constructor(
     }
 
     fun revealClose() {
-        if (!isOpen) return
-        post {
+        if (parent == null || !isOpen) return
+        context.runOnUiThread {
             shadow.fadeOut(duration = configs.transitionDuration)
             cardTransition {
                 addEndListener {

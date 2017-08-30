@@ -9,7 +9,9 @@
     <version title="v3.4.0"/>
     <item text="Update to gradle 4.x; api and implementation rather than compile" />
     <item text="Update dependencies" />
-    <item text="" />
+    <item text=":searchview: Ensure reveals are called on the UI thread" />
+    <item text=":searchview: Check that searchview has a parent before checking card state" />
+    <item text=":mediapicker: Reuse request manager from activity" />
     <item text="" />
 
 	<version title="v3.3.2"/>

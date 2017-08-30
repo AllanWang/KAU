@@ -70,10 +70,10 @@ android {
 }
 
 dependencies {
-    androidTestCompile("com.android.support.test:runner:${TEST_RUNNER}") {
+    androidTestImplementation("com.android.support.test:runner:${TEST_RUNNER}") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testCompile "junit:junit:${JUNIT}"
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
+    testImplementation "junit:junit:${JUNIT}"
 }
