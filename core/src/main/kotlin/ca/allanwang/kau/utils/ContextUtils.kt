@@ -87,13 +87,13 @@ fun Context.startPlayStoreLink(packageId: String) {
 fun Context.startLink(vararg url: String?) {
     val link = url.firstOrNull { !it.isNullOrBlank() } ?: return
     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    startActivity(browserIntent)
+    if (browserIntent.resolveActivity(packageManager) != null)
+        startActivity(browserIntent)
+    else
+        KL.d("Attempted to start $link, but could not resolve activity")
 }
 
-fun Context.startLink(@StringRes url: Int) {
-    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(string(url)))
-    startActivity(browserIntent)
-}
+fun Context.startLink(@StringRes url: Int) = startLink(string(url))
 
 //Toast helpers
 inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = context.toast(id, duration)
