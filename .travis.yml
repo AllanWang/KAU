@@ -21,7 +21,7 @@ android:
 #- adb shell input keyevent 82 &
 script:
 - chmod +x gradlew
-- if [[ "$TRAVIS_BRANCH" == "master" ]]; then ./gradlew lintRelease publishRelease; else ./gradlew lintRelease --debug test; fi
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then ./gradlew lintRelease publishRelease; else ./gradlew lintRelease test; fi
 branches:
   except:
   - gh-pages
