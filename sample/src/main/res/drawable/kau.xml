@@ -8,11 +8,11 @@
     <path
         android:fillColor="#00a9ff"
         android:fillType="evenOdd"
-        android:pathData="M42.8336 42.7538l19-42.75 31.67656 57H57.0836zM0 .08894h27L0 28.6213z" />
+        android:pathData="M42.8336 42.7538l19-42.75 31.67656 57H57.0836zM0 0.08894h27L0 28.6213z" />
     <path
         android:fillColor="#ff8900"
         android:fillType="evenOdd"
-        android:pathData="M28.5 .0038 H57l-57 57v-26.882z" />
+        android:pathData="M28.5 0.0038 H57l-57 57v-26.882z" />
     <path
         android:fillColor="#00a9ff"
         android:fillType="evenOdd"
