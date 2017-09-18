@@ -23,9 +23,11 @@ import ca.allanwang.kau.logging.KL
  */
 open class KPref {
 
+    lateinit var PREFERENCE_NAME: String
     lateinit var sp: SharedPreferences
 
     fun initialize(c: Context, preferenceName: String) {
+        PREFERENCE_NAME = preferenceName
         sp = c.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
         KL.d("Shared Preference $preferenceName has been initialized")
         val toDelete = deleteKeys()
