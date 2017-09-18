@@ -169,6 +169,10 @@ fun Context.resolveString(@AttrRes attr: Int, fallback: String = ""): String {
 inline fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): MaterialDialog {
     val builder = MaterialDialog.Builder(this)
     builder.action()
+    if (isFinishing) {
+        KL.d("Material Dialog triggered from finishing context; did not show")
+        return builder.build()
+    }
     return builder.show()
 }
 
@@ -208,3 +212,11 @@ fun Context.shareText(text: String?) {
     else
         toast("Cannot resolve activity to share text", log = true)
 }
+
+/**
+ * Check if given context is finishing.
+ * This is a wrapper to check if it's both an activity and finishing
+ * As of now, it is only checked when tied to an activity
+ */
+inline val Context.isFinishing: Boolean
+    get() = (this as? Activity)?.isFinishing ?: false

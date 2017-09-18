@@ -1,6 +1,7 @@
 ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
 
 apply from: '../android-lib.gradle'
+apply plugin: 'kotlin-kapt'
 
 dependencies {
     implementation project(':core-ui')
