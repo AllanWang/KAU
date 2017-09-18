@@ -97,13 +97,7 @@ fun Context.startLink(vararg url: String?) {
         toast("Cannot resolve browser", log = true)
 }
 
-fun Context.startLink(@StringRes url: Int) {
-    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(string(url)))
-    if (browserIntent.resolveActivity(packageManager) != null)
-        startActivity(browserIntent)
-    else
-        toast("Cannot resolve browser", log = true)
-}
+fun Context.startLink(@StringRes url: Int) = startLink(string(url))
 
 //Toast helpers
 inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) = context.toast(id, duration, log)
