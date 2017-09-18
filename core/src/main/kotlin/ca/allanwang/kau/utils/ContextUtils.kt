@@ -77,7 +77,11 @@ fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolea
 fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))
 
 fun Context.startPlayStoreLink(packageId: String) {
-    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageId")))
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageId"))
+    if (intent.resolveActivity(packageManager) != null)
+        startActivity(intent)
+    else
+        toast("Cannot resolve play store", log = true)
 }
 
 /**
@@ -87,22 +91,30 @@ fun Context.startPlayStoreLink(packageId: String) {
 fun Context.startLink(vararg url: String?) {
     val link = url.firstOrNull { !it.isNullOrBlank() } ?: return
     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    startActivity(browserIntent)
+    if (browserIntent.resolveActivity(packageManager) != null)
+        startActivity(browserIntent)
+    else
+        toast("Cannot resolve browser", log = true)
 }
 
 fun Context.startLink(@StringRes url: Int) {
     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(string(url)))
-    startActivity(browserIntent)
+    if (browserIntent.resolveActivity(packageManager) != null)
+        startActivity(browserIntent)
+    else
+        toast("Cannot resolve browser", log = true)
 }
 
 //Toast helpers
-inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = context.toast(id, duration)
+inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) = context.toast(id, duration, log)
 
-inline fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG) = toast(this.string(id), duration)
+inline fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) = toast(this.string(id), duration, log)
 
-inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG) = context.toast(text, duration)
-inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG) {
+inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) = context.toast(text, duration, log)
+
+inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) {
     Toast.makeText(this, text, duration).show()
+    if (log) KL.i("Toast: $text")
 }
 
 //Resource retrievers
@@ -192,9 +204,13 @@ fun Context.copyToClipboard(text: String?, label: String = "Copied Text", showTo
 }
 
 fun Context.shareText(text: String?) {
-    if (text == null) return toast(R.string.kau_text_is_null)
+    if (text == null) return toast("Share text is null")
     val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"
     intent.putExtra(Intent.EXTRA_TEXT, text)
-    startActivity(Intent.createChooser(intent, string(R.string.kau_share)))
+    val chooserIntent = Intent.createChooser(intent, string(R.string.kau_share))
+    if (chooserIntent.resolveActivity(packageManager) != null)
+        startActivity(chooserIntent)
+    else
+        toast("Cannot resolve activity to share text", log = true)
 }

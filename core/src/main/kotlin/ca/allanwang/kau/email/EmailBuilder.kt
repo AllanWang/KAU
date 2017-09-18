@@ -13,6 +13,7 @@ import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.installerPackageName
 import ca.allanwang.kau.utils.isAppInstalled
 import ca.allanwang.kau.utils.string
+import ca.allanwang.kau.utils.toast
 
 
 /**
@@ -76,7 +77,10 @@ class EmailBuilder(val email: String, val subject: String) {
             emailBuilder.append("\n").append(footer)
 
         intent.putExtra(Intent.EXTRA_TEXT, emailBuilder.toString())
-        context.startActivity(Intent.createChooser(intent, context.resources.getString(R.string.kau_send_via)))
+        if (intent.resolveActivity(context.packageManager) != null)
+            context.startActivity(Intent.createChooser(intent, context.resources.getString(R.string.kau_send_via)))
+        else
+            context.toast("Cannot resolve email activity", log = true)
     }
 }
 
