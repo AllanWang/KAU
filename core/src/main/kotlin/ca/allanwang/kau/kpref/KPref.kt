@@ -3,6 +3,7 @@ package ca.allanwang.kau.kpref
 import android.content.Context
 import android.content.SharedPreferences
 import ca.allanwang.kau.kotlin.ILazyResettable
+import ca.allanwang.kau.logging.KL
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -22,27 +23,19 @@ import ca.allanwang.kau.kotlin.ILazyResettable
  */
 open class KPref {
 
-    lateinit private var c: Context
-    lateinit internal var PREFERENCE_NAME: String
-    private var initialized = false
+    lateinit var PREFERENCE_NAME: String
+    lateinit var sp: SharedPreferences
 
     fun initialize(c: Context, preferenceName: String) {
-        if (initialized) throw KPrefException("KPref object $preferenceName has already been initialized; please only do so once")
-        initialized = true
-        this.c = c.applicationContext
         PREFERENCE_NAME = preferenceName
+        sp = c.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
+        KL.d("Shared Preference $preferenceName has been initialized")
         val toDelete = deleteKeys()
         if (toDelete.isNotEmpty()) {
             val edit = sp.edit()
             toDelete.forEach { edit.remove(it) }
             edit.apply()
         }
-    }
-
-    //todo hide this
-    val sp: SharedPreferences by lazy {
-        if (!initialized) throw KPrefException("KPref object has not yet been initialized; please initialize it with a context and preference name")
-        c.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
     }
 
     internal val prefMap: MutableMap<String, ILazyResettable<*>> = mutableMapOf()
