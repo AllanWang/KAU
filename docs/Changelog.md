@@ -6,6 +6,7 @@
 * :searchview: Ensure reveals are called on the UI thread
 * :searchview: Check that searchview has a parent before checking card state
 * :mediapicker: Reuse request manager from activity
+* :kpref-activity: Add bounds to text item
 
 ## v3.3.2
 * :kpref-activity: Add visibility toggle to Core contract. Items can override this to show/hide given preferences based on boolean callbacks.
