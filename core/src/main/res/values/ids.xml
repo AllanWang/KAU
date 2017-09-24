@@ -14,6 +14,7 @@
     <item name="kau_item_pref_plain_text" type="id"/>
     <item name="kau_item_pref_seekbar" type="id"/>
     <item name="kau_item_pref_sub_item" type="id"/>
+    <item name="kau_item_pref_time_picker" type="id"/>
     <item name="kau_item_pref_text" type="id"/>
     <item name="kau_item_search" type="id"/>
     <item name="kau_pref_inner_content" type="id"/>

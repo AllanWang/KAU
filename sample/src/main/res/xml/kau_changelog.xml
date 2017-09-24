@@ -11,7 +11,6 @@
 	<item text="Add intent resolver checks prior to all executions." />
 	<item text="Fix bundle NPE when starting activity" />
 	<item text="" />
-	<item text="" />
 
     <version title="v3.4.0"/>
     <item text="Update to gradle 4.x; api and implementation rather than compile" />
