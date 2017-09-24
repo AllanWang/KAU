@@ -12,7 +12,7 @@ import ca.allanwang.kau.kpref.activity.R
  * When clicked, will navigate to a new set of preferences and add the old list to a stack
  *
  */
-open class KPrefSubItems(val builder: KPrefSubItemsContract) : KPrefItemCore(builder) {
+open class KPrefSubItems(open val builder: KPrefSubItemsContract) : KPrefItemCore(builder) {
 
     override fun onClick(itemView: View, innerContent: View?): Boolean {
         builder.globalOptions.showNextPrefs(builder.titleRes, builder.itemBuilder)

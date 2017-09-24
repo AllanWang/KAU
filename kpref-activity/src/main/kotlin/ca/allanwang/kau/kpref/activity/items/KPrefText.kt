@@ -14,7 +14,7 @@ import ca.allanwang.kau.utils.toast
  * This is still a generic preference
  *
  */
-open class KPrefText<T>(val builder: KPrefTextContract<T>) : KPrefItemBase<T>(builder) {
+open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<T>(builder) {
 
     /**
      * Automatically reload on set

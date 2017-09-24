@@ -30,6 +30,7 @@ Contract | Mandatory | Optional | Description
 `KPrefSeekbarContract` | `NA` | `min` `max` `increments` `toText` `textViewConfigs` | Addtional configurations for a seekbar, as well as text to be displayed on the side.
 `KPrefSubItemsContract` | `itemBuilder` | `NA` | Contains a new list for the adapter to load when clicked
 `KPrefTextContract` | `NA` | `textGetter` | Additional configurations for the text item
+`KPrefTimeContract` | `NA` | `use24HourFormat` | Additional configurations for time picker
 
 The kpref items are as followed:
 
@@ -41,6 +42,7 @@ Item | Implements | Description
 `header` | `CoreContract` | Header; just a title that isn't clickable
 `text` | `CoreContract` `BaseContract` `KPrefTextContract` | Text item; displays the kpref as a String on the right; does not have click implementation by default
 `plainText` | `CoreContract` `BaseContract` | Plain text item; like `text` but does not deal with any preferences directly, so it doesn't need a getter or setter
+`timePicker` | `CoreContract` `BaseContract` `KPrefTextContract`, `KPrefTimeContract` | Extension ot `text` that will open and save a time picker
 This can be used to display text or deal with preference that are completely handed within the click event (eg a dialog).
 `subItems` | `CoreContract` `KPrefSubItemsContract` | Sub items; contains a new page for the activity to load when clicked
  

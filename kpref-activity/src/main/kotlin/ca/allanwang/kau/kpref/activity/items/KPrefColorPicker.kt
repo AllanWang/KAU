@@ -14,7 +14,7 @@ import ca.allanwang.kau.kpref.activity.R
  * ColorPicker preference
  * When a color is successfully selected in the dialog, it will be saved as an int
  */
-open class KPrefColorPicker(val builder: KPrefColorContract) : KPrefItemBase<Int>(builder) {
+open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBase<Int>(builder) {
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
