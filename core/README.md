@@ -178,7 +178,7 @@ KAU's swipe is a Kotlin rewrite, along with support for all directions and weakl
 # Debounce
 
 Debouncing is a means of throttling a function so that it is called no more than once in a given instance of time.
-An example where you'd like this behaviour is the searchview; you want to deliver search results quickly, 
+An example where you'd like this behaviour is the searchview: you want to deliver search results quickly,
 but you don't want to update your response with each new character.
 Instead, you can wait until a user finishes their query, then search for the results.
 
@@ -210,7 +210,7 @@ Include your email and subject, along with other optional configurations such as
 ## Extension Functions
 
 > "[Extensions](https://kotlinlang.org/docs/reference/extensions.html) provide the ability to extend a class with new functionality without having to inherit from the class"
-Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of the extensions in its core package is also in KAU.
+<br/>Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of the extensions in its core package is also in KAU.
 
 KAU's vast collection of extensions is one of its strongest features. 
 There are too many to explain here, but you may check out the [utils package](https://github.com/AllanWang/KAU/tree/master/core/src/main/kotlin/ca/allanwang/kau/utils)
