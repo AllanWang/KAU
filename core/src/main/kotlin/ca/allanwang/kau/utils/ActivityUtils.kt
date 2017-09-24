@@ -32,9 +32,9 @@ fun Activity.startActivityForResult(
         bundle: Bundle? = null,
         intentBuilder: Intent.() -> Unit = {}) {
     val intent = Intent(this, clazz)
-    val fullBundle = if (transition && buildIsLollipopAndUp)
-        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-    else Bundle()
+    val fullBundle = Bundle()
+    if (transition && buildIsLollipopAndUp)
+        fullBundle.with(ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     if (bundle != null) fullBundle.putAll(bundle)
     intent.intentBuilder()
     startActivityForResult(intent, requestCode, if (fullBundle.isEmpty) null else fullBundle)

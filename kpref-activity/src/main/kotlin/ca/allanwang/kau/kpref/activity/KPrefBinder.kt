@@ -102,5 +102,13 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
             .apply { builder() }))
 
     @KPrefMarker
+    fun timePicker(@StringRes title: Int,
+                   getter: (() -> Int),
+                   setter: ((value: Int) -> Unit),
+                   builder: KPrefTimePicker.KPrefTimeContract.() -> Unit = {})
+            = list.add(KPrefTimePicker(KPrefTimePicker.KPrefTimeBuilder(globalOptions, title, getter, setter)
+            .apply { builder() }))
+
+    @KPrefMarker
     val list: MutableList<KPrefItemCore> = mutableListOf()
 }

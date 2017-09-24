@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.4.1
+* Validate context before showing dialogs
+* Add intent resolver checks prior to all executions.
+* Fix bundle NPE when starting activity
+
 ## v3.4.0
 * Update to gradle 4.x; api and implementation rather than compile
 * Update dependencies

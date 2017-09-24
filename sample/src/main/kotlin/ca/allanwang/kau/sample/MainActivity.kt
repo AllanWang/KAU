@@ -107,8 +107,7 @@ class MainActivity : KPrefActivity() {
         checkbox(R.string.checkbox_3, { KPrefSample.check3 }, { KPrefSample.check3 = it }) {
             descRes = R.string.desc_dependent
             enabler = { KPrefSample.check2 }
-            onDisabledClick = {
-                itemView, _, _ ->
+            onDisabledClick = { itemView, _, _ ->
                 itemView.context.toast("I am still disabled")
                 true
             }
@@ -140,8 +139,7 @@ class MainActivity : KPrefActivity() {
 
         text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
             descRes = R.string.text_desc
-            onClick = {
-                itemView, _, item ->
+            onClick = { itemView, _, item ->
                 itemView.context.materialDialog {
                     title("Type Text")
                     input("Type here", item.pref, { _, input -> item.pref = input.toString() })
@@ -193,17 +191,25 @@ class MainActivity : KPrefActivity() {
             textGetter = { string(R.string.kau_lorem_ipsum) }
         }
 
+        timePicker(R.string.time, { KPrefSample.time12 }, { KPrefSample.time12 = it }) {
+            descRes = R.string.time_desc_12
+            use24HourFormat = false
+        }
+
+        timePicker(R.string.time, { KPrefSample.time24 }, { KPrefSample.time24 = it }) {
+            descRes = R.string.time_desc_24
+            use24HourFormat = true
+        }
+
     }
 
     fun subPrefs(): KPrefAdapterBuilder.() -> Unit = {
         text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
             descRes = R.string.text_desc
-            onClick = {
-                itemView, _, item ->
+            onClick = { itemView, _, item ->
                 itemView.context.materialDialog {
                     title("Type Text")
-                    input("Type here", item.pref, {
-                        _, input ->
+                    input("Type here", item.pref, { _, input ->
                         item.pref = input.toString()
                         reloadSelf()
                     })
@@ -237,21 +243,18 @@ class MainActivity : KPrefActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         if (searchView == null) searchView = bindSearchView(menu, R.id.action_search) {
 
-            textCallback = {
-                query, searchView ->
+            textCallback = { query, searchView ->
                 val items = wordBank.filter { it.contains(query) }.sorted().map { SearchItem(it) }
                 searchView.results = items
             }
-            searchCallback = {
-                query, _ ->
+            searchCallback = { query, _ ->
                 toast("Enter pressed for $query")
                 true
             }
             textDebounceInterval = 0
             noResultsFound = R.string.kau_no_results_found
             shouldClearOnClose = false
-            onItemClick = {
-                _, _, content, searchView ->
+            onItemClick = { _, _, content, searchView ->
                 toast(content)
                 searchView.revealClose()
             }
