@@ -6,7 +6,7 @@
     <item text="" />
     -->
 	
-	<version title="v3.4.1"/>
+	<version title="v3.4.3"/>
 	<item text=":core: Validate context before showing dialogs" />
 	<item text=":core: Add intent resolver checks prior to all executions." />
 	<item text=":core: Fix bundle NPE when starting activity" />
