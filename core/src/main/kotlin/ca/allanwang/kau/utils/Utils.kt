@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.support.annotation.IntRange
@@ -53,14 +54,16 @@ annotation class KauUtils
  * Converts minute value to string
  * Whole hours and days will be converted as such, otherwise it will default to x minutes
  */
-@KauUtils fun Context.minuteToText(minutes: Long): String = with(minutes) {
+@KauUtils
+fun Context.minuteToText(minutes: Long): String = with(minutes) {
     if (this < 0L) string(R.string.kau_none)
     else if (this % 1440L == 0L) plural(R.plurals.kau_x_days, this / 1440L)
     else if (this % 60L == 0L) plural(R.plurals.kau_x_hours, this / 60L)
     else plural(R.plurals.kau_x_minutes, this)
 }
 
-@KauUtils fun Number.round(@IntRange(from = 1L) decimalCount: Int): String {
+@KauUtils
+fun Number.round(@IntRange(from = 1L) decimalCount: Int): String {
     val expression = StringBuilder().append("#.")
     (1..decimalCount).forEach { expression.append("#") }
     val formatter = DecimalFormat(expression.toString())
@@ -72,7 +75,8 @@ annotation class KauUtils
  * Extracts the bitmap of a drawable, and applies a scale if given
  * For solid colors, a 1 x 1 pixel will be generated
  */
-@KauUtils fun Drawable.toBitmap(scaling: Float = 1f, config: Bitmap.Config = Bitmap.Config.ARGB_8888): Bitmap {
+@KauUtils
+fun Drawable.toBitmap(scaling: Float = 1f, config: Bitmap.Config = Bitmap.Config.ARGB_8888): Bitmap {
     if (this is BitmapDrawable && bitmap != null) {
         if (scaling == 1f) return bitmap
         val width = (bitmap.width * scaling).toInt()
@@ -122,4 +126,12 @@ class KauException(message: String) : RuntimeException(message)
 
 fun String.withMaxLength(n: Int): String =
         if (length <= n) this
-        else substring(0, n-1) + KAU_ELLIPSIS
+        else substring(0, n - 1) + KAU_ELLIPSIS
+
+/**
+ * Similar to [Bundle.putAll], but checks for a null insert and returns the parent bundle
+ */
+fun Bundle.with(bundle: Bundle?): Bundle {
+    if (bundle != null) putAll(bundle)
+    return this
+}
