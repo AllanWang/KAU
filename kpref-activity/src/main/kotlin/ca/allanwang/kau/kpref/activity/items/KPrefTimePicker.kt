@@ -35,14 +35,15 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
 
         override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
             setter((hourOfDay to minute).mergeTime)
+            reloadSelf()
         }
 
         override var textGetter: (Int) -> String? = {
             val (hour, min) = it.splitTime
             if (use24HourFormat)
-                String.format(Locale.CANADA, "%02d:%02d", hour, min)
+                String.format(Locale.CANADA, "%d:%02d", hour, min)
             else
-                String.format(Locale.CANADA, "%02d:%02d %s", hour % 12, min, if (hour >= 12) "PM" else "AM")
+                String.format(Locale.CANADA, "%d:%02d %s", hour % 12, min, if (hour >= 12) "PM" else "AM")
         }
 
         override var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<Int>) -> Boolean)? = { itemView, _, item ->
