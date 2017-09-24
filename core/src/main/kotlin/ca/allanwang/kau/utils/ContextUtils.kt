@@ -43,9 +43,9 @@ fun Context.startActivity(
         intentBuilder: Intent.() -> Unit = {}) {
     val intent = Intent(this, clazz)
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-    val fullBundle = if (transition && this is Activity && buildIsLollipopAndUp)
-        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-    else Bundle()
+    val fullBundle = Bundle()
+    if (transition && this is Activity && buildIsLollipopAndUp)
+        fullBundle.with(ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     if (transition && this !is Activity) KL.d("Cannot make scene transition when context is not an instance of an Activity")
     if (bundle != null) fullBundle.putAll(bundle)
     intent.intentBuilder()
@@ -57,9 +57,10 @@ fun Context.startActivity(
  * Bring in activity from the right
  */
 fun Context.startActivitySlideIn(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
-    val bundle = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_slide_in_right, R.anim.kau_fade_out).toBundle()
-    bundle.bundleBuilder()
-    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = bundle)
+    val fullBundle = Bundle()
+    fullBundle.with(ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_slide_in_right, R.anim.kau_fade_out).toBundle())
+    fullBundle.bundleBuilder()
+    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = if (fullBundle.isEmpty) null else fullBundle)
 }
 
 /**
@@ -69,9 +70,10 @@ fun Context.startActivitySlideIn(clazz: Class<out Activity>, clearStack: Boolean
  * Consequently, the stack will be cleared by default
  */
 fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolean = true, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
-    val bundle = ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top).toBundle()
-    bundle.bundleBuilder()
-    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = bundle)
+    val fullBundle = Bundle()
+    fullBundle.with(ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top).toBundle())
+    fullBundle.bundleBuilder()
+    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = if (fullBundle.isEmpty) null else fullBundle)
 }
 
 fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))

@@ -9,7 +9,7 @@
 	<version title="v3.4.1"/>
 	<item text="Validate context before showing dialogs" />
 	<item text="Add intent resolver checks prior to all executions." />
-	<item text="" />
+	<item text="Fix bundle NPE when starting activity" />
 	<item text="" />
 	<item text="" />
 
