@@ -11,12 +11,32 @@ import android.util.Log
  *
  * Base logger class with a predefined tag
  * This may be extended by an object to effectively replace [Log]
+ * Almost everything is opened to make everything customizable
  */
 open class KauLogger(val tag: String) {
 
+    /**
+     * Global toggle to enable the whole logger
+     */
     open var enabled = true
+
+    /**
+     * Global toggle to show private text
+     */
     open var showPrivateText = false
+
+    /**
+     * If both msg and priv msg are accepted, output the combined output
+     */
     open var messageJoiner: (msg: String, privMsg: String) -> String = { msg, privMsg -> "$msg: $privMsg" }
+
+    /**
+     * Open hook to change the output of the logger (for instance, output to stdout rather than Android log files
+     * Does not use reference notation to avoid constructor leaks
+     */
+    open var logFun: (priority: Int, message: String?, privateMessage: String?, t: Throwable?) -> Unit = { p, m, pm, t ->
+        logImpl(p, m, pm, t)
+    }
 
     /**
      * Filter pass-through to decide what we wish to log
@@ -35,14 +55,20 @@ open class KauLogger(val tag: String) {
         showPrivateText = enable
     }
 
-    open fun log(priority: Int, message: String?, privateMessage: String?, t: Throwable? = null) {
+    private fun log(priority: Int, message: String?, privateMessage: String?, t: Throwable? = null) {
         if (!shouldLog(priority, message, privateMessage, t)) return
         logImpl(priority, message, privateMessage, t)
     }
 
+    /**
+     * Condition to pass to allow the input to be logged
+     */
     protected open fun shouldLog(priority: Int, message: String?, privateMessage: String?, t: Throwable?): Boolean
             = enabled && filter(priority)
 
+    /**
+     * Base implementation of the Android logger
+     */
     protected open fun logImpl(priority: Int, message: String?, privateMessage: String?, t: Throwable?) {
         val text = if (showPrivateText) {
             if (message == null) privateMessage
