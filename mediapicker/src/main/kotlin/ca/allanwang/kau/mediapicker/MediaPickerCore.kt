@@ -153,8 +153,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
      * The adapter will be cleared on each successful call
      */
     open fun loadItems() {
-        kauRequestPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) {
-            granted, _ ->
+        kauRequestPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) { granted, _ ->
             if (granted) {
                 supportLoaderManager.initLoader(LOADER_ID, null, this)
                 onStatusChange(true)
@@ -191,7 +190,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
                     } catch (ignored: InterruptedException) {
                     } catch (ignored: ExecutionException) {
                     } finally {
-                       glide.clear(target)
+                        glide.clear(target)
                     }
                 }
             }
@@ -238,9 +237,11 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
      * See <a href="http://hmkcode.com/android-display-selected-image-and-its-real-path/"></a>
      */
     private fun <R> ContentResolver.query(baseUri: Uri, uris: List<Uri>, block: (cursor: Cursor) -> R) {
-        val ids = uris.map {
+        val ids = uris.filter {
+            DocumentsContract.isDocumentUri(this@MediaPickerCore, it)
+        }.mapNotNull {
             DocumentsContract.getDocumentId(it).split(":").getOrNull(1)
-        }.filterNotNull().joinToString(prefix = "(", separator = ",", postfix = ")")
+        }.joinToString(prefix = "(", separator = ",", postfix = ")")
         //? query replacements are done for one arg at a time
         //since we potentially have a list of ids, we'll just format the WHERE clause ourself
         query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(block)
