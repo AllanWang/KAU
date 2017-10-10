@@ -238,7 +238,9 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
      */
     private fun <R> ContentResolver.query(baseUri: Uri, uris: List<Uri>, block: (cursor: Cursor) -> R) {
         val ids = uris.filter {
-            DocumentsContract.isDocumentUri(this@MediaPickerCore, it)
+            val valid = DocumentsContract.isDocumentUri(this@MediaPickerCore, it)
+            if (!valid) KL.d("Non document uri: ${it.encodedPath}")
+            valid
         }.mapNotNull {
             DocumentsContract.getDocumentId(it).split(":").getOrNull(1)
         }.joinToString(prefix = "(", separator = ",", postfix = ")")
