@@ -25,7 +25,7 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewH
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        @JvmStatic fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
+        fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
             fastAdapter.withSelectable(false)
                     .withOnClickListener { v, _, item, _ ->
                         if (item !is LibraryIItem) false

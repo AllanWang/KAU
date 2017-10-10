@@ -34,8 +34,8 @@ class SearchItem(val key: String,
 ) {
 
     companion object {
-        @JvmStatic var foregroundColor: Int = 0xdd000000.toInt()
-        @JvmStatic var backgroundColor: Int = 0xfffafafa.toInt()
+        var foregroundColor: Int = 0xdd000000.toInt()
+        var backgroundColor: Int = 0xfffafafa.toInt()
     }
 
     var styledContent: SpannableStringBuilder? = null
