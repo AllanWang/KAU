@@ -349,7 +349,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
                 listeners.forEach { it.get()?.onScroll(scrollPercent, contentOffset, edgeFlag) }
 
             if (scrollPercent >= 1) {
-                if (!(activity?.isFinishing ?: true)) {
+                if (activity?.isFinishing == false) {
                     if (scrollPercent >= scrollThreshold && isScrollOverValid) {
                         isScrollOverValid = false
                         listeners.forEach { it.get()?.onScrollToClose(edgeFlag) }

@@ -53,11 +53,11 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewH
                 Html.fromHtml(lib.libraryDescription, Html.FROM_HTML_MODE_LEGACY)
             else Html.fromHtml(lib.libraryDescription)
             bottomDivider.gone()
-            if (lib.libraryVersion?.isNotBlank() ?: false) {
+            if (lib.libraryVersion?.isNotBlank() == true) {
                 bottomDivider.visible()
                 version.visible().text = lib.libraryVersion
             }
-            if (lib.license?.licenseName?.isNotBlank() ?: false) {
+            if (lib.license?.licenseName?.isNotBlank() == true) {
                 bottomDivider.visible()
                 license.visible().text = lib.license?.licenseName
             }

@@ -63,7 +63,7 @@ internal object PermissionManager {
         val iter = pendingResults.iterator()
         while (iter.hasNext()) {
             val action = iter.next().get()
-            if ((0 until count).any { action?.onResult(permissions[it], grantResults[it]) ?: true })
+            if ((0 until count).any { action?.onResult(permissions[it], grantResults[it]) != false })
                 iter.remove()
         }
         if (pendingResults.isEmpty())

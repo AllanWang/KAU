@@ -60,7 +60,7 @@ class SearchItem(val key: String,
 
         holder.container.setRippleBackground(foregroundColor, backgroundColor)
         holder.title.text = styledContent ?: content
-        if (description?.isNotBlank() ?: false) holder.desc.visible().text = description
+        if (description?.isNotBlank() == true) holder.desc.visible().text = description
     }
 
     override fun unbindView(holder: ViewHolder) {

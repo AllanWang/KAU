@@ -154,7 +154,7 @@ class CutoutView @JvmOverloads constructor(
     }
 
     private fun createBitmap() {
-        if (!(cutout?.isRecycled ?: true))
+        if (cutout?.isRecycled == false)
             cutout?.recycle()
         if (width == 0 || height == 0) return
         cutout = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
