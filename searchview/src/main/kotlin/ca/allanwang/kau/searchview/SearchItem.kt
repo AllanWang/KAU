@@ -44,7 +44,7 @@ class SearchItem(val key: String,
      * Highlight the subText if it is present in the content
      */
     fun withHighlights(subText: String) {
-        val index = content.indexOf(subText)
+        val index = content.indexOf(subText, ignoreCase = true)
         if (index == -1) return
         styledContent = SpannableStringBuilder(content)
         styledContent!!.setSpan(StyleSpan(Typeface.BOLD), index, index + subText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
