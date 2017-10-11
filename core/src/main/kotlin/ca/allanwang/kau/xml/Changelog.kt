@@ -87,7 +87,7 @@ internal enum class ChangelogType(val tag: String, val attr: String, @LayoutRes 
     ITEM("item", "text", R.layout.kau_changelog_content);
 
     companion object {
-        @JvmStatic val values = values()
+        val values = values()
     }
 
     /**

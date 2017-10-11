@@ -277,7 +277,7 @@ class MainActivity : KPrefActivity() {
     }
 
     override fun onBackPressed() {
-        if (!(searchView?.onBackPressed() ?: false)) super.onBackPressed()
+        if (searchView?.onBackPressed() != true) super.onBackPressed()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

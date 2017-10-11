@@ -147,14 +147,16 @@ class CutoutView @JvmOverloads constructor(
         paint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, mid, metrics)
         val maxLineWidth = paint.measureText(text)
 
-        return if (high - low < precision) low
-        else if (maxLineWidth > targetWidth) getSingleLineTextSize(text, paint, targetWidth, low, mid, precision, metrics)
-        else if (maxLineWidth < targetWidth) getSingleLineTextSize(text, paint, targetWidth, mid, high, precision, metrics)
-        else mid
+        return when {
+            high - low < precision -> low
+            maxLineWidth > targetWidth -> getSingleLineTextSize(text, paint, targetWidth, low, mid, precision, metrics)
+            maxLineWidth < targetWidth -> getSingleLineTextSize(text, paint, targetWidth, mid, high, precision, metrics)
+            else -> mid
+        }
     }
 
     private fun createBitmap() {
-        if (!(cutout?.isRecycled ?: true))
+        if (cutout?.isRecycled == false)
             cutout?.recycle()
         if (width == 0 || height == 0) return
         cutout = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)

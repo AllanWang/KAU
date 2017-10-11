@@ -31,7 +31,7 @@ class CardIItem(
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        @JvmStatic fun bindClickEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
+        fun bindClickEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
             fastAdapter.withEventHook(object : ClickEventHook<IItem<*, *>>() {
                 override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
                     return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button) else null
