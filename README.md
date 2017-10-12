@@ -141,3 +141,8 @@ To resolve that, add `multiDexEnabled true` under your `app.gradle > android > d
 Likewise, it is highly recommended to use proguard to clean up your project upon release.
 All KAU components support proguard out of the box. 
 Some may have extra requirements for certain features, which will be detailed in their respective README.
+
+## Translations
+
+KAU depends on translations crowdsourced by the general public.
+If you would like to contribute, please visit [here](https://crwd.in/kotlin-android-utils)
