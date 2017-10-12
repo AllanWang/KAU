@@ -16,8 +16,9 @@ KAU is available on JitPack
 
 [![](https://jitpack.io/v/ca.allanwang/kau.svg)](https://jitpack.io/#ca.allanwang/kau) 
 [![Build Status](https://travis-ci.org/AllanWang/KAU.svg?branch=master)](https://travis-ci.org/AllanWang/KAU)
+[![Crowdin](https://d322cqt584bo4o.cloudfront.net/kotlin-android-utils/localized.svg)](https://crowdin.com/project/kotlin-android-utils)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
-[![Stories in Ready](https://badge.waffle.io/AllanWang/KAU.png?label=ready&title=Ready)](https://waffle.io/AllanWang/KAU?utm_source=badge)
+[![ZenHub](https://img.shields.io/badge/Shipping%20faster%20with-ZenHub-45529A.svg)](https://app.zenhub.com/workspace/o/allanwang/kau/boards)
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/AllanWang/KAU/master/LICENSE)
 
 To apply, add the following to your root build.gradle:
@@ -141,3 +142,8 @@ To resolve that, add `multiDexEnabled true` under your `app.gradle > android > d
 Likewise, it is highly recommended to use proguard to clean up your project upon release.
 All KAU components support proguard out of the box. 
 Some may have extra requirements for certain features, which will be detailed in their respective README.
+
+## Translations
+
+KAU depends on translations crowdsourced by the general public.
+If you would like to contribute, please visit [here](https://crwd.in/kotlin-android-utils)

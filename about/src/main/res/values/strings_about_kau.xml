@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+    <string name="define_kau"/>
+    <string name="library_kau_author">Allan Wang</string>
+    <string name="library_kau_authorWebsite">https://www.allanwang.ca/dev/</string>
+    <string name="library_kau_libraryVersion">@string/kau_version_code</string>
+    <string name="library_kau_libraryName">KAU</string>
+    <string name="library_kau_libraryDescription">
+        <![CDATA[
+          An extensive collection of Kotlin Android Utilities.
+          <br/><br/>
+          KAU aims to make many common functions executable in one line. It adds numerous extensions to match Kotlin\'s DSL,
+          and supports completely customizable view groups that are usable in any app project.
+          ]]>
+    </string>
+    <string name="library_kau_libraryWebsite">https://allanwang.github.io/KAU/</string>
+    <string name="library_kau_isOpenSource">true</string>
+    <string name="library_kau_repositoryLink">https://github.com/AllanWang/KAU</string>
+    <string name="library_kau_classPath">ca.allanwang.kau</string>
+    <string name="library_kau_licenseId">apache_2_0</string>
+</resources>
