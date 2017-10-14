@@ -2,20 +2,23 @@
 <resources>
 
     <!--
-    <version title="v"/>
+    <version title="v" />
     <item text="" />
     -->
-	
-	<version title="v3.4.3"/>
-	<item text=":core: Validate context before showing dialogs" />
-	<item text=":core: Add intent resolver checks prior to all executions." />
-	<item text=":core: Fix bundle NPE when starting activity" />
-	<item text=":kpref-activity: Create timePicker" />
-	<item text="" />
-	<item text="" />
-	<item text="" />
 
-    <version title="v3.4.0"/>
+    <version title="v3.4.4" />
+    <item text="Add translation support for crowdin" />
+    <item text="Update dependencies" />
+    <item text=":mediapicker: Validate document uri before parsing" />
+    <item text=":searchview: Ignore casing for highlights" />
+
+    <version title="v3.4.3" />
+    <item text=":core: Validate context before showing dialogs" />
+    <item text=":core: Add intent resolver checks prior to all executions." />
+    <item text=":core: Fix bundle NPE when starting activity" />
+    <item text=":kpref-activity: Create timePicker" />
+
+    <version title="v3.4.0" />
     <item text="Update to gradle 4.x; api and implementation rather than compile" />
     <item text="Update dependencies" />
     <item text=":searchview: Ensure reveals are called on the UI thread" />
@@ -23,16 +26,16 @@
     <item text=":mediapicker: Reuse request manager from activity" />
     <item text=":kpref-activity: Add bounds to text item" />
 
-	<version title="v3.3.2"/>
+    <version title="v3.3.2" />
     <item text=":kpref-activity: Add visibility toggle to Core contract. Items can override this to show/hide given preferences based on boolean callbacks." />
-	<item text=":kpref-activity: Add width constraint for long text items" />
-	
-	<version title="v3.3.1"/>
+    <item text=":kpref-activity: Add width constraint for long text items" />
+
+    <version title="v3.3.1" />
     <item text=":core: Open up all logger functions" />
     <item text=":core: Deprecate kauSwipeOnPostCreate and move functionality to onCreate" />
     <item text=":searchview: Fix background tint" />
-	
-	<version title="v3.3.0"/>
+
+    <version title="v3.3.0" />
     <item text=":core: Create debounce methods" />
     <item text=":core: Create zip methods" />
     <item text=":core: [Breaking] Logging base has been renamed to KauLogger and no longer depends on timber" />
@@ -40,29 +43,29 @@
     <item text=":kpref-activity: [Breaking] Removed sliding toolbar and use normal toolbar title" />
     <item text=":kpref-activity: Remove :core-ui: dependency" />
     <item text=":searchview: [Breaking] remove reactive dependencies and stick with basic callbacks" />
-	
-	<version title="v3.2.5"/>
+
+    <version title="v3.2.5" />
     <item text=":core: Fix FAQ background" />
     <item text=":core: Create FileUtils" />
     <item text=":core: Create NotificationUtils" />
-	<item text=":core: Update swipe to remove most exceptions" />
-	<item text=":core: Make logging class functions inline" />
-	<item text=":core: Create removeIf for mutableIteratables" />
+    <item text=":core: Update swipe to remove most exceptions" />
+    <item text=":core: Make logging class functions inline" />
+    <item text=":core: Create removeIf for mutableIteratables" />
     <item text=":core-ui: Move reactive libs to :searchview:" />
-	
-	<version title="v3.2.3"/>
+
+    <version title="v3.2.3" />
     <item text=":about: Modularize everything" />
     <item text=":about: Create FAQ panel" />
     <item text=":core: Create FAQ parser" />
     <item text=":core: Create collapsible view delegate" />
     <item text=":mediapicker: Allow for prefetching by default for videos" />
-	
-	<version title="v3.2.2"/>
-	<item text=":core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented" />
+
+    <version title="v3.2.2" />
+    <item text=":core: Add simple KauBaseActivity so that activities extending AppCompatActivity can have some default kau helpers implemented" />
     <item text=":core: The permission manager will now notify you if you try to request a permission that isn\'t added to your manifest" />
     <item text="Begin writing android tests" />
-	
-	<version title="v3.2.1"/>
+
+    <version title="v3.2.1" />
     <item text=":core: Remove requestLayout call from setMargin and setPadding" />
     <item text=":core: Fix kau direction bits" />
     <item text=":core: Greatly simplify ripple canvas and truly support transparent ripples" />
@@ -75,32 +78,32 @@
     <item text=":core: Add more transitions and anims" />
     <item text=":kpref-activity: Reduce alpha color for desc" />
     <item text=":imagepicker: [breaking] Rename to mediapicker and add support for videos (alpha)" />
-	
-	<version title="v3.2.0"/>
-	<item text=":adapter: Make KauAnimator extensible" />
+
+    <version title="v3.2.0" />
+    <item text=":adapter: Make KauAnimator extensible" />
     <item text=":imagepicker: Add uri val to ImageModel" />
     <item text=":imagepicker: Create bindings and overlay activity" />
     <item text=":imagepicker: Create single image picker counterpart with overlay" />
     <item text=":searchview: Remove item animator so nonchanging items don\'t blink" />
     <item text="Add showcase app to play store" />
     <item text="Update build tools to 26.0.1" />
-    <item text="Update dependencies" />    
-	
-	<version title="v3.1.0"/>
+    <item text="Update dependencies" />
+
+    <version title="v3.1.0" />
     <item text=":core: Allow for nullable throwables when logging" />
     <item text=":core: Remove some extra DSL annotations" />
     <item text=":kpref-activity: Bring down to minSdk 19 and fix compatibility" />
     <item text=":adapter: Update readme for iitems and animators" />
-    <item text=":about: Move strings to private" />	
-	
-	<version title="v3.0"/>
+    <item text=":about: Move strings to private" />
+
+    <version title="v3.0" />
     <item text=":core: Add setPadding[x]" />
     <item text=":core: [breaking] Replace update[x]Margin to setMargin[x]" />
     <item text=":imagepicker: Fully implement picker" />
-	<item text="Make resources private where possible" />
-	<item text="Reduce minSdk to 19 where possible" />
-	
-    <version title="v2.1"/>
+    <item text="Make resources private where possible" />
+    <item text="Reduce minSdk to 19 where possible" />
+
+    <version title="v2.1" />
     <item text=":adapter: Fix up CardIItem" />
     <item text=":adapter: Modularized kau animators" />
     <item text=":adapter: Switched from mutablelist to list inputs for themed animator" />
@@ -115,7 +118,7 @@
     <item text=":imagepicker: Create full image picker with blurrable selections" />
     <item text="Update dependencies" />
 
-    <version title="v2.0"/>
+    <version title="v2.0" />
     <item text="Huge refactoring to separate functions to their own submodules" />
     <item text="Huge Docs update" />
     <item text="Reorder KauIItem arguments to support optional id" />
@@ -124,7 +127,7 @@
     <item text="Fix scrolling issue on about dismiss" />
     <item text="Make rClass optional in about activity" />
 
-    <version title="v1.5"/>
+    <version title="v1.5" />
     <item text="Change snackbar builder" />
     <item text="Change addBundle to withArguments to match ANKO" />
     <item text="Create KauIItem to replace AbstractItem" />
@@ -132,7 +135,7 @@
     <item text="Create swipe, a very simple helper to allow for activities to be dismissed with gestures" />
     <item text="Create network utils" />
 
-    <version title="v1.4"/>
+    <version title="v1.4" />
     <item text="Add about activities" />
     <item text="Add themed fast item imageAdapter" />
     <item text="Add chained imageAdapter" />
@@ -141,20 +144,20 @@
     <item text="Add string arg option for sendEmail" />
     <item text="Add many iitems" />
 
-    <version title="v1.3"/>
+    <version title="v1.3" />
     <item text="Add kpref subitems" />
     <item text="Add DSL markers" />
     <item text="Add transition utils and other utils" />
     <item text="Add custom searchview with binders" />
     <item text="Add KauBoundedCardView" />
 
-    <version title="v1.2"/>
+    <version title="v1.2" />
     <item text="Fix title attribute in changelog" />
     <item text="Update support libs" />
     <item text="Add is app installed utils" />
     <item text="Add email builder" />
 
-    <version title="v1.1"/>
+    <version title="v1.1" />
     <item text="Create kpref items" />
     <item text="Attach source files" />
     <item text="Create color dialog" />
