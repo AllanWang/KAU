@@ -19,7 +19,7 @@ class ColorBuilder : ColorContract {
     override var backText: Int = R.string.kau_back
     override var cancelText: Int = R.string.kau_cancel
     override var presetText: Int = R.string.kau_md_presets
-    override var customText: Int = R.string.kau_md_custom
+    override var customText: Int = R.string.kau_custom
         get() = if (allowCustom) field else 0
     override var dynamicButtonColors: Boolean = true
     override var circleSizeRes: Int = R.dimen.kau_color_circle_size
