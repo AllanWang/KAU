@@ -194,7 +194,6 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     companion object {
 
         @ColorInt
-        @JvmStatic
         private fun translucentColor(color: Int): Int {
             val factor = 0.7f
             val alpha = Math.round(Color.alpha(color) * factor)
@@ -205,7 +204,6 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
 
         @ColorInt
-        @JvmStatic
         fun shiftColor(@ColorInt color: Int,
                        @FloatRange(from = 0.0, to = 2.0) by: Float): Int {
             if (by == 1f) return color
@@ -215,11 +213,9 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
 
         @ColorInt
-        @JvmStatic
         fun shiftColorDown(@ColorInt color: Int): Int = shiftColor(color, 0.9f)
 
         @ColorInt
-        @JvmStatic
         fun shiftColorUp(@ColorInt color: Int): Int = shiftColor(color, 1.1f)
     }
 }

@@ -21,7 +21,7 @@ data class MediaModel(
     @Throws(SQLException::class)
     constructor(@NonNull cursor: Cursor) : this(
             cursor.getString(0),
-            cursor.getString(1),
+            cursor.getString(1) ?: "",
             cursor.getLong(2),
             cursor.getLong(3),
             cursor.getString(4)

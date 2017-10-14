@@ -34,8 +34,8 @@ class SearchItem(val key: String,
 ) {
 
     companion object {
-        @JvmStatic var foregroundColor: Int = 0xdd000000.toInt()
-        @JvmStatic var backgroundColor: Int = 0xfffafafa.toInt()
+        var foregroundColor: Int = 0xdd000000.toInt()
+        var backgroundColor: Int = 0xfffafafa.toInt()
     }
 
     var styledContent: SpannableStringBuilder? = null
@@ -44,7 +44,7 @@ class SearchItem(val key: String,
      * Highlight the subText if it is present in the content
      */
     fun withHighlights(subText: String) {
-        val index = content.indexOf(subText)
+        val index = content.indexOf(subText, ignoreCase = true)
         if (index == -1) return
         styledContent = SpannableStringBuilder(content)
         styledContent!!.setSpan(StyleSpan(Typeface.BOLD), index, index + subText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -60,7 +60,7 @@ class SearchItem(val key: String,
 
         holder.container.setRippleBackground(foregroundColor, backgroundColor)
         holder.title.text = styledContent ?: content
-        if (description?.isNotBlank() ?: false) holder.desc.visible().text = description
+        if (description?.isNotBlank() == true) holder.desc.visible().text = description
     }
 
     override fun unbindView(holder: ViewHolder) {

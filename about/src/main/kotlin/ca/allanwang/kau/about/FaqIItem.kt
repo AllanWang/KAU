@@ -1,5 +1,6 @@
 package ca.allanwang.kau.about
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.text.method.LinkMovementMethod
 import android.view.View
@@ -22,9 +23,7 @@ class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolde
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-
-
-        @JvmStatic fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
+        fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
             fastAdapter.withSelectable(false)
                     .withEventHook(object : ClickEventHook<IItem<*, *>>() {
 
@@ -43,6 +42,7 @@ class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolde
 
     private var isExpanded = false
 
+    @SuppressLint("SetTextI18n")
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
         super.bindView(holder, payloads)
         with(holder) {

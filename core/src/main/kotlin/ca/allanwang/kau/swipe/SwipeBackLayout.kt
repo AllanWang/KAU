@@ -349,7 +349,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
                 listeners.forEach { it.get()?.onScroll(scrollPercent, contentOffset, edgeFlag) }
 
             if (scrollPercent >= 1) {
-                if (!(activity?.isFinishing ?: true)) {
+                if (activity?.isFinishing == false) {
                     if (scrollPercent >= scrollThreshold && isScrollOverValid) {
                         isScrollOverValid = false
                         listeners.forEach { it.get()?.onScrollToClose(edgeFlag) }
@@ -390,15 +390,19 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
         }
 
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
-            return if (edgeFlag == SWIPE_EDGE_RIGHT) Math.min(0, Math.max(left, -child.width))
-            else if (edgeFlag == SWIPE_EDGE_LEFT) Math.min(child.width, Math.max(left, 0))
-            else 0
+            return when (edgeFlag) {
+                SWIPE_EDGE_RIGHT -> Math.min(0, Math.max(left, -child.width))
+                SWIPE_EDGE_LEFT -> Math.min(child.width, Math.max(left, 0))
+                else -> 0
+            }
         }
 
         override fun clampViewPositionVertical(child: View, top: Int, dy: Int): Int {
-            return if (edgeFlag == SWIPE_EDGE_BOTTOM) Math.min(0, Math.max(top, -child.height))
-            else if (edgeFlag == SWIPE_EDGE_TOP) Math.min(child.height, Math.max(top, 0))
-            else 0
+            return when (edgeFlag) {
+                SWIPE_EDGE_BOTTOM -> Math.min(0, Math.max(top, -child.height))
+                SWIPE_EDGE_TOP -> Math.min(child.height, Math.max(top, 0))
+                else -> 0
+            }
         }
     }
 

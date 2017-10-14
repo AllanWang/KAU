@@ -1,9 +1,16 @@
 # Changelog
 
-## v3.4.1
-* Validate context before showing dialogs
-* Add intent resolver checks prior to all executions.
-* Fix bundle NPE when starting activity
+## v3.4.4
+* Add translation support for crowdin
+* Update dependencies
+* :mediapicker: Validate document uri before parsing
+* :searchview: Ignore casing for highlights
+
+## v3.4.3
+* :core: Validate context before showing dialogs
+* :core: Add intent resolver checks prior to all executions.
+* :core: Fix bundle NPE when starting activity
+* :kpref-activity: Create timePicker
 
 ## v3.4.0
 * Update to gradle 4.x; api and implementation rather than compile
