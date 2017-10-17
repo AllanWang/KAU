@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.4.4
+* Add translation support for crowdin
+* Update dependencies
+* :mediapicker: Validate document uri before parsing
+* :searchview: Ignore casing for highlights
+
 ## v3.4.3
 * :core: Validate context before showing dialogs
 * :core: Add intent resolver checks prior to all executions.
