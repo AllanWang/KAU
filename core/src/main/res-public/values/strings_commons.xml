@@ -69,6 +69,6 @@ Most resources are verbatim and x represents a formatted item
     </plurals>
     <string name="kau_yes">Yes</string>
     <string name="kau_permission_denied">Permission denied</string>
-    <string name="kau_0">0</string>
-    <string name="kau_bullet_point">•</string>
+    <string name="kau_0" translatable="false">0</string>
+    <string name="kau_bullet_point" translatable="false">•</string>
 </resources>
