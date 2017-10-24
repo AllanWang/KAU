@@ -154,3 +154,5 @@ If you would like to contribute, please visit [here](https://crwd.in/kotlin-andr
 Special thanks to the following awesome people for translating!
 
 * [Vincent Kulak](https://github.com/VonOx) [FR]
+* [Jahir Fiquitiva](https://jahirfiquitiva.me/) [ES]
+* [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431) [ES]
