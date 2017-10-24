@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 BASE_MODULE=kpref-activity
-FOLDER=values-es-rES
-OUTPUT=values-es
+FOLDER=values-de-rDE
+OUTPUT=values-de
 
 cd ..
 
