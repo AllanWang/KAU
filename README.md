@@ -29,11 +29,12 @@ allprojects {
         ...
         jcenter()
         maven { url "https://jitpack.io" }
-        maven { url "https://maven.google.com" }  //for gradle < 4.0
-        google()                                  //for gradle >= 4.0
+        google()
     }
 }
 ```
+
+(If you are using gradle < 4.0, use `maven { url "https://maven.google.com" }` instead of `google()`)
 
 And add the following dependencies (You can use a specific version, commit, or -SNAPSHOT):
 
@@ -43,18 +44,20 @@ Note that if you use any particular submodule, it will automatically include all
 ```gradle
 dependencies {
     //All submodules extend this
-    compile "ca.allanwang.kau:core:$KAU"
+    implementation "ca.allanwang.kau:core:$KAU"
     //All submodules with extensive ui extend this
-    compile "ca.allanwang.kau:core-ui:$KAU"
+    implementation "ca.allanwang.kau:core-ui:$KAU"
     
-    compile "ca.allanwang.kau:about:$KAU"
-    compile "ca.allanwang.kau:colorpicker:$KAU"
-    compile "ca.allanwang.kau:kpref-activity:$KAU"
-    compile "ca.allanwang.kau:mediapicker:$KAU"
-    compile "ca.allanwang.kau:searchview:$KAU"
+    implementation "ca.allanwang.kau:about:$KAU"
+    implementation "ca.allanwang.kau:colorpicker:$KAU"
+    implementation "ca.allanwang.kau:kpref-activity:$KAU"
+    implementation "ca.allanwang.kau:mediapicker:$KAU"
+    implementation "ca.allanwang.kau:searchview:$KAU"
 }
 
 ```
+
+(If you are using gradle < 4.0, use `compile` instead of `implementation`)
 
 -----------
 
