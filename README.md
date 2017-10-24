@@ -150,3 +150,7 @@ Some may have extra requirements for certain features, which will be detailed in
 
 KAU depends on translations crowdsourced by the general public.
 If you would like to contribute, please visit [here](https://crwd.in/kotlin-android-utils)
+
+Special thanks to the following awesome people for translating!
+
+* [Vincent Kulak](https://github.com/VonOx) [FR]
