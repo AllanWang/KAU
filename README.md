@@ -151,8 +151,10 @@ Some may have extra requirements for certain features, which will be detailed in
 KAU depends on translations crowdsourced by the general public.
 If you would like to contribute, please visit [here](https://crwd.in/kotlin-android-utils)
 
-Special thanks to the following awesome people for translating!
+Special thanks to the following awesome people for translating significant portions of KAU!
 
 * [Vincent Kulak](https://github.com/VonOx) [FR]
 * [Jahir Fiquitiva](https://jahirfiquitiva.me/) [ES]
 * [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431) [ES]
+
+The full activity stream for the translations can be found [here](https://crowdin.com/project/kotlin-android-utils/activity_stream)
