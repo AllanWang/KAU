@@ -5,6 +5,14 @@
     <version title="v" />
     <item text="" />
     -->
+	
+	<version title="v3.4.5" />
+    <item text="Add French translations" />
+    <item text="Add Spanish translations" />
+    <item text="Add German translations" />
+    <item text="Remove unnecessary strings" />
+    <item text="" />
+    <item text="" />
 
     <version title="v3.4.4" />
     <item text="Add translation support for crowdin" />
