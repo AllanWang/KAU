@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.4.5
+* Add French translations
+* Add Spanish translations
+* Add German translations
+* Remove unnecessary strings
+
 ## v3.4.4
 * Add translation support for crowdin
 * Update dependencies

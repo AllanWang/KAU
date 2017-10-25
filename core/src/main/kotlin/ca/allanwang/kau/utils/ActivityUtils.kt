@@ -3,6 +3,7 @@ package ca.allanwang.kau.utils
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -93,7 +94,7 @@ inline var Activity.statusBarLight: Boolean
  *
  * Call in [Activity.onCreateOptionsMenu]
  */
-fun Activity.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg iicons: Pair<Int, IIcon>) {
+fun Context.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg iicons: Pair<Int, IIcon>) {
     iicons.forEach { (id, iicon) ->
         menu.findItem(id).icon = iicon.toDrawable(this, sizeDp = 18, color = color)
     }
