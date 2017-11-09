@@ -28,9 +28,10 @@ import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.adapters.HeaderAdapter
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
@@ -108,7 +109,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     private var hasPreloaded = false
     private var prefetcher: Future<*>? = null
 
-    val adapter: FastItemAdapter<T> = FastItemAdapter()
+    val adapter: ItemAdapter<T> = ItemAdapter()
 
     /**
      * Further improve preloading by extending the layout space
@@ -121,8 +122,8 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     }
 
     fun initializeRecycler(recycler: RecyclerView) {
-        val adapterWrapper = HeaderAdapter<MediaActionItem>()
-        adapterWrapper.wrap(adapter)
+        val adapterWrapper = ItemAdapter<MediaActionItem>()
+        val fulladapter = FastAdapter.with<IItem<*,*>,IAdapter<out IItem<*,*>>>(listOf(adapterWrapper, adapter))
         adapterWrapper.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
@@ -133,7 +134,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             setItemViewCacheSize(CACHE_SIZE)
             isDrawingCacheEnabled = true
             layoutManager = manager
-            adapter = adapterWrapper
+            adapter = fulladapter
             setHasFixedSize(true)
             itemAnimator = KauAnimator(FadeScaleAnimatorAdd(0.8f))
         }
