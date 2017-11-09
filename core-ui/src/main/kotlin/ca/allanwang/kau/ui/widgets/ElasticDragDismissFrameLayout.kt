@@ -21,7 +21,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
-import android.support.v7.widget.RecyclerView
 import android.transition.TransitionInflater
 import android.util.AttributeSet
 import android.view.View

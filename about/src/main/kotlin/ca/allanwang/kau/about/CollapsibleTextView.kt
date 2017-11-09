@@ -3,7 +3,6 @@ package ca.allanwang.kau.about
 import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
-import android.widget.LinearLayout
 import android.widget.TextView
 import ca.allanwang.kau.ui.views.CollapsibleView
 import ca.allanwang.kau.ui.views.CollapsibleViewDelegate

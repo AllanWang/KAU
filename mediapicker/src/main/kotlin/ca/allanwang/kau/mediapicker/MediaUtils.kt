@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import ca.allanwang.kau.utils.buildIsLollipopAndUp
-import com.mikepenz.fastadapter.IItem
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
