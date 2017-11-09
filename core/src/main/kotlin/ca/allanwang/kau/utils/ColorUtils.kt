@@ -9,7 +9,6 @@ import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
-import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.Toolbar
@@ -247,7 +246,7 @@ fun EditText.tintCursor(@ColorInt color: Int) {
         val fCursorDrawable = clazz.getDeclaredField("mCursorDrawable")
         fCursorDrawable.isAccessible = true
         val drawables: Array<Drawable> = Array(2, {
-            val drawable = ContextCompat.getDrawable(context, mCursorDrawableRes)
+            val drawable = context.drawable(mCursorDrawableRes)
             drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
             drawable
         })
