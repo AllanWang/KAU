@@ -3,9 +3,20 @@ package ca.allanwang.kau.adapters
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
  * Created by Allan Wang on 2017-11-08.
  */
-fun fastAdapter(vararg adapter: IAdapter<*>) =
-        FastAdapter.with<IItem<*, *>, IAdapter<out IItem<*, *>>>(adapter.toList())!!
+
+/**
+ * Add kotlin's generic syntax to better support out types
+ */
+fun <T : IItem<*, *>> fastAdapter(vararg adapter: IAdapter<out T>) =
+        FastAdapter.with<T, IAdapter<out T>>(adapter.toList())!!
+
+/**
+ * Helper to get an [IAdapter] directly from a [FastItemAdapter]
+ */
+fun <T : IItem<*, *>> fastAdapter(adapter: IAdapter<out T>, fastAdapter: FastItemAdapter<out T>) =
+        fastAdapter(adapter, fastAdapter.itemAdapter)

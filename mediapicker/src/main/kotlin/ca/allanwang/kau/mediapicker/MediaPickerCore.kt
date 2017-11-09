@@ -123,7 +123,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterHeader = ItemAdapter<MediaActionItem>()
-        val fulladapter = fastAdapter(adapterHeader, adapter.itemAdapter)
+        val fulladapter = fastAdapter(adapterHeader, adapter)
         adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
