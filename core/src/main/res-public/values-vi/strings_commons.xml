@@ -48,7 +48,7 @@ Most resources are verbatim and x represents a formatted item
   <string name="kau_share">Chia sẻ</string>
   <string name="kau_text_copied">Đã chép vào bộ nhớ tạm.</string>
   <string name="kau_thank_you">Cảm ơn</string>
-  <string name="kau_uh_oh">Ồ...</string>
+  <string name="kau_uh_oh">Ồ…</string>
   <string name="kau_warning">Cảnh báo</string>
   <plurals name="kau_x_days">
     <item quantity="other">%d ngày</item>
