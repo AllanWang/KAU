@@ -1,5 +1,6 @@
 package ca.allanwang.kau.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -224,6 +225,7 @@ fun Context.textColorStateList(@ColorInt color: Int): ColorStateList {
     return ColorStateList(states, colors)
 }
 
+@SuppressLint("RestrictedApi")
 fun EditText.tint(@ColorInt color: Int) {
     val editTextColorStateList = context.textColorStateList(color)
     if (this is AppCompatEditText) {
