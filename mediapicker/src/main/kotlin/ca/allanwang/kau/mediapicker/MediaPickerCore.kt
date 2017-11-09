@@ -18,6 +18,7 @@ import android.support.v4.content.CursorLoader
 import android.support.v4.content.Loader
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import ca.allanwang.kau.adapters.fastAdapter
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.internal.KauBaseActivity
@@ -28,8 +29,6 @@ import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
@@ -122,9 +121,9 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     }
 
     fun initializeRecycler(recycler: RecyclerView) {
-        val adapterWrapper = ItemAdapter<MediaActionItem>()
-        val fulladapter = FastAdapter.with<IItem<*,*>,IAdapter<out IItem<*,*>>>(listOf(adapterWrapper, adapter))
-        adapterWrapper.add(mediaActions.map { MediaActionItem(it, mediaType) })
+        val adapterHeader = ItemAdapter<MediaActionItem>()
+        val fulladapter = fastAdapter(adapterHeader, adapter)
+        adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
                 override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {

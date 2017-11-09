@@ -12,7 +12,7 @@
     <item text="Add Italian translations" />
     <item text="Clean up unnecessary build version support" />
     <item text="Optimize and refactor old code" />
-    <item text="" />
+    <item text="Add helper methods to enhance FastAdapter for Kotlin" />
     <item text="" />
 	
 	<version title="v3.4.5" />
