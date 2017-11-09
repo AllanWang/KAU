@@ -8,9 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
 import ca.allanwang.kau.utils.adjustAlpha
-import com.mikepenz.fastadapter.IExpandable
 import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.ISubItem
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
@@ -100,16 +98,11 @@ class FastItemThemedAdapter<Item : IItem<*, *>>(
         return super.setNewList(items)
     }
 
-    override fun <T, S> setSubItems(collapsible: T, subItems: List<S>?): T where S : IItem<*, *>?, T : IItem<*, *>?, T : IExpandable<T, S>?, S : ISubItem<Item, T>? {
-        injectTheme(subItems)
-        return super.setSubItems(collapsible, subItems)
-    }
-
-    internal fun injectTheme(items: Collection<IItem<*, *>?>?) {
+    private fun injectTheme(items: Collection<IItem<*, *>?>?) {
         items?.forEach { injectTheme(it) }
     }
 
-    internal fun injectTheme(item: IItem<*, *>?) {
+    protected fun injectTheme(item: IItem<*, *>?) {
         if (item is ThemableIItem && item.themeEnabled) {
             item.textColor = textColor
             item.backgroundColor = backgroundColor
