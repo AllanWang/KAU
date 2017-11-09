@@ -24,7 +24,10 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.Toast
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.getDip
+import ca.allanwang.kau.utils.setBackgroundColorRes
+import ca.allanwang.kau.utils.toColor
+import ca.allanwang.kau.utils.toHSV
 
 /**
  * Created by Allan Wang on 2017-06-10.

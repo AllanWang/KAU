@@ -37,7 +37,7 @@ interface CollapsibleView {
 class CollapsibleViewDelegate : CollapsibleView {
 
     private lateinit var viewRef: WeakReference<View>
-    private val view
+    private inline val view
         get() = viewRef.get()
     private var animator: ValueAnimator? = null
 

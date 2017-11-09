@@ -6,7 +6,6 @@ import android.support.annotation.RequiresApi
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater

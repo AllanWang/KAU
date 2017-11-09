@@ -7,7 +7,6 @@ import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.ui.views.CutoutView
 import ca.allanwang.kau.utils.bindView
-import com.mikepenz.fastadapter.items.AbstractItem
 
 /**
  * Created by Allan Wang on 2017-06-28.
