@@ -1,5 +1,6 @@
 package ca.allanwang.kau.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -9,7 +10,6 @@ import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
-import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.Toolbar
@@ -225,6 +225,7 @@ fun Context.textColorStateList(@ColorInt color: Int): ColorStateList {
     return ColorStateList(states, colors)
 }
 
+@SuppressLint("RestrictedApi")
 fun EditText.tint(@ColorInt color: Int) {
     val editTextColorStateList = context.textColorStateList(color)
     if (this is AppCompatEditText) {
@@ -247,7 +248,7 @@ fun EditText.tintCursor(@ColorInt color: Int) {
         val fCursorDrawable = clazz.getDeclaredField("mCursorDrawable")
         fCursorDrawable.isAccessible = true
         val drawables: Array<Drawable> = Array(2, {
-            val drawable = ContextCompat.getDrawable(context, mCursorDrawableRes)
+            val drawable = context.drawable(mCursorDrawableRes)
             drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
             drawable
         })
