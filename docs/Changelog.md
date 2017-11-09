@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.5.0
+* Update dependencies, many of which with major version increments
+* Add Vietnamese translations
+* Add Italian translations
+* Clean up unnecessary build version support
+* Optimize and refactor old code
+* Add helper methods to enhance FastAdapter for Kotlin
+
 ## v3.4.5
 * Add French translations
 * Add Spanish translations

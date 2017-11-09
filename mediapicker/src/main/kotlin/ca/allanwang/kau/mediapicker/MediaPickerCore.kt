@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
@@ -108,7 +109,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     private var hasPreloaded = false
     private var prefetcher: Future<*>? = null
 
-    val adapter: ItemAdapter<T> = ItemAdapter()
+    val adapter = FastItemAdapter<T>()
 
     /**
      * Further improve preloading by extending the layout space
@@ -122,7 +123,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterHeader = ItemAdapter<MediaActionItem>()
-        val fulladapter = fastAdapter(adapterHeader, adapter)
+        val fulladapter = fastAdapter(adapterHeader, adapter.itemAdapter)
         adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
