@@ -42,6 +42,10 @@ android {
                 'RtlHardcoded',
                 'RtlEnabled',
                 'Overdraw'
+
+        xmlReport false
+        textReport true
+        textOutput 'stdout'
     }
 
     packagingOptions {
