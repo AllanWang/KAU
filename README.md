@@ -153,12 +153,13 @@ If you would like to contribute, please visit [here](https://crwd.in/kotlin-andr
 
 Special thanks to the following awesome people for translating significant portions of KAU!
 
-* [Vincent Kulak](https://github.com/VonOx) [FR]
-* [Jahir Fiquitiva](https://jahirfiquitiva.me/) [ES]
-* [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431) [ES]
-* [Bushido1992](https://forum.xda-developers.com/member.php?u=5179246) [DE]
-* [3LD0mi](https://forum.xda-developers.com/member.php?u=5860523) [DE]
-* [Marcel Soehnchen] [DE]
-* [잇스테이크] [KO]
+| Language | Contributors |
+|----------|--------------|
+| French | [Vincent Kulak](https://github.com/VonOx) &bull; [Jean-Philippe Gravel](https://crowdin.com/profile/wokija) |
+| German | [Bushido1992](https://forum.xda-developers.com/member.php?u=5179246) &bull; [Marcel Soehnchen](https://crowdin.com/profile/msoehnchen) &bull; [3LD0mi HA](https://forum.xda-developers.com/member.php?u=5860523) |
+| Korean | [잇스테이크](https://crowdin.com/profile/bexco2010) |
+| Italian | |
+| Spanish | [Jahir Fiquitiva](https://jahirfiquitiva.me/) &bull; [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431)|
+| Vietnamese | [Alienz](https://crowdin.com/profile/alienyd) |
 
 The full activity stream for the translations can be found [here](https://crowdin.com/project/kotlin-android-utils/activity_stream)

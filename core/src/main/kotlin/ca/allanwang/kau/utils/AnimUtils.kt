@@ -126,4 +126,4 @@ import android.widget.TextView
 
 @KauUtils fun TextView.setTextWithFade(@StringRes textId: Int, duration: Long = 200, onFinish: (() -> Unit)? = null) = setTextWithFade(context.getString(textId), duration, onFinish)
 
-@KauUtils inline fun ViewPropertyAnimator.scaleXY(value: Float) = scaleX(value).scaleY(value)
+@KauUtils fun ViewPropertyAnimator.scaleXY(value: Float) = scaleX(value).scaleY(value)

@@ -1,6 +1,5 @@
 package ca.allanwang.kau.kotlin
 
-import org.jetbrains.anko.doAsync
 import org.junit.Test
 import kotlin.test.assertEquals
 

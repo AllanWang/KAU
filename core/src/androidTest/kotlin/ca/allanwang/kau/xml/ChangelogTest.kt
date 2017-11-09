@@ -1,10 +1,7 @@
 package ca.allanwang.kau.xml
 
-import android.support.test.InstrumentationRegistry
 import android.support.test.filters.MediumTest
 import android.support.test.runner.AndroidJUnit4
-import ca.allanwang.kau.test.R
-import org.junit.Test
 import org.junit.runner.RunWith
 
 /**

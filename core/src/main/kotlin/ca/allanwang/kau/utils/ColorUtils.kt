@@ -1,5 +1,6 @@
 package ca.allanwang.kau.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -9,7 +10,6 @@ import android.os.Build
 import android.support.annotation.ColorInt
 import android.support.annotation.FloatRange
 import android.support.annotation.IntRange
-import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.Toolbar
@@ -149,6 +149,7 @@ fun Context.colorStateList(@ColorInt color: Int): ColorStateList {
  * Largely based on MDTintHelper
  * https://github.com/afollestad/material-dialogs/blob/master/core/src/main/java/com/afollestad/materialdialogs/internal/MDTintHelper.java
  */
+@SuppressLint("PrivateResource")
 fun RadioButton.tint(colors: ColorStateList) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         buttonTintList = colors
@@ -162,6 +163,7 @@ fun RadioButton.tint(colors: ColorStateList) {
 
 fun RadioButton.tint(@ColorInt color: Int) = tint(context.colorStateList(color))
 
+@SuppressLint("PrivateResource")
 fun CheckBox.tint(colors: ColorStateList) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         buttonTintList = colors
@@ -180,20 +182,13 @@ fun SeekBar.tint(@ColorInt color: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         thumbTintList = s1
         progressTintList = s1
-    } else if (Build.VERSION.SDK_INT > Build.VERSION_CODES.GINGERBREAD_MR1) {
+    } else {
         val progressDrawable = DrawableCompat.wrap(progressDrawable)
         this.progressDrawable = progressDrawable
         DrawableCompat.setTintList(progressDrawable, s1)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            val thumbDrawable = DrawableCompat.wrap(thumb)
-            DrawableCompat.setTintList(thumbDrawable, s1)
-            thumb = thumbDrawable
-        }
-    } else {
-        val mode: PorterDuff.Mode = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
-            PorterDuff.Mode.MULTIPLY else PorterDuff.Mode.SRC_IN
-        indeterminateDrawable?.setColorFilter(color, mode)
-        progressDrawable?.setColorFilter(color, mode)
+        val thumbDrawable = DrawableCompat.wrap(thumb)
+        DrawableCompat.setTintList(thumbDrawable, s1)
+        thumb = thumbDrawable
     }
 }
 
@@ -204,8 +199,7 @@ fun ProgressBar.tint(@ColorInt color: Int, skipIndeterminate: Boolean = false) {
         secondaryProgressTintList = sl
         if (!skipIndeterminate) indeterminateTintList = sl
     } else {
-        val mode: PorterDuff.Mode = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1)
-            PorterDuff.Mode.MULTIPLY else PorterDuff.Mode.SRC_IN
+        val mode: PorterDuff.Mode = PorterDuff.Mode.SRC_IN
         indeterminateDrawable?.setColorFilter(color, mode)
         progressDrawable?.setColorFilter(color, mode)
     }
@@ -225,6 +219,7 @@ fun Context.textColorStateList(@ColorInt color: Int): ColorStateList {
     return ColorStateList(states, colors)
 }
 
+@SuppressLint("RestrictedApi")
 fun EditText.tint(@ColorInt color: Int) {
     val editTextColorStateList = context.textColorStateList(color)
     if (this is AppCompatEditText) {
@@ -247,7 +242,7 @@ fun EditText.tintCursor(@ColorInt color: Int) {
         val fCursorDrawable = clazz.getDeclaredField("mCursorDrawable")
         fCursorDrawable.isAccessible = true
         val drawables: Array<Drawable> = Array(2, {
-            val drawable = ContextCompat.getDrawable(context, mCursorDrawableRes)
+            val drawable = context.drawable(mCursorDrawableRes)
             drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
             drawable
         })

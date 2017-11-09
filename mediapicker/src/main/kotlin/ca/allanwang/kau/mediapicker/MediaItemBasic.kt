@@ -2,16 +2,12 @@ package ca.allanwang.kau.mediapicker
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.ui.views.MeasuredImageView
 import ca.allanwang.kau.utils.bindView
-import ca.allanwang.kau.utils.buildIsLollipopAndUp
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
