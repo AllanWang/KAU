@@ -11,13 +11,13 @@ interface SearchViewHolder {
 
     var searchView: SearchView?
 
-    fun bindSearchViewIfNotBound(binder: () -> SearchView) {
+    fun searchViewBindIfNull(binder: () -> SearchView) {
         if (searchView == null) searchView = binder()
     }
 
-    fun onSearchViewBackPress() = searchView?.onBackPressed() ?: false
+    fun searchViewOnBackPress() = searchView?.onBackPressed() ?: false
 
-    fun unbindSearchView(replacementMenuItemClickListener: ((item: MenuItem) -> Boolean)? = null) {
+    fun searchViewUnBind(replacementMenuItemClickListener: ((item: MenuItem) -> Boolean)? = null) {
         searchView?.unBind(replacementMenuItemClickListener)
         searchView = null
     }
