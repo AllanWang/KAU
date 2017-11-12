@@ -12,7 +12,10 @@
     <item text="Add Italian translations" />
     <item text="Clean up unnecessary build version support" />
     <item text="Optimize and refactor old code" />
-    <item text="Add helper methods to enhance FastAdapter for Kotlin" />
+    <item text=":adapter: Add helper methods to enhance FastAdapter for Kotlin" />
+    <item text=":core: Create ProgressAnimator class" />
+    <item text="" />
+    <item text="" />
     <item text="" />
 	
 	<version title="v3.4.5" />
