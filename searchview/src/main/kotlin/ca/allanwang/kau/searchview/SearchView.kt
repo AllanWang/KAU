@@ -316,7 +316,7 @@ class SearchView @JvmOverloads constructor(
      * with the option to replace the item click listener
      */
     fun unBind(replacementMenuItemClickListener: ((item: MenuItem) -> Boolean)? = null) {
-        parentViewGroup.removeView(this)
+        (parent as? ViewGroup)?.removeView(this)
         menuItem?.setOnMenuItemClickListener(replacementMenuItemClickListener)
         menuItem = null
     }
