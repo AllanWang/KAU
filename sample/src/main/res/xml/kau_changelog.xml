@@ -14,7 +14,7 @@
     <item text="Optimize and refactor old code" />
     <item text=":adapter: Add helper methods to enhance FastAdapter for Kotlin" />
     <item text=":core: Create ProgressAnimator class" />
-    <item text="" />
+    <item text=":searchview: Add searchview holder interface" />
     <item text="" />
     <item text="" />
 	

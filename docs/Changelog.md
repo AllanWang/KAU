@@ -6,7 +6,9 @@
 * Add Italian translations
 * Clean up unnecessary build version support
 * Optimize and refactor old code
-* Add helper methods to enhance FastAdapter for Kotlin
+* :adapter: Add helper methods to enhance FastAdapter for Kotlin
+* :core: Create ProgressAnimator class
+* :searchview: Add searchview holder interface
 
 ## v3.4.5
 * Add French translations
