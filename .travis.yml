@@ -25,6 +25,7 @@ script:
 branches:
   except:
   - gh-pages
+  - l10n_dev
 notifications:
   email: false
   slack:
