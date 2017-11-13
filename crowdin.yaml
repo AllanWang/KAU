@@ -1,0 +1,21 @@
+"project_identifier": "kotlin-android-utils"
+"base_path": "/"
+
+"files": [
+  {
+    "source" : "/about/src/main/res/values/strings_about.xml",
+    "translation" : "/about/src/main/res/values-%android_code%/strings_about.xml"
+  },
+  {
+    "source" : "/colorpicker/src/main/res/values/strings_colorpicker.xml",
+    "translation" : "/colorpicker/src/main/res/values-%android_code%/strings_colorpicker.xml"
+  },
+  {
+    "source" : "/core/src/main/res-publisc/values/strings_commons.xml",
+    "translation" : "/core/src/main/res-public/values-%android_code%/strings_commons.xml"
+  },
+  {
+    "source" : "/mediapicker/src/main/res/values/strings_mediapicker.xml",
+    "translation" : "/mediapicker/src/main/res/values-%android_code%/strings_mediapicker.xml"
+  }
+]

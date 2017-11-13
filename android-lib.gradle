@@ -41,7 +41,8 @@ android {
                 'RtlSymmetry',
                 'RtlHardcoded',
                 'RtlEnabled',
-                'Overdraw'
+                'Overdraw',
+                'MissingTranslation'
 
         xmlReport false
         textReport true
