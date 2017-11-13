@@ -11,7 +11,7 @@
     "translation" : "/colorpicker/src/main/res/values-%android_code%/strings_colorpicker.xml"
   },
   {
-    "source" : "/core/src/main/res-publisc/values/strings_commons.xml",
+    "source" : "/core/src/main/res-public/values/strings_commons.xml",
     "translation" : "/core/src/main/res-public/values-%android_code%/strings_commons.xml"
   },
   {
