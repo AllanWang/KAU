@@ -43,11 +43,4 @@ Most resources are verbatim and x represents a formatted item
   <string name="kau_report_bug">Meld een bug</string>
   <string name="kau_search">Zoeken</string>
   <string name="kau_send_feedback">Stuur feedback</string>
-  <string name="kau_send_via">Stuur via</string>
-  <string name="kau_settings">Instellingen</string>
-  <string name="kau_share">Delen</string>
-  <string name="kau_text_copied">Tekst gekopieerd naar klembord.</string>
-  <string name="kau_thank_you">Dankjewel</string>
-  <string name="kau_uh_oh">Oeps</string>
-  <string name="kau_warning">Waarschuwing</string>
 </resources>
