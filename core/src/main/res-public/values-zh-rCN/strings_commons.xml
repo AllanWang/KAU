@@ -62,4 +62,6 @@ Most resources are verbatim and x represents a formatted item
   <plurals name="kau_x_seconds">
     <item quantity="other">%d 秒</item>
   </plurals>
+  <string name="kau_yes">是的</string>
+  <string name="kau_permission_denied">权限被拒绝</string>
 </resources>
