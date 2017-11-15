@@ -10,4 +10,62 @@ Most resources are verbatim and x represents a formatted item
   <string name="kau_add_account">Adicionar Conta</string>
   <string name="kau_back">Voltar</string>
   <string name="kau_cancel">Cancelar</string>
+  <string name="kau_changelog">Histórico de Alterações</string>
+  <string name="kau_close">Fechar</string>
+  <string name="kau_contact_us">Fale Conosco</string>
+  <string name="kau_copy">Copiar</string>
+  <string name="kau_custom">Personalizado</string>
+  <string name="kau_dark">Escuro</string>
+  <string name="kau_default">Padrão</string>
+  <string name="kau_do_not_show_again">Não mostrar novamente</string>
+  <string name="kau_done">Pronto</string>
+  <string name="kau_error">Erro</string>
+  <string name="kau_exit">Sair</string>
+  <string name="kau_exit_confirmation">Tem certeza que deseja sair?</string>
+  <string name="kau_exit_confirmation_x">Tem certeza que deseja sair do %s?</string>
+  <string name="kau_glass">Vidro</string>
+  <string name="kau_got_it">Entendi</string>
+  <string name="kau_great">Ótimo</string>
+  <string name="kau_hide">Esconder</string>
+  <string name="kau_light">Claro</string>
+  <string name="kau_login">Entrar</string>
+  <string name="kau_logout">Sair</string>
+  <string name="kau_logout_confirm_as_x">Tem certeza que deseja sair como %s?</string>
+  <string name="kau_manage_account">Gerenciar Conta</string>
+  <string name="kau_maybe">Talvez</string>
+  <string name="kau_menu">Menu</string>
+  <string name="kau_no">Não</string>
+  <string name="kau_no_results_found">Nenhum Resultado Encontrado</string>
+  <string name="kau_none">Nenhum</string>
+  <string name="kau_ok">OK</string>
+  <string name="kau_play_store">Play Store</string>
+  <string name="kau_rate">Avaliar</string>
+  <string name="kau_report_bug">Relatar um Bug</string>
+  <string name="kau_search">Pesquisar</string>
+  <string name="kau_send_feedback">Enviar Feedback</string>
+  <string name="kau_send_via">Enviar via</string>
+  <string name="kau_settings">Configurações</string>
+  <string name="kau_share">Compartilhar</string>
+  <string name="kau_text_copied">Texto copiado para área de transferência.</string>
+  <string name="kau_thank_you">Obrigado</string>
+  <string name="kau_uh_oh">Uh Oh</string>
+  <string name="kau_warning">Aviso</string>
+  <plurals name="kau_x_days">
+    <item quantity="one">%d dia</item>
+    <item quantity="other">%d dias</item>
+  </plurals>
+  <plurals name="kau_x_hours">
+    <item quantity="one">%d hora</item>
+    <item quantity="other">%d horas</item>
+  </plurals>
+  <plurals name="kau_x_minutes">
+    <item quantity="one">%d minuto</item>
+    <item quantity="other">%d minutos</item>
+  </plurals>
+  <plurals name="kau_x_seconds">
+    <item quantity="one">%d segundo</item>
+    <item quantity="other">%d segundos</item>
+  </plurals>
+  <string name="kau_yes">Sim</string>
+  <string name="kau_permission_denied">Permissão negada</string>
 </resources>
