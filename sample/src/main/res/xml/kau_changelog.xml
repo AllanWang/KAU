@@ -8,6 +8,7 @@
 
     <version title="v3.5.1" />
     <item text="Add Portuguese translations" />
+    <item text="Add Galician translations" />
     <item text="Add some minor util elements" />
     <item text="Update dependencies (sdk 27)" />
 
