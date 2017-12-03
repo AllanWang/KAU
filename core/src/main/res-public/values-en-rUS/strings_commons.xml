@@ -4,7 +4,4 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources>
-  <string name="kau_about_app">About app</string>
-  <string name="kau_about_x">About %s</string>
-</resources>
+<resources></resources>

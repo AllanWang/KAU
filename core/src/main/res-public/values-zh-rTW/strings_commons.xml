@@ -4,6 +4,4 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources>
-  <string name="kau_default">默認</string>
-</resources>
+<resources></resources>
