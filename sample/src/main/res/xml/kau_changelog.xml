@@ -5,7 +5,12 @@
     <version title="v" />
     <item text="" />
     -->
-	
+
+    <version title="v3.5.1" />
+    <item text="Add Portuguese translations" />
+    <item text="Add some minor util elements" />
+    <item text="Update dependencies (sdk 27)" />
+
 	<version title="v3.5.0" />
     <item text="Update dependencies, many of which with major version increments" />
     <item text="Add Vietnamese translations" />
@@ -15,8 +20,6 @@
     <item text=":adapter: Add helper methods to enhance FastAdapter for Kotlin" />
     <item text=":core: Create ProgressAnimator class" />
     <item text=":searchview: Add searchview holder interface" />
-    <item text="" />
-    <item text="" />
 	
 	<version title="v3.4.5" />
     <item text="Add French translations" />
