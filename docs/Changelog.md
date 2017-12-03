@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.5.1
+* Add Portuguese translations
+* Add some minor util elements
+* Update dependencies (sdk 27)
+
 ## v3.5.0
 * Update dependencies, many of which with major version increments
 * Add Vietnamese translations
