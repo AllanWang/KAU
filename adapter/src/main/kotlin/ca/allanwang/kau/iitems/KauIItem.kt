@@ -22,7 +22,4 @@ open class KauIItem<Item, VH : RecyclerView.ViewHolder>(
     override final fun getViewHolder(v: View): VH = viewHolder(v)
     override final fun getLayoutRes(): Int = layoutRes
 
-    override fun bindView(holder: VH, payloads: MutableList<Any>) {
-        super.bindView(holder, payloads)
-    }
 }
