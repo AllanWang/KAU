@@ -14,7 +14,7 @@ import ca.allanwang.kau.utils.hasPermission
 class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox, PermissionCheckbox.ViewHolder>(
         R.layout.permission_checkbox, { ViewHolder(it) }) {
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         holder.text.text = permission
         holder.checkbox.isChecked = holder.itemView.context.hasPermission(permission)

@@ -43,7 +43,7 @@ class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolde
     private var isExpanded = false
 
     @SuppressLint("SetTextI18n")
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         with(holder) {
             number.text = "${content.number}."

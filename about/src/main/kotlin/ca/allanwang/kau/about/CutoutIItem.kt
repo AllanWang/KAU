@@ -14,12 +14,12 @@ import ca.allanwang.kau.utils.bindView
  * Just a cutout item with some defaults in [R.layout.kau_iitem_cutout]
  */
 class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem, CutoutIItem.ViewHolder>(
-        R.layout.kau_iitem_cutout, {ViewHolder(it)}, R.id.kau_item_cutout
+        R.layout.kau_iitem_cutout, ::ViewHolder, R.id.kau_item_cutout
 ), ThemableIItem by ThemableIItemDelegate() {
 
     override fun isSelectable(): Boolean = false
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         with(holder) {
             if (accentColor != null && themeEnabled) cutout.foregroundColor = accentColor!!
