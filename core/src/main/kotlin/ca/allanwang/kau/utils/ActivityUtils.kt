@@ -2,7 +2,6 @@ package ca.allanwang.kau.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -20,35 +19,35 @@ import org.jetbrains.anko.contentView
  * Created by Allan Wang on 2017-06-21.
  */
 
+@DslMarker
+@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE, AnnotationTarget.FUNCTION)
+annotation class KauActivity
+
 /**
  * Helper class to launch an activity for result
  * Counterpart of [Activity.startActivityForResult]
  * For starting activities without result, see [startActivity]
  */
-@SuppressLint("NewApi")
-fun Activity.startActivityForResult(
+inline fun Activity.startActivityForResult(
         clazz: Class<out Activity>,
         requestCode: Int,
-        transition: Boolean = false,
-        bundle: Bundle? = null,
+        bundleBuilder: Bundle.() -> Unit = {},
         intentBuilder: Intent.() -> Unit = {}) {
     val intent = Intent(this, clazz)
-    val fullBundle = Bundle()
-    if (transition && buildIsLollipopAndUp)
-        fullBundle.with(ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-    if (bundle != null) fullBundle.putAll(bundle)
     intent.intentBuilder()
-    startActivityForResult(intent, requestCode, if (fullBundle.isEmpty) null else fullBundle)
+    val bundle = Bundle()
+    bundle.bundleBuilder()
+    startActivityForResult(intent, requestCode, bundle)
 }
 
 /**
  * Restarts an activity from itself with a fade animation
- * Keeps its existing extra bundles and has a builder to accept other parameters
+ * Keeps its existing extra bundles and has a intentBuilder to accept other parameters
  */
-fun Activity.restart(builder: Intent.() -> Unit = {}) {
+inline fun Activity.restart(intentBuilder: Intent.() -> Unit = {}) {
     val i = Intent(this, this::class.java)
     i.putExtras(intent.extras)
-    i.builder()
+    i.intentBuilder()
     startActivity(i)
     overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out) //No transitions
     finish()
