@@ -17,8 +17,6 @@ open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
         if (accentColor != null) viewHolder.title.setTextColor(accentColor)
     }
 
-    override fun onClick(itemView: View, innerContent: View?): Boolean = true
-
     override fun getType() = R.id.kau_item_pref_header
 
 }

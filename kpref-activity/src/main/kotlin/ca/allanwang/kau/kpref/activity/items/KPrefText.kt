@@ -1,8 +1,8 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import android.view.View
 import android.widget.TextView
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.toast
 
@@ -20,22 +20,21 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
      * Automatically reload on set
      */
     override var pref: T
-        get() = base.getter.invoke()
+        get() = base.getter()
         set(value) {
-            base.setter.invoke(value)
+            base.setter(value)
             builder.reloadSelf()
         }
 
-    override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
-        itemView.context.toast("No click function set")
-        return true
+    override fun KClick<T>.defaultOnClick() {
+        context.toast("No click function set")
     }
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
         val textview = viewHolder.bindInnerView<TextView>(R.layout.kau_pref_text)
         if (textColor != null) textview.setTextColor(textColor)
-        textview.text = builder.textGetter.invoke(pref)
+        textview.text = builder.textGetter(pref)
     }
 
     /**
@@ -50,10 +49,10 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
      */
     class KPrefTextBuilder<T>(
             globalOptions: GlobalOptions,
-            titleRes: Int,
+            titleId: Int,
             getter: () -> T,
             setter: (value: T) -> Unit
-    ) : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>(globalOptions, titleRes, getter, setter) {
+    ) : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>(globalOptions, titleId, getter, setter) {
         override var textGetter: (T) -> String? = { it?.toString() }
     }
 

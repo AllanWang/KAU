@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
-import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -32,17 +31,25 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
 
     override final fun getViewHolder(v: View) = ViewHolder(v)
 
+    protected fun ViewHolder.updateDesc() {
+        val descRes = core.descFun()
+        if (descRes > 0)
+            desc?.visible()?.setText(descRes)
+        else
+            desc?.gone()
+    }
+
+    protected fun ViewHolder.updateTitle() {
+        title.setText(core.titleFun())
+    }
+
     @SuppressLint("NewApi")
     @CallSuper
     override fun bindView(viewHolder: ViewHolder, payloads: List<Any>) {
         super.bindView(viewHolder, payloads)
         with(viewHolder) {
-            val context = itemView.context
-            title.text = context.string(core.titleRes)
-            if (core.descRes > 0)
-                desc?.visible()?.setText(core.descRes)
-            else
-                desc?.gone()
+            updateTitle()
+            updateDesc()
             if (core.iicon != null) icon?.visible()?.setIcon(core.iicon, 24)
             else icon?.gone()
             innerFrame?.removeAllViews()
@@ -61,7 +68,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
 
     abstract fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?)
 
-    abstract fun onClick(itemView: View, innerContent: View?): Boolean
+    open fun onClick(itemView: View) = Unit
 
     override fun unbindView(holder: ViewHolder) {
         super.unbindView(holder)
@@ -80,14 +87,15 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
     @KPrefMarker
     interface CoreContract {
         val globalOptions: GlobalOptions
-        @get:StringRes val titleRes: Int
+        val titleId: Int
+        var titleFun: () -> Int
         var descRes: Int
-            @StringRes get
+        var descFun: () -> Int
         var iicon: IIcon?
         var visible: () -> Boolean
 
         /**
-         * Attempts to reload current item by identifying it with its [titleRes]
+         * Attempts to reload current item by identifying it with its [titleId]
          */
         fun reloadSelf()
     }
@@ -96,13 +104,19 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
      * Default implementation of [CoreContract]
      */
     class CoreBuilder(override val globalOptions: GlobalOptions,
-                      override @param:StringRes val titleRes: Int) : CoreContract {
+                      override val titleId: Int) : CoreContract {
         override var descRes: Int = -1
+            set(value) {
+                field = value
+                descFun = { field }
+            }
+        override var descFun = { -1 }
         override var iicon: IIcon? = null
-        override var visible: () -> Boolean = { true }
+        override var visible = { true }
+        override var titleFun = { titleId }
 
         override fun reloadSelf() {
-            globalOptions.reloadByTitle(titleRes)
+            globalOptions.reloadByTitle(titleId)
         }
     }
 
@@ -113,7 +127,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         val icon: ImageView? by bindOptionalView(R.id.kau_pref_icon)
         val innerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_inner_frame)
         val lowerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_lower_frame)
-        val innerContent: View?
+        val innerView: View?
             get() = itemView.findViewById(R.id.kau_pref_inner_content)
         val lowerContent: View?
             get() = itemView.findViewById(R.id.kau_pref_lower_content)
@@ -121,22 +135,22 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         inline fun <reified T : View> bindInnerView(@LayoutRes id: Int) = bindInnerView(id) { _: T -> }
 
         inline fun <reified T : View> bindInnerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
-            if (innerFrame == null) throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
-            if (innerContent !is T) {
-                innerFrame!!.removeAllViews()
-                LayoutInflater.from(innerFrame!!.context).inflate(id, innerFrame)
-                onFirstBind(innerContent as T)
+            val innerFrame = this.innerFrame ?: throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
+            if (innerView !is T) {
+                innerFrame.removeAllViews()
+                LayoutInflater.from(innerFrame.context).inflate(id, innerFrame)
+                onFirstBind(innerView as T)
             }
-            return innerContent as T
+            return innerView as T
         }
 
         inline fun <reified T : View> bindLowerView(@LayoutRes id: Int) = bindLowerView(id) { _: T -> }
 
         inline fun <reified T : View> bindLowerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
-            if (lowerFrame == null) throw IllegalStateException("Cannot bind inner view when lowerContent does not exist")
+            val lowerFrame = this.lowerFrame ?: throw IllegalStateException("Cannot bind inner view when lowerContent does not exist")
             if (lowerContent !is T) {
-                lowerFrame!!.removeAllViews()
-                LayoutInflater.from(lowerFrame!!.context).inflate(id, lowerFrame)
+                lowerFrame.removeAllViews()
+                LayoutInflater.from(lowerFrame.context).inflate(id, lowerFrame)
                 onFirstBind(lowerContent as T)
             }
             return lowerContent as T
