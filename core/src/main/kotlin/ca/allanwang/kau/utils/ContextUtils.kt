@@ -2,9 +2,7 @@
 
 package ca.allanwang.kau.utils
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -14,7 +12,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.*
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
@@ -34,47 +31,20 @@ import com.afollestad.materialdialogs.MaterialDialog
  * Counterpart of [ContextCompat.startActivity]
  * For starting activities for results, see [startActivityForResult]
  */
-@SuppressLint("NewApi")
-fun Context.startActivity(
+inline fun Context.startActivity(
         clazz: Class<out Activity>,
         clearStack: Boolean = false,
-        transition: Boolean = false,
-        bundle: Bundle? = null,
+        bundleBuilder: Bundle.() -> Unit = {},
         intentBuilder: Intent.() -> Unit = {}) {
     val intent = Intent(this, clazz)
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-    val fullBundle = Bundle()
-    if (transition && this is Activity && buildIsLollipopAndUp)
-        fullBundle.with(ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-    if (transition && this !is Activity) KL.d("Cannot make scene transition when context is not an instance of an Activity")
-    if (bundle != null) fullBundle.putAll(bundle)
     intent.intentBuilder()
-    ContextCompat.startActivity(this, intent, if (fullBundle.isEmpty) null else fullBundle)
+    val bundle = Bundle()
+    bundle.bundleBuilder()
+    ContextCompat.startActivity(this, intent, bundle)
     if (this is Activity && clearStack) finish()
 }
 
-/**
- * Bring in activity from the right
- */
-fun Context.startActivitySlideIn(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
-    val fullBundle = Bundle()
-    fullBundle.with(ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_slide_in_right, R.anim.kau_fade_out).toBundle())
-    fullBundle.bundleBuilder()
-    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = if (fullBundle.isEmpty) null else fullBundle)
-}
-
-/**
- * Bring in activity from behind while pushing the current activity to the right
- * This replicates the exit animation of a sliding activity, but is a forward creation
- * For the animation to work, the previous activity should not be in the stack (otherwise you wouldn't need this in the first place)
- * Consequently, the stack will be cleared by default
- */
-fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolean = true, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
-    val fullBundle = Bundle()
-    fullBundle.with(ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top).toBundle())
-    fullBundle.bundleBuilder()
-    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = if (fullBundle.isEmpty) null else fullBundle)
-}
 
 fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))
 

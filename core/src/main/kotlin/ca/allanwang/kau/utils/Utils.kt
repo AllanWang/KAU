@@ -127,11 +127,3 @@ class KauException(message: String) : RuntimeException(message)
 fun String.withMaxLength(n: Int): String =
         if (length <= n) this
         else substring(0, n - 1) + KAU_ELLIPSIS
-
-/**
- * Similar to [Bundle.putAll], but checks for a null insert and returns the parent bundle
- */
-fun Bundle.with(bundle: Bundle?): Bundle {
-    if (bundle != null) putAll(bundle)
-    return this
-}

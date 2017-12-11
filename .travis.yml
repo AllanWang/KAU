@@ -7,13 +7,15 @@ android:
 #  - android-21
   - platform-tools
   - tools
-  - build-tools-27.0.1
+  - build-tools-27.0.2
   - android-27
   - extra-android-support
   - extra-android-m2repository
   - extra-google-m2repository
   licenses:
   - ".+"
+before_install:
+- yes | sdkmanager "platforms;android-27"
 #before_script:
 #- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
 #- emulator -avd test -no-audio -no-window &

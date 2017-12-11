@@ -173,7 +173,12 @@ class MainActivity : KPrefActivity() {
         }
 
         plainText(R.string.adapter_showcase) {
-            onClick = { _, _, _ -> startActivity(AdapterActivity::class.java, transition = true); false }
+            onClick = { _, _, _ ->
+                startActivity(AdapterActivity::class.java, bundleBuilder = {
+                    withSceneTransitionAnimation(this@MainActivity)
+                })
+                false
+            }
         }
 
         plainText(R.string.kau_about_app) {
