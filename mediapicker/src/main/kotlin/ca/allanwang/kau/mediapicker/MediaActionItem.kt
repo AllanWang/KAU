@@ -26,7 +26,7 @@ class MediaActionItem(
 
     override fun isSelectable(): Boolean = false
 
-    override fun bindView(holder: MediaItemBasic.ViewHolder, payloads: MutableList<Any>?) {
+    override fun bindView(holder: MediaItemBasic.ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         holder.image.apply {
             setImageDrawable(MediaPickerCore.getIconDrawable(context, action.iicon(this@MediaActionItem), action.color))

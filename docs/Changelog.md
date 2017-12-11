@@ -2,6 +2,7 @@
 
 ## v3.5.1
 * Add Portuguese translations
+* Add Galician translations
 * Add some minor util elements
 * Update dependencies (sdk 27)
 

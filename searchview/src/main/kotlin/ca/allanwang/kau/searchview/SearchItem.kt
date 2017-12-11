@@ -50,7 +50,7 @@ class SearchItem(val key: String,
         styledContent!!.setSpan(StyleSpan(Typeface.BOLD), index, index + subText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         holder.title.setTextColor(foregroundColor)
         holder.desc.setTextColor(foregroundColor.adjustAlpha(0.6f))

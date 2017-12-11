@@ -21,4 +21,5 @@ open class KauIItem<Item, VH : RecyclerView.ViewHolder>(
     override final fun getType(): Int = type
     override final fun getViewHolder(v: View): VH = viewHolder(v)
     override final fun getLayoutRes(): Int = layoutRes
+
 }
