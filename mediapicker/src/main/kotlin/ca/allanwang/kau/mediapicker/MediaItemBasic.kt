@@ -34,7 +34,7 @@ class MediaItemBasic(val data: MediaModel)
 
     override fun isSelectable(): Boolean = false
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>?) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         glide(holder.itemView)
                 .load(data.data)
@@ -42,7 +42,7 @@ class MediaItemBasic(val data: MediaModel)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any, target: Target<Drawable>, isFirstResource: Boolean): Boolean {
                         holder.image.setImageDrawable(MediaPickerCore.getErrorDrawable(holder.itemView.context))
-                        return true;
+                        return true
                     }
 
                     override fun onResourceReady(resource: Drawable, model: Any, target: Target<Drawable>, dataSource: DataSource, isFirstResource: Boolean): Boolean {

@@ -84,7 +84,7 @@ class KPrefDelegate<T : Any> internal constructor(
             else -> throw KPrefException(t)
         }
         editor.apply()
-        postSetter.invoke(t)
+        postSetter(t)
     }
 }
 

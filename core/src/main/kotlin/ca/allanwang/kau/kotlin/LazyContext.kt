@@ -1,7 +1,7 @@
 package ca.allanwang.kau.kotlin
 
 import android.content.Context
-import android.support.annotation.AnimatorRes
+import android.support.annotation.AnimRes
 import android.support.annotation.InterpolatorRes
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -11,14 +11,15 @@ import android.view.animation.Interpolator
  * Created by Allan Wang on 2017-05-30.
  *
  * Lazy retrieval of context based items
- * Items are retrieved using delegateName[context]
+ * Items are retrieved using delegateName(context)
  *
  */
 
 fun lazyInterpolator(@InterpolatorRes id: Int) = lazyContext<Interpolator> { AnimationUtils.loadInterpolator(it, id) }
-fun lazyAnimation(@AnimatorRes id: Int) = lazyContext<Animation> { AnimationUtils.loadAnimation(it, id) }
 
-fun <T : Any> lazyContext(initializer: (context: Context) -> T): LazyContext<T> = LazyContext<T>(initializer)
+fun lazyAnimation(@AnimRes id: Int) = lazyContext<Animation> { AnimationUtils.loadAnimation(it, id) }
+
+fun <T : Any> lazyContext(initializer: (context: Context) -> T): LazyContext<T> = LazyContext(initializer)
 
 class LazyContext<out T : Any>(private val initializer: (context: Context) -> T, lock: Any? = null) {
     @Volatile private var _value: Any = UNINITIALIZED

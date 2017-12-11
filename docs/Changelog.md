@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.6.0
+* :core: Created BundleUtils
+* :core: [Breaking] Refactored startActivity functions
+* :kpref-activity: [Breaking] Simplified listener function parameters
+* :kpref-activity: [Breaking] Added dynamic string loading options
+* (See Migrations.md for further details on breaking changes)
+
 ## v3.5.1
 * Add Portuguese translations
 * Add Galician translations

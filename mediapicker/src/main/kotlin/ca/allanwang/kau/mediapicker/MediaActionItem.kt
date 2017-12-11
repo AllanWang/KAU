@@ -30,7 +30,7 @@ class MediaActionItem(
         super.bindView(holder, payloads)
         holder.image.apply {
             setImageDrawable(MediaPickerCore.getIconDrawable(context, action.iicon(this@MediaActionItem), action.color))
-            setOnClickListener { action.invoke(context, this@MediaActionItem) }
+            setOnClickListener { action(context, this@MediaActionItem) }
         }
     }
 
@@ -46,7 +46,7 @@ class MediaActionItem(
 interface MediaAction {
     var color: Int
     fun iicon(item: MediaActionItem): IIcon
-    fun invoke(c: Context, item: MediaActionItem)
+    operator fun invoke(c: Context, item: MediaActionItem)
 }
 
 internal const val MEDIA_ACTION_REQUEST_CAMERA = 100
@@ -71,9 +71,8 @@ abstract class MediaActionCamera(
         MediaType.VIDEO -> GoogleMaterial.Icon.gmd_videocam
     }
 
-    override fun invoke(c: Context, item: MediaActionItem) {
-        c.kauRequestPermissions(PERMISSION_WRITE_EXTERNAL_STORAGE) {
-            granted, _ ->
+    override operator fun invoke(c: Context, item: MediaActionItem) {
+        c.kauRequestPermissions(PERMISSION_WRITE_EXTERNAL_STORAGE) { granted, _ ->
             if (granted) {
                 val intent = Intent(item.mediaType.captureType)
                 if (intent.resolveActivity(c.packageManager) == null) {
@@ -109,7 +108,7 @@ class MediaActionCameraVideo(
         override var color: Int = MediaPickerCore.accentColor
 ) : MediaAction {
     override fun iicon(item: MediaActionItem) = GoogleMaterial.Icon.gmd_videocam
-    override fun invoke(c: Context, item: MediaActionItem) {
+    override operator fun invoke(c: Context, item: MediaActionItem) {
         val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
         if (intent.resolveActivity(c.packageManager) == null) {
             c.materialDialog {
@@ -136,9 +135,8 @@ class MediaActionGallery(
         MediaType.VIDEO -> GoogleMaterial.Icon.gmd_video_library
     }
 
-    override fun invoke(c: Context, item: MediaActionItem) {
-        c.kauRequestPermissions(PERMISSION_READ_EXTERNAL_STORAGE) {
-            granted, _ ->
+    override operator fun invoke(c: Context, item: MediaActionItem) {
+        c.kauRequestPermissions(PERMISSION_READ_EXTERNAL_STORAGE) { granted, _ ->
             if (granted) {
                 val intent = Intent().apply {
                     type = item.mediaType.mimeType
