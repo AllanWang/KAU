@@ -1,7 +1,7 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import android.view.View
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
 
 /**
@@ -14,15 +14,12 @@ import ca.allanwang.kau.kpref.activity.R
  */
 open class KPrefPlainText(open val builder: KPrefPlainTextBuilder) : KPrefItemBase<Unit>(builder) {
 
-    override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
-        //nothing
-        return true
-    }
+    override fun KClick<Unit>.defaultOnClick() = Unit
 
     class KPrefPlainTextBuilder(
             globalOptions: GlobalOptions,
-            titleRes: Int
-    ) : BaseContract<Unit> by BaseBuilder(globalOptions, titleRes, {}, {})
+            titleId: Int
+    ) : BaseContract<Unit> by BaseBuilder(globalOptions, titleId, {}, {})
 
     override fun getType(): Int = R.id.kau_item_pref_plain_text
 

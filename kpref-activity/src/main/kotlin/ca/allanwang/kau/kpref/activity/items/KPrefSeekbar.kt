@@ -1,9 +1,9 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.tint
 
@@ -15,8 +15,7 @@ import ca.allanwang.kau.utils.tint
  */
 open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(builder) {
 
-
-    override fun defaultOnClick(itemView: View, innerContent: View?): Boolean = false
+    override fun KClick<Int>.defaultOnClick() = Unit
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
@@ -66,10 +65,10 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
      */
     class KPrefSeekbarBuilder(
             globalOptions: GlobalOptions,
-            titleRes: Int,
+            titleId: Int,
             getter: () -> Int,
             setter: (value: Int) -> Unit
-    ) : KPrefSeekbarContract, BaseContract<Int> by BaseBuilder(globalOptions, titleRes, getter, setter) {
+    ) : KPrefSeekbarContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
         override var min: Int = 0
 

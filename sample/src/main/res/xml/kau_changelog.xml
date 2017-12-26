@@ -6,13 +6,21 @@
     <item text="" />
     -->
 
+    <version title="v3.6.0" />
+    <item text=":core: Created BundleUtils" />
+    <item text=":core: [Breaking] Refactored startActivity functions" />
+    <item text=":kpref-activity: [Breaking] Simplified listener function parameters" />
+    <item text=":kpref-activity: [Breaking] Added dynamic string loading options" />
+    <item text="" />
+    <item text="(See Migrations.md for further details on breaking changes)" />
+
     <version title="v3.5.1" />
     <item text="Add Portuguese translations" />
     <item text="Add Galician translations" />
     <item text="Add some minor util elements" />
     <item text="Update dependencies (sdk 27)" />
 
-	<version title="v3.5.0" />
+    <version title="v3.5.0" />
     <item text="Update dependencies, many of which with major version increments" />
     <item text="Add Vietnamese translations" />
     <item text="Add Italian translations" />
@@ -21,8 +29,8 @@
     <item text=":adapter: Add helper methods to enhance FastAdapter for Kotlin" />
     <item text=":core: Create ProgressAnimator class" />
     <item text=":searchview: Add searchview holder interface" />
-	
-	<version title="v3.4.5" />
+
+    <version title="v3.4.5" />
     <item text="Add French translations" />
     <item text="Add Spanish translations" />
     <item text="Add German translations" />

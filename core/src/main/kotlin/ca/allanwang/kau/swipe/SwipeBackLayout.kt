@@ -30,11 +30,11 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
         get() = this
     /**
      * Threshold of scroll, we will close the activity, when scrollPercent over
-     * this value;
+     * this value
      */
     override var scrollThreshold = DEFAULT_SCROLL_THRESHOLD
         set(value) {
-            if (value >= 1.0f || value <= 0) throw IllegalArgumentException("Threshold value should be between 0 and 1.0")
+            if (value >= 1.0f || value <= 0f) throw IllegalArgumentException("Threshold value should be between 0.0 and 1.0")
             field = value
         }
 

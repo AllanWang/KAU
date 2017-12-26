@@ -1,12 +1,13 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import android.view.View
 import ca.allanwang.kau.colorpicker.CircleView
 import ca.allanwang.kau.colorpicker.ColorBuilder
 import ca.allanwang.kau.colorpicker.ColorContract
 import ca.allanwang.kau.colorpicker.colorPickerDialog
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
+import ca.allanwang.kau.utils.string
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -19,10 +20,8 @@ open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBas
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         super.onPostBindView(viewHolder, textColor, accentColor)
         builder.apply {
-            titleRes = core.titleRes
-            colorCallback = {
-                pref = it
-            }
+            titleRes = core.titleFun()
+            colorCallback = { pref = it }
         }
         if (builder.showPreview) {
             val preview = viewHolder.bindInnerView<CircleView>(R.layout.kau_pref_color)
@@ -33,18 +32,16 @@ open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBas
                     pref = it
                     if (builder.showPreview)
                         preview.setBackgroundColor(it)
+                    viewHolder.updateTitle()
+                    viewHolder.updateDesc()
                 }
             }
         }
     }
 
-
-    override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
-        builder.apply {
-            defaultColor = pref //update color
-        }
-        itemView.context.colorPickerDialog(builder).show()
-        return true
+    override fun KClick<Int>.defaultOnClick() {
+        builder.defaultColor = pref
+        context.colorPickerDialog(builder).show()
     }
 
     /**
@@ -58,10 +55,10 @@ open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBas
      * Default implementation of [KPrefColorContract]
      */
     class KPrefColorBuilder(globalOptions: GlobalOptions,
-                            override var titleRes: Int,
+                            titleId: Int,
                             getter: () -> Int,
                             setter: (value: Int) -> Unit
-    ) : KPrefColorContract, BaseContract<Int> by BaseBuilder<Int>(globalOptions, titleRes, getter, setter),
+    ) : KPrefColorContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter),
             ColorContract by ColorBuilder() {
         override var showPreview: Boolean = true
     }

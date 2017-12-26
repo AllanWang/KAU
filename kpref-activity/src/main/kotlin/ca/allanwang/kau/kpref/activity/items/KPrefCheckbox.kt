@@ -3,6 +3,7 @@ package ca.allanwang.kau.kpref.activity.items
 import android.support.v7.widget.AppCompatCheckBox
 import android.view.View
 import android.widget.CheckBox
+import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.tint
 
@@ -14,10 +15,9 @@ import ca.allanwang.kau.utils.tint
  */
 open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean>(builder) {
 
-    override fun defaultOnClick(itemView: View, innerContent: View?): Boolean {
+    override fun KClick<Boolean>.defaultOnClick() {
         pref = !pref
-        (innerContent as AppCompatCheckBox).isChecked = pref
-        return true
+        (innerView as AppCompatCheckBox).isChecked = pref
     }
 
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {

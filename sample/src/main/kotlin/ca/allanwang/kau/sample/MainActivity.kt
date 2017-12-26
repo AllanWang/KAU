@@ -107,10 +107,7 @@ class MainActivity : KPrefActivity() {
         checkbox(R.string.checkbox_3, { KPrefSample.check3 }, { KPrefSample.check3 = it }) {
             descRes = R.string.desc_dependent
             enabler = { KPrefSample.check2 }
-            onDisabledClick = { itemView, _, _ ->
-                itemView.context.toast("I am still disabled")
-                true
-            }
+            onDisabledClick = { itemView.context.toast("I am still disabled") }
         }
 
         colorPicker(R.string.text_color, { KPrefSample.textColor }, { KPrefSample.textColor = it; reload() }) {
@@ -139,13 +136,13 @@ class MainActivity : KPrefActivity() {
 
         text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
             descRes = R.string.text_desc
-            onClick = { itemView, _, item ->
+            onClick = {
                 itemView.context.materialDialog {
                     title("Type Text")
                     input("Type here", item.pref, { _, input -> item.pref = input.toString() })
                     inputRange(0, 20)
                 }
-                true
+
             }
         }
 
@@ -161,28 +158,26 @@ class MainActivity : KPrefActivity() {
         }
 
         plainText(R.string.swipe_showcase) {
-            onClick = { _, _, _ -> startActivityWithEdge(SWIPE_EDGE_LEFT); false }
+            onClick = { startActivityWithEdge(SWIPE_EDGE_LEFT) }
         }
 
         plainText(R.string.image_showcase) {
-            onClick = { _, _, _ -> kauLaunchMediaPicker(ImagePickerActivity::class.java, REQUEST_MEDIA); false }
+            onClick = { kauLaunchMediaPicker(ImagePickerActivity::class.java, REQUEST_MEDIA) }
         }
 
         plainText(R.string.video_overlay_showcase) {
-            onClick = { _, _, _ -> kauLaunchMediaPicker(VideoPickerActivityOverlay::class.java, REQUEST_MEDIA); false }
+            onClick = { kauLaunchMediaPicker(VideoPickerActivityOverlay::class.java, REQUEST_MEDIA) }
         }
 
         plainText(R.string.adapter_showcase) {
-            onClick = { _, _, _ ->
-                startActivity(AdapterActivity::class.java, bundleBuilder = {
+            onClick = {    startActivity(AdapterActivity::class.java, bundleBuilder = {
                     withSceneTransitionAnimation(this@MainActivity)
                 })
-                false
             }
         }
 
         plainText(R.string.kau_about_app) {
-            onClick = { _, _, _ -> kauLaunchAbout(AboutActivity::class.java); false }
+            onClick = { kauLaunchAbout(AboutActivity::class.java) }
         }
 
         header(R.string.long_prefs)
@@ -211,7 +206,7 @@ class MainActivity : KPrefActivity() {
     fun subPrefs(): KPrefAdapterBuilder.() -> Unit = {
         text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
             descRes = R.string.text_desc
-            onClick = { itemView, _, item ->
+            onClick = {
                 itemView.context.materialDialog {
                     title("Type Text")
                     input("Type here", item.pref, { _, input ->
@@ -220,7 +215,6 @@ class MainActivity : KPrefActivity() {
                     })
                     inputRange(0, 20)
                 }
-                true
             }
         }
     }

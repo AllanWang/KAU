@@ -259,7 +259,7 @@ fun FloatingActionButton.hideOnDownwardsScroll(recycler: RecyclerView) {
     recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            if (newState == android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE && !isShown) show();
+            if (newState == android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE && !isShown) show()
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
