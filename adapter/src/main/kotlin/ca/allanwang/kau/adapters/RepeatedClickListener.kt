@@ -40,11 +40,10 @@ private class RepeatedClickListener<Item : IItem<*, *>>(
         if (time - now < duration)
             chain++
         else
-            chain = 0
+            chain = 1
         time = now
         if (chain == count) {
             chain = 0
-            time = -1
             event.onClick(v, adapter, item, position)
             return true
         }
