@@ -109,7 +109,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     private var hasPreloaded = false
     private var prefetcher: Future<*>? = null
 
-    val adapter = FastItemAdapter<T>()
+    val adapter = ItemAdapter<T>()
 
     /**
      * Further improve preloading by extending the layout space

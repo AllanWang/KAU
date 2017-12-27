@@ -1,6 +1,7 @@
 # Changelog
 
 ## v3.6.0
+* :core: Create kotlin flyweight
 * :core: Created BundleUtils
 * :core: [Breaking] Refactored startActivity functions
 * :kpref-activity: [Breaking] Simplified listener function parameters
