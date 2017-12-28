@@ -6,7 +6,6 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.AnimRes
-import android.support.v4.app.ActivityOptionsCompat
 import ca.allanwang.kau.R
 
 /**
@@ -32,7 +31,7 @@ fun Bundle.withSceneTransitionAnimation(context: Context) {
 fun Bundle.withCustomAnimation(context: Context,
                                @AnimRes enterResId: Int,
                                @AnimRes exitResId: Int) {
-    this with ActivityOptionsCompat.makeCustomAnimation(context,
+    this with ActivityOptions.makeCustomAnimation(context,
             enterResId, exitResId).toBundle()
 }
 
