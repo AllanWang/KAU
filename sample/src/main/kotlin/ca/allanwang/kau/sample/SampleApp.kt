@@ -9,7 +9,6 @@ import ca.allanwang.kau.logging.KL
 class SampleApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        KL.enabled = BuildConfig.DEBUG
         KPrefSample.initialize(this, "pref_sample")
     }
 }
