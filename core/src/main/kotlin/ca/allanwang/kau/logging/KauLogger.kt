@@ -43,16 +43,17 @@ open class KauLogger(val tag: String) {
 
     inline fun log(priority: Int, message: () -> Any?, t: Throwable? = null) {
         if (shouldLog(priority))
-            logImpl(priority, message()?.toString() ?: "null", t)
+            logImpl(priority, message()?.toString(), t)
     }
 
     open fun shouldLog(priority: Int) = enabled
 
-    open fun logImpl(priority: Int, message: String, t: Throwable?) {
+    open fun logImpl(priority: Int, message: String?, t: Throwable?) {
+        val msg = message ?: "null"
         if (t != null)
-            Log.e(tag, message, t)
+            Log.e(tag, msg, t)
         else
-            Log.println(priority, tag, message)
+            Log.println(priority, tag, msg)
     }
 
     /**
@@ -89,7 +90,11 @@ class KauLoggerExtension(val tag: String, val logger: KauLogger) {
     }
 
     inline fun log(priority: Int, message: () -> Any?, t: Throwable? = null) =
-            logger.log(priority, { "$tag: ${message()?.toString() ?: "null"}" }, t)
+            logger.log(priority, {
+                val msg = message()?.toString()
+                if (msg == null) null
+                else "$tag: $msg"
+            }, t)
 
     inline fun checkThread(id: Int) {
         d {
