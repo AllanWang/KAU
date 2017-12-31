@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.6.1
+* :core: [Breaking] Removed private text field and introduced lazy logging functions
+
 ## v3.6.0
 * :adapter: Create withOnRepeatedClickListener
 * :core: Create kotlin flyweight

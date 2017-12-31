@@ -19,7 +19,7 @@ import com.mikepenz.fastadapter.listeners.ClickEventHook
  * Created by Allan Wang on 2017-08-02.
  */
 class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolder>(
-        R.layout.kau_iitem_faq, { ViewHolder(it) }, R.id.kau_item_faq
+        R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
