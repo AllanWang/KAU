@@ -42,9 +42,11 @@ open class KauLogger(val tag: String) {
     }
 
     inline fun log(priority: Int, message: () -> Any?, t: Throwable? = null) {
-        if (enabled)
+        if (shouldLog(priority))
             logImpl(priority, message()?.toString() ?: "null", t)
     }
+
+    open fun shouldLog(priority: Int) = enabled
 
     open fun logImpl(priority: Int, message: String, t: Throwable?) {
         if (t != null)
