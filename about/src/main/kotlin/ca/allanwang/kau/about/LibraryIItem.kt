@@ -21,21 +21,20 @@ import com.mikepenz.fastadapter.IItem
  * Created by Allan Wang on 2017-06-27.
  */
 class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewHolder>(
-        R.layout.kau_iitem_library, { ViewHolder(it) }, R.id.kau_item_library
+        R.layout.kau_iitem_library, ::ViewHolder, R.id.kau_item_library
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
             fastAdapter.withSelectable(false)
                     .withOnClickListener { v, _, item, _ ->
-                        if (item !is LibraryIItem) false
-                        else {
-                            val c = v.context
+                        if (item !is LibraryIItem)
+                            false
+                        else
                             with(item.lib) {
-                                c.startLink(libraryWebsite, repositoryLink, authorWebsite)
+                                v.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
+                                true
                             }
-                            true
-                        }
                     }
         }
     }

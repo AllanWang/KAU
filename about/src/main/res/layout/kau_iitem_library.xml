@@ -16,50 +16,45 @@
         android:paddingStart="@dimen/kau_padding_normal"
         android:paddingTop="@dimen/kau_padding_normal">
 
-        <android.support.constraint.Guideline
-            android:id="@+id/lib_g_m_v"
-            android:layout_width="1dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
-
         <TextView
             android:id="@+id/lib_item_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/kau_padding_normal"
             android:ellipsize="end"
             android:gravity="start"
-            android:maxLines="1"
+            android:lines="1"
             android:textSize="@dimen/textSizeLarge_openSource"
             android:textStyle="normal"
-            app:layout_constraintEnd_toStartOf="@id/lib_g_m_v"
+            app:layout_constraintEnd_toStartOf="@+id/lib_item_author"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginEnd="0dp"
             tools:text="Library name" />
 
+
         <TextView
-            android:id="@+id/lib_item_author"
-            android:layout_width="0dp"
+            android:id="@id/lib_item_author"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:gravity="end"
-            android:maxLines="2"
+            android:lines="1"
             android:textSize="@dimen/textSizeSmall_openSource"
             android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="@id/lib_item_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/lib_g_m_v"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
             tools:text="Author" />
 
-        <android.support.constraint.Barrier
+        <View
             android:id="@+id/lib_item_top_divider"
             android:layout_width="wrap_content"
             android:layout_height="1px"
             android:layout_marginTop="@dimen/kau_spacing_micro"
-            app:barrierDirection="bottom"
-            app:constraint_referenced_ids="lib_item_name,lib_item_author"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lib_item_name" />
 
         <TextView
             android:id="@+id/lib_item_description"
@@ -96,14 +91,14 @@
             android:textSize="@dimen/textSizeSmall_openSource"
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/lib_g_m_v"
+            app:layout_constraintEnd_toStartOf="@+id/lib_item_license"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/lib_item_bottom_divider"
             tools:text="Version" />
 
         <TextView
-            android:id="@+id/lib_item_license"
-            android:layout_width="0dp"
+            android:id="@id/lib_item_license"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/kau_spacing_normal"
             android:layout_marginTop="@dimen/kau_spacing_micro"
@@ -114,7 +109,6 @@
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/lib_g_m_v"
             app:layout_constraintTop_toBottomOf="@id/lib_item_bottom_divider"
             tools:text="License" />
 
