@@ -210,7 +210,7 @@ class SearchView @JvmOverloads constructor(
     private val divider: View by bindView(R.id.kau_search_divider)
     private val recycler: RecyclerView by bindView(R.id.kau_search_recycler)
     private var textCallback: Debouncer2<String, SearchView>
-            = debounce(0) { query, _ -> KL.d("Search query $query found; set your own textCallback") }
+            = debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
     val adapter = FastItemAdapter<SearchItem>()
     var menuItem: MenuItem? = null
     val isOpen: Boolean

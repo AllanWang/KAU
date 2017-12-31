@@ -29,14 +29,14 @@ internal object SwipeBackHelper {
         }
         activity.overridePendingTransition(startAnimation, 0)
         page.onPostCreate()
-        KL.v("KauSwipe onCreate ${activity.localClassName}")
+        KL.v { "KauSwipe onCreate ${activity.localClassName}" }
     }
 
     fun onDestroy(activity: Activity) {
         val page: SwipeBackPage? = this[activity]
         pageStack.kauRemoveIf { it.activityRef.get() == null || it === page }
         page?.activityRef?.clear()
-        KL.v("KauSwipe onDestroy ${activity.localClassName}")
+        KL.v { "KauSwipe onDestroy ${activity.localClassName}" }
     }
 
     fun finish(activity: Activity) = this[activity]?.scrollToFinishActivity()

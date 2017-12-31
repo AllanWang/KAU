@@ -205,7 +205,8 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
      * Scroll out contentView and finish the activity
      */
     override fun scrollToFinishActivity() {
-        val contentView = contentViewRef.get() ?: return KL.e("KauSwipe cannot scroll to finish as contentView is null. Is onPostCreate called?")
+        val contentView = contentViewRef.get()
+                ?: return KL.e { "KauSwipe cannot scroll to finish as contentView is null. Is onPostCreate called?" }
         val childWidth = contentView.width
         val top = 0
         val left = childWidth + OVERSCROLL_DISTANCE
@@ -222,6 +223,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (!swipeEnabled) return false
         try {
@@ -233,7 +235,8 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        val contentView = contentViewRef.get() ?: return KL.e("KauSwipe cannot change layout as contentView is null. Is onPostCreate called?")
+        val contentView = contentViewRef.get()
+                ?: return KL.e { "KauSwipe cannot change layout as contentView is null. Is onPostCreate called?" }
         inLayout = true
         val xOffset: Int
         val yOffset: Int
@@ -335,7 +338,8 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
 
         override fun onViewPositionChanged(changedView: View, left: Int, top: Int, dx: Int, dy: Int) {
             super.onViewPositionChanged(changedView, left, top, dx, dy)
-            val contentView = contentViewRef.get() ?: return KL.e("KauSwipe cannot change view position as contentView is null; is onPostCreate called?")
+            val contentView = contentViewRef.get()
+                    ?: return KL.e { "KauSwipe cannot change view position as contentView is null; is onPostCreate called?" }
             //make sure that we are using the proper axis
             scrollPercent = Math.abs(
                     if (horizontal) left.toFloat() / contentView.width

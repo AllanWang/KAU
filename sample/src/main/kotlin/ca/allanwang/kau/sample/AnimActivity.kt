@@ -32,7 +32,7 @@ class AnimActivity : KauBaseActivity() {
                 PERMISSION_CAMERA
         ).map { PermissionCheckbox(it) })
         adapter.withOnClickListener { _, _, item, _ ->
-            KL.d("Perm Click")
+            KL.d { "Perm Click" }
             kauRequestPermissions(item.permission) { granted, _ ->
                 toast("${item.permission} enabled: $granted")
                 adapter.notifyAdapterDataSetChanged()

@@ -6,6 +6,10 @@
     <item text="" />
     -->
 
+
+    <version title="v3.6.1" />
+    <item text=":core: [Breaking] Removed private text field and introduced lazy logging functions" />
+
     <version title="v3.6.0" />
     <item text=":adapter: Create withOnRepeatedClickListener" />
     <item text=":core: Create kotlin flyweight" />
@@ -13,7 +17,6 @@
     <item text=":core: [Breaking] Refactored startActivity functions" />
     <item text=":kpref-activity: [Breaking] Simplified listener function parameters" />
     <item text=":kpref-activity: [Breaking] Added dynamic string loading options" />
-    <item text="" />
     <item text="(See Migrations.md for further details on breaking changes)" />
 
     <version title="v3.5.1" />
