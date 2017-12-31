@@ -9,6 +9,7 @@
 
     <version title="v3.6.1" />
     <item text=":core: [Breaking] Removed private text field and introduced lazy logging functions" />
+    <item text=":adapter: Improve library item layout" />
 
     <version title="v3.6.0" />
     <item text=":adapter: Create withOnRepeatedClickListener" />
