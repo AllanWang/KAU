@@ -80,7 +80,7 @@ inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Bool
 
 inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) {
     Toast.makeText(this, text, duration).show()
-    if (log) KL.i("Toast: $text")
+    if (log) KL.i { "Toast: $text" }
 }
 
 //Resource retrievers
@@ -142,7 +142,7 @@ inline fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): Ma
     val builder = MaterialDialog.Builder(this)
     builder.action()
     if (isFinishing) {
-        KL.d("Material Dialog triggered from finishing context; did not show")
+        KL.d { "Material Dialog triggered from finishing context; did not show" }
         return builder.build()
     }
     return builder.show()

@@ -29,7 +29,7 @@ open class KPref {
     fun initialize(c: Context, preferenceName: String) {
         PREFERENCE_NAME = preferenceName
         sp = c.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
-        KL.d("Shared Preference $preferenceName has been initialized")
+        KL.d { "Shared Preference $preferenceName has been initialized" }
         val toDelete = deleteKeys()
         if (toDelete.isNotEmpty()) {
             val edit = sp.edit()

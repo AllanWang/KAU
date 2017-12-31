@@ -60,7 +60,7 @@ class EmailBuilder(val email: String, val subject: String) {
                         .append("\nApp Version Name: ").append(appInfo.versionName)
                         .append("\nApp Version Code: ").append(appInfo.versionCode).append("\n")
             } catch (e: PackageManager.NameNotFoundException) {
-                KL.e("EmailBuilder packageInfo not found")
+                KL.e{"EmailBuilder packageInfo not found"}
             }
         }
 

@@ -1,6 +1,7 @@
 # Changelog
 
 ## v3.6.0
+* :adapter: Create withOnRepeatedClickListener
 * :core: Create kotlin flyweight
 * :core: Created BundleUtils
 * :core: [Breaking] Refactored startActivity functions
