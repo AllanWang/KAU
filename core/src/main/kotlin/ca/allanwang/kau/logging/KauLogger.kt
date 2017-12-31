@@ -22,12 +22,16 @@ import android.util.Log
  *      if (BuildConfig.DEBUG) d(message)
  * }
  */
-open class KauLogger(val tag: String) {
+open class KauLogger(
+        /**
+         * Tag to be used for each log
+         */
+        val tag: String,
+        /**
+         * Toggle to dictate whether a message should be logged
+         */
+        var shouldLog: (priority: Int) -> Boolean = { true }) {
 
-    /**
-     * Global toggle to enable the whole logger
-     */
-    open var enabled = true
 
     inline fun v(message: () -> Any?) = log(Log.VERBOSE, message)
 
@@ -37,16 +41,15 @@ open class KauLogger(val tag: String) {
 
     inline fun e(t: Throwable? = null, message: () -> Any?) = log(Log.ERROR, message, t)
 
-    inline fun eThrow(message: Any) = with(message.toString()) {
-        log(Log.ERROR, { this }, Throwable(this))
+    inline fun eThrow(message: Any?) {
+        val msg = message?.toString() ?: return
+        log(Log.ERROR, { msg }, Throwable(msg))
     }
 
     inline fun log(priority: Int, message: () -> Any?, t: Throwable? = null) {
         if (shouldLog(priority))
             logImpl(priority, message()?.toString(), t)
     }
-
-    open fun shouldLog(priority: Int) = enabled
 
     open fun logImpl(priority: Int, message: String?, t: Throwable?) {
         val msg = message ?: "null"
@@ -85,8 +88,9 @@ class KauLoggerExtension(val tag: String, val logger: KauLogger) {
 
     inline fun e(t: Throwable? = null, message: () -> Any?) = log(Log.ERROR, message, t)
 
-    inline fun eThrow(message: Any) = with(message.toString()) {
-        log(Log.ERROR, { this }, Throwable(this))
+    inline fun eThrow(message: Any?) {
+        val msg = message?.toString() ?: return
+        log(Log.ERROR, { msg }, Throwable(msg))
     }
 
     inline fun log(priority: Int, message: () -> Any?, t: Throwable? = null) =
