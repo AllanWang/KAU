@@ -28,16 +28,26 @@ annotation class KauActivity
  * Counterpart of [Activity.startActivityForResult]
  * For starting activities without result, see [startActivity]
  */
-inline fun Activity.startActivityForResult(
-        clazz: Class<out Activity>,
+inline fun <reified T : Activity> Activity.startActivityForResult(
         requestCode: Int,
         bundleBuilder: Bundle.() -> Unit = {},
         intentBuilder: Intent.() -> Unit = {}) {
-    val intent = Intent(this, clazz)
+    val intent = Intent(this, T::class.java)
     intent.intentBuilder()
     val bundle = Bundle()
     bundle.bundleBuilder()
     startActivityForResult(intent, requestCode, bundle)
+}
+
+@Deprecated("Use reified generic instead of passing class",
+        ReplaceWith("startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)"),
+        DeprecationLevel.WARNING)
+inline fun <reified T : Activity> Activity.startActivityForResult(
+        clazz: Class<T>,
+        requestCode: Int,
+        bundleBuilder: Bundle.() -> Unit = {},
+        intentBuilder: Intent.() -> Unit = {}) {
+    startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)
 }
 
 /**

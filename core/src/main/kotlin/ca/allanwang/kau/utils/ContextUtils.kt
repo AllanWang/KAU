@@ -28,21 +28,32 @@ import com.afollestad.materialdialogs.MaterialDialog
 
 /**
  * Helper class to launch an activity from a context
- * Counterpart of [ContextCompat.startActivity]
+ * Counterpart of [Context.startActivity]
  * For starting activities for results, see [startActivityForResult]
  */
-inline fun Context.startActivity(
-        clazz: Class<out Activity>,
+inline fun <reified T : Activity> Context.startActivity(
         clearStack: Boolean = false,
         bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}) {
-    val intent = Intent(this, clazz)
+        intentBuilder: Intent.() -> Unit = {}
+) {
+    val intent = Intent(this, T::class.java)
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.intentBuilder()
     val bundle = Bundle()
     bundle.bundleBuilder()
-    ContextCompat.startActivity(this, intent, bundle)
-    if (this is Activity && clearStack) finish()
+    startActivity(intent, bundle)
+    if (clearStack && this is Activity) finish()
+}
+
+@Deprecated("Use reified generic instead of passing class",
+        ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
+        DeprecationLevel.WARNING)
+inline fun <reified T : Activity> Context.startActivity(
+        clazz: Class<T>,
+        clearStack: Boolean = false,
+        bundleBuilder: Bundle.() -> Unit = {},
+        intentBuilder: Intent.() -> Unit = {}) {
+    startActivity<T>(clearStack, bundleBuilder, intentBuilder)
 }
 
 
@@ -93,13 +104,13 @@ inline fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
 inline fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
 inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id) ?: throw KauException("Drawable with id $id not found")
 inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
-inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)
-inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)
+inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)!!
+inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)!!
 /**
  * Returns plural form of res. The quantity is also passed to the formatter as an int
  */
 inline fun Context.plural(@PluralsRes id: Int, quantity: Number)
-        = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
+        = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())!!
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {
