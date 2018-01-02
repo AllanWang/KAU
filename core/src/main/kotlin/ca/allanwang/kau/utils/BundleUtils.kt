@@ -36,8 +36,8 @@ fun Bundle.withSceneTransitionAnimation(context: Context) {
  * create a scene transition animation
  */
 fun Bundle.withSceneTransitionAnimation(parent: View, data: Map<Int, String>) =
-        withSceneTransitionAnimation(parent.context, data.mapKeys {
-            (id, _) -> parent.findViewById<View>(id)
+        withSceneTransitionAnimation(parent.context, data.mapKeys { (id, _) ->
+            parent.findViewById<View>(id)
         })
 
 @SuppressLint("NewApi")
@@ -45,6 +45,7 @@ fun Bundle.withSceneTransitionAnimation(context: Context, data: Map<View, String
     if (context !is Activity || !buildIsLollipopAndUp) return
     val options = ActivityOptions.makeSceneTransitionAnimation(context,
             *data.map { (view, tag) -> Pair(view, tag) }.toTypedArray())
+    putAll(options.toBundle())
 }
 
 fun Bundle.withCustomAnimation(context: Context,
