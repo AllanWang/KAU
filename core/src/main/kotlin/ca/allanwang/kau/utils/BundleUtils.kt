@@ -36,19 +36,16 @@ fun Bundle.withSceneTransitionAnimation(context: Context) {
  * create a scene transition animation
  */
 fun Bundle.withSceneTransitionAnimation(parent: View, data: Map<Int, String>) =
-        withSceneTransitionAnimation(data.mapKeys { (id, _) ->
+        withSceneTransitionAnimation(parent.context, data.mapKeys { (id, _) ->
             parent.findViewById<View>(id)
         })
 
 /**
  * Given a mapping of views to tags,
  * create a scene transition animation
- * It is inferred that all views hold a reference to the underlying activity,
- * so an explicit activity does not need to be passed
  */
 @SuppressLint("NewApi")
-fun Bundle.withSceneTransitionAnimation(data: Map<View, String>) {
-    val context = data.keys.firstOrNull()?.context
+fun Bundle.withSceneTransitionAnimation(context: Context, data: Map<View, String>) {
     if (context !is Activity || !buildIsLollipopAndUp) return
     val options = ActivityOptions.makeSceneTransitionAnimation(context,
             *data.map { (view, tag) -> Pair(view, tag) }.toTypedArray())
