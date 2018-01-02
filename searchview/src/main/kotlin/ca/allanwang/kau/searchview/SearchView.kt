@@ -321,12 +321,13 @@ class SearchView @JvmOverloads constructor(
         menuItem = null
     }
 
+    private val locations = IntArray(2)
+
     private fun configureCoords(item: MenuItem?) {
         item ?: return
         if (parent !is ViewGroup) return
         val view = parentViewGroup.findViewById<View>(item.itemId) ?: return
-        val locations = IntArray(2)
-        view.getLocationOnScreen(locations)
+        view.getLocationInWindow(locations)
         menuX = (locations[0] + view.width / 2)
         menuHalfHeight = view.height / 2
         menuY = (locations[1] + menuHalfHeight)
