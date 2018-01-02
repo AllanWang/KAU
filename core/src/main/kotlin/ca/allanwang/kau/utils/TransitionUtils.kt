@@ -23,7 +23,8 @@ class TransitionEndListener(val onEnd: (transition: Transition) -> Unit) : Trans
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-@KauUtils fun Transition.addEndListener(onEnd: (transition: Transition) -> Unit) {
+@KauUtils
+fun Transition.addEndListener(onEnd: (transition: Transition) -> Unit) {
     addListener(TransitionEndListener(onEnd))
 }
 
@@ -37,18 +38,21 @@ class SupportTransitionEndListener(val onEnd: (transition: SupportTransition) ->
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-@KauUtils fun SupportTransition.addEndListener(onEnd: (transition: SupportTransition) -> Unit) {
+@KauUtils
+fun SupportTransition.addEndListener(onEnd: (transition: SupportTransition) -> Unit) {
     addListener(SupportTransitionEndListener(onEnd))
 }
 
-@KauUtils fun ViewGroup.transitionAuto(builder: AutoTransition.() -> Unit = {}) {
+@KauUtils
+fun ViewGroup.transitionAuto(builder: AutoTransition.() -> Unit = {}) {
     if (!buildIsLollipopAndUp) return
     val transition = AutoTransition()
     transition.builder()
     TransitionManager.beginDelayedTransition(this, transition)
 }
 
-@KauUtils fun ViewGroup.transitionDelayed(@TransitionRes id: Int, builder: android.support.transition.Transition.() -> Unit = {}) {
+@KauUtils
+fun ViewGroup.transitionDelayed(@TransitionRes id: Int, builder: android.support.transition.Transition.() -> Unit = {}) {
     if (!buildIsLollipopAndUp) return
     val transition = TransitionInflater.from(context).inflateTransition(id)
     transition.builder()

@@ -162,22 +162,23 @@ class MainActivity : KPrefActivity() {
         }
 
         plainText(R.string.image_showcase) {
-            onClick = { kauLaunchMediaPicker(ImagePickerActivity::class.java, REQUEST_MEDIA) }
+            onClick = { kauLaunchMediaPicker<ImagePickerActivity>(REQUEST_MEDIA) }
         }
 
         plainText(R.string.video_overlay_showcase) {
-            onClick = { kauLaunchMediaPicker(VideoPickerActivityOverlay::class.java, REQUEST_MEDIA) }
+            onClick = { kauLaunchMediaPicker<VideoPickerActivityOverlay>(REQUEST_MEDIA) }
         }
 
         plainText(R.string.adapter_showcase) {
-            onClick = {    startActivity(AdapterActivity::class.java, bundleBuilder = {
+            onClick = {
+                startActivity<AdapterActivity>(bundleBuilder = {
                     withSceneTransitionAnimation(this@MainActivity)
                 })
             }
         }
 
         plainText(R.string.kau_about_app) {
-            onClick = { kauLaunchAbout(AboutActivity::class.java) }
+            onClick = { kauLaunchAbout<AboutActivity>() }
         }
 
         header(R.string.long_prefs)
@@ -268,7 +269,7 @@ class MainActivity : KPrefActivity() {
                 backgroundColor(KPrefSample.bgColor)
                 positiveColor(KPrefSample.accentColor)
             }
-            R.id.action_settings -> startActivity(AnimActivity::class.java)
+            R.id.action_settings -> startActivity<AnimActivity>()
             R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
             else -> return super.onOptionsItemSelected(item)
         }

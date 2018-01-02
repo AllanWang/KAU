@@ -1,7 +1,6 @@
 package ca.allanwang.kau.sample
 
 import android.app.Application
-import ca.allanwang.kau.logging.KL
 
 /**
  * Created by Allan Wang on 2017-06-08.

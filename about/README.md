@@ -18,8 +18,9 @@ Note that the viewpager by default will keep all panels in memory, so it's best 
 
 You may easily launch the activity through the binder:
 ```
-Activity.kauLaunchAbout(YourClass::class.java)
+Activity.kauLaunchAbout<T>()
 ```
+where `T` extends `AboutActivityBase`
 
 Be sure to include the activity in your Manifest and have it extend `Kau.About`, or any other style that achieves the same look.
 

@@ -11,8 +11,8 @@ import ca.allanwang.kau.utils.withSceneTransitionAnimation
 /**
  * About activity launcher
  */
-fun Activity.kauLaunchAbout(clazz: Class<out AboutActivityBase>) {
-    startActivity(clazz, bundleBuilder = {
+inline fun <reified T : AboutActivityBase> Activity.kauLaunchAbout() {
+    startActivity<T>(bundleBuilder = {
         withSceneTransitionAnimation(this@kauLaunchAbout)
     })
 }

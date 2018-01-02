@@ -28,8 +28,7 @@ fun Context.kauParseFaq(
         callback: (items: List<FaqItem>) -> Unit) {
     doAsync {
         val items = mutableListOf<FaqItem>()
-        resources.getXml(xmlRes).use {
-            parser: XmlResourceParser ->
+        resources.getXml(xmlRes).use { parser: XmlResourceParser ->
             var eventType = parser.eventType
             var question: Spanned? = null
             var flag = -1 //-1, 0, 1 -> invalid, question, answer

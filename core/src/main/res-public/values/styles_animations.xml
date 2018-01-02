@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+
     <style name="KauFadeIn" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/kau_fade_in</item>
         <item name="android:activityCloseEnterAnimation">@anim/kau_fade_in</item>

@@ -50,7 +50,7 @@ class AnimActivity : KauBaseActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(MainActivity::class.java, bundleBuilder = {
+        startActivity<MainActivity>(bundleBuilder = {
             withSlideOut(this@AnimActivity)
         })
     }

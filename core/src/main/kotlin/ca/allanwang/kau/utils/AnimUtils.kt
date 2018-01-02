@@ -18,7 +18,8 @@ import android.widget.TextView
  */
 
 @SuppressLint("NewApi")
-@KauUtils fun View.circularReveal(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils
+fun View.circularReveal(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
         visible()
@@ -45,7 +46,8 @@ import android.widget.TextView
 }
 
 @SuppressLint("NewApi")
-@KauUtils fun View.circularHide(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils
+fun View.circularHide(x: Int = 0, y: Int = 0, offset: Long = 0L, radius: Float = -1.0f, duration: Long = 500L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
         invisible()
@@ -72,7 +74,8 @@ import android.widget.TextView
     anim.start()
 }
 
-@KauUtils fun View.fadeIn(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils
+fun View.fadeIn(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
         visible()
@@ -93,7 +96,8 @@ import android.widget.TextView
     startAnimation(anim)
 }
 
-@KauUtils fun View.fadeOut(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
+@KauUtils
+fun View.fadeOut(offset: Long = 0L, duration: Long = 200L, onStart: (() -> Unit)? = null, onFinish: (() -> Unit)? = null) {
     if (!isAttachedToWindow) {
         onStart?.invoke()
         invisible()
@@ -117,13 +121,16 @@ import android.widget.TextView
     startAnimation(anim)
 }
 
-@KauUtils fun TextView.setTextWithFade(text: String, duration: Long = 200, onFinish: (() -> Unit)? = null) {
+@KauUtils
+fun TextView.setTextWithFade(text: String, duration: Long = 200, onFinish: (() -> Unit)? = null) {
     fadeOut(duration = duration, onFinish = {
         setText(text)
         fadeIn(duration = duration, onFinish = onFinish)
     })
 }
 
-@KauUtils fun TextView.setTextWithFade(@StringRes textId: Int, duration: Long = 200, onFinish: (() -> Unit)? = null) = setTextWithFade(context.getString(textId), duration, onFinish)
+@KauUtils
+fun TextView.setTextWithFade(@StringRes textId: Int, duration: Long = 200, onFinish: (() -> Unit)? = null) = setTextWithFade(context.getString(textId), duration, onFinish)
 
-@KauUtils fun ViewPropertyAnimator.scaleXY(value: Float) = scaleX(value).scaleY(value)
+@KauUtils
+fun ViewPropertyAnimator.scaleXY(value: Float) = scaleX(value).scaleY(value)

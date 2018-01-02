@@ -6,7 +6,7 @@ fun KPref.kprefSingle(key: String) = KPrefSingleDelegate(key, this)
 
 /**
  * Created by Allan Wang on 2017-06-07.
- * 
+ *
  * Singular KPref Delegate for booleans
  * When the shared pref is not initialized, it will return true then set the pref to false
  * All subsequent retrievals will be false

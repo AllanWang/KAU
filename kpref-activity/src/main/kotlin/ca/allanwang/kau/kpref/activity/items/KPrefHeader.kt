@@ -1,6 +1,5 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import android.view.View
 import ca.allanwang.kau.kpref.activity.R
 
 /**

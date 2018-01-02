@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <style name="Kau" parent="Theme.AppCompat.NoActionBar"/>
+
+    <style name="Kau" parent="Theme.AppCompat.NoActionBar" />
 
     <style name="Kau.Translucent">
         <item name="android:windowBackground">@color/kau_shadow_overlay</item>
