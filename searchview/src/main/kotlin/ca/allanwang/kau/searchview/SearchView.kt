@@ -229,7 +229,7 @@ class SearchView @JvmOverloads constructor(
         context.runOnUiThread { cardTransition(); adapter.clear() }
     }
 
-    val configs = Configs()
+    private val configs = Configs()
     //views
     private val shadow: View by bindView(R.id.kau_search_shadow)
     private val card: BoundedCardView by bindView(R.id.kau_search_cardview)
@@ -242,10 +242,16 @@ class SearchView @JvmOverloads constructor(
     private val recycler: RecyclerView by bindView(R.id.kau_search_recycler)
     private var textCallback: Debouncer2<String, SearchView>
             = debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
-    val adapter = FastItemAdapter<SearchItem>()
-    var menuItem: MenuItem? = null
+    private val adapter = FastItemAdapter<SearchItem>()
+    private var menuItem: MenuItem? = null
     val isOpen: Boolean
         get() = parent != null && card.isVisible
+
+    /**
+     * The current text located in our searchview
+     */
+    val query: String
+        get() = editText.text.toString().trim()
 
     /*
      * Ripple start points and search view offset
