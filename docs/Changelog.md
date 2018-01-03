@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.6.2
+* :core: Create more bundle utils to help with shared transition elements
+* :searchview: Add better encapsulation and use view location
+* :searchview: Add textClearedCallback
+
 ## v3.6.1
 * :core: [Breaking] Removed private text field and introduced lazy logging functions
 * :adapter: Improve library item layout
