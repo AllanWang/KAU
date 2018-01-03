@@ -1,6 +1,6 @@
 package ca.allanwang.kau.about
 
-import android.app.Activity
+import android.content.Context
 import ca.allanwang.kau.utils.startActivity
 import ca.allanwang.kau.utils.withSceneTransitionAnimation
 
@@ -11,8 +11,7 @@ import ca.allanwang.kau.utils.withSceneTransitionAnimation
 /**
  * About activity launcher
  */
-inline fun <reified T : AboutActivityBase> Activity.kauLaunchAbout() {
-    startActivity<T>(bundleBuilder = {
-        withSceneTransitionAnimation(this@kauLaunchAbout)
-    })
-}
+inline fun <reified T : AboutActivityBase> Context.kauLaunchAbout() =
+        startActivity<T>(bundleBuilder = {
+            withSceneTransitionAnimation(this@kauLaunchAbout)
+        })

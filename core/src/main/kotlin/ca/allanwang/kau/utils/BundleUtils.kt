@@ -6,6 +6,8 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.AnimRes
+import android.util.Pair
+import android.view.View
 import ca.allanwang.kau.R
 
 /**
@@ -25,7 +27,29 @@ infix fun Bundle.with(bundle: Bundle?): Bundle {
 @SuppressLint("NewApi")
 fun Bundle.withSceneTransitionAnimation(context: Context) {
     if (context !is Activity || !buildIsLollipopAndUp) return
-    this with ActivityOptions.makeSceneTransitionAnimation(context).toBundle()
+    val options = ActivityOptions.makeSceneTransitionAnimation(context)
+    putAll(options.toBundle())
+}
+
+/**
+ * Given the parent view and map of view ids to tags,
+ * create a scene transition animation
+ */
+fun Bundle.withSceneTransitionAnimation(parent: View, data: Map<Int, String>) =
+        withSceneTransitionAnimation(parent.context, data.mapKeys { (id, _) ->
+            parent.findViewById<View>(id)
+        })
+
+/**
+ * Given a mapping of views to tags,
+ * create a scene transition animation
+ */
+@SuppressLint("NewApi")
+fun Bundle.withSceneTransitionAnimation(context: Context, data: Map<View, String>) {
+    if (context !is Activity || !buildIsLollipopAndUp) return
+    val options = ActivityOptions.makeSceneTransitionAnimation(context,
+            *data.map { (view, tag) -> Pair(view, tag) }.toTypedArray())
+    putAll(options.toBundle())
 }
 
 fun Bundle.withCustomAnimation(context: Context,

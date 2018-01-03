@@ -2,6 +2,7 @@
 
 ## v3.6.1
 * :core: [Breaking] Removed private text field and introduced lazy logging functions
+* :adapter: Improve library item layout
 
 ## v3.6.0
 * :adapter: Create withOnRepeatedClickListener

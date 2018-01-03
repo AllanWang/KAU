@@ -1,10 +1,11 @@
 package ca.allanwang.kau.sample
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import ca.allanwang.kau.about.kauLaunchAbout
+import ca.allanwang.kau.about.AboutActivityBase
 import ca.allanwang.kau.email.sendEmail
 import ca.allanwang.kau.kpref.activity.CoreAttributeContract
 import ca.allanwang.kau.kpref.activity.KPrefActivity
@@ -287,3 +288,8 @@ class MainActivity : KPrefActivity() {
         }
     }
 }
+
+inline fun <reified T : AboutActivityBase> Context.kauLaunchAbout() =
+        startActivity<T>(bundleBuilder = {
+            withSceneTransitionAnimation(this@kauLaunchAbout)
+        })
