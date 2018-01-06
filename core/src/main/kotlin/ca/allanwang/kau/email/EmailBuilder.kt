@@ -26,10 +26,15 @@ class EmailBuilder(val email: String, val subject: String) {
     var footer: String? = null
     private val pairs: MutableMap<String, String> = mutableMapOf()
     private val packages: MutableList<Package> = mutableListOf()
+    private val attachments: ArrayList<Uri> = arrayListOf()
 
     fun checkPackage(packageName: String, appName: String) = packages.add(Package(packageName, appName))
 
     fun addItem(key: String, value: String) = pairs.put(key, value)
+
+    fun addAttachment(uri: Uri) = attachments.add(uri)
+
+    var extras: Intent.() -> Unit = {}
 
     data class Package(val packageName: String, val appName: String)
 
@@ -84,15 +89,16 @@ class EmailBuilder(val email: String, val subject: String) {
      * Create the intent and send the request when possible
      * If a stream uri is added, it will automatically be flagged to pass on read permissions
      */
-    inline fun execute(context: Context, extras: Intent.() -> Unit = {}) {
+    fun execute(context: Context) {
         val intent = getIntent(context)
         intent.extras()
         val packageName = intent.resolveActivity(context.packageManager)?.packageName
                 ?: return context.toast(R.string.kau_error_no_email, log = true)
 
-        val stream = intent.extras?.get(Intent.EXTRA_STREAM) as? Uri
-        if (stream != null)
-            context.grantUriPermission(packageName, stream, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        if (attachments.isNotEmpty()) {
+            attachments.forEach { context.grantUriPermission(packageName, it, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
+            intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments)
+        }
 
         context.startActivity(Intent.createChooser(intent, context.string(R.string.kau_send_via)))
     }
