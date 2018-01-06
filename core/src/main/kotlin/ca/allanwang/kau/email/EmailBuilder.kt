@@ -80,13 +80,21 @@ class EmailBuilder(val email: String, val subject: String) {
         return intent
     }
 
+    /**
+     * Create the intent and send the request when possible
+     * If a stream uri is added, it will automatically be flagged to pass on read permissions
+     */
     inline fun execute(context: Context, extras: Intent.() -> Unit = {}) {
         val intent = getIntent(context)
         intent.extras()
-        if (intent.resolveActivity(context.packageManager) != null)
-            context.startActivity(Intent.createChooser(intent, context.string(R.string.kau_send_via)))
-        else
-            context.toast("Cannot resolve email activity", log = true)
+        val packageName = intent.resolveActivity(context.packageManager)?.packageName
+                ?: return context.toast(R.string.kau_error_no_email, log = true)
+
+        val stream = intent.extras?.get(Intent.EXTRA_STREAM) as? Uri
+        if (stream != null)
+            context.grantUriPermission(packageName, stream, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        context.startActivity(Intent.createChooser(intent, context.string(R.string.kau_send_via)))
     }
 }
 
