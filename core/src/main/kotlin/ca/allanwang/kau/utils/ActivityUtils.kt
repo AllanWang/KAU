@@ -31,23 +31,22 @@ annotation class KauActivity
 inline fun <reified T : Activity> Activity.startActivityForResult(
         requestCode: Int,
         bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}) {
-    val intent = Intent(this, T::class.java)
-    intent.intentBuilder()
-    val bundle = Bundle()
-    bundle.bundleBuilder()
-    startActivityForResult(intent, requestCode, bundle)
-}
+        intentBuilder: Intent.() -> Unit = {}
+) = startActivityForResult(T::class.java, requestCode, bundleBuilder, intentBuilder)
 
 @Deprecated("Use reified generic instead of passing class",
         ReplaceWith("startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)"),
         DeprecationLevel.WARNING)
-inline fun <reified T : Activity> Activity.startActivityForResult(
+inline fun <T : Activity> Activity.startActivityForResult(
         clazz: Class<T>,
         requestCode: Int,
         bundleBuilder: Bundle.() -> Unit = {},
         intentBuilder: Intent.() -> Unit = {}) {
-    startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)
+    val intent = Intent(this, clazz)
+    intent.intentBuilder()
+    val bundle = Bundle()
+    bundle.bundleBuilder()
+    startActivityForResult(intent, requestCode, bundle)
 }
 
 /**

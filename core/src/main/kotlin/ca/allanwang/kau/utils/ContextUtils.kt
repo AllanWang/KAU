@@ -35,25 +35,23 @@ inline fun <reified T : Activity> Context.startActivity(
         clearStack: Boolean = false,
         bundleBuilder: Bundle.() -> Unit = {},
         intentBuilder: Intent.() -> Unit = {}
-) {
-    val intent = Intent(this, T::class.java)
+) = startActivity(T::class.java, clearStack, bundleBuilder, intentBuilder)
+
+@Deprecated("Use reified generic instead of passing class",
+        ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
+        DeprecationLevel.WARNING)
+inline fun <T : Activity> Context.startActivity(
+        clazz: Class<T>,
+        clearStack: Boolean = false,
+        bundleBuilder: Bundle.() -> Unit = {},
+        intentBuilder: Intent.() -> Unit = {}) {
+    val intent = Intent(this, clazz)
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.intentBuilder()
     val bundle = Bundle()
     bundle.bundleBuilder()
     startActivity(intent, bundle)
     if (clearStack && this is Activity) finish()
-}
-
-@Deprecated("Use reified generic instead of passing class",
-        ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
-        DeprecationLevel.WARNING)
-inline fun <reified T : Activity> Context.startActivity(
-        clazz: Class<T>,
-        clearStack: Boolean = false,
-        bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}) {
-    startActivity<T>(clearStack, bundleBuilder, intentBuilder)
 }
 
 
