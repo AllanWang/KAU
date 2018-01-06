@@ -33,7 +33,7 @@ class EmailBuilder(val email: String, val subject: String) {
 
     data class Package(val packageName: String, val appName: String)
 
-    fun execute(context: Context) {
+    fun getIntent(context: Context): Intent {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:$email"))
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
         val emailBuilder = StringBuilder()
@@ -77,6 +77,11 @@ class EmailBuilder(val email: String, val subject: String) {
             emailBuilder.append("\n").append(footer)
 
         intent.putExtra(Intent.EXTRA_TEXT, emailBuilder.toString())
+        return intent
+    }
+
+    fun execute(context: Context) {
+        val intent = getIntent(context)
         if (intent.resolveActivity(context.packageManager) != null)
             context.startActivity(Intent.createChooser(intent, context.resources.getString(R.string.kau_send_via)))
         else
