@@ -80,10 +80,11 @@ class EmailBuilder(val email: String, val subject: String) {
         return intent
     }
 
-    fun execute(context: Context) {
+    inline fun execute(context: Context, extras: Intent.() -> Unit = {}) {
         val intent = getIntent(context)
+        intent.extras()
         if (intent.resolveActivity(context.packageManager) != null)
-            context.startActivity(Intent.createChooser(intent, context.resources.getString(R.string.kau_send_via)))
+            context.startActivity(Intent.createChooser(intent, context.string(R.string.kau_send_via)))
         else
             context.toast("Cannot resolve email activity", log = true)
     }
