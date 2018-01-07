@@ -41,9 +41,10 @@ class EmailBuilder(val email: String, val subject: String) {
     data class Package(val packageName: String, val appName: String)
 
     fun getIntent(context: Context): Intent {
-        val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email"))
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        val intent = Intent(Intent.ACTION_SEND)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+                .putExtra(Intent.EXTRA_SUBJECT, subject)
         val emailBuilder = StringBuilder()
         emailBuilder.append(message).append("\n\n")
         if (deviceDetails) {
