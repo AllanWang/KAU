@@ -26,20 +26,23 @@ class EmailBuilder(val email: String, val subject: String) {
     var footer: String? = null
     private val pairs: MutableMap<String, String> = mutableMapOf()
     private val packages: MutableList<Package> = mutableListOf()
-    private val attachments: ArrayList<Uri> = arrayListOf()
+    private var attachment: Uri? = null
 
     fun checkPackage(packageName: String, appName: String) = packages.add(Package(packageName, appName))
 
     fun addItem(key: String, value: String) = pairs.put(key, value)
 
-    fun addAttachment(uri: Uri) = attachments.add(uri)
+    fun addAttachment(uri: Uri) {
+        attachment = uri
+    }
 
     var extras: Intent.() -> Unit = {}
 
     data class Package(val packageName: String, val appName: String)
 
     fun getIntent(context: Context): Intent {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:$email"))
+        val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
         val emailBuilder = StringBuilder()
         emailBuilder.append(message).append("\n\n")
@@ -95,9 +98,10 @@ class EmailBuilder(val email: String, val subject: String) {
         val packageName = intent.resolveActivity(context.packageManager)?.packageName
                 ?: return context.toast(R.string.kau_error_no_email, log = true)
 
-        if (attachments.isNotEmpty()) {
-            attachments.forEach { context.grantUriPermission(packageName, it, Intent.FLAG_GRANT_READ_URI_PERMISSION) }
-            intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, attachments)
+        val attachment = this.attachment
+        if (attachment != null) {
+            context.grantUriPermission(packageName, attachment, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            intent.putExtra(Intent.EXTRA_STREAM, attachment)
         }
 
         context.startActivity(Intent.createChooser(intent, context.string(R.string.kau_send_via)))
