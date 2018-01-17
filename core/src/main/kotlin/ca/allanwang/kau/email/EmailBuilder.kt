@@ -86,6 +86,7 @@ class EmailBuilder(val email: String, val subject: String) {
             emailBuilder.append("\n").append(footer)
 
         intent.putExtra(Intent.EXTRA_TEXT, emailBuilder.toString())
+        intent.type = "text/plain"
         return intent
     }
 
