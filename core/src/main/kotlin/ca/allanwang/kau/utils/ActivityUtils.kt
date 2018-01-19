@@ -28,6 +28,7 @@ annotation class KauActivity
  * Counterpart of [Activity.startActivityForResult]
  * For starting activities without result, see [startActivity]
  */
+@Suppress("DEPRECATION")
 inline fun <reified T : Activity> Activity.startActivityForResult(
         requestCode: Int,
         bundleBuilder: Bundle.() -> Unit = {},
@@ -46,7 +47,7 @@ inline fun <T : Activity> Activity.startActivityForResult(
     intent.intentBuilder()
     val bundle = Bundle()
     bundle.bundleBuilder()
-    startActivityForResult(intent, requestCode, bundle)
+    startActivityForResult(intent, requestCode, if (bundle.isEmpty) null else bundle)
 }
 
 /**

@@ -26,16 +26,25 @@ class EmailBuilder(val email: String, val subject: String) {
     var footer: String? = null
     private val pairs: MutableMap<String, String> = mutableMapOf()
     private val packages: MutableList<Package> = mutableListOf()
+    private var attachment: Uri? = null
 
     fun checkPackage(packageName: String, appName: String) = packages.add(Package(packageName, appName))
 
     fun addItem(key: String, value: String) = pairs.put(key, value)
 
+    fun addAttachment(uri: Uri) {
+        attachment = uri
+    }
+
+    var extras: Intent.() -> Unit = {}
+
     data class Package(val packageName: String, val appName: String)
 
     fun getIntent(context: Context): Intent {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("mailto:$email"))
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        val intent = Intent(Intent.ACTION_SEND)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+                .putExtra(Intent.EXTRA_SUBJECT, subject)
         val emailBuilder = StringBuilder()
         emailBuilder.append(message).append("\n\n")
         if (deviceDetails) {
@@ -77,16 +86,27 @@ class EmailBuilder(val email: String, val subject: String) {
             emailBuilder.append("\n").append(footer)
 
         intent.putExtra(Intent.EXTRA_TEXT, emailBuilder.toString())
+        intent.type = "text/plain"
         return intent
     }
 
-    inline fun execute(context: Context, extras: Intent.() -> Unit = {}) {
+    /**
+     * Create the intent and send the request when possible
+     * If a stream uri is added, it will automatically be flagged to pass on read permissions
+     */
+    fun execute(context: Context) {
         val intent = getIntent(context)
         intent.extras()
-        if (intent.resolveActivity(context.packageManager) != null)
-            context.startActivity(Intent.createChooser(intent, context.string(R.string.kau_send_via)))
-        else
-            context.toast("Cannot resolve email activity", log = true)
+        val packageName = intent.resolveActivity(context.packageManager)?.packageName
+                ?: return context.toast(R.string.kau_error_no_email, log = true)
+
+        val attachment = this.attachment
+        if (attachment != null) {
+            context.grantUriPermission(packageName, attachment, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            intent.putExtra(Intent.EXTRA_STREAM, attachment)
+        }
+
+        context.startActivity(Intent.createChooser(intent, context.string(R.string.kau_send_via)))
     }
 }
 

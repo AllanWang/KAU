@@ -8,6 +8,8 @@
 
 
     <version title="v3.6.2" />
+    <item text=":core: Pass null instead of bundle if bundle is empty for startActivity" />
+    <item text=":core: Support sending attachments for email" />
     <item text=":core: Create more bundle utils to help with shared transition elements" />
     <item text=":searchview: Add better encapsulation and use view location" />
     <item text=":searchview: Add textClearedCallback" />
