@@ -17,7 +17,8 @@ import android.provider.Settings
  * @param packageName packageId
  * @return true if installed with activity, false otherwise
  */
-@KauUtils fun Context.isAppInstalled(packageName: String): Boolean {
+@KauUtils
+fun Context.isAppInstalled(packageName: String): Boolean {
     try {
         packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
         return true
@@ -26,7 +27,8 @@ import android.provider.Settings
     }
 }
 
-@KauUtils fun Context.isAppEnabled(packageName: String): Boolean {
+@KauUtils
+fun Context.isAppEnabled(packageName: String): Boolean {
     try {
         return packageManager.getApplicationInfo(packageName, 0).enabled
     } catch (e: Exception) {
@@ -34,7 +36,8 @@ import android.provider.Settings
     }
 }
 
-@KauUtils fun Context.showAppInfo(packageName: String) {
+@KauUtils
+fun Context.showAppInfo(packageName: String) {
     try {
         //Open the specific App Info page:
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)

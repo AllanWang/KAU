@@ -16,7 +16,7 @@ dependencies {
     api "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
 
     api "com.afollestad.material-dialogs:core:${MATERIAL_DIALOG}"
-    
+
     api "org.jetbrains.anko:anko-commons:${ANKO}"
 }
 

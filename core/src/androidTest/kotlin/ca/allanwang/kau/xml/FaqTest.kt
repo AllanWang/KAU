@@ -17,8 +17,7 @@ class FaqTest {
 
     @Test
     fun simpleTest() {
-        InstrumentationRegistry.getTargetContext().kauParseFaq(R.xml.test_faq) {
-            data ->
+        InstrumentationRegistry.getTargetContext().kauParseFaq(R.xml.test_faq) { data ->
             assertEquals(2, data.size, "FAQ size is incorrect")
             assertEquals("1. This is a question", data.first().first.toString(), "First question does not match")
             assertEquals("This is an answer", data.first().second.toString(), "First answer does not match")
@@ -29,8 +28,7 @@ class FaqTest {
 
     @Test
     fun withoutNumbering() {
-        InstrumentationRegistry.getTargetContext().kauParseFaq(R.xml.test_faq, false) {
-            data ->
+        InstrumentationRegistry.getTargetContext().kauParseFaq(R.xml.test_faq, false) { data ->
             assertEquals(2, data.size, "FAQ size is incorrect")
             assertEquals("This is a question", data.first().first.toString(), "First question does not match")
             assertEquals("This is an answer", data.first().second.toString(), "First answer does not match")

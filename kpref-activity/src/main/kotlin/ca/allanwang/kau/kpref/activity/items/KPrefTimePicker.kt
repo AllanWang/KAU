@@ -1,9 +1,9 @@
 package ca.allanwang.kau.kpref.activity.items
 
 import android.app.TimePickerDialog
-import android.view.View
 import android.widget.TimePicker
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
 import java.util.*
 
@@ -17,8 +17,13 @@ import java.util.*
  */
 open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<Int>(builder) {
 
-    interface KPrefTimeContract : KPrefText.KPrefTextContract<Int> {
+    interface KPrefTimeContract : KPrefText.KPrefTextContract<Int>, TimePickerDialog.OnTimeSetListener {
         var use24HourFormat: Boolean
+    }
+
+    override fun KClick<Int>.defaultOnClick() {
+        val (hour, min) = pref.splitTime
+        TimePickerDialog(itemView.context, builder, hour, min, builder.use24HourFormat).show()
     }
 
     /**
@@ -26,10 +31,10 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
      */
     class KPrefTimeBuilder(
             globalOptions: GlobalOptions,
-            titleRes: Int,
+            titleId: Int,
             getter: () -> Int,
             setter: (value: Int) -> Unit
-    ) : KPrefTimeContract, BaseContract<Int> by BaseBuilder<Int>(globalOptions, titleRes, getter, setter), TimePickerDialog.OnTimeSetListener {
+    ) : KPrefTimeContract, BaseContract<Int> by BaseBuilder<Int>(globalOptions, titleId, getter, setter) {
 
         override var use24HourFormat: Boolean = false
 
@@ -46,19 +51,14 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
                 String.format(Locale.CANADA, "%d:%02d %s", hour % 12, min, if (hour >= 12) "PM" else "AM")
         }
 
-        override var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<Int>) -> Boolean)? = { itemView, _, item ->
-            val (hour, min) = item.pref.splitTime
-            TimePickerDialog(itemView.context, this, hour, min, use24HourFormat).show()
-            true
-        }
-
-        private val Int.splitTime: Pair<Int, Int>
-            get() = Pair(this / 100, this % 100)
-
-        private val Pair<Int, Int>.mergeTime: Int
-            get() = first * 100 + second
     }
 
     override fun getType(): Int = R.id.kau_item_pref_time_picker
 
 }
+
+private val Int.splitTime: Pair<Int, Int>
+    get() = Pair(this / 100, this % 100)
+
+private val Pair<Int, Int>.mergeTime: Int
+    get() = first * 100 + second

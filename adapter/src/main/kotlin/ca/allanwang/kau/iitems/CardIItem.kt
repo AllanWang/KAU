@@ -27,7 +27,7 @@ import com.mikepenz.iconics.typeface.IIcon
 class CardIItem(
         val builder: Config.() -> Unit = {}
 ) : KauIItem<CardIItem, CardIItem.ViewHolder>(
-        R.layout.kau_iitem_card, { ViewHolder(it) }, R.id.kau_item_card
+        R.layout.kau_iitem_card, ::ViewHolder, R.id.kau_item_card
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
@@ -69,7 +69,7 @@ class CardIItem(
         var imageRes: Int = -1
     }
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>?) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         with(holder.itemView.context) context@ {
             with(configs) {

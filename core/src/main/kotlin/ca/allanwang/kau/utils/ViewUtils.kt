@@ -72,11 +72,13 @@ fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: S
 fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {})
         = snackbar(context.string(textId), duration, builder)
 
-@KauUtils fun TextView.setTextIfValid(@StringRes id: Int) {
+@KauUtils
+fun TextView.setTextIfValid(@StringRes id: Int) {
     if (id > 0) text = context.string(id)
 }
 
-@KauUtils fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
+@KauUtils
+fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
     if (icon == null) return
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
 }
@@ -87,42 +89,50 @@ fun FloatingActionButton.showIf(show: Boolean) = if (show) show() else hide()
 
 fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
 
-@KauUtils fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View = LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
+@KauUtils
+fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View = LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
 /**
  * Set left margin to a value in px
  */
-@KauUtils fun View.setMarginLeft(margin: Int) = setMargins(margin, KAU_LEFT)
+@KauUtils
+fun View.setMarginLeft(margin: Int) = setMargins(margin, KAU_LEFT)
 
 /**
  * Set top margin to a value in px
  */
-@KauUtils fun View.setMarginTop(margin: Int) = setMargins(margin, KAU_TOP)
+@KauUtils
+fun View.setMarginTop(margin: Int) = setMargins(margin, KAU_TOP)
 
 /**
  * Set right margin to a value in px
  */
-@KauUtils fun View.setMarginRight(margin: Int) = setMargins(margin, KAU_RIGHT)
+@KauUtils
+fun View.setMarginRight(margin: Int) = setMargins(margin, KAU_RIGHT)
 
 /**
  * Set bottom margin to a value in px
  */
-@KauUtils fun View.setMarginBottom(margin: Int) = setMargins(margin, KAU_BOTTOM)
+@KauUtils
+fun View.setMarginBottom(margin: Int) = setMargins(margin, KAU_BOTTOM)
 
 /**
  * Set left and right margins to a value in px
  */
-@KauUtils fun View.setMarginHorizontal(margin: Int) = setMargins(margin, KAU_HORIZONTAL)
+@KauUtils
+fun View.setMarginHorizontal(margin: Int) = setMargins(margin, KAU_HORIZONTAL)
 
 /**
  * Set top and bottom margins to a value in px
  */
-@KauUtils fun View.setMarginVertical(margin: Int) = setMargins(margin, KAU_VERTICAL)
+@KauUtils
+fun View.setMarginVertical(margin: Int) = setMargins(margin, KAU_VERTICAL)
 
 /**
  * Set all margins to a value in px
  */
-@KauUtils fun View.setMargin(margin: Int) = setMargins(margin, KAU_ALL)
+@KauUtils
+fun View.setMargin(margin: Int) = setMargins(margin, KAU_ALL)
 
 /**
  * Base margin setter
@@ -142,37 +152,44 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
 /**
  * Set left padding to a value in px
  */
-@KauUtils fun View.setPaddingLeft(padding: Int) = setPadding(padding, KAU_LEFT)
+@KauUtils
+fun View.setPaddingLeft(padding: Int) = setPadding(padding, KAU_LEFT)
 
 /**
  * Set top padding to a value in px
  */
-@KauUtils fun View.setPaddingTop(padding: Int) = setPadding(padding, KAU_TOP)
+@KauUtils
+fun View.setPaddingTop(padding: Int) = setPadding(padding, KAU_TOP)
 
 /**
  * Set right padding to a value in px
  */
-@KauUtils fun View.setPaddingRight(padding: Int) = setPadding(padding, KAU_RIGHT)
+@KauUtils
+fun View.setPaddingRight(padding: Int) = setPadding(padding, KAU_RIGHT)
 
 /**
  * Set bottom padding to a value in px
  */
-@KauUtils fun View.setPaddingBottom(padding: Int) = setPadding(padding, KAU_BOTTOM)
+@KauUtils
+fun View.setPaddingBottom(padding: Int) = setPadding(padding, KAU_BOTTOM)
 
 /**
  * Set left and right padding to a value in px
  */
-@KauUtils fun View.setPaddingHorizontal(padding: Int) = setPadding(padding, KAU_HORIZONTAL)
+@KauUtils
+fun View.setPaddingHorizontal(padding: Int) = setPadding(padding, KAU_HORIZONTAL)
 
 /**
  * Set top and bottom padding to a value in px
  */
-@KauUtils fun View.setPaddingVertical(padding: Int) = setPadding(padding, KAU_VERTICAL)
+@KauUtils
+fun View.setPaddingVertical(padding: Int) = setPadding(padding, KAU_VERTICAL)
 
 /**
  * Set all padding to a value in px
  */
-@KauUtils fun View.setPadding(padding: Int) = setPadding(padding, KAU_ALL)
+@KauUtils
+fun View.setPadding(padding: Int) = setPadding(padding, KAU_ALL)
 
 /**
  * Base padding setter
@@ -186,19 +203,22 @@ fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
     )
 }
 
-@KauUtils fun View.hideKeyboard() {
+@KauUtils
+fun View.hideKeyboard() {
     clearFocus()
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
 }
 
-@KauUtils fun View.showKeyboard() {
+@KauUtils
+fun View.showKeyboard() {
     requestFocus()
     (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
 }
 
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-@KauUtils fun View.setRippleBackground(@ColorInt foregroundColor: Int, @ColorInt backgroundColor: Int) {
+@KauUtils
+fun View.setRippleBackground(@ColorInt foregroundColor: Int, @ColorInt backgroundColor: Int) {
     background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }
 
@@ -259,7 +279,7 @@ fun FloatingActionButton.hideOnDownwardsScroll(recycler: RecyclerView) {
     recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            if (newState == android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE && !isShown) show();
+            if (newState == android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE && !isShown) show()
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

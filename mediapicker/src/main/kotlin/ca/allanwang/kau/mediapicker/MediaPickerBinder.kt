@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import ca.allanwang.kau.utils.startActivityForResult
+import ca.allanwang.kau.utils.withSceneTransitionAnimation
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -18,8 +19,11 @@ import com.bumptech.glide.request.RequestOptions
 /**
  * Image picker launchers
  */
-fun Activity.kauLaunchMediaPicker(clazz: Class<out MediaPickerCore<*>>, requestCode: Int) {
-    startActivityForResult(clazz, requestCode, transition = MediaPickerActivityOverlayBase::class.java.isAssignableFrom(clazz))
+inline fun <reified T : MediaPickerCore<*>> Activity.kauLaunchMediaPicker(requestCode: Int) {
+    startActivityForResult<T>(requestCode, bundleBuilder = {
+        if (MediaPickerActivityOverlayBase::class.java.isAssignableFrom(T::class.java))
+            withSceneTransitionAnimation(this@kauLaunchMediaPicker)
+    })
 }
 
 /**

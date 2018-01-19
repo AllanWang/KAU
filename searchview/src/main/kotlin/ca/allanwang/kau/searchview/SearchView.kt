@@ -52,19 +52,23 @@ class SearchView @JvmOverloads constructor(
      * However, these are the main config options
      */
     class Configs {
+
         /**
          * The foreground color accounts for all text colors and icon colors
          * Various alpha levels may be used for sub texts/dividers etc
          */
         var foregroundColor: Int = SearchItem.foregroundColor
+
         /**
          * Namely the background for the card and recycler view
          */
         var backgroundColor: Int = SearchItem.backgroundColor
+
         /**
          * Icon for the leftmost ImageView, which typically contains the hamburger menu/back arror
          */
         var navIcon: IIcon? = GoogleMaterial.Icon.gmd_arrow_back
+
         /**
          * Optional icon just to the left of the clear icon
          * This is not implemented by default, but can be used for anything, such as mic or redirects
@@ -72,43 +76,53 @@ class SearchView @JvmOverloads constructor(
          * Set the iicon as null to hide the extra icon
          */
         var extraIcon: Pair<IIcon, OnClickListener>? = null
+
         /**
          * Icon for the rightmost ImageView, which typically contains a close icon
          */
         var clearIcon: IIcon? = GoogleMaterial.Icon.gmd_clear
+
         /**
          * Duration for the circular reveal animation
          */
         var revealDuration: Long = 300L
+
         /**
          * Duration for the auto transition, which is namely used to resize the recycler view
          */
         var transitionDuration: Long = 100L
+
         /**
          * Defines whether the edit text and mainAdapter should clear themselves when the searchView is closed
          */
         var shouldClearOnClose: Boolean = false
+
         /**
          * Callback that will be called every time the searchView opens
          */
         var openListener: ((searchView: SearchView) -> Unit)? = null
+
         /**
          * Callback that will be called every time the searchView closes
          */
         var closeListener: ((searchView: SearchView) -> Unit)? = null
+
         /**
          * Draw a divider between the search bar and the suggestion items
          * The divider is colored based on the [foregroundColor]
          */
         var withDivider: Boolean = true
+
         /**
          * Hint string to be set in the searchView
          */
         var hintText: String? = null
+
         /**
          * Hint string res to be set in the searchView
          */
         var hintTextRes: Int = -1
+
         /**
          * StringRes for a "no results found" item
          * If [results] is ever set to an empty list, it will default to
@@ -118,29 +132,46 @@ class SearchView @JvmOverloads constructor(
          * which you may use
          */
         var noResultsFound: Int = -1
+
         /**
          * Callback for when the query changes
+         * This callback does not run on the ui thread!
+         * It is always on a worker thread, so there is no need for asynchronous calls
+         * Likewise, calls modifying the UI should be passed through [runOnUiThread]
          */
         var textCallback: (query: String, searchView: SearchView) -> Unit = { _, _ -> }
+
+        /**
+         * Callback for when the query is changed to an empty string
+         * Typically, this may be ignored as the adapter will simply be cleared,
+         * but if we wish to do something else, we may pass a function
+         * Returns [true] if the action was consumed, [false] otherwise (to execute default behaviour)
+         */
+        var textClearedCallback: (searchView: SearchView) -> Boolean = { _ -> false }
+
         /**
          * Callback for when the search action key is detected from the keyboard
          * Returns true if the searchbar should close afterwards, and false otherwise
          */
         var searchCallback: (query: String, searchView: SearchView) -> Boolean = { _, _ -> false }
+
         /**
          * Debouncing interval between callbacks
          */
         var textDebounceInterval: Long = 0
+
         /**
          * Click event for suggestion items
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
          */
         var onItemClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit = { _, _, _, _ -> }
+
         /**
          * Long click event for suggestion items
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
          */
         var onItemLongClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit = { _, _, _, _ -> }
+
         /**
          * If a [SearchItem]'s title contains the submitted query, make that portion bold
          * See [SearchItem.withHighlights]
@@ -198,7 +229,7 @@ class SearchView @JvmOverloads constructor(
         context.runOnUiThread { cardTransition(); adapter.clear() }
     }
 
-    val configs = Configs()
+    private val configs = Configs()
     //views
     private val shadow: View by bindView(R.id.kau_search_shadow)
     private val card: BoundedCardView by bindView(R.id.kau_search_cardview)
@@ -210,11 +241,17 @@ class SearchView @JvmOverloads constructor(
     private val divider: View by bindView(R.id.kau_search_divider)
     private val recycler: RecyclerView by bindView(R.id.kau_search_recycler)
     private var textCallback: Debouncer2<String, SearchView>
-            = debounce(0) { query, _ -> KL.d("Search query $query found; set your own textCallback") }
-    val adapter = FastItemAdapter<SearchItem>()
-    var menuItem: MenuItem? = null
+            = debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
+    private val adapter = FastItemAdapter<SearchItem>()
+    private var menuItem: MenuItem? = null
     val isOpen: Boolean
         get() = parent != null && card.isVisible
+
+    /**
+     * The current text located in our searchview
+     */
+    val query: String
+        get() = editText.text.toString().trim()
 
     /*
      * Ripple start points and search view offset
@@ -258,8 +295,12 @@ class SearchView @JvmOverloads constructor(
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                if (s.isNotBlank()) textCallback(s.toString().trim(), this@SearchView)
-                else clearResults()
+                val text = s.toString().trim()
+                textCallback.cancel()
+                if (text.isNotEmpty())
+                    textCallback(text, this@SearchView)
+                else if (!configs.textClearedCallback(this@SearchView))
+                    clearResults()
             }
         })
         editText.setOnEditorActionListener { _, actionId, _ ->
@@ -321,12 +362,13 @@ class SearchView @JvmOverloads constructor(
         menuItem = null
     }
 
+    private val locations = IntArray(2)
+
     private fun configureCoords(item: MenuItem?) {
         item ?: return
         if (parent !is ViewGroup) return
         val view = parentViewGroup.findViewById<View>(item.itemId) ?: return
-        val locations = IntArray(2)
-        view.getLocationOnScreen(locations)
+        view.getLocationInWindow(locations)
         menuX = (locations[0] + view.width / 2)
         menuHalfHeight = view.height / 2
         menuY = (locations[1] + menuHalfHeight)

@@ -35,7 +35,6 @@ import android.view.animation.Interpolator;
 
 import java.util.Arrays;
 
-import ca.allanwang.kau.logging.KL;
 import ca.allanwang.kau.ui.R;
 import ca.allanwang.kau.utils.AnimHolder;
 import ca.allanwang.kau.utils.ColorUtilsKt;
@@ -640,9 +639,6 @@ public class InkPageIndicator extends View implements ViewPager.OnPageChangeList
 
     private void setJoiningFraction(int leftDot, float fraction) {
         if (leftDot < joiningFractions.length) {
-
-            if (leftDot == 1) KL.INSTANCE.v("PageIndicator dot 1 fraction:\t" + fraction, null);
-
             joiningFractions[leftDot] = fraction;
             postInvalidateOnAnimation();
         }

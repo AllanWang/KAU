@@ -79,8 +79,7 @@ inline fun Collection<(ZipEmptyCallback) -> Unit>.zip(crossinline onFinished: ()
  */
 inline fun Collection<() -> Unit>.zipAsync(crossinline onFinished: () -> Unit) {
     map { synchronousFun ->
-        {
-            callback: ZipEmptyCallback ->
+        { callback: ZipEmptyCallback ->
             doAsync {
                 synchronousFun()
                 callback()

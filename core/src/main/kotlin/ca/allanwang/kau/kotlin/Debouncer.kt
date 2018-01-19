@@ -30,7 +30,7 @@ open class Debouncer(var interval: Long) {
         synchronized(this) {
             task?.invalidate()
             val newTask = DebounceTask(callback)
-            KL.v("Debouncer task created: $newTask in $this")
+            KL.v { "Debouncer task created: $newTask in $this" }
             sched.schedule(newTask, interval, TimeUnit.MILLISECONDS)
             task = newTask
         }
@@ -47,7 +47,7 @@ open class Debouncer(var interval: Long) {
      */
     fun cancel() {
         synchronized(this) {
-            if (task != null) KL.v("Debouncer cancelled for $task in $this")
+            if (task != null) KL.v { "Debouncer cancelled for $task in $this" }
             task?.invalidate()
             task = null
         }
@@ -74,11 +74,11 @@ private class DebounceTask(inline val callback: () -> Unit) : Runnable {
     override fun run() {
         if (!valid) return
         valid = false
-        KL.v("Debouncer task executed $this")
+        KL.v { "Debouncer task executed $this" }
         try {
             callback()
         } catch (e: Exception) {
-            KL.e(e, "DebouncerTask exception")
+            KL.e(e) { "DebouncerTask exception" }
         }
     }
 }

@@ -48,14 +48,16 @@ abstract class MediaPickerActivityBase(
 
         initializeRecycler(recycler)
 
-        MediaItem.bindEvents(adapter)
-        adapter.withSelectionListener({ _, _ -> selectionCount.text = adapter.selections.size.toString() })
+        MediaItem.bindEvents(adapter.fastAdapter)
+        adapter.fastAdapter.withSelectionListener { _, _ ->
+            selectionCount.text = adapter.fastAdapter.selections.size.toString()
+        }
 
         fab.apply {
             show()
             setIcon(GoogleMaterial.Icon.gmd_send)
             setOnClickListener {
-                val selection = adapter.selectedItems
+                val selection = adapter.fastAdapter.selectedItems
                 if (selection.isEmpty()) {
                     toast(R.string.kau_no_items_selected)
                 } else {
@@ -88,7 +90,8 @@ abstract class MediaPickerActivityBase(
 
     override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
         super.onLoadFinished(loader, data)
-        setToolbarScrollable((recycler.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition() < adapter.getItemCount() - 1)
+        setToolbarScrollable((recycler.layoutManager as LinearLayoutManager)
+                .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1)
     }
 
     override fun onStatusChange(loaded: Boolean) {

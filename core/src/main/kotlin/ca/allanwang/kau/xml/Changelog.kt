@@ -70,8 +70,7 @@ internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @C
 
 internal fun parse(context: Context, @XmlRes xmlRes: Int): List<Pair<String, ChangelogType>> {
     val items = mutableListOf<Pair<String, ChangelogType>>()
-    context.resources.getXml(xmlRes).use {
-        parser: XmlResourceParser ->
+    context.resources.getXml(xmlRes).use { parser: XmlResourceParser ->
         var eventType = parser.eventType
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG)

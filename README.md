@@ -9,6 +9,7 @@ This library contains small helper functions used throughout almost all of my ot
 <a href='https://play.google.com/store/apps/details?id=ca.allanwang.kau.sample&utm_source=github'><img alt='Get it on Google Play' width="30%" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
 [Changelog](docs/Changelog.md)
+[Migration](docs/Migration.md)
 
 ------------
 

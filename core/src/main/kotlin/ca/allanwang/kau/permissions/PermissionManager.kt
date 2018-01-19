@@ -33,7 +33,7 @@ internal object PermissionManager {
     }
 
     operator fun invoke(context: Context, permissions: Array<out String>, callback: (granted: Boolean, deniedPerm: String?) -> Unit) {
-        KL.d("Permission manager for: ${permissions.contentToString()}")
+        KL.d { "Permission manager for: ${permissions.contentToString()}" }
         if (!buildIsMarshmallowAndUp) return callback(true, null)
         val missingPermissions = permissions.filter { !context.hasPermission(it) }
         if (missingPermissions.isEmpty()) return callback(true, null)
@@ -41,24 +41,24 @@ internal object PermissionManager {
         if (!requestInProgress) {
             requestInProgress = true
             requestPermissions(context, missingPermissions.toTypedArray())
-        } else KL.d("Request is postponed since another one is still in progress; did you remember to override onRequestPermissionsResult?")
+        } else KL.d { "Request is postponed since another one is still in progress; did you remember to override onRequestPermissionsResult?" }
     }
 
     @Synchronized internal fun requestPermissions(context: Context, permissions: Array<out String>) {
         permissions.forEach {
             if (!manifestPermission(context).contains(it)) {
-                KL.e("Requested permission $it is not stated in the manifest")
+                KL.e { "Requested permission $it is not stated in the manifest" }
                 context.toast("$it is not in the manifest")
                 //we'll let the request pass through so it can be denied and so the callback can be triggered
             }
         }
         val activity = (context as? Activity) ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
-        KL.i("Requesting permissions ${permissions.contentToString()}")
+        KL.i { "Requesting permissions ${permissions.contentToString()}" }
         ActivityCompat.requestPermissions(activity, permissions, 1)
     }
 
     fun onRequestPermissionsResult(context: Context, permissions: Array<out String>, grantResults: IntArray) {
-        KL.i("On permission result: pending ${pendingResults.size}")
+        KL.i { "On permission result: pending ${pendingResults.size}" }
         val count = Math.min(permissions.size, grantResults.size)
         val iter = pendingResults.iterator()
         while (iter.hasNext()) {
@@ -77,7 +77,7 @@ internal object PermissionManager {
             }
             requestPermissions(context, action.permissions.toTypedArray())
         }
-        KL.i("Post on permission result: pending ${pendingResults.size}")
+        KL.i { "Post on permission result: pending ${pendingResults.size}" }
     }
 
 }

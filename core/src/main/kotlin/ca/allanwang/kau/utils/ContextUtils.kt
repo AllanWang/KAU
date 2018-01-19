@@ -2,9 +2,7 @@
 
 package ca.allanwang.kau.utils
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.ActivityOptions
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -14,7 +12,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.*
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
@@ -31,50 +28,33 @@ import com.afollestad.materialdialogs.MaterialDialog
 
 /**
  * Helper class to launch an activity from a context
- * Counterpart of [ContextCompat.startActivity]
+ * Counterpart of [Context.startActivity]
  * For starting activities for results, see [startActivityForResult]
  */
-@SuppressLint("NewApi")
-fun Context.startActivity(
-        clazz: Class<out Activity>,
+@Suppress("DEPRECATION")
+inline fun <reified T : Activity> Context.startActivity(
         clearStack: Boolean = false,
-        transition: Boolean = false,
-        bundle: Bundle? = null,
+        bundleBuilder: Bundle.() -> Unit = {},
+        intentBuilder: Intent.() -> Unit = {}
+) = startActivity(T::class.java, clearStack, bundleBuilder, intentBuilder)
+
+@Deprecated("Use reified generic instead of passing class",
+        ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
+        DeprecationLevel.WARNING)
+inline fun <T : Activity> Context.startActivity(
+        clazz: Class<T>,
+        clearStack: Boolean = false,
+        bundleBuilder: Bundle.() -> Unit = {},
         intentBuilder: Intent.() -> Unit = {}) {
     val intent = Intent(this, clazz)
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-    val fullBundle = Bundle()
-    if (transition && this is Activity && buildIsLollipopAndUp)
-        fullBundle.with(ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-    if (transition && this !is Activity) KL.d("Cannot make scene transition when context is not an instance of an Activity")
-    if (bundle != null) fullBundle.putAll(bundle)
     intent.intentBuilder()
-    ContextCompat.startActivity(this, intent, if (fullBundle.isEmpty) null else fullBundle)
-    if (this is Activity && clearStack) finish()
+    val bundle = Bundle()
+    bundle.bundleBuilder()
+    startActivity(intent, if (bundle.isEmpty) null else bundle)
+    if (clearStack && this is Activity) finish()
 }
 
-/**
- * Bring in activity from the right
- */
-fun Context.startActivitySlideIn(clazz: Class<out Activity>, clearStack: Boolean = false, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
-    val fullBundle = Bundle()
-    fullBundle.with(ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_slide_in_right, R.anim.kau_fade_out).toBundle())
-    fullBundle.bundleBuilder()
-    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = if (fullBundle.isEmpty) null else fullBundle)
-}
-
-/**
- * Bring in activity from behind while pushing the current activity to the right
- * This replicates the exit animation of a sliding activity, but is a forward creation
- * For the animation to work, the previous activity should not be in the stack (otherwise you wouldn't need this in the first place)
- * Consequently, the stack will be cleared by default
- */
-fun Context.startActivitySlideOut(clazz: Class<out Activity>, clearStack: Boolean = true, intentBuilder: Intent.() -> Unit = {}, bundleBuilder: Bundle.() -> Unit = {}) {
-    val fullBundle = Bundle()
-    fullBundle.with(ActivityOptionsCompat.makeCustomAnimation(this, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top).toBundle())
-    fullBundle.bundleBuilder()
-    startActivity(clazz, clearStack, intentBuilder = intentBuilder, bundle = if (fullBundle.isEmpty) null else fullBundle)
-}
 
 fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))
 
@@ -110,7 +90,7 @@ inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Bool
 
 inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) {
     Toast.makeText(this, text, duration).show()
-    if (log) KL.i("Toast: $text")
+    if (log) KL.i { "Toast: $text" }
 }
 
 //Resource retrievers
@@ -123,13 +103,13 @@ inline fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
 inline fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
 inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id) ?: throw KauException("Drawable with id $id not found")
 inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
-inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)
-inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)
+inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)!!
+inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)!!
 /**
  * Returns plural form of res. The quantity is also passed to the formatter as an int
  */
 inline fun Context.plural(@PluralsRes id: Int, quantity: Number)
-        = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
+        = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())!!
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {
@@ -172,7 +152,7 @@ inline fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): Ma
     val builder = MaterialDialog.Builder(this)
     builder.action()
     if (isFinishing) {
-        KL.d("Material Dialog triggered from finishing context; did not show")
+        KL.d { "Material Dialog triggered from finishing context; did not show" }
         return builder.build()
     }
     return builder.show()

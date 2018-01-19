@@ -1,7 +1,6 @@
 package ca.allanwang.kau.sample
 
 import android.app.Application
-import ca.allanwang.kau.logging.KL
 
 /**
  * Created by Allan Wang on 2017-06-08.
@@ -9,7 +8,6 @@ import ca.allanwang.kau.logging.KL
 class SampleApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        KL.debug(BuildConfig.DEBUG)
         KPrefSample.initialize(this, "pref_sample")
     }
 }

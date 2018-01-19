@@ -23,6 +23,7 @@ import android.os.Build
 import android.support.annotation.RequiresApi
 import android.transition.TransitionInflater
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import ca.allanwang.kau.logging.KL
@@ -54,6 +55,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
     private var totalDrag: Float = 0f
     private var draggingDown = false
     private var draggingUp = false
+    private var lastEvent = -1
 
     private var callbacks: MutableList<ElasticDragDismissCallback> = mutableListOf()
 
@@ -95,6 +97,11 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
 
     }
 
+    override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
+        lastEvent = ev.action
+        return super.onInterceptTouchEvent(ev)
+    }
+
     override fun onStartNestedScroll(child: View, target: View, nestedScrollAxes: Int): Boolean {
         return nestedScrollAxes and View.SCROLL_AXIS_VERTICAL != 0
     }
@@ -116,13 +123,20 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         if (Math.abs(totalDrag) >= dragDismissDistance) {
             dispatchDismissCallback()
         } else { // settle back to natural position
-            animate()
-                    .translationY(0f)
-                    .scaleXY(1f)
-                    .setDuration(200L)
-                    .setInterpolator(AnimHolder.fastOutSlowInInterpolator(context))
-                    .setListener(null)
-                    .start()
+
+            if (lastEvent == MotionEvent.ACTION_DOWN) {
+                translationY = 0f
+                scaleXY = 1f
+            } else {
+                animate()
+                        .translationY(0f)
+                        .scaleXY(1f)
+                        .setDuration(200L)
+                        .setInterpolator(AnimHolder.fastOutSlowInInterpolator(context))
+                        .setListener(null)
+                        .start()
+            }
+
             totalDrag = 0f
             draggingUp = false
             draggingDown = draggingUp
@@ -236,7 +250,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
     fun addExitListener(activity: Activity, transitionBottom: Int = R.transition.kau_exit_slide_bottom, transitionTop: Int = R.transition.kau_exit_slide_top) {
         addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(activity) {
             override fun onDragDismissed() {
-                KL.d("New transition")
+                KL.v{"New transition"}
                 activity.window.returnTransition = TransitionInflater.from(activity)
                         .inflateTransition(if (translationY > 0) transitionBottom else transitionTop)
                 activity.finishAfterTransition()

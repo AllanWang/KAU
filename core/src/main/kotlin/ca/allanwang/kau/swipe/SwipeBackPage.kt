@@ -40,7 +40,7 @@ internal class SwipeBackPage(activity: Activity) : SwipeBackContractInternal by 
         }
 
     private fun handleLayout() {
-        val activity = activityRef.get() ?: return KL.v("KauSwipe activity ref gone during handleLayout")
+        val activity = activityRef.get() ?: return KL.v { "KauSwipe activity ref gone during handleLayout" }
         if (swipeEnabled) swipeBackLayout.attachToActivity(activity)
         else swipeBackLayout.removeFromActivity(activity)
     }

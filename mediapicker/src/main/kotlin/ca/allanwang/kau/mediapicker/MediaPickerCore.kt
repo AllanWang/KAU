@@ -31,7 +31,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
@@ -109,7 +108,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     private var hasPreloaded = false
     private var prefetcher: Future<*>? = null
 
-    val adapter = FastItemAdapter<T>()
+    val adapter = ItemAdapter<T>()
 
     /**
      * Further improve preloading by extending the layout space
@@ -240,7 +239,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     private fun <R> ContentResolver.query(baseUri: Uri, uris: List<Uri>, block: (cursor: Cursor) -> R) {
         val ids = uris.filter {
             val valid = DocumentsContract.isDocumentUri(this@MediaPickerCore, it)
-            if (!valid) KL.d("Non document uri: ${it.encodedPath}")
+            if (!valid) KL.d { "Non document uri: ${it.encodedPath}" }
             valid
         }.mapNotNull {
             DocumentsContract.getDocumentId(it).split(":").getOrNull(1)
@@ -261,7 +260,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             }
             return super.onActivityResult(requestCode, resultCode, data)
         }
-        KL.d("Media result received")
+        KL.d { "Media result received" }
         when (requestCode) {
             MEDIA_ACTION_REQUEST_CAMERA -> onCameraResult(data)
             MEDIA_ACTION_REQUEST_PICKER -> onPickerResult(data)
@@ -277,34 +276,34 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         } else if (data?.data != null) {
             f = File(data.data.path)
         } else {
-            KL.d("Media camera no file found")
+            KL.d { "Media camera no file found" }
             return
         }
         if (f.exists()) {
-            KL.v("Media camera path found", f.absolutePath)
+            KL.v { "Media camera path found: ${f.absolutePath}" }
             scanMedia(f)
             finish(arrayListOf(MediaModel(f)))
         } else {
-            KL.d("Media camera file not found")
+            KL.d { "Media camera file not found" }
         }
     }
 
     private fun onPickerResult(data: Intent?) {
         val items = mutableListOf<Uri>()
         if (data?.data != null) {
-            KL.v("Media picker data uri", data.data.path)
+            KL.v { "Media picker data uri: ${data.data.path}" }
             items.add(data.data)
         } else if (data != null) {
             val clip = data.clipData
             if (clip != null) {
                 items.addAll((0 until clip.itemCount).map {
                     clip.getItemAt(it).uri.apply {
-                        KL.v("Media picker clip uri", path)
+                        KL.v { "Media picker clip uri $path" }
                     }
                 })
             }
         }
-        if (items.isEmpty()) return KL.d("Media picker empty intent")
+        if (items.isEmpty()) return KL.d { "Media picker empty intent" }
         contentResolver.query(mediaType.contentUri, items) {
             if (it.moveToFirst()) {
                 val models = arrayListOf<MediaModel>()

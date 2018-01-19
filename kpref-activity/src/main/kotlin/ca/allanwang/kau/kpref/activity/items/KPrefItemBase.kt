@@ -3,6 +3,7 @@ package ca.allanwang.kau.kpref.activity.items
 import android.support.annotation.CallSuper
 import android.view.View
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.resolveDrawable
 
@@ -14,42 +15,50 @@ import ca.allanwang.kau.utils.resolveDrawable
 abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base) {
 
     open var pref: T
-        get() = base.getter.invoke()
+        get() = base.getter()
         set(value) {
-            base.setter.invoke(value)
+            base.setter(value)
         }
 
     var enabled: Boolean = true
 
     init {
-        if (base.onClick == null) base.onClick = {
-            itemView, innerContent, _ ->
-            defaultOnClick(itemView, innerContent)
-        }
+        if (base.onClick == null) base.onClick = { defaultOnClick() }
     }
-
-    abstract fun defaultOnClick(itemView: View, innerContent: View?): Boolean
 
     @CallSuper
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
-        enabled = base.enabler.invoke()
+        enabled = base.enabler()
         with(viewHolder) {
             if (!enabled) container?.background = null
             container?.alpha = if (enabled) 1.0f else 0.3f
         }
     }
 
-    override final fun onClick(itemView: View, innerContent: View?): Boolean {
-        return if (enabled) base.onClick?.invoke(itemView, innerContent, this) ?: false
-        else base.onDisabledClick?.invoke(itemView, innerContent, this) ?: false
+    override final fun onClick(itemView: View) {
+        val kclick = object : KClick<T> {
+            override val context = itemView.context
+            override val itemView = itemView
+            override val innerView: View? by lazy { itemView.findViewById<View>(R.id.kau_pref_inner_content) }
+            override val item = this@KPrefItemBase
+        }
+        if (enabled) {
+            val onClick = base.onClick ?: return
+            kclick.onClick()
+        } else {
+            val onClick = base.onDisabledClick ?: return
+            kclick.onClick()
+        }
     }
+
+    abstract fun KClick<T>.defaultOnClick()
 
     override fun unbindView(holder: ViewHolder) {
         super.unbindView(holder)
-        with(holder) {
-            container?.isEnabled = true
-            container?.background = itemView.context.resolveDrawable(android.R.attr.selectableItemBackground)
-            container?.alpha = 1.0f
+        holder.container?.apply {
+            isEnabled = true
+            background = holder.itemView.context.resolveDrawable(android.R.attr.selectableItemBackground)
+            alpha = 1.0f
         }
     }
 
@@ -62,8 +71,8 @@ abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base)
      */
     interface BaseContract<T> : CoreContract {
         var enabler: () -> Boolean
-        var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)?
-        var onDisabledClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)?
+        var onClick: (KClick<T>.() -> Unit)?
+        var onDisabledClick: (KClick<T>.() -> Unit)?
         val getter: () -> T
         val setter: (value: T) -> Unit
     }
@@ -72,13 +81,13 @@ abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base)
      * Default implementation of [BaseContract]
      */
     class BaseBuilder<T>(globalOptions: GlobalOptions,
-                         titleRes: Int,
+                         titleId: Int,
                          override val getter: () -> T,
                          override val setter: (value: T) -> Unit
-    ) : CoreContract by CoreBuilder(globalOptions, titleRes), BaseContract<T> {
+    ) : CoreContract by CoreBuilder(globalOptions, titleId), BaseContract<T> {
         override var enabler: () -> Boolean = { true }
-        override var onClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
-        override var onDisabledClick: ((itemView: View, innerContent: View?, item: KPrefItemBase<T>) -> Boolean)? = null
+        override var onClick: (KClick<T>.() -> Unit)? = null
+        override var onDisabledClick: (KClick<T>.() -> Unit)? = null
     }
 
 }

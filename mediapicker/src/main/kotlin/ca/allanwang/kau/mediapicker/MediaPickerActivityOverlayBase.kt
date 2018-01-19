@@ -29,7 +29,7 @@ abstract class MediaPickerActivityOverlayBase(
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_activity_image_picker_overlay)
         initializeRecycler(recycler)
-        MediaItemBasic.bindEvents(this, adapter)
+        MediaItemBasic.bindEvents(this, adapter.fastAdapter)
 
         draggable.addExitListener(this, R.transition.kau_image_exit_bottom, R.transition.kau_image_exit_top)
         draggable.setOnClickListener { finishAfterTransition() }

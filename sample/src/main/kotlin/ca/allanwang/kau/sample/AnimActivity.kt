@@ -10,10 +10,7 @@ import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.kauSwipeOnCreate
 import ca.allanwang.kau.swipe.kauSwipeOnDestroy
-import ca.allanwang.kau.utils.fullLinearRecycler
-import ca.allanwang.kau.utils.startActivitySlideOut
-import ca.allanwang.kau.utils.toast
-import ca.allanwang.kau.utils.withAlpha
+import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
@@ -35,9 +32,8 @@ class AnimActivity : KauBaseActivity() {
                 PERMISSION_CAMERA
         ).map { PermissionCheckbox(it) })
         adapter.withOnClickListener { _, _, item, _ ->
-            KL.d("Perm Click")
-            kauRequestPermissions(item.permission) {
-                granted, _ ->
+            KL.d { "Perm Click" }
+            kauRequestPermissions(item.permission) { granted, _ ->
                 toast("${item.permission} enabled: $granted")
                 adapter.notifyAdapterDataSetChanged()
             }
@@ -54,7 +50,9 @@ class AnimActivity : KauBaseActivity() {
     }
 
     override fun onBackPressed() {
-        startActivitySlideOut(MainActivity::class.java)
+        startActivity<MainActivity>(bundleBuilder = {
+            withSlideOut(this@AnimActivity)
+        })
     }
 
 }

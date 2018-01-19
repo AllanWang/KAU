@@ -14,9 +14,8 @@ import ca.allanwang.kau.kpref.activity.R
  */
 open class KPrefSubItems(open val builder: KPrefSubItemsContract) : KPrefItemCore(builder) {
 
-    override fun onClick(itemView: View, innerContent: View?): Boolean {
-        builder.globalOptions.showNextPrefs(builder.titleRes, builder.itemBuilder)
-        return true
+    override fun onClick(itemView: View) {
+        builder.globalOptions.showNextPrefs(builder.titleFun(), builder.itemBuilder)
     }
 
     override fun getLayoutRes(): Int = R.layout.kau_pref_core
@@ -34,9 +33,9 @@ open class KPrefSubItems(open val builder: KPrefSubItemsContract) : KPrefItemCor
      */
     class KPrefSubItemsBuilder(
             globalOptions: GlobalOptions,
-            titleRes: Int,
+            titleId: Int,
             override val itemBuilder: KPrefAdapterBuilder.() -> Unit
-    ) : KPrefSubItemsContract, CoreContract by CoreBuilder(globalOptions, titleRes)
+    ) : KPrefSubItemsContract, CoreContract by CoreBuilder(globalOptions, titleId)
 
     override fun getType(): Int = R.id.kau_item_pref_sub_item
 

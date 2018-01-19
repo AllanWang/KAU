@@ -24,8 +24,7 @@ class ZipTest {
         val latch = CountDownLatch(1)
         val rnd = Random()
         (0..10).map {
-            {
-                callback: ZipCallback<Int> ->
+            { callback: ZipCallback<Int> ->
                 doAsync {
                     val sleepTime = rnd.nextInt(100) + 200L
                     p("Task $it will sleep for ${sleepTime}ms")
@@ -35,8 +34,7 @@ class ZipTest {
                     callback(it)
                 }; Unit
             }
-        }.zip(-1) {
-            results ->
+        }.zip(-1) { results ->
             val finish = System.currentTimeMillis()
             println("Results ${results.contentToString()} received in ${finish - start}ms at $finish")
             assertTrue((0..10).toList().toTypedArray().contentEquals(results), "Basic zip results do not match")

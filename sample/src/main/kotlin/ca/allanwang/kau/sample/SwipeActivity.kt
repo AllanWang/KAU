@@ -15,7 +15,7 @@ import ca.allanwang.kau.utils.*
 private const val SWIPE_EDGE = "swipe_edge"
 
 fun Activity.startActivityWithEdge(flag: Int) {
-    startActivity(SwipeActivity::class.java) {
+    startActivity<SwipeActivity> {
         putExtra(SWIPE_EDGE, flag)
     }
 }

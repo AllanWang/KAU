@@ -70,7 +70,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         globalOptions = GlobalOptions(core, this)
         recycler.withLinearAdapter(adapter)
         adapter.withSelectable(false)
-                .withOnClickListener { v, _, item, _ -> item.onClick(v, v.findViewById(R.id.kau_pref_inner_content)) }
+                .withOnClickListener { v, _, item, _ -> item.onClick(v); true }
         showNextPrefs(R.string.kau_settings, onCreateKPrefs(savedInstanceState), true)
     }
 
@@ -141,7 +141,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
     override fun reloadByTitle(@StringRes vararg title: Int) {
         if (title.isEmpty()) return
         adapter.adapterItems.forEachIndexed { index, item ->
-            if (title.any { item.core.titleRes == it })
+            if (title.any { item.core.titleId == it })
                 adapter.notifyItemChanged(index)
         }
     }

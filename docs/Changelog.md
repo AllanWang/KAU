@@ -1,7 +1,26 @@
 # Changelog
 
+## v3.6.2
+* :core: Create more bundle utils to help with shared transition elements
+* :searchview: Add better encapsulation and use view location
+* :searchview: Add textClearedCallback
+
+## v3.6.1
+* :core: [Breaking] Removed private text field and introduced lazy logging functions
+* :adapter: Improve library item layout
+
+## v3.6.0
+* :adapter: Create withOnRepeatedClickListener
+* :core: Create kotlin flyweight
+* :core: Created BundleUtils
+* :core: [Breaking] Refactored startActivity functions
+* :kpref-activity: [Breaking] Simplified listener function parameters
+* :kpref-activity: [Breaking] Added dynamic string loading options
+* (See Migrations.md for further details on breaking changes)
+
 ## v3.5.1
 * Add Portuguese translations
+* Add Galician translations
 * Add some minor util elements
 * Update dependencies (sdk 27)
 

@@ -1,6 +1,5 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import android.view.View
 import ca.allanwang.kau.kpref.activity.R
 
 /**
@@ -16,8 +15,6 @@ open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
     override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
         if (accentColor != null) viewHolder.title.setTextColor(accentColor)
     }
-
-    override fun onClick(itemView: View, innerContent: View?): Boolean = true
 
     override fun getType() = R.id.kau_item_pref_header
 
