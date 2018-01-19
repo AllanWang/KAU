@@ -31,6 +31,7 @@ import com.afollestad.materialdialogs.MaterialDialog
  * Counterpart of [Context.startActivity]
  * For starting activities for results, see [startActivityForResult]
  */
+@Suppress("DEPRECATION")
 inline fun <reified T : Activity> Context.startActivity(
         clearStack: Boolean = false,
         bundleBuilder: Bundle.() -> Unit = {},
@@ -50,7 +51,7 @@ inline fun <T : Activity> Context.startActivity(
     intent.intentBuilder()
     val bundle = Bundle()
     bundle.bundleBuilder()
-    startActivity(intent, bundle)
+    startActivity(intent, if (bundle.isEmpty) null else bundle)
     if (clearStack && this is Activity) finish()
 }
 
