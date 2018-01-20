@@ -30,7 +30,7 @@ Most resources are verbatim and x represents a formatted item
   <string name="kau_light">สว่าง</string>
   <string name="kau_login">เข้าสู่ระบบ</string>
   <string name="kau_logout">ออกจากระบบ</string>
-  <string name="kau_logout_confirm_as_x">คุณแน่ใจว่าต้องการให้%sออกจากระบบ%s?</string>
+  <string name="kau_logout_confirm_as_x">คุณแน่ใจว่าต้องการให้ออกจากระบบ%s?</string>
   <string name="kau_manage_account">จัดการบัญชี</string>
   <string name="kau_maybe">บางที</string>
   <string name="kau_menu">เมนู</string>
