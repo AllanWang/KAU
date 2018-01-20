@@ -1,6 +1,8 @@
 # Changelog
 
 ## v3.6.2
+* :core: Pass null instead of bundle if bundle is empty for startActivity
+* :core: Support sending attachments for email
 * :core: Create more bundle utils to help with shared transition elements
 * :searchview: Add better encapsulation and use view location
 * :searchview: Add textClearedCallback
