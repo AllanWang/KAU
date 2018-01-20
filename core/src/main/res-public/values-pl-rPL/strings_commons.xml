@@ -50,26 +50,6 @@ Most resources are verbatim and x represents a formatted item
   <string name="kau_thank_you">Dziękuję</string>
   <string name="kau_uh_oh">Uh Oh</string>
   <string name="kau_warning">Ostrzeżenie</string>
-  <plurals name="kau_x_days">
-    <item quantity="one">%d dzień</item>
-    <item quantity="few">%d dni</item>
-    <item quantity="other">%d dni</item>
-  </plurals>
-  <plurals name="kau_x_hours">
-    <item quantity="one">%d godzina</item>
-    <item quantity="few">%d godziny</item>
-    <item quantity="other">%d godzin</item>
-  </plurals>
-  <plurals name="kau_x_minutes">
-    <item quantity="one">%d minuta</item>
-    <item quantity="few">%d minuty</item>
-    <item quantity="other">%d minut</item>
-  </plurals>
-  <plurals name="kau_x_seconds">
-    <item quantity="one">%d sekunda</item>
-    <item quantity="few">%d sekundy</item>
-    <item quantity="other">%d sekund</item>
-  </plurals>
   <string name="kau_yes">Tak</string>
   <string name="kau_permission_denied">Odmowa uprawnienia</string>
 </resources>
