@@ -4,6 +4,7 @@ import android.support.v7.widget.AppCompatCheckBox
 import android.widget.CheckBox
 import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
+import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.tint
 
 /**
@@ -19,10 +20,10 @@ open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean
         (innerView as AppCompatCheckBox).isChecked = pref
     }
 
-    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
-        super.onPostBindView(viewHolder, textColor, accentColor)
-        val checkbox = viewHolder.bindInnerView<CheckBox>(R.layout.kau_pref_checkbox)
-        if (accentColor != null) checkbox.tint(accentColor)
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+        super.bindView(holder, payloads)
+        val checkbox = holder.bindInnerView<CheckBox>(R.layout.kau_pref_checkbox)
+        withAccentColor(checkbox::tint)
         checkbox.isChecked = pref
         checkbox.jumpDrawablesToCurrentState() //Cancel the animation
     }

@@ -20,7 +20,6 @@ open class KPrefSubItems(open val builder: KPrefSubItemsContract) : KPrefItemCor
 
     override fun getLayoutRes(): Int = R.layout.kau_pref_core
 
-    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {}
     /**
      * Extension of the base contract with an optional text getter
      */

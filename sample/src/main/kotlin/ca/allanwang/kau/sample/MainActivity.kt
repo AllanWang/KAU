@@ -184,7 +184,12 @@ class MainActivity : KPrefActivity() {
 
         header(R.string.long_prefs)
 
-        checkbox(R.string.checkbox_3, { KPrefSample.check2 }, { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) }) {
+        /**
+         * Showcases a little trick. The id for reloading is [R.string.checkbox_2],
+         * but the title displayed is still [R.string.checkbox_3]
+         */
+        checkbox(R.string.checkbox_2, { KPrefSample.check2 }, { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) }) {
+            titleFun = { R.string.checkbox_3 }
             descRes = R.string.kau_lorem_ipsum
         }
 

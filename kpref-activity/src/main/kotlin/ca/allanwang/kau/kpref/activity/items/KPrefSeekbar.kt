@@ -17,15 +17,15 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
     override fun KClick<Int>.defaultOnClick() = Unit
 
-    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
-        super.onPostBindView(viewHolder, textColor, accentColor)
-        val text = viewHolder.bindInnerView<TextView>(R.layout.kau_pref_seekbar_text)
-        if (textColor != null) text.setTextColor(textColor)
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+        super.bindView(holder, payloads)
+        val text = holder.bindInnerView<TextView>(R.layout.kau_pref_seekbar_text)
+        withTextColor(text::setTextColor)
 
         val tvc = builder.textViewConfigs
 
         text.tvc()
-        val seekbar = viewHolder.bindLowerView<SeekBar>(R.layout.kau_pref_seekbar) {
+        val seekbar = holder.bindLowerView<SeekBar>(R.layout.kau_pref_seekbar) {
             it.max = builder.max - builder.min
             it.incrementProgressBy(builder.increments)
             it.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -41,7 +41,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
                 }
             })
         }
-        if (accentColor != null) seekbar.tint(accentColor)
+        withAccentColor(seekbar::tint)
         text.text = builder.toText(seekbar.progress.fromProgress) //set initial text in case no change occurs
         seekbar.progress = pref.toProgress
     }

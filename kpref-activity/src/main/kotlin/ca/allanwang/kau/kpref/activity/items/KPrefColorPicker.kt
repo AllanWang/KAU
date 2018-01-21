@@ -16,14 +16,14 @@ import ca.allanwang.kau.kpref.activity.R
  */
 open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBase<Int>(builder) {
 
-    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
-        super.onPostBindView(viewHolder, textColor, accentColor)
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+        super.bindView(holder, payloads)
         builder.apply {
             titleRes = core.titleFun()
             colorCallback = { pref = it }
         }
         if (builder.showPreview) {
-            val preview = viewHolder.bindInnerView<CircleView>(R.layout.kau_pref_color)
+            val preview = holder.bindInnerView<CircleView>(R.layout.kau_pref_color)
             preview.setBackgroundColor(pref)
             preview.withBorder = true
             builder.apply {
@@ -31,8 +31,8 @@ open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBas
                     pref = it
                     if (builder.showPreview)
                         preview.setBackgroundColor(it)
-                    viewHolder.updateTitle()
-                    viewHolder.updateDesc()
+                    holder.updateTitle()
+                    holder.updateDesc()
                 }
             }
         }

@@ -152,6 +152,10 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         if (!backPress()) super.onBackPressed()
     }
 
+    /**
+     * Back press handler with status output
+     * Returns [true] if the press has been consumed, [false] otherwise
+     */
     fun backPress(): Boolean {
         if (hasPrevPrefs) {
             showPrevPrefs()

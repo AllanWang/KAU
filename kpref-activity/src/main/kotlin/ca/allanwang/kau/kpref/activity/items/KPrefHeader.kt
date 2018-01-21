@@ -12,8 +12,9 @@ open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
 
     override fun getLayoutRes(): Int = R.layout.kau_pref_header
 
-    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
-        if (accentColor != null) viewHolder.title.setTextColor(accentColor)
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+        super.bindView(holder, payloads)
+        withAccentColor(holder.title::setTextColor)
     }
 
     override fun getType() = R.id.kau_item_pref_header

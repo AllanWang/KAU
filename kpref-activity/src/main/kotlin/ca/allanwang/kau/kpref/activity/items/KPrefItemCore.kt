@@ -29,7 +29,7 @@ import com.mikepenz.iconics.typeface.IIcon
 abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>(),
         ThemableIItem by ThemableIItemDelegate() {
 
-    override final fun getViewHolder(v: View) = ViewHolder(v)
+    final override fun getViewHolder(v: View) = ViewHolder(v)
 
     protected fun ViewHolder.updateDesc() {
         val descRes = core.descFun()
@@ -43,30 +43,41 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         title.setText(core.titleFun())
     }
 
+    /**
+     * NewApi is suppressed as [buildIsLollipopAndUp] already covers it
+     */
     @SuppressLint("NewApi")
     @CallSuper
-    override fun bindView(viewHolder: ViewHolder, payloads: List<Any>) {
-        super.bindView(viewHolder, payloads)
-        with(viewHolder) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+        super.bindView(holder, payloads)
+        with(holder) {
             updateTitle()
             updateDesc()
             if (core.iicon != null) icon?.visible()?.setIcon(core.iicon, 24)
             else icon?.gone()
             innerFrame?.removeAllViews()
-            val textColor = core.globalOptions.textColor?.invoke()
-            if (textColor != null) {
-                title.setTextColor(textColor)
-                desc?.setTextColor(textColor.adjustAlpha(0.65f))
+            withTextColor {
+                title.setTextColor(it)
+                desc?.setTextColor(it.adjustAlpha(0.65f))
             }
-            val accentColor = core.globalOptions.accentColor?.invoke()
-            if (accentColor != null && buildIsLollipopAndUp) {
-                icon?.drawable?.setTint(accentColor)
-            }
-            onPostBindView(this, textColor, accentColor)
+            if (buildIsLollipopAndUp)
+                withAccentColor {
+                    icon?.drawable?.setTint(it)
+                }
         }
     }
 
-    abstract fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?)
+    protected inline fun withAccentColor(action: (color: Int) -> Unit) =
+            withColor(core.globalOptions.accentColor, action)
+
+    protected inline fun withTextColor(action: (color: Int) -> Unit) =
+            withColor(core.globalOptions.textColor, action)
+
+    protected inline fun withColor(noinline supplier: (() -> Int)?,
+                                   action: (color: Int) -> Unit) {
+        val color = supplier?.invoke() ?: return
+        action(color)
+    }
 
     open fun onClick(itemView: View) = Unit
 
@@ -95,7 +106,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         var visible: () -> Boolean
 
         /**
-         * Attempts to reload current item by identifying it with its [titleId]
+         * Attempts to reload current item by identifying it with its [id]
          */
         fun reloadSelf()
     }
@@ -135,7 +146,8 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         inline fun <reified T : View> bindInnerView(@LayoutRes id: Int) = bindInnerView(id) { _: T -> }
 
         inline fun <reified T : View> bindInnerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
-            val innerFrame = this.innerFrame ?: throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
+            val innerFrame = this.innerFrame
+                    ?: throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
             if (innerView !is T) {
                 innerFrame.removeAllViews()
                 LayoutInflater.from(innerFrame.context).inflate(id, innerFrame)
@@ -147,7 +159,8 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         inline fun <reified T : View> bindLowerView(@LayoutRes id: Int) = bindLowerView(id) { _: T -> }
 
         inline fun <reified T : View> bindLowerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
-            val lowerFrame = this.lowerFrame ?: throw IllegalStateException("Cannot bind inner view when lowerContent does not exist")
+            val lowerFrame = this.lowerFrame
+                    ?: throw IllegalStateException("Cannot bind inner view when lowerContent does not exist")
             if (lowerContent !is T) {
                 lowerFrame.removeAllViews()
                 LayoutInflater.from(lowerFrame.context).inflate(id, lowerFrame)

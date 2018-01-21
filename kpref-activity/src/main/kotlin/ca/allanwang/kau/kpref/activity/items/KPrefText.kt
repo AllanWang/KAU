@@ -30,11 +30,11 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
         context.toast("No click function set")
     }
 
-    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
-        super.onPostBindView(viewHolder, textColor, accentColor)
-        val textview = viewHolder.bindInnerView<TextView>(R.layout.kau_pref_text)
-        if (textColor != null) textview.setTextColor(textColor)
-        textview.text = builder.textGetter(pref)
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+        super.bindView(holder, payloads)
+        val textView = holder.bindInnerView<TextView>(R.layout.kau_pref_text)
+        withTextColor(textView::setTextColor)
+        textView.text = builder.textGetter(pref)
     }
 
     /**

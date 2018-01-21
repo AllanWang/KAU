@@ -12,7 +12,7 @@ import ca.allanwang.kau.utils.resolveDrawable
  *
  * Base class for pref setters that include the Shared Preference hooks
  */
-abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base) {
+abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItemCore(base) {
 
     open var pref: T
         get() = base.getter()
@@ -20,29 +20,33 @@ abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base)
             base.setter(value)
         }
 
-    var enabled: Boolean = true
+    private var _enabled: Boolean = true
+
+    val enabled
+        get() = _enabled
 
     init {
         if (base.onClick == null) base.onClick = { defaultOnClick() }
     }
 
     @CallSuper
-    override fun onPostBindView(viewHolder: ViewHolder, textColor: Int?, accentColor: Int?) {
-        enabled = base.enabler()
-        with(viewHolder) {
-            if (!enabled) container?.background = null
-            container?.alpha = if (enabled) 1.0f else 0.3f
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+        super.bindView(holder, payloads)
+        _enabled = base.enabler()
+        with(holder) {
+            if (!_enabled) container?.background = null
+            container?.alpha = if (_enabled) 1.0f else 0.3f
         }
     }
 
-    override final fun onClick(itemView: View) {
+    final override fun onClick(itemView: View) {
         val kclick = object : KClick<T> {
             override val context = itemView.context
             override val itemView = itemView
             override val innerView: View? by lazy { itemView.findViewById<View>(R.id.kau_pref_inner_content) }
             override val item = this@KPrefItemBase
         }
-        if (enabled) {
+        if (_enabled) {
             val onClick = base.onClick ?: return
             kclick.onClick()
         } else {
@@ -62,7 +66,7 @@ abstract class KPrefItemBase<T>(val base: BaseContract<T>) : KPrefItemCore(base)
         }
     }
 
-    override final fun getLayoutRes(): Int = R.layout.kau_pref_core
+    final override fun getLayoutRes(): Int = R.layout.kau_pref_core
 
     /**
      * Extension of the core contract
