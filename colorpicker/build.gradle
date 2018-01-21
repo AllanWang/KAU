@@ -1,3 +1,6 @@
+plugins {
+    id 'com.gladed.androidgitversion' version '0.4.3'
+}
 ext.kauSubModuleResourcePrefix = "kau_color_"
 
 ext.kauSubModuleMinSdk = project.CORE_MIN_SDK

@@ -1,8 +1,11 @@
+plugins {
+    id 'com.gladed.androidgitversion' version '0.4.3'
+}
 apply from: '../android-lib.gradle'
 
 android {
     defaultConfig {
-        resValue "string", "kau_version_code", project.VERSION_NAME
+        resValue "string", "kau_version_code", androidGitVersion.name()
     }
 }
 

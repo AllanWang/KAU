@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.6.3
+* Add Chinese, Indonesian, Norwegian, Polish, Thai, and Turkish translations
+
 ## v3.6.2
 * :core: Pass null instead of bundle if bundle is empty for startActivity
 * :core: Support sending attachments for email

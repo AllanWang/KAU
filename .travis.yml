@@ -30,6 +30,7 @@ before_script:
 - adb shell input keyevent 82 &
 script:
 - chmod +x gradlew
+- "./gradlew --quiet androidGitVersion"
 - if [[ "$TRAVIS_BRANCH" == "master" ]]; then ./gradlew lintRelease publishRelease; else ./gradlew lintRelease test; fi
 branches:
   except:
