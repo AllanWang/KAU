@@ -1,7 +1,9 @@
 # Changelog
 
 ## v3.6.3
+* :kpref-activity: Simplify internal code and add better encapsulation
 * Add Chinese, Indonesian, Norwegian, Polish, Thai, and Turkish translations
+* Add back git versioning
 
 ## v3.6.2
 * :core: Pass null instead of bundle if bundle is empty for startActivity

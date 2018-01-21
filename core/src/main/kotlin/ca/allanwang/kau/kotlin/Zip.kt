@@ -53,7 +53,7 @@ inline fun <reified T> Collection<(ZipCallback<T>) -> Unit>.zip(
     val result = Array(size) { defaultResult }
     val countDown = AtomicInteger(size)
     forEachIndexed { index, asyncFun ->
-        asyncFun(ZipCallback<T> {
+        asyncFun(ZipCallback {
             result[index] = it
             if (countDown.decrementAndGet() <= 0)
                 onFinished(result)

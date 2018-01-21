@@ -10,10 +10,7 @@ import android.support.annotation.StringRes
 import android.util.DisplayMetrics
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
-import ca.allanwang.kau.utils.installerPackageName
-import ca.allanwang.kau.utils.isAppInstalled
-import ca.allanwang.kau.utils.string
-import ca.allanwang.kau.utils.toast
+import ca.allanwang.kau.utils.*
 
 
 /**
@@ -28,7 +25,8 @@ class EmailBuilder(val email: String, val subject: String) {
     private val packages: MutableList<Package> = mutableListOf()
     private var attachment: Uri? = null
 
-    fun checkPackage(packageName: String, appName: String) = packages.add(Package(packageName, appName))
+    fun checkPackage(packageName: String, appName: String) =
+            packages.add(Package(packageName, appName))
 
     fun addItem(key: String, value: String) = pairs.put(key, value)
 
@@ -53,12 +51,13 @@ class EmailBuilder(val email: String, val subject: String) {
                     "OS SDK" to Build.VERSION.SDK_INT,
                     "Device (Manufacturer)" to "${Build.DEVICE} (${Build.MANUFACTURER})",
                     "Model (Product)" to "${Build.MODEL} (${Build.PRODUCT})",
-                    "Package Installer" to (context.installerPackageName ?: "None")
+                    "Package Installer" to (context.installerPackageName ?: "None"),
+                    "Tablet" to context.boolean(R.bool.kau_is_tablet)
             )
             if (context is Activity) {
                 val metric = DisplayMetrics()
                 context.windowManager.defaultDisplay.getMetrics(metric)
-                deviceItems.put("Screen Dimensions", "${metric.widthPixels} x ${metric.heightPixels}")
+                deviceItems["Screen Dimensions"] = "${metric.widthPixels} x ${metric.heightPixels}"
             }
             deviceItems.forEach { (k, v) -> emailBuilder.append("$k: $v\n") }
         }
@@ -79,8 +78,10 @@ class EmailBuilder(val email: String, val subject: String) {
                 emailBuilder.append(String.format("\n%s is installed", it.appName))
         }
 
-        if (pairs.isNotEmpty()) emailBuilder.append("\n")
-        pairs.forEach { (k, v) -> emailBuilder.append("$k: $v\n") }
+        if (pairs.isNotEmpty()) {
+            emailBuilder.append("\n")
+            pairs.forEach { (k, v) -> emailBuilder.append("$k: $v\n") }
+        }
 
         if (footer != null)
             emailBuilder.append("\n").append(footer)
@@ -110,8 +111,7 @@ class EmailBuilder(val email: String, val subject: String) {
     }
 }
 
-fun Context.sendEmail(@StringRes emailId: Int, @StringRes subjectId: Int, builder: EmailBuilder.() -> Unit = {})
-        = sendEmail(string(emailId), string(subjectId), builder)
+fun Context.sendEmail(@StringRes emailId: Int, @StringRes subjectId: Int, builder: EmailBuilder.() -> Unit = {}) = sendEmail(string(emailId), string(subjectId), builder)
 
 
 fun Context.sendEmail(email: String, subject: String, builder: EmailBuilder.() -> Unit = {}) {
