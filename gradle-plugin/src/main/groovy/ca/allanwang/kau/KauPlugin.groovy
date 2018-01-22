@@ -1,4 +1,4 @@
-package ca.allanwang.kau.plugin
+package ca.allanwang.kau
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
