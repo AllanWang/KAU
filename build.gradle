@@ -39,15 +39,12 @@ task generateChangelogMd {
 
 subprojects {
 
-    repositories {
-        jcenter()
-    }
-
     if (it.name == 'gradle-plugin')
         return
 
     repositories {
         google()
+        jcenter()
         maven { url "https://jitpack.io" }
     }
 }

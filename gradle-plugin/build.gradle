@@ -1,17 +1,9 @@
 apply plugin: 'groovy'
-apply plugin: 'kotlin'
 apply plugin: 'maven'
 
 group = project.APP_GROUP
 
-sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
-    test.java.srcDirs += 'src/test/kotlin'
-}
-
 dependencies {
     compile gradleApi()
     compile localGroovy()
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
 }
