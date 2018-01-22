@@ -11,7 +11,7 @@ class KauPlugin implements Plugin<Project> {
         project.extensions.create("kauDependencies", Dependencies)
     }
 
-    class Dependencies {
+    static class Dependencies {
         String test = 'asdf'
     }
 }
