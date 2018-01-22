@@ -1,7 +1,7 @@
 plugins {
     id 'com.gladed.androidgitversion' version '0.4.3'
 }
-ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
+ext.kauSubModuleMinSdk = kau.coreMinSdk
 
 apply from: '../android-lib.gradle'
 apply plugin: 'kotlin-kapt'
@@ -10,8 +10,8 @@ dependencies {
     implementation project(':core-ui')
     implementation project(':adapter')
 
-    api "com.github.bumptech.glide:glide:${GLIDE}"
-    implementation "jp.wasabeef:blurry:${BLURRY}"
+    api "com.github.bumptech.glide:glide:${kau.glide}"
+    implementation "jp.wasabeef:blurry:${kau.blurry}"
 }
 
 apply from: '../artifacts.gradle'

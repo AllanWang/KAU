@@ -14,8 +14,8 @@ play {
 }
 
 android {
-    compileSdkVersion Integer.parseInt(project.TARGET_SDK)
-    buildToolsVersion project.BUILD_TOOLS
+    compileSdkVersion kau.targetSdk
+    buildToolsVersion kau.buildTools
 
     androidGitVersion {
         codeFormat = 'MMNNPPXX'
@@ -24,8 +24,8 @@ android {
 
     defaultConfig {
         applicationId "ca.allanwang.kau.sample"
-        minSdkVersion Integer.parseInt(project.MIN_SDK)
-        targetSdkVersion Integer.parseInt(project.TARGET_SDK)
+        minSdkVersion kau.minSdk
+        targetSdkVersion kau.targetSdk
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
         multiDexEnabled true
@@ -97,16 +97,14 @@ dependencies {
     implementation project(':kpref-activity')
     implementation project(':searchview')
     implementation project(':mediapicker')
-    implementation "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
 
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:${ESPRESSO}") {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${kau.espresso}") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestImplementation("com.android.support.test:runner:${TEST_RUNNER}") {
+    androidTestImplementation("com.android.support.test:runner:${kau.testRunner}") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testImplementation "junit:junit:${JUNIT}"
+    androidTestImplementation kauDependency.kotlinTest
+    testImplementation kauDependency.kotlinTest
+    testImplementation kauDependency.junit
 }

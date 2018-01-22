@@ -3,14 +3,14 @@ plugins {
 }
 ext.kauSubModuleResourcePrefix = "kau_color_"
 
-ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
+ext.kauSubModuleMinSdk = kau.coreMinSdk
 
 apply from: '../android-lib.gradle'
 
 dependencies {
     implementation project(':core')
 
-    implementation "com.afollestad.material-dialogs:commons:${MATERIAL_DIALOG}"
+    implementation "com.afollestad.material-dialogs:commons:${kau.materialDialog}"
 }
 
 apply from: '../artifacts.gradle'

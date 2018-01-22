@@ -1,26 +1,26 @@
 plugins {
     id 'com.gladed.androidgitversion' version '0.4.3'
 }
-ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
+ext.kauSubModuleMinSdk = kau.coreMinSdk
 
 apply from: '../android-lib.gradle'
 
 dependencies {
-    api "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
+    api kauDependency.kotlin
 
-    api "com.android.support:appcompat-v7:${ANDROID_SUPPORT_LIBS}"
-    api "com.android.support:support-v13:${ANDROID_SUPPORT_LIBS}"
-    api "com.android.support:design:${ANDROID_SUPPORT_LIBS}"
-    api "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_LIBS}"
-    api "com.android.support:cardview-v7:${ANDROID_SUPPORT_LIBS}"
-    api "com.android.support.constraint:constraint-layout:${CONSTRAINT_LAYOUT}"
+    api "com.android.support:appcompat-v7:${kau.supportLibs}"
+    api "com.android.support:support-v13:${kau.supportLibs}"
+    api "com.android.support:design:${kau.supportLibs}"
+    api "com.android.support:recyclerview-v7:${kau.supportLibs}"
+    api "com.android.support:cardview-v7:${kau.supportLibs}"
+    api "com.android.support.constraint:constraint-layout:${kau.constraintLayout}"
 
-    api "com.mikepenz:iconics-core:${ICONICS}@aar"
-    api "com.mikepenz:google-material-typeface:${IICON_GOOGLE}.original@aar"
+    api "com.mikepenz:iconics-core:${kau.iconics}@aar"
+    api "com.mikepenz:google-material-typeface:${kau.iconicsGoogle}.original@aar"
 
-    api "com.afollestad.material-dialogs:core:${MATERIAL_DIALOG}"
+    api "com.afollestad.material-dialogs:core:${kau.materialDialog}"
 
-    api "org.jetbrains.anko:anko-commons:${ANKO}"
+    api "org.jetbrains.anko:anko-commons:${kau.anko}"
 }
 
 apply from: '../artifacts.gradle'

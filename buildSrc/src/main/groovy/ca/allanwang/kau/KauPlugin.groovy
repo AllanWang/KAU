@@ -7,8 +7,10 @@ class KauPlugin implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        println("Hello KAU")
-        project.extensions.create("kau", Dependency)
+        project.extensions.create("kau", Versions)
+        project.extensions.create("kauPlugin", Plugins)
+        project.extensions.create("kauDependency", Dependencies)
+        project.extensions.create("kauChangelog", ChangelogGenerator, project)
     }
 
 }

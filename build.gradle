@@ -4,18 +4,21 @@ buildscript {
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
     }
+
+    apply plugin: "ca.allanwang.kau"
+
     dependencies {
-        classpath "com.android.tools.build:gradle:$GRADLE_PLUGIN"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$KOTLIN"
-        classpath "com.github.dcendents:android-maven-gradle-plugin:$MAVEN_PLUGIN"
-        classpath "com.github.triplet.gradle:play-publisher:$PLAY_PUBLISH_PLUGIN"
-        classpath "com.getkeepsafe.dexcount:dexcount-gradle-plugin:$DEX_COUNT_PLUGIN"
+        classpath kauPlugin.android
+        classpath kauPlugin.kotlin
+        classpath kauPlugin.androidMaven
+        classpath kauPlugin.playPublisher
+        classpath kauPlugin.dexCount
     }
 }
 
 apply plugin: "ca.allanwang.kau"
 
-println(kau.test)
+println(kau.kotlin)
 
 
 task clean(type: Delete) {
@@ -23,21 +26,7 @@ task clean(type: Delete) {
 }
 
 task generateChangelogMd {
-    def parsedProjectXml = (new XmlParser()).parse("$project.rootDir/sample/src/main/res/xml/kau_changelog.xml")
-    def sw = new StringWriter()
-    sw.append("# Changelog\n")
-    parsedProjectXml.depthFirst().each {
-        switch (it.name()) {
-            case "version":
-                sw.append("\n## ${it.@title}\n")
-                break
-            case "item":
-                if (it.@text?.trim())
-                    sw.append("* ${it.@text}\n")
-        }
-    }
-    def changelogMd = new File("$project.rootDir/docs/Changelog.md")
-    changelogMd.write(sw.toString())
+    kauChangelog.generate("$project.rootDir/sample/src/main/res/xml/kau_changelog.xml")
 }
 
 subprojects {
