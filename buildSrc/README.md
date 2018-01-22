@@ -5,6 +5,9 @@
 KAU holds quite a big collection of projects, with the intent on making it easy to reuse complex features, and also to update.
 This plugin aims to help maintain version updates straight from the source, and also adds on a few nice functions.
 
+As a note, this is located under `buildSrc` as it is automatically included when building KAU.
+Everything here is used when generating the library, so it's always tested.
+
 ## Contents
 * [Versions](#versions)
 * [Plugins](#plugins)
