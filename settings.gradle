@@ -6,7 +6,9 @@ include ':core',
         ':colorpicker',
         ':mediapicker',
         ':kpref-activity',
-        ':searchview'
+        ':searchview',
+
+        ':gradle-plugin'
 
 if (!System.env.JITPACK)
     include ':sample'

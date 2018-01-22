@@ -1,6 +1,7 @@
 # Changelog
 
 ## v3.6.3
+* :core: Check for tablet in email builder
 * :kpref-activity: Simplify internal code and add better encapsulation
 * Add Chinese, Indonesian, Norwegian, Polish, Thai, and Turkish translations
 * Add back git versioning

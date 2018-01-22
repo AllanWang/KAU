@@ -1,0 +1,28 @@
+ext.versions = [
+        coreMinSdk          : 19,
+        minSdk              : 21,
+        targetSdk           : 27,
+        buildTools          : '27.0.2',
+
+        gradlePlugin        : '3.0.1',
+        mavenPlugin         : '2.0',
+        playPublishPlugin   : '1.2.0',
+        dexCountPlugin      : '0.8.2',
+
+        supportLib          : '27.0.2',
+        kotlin              : '1.2.20',
+        aboutLibraries      : '6.0.1',
+        anko                : '0.10.4',
+        blurry              : '2.1.1',
+        constraintLayout    : '1.1.0-beta4',
+        fastAdapter         : '3.1.2',
+        fastAdapterCommons  : '3.1.2',
+        glide               : '4.5.0',
+        iconics             : '3.0.0',
+        iiconGoogle         : '3.0.1.2',
+        materialDialog      : '0.9.6.0',
+
+        espresso            : '3.0.0',
+        junit               : '4.12',
+        testRunner          : '1.0.0'
+]
