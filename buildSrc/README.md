@@ -37,7 +37,7 @@ apply plugin: 'ca.allanwang.kau'
 
 # Versions
 
-> [Versions.groovy](./buildSrc/src/main/groovy/ca/allanwang/kau/Versions.groovy)
+> [Versions.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Versions.groovy)
 
 Contains the version code for any external library used in KAU.
 You are free to use the values through `kau.[tagName]`.
@@ -50,7 +50,7 @@ api "com.android.support:appcompat-v7:${kau.supportLibs}"
 
 # Plugins
 
-> [Plugins.groovy](./buildSrc/src/main/groovy/ca/allanwang/kau/Plugins.groovy)
+> [Plugins.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Plugins.groovy)
 
 Unfortunately, it seems like you can't use the plugin directly in the buildscript, so this is mainly internal.
 
@@ -59,7 +59,7 @@ The versions are taken from `Versions.groovy`, so it is always in sync.
 
 # Dependencies
 
-> [Dependencies.groovy](./buildSrc/src/main/groovy/ca/allanwang/kau/Dependencies.groovy)
+> [Dependencies.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Dependencies.groovy)
 
 Contains the dependency string for common libraries.
 You are free to use the values through `kauDependency.[tagName]`.
@@ -72,7 +72,7 @@ testImplementation kauDependency.junit
 
 # Changelog Generator
 
-In conjunction with [core](./core#changelog-xml), 
+In conjunction with [core](/core#changelog-xml), 
 the xml changelog can be converted to markdown.
 
 To allow for compilation per build, add your own task:
