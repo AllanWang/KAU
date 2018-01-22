@@ -12,3 +12,5 @@ include ':core',
 
 if (!System.env.JITPACK)
     include ':sample'
+
+project(":gradle-plugin").projectDir = file("buildSrc")

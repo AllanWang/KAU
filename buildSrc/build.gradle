@@ -1,7 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
-group = project.APP_GROUP
+group = "ca.allanwang"
 
 dependencies {
     compile gradleApi()

@@ -8,10 +8,7 @@ class KauPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         println("Hello KAU")
-        project.extensions.create("kauDependencies", Dependencies)
+        project.extensions.create("kau", Dependency)
     }
 
-    static class Dependencies {
-        String test = 'asdf'
-    }
 }
