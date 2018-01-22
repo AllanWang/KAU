@@ -1,11 +1,9 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply plugin: 'groovy'
 apply plugin: 'maven'
 
 group = project.APP_GROUP
 
 dependencies {
     compile gradleApi()
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${KOTLIN}"
+    compile localGroovy()
 }
