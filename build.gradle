@@ -20,9 +20,6 @@ buildscript {
 
 apply plugin: "ca.allanwang.kau"
 
-println(kau.kotlin)
-
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
