@@ -1,6 +1,3 @@
-plugins {
-    id 'com.gladed.androidgitversion' version '0.4.3'
-}
 ext.kauSubModuleResourcePrefix = "kau_search_"
 
 apply from: '../android-lib.gradle'

@@ -1,0 +1,9 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+group = "ca.allanwang"
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}

@@ -1,44 +1,40 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
         google()
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
+
+    apply plugin: "ca.allanwang.kau"
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${KOTLIN}"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.github.triplet.gradle:play-publisher:1.2.0'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.2'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath kauPlugin.android
+        classpath kauPlugin.kotlin
+        classpath kauPlugin.androidMaven
+        classpath kauPlugin.playPublisher
+        classpath kauPlugin.dexCount
+        classpath kauPlugin.gitVersion
     }
 }
+
+apply plugin: "ca.allanwang.kau"
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
 task generateChangelogMd {
-    def parsedProjectXml = (new XmlParser()).parse("$project.rootDir/sample/src/main/res/xml/kau_changelog.xml")
-    def sw = new StringWriter()
-    sw.append("# Changelog\n")
-    parsedProjectXml.depthFirst().each {
-        switch (it.name()) {
-            case "version":
-                sw.append("\n## ${it.@title}\n")
-                break
-            case "item":
-                if (it.@text?.trim())
-                    sw.append("* ${it.@text}\n")
-        }
-    }
-    def changelogMd = new File("$project.rootDir/docs/Changelog.md")
-    changelogMd.write(sw.toString())
+    kauChangelog.generate("$project.rootDir/sample/src/main/res/xml/kau_changelog.xml")
 }
 
 subprojects {
+
+    if (it.name == 'gradle-plugin')
+        return
+
+    apply plugin: 'com.gladed.androidgitversion'
+
     repositories {
         google()
         jcenter()
