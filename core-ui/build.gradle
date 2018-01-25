@@ -1,7 +1,4 @@
-plugins {
-    id 'com.gladed.androidgitversion' version '0.4.3'
-}
-ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
+ext.kauSubModuleMinSdk = kau.coreMinSdk
 
 apply from: '../android-lib.gradle'
 

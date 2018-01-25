@@ -56,6 +56,19 @@ dependencies {
     implementation "ca.allanwang.kau:searchview:$KAU"
 }
 
+// optional buildscript plugin (see below)
+buildscript {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+
+    dependencies {
+        ...
+        classpath "ca.allanwang:kau:${KAU}"
+    }
+}
+
 ```
 
 (If you are using gradle < 4.0, use `compile` instead of `implementation`)
@@ -124,6 +137,9 @@ This means that you'll need to explicitly include each submodule you'd like to u
 ## [SearchView](searchview#readme)
 * Material searchview with kotlin bindings
 * Includes `:core-ui`, `:adapter`
+
+## [Gradle Plugin](buildSrc#readme)
+* Gradle plugin to help facilitate versioning and other gradle functions
 
 -----------
 

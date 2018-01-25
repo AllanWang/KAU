@@ -1,15 +1,14 @@
-plugins {
-    id 'com.gladed.androidgitversion' version '0.4.3'
-}
-ext.kauSubModuleMinSdk = project.CORE_MIN_SDK
+ext.kauSubModuleMinSdk = kau.coreMinSdk
 
 apply from: '../android-lib.gradle'
 
 dependencies {
     implementation project(':core')
 
-    api "com.mikepenz:fastadapter:${FAST_ADAPTER}@aar"
-    api "com.mikepenz:fastadapter-commons:${FAST_ADAPTER_COMMONS}@aar"
+    //noinspection GradleDependency
+    api "com.mikepenz:fastadapter-commons:${kau.fastAdapterCommons}@aar"
+    //noinspection GradleDependency
+    api "com.mikepenz:fastadapter:${kau.fastAdapter}@aar"
 }
 
 apply from: '../artifacts.gradle'

@@ -2,18 +2,18 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.getkeepsafe.dexcount'
-group = project.APP_GROUP
+group = "ca.allanwang"
 
 android {
-    compileSdkVersion Integer.parseInt(project.TARGET_SDK)
-    buildToolsVersion project.BUILD_TOOLS
+    compileSdkVersion kau.targetSdk
+    buildToolsVersion kau.buildTools
 
     androidGitVersion {
         codeFormat = 'MMNNPPXX'
         format = '%tag%%.count%%-commit%'
     }
 
-    def kauMinSdk = project.MIN_SDK
+    def kauMinSdk = kau.minSdk
     if (project.hasProperty('kauSubModuleMinSdk'))
         kauMinSdk = kauSubModuleMinSdk
 
@@ -24,8 +24,8 @@ android {
     resourcePrefix kauResourcePrefix
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(kauMinSdk)
-        targetSdkVersion Integer.parseInt(project.TARGET_SDK)
+        minSdkVersion kauMinSdk
+        targetSdkVersion kau.targetSdk
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
         consumerProguardFiles 'progress-proguard.txt'
@@ -81,10 +81,10 @@ android {
 }
 
 dependencies {
-    androidTestImplementation("com.android.support.test:runner:${TEST_RUNNER}") {
+    androidTestImplementation("com.android.support.test:runner:${kau.testRunner}") {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${KOTLIN}"
-    testImplementation "junit:junit:${JUNIT}"
+    androidTestImplementation kauDependency.kotlinTest
+    testImplementation kauDependency.kotlinTest
+    testImplementation kauDependency.junit
 }
