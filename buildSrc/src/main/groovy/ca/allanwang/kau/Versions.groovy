@@ -14,8 +14,8 @@ class Versions {
     static def anko = '0.10.4'
     static def blurry = '2.1.1'
     static def constraintLayout = '1.1.0-beta4'
-    static def fastAdapter = '3.2.0'
-    static def fastAdapterCommons = '3.2.0'
+    static def fastAdapter = '3.1.2'
+    static def fastAdapterCommons = '3.1.2'
     static def glide = '4.5.0'
 
     static def iconics = '3.0.2'
