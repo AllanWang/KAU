@@ -240,8 +240,7 @@ class SearchView @JvmOverloads constructor(
     private val iconClear: ImageView by bindView(R.id.kau_search_clear)
     private val divider: View by bindView(R.id.kau_search_divider)
     private val recycler: RecyclerView by bindView(R.id.kau_search_recycler)
-    private var textCallback: Debouncer2<String, SearchView>
-            = debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
+    private var textCallback: Debouncer2<String, SearchView> = debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
     private val adapter = FastItemAdapter<SearchItem>()
     private var menuItem: MenuItem? = null
     val isOpen: Boolean
@@ -343,7 +342,8 @@ class SearchView @JvmOverloads constructor(
      */
     fun bind(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
         config(config)
-        val menuItem = menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
+        val menuItem = menu.findItem(id)
+                ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
         if (menuItem.icon == null) menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         card.gone()
         menuItem.setOnMenuItemClickListener { revealOpen(); true }
@@ -459,8 +459,7 @@ annotation class KauSearch
  * Helper function that binds to an activity's main view
  */
 @KauSearch
-fun Activity.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView
-        = findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
+fun Activity.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView = findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
 
 /**
  * Bind searchView to a menu item; call this in [Activity.onCreateOptionsMenu]
