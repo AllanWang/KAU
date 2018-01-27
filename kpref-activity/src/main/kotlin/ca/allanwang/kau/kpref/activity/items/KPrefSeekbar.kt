@@ -36,14 +36,14 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
                 override fun onStartTrackingTouch(sb: SeekBar) {}
 
                 override fun onStopTrackingTouch(sb: SeekBar) {
-                    val trueProgress = sb.progress.fromProgress
-                    pref = trueProgress
+                    pref = sb.progress.fromProgress
                 }
             })
         }
         withAccentColor(seekbar::tint)
         text.text = builder.toText(seekbar.progress.fromProgress) //set initial text in case no change occurs
         seekbar.progress = pref.toProgress
+        seekbar.isEnabled = builder.enabler()
     }
 
     /**
@@ -76,15 +76,15 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
         override var increments: Int = 1
 
-        override var toText: (Int) -> String = { it.toString() }
+        override var toText: (Int) -> String = Int::toString
 
         override var textViewConfigs: TextView.() -> Unit = {}
     }
 
-    val Int.toProgress: Int
+    protected inline val Int.toProgress: Int
         get() = this - builder.min
 
-    val Int.fromProgress: Int
+    protected inline val Int.fromProgress: Int
         get() = this + builder.min
 
     override fun getType(): Int = R.id.kau_item_pref_seekbar

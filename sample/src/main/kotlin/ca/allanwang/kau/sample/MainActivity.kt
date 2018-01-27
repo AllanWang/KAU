@@ -81,8 +81,8 @@ class MainActivity : KPrefActivity() {
     }
 
     override fun kPrefCoreAttributes(): CoreAttributeContract.() -> Unit = {
-        textColor = { KPrefSample.textColor }
-        accentColor = { KPrefSample.accentColor }
+        textColor = KPrefSample::textColor
+        accentColor = KPrefSample::accentColor
     }
 
     override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
@@ -92,7 +92,7 @@ class MainActivity : KPrefActivity() {
         /**
          * This is how the setup looks like with all the proper tags
          */
-        checkbox(title = R.string.checkbox_1, getter = { KPrefSample.check1 }, setter = { KPrefSample.check1 = it },
+        checkbox(title = R.string.checkbox_1, getter = KPrefSample::check1, setter = { KPrefSample.check1 = it },
                 builder = {
                     descRes = R.string.desc
                 })
@@ -100,23 +100,23 @@ class MainActivity : KPrefActivity() {
         /**
          * Since we know the order, we may omit the tags
          */
-        checkbox(R.string.checkbox_2, { KPrefSample.check2 }, { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) })
+        checkbox(R.string.checkbox_2, KPrefSample::check2, { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) })
 
         /**
          * Since the builder is the last argument and is a lambda, we may write the setup cleanly like so:
          */
-        checkbox(R.string.checkbox_3, { KPrefSample.check3 }, { KPrefSample.check3 = it }) {
+        checkbox(R.string.checkbox_3, KPrefSample::check3, { KPrefSample.check3 = it }) {
             descRes = R.string.desc_dependent
             enabler = { KPrefSample.check2 }
             onDisabledClick = { itemView.context.toast("I am still disabled") }
         }
 
-        colorPicker(R.string.text_color, { KPrefSample.textColor }, { KPrefSample.textColor = it; reload() }) {
+        colorPicker(R.string.text_color, KPrefSample::textColor, { KPrefSample.textColor = it; reload() }) {
             descRes = R.string.color_custom
             allowCustom = true
         }
 
-        colorPicker(R.string.accent_color, { KPrefSample.accentColor }, {
+        colorPicker(R.string.accent_color, KPrefSample::accentColor, {
             KPrefSample.accentColor = it
             reload()
             this@MainActivity.navigationBarColor = it
@@ -126,7 +126,7 @@ class MainActivity : KPrefActivity() {
             allowCustom = false
         }
 
-        colorPicker(R.string.background_color, { KPrefSample.bgColor }, {
+        colorPicker(R.string.background_color, KPrefSample::bgColor, {
             KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500L)
         }) {
             iicon = GoogleMaterial.Icon.gmd_colorize
@@ -135,7 +135,7 @@ class MainActivity : KPrefActivity() {
             allowCustom = true
         }
 
-        text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
+        text(R.string.text, KPrefSample::text, { KPrefSample.text = it }) {
             descRes = R.string.text_desc
             onClick = {
                 itemView.context.materialDialog {
@@ -147,7 +147,7 @@ class MainActivity : KPrefActivity() {
             }
         }
 
-        seekbar(R.string.seekbar, { KPrefSample.seekbar }, { KPrefSample.seekbar = it }) {
+        seekbar(R.string.seekbar, KPrefSample::seekbar, { KPrefSample.seekbar = it }) {
             descRes = R.string.kau_lorem_ipsum
             textViewConfigs = {
                 minEms = 2
@@ -188,22 +188,22 @@ class MainActivity : KPrefActivity() {
          * Showcases a little trick. The id for reloading is [R.string.checkbox_2],
          * but the title displayed is still [R.string.checkbox_3]
          */
-        checkbox(R.string.checkbox_2, { KPrefSample.check2 }, { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) }) {
+        checkbox(R.string.checkbox_2, KPrefSample::check2, { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) }) {
             titleFun = { R.string.checkbox_3 }
             descRes = R.string.kau_lorem_ipsum
         }
 
-        text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
+        text(R.string.text, KPrefSample::text, { KPrefSample.text = it }) {
             descRes = R.string.kau_lorem_ipsum
             textGetter = { string(R.string.kau_lorem_ipsum) }
         }
 
-        timePicker(R.string.time, { KPrefSample.time12 }, { KPrefSample.time12 = it }) {
+        timePicker(R.string.time, KPrefSample::time12, { KPrefSample.time12 = it }) {
             descRes = R.string.time_desc_12
             use24HourFormat = false
         }
 
-        timePicker(R.string.time, { KPrefSample.time24 }, { KPrefSample.time24 = it }) {
+        timePicker(R.string.time, KPrefSample::time24, { KPrefSample.time24 = it }) {
             descRes = R.string.time_desc_24
             use24HourFormat = true
         }
