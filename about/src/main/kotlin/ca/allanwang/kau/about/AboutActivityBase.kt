@@ -38,7 +38,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
     private val pager: ViewPager by bindView(R.id.about_pager)
     private val indicator: InkPageIndicator by bindView(R.id.about_indicator)
 
-    val currentPage
+    val currentPage: Int
         get() = pager.currentItem
 
     /**

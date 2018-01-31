@@ -41,7 +41,7 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
         var exitTransitionTop = R.transition.kau_exit_slide_top
     }
 
-    override final fun onCreate(savedInstanceState: Bundle?) {
+    final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_elastic_recycler_activity)
         setSupportActionBar(toolbar)
