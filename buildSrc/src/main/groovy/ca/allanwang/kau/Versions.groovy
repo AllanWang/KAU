@@ -10,13 +10,13 @@ class Versions {
 
     static def kotlin = '1.2.21'
 
-    static def aboutLibraries = '6.0.1'
+    static def aboutLibraries = '6.0.5'
     static def anko = '0.10.4'
     static def blurry = '2.1.1'
-    static def constraintLayout = '1.1.0-beta4'
+    static def constraintLayout = '1.1.0-beta5'
     static def fastAdapter = '3.1.2'
-    static def fastAdapterCommons = '3.1.2'
-    static def glide = '4.5.0'
+    static def fastAdapterCommons = fastAdapter
+    static def glide = '4.6.1'
 
     static def iconics = '3.0.2'
     static def iconicsGoogle = '3.0.1.2'
