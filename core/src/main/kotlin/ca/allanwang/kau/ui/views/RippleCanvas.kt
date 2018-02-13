@@ -12,7 +12,6 @@ import android.view.View
 /**
  * Created by Allan Wang on 2016-11-17.
  *
- *
  * Canvas drawn ripples that keep the previous color
  * Extends to view dimensions
  * Supports multiple ripples from varying locations

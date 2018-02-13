@@ -47,7 +47,6 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private val innerPaint: Paint = Paint().apply { isAntiAlias = true }
     private var selected: Boolean = false
     var withBorder: Boolean = false
-        get() = field
         set(value) {
             if (field != value) {
                 field = value
@@ -65,13 +64,13 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         outerPaint.color = shiftColorDown(color)
 
         val selector = createSelector(color)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        foreground = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val states = arrayOf(intArrayOf(android.R.attr.state_pressed))
             val colors = intArrayOf(shiftColorUp(color))
             val rippleColors = ColorStateList(states, colors)
-            foreground = RippleDrawable(rippleColors, selector, null)
+            RippleDrawable(rippleColors, selector, null)
         } else {
-            foreground = selector
+            selector
         }
     }
 
@@ -85,20 +84,17 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         setBackgroundColorRes(color)
     }
 
-
-    @Deprecated("")
+    @Deprecated("Cannot use setBackground() on CircleView", level = DeprecationLevel.ERROR)
     override fun setBackground(background: Drawable) {
         throw IllegalStateException("Cannot use setBackground() on CircleView.")
     }
 
-
-    @Deprecated("")
+    @Deprecated("Cannot use setBackgroundDrawable() on CircleView", level = DeprecationLevel.ERROR)
     override fun setBackgroundDrawable(background: Drawable) {
         throw IllegalStateException("Cannot use setBackgroundDrawable() on CircleView.")
     }
 
-
-    @Deprecated("")
+    @Deprecated("Cannot use setActivated() on CircleView", level = DeprecationLevel.ERROR)
     override fun setActivated(activated: Boolean) {
         throw IllegalStateException("Cannot use setActivated() on CircleView.")
     }
@@ -194,10 +190,10 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         cheatSheet.show()
     }
 
-    companion object {
+    private companion object {
 
         @ColorInt
-        private fun translucentColor(color: Int): Int {
+        fun translucentColor(color: Int): Int {
             val factor = 0.7f
             val alpha = Math.round(Color.alpha(color) * factor)
             val red = Color.red(color)

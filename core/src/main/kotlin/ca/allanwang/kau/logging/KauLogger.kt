@@ -21,6 +21,8 @@ import android.util.Log
  * inline fun _d(message: () -> Any?) {
  *      if (BuildConfig.DEBUG) d(message)
  * }
+ * This use case allows for a constant boolean check, which should be caught and removed by proguard
+ * for production builds
  */
 open class KauLogger(
         /**
