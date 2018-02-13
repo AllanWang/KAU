@@ -344,6 +344,6 @@ internal object ColorPalette {
                 "#DD2C00"))
     }
 
-    fun colorArrayOf(vararg colors: String) = colors.map { Color.parseColor(it) }.toIntArray()
+    private fun colorArrayOf(vararg colors: String) = colors.map { Color.parseColor(it) }.toIntArray()
 }
 

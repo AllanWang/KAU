@@ -1,5 +1,6 @@
 package ca.allanwang.kau.colorpicker
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.support.annotation.ColorInt
@@ -29,6 +30,7 @@ internal class ColorPickerView @JvmOverloads constructor(
     var isInSub: Boolean = false
     var isInCustom: Boolean = false
     var circleSize: Int = context.dimen(R.dimen.kau_color_circle_size).toInt()
+    @SuppressLint("PrivateResource")
     val backgroundColor = context.resolveColor(R.attr.md_background_color,
             if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark) Color.WHITE else 0xff424242.toInt())
     val backgroundColorTint = backgroundColor.colorToForeground()
@@ -51,7 +53,6 @@ internal class ColorPickerView @JvmOverloads constructor(
                 }
             }
         }
-
 
     val gridView: FillGridView by bindView(R.id.md_grid)
     val customFrame: LinearLayout by bindView(R.id.md_colorChooserCustomFrame)
@@ -126,10 +127,10 @@ internal class ColorPickerView @JvmOverloads constructor(
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    try {
-                        selectedColor = Color.parseColor("#" + s.toString())
+                    selectedColor = try {
+                        Color.parseColor("#$s")
                     } catch (e: IllegalArgumentException) {
-                        selectedColor = Color.BLACK
+                        Color.BLACK
                     }
 
                     customColorIndicator.setBackgroundColor(selectedColor)
@@ -171,9 +172,9 @@ internal class ColorPickerView @JvmOverloads constructor(
                     blueValue.text = blueSeekbar.progress.toString()
                 }
 
-                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStartTrackingTouch(seekBar: SeekBar) = Unit
 
-                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar) = Unit
             }
             redSeekbar.setOnSeekBarChangeListener(customRgbListener)
             greenSeekbar.setOnSeekBarChangeListener(customRgbListener)
@@ -187,7 +188,7 @@ internal class ColorPickerView @JvmOverloads constructor(
             findColor(selectedColor)
             if (builder.allowCustom) dialog.setActionButton(DialogAction.NEUTRAL, builder.customText)
             dialog.setActionButton(DialogAction.NEGATIVE, if (isInSub) builder.backText else builder.cancelText)
-            gridView.fadeIn(onStart = { invalidateGrid() })
+            gridView.fadeIn(onStart = this::invalidateGrid)
             customFrame.fadeOut(onFinish = { customFrame.gone() })
             hexInput.removeTextChangedListener(customHexTextWatcher)
             customHexTextWatcher = null
@@ -217,11 +218,10 @@ internal class ColorPickerView @JvmOverloads constructor(
         hexInput.tint(visibleColor)
     }
 
-    fun findColor(@ColorInt color: Int): Boolean {
+    private fun findColor(@ColorInt color: Int): Boolean {
         topIndex = -1
         subIndex = -1
-        colorsTop.forEachIndexed {
-            index, topColor ->
+        colorsTop.forEachIndexed { index, topColor ->
             if (findSubColor(color, index)) {
                 topIndex = index
                 return true
@@ -234,10 +234,9 @@ internal class ColorPickerView @JvmOverloads constructor(
         return false
     }
 
-    fun findSubColor(@ColorInt color: Int, topIndex: Int): Boolean {
+    private fun findSubColor(@ColorInt color: Int, topIndex: Int): Boolean {
         if (colorsSub == null || colorsSub!!.size <= topIndex) return false
-        colorsSub!![topIndex].forEachIndexed {
-            index, subColor ->
+        colorsSub!![topIndex].forEachIndexed { index, subColor ->
             if (subColor == color) {
                 subIndex = index
                 return true
@@ -246,7 +245,7 @@ internal class ColorPickerView @JvmOverloads constructor(
         return false
     }
 
-    fun invalidateGrid() {
+    private fun invalidateGrid() {
         if (gridView.adapter == null) {
             gridView.adapter = ColorGridAdapter()
             gridView.selector = ResourcesCompat.getDrawable(resources, R.drawable.kau_transparent, null)
@@ -303,6 +302,5 @@ internal class ColorPickerView @JvmOverloads constructor(
                 setOnLongClickListener(this@ColorGridAdapter)
             }
         }
-
     }
 }
