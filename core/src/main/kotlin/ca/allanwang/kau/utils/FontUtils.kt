@@ -8,7 +8,7 @@ import android.graphics.Typeface
  */
 object FontUtils {
 
-    val sTypefaceCache: MutableMap<String, Typeface> = mutableMapOf()
+    private val sTypefaceCache: MutableMap<String, Typeface> = mutableMapOf()
 
     fun get(context: Context, font: String): Typeface {
         synchronized(sTypefaceCache) {

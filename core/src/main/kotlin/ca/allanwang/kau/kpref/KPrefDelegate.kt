@@ -21,8 +21,8 @@ class StringSet(set: Collection<String>) : LinkedHashSet<String>(set)
  * Also contains an optional mutable postSetter that will be called every time a new value is given
  */
 class KPrefDelegate<T : Any> internal constructor(
-        private val key: String, private val fallback: T, private val pref: KPref, var postSetter: (value: T) -> Unit = {}, lock: Any? = null
-) : ILazyResettable<T>, java.io.Serializable {
+        private val key: String, private val fallback: T, private val pref: KPref, private var postSetter: (value: T) -> Unit = {}, lock: Any? = null
+) : ILazyResettable<T> {
 
     private object UNINITIALIZED
 

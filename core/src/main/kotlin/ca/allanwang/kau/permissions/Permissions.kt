@@ -3,6 +3,8 @@ package ca.allanwang.kau.permissions
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.os.Build
+import android.support.annotation.RequiresApi
 
 
 /**
@@ -60,6 +62,7 @@ const val PERMISSION_ADD_VOICEMAIL = Manifest.permission.ADD_VOICEMAIL
 const val PERMISSION_USE_SIP = Manifest.permission.USE_SIP
 const val PERMISSION_PROCESS_OUTGOING_CALLS = Manifest.permission.PROCESS_OUTGOING_CALLS
 
+@RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
 const val PERMISSION_BODY_SENSORS = Manifest.permission.BODY_SENSORS
 
 const val PERMISSION_SEND_SMS = Manifest.permission.SEND_SMS
