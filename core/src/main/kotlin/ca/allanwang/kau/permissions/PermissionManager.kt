@@ -15,6 +15,9 @@ import java.lang.ref.WeakReference
 
 /**
  * Created by Allan Wang on 2017-07-03.
+ *
+ * Permission manager that is decoupled from activities
+ * Keeps track of pending requests, and warns about invalid requests
  */
 internal object PermissionManager {
 
@@ -24,7 +27,7 @@ internal object PermissionManager {
     /**
      * Retrieve permissions requested in our manifest
      */
-    val manifestPermission = lazyContext<Array<String>> {
+    private val manifestPermission = lazyContext<Array<String>> {
         try {
             it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions ?: emptyArray()
         } catch (e: Exception) {
@@ -44,7 +47,7 @@ internal object PermissionManager {
         } else KL.d { "Request is postponed since another one is still in progress; did you remember to override onRequestPermissionsResult?" }
     }
 
-    @Synchronized internal fun requestPermissions(context: Context, permissions: Array<out String>) {
+    @Synchronized private fun requestPermissions(context: Context, permissions: Array<out String>) {
         permissions.forEach {
             if (!manifestPermission(context).contains(it)) {
                 KL.e { "Requested permission $it is not stated in the manifest" }
@@ -57,6 +60,10 @@ internal object PermissionManager {
         ActivityCompat.requestPermissions(activity, permissions, 1)
     }
 
+    /**
+     * Handles permission result by allowing accepted permissions for all pending requests
+     * Also cleans up destroyed or completed pending requests
+     */
     fun onRequestPermissionsResult(context: Context, permissions: Array<out String>, grantResults: IntArray) {
         KL.i { "On permission result: pending ${pendingResults.size}" }
         val count = Math.min(permissions.size, grantResults.size)

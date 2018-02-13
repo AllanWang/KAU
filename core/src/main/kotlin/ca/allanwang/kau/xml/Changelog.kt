@@ -23,8 +23,9 @@ import org.xmlpull.v1.XmlPullParser
 
 /**
  * Created by Allan Wang on 2017-05-28.
+ *
+ * Easy changelog loader
  */
-
 fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null, customize: MaterialDialog.Builder.() -> Unit = {}) {
     doAsync {
         val items = parse(this@showChangelog, xmlRes)

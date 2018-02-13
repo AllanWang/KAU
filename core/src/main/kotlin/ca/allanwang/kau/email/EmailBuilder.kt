@@ -15,6 +15,8 @@ import ca.allanwang.kau.utils.*
 
 /**
  * Created by Allan Wang on 2017-06-20.
+ *
+ * Helper tool to call an email intent with device information
  */
 class EmailBuilder(val email: String, val subject: String) {
     var message: String = "Write here."
@@ -34,6 +36,9 @@ class EmailBuilder(val email: String, val subject: String) {
         attachment = uri
     }
 
+    /**
+     * Optional handler to update the created intent
+     */
     var extras: Intent.() -> Unit = {}
 
     data class Package(val packageName: String, val appName: String)
@@ -72,10 +77,12 @@ class EmailBuilder(val email: String, val subject: String) {
             }
         }
 
-        if (packages.isNotEmpty()) emailBuilder.append("\n")
-        packages.forEach {
-            if (context.isAppInstalled(it.packageName))
-                emailBuilder.append(String.format("\n%s is installed", it.appName))
+        if (packages.isNotEmpty()) {
+            emailBuilder.append("\n")
+            packages.forEach {
+                if (context.isAppInstalled(it.packageName))
+                    emailBuilder.append(String.format("\n%s is installed", it.appName))
+            }
         }
 
         if (pairs.isNotEmpty()) {
