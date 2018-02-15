@@ -7,6 +7,9 @@
     -->
 
     <version title="v3.6.4" />
+    <item text=":core: Fix potential NPE in restart()" />
+    <item text=":core: Create restartApplication()" />
+    <item text="" />
     <item text="Update documentation" />
     <item text="" />
 
