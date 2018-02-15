@@ -8,8 +8,8 @@ fun KPref.kprefSingle(key: String) = KPrefSingleDelegate(key, this)
  * Created by Allan Wang on 2017-06-07.
  *
  * Singular KPref Delegate for booleans
- * When the shared pref is not initialized, it will return true then set the pref to false
- * All subsequent retrievals will be false
+ * When the shared pref is not initialized, it will return [true] then set the pref to [false]
+ * All subsequent retrievals will be [false]
  * This is useful for one time toggles such as showcasing items
  */
 class KPrefSingleDelegate internal constructor(private val key: String, private val pref: KPref, lock: Any? = null) : ILazyResettable<Boolean> {
