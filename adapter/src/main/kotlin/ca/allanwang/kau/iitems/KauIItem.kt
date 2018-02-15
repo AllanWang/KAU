@@ -20,6 +20,6 @@ open class KauIItem<Item, VH : RecyclerView.ViewHolder>(
 ) : AbstractItem<Item, VH>() where Item : IItem<*, *>, Item : IClickable<*> {
     final override fun getType(): Int = type
     final override fun getViewHolder(v: View): VH = viewHolder(v)
-    final override fun getLayoutRes(): Int = layoutRes
+    final override fun getLayoutRes(): Int = layoutResz
 
 }

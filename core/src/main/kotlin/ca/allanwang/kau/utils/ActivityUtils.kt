@@ -2,11 +2,15 @@ package ca.allanwang.kau.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.support.annotation.ColorInt
+import android.support.annotation.RequiresApi
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.view.Menu
@@ -56,12 +60,33 @@ inline fun <T : Activity> Activity.startActivityForResult(
  */
 inline fun Activity.restart(intentBuilder: Intent.() -> Unit = {}) {
     val i = Intent(this, this::class.java)
-    i.putExtras(intent.extras)
+    val oldExtras = intent.extras
+    if (oldExtras != null)
+        i.putExtras(oldExtras)
     i.intentBuilder()
     startActivity(i)
     overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out) //No transitions
     finish()
     overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out)
+}
+
+
+/**
+ * Force restart an entire application
+ */
+@Suppress("NOTHING_TO_INLINE")
+@RequiresApi(Build.VERSION_CODES.M)
+inline fun Activity.restartApplication() {
+    val intent = packageManager.getLaunchIntentForPackage(packageName)
+    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+    val pending = PendingIntent.getActivity(this, 666, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+    val alarm = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    if (buildIsMarshmallowAndUp)
+        alarm.setExactAndAllowWhileIdle(AlarmManager.RTC, System.currentTimeMillis() + 100, pending)
+    else
+        alarm.setExact(AlarmManager.RTC, System.currentTimeMillis() + 100, pending)
+    finish()
+    System.exit(0)
 }
 
 fun Activity.finishSlideOut() {
@@ -113,8 +138,6 @@ fun Activity.hideKeyboard() = currentFocus.hideKeyboard()
 
 fun Activity.showKeyboard() = currentFocus.showKeyboard()
 
-fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {})
-        = contentView!!.snackbar(text, duration, builder)
+fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(text, duration, builder)
 
-fun Activity.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {})
-        = contentView!!.snackbar(textId, duration, builder)
+fun Activity.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(textId, duration, builder)
