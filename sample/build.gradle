@@ -32,9 +32,9 @@ android {
     def releaseSigning = file("../files/kau.properties")
     def hasSigning = releaseSigning.exists()
 
-    if (hasSigning) {
-        signingConfigs {
+    signingConfigs {
 
+        if (hasSigning) {
             def releaseProps = new Properties()
             releaseSigning.withInputStream { releaseProps.load(it) }
 
@@ -45,9 +45,24 @@ android {
                 keyPassword releaseProps.getProperty('keyPassword')
             }
         }
+
+        debug {
+            storeFile file("../files/debug.keystore")
+            storePassword "debugKey"
+            keyAlias "debugKey"
+            keyPassword "debugKey"
+        }
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debug
+        }
+
         release {
             minifyEnabled true
             if (hasSigning) signingConfig signingConfigs.release

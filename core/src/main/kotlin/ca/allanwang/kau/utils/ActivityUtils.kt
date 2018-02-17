@@ -141,3 +141,7 @@ fun Activity.showKeyboard() = currentFocus.showKeyboard()
 fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(text, duration, builder)
 
 fun Activity.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(textId, duration, builder)
+
+fun Activity.withTransitionListener() {
+
+}

@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.6.4
+* :core: Fix potential NPE in restart()
+* :core: Create restartApplication()
+* Update documentation
+
 ## v3.6.3
 * :core: Check for tablet in email builder
 * :kpref-activity: Simplify internal code and add better encapsulation
