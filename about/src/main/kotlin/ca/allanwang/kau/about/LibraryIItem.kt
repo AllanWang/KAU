@@ -32,7 +32,7 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewH
                             false
                         else
                             with(item.lib) {
-                                v.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
+                                v!!.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
                                 true
                             }
                     }
