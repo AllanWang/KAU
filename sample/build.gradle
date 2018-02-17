@@ -61,11 +61,13 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             signingConfig signingConfigs.debug
+            resValue "string", "app_name", "KAU Debug"
         }
 
         release {
             minifyEnabled true
             if (hasSigning) signingConfig signingConfigs.release
+            resValue "string", "app_name", "KAU"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
