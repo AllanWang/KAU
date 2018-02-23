@@ -31,19 +31,26 @@ class ColorBuilder : ColorContract {
 
 interface ColorContract {
     var title: String?
-    var titleRes: Int @StringRes set
+    @setparam:StringRes
+    var titleRes: Int
     var allowCustom: Boolean
     var allowCustomAlpha: Boolean
     var isAccent: Boolean
-    var defaultColor: Int @StringRes set
-    var doneText: Int @StringRes set
-    var backText: Int @StringRes set
-    var cancelText: Int @StringRes set
+    @setparam:StringRes
+    var defaultColor: Int
+    @setparam:StringRes
+    var doneText: Int
+    @setparam:StringRes
+    var backText: Int
+    @setparam:StringRes
+    var cancelText: Int
+    @setparam:StringRes
     var presetText: Int
-        @StringRes set
-    var customText: Int @StringRes set
+    @setparam:StringRes
+    var customText: Int
     var dynamicButtonColors: Boolean
-    var circleSizeRes: Int @DimenRes set
+    @setparam:DimenRes
+    var circleSizeRes: Int
     var colorCallback: ((selectedColor: Int) -> Unit)?
     var colorsTop: IntArray?
     var colorsSub: Array<IntArray>?
