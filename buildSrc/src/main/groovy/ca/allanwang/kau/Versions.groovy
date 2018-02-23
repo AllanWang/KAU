@@ -25,9 +25,9 @@ class Versions {
 
     static def materialDialog = '0.9.6.0'
 
-    static def espresso = '3.0.0'
+    static def espresso = '3.0.1'
     static def junit = '4.12'
-    static def testRunner = '1.0.0'
+    static def testRunner = '1.0.1'
 
     static def gradlePlugin = '3.0.1'
     static def mavenPlugin = '2.0'

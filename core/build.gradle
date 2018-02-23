@@ -5,6 +5,7 @@ apply from: '../android-lib.gradle'
 dependencies {
     api kauDependency.kotlin
 
+    api "com.android.support:support-annotations:${kau.supportLibs}"
     api "com.android.support:appcompat-v7:${kau.supportLibs}"
     api "com.android.support:support-v13:${kau.supportLibs}"
     api "com.android.support:design:${kau.supportLibs}"
