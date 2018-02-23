@@ -45,6 +45,8 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private val outerPaint: Paint = Paint().apply { isAntiAlias = true }
     private val whitePaint: Paint = Paint().apply { isAntiAlias = true; color = Color.WHITE }
     private val innerPaint: Paint = Paint().apply { isAntiAlias = true }
+    val colorSelected: Boolean
+        get() = selected
     private var selected: Boolean = false
     var withBorder: Boolean = false
         set(value) {
@@ -107,7 +109,7 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     fun animateSelected(selected: Boolean) {
         if (this.selected == selected) return
-        this.selected = true // We need to draw the other bands
+        this.selected = selected // We need to draw the other bands
         val range = if (selected) Pair(-borderWidthSmall, borderWidthLarge) else Pair(borderWidthLarge, -borderWidthSmall)
         ValueAnimator.ofFloat(range.first, range.second).apply {
             reverse()
@@ -117,15 +119,6 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 invalidate()
 
             }
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    this@CircleView.selected = selected
-                }
-
-                override fun onAnimationCancel(animation: Animator) {
-                    this@CircleView.selected = selected
-                }
-            })
             start()
         }
     }

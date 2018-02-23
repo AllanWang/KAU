@@ -72,7 +72,6 @@ fun Context.colorPickerDialog(contract: ColorContract): MaterialDialog {
     val dialog = with(MaterialDialog.Builder(this)) {
         title(string(contract.titleRes, contract.title) ?: string(R.string.kau_md_color_palette))
         customView(view, false)
-        tag("colorpicker")
         autoDismiss(false)
         positiveText(contract.doneText)
         negativeText(contract.cancelText)
