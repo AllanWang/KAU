@@ -261,20 +261,18 @@ internal class ColorPickerView @JvmOverloads constructor(
             val (pos, color) = v.tagData ?: return
             if (colorIndex == pos && isInSub)
                 return
-//            val prevCircle = circleAt(colorIndex)
             circleAt(colorIndex)?.animateSelected(false)
             _selectedColor = color
             colorIndex = pos
             refreshColors()
-            if (isInSub) {
-//                prevCircle?.animateSelected(false)
+            if (isInSub)
                 circleAt(colorIndex)?.animateSelected(true)
-            }
             //Otherwise we are invalidating our grid, so there is no point in animating
         }
 
         private fun circleAt(index: Int): CircleView? =
-                if (index == -1) null else gridView.getChildAt(index) as? CircleView
+                if (index == -1) null
+                else gridView.getChildAt(index) as? CircleView
 
         private val View.tagData: Pair<Int, Int>?
             get() {
