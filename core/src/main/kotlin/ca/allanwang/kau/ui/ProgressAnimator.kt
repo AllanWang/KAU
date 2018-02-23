@@ -77,6 +77,10 @@ class ProgressAnimator private constructor(private vararg val values: Float) {
                 override fun onAnimationEnd(animation: Animator?) {
                     endActions.forEach { it() }
                 }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                    endActions.forEach { it() }
+                }
             })
             extraConfigs()
             start()

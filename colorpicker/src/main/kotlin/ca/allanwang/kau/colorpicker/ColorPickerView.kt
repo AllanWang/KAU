@@ -31,9 +31,9 @@ internal class ColorPickerView @JvmOverloads constructor(
     var isInCustom: Boolean = false
     var circleSize: Int = context.dimen(R.dimen.kau_color_circle_size).toInt()
     @SuppressLint("PrivateResource")
-    val backgroundColor = context.resolveColor(R.attr.md_background_color,
+    private val backgroundColor = context.resolveColor(R.attr.md_background_color,
             if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark) Color.WHITE else 0xff424242.toInt())
-    val backgroundColorTint = backgroundColor.colorToForeground()
+    private val backgroundColorTint = backgroundColor.colorToForeground()
     lateinit var dialog: MaterialDialog
     lateinit var builder: ColorContract
     lateinit var colorsTop: IntArray
@@ -72,6 +72,11 @@ internal class ColorPickerView @JvmOverloads constructor(
     var customRgbListener: SeekBar.OnSeekBarChangeListener? = null
 
     init {
+        init()
+    }
+
+    @SuppressLint("PrivateResource")
+    private fun init() {
         View.inflate(context, R.layout.md_dialog_colorchooser, this)
     }
 
@@ -79,14 +84,18 @@ internal class ColorPickerView @JvmOverloads constructor(
         this.builder = builder
         this.dialog = dialog
         this.colorsTop = with(builder) {
-            if (colorsTop != null) colorsTop!!
-            else if (isAccent) ColorPalette.ACCENT_COLORS
-            else ColorPalette.PRIMARY_COLORS
+            when {
+                colorsTop != null -> colorsTop!!
+                isAccent -> ColorPalette.ACCENT_COLORS
+                else -> ColorPalette.PRIMARY_COLORS
+            }
         }
         this.colorsSub = with(builder) {
-            if (colorsTop != null) colorsSub
-            else if (isAccent) ColorPalette.ACCENT_COLORS_SUB
-            else ColorPalette.PRIMARY_COLORS_SUB
+            when {
+                colorsTop != null -> colorsSub
+                isAccent -> ColorPalette.ACCENT_COLORS_SUB
+                else -> ColorPalette.PRIMARY_COLORS_SUB
+            }
         }
         this.selectedColor = builder.defaultColor
         if (builder.allowCustom) {
@@ -222,11 +231,8 @@ internal class ColorPickerView @JvmOverloads constructor(
         topIndex = -1
         subIndex = -1
         colorsTop.forEachIndexed { index, topColor ->
-            if (findSubColor(color, index)) {
-                topIndex = index
-                return true
-            }
-            if (topColor == color) { // If no sub colors exists and top color matches
+            // First check for sub colors, then if the top color matches
+            if (findSubColor(color, index) || topColor == color) {
                 topIndex = index
                 return true
             }
@@ -235,14 +241,8 @@ internal class ColorPickerView @JvmOverloads constructor(
     }
 
     private fun findSubColor(@ColorInt color: Int, topIndex: Int): Boolean {
-        if (colorsSub == null || colorsSub!!.size <= topIndex) return false
-        colorsSub!![topIndex].forEachIndexed { index, subColor ->
-            if (subColor == color) {
-                subIndex = index
-                return true
-            }
-        }
-        return false
+        subIndex = colorsSub?.getOrNull(topIndex)?.indexOfFirst { color == it } ?: -1
+        return subIndex != -1
     }
 
     private fun invalidateGrid() {
@@ -256,50 +256,55 @@ internal class ColorPickerView @JvmOverloads constructor(
 
     inner class ColorGridAdapter : BaseAdapter(), OnClickListener, OnLongClickListener {
         override fun onClick(v: View) {
-            if (v.tag != null && v.tag is String) {
-                val tags = (v.tag as String).split(":")
-                if (colorIndex == tags[0].toInt()) {
-                    colorIndex = tags[0].toInt() //Go to sub list if exists
-                    return
-                }
-                if (colorIndex != -1) (gridView.getChildAt(colorIndex) as CircleView).animateSelected(false)
-                selectedColor = tags[1].toInt()
-                refreshColors()
-                val currentSub = isInSub
-                colorIndex = tags[0].toInt()
-                if (currentSub == isInSub) (gridView.getChildAt(colorIndex) as CircleView).animateSelected(true)
-                //Otherwise we are invalidating our grid, so there is no point in animating
+            val (pos, color) = v.tagData ?: return
+            if (colorIndex == pos && isInSub)
+                return
+//            val prevCircle = circleAt(colorIndex)
+            circleAt(colorIndex)?.animateSelected(false)
+            selectedColor = color
+            colorIndex = pos
+            refreshColors()
+            if (isInSub) {
+//                prevCircle?.animateSelected(false)
+                circleAt(colorIndex)?.animateSelected(true)
             }
+            //Otherwise we are invalidating our grid, so there is no point in animating
         }
+
+        private fun circleAt(index: Int): CircleView? =
+                if (index == -1) null else gridView.getChildAt(index) as? CircleView
+
+        private val View.tagData: Pair<Int, Int>?
+            get() {
+                val tags = (tag as? String)?.split(":") ?: return null
+                val pos = tags[0].toIntOrNull() ?: return null
+                val color = tags[1].toIntOrNull() ?: return null
+                return pos to color
+            }
 
         override fun onLongClick(v: View): Boolean {
-            if (v.tag != null && v.tag is String) {
-                val tag = (v.tag as String).split(":")
-                val color = tag[1].toInt()
-                (v as CircleView).showHint(color)
-                return true
-            }
-            return false
+            val (_, color) = v.tagData ?: return false
+            (v as? CircleView)?.showHint(color) ?: return false
+            return true
         }
 
-        override fun getItem(position: Int): Any = if (isInSub) colorsSub!![topIndex][position] else colorsTop[position]
+        override fun getItem(position: Int): Int = if (isInSub) colorsSub!![topIndex][position] else colorsTop[position]
 
         override fun getCount(): Int = if (isInSub) colorsSub!![topIndex].size else colorsTop.size
 
         override fun getItemId(position: Int): Long = position.toLong()
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val view: CircleView = if (convertView == null)
-                CircleView(context).apply { layoutParams = AbsListView.LayoutParams(circleSize, circleSize) }
-            else
-                convertView as CircleView
-            val color: Int = if (isInSub) colorsSub!![topIndex][position] else colorsTop[position]
+            val view: CircleView = convertView as? CircleView ?: CircleView(context).apply {
+                layoutParams = AbsListView.LayoutParams(circleSize, circleSize)
+                setOnClickListener(this@ColorGridAdapter)
+                setOnLongClickListener(this@ColorGridAdapter)
+            }
+            val color: Int = getItem(position)
             return view.apply {
                 setBackgroundColor(color)
                 isSelected = colorIndex == position
                 tag = "$position:$color"
-                setOnClickListener(this@ColorGridAdapter)
-                setOnLongClickListener(this@ColorGridAdapter)
             }
         }
     }

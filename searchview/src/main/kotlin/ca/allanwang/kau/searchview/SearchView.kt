@@ -230,7 +230,7 @@ class SearchView @JvmOverloads constructor(
     }
 
     private val configs = Configs()
-    //views
+    // views
     private val shadow: View by bindView(R.id.kau_search_shadow)
     private val card: BoundedCardView by bindView(R.id.kau_search_cardview)
     private val iconNav: ImageView by bindView(R.id.kau_search_nav)

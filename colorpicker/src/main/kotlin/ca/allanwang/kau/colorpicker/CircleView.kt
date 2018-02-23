@@ -109,13 +109,13 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         if (this.selected == selected) return
         this.selected = true // We need to draw the other bands
         val range = if (selected) Pair(-borderWidthSmall, borderWidthLarge) else Pair(borderWidthLarge, -borderWidthSmall)
-        val animator = ValueAnimator.ofFloat(range.first, range.second)
-        with(animator) {
+        ValueAnimator.ofFloat(range.first, range.second).apply {
             reverse()
             duration = 150L
             addUpdateListener { animation ->
                 whiteOuterBound = animation.animatedValue as Float
                 invalidate()
+
             }
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {

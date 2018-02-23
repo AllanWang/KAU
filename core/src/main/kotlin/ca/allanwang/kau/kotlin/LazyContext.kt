@@ -14,7 +14,6 @@ import android.view.animation.Interpolator
  * Items are retrieved using delegateName(context)
  *
  */
-
 fun lazyInterpolator(@InterpolatorRes id: Int) = lazyContext<Interpolator> { AnimationUtils.loadInterpolator(it, id) }
 
 fun lazyAnimation(@AnimRes id: Int) = lazyContext<Animation> { AnimationUtils.loadAnimation(it, id) }
