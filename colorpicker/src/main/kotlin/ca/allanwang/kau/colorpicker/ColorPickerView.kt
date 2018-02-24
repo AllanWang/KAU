@@ -112,7 +112,7 @@ internal class ColorPickerView @JvmOverloads constructor(
                 hexInput.filters = arrayOf(InputFilter.LengthFilter(8))
             }
         }
-        if (findColor(builder.defaultColor) || !builder.allowCustom) isInCustom = true //when toggled this will be false
+        if (findColor(_selectedColor) || !builder.allowCustom) isInCustom = true // when toggled this will be false
         toggleCustom()
     }
 
@@ -143,7 +143,6 @@ internal class ColorPickerView @JvmOverloads constructor(
                     } catch (e: IllegalArgumentException) {
                         Color.BLACK
                     }
-
                     customColorIndicator.setBackgroundColor(_selectedColor)
                     if (alphaSeekbar.isVisible) {
                         val alpha = Color.alpha(_selectedColor)
@@ -213,7 +212,7 @@ internal class ColorPickerView @JvmOverloads constructor(
 
     fun refreshColors() {
         if (!isInCustom) findColor(_selectedColor)
-        //Ensure that our tinted color is still visible against the background
+        // Ensure that our tinted color is still visible against the background
         val visibleColor = if (_selectedColor.isColorVisibleOn(backgroundColor)) _selectedColor else backgroundColorTint
         if (builder.dynamicButtonColors) {
             dialog.getActionButton(DialogAction.POSITIVE).setTextColor(visibleColor)
@@ -267,7 +266,7 @@ internal class ColorPickerView @JvmOverloads constructor(
             refreshColors()
             if (isInSub)
                 circleAt(colorIndex)?.animateSelected(true)
-            //Otherwise we are invalidating our grid, so there is no point in animating
+            // Otherwise we are invalidating our grid, so there is no point in animating
         }
 
         private fun circleAt(index: Int): CircleView? =
