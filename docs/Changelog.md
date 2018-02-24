@@ -5,7 +5,6 @@
 * :core: Create restartApplication()
 * :colorpicker: Rewrote implementation to be null and parse safe
 * :colorpicker: Added more encapsulation to CircleView (selected -> colorSelected; all others are private)
-* :colorpicker:
 * Update documentation
 
 ## v3.6.3

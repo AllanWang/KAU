@@ -70,7 +70,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         globalOptions = GlobalOptions(core, this)
         recycler.withLinearAdapter(adapter)
         adapter.withSelectable(false)
-                .withOnClickListener { v, _, item, _ -> item.onClick(v); true }
+                .withOnClickListener { v, _, item, _ -> item.onClick(v!!); true }
         showNextPrefs(R.string.kau_settings, onCreateKPrefs(savedInstanceState), true)
     }
 

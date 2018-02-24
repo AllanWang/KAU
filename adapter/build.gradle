@@ -5,9 +5,7 @@ apply from: '../android-lib.gradle'
 dependencies {
     implementation project(':core')
 
-    //noinspection GradleDependency
     api "com.mikepenz:fastadapter-commons:${kau.fastAdapterCommons}@aar"
-    //noinspection GradleDependency
     api "com.mikepenz:fastadapter:${kau.fastAdapter}@aar"
 }
 

@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package ca.allanwang.kau.utils
 
 import android.annotation.SuppressLint
@@ -74,7 +76,6 @@ inline fun Activity.restart(intentBuilder: Intent.() -> Unit = {}) {
 /**
  * Force restart an entire application
  */
-@Suppress("NOTHING_TO_INLINE")
 @RequiresApi(Build.VERSION_CODES.M)
 inline fun Activity.restartApplication() {
     val intent = packageManager.getLaunchIntentForPackage(packageName)
@@ -134,10 +135,10 @@ fun Context.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg 
     }
 }
 
-fun Activity.hideKeyboard() = currentFocus.hideKeyboard()
+inline fun Activity.hideKeyboard() = currentFocus.hideKeyboard()
 
-fun Activity.showKeyboard() = currentFocus.showKeyboard()
+inline fun Activity.showKeyboard() = currentFocus.showKeyboard()
 
-fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(text, duration, builder)
+inline fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, noinline builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(text, duration, builder)
 
-fun Activity.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(textId, duration, builder)
+inline fun Activity.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, noinline builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(textId, duration, builder)
