@@ -10,13 +10,13 @@ class Versions {
 
     static def kotlin = '1.2.21'
 
-    static def aboutLibraries = '6.0.1'
+    static def aboutLibraries = '6.0.6'
     static def anko = '0.10.4'
     static def blurry = '2.1.1'
-    static def constraintLayout = '1.1.0-beta4'
-    static def fastAdapter = '3.1.2'
-    static def fastAdapterCommons = '3.1.2'
-    static def glide = '4.5.0'
+    static def constraintLayout = '1.1.0-beta5'
+    static def fastAdapter = '3.2.4'
+    static def fastAdapterCommons = fastAdapter
+    static def glide = '4.6.1'
 
     static def iconics = '3.0.2'
     static def iconicsGoogle = '3.0.1.2'
@@ -25,9 +25,9 @@ class Versions {
 
     static def materialDialog = '0.9.6.0'
 
-    static def espresso = '3.0.0'
+    static def espresso = '3.0.1'
     static def junit = '4.12'
-    static def testRunner = '1.0.0'
+    static def testRunner = '1.0.1'
 
     static def gradlePlugin = '3.0.1'
     static def mavenPlugin = '2.0'

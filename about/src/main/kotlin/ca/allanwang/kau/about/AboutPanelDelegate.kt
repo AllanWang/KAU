@@ -114,7 +114,7 @@ open class AboutPanelMain : AboutPanelRecycler() {
 
     override fun inflatePage(activity: AboutActivityBase, parent: ViewGroup, position: Int): View {
         with(activity) {
-            adapter = FastItemThemedAdapter<IItem<*, *>>(configs)
+            adapter = FastItemThemedAdapter(configs)
             recycler = fullLinearRecycler(adapter)
             adapter.add(CutoutIItem {
                 with(configs) {
@@ -156,7 +156,7 @@ open class AboutPanelLibs : AboutPanelRecycler() {
         doAsync {
             with(activity) {
                 items = getLibraries(if (rClass == null) Libs(activity) else Libs(this, Libs.toStringArray(rClass.fields)))
-                        .map { LibraryIItem(it) }
+                        .map(::LibraryIItem)
                 if (pageStatus[position] == 1)
                     uiThread { addItems(activity, position) }
             }
@@ -181,7 +181,7 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
     override fun loadItems(activity: AboutActivityBase, position: Int) {
         with(activity) {
             kauParseFaq(configs.faqXmlRes, configs.faqParseNewLine) {
-                items = it.map { FaqIItem(it) }
+                items = it.map(::FaqIItem)
                 if (pageStatus[position] == 1)
                     addItems(activity, position)
             }

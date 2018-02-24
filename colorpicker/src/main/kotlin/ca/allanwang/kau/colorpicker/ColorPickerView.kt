@@ -1,5 +1,6 @@
 package ca.allanwang.kau.colorpicker
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.support.annotation.ColorInt
@@ -25,20 +26,23 @@ import java.util.*
 internal class ColorPickerView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ScrollView(context, attrs, defStyleAttr) {
-    var selectedColor: Int = -1
-    var isInSub: Boolean = false
-    var isInCustom: Boolean = false
-    var circleSize: Int = context.dimen(R.dimen.kau_color_circle_size).toInt()
-    val backgroundColor = context.resolveColor(R.attr.md_background_color,
+    val selectedColor: Int
+        get() = _selectedColor
+    private var _selectedColor: Int = -1
+    private var isInSub: Boolean = false
+    private var isInCustom: Boolean = false
+    private var circleSize: Int = context.dimen(R.dimen.kau_color_circle_size).toInt()
+    @SuppressLint("PrivateResource")
+    private val backgroundColor = context.resolveColor(R.attr.md_background_color,
             if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark) Color.WHITE else 0xff424242.toInt())
-    val backgroundColorTint = backgroundColor.colorToForeground()
-    lateinit var dialog: MaterialDialog
-    lateinit var builder: ColorContract
-    lateinit var colorsTop: IntArray
-    var colorsSub: Array<IntArray>? = null
-    var topIndex: Int = -1
-    var subIndex: Int = -1
-    var colorIndex: Int
+    private val backgroundColorTint = backgroundColor.colorToForeground()
+    private lateinit var dialog: MaterialDialog
+    private lateinit var builder: ColorContract
+    private lateinit var colorsTop: IntArray
+    private var colorsSub: Array<IntArray>? = null
+    private var topIndex: Int = -1
+    private var subIndex: Int = -1
+    private var colorIndex: Int
         get() = if (isInSub) subIndex else topIndex
         set(value) {
             if (isInSub) subIndex = value
@@ -52,25 +56,29 @@ internal class ColorPickerView @JvmOverloads constructor(
             }
         }
 
+    private val gridView: FillGridView by bindView(R.id.md_grid)
+    private val customFrame: LinearLayout by bindView(R.id.md_colorChooserCustomFrame)
+    private val customColorIndicator: View by bindView(R.id.md_colorIndicator)
+    private val hexInput: EditText by bindView(R.id.md_hexInput)
+    private val alphaLabel: TextView by bindView(R.id.md_colorALabel)
+    private val alphaSeekbar: SeekBar by bindView(R.id.md_colorA)
+    private val alphaValue: TextView by bindView(R.id.md_colorAValue)
+    private val redSeekbar: SeekBar by bindView(R.id.md_colorR)
+    private val redValue: TextView by bindView(R.id.md_colorRValue)
+    private val greenSeekbar: SeekBar by bindView(R.id.md_colorG)
+    private val greenValue: TextView by bindView(R.id.md_colorGValue)
+    private val blueSeekbar: SeekBar by bindView(R.id.md_colorB)
+    private val blueValue: TextView by bindView(R.id.md_colorBValue)
 
-    val gridView: FillGridView by bindView(R.id.md_grid)
-    val customFrame: LinearLayout by bindView(R.id.md_colorChooserCustomFrame)
-    val customColorIndicator: View by bindView(R.id.md_colorIndicator)
-    val hexInput: EditText by bindView(R.id.md_hexInput)
-    val alphaLabel: TextView by bindView(R.id.md_colorALabel)
-    val alphaSeekbar: SeekBar by bindView(R.id.md_colorA)
-    val alphaValue: TextView by bindView(R.id.md_colorAValue)
-    val redSeekbar: SeekBar by bindView(R.id.md_colorR)
-    val redValue: TextView by bindView(R.id.md_colorRValue)
-    val greenSeekbar: SeekBar by bindView(R.id.md_colorG)
-    val greenValue: TextView by bindView(R.id.md_colorGValue)
-    val blueSeekbar: SeekBar by bindView(R.id.md_colorB)
-    val blueValue: TextView by bindView(R.id.md_colorBValue)
-
-    var customHexTextWatcher: TextWatcher? = null
-    var customRgbListener: SeekBar.OnSeekBarChangeListener? = null
+    private var customHexTextWatcher: TextWatcher? = null
+    private var customRgbListener: SeekBar.OnSeekBarChangeListener? = null
 
     init {
+        init()
+    }
+
+    @SuppressLint("PrivateResource")
+    private fun init() {
         View.inflate(context, R.layout.md_dialog_colorchooser, this)
     }
 
@@ -78,29 +86,33 @@ internal class ColorPickerView @JvmOverloads constructor(
         this.builder = builder
         this.dialog = dialog
         this.colorsTop = with(builder) {
-            if (colorsTop != null) colorsTop!!
-            else if (isAccent) ColorPalette.ACCENT_COLORS
-            else ColorPalette.PRIMARY_COLORS
+            when {
+                colorsTop != null -> colorsTop!!
+                isAccent -> ColorPalette.ACCENT_COLORS
+                else -> ColorPalette.PRIMARY_COLORS
+            }
         }
         this.colorsSub = with(builder) {
-            if (colorsTop != null) colorsSub
-            else if (isAccent) ColorPalette.ACCENT_COLORS_SUB
-            else ColorPalette.PRIMARY_COLORS_SUB
+            when {
+                colorsTop != null -> colorsSub
+                isAccent -> ColorPalette.ACCENT_COLORS_SUB
+                else -> ColorPalette.PRIMARY_COLORS_SUB
+            }
         }
-        this.selectedColor = builder.defaultColor
+        this._selectedColor = builder.defaultColor
         if (builder.allowCustom) {
             if (!builder.allowCustomAlpha) {
                 alphaLabel.gone()
                 alphaSeekbar.gone()
                 alphaValue.gone()
-                hexInput.hint = String.format("%06X", selectedColor)
+                hexInput.hint = String.format("%06X", _selectedColor)
                 hexInput.filters = arrayOf(InputFilter.LengthFilter(6))
             } else {
-                hexInput.hint = String.format("%08X", selectedColor)
+                hexInput.hint = String.format("%08X", _selectedColor)
                 hexInput.filters = arrayOf(InputFilter.LengthFilter(8))
             }
         }
-        if (findColor(builder.defaultColor) || !builder.allowCustom) isInCustom = true //when toggled this will be false
+        if (findColor(_selectedColor) || !builder.allowCustom) isInCustom = true // when toggled this will be false
         toggleCustom()
     }
 
@@ -126,21 +138,20 @@ internal class ColorPickerView @JvmOverloads constructor(
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    try {
-                        selectedColor = Color.parseColor("#" + s.toString())
+                    _selectedColor = try {
+                        Color.parseColor("#$s")
                     } catch (e: IllegalArgumentException) {
-                        selectedColor = Color.BLACK
+                        Color.BLACK
                     }
-
-                    customColorIndicator.setBackgroundColor(selectedColor)
+                    customColorIndicator.setBackgroundColor(_selectedColor)
                     if (alphaSeekbar.isVisible) {
-                        val alpha = Color.alpha(selectedColor)
+                        val alpha = Color.alpha(_selectedColor)
                         alphaSeekbar.progress = alpha
                         alphaValue.text = String.format(Locale.CANADA, "%d", alpha)
                     }
-                    redSeekbar.progress = Color.red(selectedColor)
-                    greenSeekbar.progress = Color.green(selectedColor)
-                    blueSeekbar.progress = Color.blue(selectedColor)
+                    redSeekbar.progress = Color.red(_selectedColor)
+                    greenSeekbar.progress = Color.green(_selectedColor)
+                    blueSeekbar.progress = Color.blue(_selectedColor)
                     isInSub = false
                     topIndex = -1
                     subIndex = -1
@@ -149,7 +160,7 @@ internal class ColorPickerView @JvmOverloads constructor(
 
                 override fun afterTextChanged(s: Editable?) {}
             }
-            hexInput.setText(selectedColor.toHexString(builder.allowCustomAlpha, false))
+            hexInput.setText(_selectedColor.toHexString(builder.allowCustomAlpha, false))
             hexInput.addTextChangedListener(customHexTextWatcher)
             customRgbListener = object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -171,23 +182,23 @@ internal class ColorPickerView @JvmOverloads constructor(
                     blueValue.text = blueSeekbar.progress.toString()
                 }
 
-                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStartTrackingTouch(seekBar: SeekBar) = Unit
 
-                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar) = Unit
             }
             redSeekbar.setOnSeekBarChangeListener(customRgbListener)
             greenSeekbar.setOnSeekBarChangeListener(customRgbListener)
             blueSeekbar.setOnSeekBarChangeListener(customRgbListener)
             if (alphaSeekbar.isVisible)
                 alphaSeekbar.setOnSeekBarChangeListener(customRgbListener)
-            hexInput.setText(selectedColor.toHexString(alphaSeekbar.isVisible, false))
+            hexInput.setText(_selectedColor.toHexString(alphaSeekbar.isVisible, false))
             gridView.fadeOut(onFinish = { gridView.gone() })
             customFrame.fadeIn()
         } else {
-            findColor(selectedColor)
+            findColor(_selectedColor)
             if (builder.allowCustom) dialog.setActionButton(DialogAction.NEUTRAL, builder.customText)
             dialog.setActionButton(DialogAction.NEGATIVE, if (isInSub) builder.backText else builder.cancelText)
-            gridView.fadeIn(onStart = { invalidateGrid() })
+            gridView.fadeIn(onStart = this::invalidateGrid)
             customFrame.fadeOut(onFinish = { customFrame.gone() })
             hexInput.removeTextChangedListener(customHexTextWatcher)
             customHexTextWatcher = null
@@ -200,9 +211,9 @@ internal class ColorPickerView @JvmOverloads constructor(
     }
 
     fun refreshColors() {
-        if (!isInCustom) findColor(selectedColor)
-        //Ensure that our tinted color is still visible against the background
-        val visibleColor = if (selectedColor.isColorVisibleOn(backgroundColor)) selectedColor else backgroundColorTint
+        if (!isInCustom) findColor(_selectedColor)
+        // Ensure that our tinted color is still visible against the background
+        val visibleColor = if (_selectedColor.isColorVisibleOn(backgroundColor)) _selectedColor else backgroundColorTint
         if (builder.dynamicButtonColors) {
             dialog.getActionButton(DialogAction.POSITIVE).setTextColor(visibleColor)
             dialog.getActionButton(DialogAction.NEGATIVE).setTextColor(visibleColor)
@@ -217,16 +228,12 @@ internal class ColorPickerView @JvmOverloads constructor(
         hexInput.tint(visibleColor)
     }
 
-    fun findColor(@ColorInt color: Int): Boolean {
+    private fun findColor(@ColorInt color: Int): Boolean {
         topIndex = -1
         subIndex = -1
-        colorsTop.forEachIndexed {
-            index, topColor ->
-            if (findSubColor(color, index)) {
-                topIndex = index
-                return true
-            }
-            if (topColor == color) { // If no sub colors exists and top color matches
+        colorsTop.forEachIndexed { index, topColor ->
+            // First check for sub colors, then if the top color matches
+            if (findSubColor(color, index) || topColor == color) {
                 topIndex = index
                 return true
             }
@@ -234,19 +241,12 @@ internal class ColorPickerView @JvmOverloads constructor(
         return false
     }
 
-    fun findSubColor(@ColorInt color: Int, topIndex: Int): Boolean {
-        if (colorsSub == null || colorsSub!!.size <= topIndex) return false
-        colorsSub!![topIndex].forEachIndexed {
-            index, subColor ->
-            if (subColor == color) {
-                subIndex = index
-                return true
-            }
-        }
-        return false
+    private fun findSubColor(@ColorInt color: Int, topIndex: Int): Boolean {
+        subIndex = colorsSub?.getOrNull(topIndex)?.indexOfFirst { color == it } ?: -1
+        return subIndex != -1
     }
 
-    fun invalidateGrid() {
+    private fun invalidateGrid() {
         if (gridView.adapter == null) {
             gridView.adapter = ColorGridAdapter()
             gridView.selector = ResourcesCompat.getDrawable(resources, R.drawable.kau_transparent, null)
@@ -257,52 +257,54 @@ internal class ColorPickerView @JvmOverloads constructor(
 
     inner class ColorGridAdapter : BaseAdapter(), OnClickListener, OnLongClickListener {
         override fun onClick(v: View) {
-            if (v.tag != null && v.tag is String) {
-                val tags = (v.tag as String).split(":")
-                if (colorIndex == tags[0].toInt()) {
-                    colorIndex = tags[0].toInt() //Go to sub list if exists
-                    return
-                }
-                if (colorIndex != -1) (gridView.getChildAt(colorIndex) as CircleView).animateSelected(false)
-                selectedColor = tags[1].toInt()
-                refreshColors()
-                val currentSub = isInSub
-                colorIndex = tags[0].toInt()
-                if (currentSub == isInSub) (gridView.getChildAt(colorIndex) as CircleView).animateSelected(true)
-                //Otherwise we are invalidating our grid, so there is no point in animating
-            }
+            val (pos, color) = v.tagData ?: return
+            if (colorIndex == pos && isInSub)
+                return
+            circleAt(colorIndex)?.animateSelected(false)
+            _selectedColor = color
+            colorIndex = pos
+            refreshColors()
+            if (isInSub)
+                circleAt(colorIndex)?.animateSelected(true)
+            // Otherwise we are invalidating our grid, so there is no point in animating
         }
+
+        private fun circleAt(index: Int): CircleView? =
+                if (index == -1) null
+                else gridView.getChildAt(index) as? CircleView
+
+        private val View.tagData: Pair<Int, Int>?
+            get() {
+                val tags = (tag as? String)?.split(":") ?: return null
+                val pos = tags[0].toIntOrNull() ?: return null
+                val color = tags[1].toIntOrNull() ?: return null
+                return pos to color
+            }
 
         override fun onLongClick(v: View): Boolean {
-            if (v.tag != null && v.tag is String) {
-                val tag = (v.tag as String).split(":")
-                val color = tag[1].toInt()
-                (v as CircleView).showHint(color)
-                return true
-            }
-            return false
+            val (_, color) = v.tagData ?: return false
+            (v as? CircleView)?.showHint(color) ?: return false
+            return true
         }
 
-        override fun getItem(position: Int): Any = if (isInSub) colorsSub!![topIndex][position] else colorsTop[position]
+        override fun getItem(position: Int): Int = if (isInSub) colorsSub!![topIndex][position] else colorsTop[position]
 
         override fun getCount(): Int = if (isInSub) colorsSub!![topIndex].size else colorsTop.size
 
         override fun getItemId(position: Int): Long = position.toLong()
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            val view: CircleView = if (convertView == null)
-                CircleView(context).apply { layoutParams = AbsListView.LayoutParams(circleSize, circleSize) }
-            else
-                convertView as CircleView
-            val color: Int = if (isInSub) colorsSub!![topIndex][position] else colorsTop[position]
+            val view: CircleView = convertView as? CircleView ?: CircleView(context).apply {
+                layoutParams = AbsListView.LayoutParams(circleSize, circleSize)
+                setOnClickListener(this@ColorGridAdapter)
+                setOnLongClickListener(this@ColorGridAdapter)
+            }
+            val color: Int = getItem(position)
             return view.apply {
                 setBackgroundColor(color)
                 isSelected = colorIndex == position
                 tag = "$position:$color"
-                setOnClickListener(this@ColorGridAdapter)
-                setOnLongClickListener(this@ColorGridAdapter)
             }
         }
-
     }
 }

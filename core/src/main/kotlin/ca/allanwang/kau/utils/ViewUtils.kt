@@ -248,7 +248,7 @@ fun RecyclerView.withLinearAdapter(rvAdapter: RecyclerView.Adapter<*>) = apply {
 
 /**
  * Animate a transition a given imageview
- * If it is not shown, the action will be invoked directly and the fab will be shown
+ * If it is not shown, the action will be invoked directly and no further actions will be made
  * If it is already shown, scaling and alpha animations will be added to the action
  */
 inline fun <T : ImageView> T.fadeScaleTransition(duration: Long = 500L, minScale: Float = 0.7f, crossinline action: T.() -> Unit) {

@@ -40,7 +40,11 @@ open class Debouncer(var interval: Long) {
      * Call to cancel all pending requests and shutdown the thread pool
      * The debouncer cannot be used after this
      */
-    fun terminate() = sched.shutdownNow()
+    fun terminate() {
+        task?.invalidate()
+        task = null
+        sched.shutdownNow()
+    }
 
     /**
      * Invalidate any pending tasks

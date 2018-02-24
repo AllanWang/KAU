@@ -35,7 +35,7 @@ private class RepeatedClickListener<Item : IItem<*, *>>(
     private var chain = 0
     private var time = -1L
 
-    override fun onClick(v: View, adapter: IAdapter<Item>, item: Item, position: Int): Boolean {
+    override fun onClick(v: View?, adapter: IAdapter<Item>, item: Item, position: Int): Boolean {
         val now = System.currentTimeMillis()
         if (time - now < duration)
             chain++

@@ -32,7 +32,7 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewH
                             false
                         else
                             with(item.lib) {
-                                v.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
+                                v!!.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
                                 true
                             }
                     }
@@ -47,10 +47,11 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewH
             name.text = lib.libraryName
             creator.text = lib.author
             @Suppress("DEPRECATION")
-            description.text = if (lib.libraryDescription.isBlank()) lib.libraryDescription
-            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                Html.fromHtml(lib.libraryDescription, Html.FROM_HTML_MODE_LEGACY)
-            else Html.fromHtml(lib.libraryDescription)
+            description.text = when {
+                lib.libraryDescription.isBlank() -> lib.libraryDescription
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(lib.libraryDescription, Html.FROM_HTML_MODE_LEGACY)
+                else -> Html.fromHtml(lib.libraryDescription)
+            }
             bottomDivider.gone()
             if (lib.libraryVersion?.isNotBlank() == true) {
                 bottomDivider.visible()

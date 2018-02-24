@@ -1,8 +1,17 @@
 # Changelog
 
+## v3.7.0
+* :core: Fix potential NPE in restart()
+* :core: Create restartApplication()
+* :colorpicker: Rewrote implementation to be null and parse safe
+* :colorpicker: Added more encapsulation to CircleView (selected -> colorSelected; all others are private)
+* :adapter: [Breaking] update fastadapter; click listeners now have nullable views
+* Update documentation
+
 ## v3.6.3
 * :core: Check for tablet in email builder
 * :kpref-activity: Simplify internal code and add better encapsulation
+* :kpref-activity: Disable seekbar when kprefseekbar is disabled
 * Add Chinese, Indonesian, Norwegian, Polish, Thai, and Turkish translations
 * Add back git versioning
 * Created gradle plugin for getting version updates
@@ -210,5 +219,5 @@
 ## v1.0
 * Initial Changelog
 * Create many extension functions
-* Port changelog builer
+* Port changelog builder
 * Port ripple canvas

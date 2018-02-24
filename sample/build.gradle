@@ -32,9 +32,9 @@ android {
     def releaseSigning = file("../files/kau.properties")
     def hasSigning = releaseSigning.exists()
 
-    if (hasSigning) {
-        signingConfigs {
+    signingConfigs {
 
+        if (hasSigning) {
             def releaseProps = new Properties()
             releaseSigning.withInputStream { releaseProps.load(it) }
 
@@ -45,12 +45,29 @@ android {
                 keyPassword releaseProps.getProperty('keyPassword')
             }
         }
+
+        debug {
+            storeFile file("../files/debug.keystore")
+            storePassword "debugKey"
+            keyAlias "debugKey"
+            keyPassword "debugKey"
+        }
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debug
+            resValue "string", "app_name", "KAU Debug"
+        }
+
         release {
             minifyEnabled true
             if (hasSigning) signingConfig signingConfigs.release
+            resValue "string", "app_name", "KAU"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -95,13 +112,17 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:${kau.espresso}") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation("com.android.support.test:runner:${kau.testRunner}") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation kauDependency.kotlinTest
+//    androidTestImplementation("com.android.support.test.espresso:espresso-core:${kau.espresso}") {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+//    androidTestImplementation("com.android.support.test:runner:${kau.testRunner}") {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+//    androidTestImplementation kauDependency.kotlinTest
     testImplementation kauDependency.kotlinTest
     testImplementation kauDependency.junit
+
+    androidTestImplementation kauDependency.kotlinTest
+    androidTestImplementation kauDependency.espresso
+    androidTestImplementation kauDependency.testRunner
 }

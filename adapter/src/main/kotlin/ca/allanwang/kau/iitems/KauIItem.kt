@@ -18,8 +18,7 @@ open class KauIItem<Item, VH : RecyclerView.ViewHolder>(
         private val viewHolder: (v: View) -> VH,
         private val type: Int = layoutRes
 ) : AbstractItem<Item, VH>() where Item : IItem<*, *>, Item : IClickable<*> {
-    override final fun getType(): Int = type
-    override final fun getViewHolder(v: View): VH = viewHolder(v)
-    override final fun getLayoutRes(): Int = layoutRes
-
+    final override fun getType(): Int = type
+    final override fun getViewHolder(v: View): VH = viewHolder(v)
+    final override fun getLayoutRes(): Int = layoutRes
 }

@@ -233,11 +233,12 @@ class MainActivity : KPrefActivity() {
         this.navigationBarColor = KPrefSample.accentColor
         if (KPrefSample.version < BuildConfig.VERSION_CODE) {
             KPrefSample.version = BuildConfig.VERSION_CODE
-            showChangelog(R.xml.kau_changelog, KPrefSample.textColor) {
-                titleColor(KPrefSample.textColor)
-                backgroundColor(KPrefSample.bgColor)
-                positiveColor(KPrefSample.accentColor)
-            }
+            if (!BuildConfig.DEBUG)
+                showChangelog(R.xml.kau_changelog, KPrefSample.textColor) {
+                    titleColor(KPrefSample.textColor)
+                    backgroundColor(KPrefSample.bgColor)
+                    positiveColor(KPrefSample.accentColor)
+                }
         }
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(false)

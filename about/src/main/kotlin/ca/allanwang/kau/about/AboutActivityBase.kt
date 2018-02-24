@@ -38,7 +38,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
     private val pager: ViewPager by bindView(R.id.about_pager)
     private val indicator: InkPageIndicator by bindView(R.id.about_indicator)
 
-    val currentPage
+    val currentPage: Int
         get() = pager.currentItem
 
     /**
@@ -126,7 +126,8 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
      * Method to fetch the library list
      * This is fetched asynchronously and you may override it to customize the list
      */
-    open fun getLibraries(libs: Libs): List<Library> = libs.prepareLibraries(this, null, null, true, true)!!
+    open fun getLibraries(libs: Libs): List<Library> =
+            libs.prepareLibraries(this, null, null, true, true, true)!!
 
     /*
      * -------------------------------------------------------------------
@@ -164,9 +165,9 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         }
     }
 
-    override fun onPageScrollStateChanged(state: Int) {}
+    override fun onPageScrollStateChanged(state: Int) = Unit
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
 
     override fun onPageSelected(position: Int) {
         if (pageStatus[position] == 0) pageStatus[position] = 1 // mark as seen if previously null

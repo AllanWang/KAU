@@ -13,7 +13,7 @@ fun RecyclerView.withMarginDecoration(sizeDp: Int, edgeFlags: Int) {
 
 class MarginItemDecoration(sizeDp: Int, val edgeFlags: Int) : RecyclerView.ItemDecoration() {
 
-    val sizePx = sizeDp.dpToPx
+    private val sizePx = sizeDp.dpToPx
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)

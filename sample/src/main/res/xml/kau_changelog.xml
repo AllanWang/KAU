@@ -6,6 +6,15 @@
     <item text="" />
     -->
 
+    <version title="v3.7.0" />
+    <item text=":core: Fix potential NPE in restart()" />
+    <item text=":core: Create restartApplication()" />
+    <item text=":colorpicker: Rewrote implementation to be null and parse safe" />
+    <item text=":colorpicker: Added more encapsulation to CircleView (selected -> colorSelected; all others are private)" />
+    <item text=":adapter: [Breaking] update fastadapter; click listeners now have nullable views" />
+    <item text="Update documentation" />
+    <item text="" />
+
     <version title="v3.6.3" />
     <item text=":core: Check for tablet in email builder" />
     <item text=":kpref-activity: Simplify internal code and add better encapsulation" />
@@ -13,8 +22,6 @@
     <item text="Add Chinese, Indonesian, Norwegian, Polish, Thai, and Turkish translations" />
     <item text="Add back git versioning" />
     <item text="Created gradle plugin for getting version updates" />
-    <item text="" />
-    <item text="" />
 
     <version title="v3.6.2" />
     <item text=":core: Pass null instead of bundle if bundle is empty for startActivity" />
@@ -219,6 +226,6 @@
     <version title="v1.0" />
     <item text="Initial Changelog" />
     <item text="Create many extension functions" />
-    <item text="Port changelog builer" />
+    <item text="Port changelog builder" />
     <item text="Port ripple canvas" />
 </resources>
