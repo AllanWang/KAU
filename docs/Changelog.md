@@ -1,10 +1,11 @@
 # Changelog
 
-## v3.6.4
+## v3.7.0
 * :core: Fix potential NPE in restart()
 * :core: Create restartApplication()
 * :colorpicker: Rewrote implementation to be null and parse safe
 * :colorpicker: Added more encapsulation to CircleView (selected -> colorSelected; all others are private)
+* :adapter: [Breaking] update fastadapter; click listeners now have nullable views
 * Update documentation
 
 ## v3.6.3
