@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.6.4
+* :core: Fix potential NPE in restart()
+* :core: Create restartApplication()
+* :colorpicker: Rewrote implementation to be null and parse safe
+* :colorpicker: Added more encapsulation to CircleView (selected -> colorSelected; all others are private)
+* :colorpicker:
+* Update documentation
+
 ## v3.6.3
 * :core: Check for tablet in email builder
 * :kpref-activity: Simplify internal code and add better encapsulation
@@ -211,5 +219,5 @@
 ## v1.0
 * Initial Changelog
 * Create many extension functions
-* Port changelog builer
+* Port changelog builder
 * Port ripple canvas

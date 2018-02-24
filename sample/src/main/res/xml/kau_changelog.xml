@@ -9,7 +9,9 @@
     <version title="v3.6.4" />
     <item text=":core: Fix potential NPE in restart()" />
     <item text=":core: Create restartApplication()" />
-    <item text="" />
+    <item text=":colorpicker: Rewrote implementation to be null and parse safe" />
+    <item text=":colorpicker: Added more encapsulation to CircleView (selected -> colorSelected; all others are private)" />
+    <item text=":colorpicker:" />
     <item text="Update documentation" />
     <item text="" />
 
@@ -224,6 +226,6 @@
     <version title="v1.0" />
     <item text="Initial Changelog" />
     <item text="Create many extension functions" />
-    <item text="Port changelog builer" />
+    <item text="Port changelog builder" />
     <item text="Port ripple canvas" />
 </resources>

@@ -95,13 +95,17 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:${kau.espresso}") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation("com.android.support.test:runner:${kau.testRunner}") {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestImplementation kauDependency.kotlinTest
+//    androidTestImplementation("com.android.support.test.espresso:espresso-core:${kau.espresso}") {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+//    androidTestImplementation("com.android.support.test:runner:${kau.testRunner}") {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+//    androidTestImplementation kauDependency.kotlinTest
     testImplementation kauDependency.kotlinTest
     testImplementation kauDependency.junit
+
+    androidTestImplementation kauDependency.kotlinTest
+    androidTestImplementation kauDependency.espresso
+    androidTestImplementation kauDependency.testRunner
 }

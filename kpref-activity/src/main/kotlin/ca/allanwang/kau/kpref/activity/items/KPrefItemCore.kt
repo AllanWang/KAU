@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.support.annotation.CallSuper
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -100,6 +101,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         val globalOptions: GlobalOptions
         val titleId: Int
         var titleFun: () -> Int
+        @setparam:StringRes
         var descRes: Int
         var descFun: () -> Int
         var iicon: IIcon?

@@ -77,7 +77,7 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
                  getter: (() -> T),
                  setter: ((value: T) -> Unit),
                  builder: KPrefText.KPrefTextContract<T>.() -> Unit = {})
-            = list.add(KPrefText<T>(KPrefText.KPrefTextBuilder<T>(globalOptions, title, getter, setter)
+            = list.add(KPrefText(KPrefText.KPrefTextBuilder(globalOptions, title, getter, setter)
             .apply { builder() }))
 
     @KPrefMarker
