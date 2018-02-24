@@ -10,7 +10,7 @@ class Versions {
 
     static def kotlin = '1.2.21'
 
-    static def aboutLibraries = '6.0.5'
+    static def aboutLibraries = '6.0.6'
     static def anko = '0.10.4'
     static def blurry = '2.1.1'
     static def constraintLayout = '1.1.0-beta5'

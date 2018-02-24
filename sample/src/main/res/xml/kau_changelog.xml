@@ -6,12 +6,12 @@
     <item text="" />
     -->
 
-    <version title="v3.6.4" />
+    <version title="v3.7.0" />
     <item text=":core: Fix potential NPE in restart()" />
     <item text=":core: Create restartApplication()" />
     <item text=":colorpicker: Rewrote implementation to be null and parse safe" />
     <item text=":colorpicker: Added more encapsulation to CircleView (selected -> colorSelected; all others are private)" />
-    <item text=":colorpicker:" />
+    <item text=":adapter: [Breaking] update fastadapter; click listeners now have nullable views" />
     <item text="Update documentation" />
     <item text="" />
 
