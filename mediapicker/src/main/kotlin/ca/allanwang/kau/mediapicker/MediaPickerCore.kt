@@ -164,7 +164,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         }
     }
 
-    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         reset()
         if (data == null || !data.moveToFirst()) {
             toast(R.string.kau_no_items_found)
@@ -199,7 +199,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     abstract fun converter(model: MediaModel): T
 
-    override fun onLoaderReset(loader: Loader<Cursor>?) = reset()
+    override fun onLoaderReset(loader: Loader<Cursor>) = reset()
 
     /**
      * Called at the end of [onLoadFinished]

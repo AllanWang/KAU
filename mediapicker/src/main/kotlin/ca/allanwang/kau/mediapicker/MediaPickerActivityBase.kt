@@ -88,7 +88,7 @@ abstract class MediaPickerActivityBase(
             params.scrollFlags = 0
     }
 
-    override fun onLoadFinished(loader: Loader<Cursor>?, data: Cursor?) {
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         super.onLoadFinished(loader, data)
         setToolbarScrollable((recycler.layoutManager as LinearLayoutManager)
                 .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1)
