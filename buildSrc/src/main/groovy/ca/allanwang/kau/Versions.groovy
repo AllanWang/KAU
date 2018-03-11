@@ -6,9 +6,9 @@ class Versions {
     static def targetSdk = 27
 
     static def buildTools = '27.0.2'
-    static def supportLibs = '27.0.2'
+    static def supportLibs = '27.1.0'
 
-    static def kotlin = '1.2.21'
+    static def kotlin = '1.2.30'
 
     static def aboutLibraries = '6.0.6'
     static def anko = '0.10.4'
