@@ -18,7 +18,7 @@ class Versions {
     static def constraintLayout = '1.1.0-beta6'
     static def fastAdapter = '3.2.5'
     static def fastAdapterCommons = fastAdapter
-    static def glide = '4.5.0'
+    static def glide = '4.6.1'
 
     static def iconics = '3.0.3'
     static def iconicsGoogle = '3.0.1.2'
