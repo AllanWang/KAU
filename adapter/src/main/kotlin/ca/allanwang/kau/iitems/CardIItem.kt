@@ -56,17 +56,17 @@ class CardIItem(
 
     class Config {
         var title: String? = null
-        var titleRes: Int = -1
+        var titleRes: Int = INVALID_ID
         var desc: String? = null
-        var descRes: Int = -1
+        var descRes: Int = INVALID_ID
         var button: String? = null
-        var buttonRes: Int = -1
+        var buttonRes: Int = INVALID_ID
         var buttonClick: (() -> Unit)? = null
         var cardClick: (() -> Unit)? = null
         var image: Drawable? = null
         var imageIIcon: IIcon? = null
         var imageIIconColor: Int = Color.WHITE
-        var imageRes: Int = -1
+        var imageRes: Int = INVALID_ID
     }
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
@@ -81,8 +81,9 @@ class CardIItem(
                     holder.bottomRow.visible()
                     holder.button.text = buttonText
                 }
-                val icon = if (imageRes > 0) drawable(imageRes)
-                else imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor) ?: image
+                val icon = drawable(imageRes) {
+                    imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor) ?: image
+                }
                 if (icon != null) holder.icon.visible().setImageDrawable(icon)
             }
             with(holder) {

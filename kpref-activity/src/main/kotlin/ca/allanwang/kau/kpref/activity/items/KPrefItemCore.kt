@@ -34,7 +34,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
 
     protected fun ViewHolder.updateDesc() {
         val descRes = core.descFun()
-        if (descRes > 0)
+        if (descRes != INVALID_ID)
             desc?.visible()?.setText(descRes)
         else
             desc?.gone()
@@ -118,12 +118,12 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
      */
     class CoreBuilder(override val globalOptions: GlobalOptions,
                       override val titleId: Int) : CoreContract {
-        override var descRes: Int = -1
+        override var descRes: Int = INVALID_ID
             set(value) {
                 field = value
                 descFun = { field }
             }
-        override var descFun = { -1 }
+        override var descFun = { INVALID_ID }
         override var iicon: IIcon? = null
         override var visible = { true }
         override var titleFun = { titleId }

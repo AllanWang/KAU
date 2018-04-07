@@ -1,6 +1,5 @@
 package ca.allanwang.kau.adapters
 
-import android.view.View
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.IItem

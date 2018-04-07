@@ -121,7 +121,7 @@ class SearchView @JvmOverloads constructor(
         /**
          * Hint string res to be set in the searchView
          */
-        var hintTextRes: Int = -1
+        var hintTextRes: Int = INVALID_ID
 
         /**
          * StringRes for a "no results found" item
@@ -131,7 +131,7 @@ class SearchView @JvmOverloads constructor(
          * For simplicity, kau contains [R.string.kau_no_results_found]
          * which you may use
          */
-        var noResultsFound: Int = -1
+        var noResultsFound: Int = INVALID_ID
 
         /**
          * Callback for when the query changes
@@ -212,7 +212,7 @@ class SearchView @JvmOverloads constructor(
     var results: List<SearchItem>
         get() = adapter.adapterItems
         set(value) = context.runOnUiThread {
-            val list = if (value.isEmpty() && configs.noResultsFound > 0)
+            val list = if (value.isEmpty() && configs.noResultsFound != INVALID_ID)
                 listOf(SearchItem("", context.string(configs.noResultsFound), iicon = null))
             else value
             if (configs.highlightQueryText && value.isNotEmpty()) list.forEach { it.withHighlights(editText.text.toString()) }

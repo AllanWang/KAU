@@ -7,6 +7,7 @@ dependencies {
     implementation project(':core-ui')
     implementation project(':adapter')
 
+   //noinspection GradleDependency
     api "com.github.bumptech.glide:glide:${kau.glide}"
     implementation "jp.wasabeef:blurry:${kau.blurry}"
 }

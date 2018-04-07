@@ -4,13 +4,14 @@ import android.content.Context
 import android.graphics.Color
 import android.support.annotation.DimenRes
 import android.support.annotation.StringRes
+import ca.allanwang.kau.utils.INVALID_ID
 import ca.allanwang.kau.utils.string
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.Theme
 
 class ColorBuilder : ColorContract {
     override var title: String? = null
-    override var titleRes: Int = -1
+    override var titleRes: Int = INVALID_ID
     override var allowCustom: Boolean = true
     override var allowCustomAlpha: Boolean = false
     override var isAccent: Boolean = false

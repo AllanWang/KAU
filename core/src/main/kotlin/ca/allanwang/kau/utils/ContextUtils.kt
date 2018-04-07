@@ -93,24 +93,29 @@ inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: B
     if (log) KL.i { "Toast: $text" }
 }
 
+const val INVALID_ID = 0
+
 //Resource retrievers
 inline fun Context.string(@StringRes id: Int): String = getString(id)
 
-inline fun Context.string(@StringRes id: Int, fallback: String?): String? = if (id > 0) string(id) else fallback
+inline fun Context.string(@StringRes id: Int, fallback: String?): String? = if (id != INVALID_ID) string(id) else fallback
+inline fun Context.string(@StringRes id: Int, fallback: () -> String?): String? = if (id != INVALID_ID) string(id) else fallback()
 inline fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 inline fun Context.boolean(@BoolRes id: Int): Boolean = resources.getBoolean(id)
 inline fun Context.integer(@IntegerRes id: Int): Int = resources.getInteger(id)
 inline fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
 inline fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
-inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id) ?: throw KauException("Drawable with id $id not found")
-inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id > 0) drawable(id) else fallback
+inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)
+        ?: throw KauException("Drawable with id $id not found")
+
+inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id != INVALID_ID) drawable(id) else fallback
+inline fun Context.drawable(@DrawableRes id: Int, fallback: () -> Drawable?): Drawable? = if (id != INVALID_ID) drawable(id) else fallback()
 inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)!!
 inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)!!
 /**
  * Returns plural form of res. The quantity is also passed to the formatter as an int
  */
-inline fun Context.plural(@PluralsRes id: Int, quantity: Number)
-        = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())!!
+inline fun Context.plural(@PluralsRes id: Int, quantity: Number) = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())!!
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {

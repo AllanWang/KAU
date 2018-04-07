@@ -50,6 +50,7 @@ abstract class MediaPickerActivityBase(
 
         MediaItem.bindEvents(adapter.fastAdapter)
         adapter.fastAdapter.withSelectionListener { _, _ ->
+            @Suppress("DEPRECATION")
             selectionCount.text = adapter.fastAdapter.selections.size.toString()
         }
 
@@ -57,6 +58,7 @@ abstract class MediaPickerActivityBase(
             show()
             setIcon(GoogleMaterial.Icon.gmd_send)
             setOnClickListener {
+                @Suppress("DEPRECATION")
                 val selection = adapter.fastAdapter.selectedItems
                 if (selection.isEmpty()) {
                     toast(R.string.kau_no_items_selected)
