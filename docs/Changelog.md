@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.8.0
+* Update everything to Android Studio 3.1
+* Fix new lint issues (see Migration for resource related methods)
+
 ## v3.7.1
 * Update appcompat to 27.1.0
 

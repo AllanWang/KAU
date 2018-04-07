@@ -6,6 +6,12 @@
     <item text="" />
     -->
 
+    <version title="v3.8.0" />
+    <item text="Update everything to Android Studio 3.1" />
+    <item text="Fix new lint issues (see Migration for resource related methods)" />
+    <item text="" />
+    <item text="" />
+
     <version title="v3.7.1" />
     <item text="Update appcompat to 27.1.0" />
 
