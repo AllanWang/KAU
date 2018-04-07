@@ -5,20 +5,22 @@ class Versions {
     static def minSdk = 21
     static def targetSdk = 27
 
-    static def buildTools = '27.0.2'
-    static def supportLibs = '27.1.0'
+    static def buildTools = '27.0.3'
+    static def supportLibs = '27.1.1'
 
-    static def kotlin = '1.2.30'
+    static def kotlin = '1.2.31'
 
-    static def aboutLibraries = '6.0.6'
+    static def aboutLibraries = '6.0.8'
     static def anko = '0.10.4'
     static def blurry = '2.1.1'
-    static def constraintLayout = '1.1.0-beta5'
-    static def fastAdapter = '3.2.4'
-    static def fastAdapterCommons = fastAdapter
-    static def glide = '4.6.1'
 
-    static def iconics = '3.0.2'
+    // https://dl.google.com/dl/android/maven2/com/android/support/constraint/group-index.xml
+    static def constraintLayout = '1.1.0-beta6'
+    static def fastAdapter = '3.2.5'
+    static def fastAdapterCommons = fastAdapter
+    static def glide = '4.5.0'
+
+    static def iconics = '3.0.3'
     static def iconicsGoogle = '3.0.1.2'
     static def iconicsMaterial = '2.2.0.4'
     static def iconicsCommunity = '2.0.46.1'

@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.7.1
+* Update appcompat to 27.1.0
+
 ## v3.7.0
 * :core: Fix potential NPE in restart()
 * :core: Create restartApplication()

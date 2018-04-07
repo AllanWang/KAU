@@ -16,6 +16,10 @@ buildscript {
         classpath kauPlugin.dexCount
         classpath kauPlugin.gitVersion
     }
+    
+    wrapper {
+        distributionType = "all"
+    }
 }
 
 apply plugin: "ca.allanwang.kau"
