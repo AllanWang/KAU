@@ -2,6 +2,7 @@ package ca.allanwang.kau.about
 
 import android.content.Context
 import android.content.res.Configuration
+import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
 import android.widget.TextView
 import ca.allanwang.kau.ui.views.CollapsibleView
@@ -13,7 +14,7 @@ import ca.allanwang.kau.ui.views.CollapsibleViewDelegate
  */
 class CollapsibleTextView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : TextView(context, attrs, defStyleAttr), CollapsibleView by CollapsibleViewDelegate() {
+) : AppCompatTextView(context, attrs, defStyleAttr), CollapsibleView by CollapsibleViewDelegate() {
 
     init {
         initCollapsible(this)
