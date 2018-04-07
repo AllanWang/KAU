@@ -73,11 +73,6 @@ fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, 
         = snackbar(context.string(textId), duration, builder)
 
 @KauUtils
-fun TextView.setTextIfValid(@StringRes id: Int) {
-    if (id > 0) text = context.string(id)
-}
-
-@KauUtils
 fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
     if (icon == null) return
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
