@@ -30,15 +30,27 @@ fun <V : View> Activity.bindView(id: Int)
 fun <V : View> Dialog.bindView(id: Int)
         : ReadOnlyProperty<Dialog, V> = required(id, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindViewResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindViewResettable<V>(id)"),
+        DeprecationLevel.WARNING)
 fun <V : View> DialogFragment.bindView(id: Int)
         : ReadOnlyProperty<DialogFragment, V> = required(id, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindViewResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindViewResettable<V>(id)"),
+        DeprecationLevel.WARNING)
 fun <V : View> SupportDialogFragment.bindView(id: Int)
         : ReadOnlyProperty<android.support.v4.app.DialogFragment, V> = required(id, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindViewResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindViewResettable<V>(id)"),
+        DeprecationLevel.WARNING)
 fun <V : View> Fragment.bindView(id: Int)
         : ReadOnlyProperty<Fragment, V> = required(id, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindViewResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindViewResettable<V>(id)"),
+        DeprecationLevel.WARNING)
 fun <V : View> SupportFragment.bindView(id: Int)
         : ReadOnlyProperty<android.support.v4.app.Fragment, V> = required(id, viewFinder)
 
@@ -54,15 +66,27 @@ fun <V : View> Activity.bindOptionalView(id: Int)
 fun <V : View> Dialog.bindOptionalView(id: Int)
         : ReadOnlyProperty<Dialog, V?> = optional(id, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindOptionalViewResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindOptionalViewResettable<V>(id)"),
+        DeprecationLevel.WARNING)
 fun <V : View> DialogFragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<DialogFragment, V?> = optional(id, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindOptionalViewResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindOptionalViewResettable<V>(id)"),
+        DeprecationLevel.WARNING)
 fun <V : View> SupportDialogFragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<android.support.v4.app.DialogFragment, V?> = optional(id, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindOptionalViewResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindOptionalViewResettable<V>(id)"),
+        DeprecationLevel.WARNING)
 fun <V : View> Fragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<Fragment, V?> = optional(id, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindOptionalViewResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindOptionalViewResettable<V>(id)"),
+        DeprecationLevel.WARNING)
 fun <V : View> SupportFragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<android.support.v4.app.Fragment, V?> = optional(id, viewFinder)
 
@@ -78,15 +102,27 @@ fun <V : View> Activity.bindViews(vararg ids: Int)
 fun <V : View> Dialog.bindViews(vararg ids: Int)
         : ReadOnlyProperty<Dialog, List<V>> = required(ids, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindViewsResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindViewsResettable<V>(*ids)"),
+        DeprecationLevel.WARNING)
 fun <V : View> DialogFragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<DialogFragment, List<V>> = required(ids, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindViewsResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindViewsResettable<V>(*ids)"),
+        DeprecationLevel.WARNING)
 fun <V : View> SupportDialogFragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = required(ids, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindViewsResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindViewsResettable<V>(*ids)"),
+        DeprecationLevel.WARNING)
 fun <V : View> Fragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<Fragment, List<V>> = required(ids, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindViewsResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindViewsResettable<V>(*ids)"),
+        DeprecationLevel.WARNING)
 fun <V : View> SupportFragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = required(ids, viewFinder)
 
@@ -102,15 +138,27 @@ fun <V : View> Activity.bindOptionalViews(vararg ids: Int)
 fun <V : View> Dialog.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<Dialog, List<V>> = optional(ids, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindOptionalViewsResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindOptionalViewsResettable<V>(*ids)"),
+        DeprecationLevel.WARNING)
 fun <V : View> DialogFragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<DialogFragment, List<V>> = optional(ids, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindOptionalViewsResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindOptionalViewsResettable<V>(*ids)"),
+        DeprecationLevel.WARNING)
 fun <V : View> SupportDialogFragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = optional(ids, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindOptionalViewsResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindOptionalViewsResettable<V>(*ids)"),
+        DeprecationLevel.WARNING)
 fun <V : View> Fragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<Fragment, List<V>> = optional(ids, viewFinder)
 
+@Deprecated("Fragments operate on a different lifecycle. Consider using bindOptionalViewsResettable and resetting using KotterKnife.reset(this)",
+        ReplaceWith("bindOptionalViewsResettable<V>(*ids)"),
+        DeprecationLevel.WARNING)
 fun <V : View> SupportFragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = optional(ids, viewFinder)
 
@@ -137,17 +185,19 @@ private inline val ViewHolder.viewFinder: ViewHolder.(Int) -> View?
 private fun viewNotFound(id: Int, desc: KProperty<*>): Nothing =
         throw IllegalStateException("View ID $id for '${desc.name}' not found.")
 
-private fun <T, V : View> required(id: Int, finder: T.(Int) -> View?)
-        = Lazy { t: T, desc -> (t.finder(id) as V?)?.apply { } ?: viewNotFound(id, desc) }
+private fun <T, V : View> required(id: Int, finder: T.(Int) -> View?) = Lazy { t: T, desc ->
+    (t.finder(id) as V?)?.apply { } ?: viewNotFound(id, desc)
+}
 
-private fun <T, V : View> optional(id: Int, finder: T.(Int) -> View?)
-        = Lazy { t: T, _ -> t.finder(id) as V? }
+private fun <T, V : View> optional(id: Int, finder: T.(Int) -> View?) = Lazy { t: T, _ -> t.finder(id) as V? }
 
-private fun <T, V : View> required(ids: IntArray, finder: T.(Int) -> View?)
-        = Lazy { t: T, desc -> ids.map { t.finder(it) as V? ?: viewNotFound(it, desc) } }
+private fun <T, V : View> required(ids: IntArray, finder: T.(Int) -> View?) = Lazy { t: T, desc ->
+    ids.map {
+        t.finder(it) as V? ?: viewNotFound(it, desc)
+    }
+}
 
-private fun <T, V : View> optional(ids: IntArray, finder: T.(Int) -> View?)
-        = Lazy { t: T, _ -> ids.map { t.finder(it) as V? }.filterNotNull() }
+private fun <T, V : View> optional(ids: IntArray, finder: T.(Int) -> View?) = Lazy { t: T, _ -> ids.map { t.finder(it) as V? }.filterNotNull() }
 
 // Like Kotlin's lazy delegate but the initializer gets the target and metadata passed to it
 private open class Lazy<in T, out V>(private val initializer: (T, KProperty<*>) -> V) : ReadOnlyProperty<T, V> {
@@ -269,17 +319,19 @@ fun <V : View> SupportFragment.bindOptionalViewsResettable(vararg ids: Int)
 fun <V : View> ViewHolder.bindOptionalViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<ViewHolder, List<V>> = optionalResettable(ids, viewFinder)
 
-private fun <T, V : View> requiredResettable(id: Int, finder: T.(Int) -> View?)
-        = LazyResettable { t: T, desc -> (t.finder(id) as V?)?.apply { } ?: viewNotFound(id, desc) }
+private fun <T, V : View> requiredResettable(id: Int, finder: T.(Int) -> View?) = LazyResettable { t: T, desc ->
+    (t.finder(id) as V?)?.apply { } ?: viewNotFound(id, desc)
+}
 
-private fun <T, V : View> optionalResettable(id: Int, finder: T.(Int) -> View?)
-        = LazyResettable { t: T, _ -> t.finder(id) as V? }
+private fun <T, V : View> optionalResettable(id: Int, finder: T.(Int) -> View?) = LazyResettable { t: T, _ -> t.finder(id) as V? }
 
-private fun <T, V : View> requiredResettable(ids: IntArray, finder: T.(Int) -> View?)
-        = LazyResettable { t: T, desc -> ids.map { t.finder(it) as V? ?: viewNotFound(it, desc) } }
+private fun <T, V : View> requiredResettable(ids: IntArray, finder: T.(Int) -> View?) = LazyResettable { t: T, desc ->
+    ids.map {
+        t.finder(it) as V? ?: viewNotFound(it, desc)
+    }
+}
 
-private fun <T, V : View> optionalResettable(ids: IntArray, finder: T.(Int) -> View?)
-        = LazyResettable { t: T, _ -> ids.map { t.finder(it) as V? }.filterNotNull() }
+private fun <T, V : View> optionalResettable(ids: IntArray, finder: T.(Int) -> View?) = LazyResettable { t: T, _ -> ids.map { t.finder(it) as V? }.filterNotNull() }
 
 //Like Kotterknife's lazy delegate but is resettable
 private class LazyResettable<in T, out V>(initializer: (T, KProperty<*>) -> V) : Lazy<T, V>(initializer) {
@@ -302,8 +354,7 @@ object Kotterknife {
 private object KotterknifeRegistry {
     private val lazyMap = WeakHashMap<Any, MutableCollection<LazyResettable<*, *>>>()
 
-    fun register(target: Any, lazy: LazyResettable<*, *>)
-            = lazyMap.getOrPut(target, { Collections.newSetFromMap(WeakHashMap()) }).add(lazy)
+    fun register(target: Any, lazy: LazyResettable<*, *>) = lazyMap.getOrPut(target, { Collections.newSetFromMap(WeakHashMap()) }).add(lazy)
 
-    fun reset(target: Any) = lazyMap[target]?.forEach { it.reset() }
+    fun reset(target: Any) = lazyMap[target]?.forEach(LazyResettable<*, *>::reset)
 }
