@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.widget.TextView
+import ca.allanwang.kau.adapters.selectedItems
+import ca.allanwang.kau.adapters.selectionSize
 import ca.allanwang.kau.utils.*
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
@@ -50,14 +52,14 @@ abstract class MediaPickerActivityBase(
 
         MediaItem.bindEvents(adapter.fastAdapter)
         adapter.fastAdapter.withSelectionListener { _, _ ->
-            selectionCount.text = adapter.fastAdapter.selections.size.toString()
+            selectionCount.text = adapter.selectionSize.toString()
         }
 
         fab.apply {
             show()
             setIcon(GoogleMaterial.Icon.gmd_send)
             setOnClickListener {
-                val selection = adapter.fastAdapter.selectedItems
+                val selection = adapter.selectedItems
                 if (selection.isEmpty()) {
                     toast(R.string.kau_no_items_selected)
                 } else {

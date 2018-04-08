@@ -34,8 +34,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
-            tools:layout_editor_absoluteX="0dp"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry"
+            tools:layout_editor_absoluteX="0dp" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@id/kau_pref_title"
@@ -87,7 +87,8 @@
             app:barrierDirection="end"
             app:constraint_referenced_ids="kau_pref_title,kau_pref_desc"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="NotSibling" />
 
         <LinearLayout
             android:id="@id/kau_pref_inner_frame"

@@ -2,6 +2,13 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v3.8.0
+
+Along with the update to support Android Studio 3.1, a lot of changes have occurred with other dependencies and with lint.
+
+* Resource ids can be negatives due to the bit overflow. Instead, `INVALID_ID` has been introduced to signify an unset or invalid id.
+Methods such as `Context.string(id, fallback)` now check against `INVALID_ID` through equality rather than using an inequality to address this.
+
 # v3.6.0
 
 ## startActivity

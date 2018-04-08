@@ -15,6 +15,7 @@ import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.ui.widgets.InkPageIndicator
 import ca.allanwang.kau.utils.AnimHolder
+import ca.allanwang.kau.utils.INVALID_ID
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.dimenPixelSize
 import com.mikepenz.aboutlibraries.Libs
@@ -57,7 +58,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
 
     val panels: List<AboutPanelContract> by lazy {
         val defaultPanels = mutableListOf(AboutPanelMain(), AboutPanelLibs())
-        if (configs.faqXmlRes != -1) defaultPanels.add(AboutPanelFaqs())
+        if (configs.faqXmlRes != INVALID_ID) defaultPanels.add(AboutPanelFaqs())
         defaultPanels
     }
 
@@ -86,23 +87,23 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
     }
 
     class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {
-        var cutoutTextRes: Int = -1
+        var cutoutTextRes: Int = INVALID_ID
         var cutoutText: String? = null
-        var cutoutDrawableRes: Int = -1
+        var cutoutDrawableRes: Int = INVALID_ID
         var cutoutDrawable: Drawable? = null
         var cutoutForeground: Int? = null
         var libPageTitleRes: Int = R.string.kau_about_libraries_intro
         var libPageTitle: String? = null
             set(value) {
                 field = value
-                libPageTitleRes = -1 //reset res so we don't use our default
+                libPageTitleRes = INVALID_ID //reset res so we don't use our default
             }
-        var faqXmlRes: Int = -1
+        var faqXmlRes: Int = INVALID_ID
         var faqPageTitleRes: Int = R.string.kau_about_faq_intro
         var faqPageTitle: String? = null
             set(value) {
                 field = value
-                faqPageTitleRes = -1 //reset res so we don't use our default
+                faqPageTitleRes = INVALID_ID //reset res so we don't use our default
             }
         /**
          * Whether new lines should be included

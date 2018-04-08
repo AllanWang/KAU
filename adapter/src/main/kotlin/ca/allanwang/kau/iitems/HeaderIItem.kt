@@ -7,6 +7,7 @@ import android.widget.TextView
 import ca.allanwang.kau.adapter.R
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
+import ca.allanwang.kau.utils.INVALID_ID
 import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.string
 
@@ -17,7 +18,7 @@ import ca.allanwang.kau.utils.string
  * Contains only one text view
  */
 class HeaderIItem(
-        text: String? = null, var textRes: Int = -1
+        text: String? = null, var textRes: Int = INVALID_ID
 ) : KauIItem<HeaderIItem, HeaderIItem.ViewHolder>(
         R.layout.kau_iitem_header, { ViewHolder(it) }, R.id.kau_item_header_big_margin_top
 ), ThemableIItem by ThemableIItemDelegate() {
