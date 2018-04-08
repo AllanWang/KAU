@@ -3,6 +3,8 @@
 ## v3.8.0
 * Update everything to Android Studio 3.1
 * Fix new lint issues (see Migration for resource related methods)
+* :adapter: Add more IAdapter functions to help retrieve selections
+* :core: Add deprecation warning to bindView for fragment based extensions; use bindViewResettable instead
 
 ## v3.7.1
 * Update appcompat to 27.1.0

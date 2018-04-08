@@ -16,3 +16,15 @@ inline fun <T, C : MutableIterable<T>> C.kauRemoveIf(filter: (item: T) -> Boolea
         if (filter(iter.next())) iter.remove()
     return this
 }
+
+/**
+ * Returns the first element tha matches the predicate,
+ * or null if no match is found
+ */
+inline fun <T : Any> Iterator<T>.firstOrNull(predicate: (T) -> Boolean): T? {
+    while (hasNext()) {
+        val data = next()
+        if (predicate(data)) return data
+    }
+    return null
+}
