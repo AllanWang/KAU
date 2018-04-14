@@ -149,6 +149,7 @@ class MainActivity : KPrefActivity() {
 
         seekbar(R.string.seekbar, KPrefSample::seekbar, { KPrefSample.seekbar = it }) {
             descRes = R.string.kau_lorem_ipsum
+            increments = 5
             textViewConfigs = {
                 minEms = 2
             }

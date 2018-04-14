@@ -15,7 +15,7 @@ class Versions {
     static def blurry = '2.1.1'
 
     // https://dl.google.com/dl/android/maven2/com/android/support/constraint/group-index.xml
-    static def constraintLayout = '1.1.0-beta6'
+    static def constraintLayout = '1.1.0'
     static def fastAdapter = '3.2.5'
     static def fastAdapterCommons = fastAdapter
     static def glide = '4.6.1'
@@ -31,7 +31,7 @@ class Versions {
     static def junit = '4.12'
     static def testRunner = '1.0.1'
 
-    static def gradlePlugin = '3.1.0'
+    static def gradlePlugin = '3.1.1'
     static def mavenPlugin = '2.0'
     static def playPublishPlugin = '1.2.0'
     static def dexCountPlugin = '0.8.2'
