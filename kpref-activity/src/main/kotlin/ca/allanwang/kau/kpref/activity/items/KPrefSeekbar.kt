@@ -15,6 +15,15 @@ import ca.allanwang.kau.utils.tint
  */
 open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(builder) {
 
+    protected val min = builder.min
+    protected val max = builder.max
+    protected val increment = builder.increments
+
+    init {
+        if (increment <= 0)
+            throw IllegalArgumentException("Seekbar must increment by at least 1")
+    }
+
     override fun KClick<Int>.defaultOnClick() = Unit
 
     override fun bindView(holder: ViewHolder, payloads: List<Any>) {
@@ -26,8 +35,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
         text.tvc()
         val seekbar = holder.bindLowerView<SeekBar>(R.layout.kau_pref_seekbar) {
-            it.max = builder.max - builder.min
-            it.incrementProgressBy(builder.increments)
+            it.max = (max - min) / increment
             it.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(sb: SeekBar, progress: Int, fromUser: Boolean) {
                     text.text = builder.toText(progress.fromProgress)
@@ -81,11 +89,18 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
         override var textViewConfigs: TextView.() -> Unit = {}
     }
 
+    /**
+     * Helper to convert true value to progress value
+     * Progress values start at 0 and increment by 1
+     */
     protected inline val Int.toProgress: Int
-        get() = this - builder.min
+        get() = (this - min) / increment
 
+    /**
+     * Inverse of [Int.toProgress] to find the true value from the seekbar
+     */
     protected inline val Int.fromProgress: Int
-        get() = this + builder.min
+        get() = this * increment + min
 
     override fun getType(): Int = R.id.kau_item_pref_seekbar
 

@@ -11,7 +11,7 @@
     <item text="Fix new lint issues (see Migration for resource related methods)" />
     <item text=":adapter: Add more IAdapter functions to help retrieve selections" />
     <item text=":core: Add deprecation warning to bindView for fragment based extensions; use bindViewResettable instead" />
-    <item text="" />
+    <item text=":kpref-activity: Fix seekbar increment" />
     <item text="" />
     <item text="" />
 
