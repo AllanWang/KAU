@@ -24,7 +24,7 @@ class Versions {
     static def blurry = '2.1.1'
 
     // https://dl.google.com/dl/android/maven2/com/android/support/constraint/group-index.xml
-    static def constraintLayout = '1.1.0'
+    static def constraintLayout = '1.1.3'
 
     // https://github.com/mikepenz/FastAdapter#using-maven
     static def fastAdapter = '3.2.5'
