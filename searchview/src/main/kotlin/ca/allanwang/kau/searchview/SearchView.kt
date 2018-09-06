@@ -215,7 +215,7 @@ class SearchView @JvmOverloads constructor(
             val list = if (value.isEmpty() && configs.noResultsFound != INVALID_ID)
                 listOf(SearchItem("", context.string(configs.noResultsFound), iicon = null))
             else value
-            if (configs.highlightQueryText && value.isNotEmpty()) list.forEach { it.withHighlights(editText.text.toString()) }
+            if (configs.highlightQueryText && value.isNotEmpty()) list.forEach { it.withHighlights(editText.text?.toString()) }
             cardTransition()
             adapter.setNewList(list)
         }
@@ -250,7 +250,7 @@ class SearchView @JvmOverloads constructor(
      * The current text located in our searchview
      */
     val query: String
-        get() = editText.text.toString().trim()
+        get() = editText.text?.toString()?.trim() ?: ""
 
     /*
      * Ripple start points and search view offset
@@ -265,7 +265,7 @@ class SearchView @JvmOverloads constructor(
         View.inflate(context, R.layout.kau_search_view, this)
         z = 99f
         iconNav.setSearchIcon(configs.navIcon).setOnClickListener { revealClose() }
-        iconClear.setSearchIcon(configs.clearIcon).setOnClickListener { editText.text.clear() }
+        iconClear.setSearchIcon(configs.clearIcon).setOnClickListener { editText.text?.clear() }
         tintForeground(configs.foregroundColor)
         tintBackground(configs.backgroundColor)
         with(recycler) {
@@ -304,7 +304,7 @@ class SearchView @JvmOverloads constructor(
         })
         editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (configs.searchCallback(editText.text.toString(), this)) revealClose()
+                if (configs.searchCallback(editText.text?.toString() ?: "", this)) revealClose()
                 else editText.hideKeyboard()
                 return@setOnEditorActionListener true
             }
@@ -403,6 +403,7 @@ class SearchView @JvmOverloads constructor(
         divider.setBackgroundColor(color.adjustAlpha(0.1f))
         editText.tint(color)
         editText.setTextColor(ColorStateList.valueOf(color))
+        editText.setHintTextColor(color.adjustAlpha(0.7f))
     }
 
     /**
@@ -441,7 +442,7 @@ class SearchView @JvmOverloads constructor(
                     card.circularHide(menuX, menuHalfHeight, duration = configs.revealDuration,
                             onFinish = {
                                 configs.closeListener?.invoke(this@SearchView)
-                                if (configs.shouldClearOnClose) editText.text.clear()
+                                if (configs.shouldClearOnClose) editText.text?.clear()
                             })
                 }
             }

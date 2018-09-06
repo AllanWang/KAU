@@ -38,12 +38,13 @@ class SearchItem(val key: String,
         var backgroundColor: Int = 0xfffafafa.toInt()
     }
 
-    var styledContent: SpannableStringBuilder? = null
+    private var styledContent: SpannableStringBuilder? = null
 
     /**
      * Highlight the subText if it is present in the content
      */
-    fun withHighlights(subText: String) {
+    internal fun withHighlights(subText: String?) {
+        subText ?: return
         val index = content.indexOf(subText, ignoreCase = true)
         if (index == -1) return
         styledContent = SpannableStringBuilder(content)
