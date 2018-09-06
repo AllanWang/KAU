@@ -18,10 +18,11 @@ fun lazyInterpolator(@InterpolatorRes id: Int) = lazyContext<Interpolator> { Ani
 
 fun lazyAnimation(@AnimRes id: Int) = lazyContext<Animation> { AnimationUtils.loadAnimation(it, id) }
 
-fun <T : Any> lazyContext(initializer: (context: Context) -> T): LazyContext<T> = LazyContext(initializer)
+fun <T> lazyContext(initializer: (context: Context) -> T): LazyContext<T> = LazyContext(initializer)
 
-class LazyContext<out T : Any>(private val initializer: (context: Context) -> T, lock: Any? = null) {
-    @Volatile private var _value: Any = UNINITIALIZED
+class LazyContext<out T>(private val initializer: (context: Context) -> T, lock: Any? = null) {
+    @Volatile
+    private var _value: Any? = UNINITIALIZED
     private val lock = lock ?: this
 
     fun invalidate() {
