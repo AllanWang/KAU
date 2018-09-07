@@ -45,11 +45,11 @@ class Versions {
     static def junit = '4.12'
     static def testRunner = '1.0.1'
 
-    static def gradlePlugin = '3.1.2'
-    static def mavenPlugin = '2.0'
-    static def playPublishPlugin = '1.2.0'
+    static def gradlePlugin = '3.2.0-rc02'
+    static def mavenPlugin = '2.1'
+    static def playPublishPlugin = '1.2.2'
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    static def dexCountPlugin = '0.8.2'
-    static def gitVersionPlugin = '0.4.3'
+    static def dexCountPlugin = '0.8.3'
+    static def gitVersionPlugin = '0.4.4'
 }
