@@ -13,10 +13,10 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
  */
 class AdapterActivity : ElasticRecyclerActivity() {
 
-    val adapter = FastItemAdapter<IItem<*, *>>()
+    private val adapter = FastItemAdapter<IItem<*, *>>()
 
     override fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean {
-        kau_recycler.adapter = adapter
+        recycler.adapter = adapter
         adapter.add(listOf(
                 CardIItem {
                     titleRes = R.string.kau_text_copied

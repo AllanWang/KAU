@@ -3,6 +3,8 @@ package ca.allanwang.kau.ui.activities
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.ui.R
@@ -24,6 +26,8 @@ import kotlinx.android.synthetic.main.kau_elastic_recycler_activity.*
 abstract class ElasticRecyclerActivity : KauBaseActivity() {
 
     private val configs = Configs()
+    protected val toolbar: Toolbar get() = kau_toolbar
+    protected val recycler: RecyclerView get() = kau_recycler
 
     class Configs {
         var exitTransitionBottom = R.transition.kau_exit_slide_bottom
