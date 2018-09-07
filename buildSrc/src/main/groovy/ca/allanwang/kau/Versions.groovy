@@ -3,16 +3,16 @@ package ca.allanwang.kau
 class Versions {
     static def coreMinSdk = 19
     static def minSdk = 21
-    static def targetSdk = 27
+    static def targetSdk = 28
 
     // https://developer.android.com/studio/releases/build-tools
-    static def buildTools = '27.0.3'
+    static def buildTools = '28.0.2'
 
     // https://developer.android.com/topic/libraries/support-library/revisions
     static def supportLibs = '27.1.1'
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    static def kotlin = '1.2.41'
+    static def kotlin = '1.2.61'
 
     // https://github.com/mikepenz/AboutLibraries/releases
     static def aboutLibraries = '6.0.8'
