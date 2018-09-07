@@ -13,14 +13,13 @@ import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
-import ca.allanwang.kau.ui.widgets.InkPageIndicator
 import ca.allanwang.kau.utils.AnimHolder
 import ca.allanwang.kau.utils.INVALID_ID
-import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.dimenPixelSize
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.IItem
+import kotlinx.android.synthetic.main.kau_activity_about.*
 
 /**
  * Created by Allan Wang on 2017-06-28.
@@ -35,12 +34,8 @@ import com.mikepenz.fastadapter.IItem
  */
 abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilder: Configs.() -> Unit = {}) : KauBaseActivity(), ViewPager.OnPageChangeListener {
 
-    private val draggableFrame: ElasticDragDismissFrameLayout by bindView(R.id.about_draggable_frame)
-    private val pager: ViewPager by bindView(R.id.about_pager)
-    private val indicator: InkPageIndicator by bindView(R.id.about_indicator)
-
     val currentPage: Int
-        get() = pager.currentItem
+        get() = about_pager.currentItem
 
     /**
      * Holds some common configurations that may be added directly from the constructor
@@ -67,18 +62,18 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         setContentView(R.layout.kau_activity_about)
         pageStatus = IntArray(panels.size)
         pageStatus[0] = 2 //the first page is instantly visible
-        if (configs.textColor != null) indicator.setColour(configs.textColor!!)
-        with(pager) {
+        if (configs.textColor != null) about_indicator.setColour(configs.textColor!!)
+        with(about_pager) {
             adapter = AboutPagerAdapter()
             pageMargin = dimenPixelSize(R.dimen.kau_spacing_normal)
             offscreenPageLimit = panels.size - 1
             addOnPageChangeListener(this@AboutActivityBase)
         }
-        indicator.setViewPager(pager)
-        draggableFrame.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
+        about_indicator.setViewPager(about_pager)
+        about_draggable_frame.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
-                        .inflateTransition(if (draggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
+                        .inflateTransition(if (about_draggable_frame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
                 panels[currentPage].recycler?.stopScroll()
                 finishAfterTransition()
             }

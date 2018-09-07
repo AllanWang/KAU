@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import ca.allanwang.kau.iitems.KauIItem
-import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.hasPermission
 
 /**
@@ -23,7 +22,7 @@ class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox, 
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val text: TextView by bindView(R.id.perm_text)
-        val checkbox: CheckBox by bindView(R.id.perm_checkbox)
+        val text: TextView = v.findViewById(R.id.perm_text)
+        val checkbox: CheckBox = v.findViewById(R.id.perm_checkbox)
     }
 }

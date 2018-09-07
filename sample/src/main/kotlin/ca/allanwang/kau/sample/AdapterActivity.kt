@@ -16,7 +16,7 @@ class AdapterActivity : ElasticRecyclerActivity() {
     val adapter = FastItemAdapter<IItem<*, *>>()
 
     override fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean {
-        recycler.adapter = adapter
+        kau_recycler.adapter = adapter
         adapter.add(listOf(
                 CardIItem {
                     titleRes = R.string.kau_text_copied

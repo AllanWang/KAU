@@ -72,9 +72,9 @@ class SearchItem(val key: String,
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val icon: ImageView by bindView(R.id.kau_search_icon)
-        val title: TextView by bindView(R.id.kau_search_title)
-        val desc: TextView by bindView(R.id.kau_search_desc)
-        val container: ConstraintLayout by bindView(R.id.kau_search_item_frame)
+        val icon: ImageView = v.findViewById(R.id.kau_search_icon)
+        val title: TextView = v.findViewById(R.id.kau_search_title)
+        val desc: TextView = v.findViewById(R.id.kau_search_desc)
+        val container: ConstraintLayout = v.findViewById(R.id.kau_search_item_frame)
     }
 }
