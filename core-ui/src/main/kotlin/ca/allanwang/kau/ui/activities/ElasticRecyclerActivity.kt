@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.kau_elastic_recycler_activity.*
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 abstract class ElasticRecyclerActivity : KauBaseActivity() {
 
-    val configs = Configs()
+    private val configs = Configs()
 
     class Configs {
         var exitTransitionBottom = R.transition.kau_exit_slide_bottom
