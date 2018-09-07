@@ -39,29 +39,39 @@ class CutoutView @JvmOverloads constructor(
 
     companion object {
         const val PHI = 1.6182f
-        const val TYPE_TEXT = 100
-        const val TYPE_DRAWABLE = 101
+        const val TYPE_EMPTY = 100
+        const val TYPE_TEXT = 101
+        const val TYPE_DRAWABLE = 102
     }
 
-    private val paint: TextPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
+    private val paint: TextPaint = TextPaint().apply {
+        isAntiAlias = true
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+    }
     private var bitmapScaling: Float = 1f
     private var cutout: Bitmap? = null
     var foregroundColor = Color.MAGENTA
     var text: String? = "Text"
         set(value) {
             field = value
-            if (value != null) cutoutType = TYPE_TEXT
-            else if (drawable != null) cutoutType = TYPE_DRAWABLE
+            cutoutType = when {
+                value != null -> TYPE_TEXT
+                drawable != null -> TYPE_DRAWABLE
+                else -> TYPE_EMPTY
+            }
         }
-    var cutoutType: Int = TYPE_TEXT
+    var cutoutType: Int = TYPE_EMPTY
     private var textSize: Float = 0f
     private var cutoutY: Float = 0f
     private var cutoutX: Float = 0f
     var drawable: Drawable? = null
         set(value) {
             field = value
-            if (value != null) cutoutType = TYPE_DRAWABLE
-            else if (text != null) cutoutType = TYPE_TEXT
+            cutoutType = when {
+                drawable != null -> TYPE_DRAWABLE
+                value != null -> TYPE_TEXT
+                else -> TYPE_EMPTY
+            }
         }
     private var heightPercentage: Float = 0f
     private var minHeight: Float = 0f
@@ -159,22 +169,22 @@ class CutoutView @JvmOverloads constructor(
         if (cutout?.isRecycled == false)
             cutout?.recycle()
         if (width == 0 || height == 0) return
-        cutout = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        cutout!!.setHasAlpha(true)
+        cutout = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).apply {
+            setHasAlpha(true)
+        }
         val cutoutCanvas = Canvas(cutout!!)
         cutoutCanvas.drawColor(foregroundColor)
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
         when (cutoutType) {
             TYPE_TEXT -> {
-                // this is the magic – Clear mode punches out the bitmap
-                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-                cutoutCanvas.drawText(text, cutoutX, cutoutY, paint)
+                cutoutCanvas.drawText(text!!, cutoutX, cutoutY, paint)
             }
             TYPE_DRAWABLE -> {
                 cutoutCanvas.drawBitmap(drawable!!.toBitmap(bitmapScaling, Bitmap.Config.ALPHA_8), cutoutX, cutoutY, paint)
             }
-
+            TYPE_EMPTY -> {
+                // do nothing
+            }
         }
     }
 

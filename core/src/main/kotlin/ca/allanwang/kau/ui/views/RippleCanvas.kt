@@ -36,7 +36,7 @@ class RippleCanvas @JvmOverloads constructor(
      */
     override fun onDraw(canvas: Canvas) {
         paint.color = baseColor
-        canvas.drawRect(0f, 0f, canvas.width.toFloat(), canvas.height.toFloat(), paint)
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
         val itr = ripples.iterator()
         while (itr.hasNext()) {
             val r = itr.next()

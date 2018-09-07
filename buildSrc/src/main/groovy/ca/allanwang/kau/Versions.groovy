@@ -3,16 +3,16 @@ package ca.allanwang.kau
 class Versions {
     static def coreMinSdk = 19
     static def minSdk = 21
-    static def targetSdk = 27
+    static def targetSdk = 28
 
     // https://developer.android.com/studio/releases/build-tools
-    static def buildTools = '27.0.3'
+    static def buildTools = '28.0.2'
 
     // https://developer.android.com/topic/libraries/support-library/revisions
     static def supportLibs = '27.1.1'
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    static def kotlin = '1.2.41'
+    static def kotlin = '1.2.61'
 
     // https://github.com/mikepenz/AboutLibraries/releases
     static def aboutLibraries = '6.0.8'
@@ -45,11 +45,11 @@ class Versions {
     static def junit = '4.12'
     static def testRunner = '1.0.1'
 
-    static def gradlePlugin = '3.1.2'
-    static def mavenPlugin = '2.0'
-    static def playPublishPlugin = '1.2.0'
+    static def gradlePlugin = '3.2.0-rc02'
+    static def mavenPlugin = '2.1'
+    static def playPublishPlugin = '1.2.2'
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    static def dexCountPlugin = '0.8.2'
-    static def gitVersionPlugin = '0.4.3'
+    static def dexCountPlugin = '0.8.3'
+    static def gitVersionPlugin = '0.4.4'
 }

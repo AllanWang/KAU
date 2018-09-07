@@ -25,28 +25,36 @@ import java.text.DecimalFormat
 @DslMarker
 annotation class KauUtils
 
-@KauUtils inline val Float.dpToPx: Float
+@KauUtils
+inline val Float.dpToPx: Float
     get() = this * Resources.getSystem().displayMetrics.density
 
-@KauUtils inline val Int.dpToPx: Int
+@KauUtils
+inline val Int.dpToPx: Int
     get() = toFloat().dpToPx.toInt()
 
-@KauUtils inline val Float.pxToDp: Float
+@KauUtils
+inline val Float.pxToDp: Float
     get() = this / Resources.getSystem().displayMetrics.density
 
-@KauUtils inline val Int.pxToDp: Int
+@KauUtils
+inline val Int.pxToDp: Int
     get() = toFloat().pxToDp.toInt()
 
-@KauUtils inline val Float.dpToSp: Float
+@KauUtils
+inline val Float.dpToSp: Float
     get() = this * Resources.getSystem().displayMetrics.scaledDensity
 
-@KauUtils inline val Int.dpToSp: Int
+@KauUtils
+inline val Int.dpToSp: Int
     get() = toFloat().dpToSp.toInt()
 
-@KauUtils inline val Float.spToDp: Float
+@KauUtils
+inline val Float.spToDp: Float
     get() = this / Resources.getSystem().displayMetrics.scaledDensity
 
-@KauUtils inline val Int.spToDp: Int
+@KauUtils
+inline val Int.spToDp: Int
     get() = toFloat().spToDp.toInt()
 
 /**
@@ -87,7 +95,7 @@ fun Drawable.toBitmap(scaling: Float = 1f, config: Bitmap.Config = Bitmap.Config
     else
         Bitmap.createBitmap((intrinsicWidth * scaling).toInt(), (intrinsicHeight * scaling).toInt(), config)
     val canvas = Canvas(bitmap)
-    setBounds(0, 0, canvas.width, canvas.height)
+    setBounds(0, 0, bitmap.width, bitmap.height)
     draw(canvas)
     return bitmap
 }
