@@ -3,17 +3,16 @@ package ca.allanwang.kau.mediapicker
 import android.database.Cursor
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.content.Loader
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
-import android.widget.TextView
 import ca.allanwang.kau.adapters.selectedItems
 import ca.allanwang.kau.adapters.selectionSize
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.hideOnDownwardsScroll
+import ca.allanwang.kau.utils.setIcon
+import ca.allanwang.kau.utils.toDrawable
+import ca.allanwang.kau.utils.toast
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import kotlinx.android.synthetic.main.kau_activity_image_picker.*
 
 /**
  * Created by Allan Wang on 2017-07-04.
@@ -27,35 +26,29 @@ abstract class MediaPickerActivityBase(
         mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
-    val coordinator: CoordinatorLayout by bindView(R.id.kau_coordinator)
-    val toolbar: Toolbar by bindView(R.id.kau_toolbar)
-    val selectionCount: TextView by bindView(R.id.kau_selection_count)
-    val recycler: RecyclerView by bindView(R.id.kau_recyclerview)
-    val fab: FloatingActionButton by bindView(R.id.kau_fab)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.kau_activity_image_picker)
 
-        selectionCount.setCompoundDrawables(null, null, GoogleMaterial.Icon.gmd_image.toDrawable(this, 18), null)
+        kau_selection_count.setCompoundDrawables(null, null, GoogleMaterial.Icon.gmd_image.toDrawable(this, 18), null)
 
-        setSupportActionBar(toolbar)
+        setSupportActionBar(kau_toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
             setHomeAsUpIndicator(GoogleMaterial.Icon.gmd_close.toDrawable(this@MediaPickerActivityBase, 18))
         }
-        toolbar.setNavigationOnClickListener { onBackPressed() }
+        kau_toolbar.setNavigationOnClickListener { onBackPressed() }
 
-        initializeRecycler(recycler)
+        initializeRecycler(kau_recyclerview)
 
         MediaItem.bindEvents(adapter.fastAdapter)
         adapter.fastAdapter.withSelectionListener { _, _ ->
-            selectionCount.text = adapter.selectionSize.toString()
+            kau_selection_count.text = adapter.selectionSize.toString()
         }
 
-        fab.apply {
+        kau_fab.apply {
             show()
             setIcon(GoogleMaterial.Icon.gmd_send)
             setOnClickListener {
@@ -66,7 +59,7 @@ abstract class MediaPickerActivityBase(
                     finish(ArrayList(selection.map { it.data }))
                 }
             }
-            hideOnDownwardsScroll(recycler)
+            hideOnDownwardsScroll(kau_recyclerview)
         }
 
         loadItems()
@@ -83,7 +76,7 @@ abstract class MediaPickerActivityBase(
      * @param scrollable true if scroll flags are enabled, false otherwise
      */
     private fun setToolbarScrollable(scrollable: Boolean) {
-        val params = toolbar.layoutParams as AppBarLayout.LayoutParams
+        val params = kau_toolbar.layoutParams as AppBarLayout.LayoutParams
         if (scrollable)
             params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
         else
@@ -92,7 +85,7 @@ abstract class MediaPickerActivityBase(
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         super.onLoadFinished(loader, data)
-        setToolbarScrollable((recycler.layoutManager as LinearLayoutManager)
+        setToolbarScrollable((kau_recyclerview.layoutManager as LinearLayoutManager)
                 .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1)
     }
 

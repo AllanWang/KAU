@@ -33,7 +33,7 @@ internal object SwipeBackHelper {
     }
 
     fun onDestroy(activity: Activity) {
-        val page: SwipeBackPage? = this[activity]
+        val page: SwipeBackPage? = this[activity] ?: return
         pageStack.kauRemoveIf { it.activityRef.get() == null || it === page }
         page?.activityRef?.clear()
         KL.v { "KauSwipe onDestroy ${activity.localClassName}" }

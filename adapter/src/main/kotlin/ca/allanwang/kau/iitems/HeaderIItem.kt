@@ -8,7 +8,6 @@ import ca.allanwang.kau.adapter.R
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.utils.INVALID_ID
-import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.string
 
 /**
@@ -38,8 +37,8 @@ class HeaderIItem(
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val text: TextView by bindView(R.id.kau_header_text)
-        val container: CardView by bindView(R.id.kau_header_container)
+        val text: TextView = v.findViewById(R.id.kau_header_text)
+        val container: CardView = v.findViewById(R.id.kau_header_container)
     }
 
 }

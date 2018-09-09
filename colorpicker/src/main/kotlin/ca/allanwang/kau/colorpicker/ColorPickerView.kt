@@ -56,30 +56,39 @@ internal class ColorPickerView @JvmOverloads constructor(
             }
         }
 
-    private val gridView: FillGridView by bindView(R.id.md_grid)
-    private val customFrame: LinearLayout by bindView(R.id.md_colorChooserCustomFrame)
-    private val customColorIndicator: View by bindView(R.id.md_colorIndicator)
-    private val hexInput: EditText by bindView(R.id.md_hexInput)
-    private val alphaLabel: TextView by bindView(R.id.md_colorALabel)
-    private val alphaSeekbar: SeekBar by bindView(R.id.md_colorA)
-    private val alphaValue: TextView by bindView(R.id.md_colorAValue)
-    private val redSeekbar: SeekBar by bindView(R.id.md_colorR)
-    private val redValue: TextView by bindView(R.id.md_colorRValue)
-    private val greenSeekbar: SeekBar by bindView(R.id.md_colorG)
-    private val greenValue: TextView by bindView(R.id.md_colorGValue)
-    private val blueSeekbar: SeekBar by bindView(R.id.md_colorB)
-    private val blueValue: TextView by bindView(R.id.md_colorBValue)
+    private val gridView: FillGridView
+    private val customFrame: LinearLayout
+    private val customColorIndicator: View
+    private val hexInput: EditText
+    private val alphaLabel: TextView
+    private val alphaSeekbar: SeekBar
+    private val alphaValue: TextView
+    private val redSeekbar: SeekBar
+    private val redValue: TextView
+    private val greenSeekbar: SeekBar
+    private val greenValue: TextView
+    private val blueSeekbar: SeekBar
+    private val blueValue: TextView
 
     private var customHexTextWatcher: TextWatcher? = null
     private var customRgbListener: SeekBar.OnSeekBarChangeListener? = null
 
     init {
-        init()
-    }
-
-    @SuppressLint("PrivateResource")
-    private fun init() {
+        //noinspection PrivateResource
         View.inflate(context, R.layout.md_dialog_colorchooser, this)
+        gridView = findViewById(R.id.md_grid)
+        customFrame = findViewById(R.id.md_colorChooserCustomFrame)
+        customColorIndicator = findViewById(R.id.md_colorIndicator)
+        hexInput = findViewById(R.id.md_hexInput)
+        alphaLabel = findViewById(R.id.md_colorALabel)
+        alphaSeekbar = findViewById(R.id.md_colorA)
+        alphaValue = findViewById(R.id.md_colorAValue)
+        redSeekbar = findViewById(R.id.md_colorR)
+        redValue = findViewById(R.id.md_colorRValue)
+        greenSeekbar = findViewById(R.id.md_colorG)
+        greenValue = findViewById(R.id.md_colorGValue)
+        blueSeekbar = findViewById(R.id.md_colorB)
+        blueValue = findViewById(R.id.md_colorBValue)
     }
 
     fun bind(builder: ColorContract, dialog: MaterialDialog) {

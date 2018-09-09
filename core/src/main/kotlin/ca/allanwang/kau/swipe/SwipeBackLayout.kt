@@ -207,9 +207,16 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
     override fun scrollToFinishActivity() {
         val contentView = contentViewRef.get()
                 ?: return KL.e { "KauSwipe cannot scroll to finish as contentView is null. Is onPostCreate called?" }
-        val childWidth = contentView.width
-        val top = 0
-        val left = childWidth + OVERSCROLL_DISTANCE
+        val swipeWidth = contentView.width + OVERSCROLL_DISTANCE
+        val swipeHeight = contentView.height + OVERSCROLL_DISTANCE
+        var top = 0
+        var left = 0
+        when (edgeFlag) {
+            SWIPE_EDGE_LEFT -> left = swipeWidth
+            SWIPE_EDGE_TOP -> top = swipeHeight
+            SWIPE_EDGE_RIGHT -> left = -swipeWidth
+            SWIPE_EDGE_BOTTOM -> top = -swipeHeight
+        }
         dragHelper.smoothSlideViewTo(contentView, left, top)
         invalidate()
     }
