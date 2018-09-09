@@ -3,7 +3,7 @@ package ca.allanwang.kau.ui
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
-import android.view.animation.Interpolator
+import ca.allanwang.kau.kotlin.kauRemoveIf
 
 /**
  * Created by Allan Wang on 2017-11-10.
@@ -13,77 +13,144 @@ import android.view.animation.Interpolator
  * This differs in that everything can be done with simple listeners, which will be bundled
  * and added to the backing [ValueAnimator]
  */
-class ProgressAnimator private constructor(private vararg val values: Float) {
+class ProgressAnimator private constructor() : ValueAnimator() {
 
     companion object {
-        inline fun ofFloat(crossinline builder: ProgressAnimator.() -> Unit) = ofFloat(0f, 1f) { builder() }
 
-        fun ofFloat(vararg values: Float, builder: ProgressAnimator.() -> Unit) = ProgressAnimator(*values).apply {
-            builder()
-            build()
+        fun ofFloat(builder: ProgressAnimator.() -> Unit): ProgressAnimator = ProgressAnimator().apply {
+            setFloatValues(0f, 1f)
+            addUpdateListener { apply(it.animatedValue as Float) }
+            addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?, isReverse: Boolean) {
+                    isCancelled = false
+                    startActions.runAll()
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                    isCancelled = true
+                    cancelActions.runAll()
+                }
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    endActions.runAll()
+                    isCancelled = false
+                }
+            })
+            apply(builder)
         }
+
+        /**
+         * Gets output of a linear function starting at [start] when [progress] is 0 and [end] when [progress] is 1 at point [progress].
+         */
+        fun progress(start: Float, end: Float, progress: Float): Float = start + (end - start) * progress
+
+        fun progress(start: Float, end: Float, progress: Float, min: Float, max: Float): Float = when {
+            min == max -> throw IllegalArgumentException("Progress range cannot be 0 (min == max == $min")
+            progress <= min -> start
+            progress >= max -> end
+            else -> {
+                val trueProgress = (progress - min) / (max - min)
+                start + (end - start) * trueProgress
+            }
+        }
+
     }
 
-    private val animators: MutableList<(Float) -> Unit> = mutableListOf()
-    private val startActions: MutableList<() -> Unit> = mutableListOf()
-    private val endActions: MutableList<() -> Unit> = mutableListOf()
+    private val animators: MutableList<ProgressDisposableAction> = mutableListOf()
+    private val startActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
+    private val cancelActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
+    private val endActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
+    var isCancelled: Boolean = false
+        private set
 
-    var duration: Long = -1L
-    var interpolator: Interpolator? = null
 
     /**
-     * Add more changes to the [ValueAnimator] before running
+     * Converts an action to a disposable action
      */
-    var extraConfigs: ValueAnimator.() -> Unit = {}
+    private fun ProgressAction.asDisposable(): ProgressDisposableAction = { this(it); false }
+
+    private fun ProgressRunnable.asDisposable(): ProgressDisposableRunnable = { this(); false }
+
+    /**
+     * If [condition] applies, run the animator.
+     * @return [condition]
+     */
+    private fun ProgressAction.runIf(condition: Boolean, progress: Float): Boolean {
+        if (condition) this(progress)
+        return condition
+    }
+
+    private fun MutableList<ProgressDisposableRunnable>.runAll() = kauRemoveIf { it() }
+
+    internal fun apply(progress: Float) {
+        animators.kauRemoveIf { it(progress) }
+    }
+
+    fun withAnimator(action: ProgressAction) =
+            withDisposableAnimator(action.asDisposable())
 
     /**
      * Range animator. Multiples the range by the current float progress before emission
      */
-    fun withAnimator(from: Float, to: Float, animator: (Float) -> Unit) = animators.add {
-        val range = to - from
-        animator(range * it + from)
+    fun withAnimator(from: Float, to: Float, action: ProgressAction) =
+            withDisposableAnimator(from, to, action.asDisposable())
+
+    fun withDisposableAnimator(action: ProgressDisposableAction) = animators.add(action)
+
+    fun withDisposableAnimator(from: Float, to: Float, action: ProgressDisposableAction) {
+        if (to != from) {
+            animators.add {
+                action(progress(from, to, it))
+            }
+        }
     }
 
-    /**
-     * Standard animator. Emits progress value as is
-     */
-    fun withAnimator(animator: (Float) -> Unit) = animators.add(animator)
+    fun withRangeAnimator(min: Float, max: Float, start: Float, end: Float, progress: Float, action: ProgressAction) {
+        if (min >= max) {
+            throw IllegalArgumentException("Range animator must have min < max; currently min=$min, max=$max")
+        }
+            withDisposableAnimator {
+                when {
+                    it > max -> true
+                    it < min -> false
+                    else -> {
+                        action(progress(start, end, progress, min, max))
+                        false
+                    }
+                }
+            }
+    }
+
+    fun withPointAnimator(point: Float, action: ProgressAction) {
+        animators.add {
+            action.runIf(it >= point, it)
+        }
+    }
+
+    fun withDelayedStartAction(skipCount: Int, action: ProgressAction) {
+        var count = 0
+        animators.add {
+            action.runIf(count++ >= skipCount, it)
+        }
+    }
 
     /**
      * Start action to be called once when the animator first begins
      */
-    fun withStartAction(action: () -> Unit) = startActions.add(action)
+    fun withStartAction(action: ProgressRunnable) = withDisposableStartAction(action.asDisposable())
 
-    /**
-     * End action to be called once when the animator ends
-     */
-    fun withEndAction(action: () -> Unit) = endActions.add(action)
+    fun withDisposableStartAction(action: ProgressDisposableRunnable) = startActions.add(action)
 
-    fun build() {
-        ValueAnimator.ofFloat(*values).apply {
-            if (this@ProgressAnimator.duration > 0L)
-                duration = this@ProgressAnimator.duration
-            if (this@ProgressAnimator.interpolator != null)
-                interpolator = this@ProgressAnimator.interpolator
-            addUpdateListener {
-                val progress = it.animatedValue as Float
-                animators.forEach { it(progress) }
-            }
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationStart(animation: Animator?) {
-                    startActions.forEach { it() }
-                }
+    fun withCancelAction(action:ProgressRunnable) = withDisposableCancelAction(action.asDisposable())
 
-                override fun onAnimationEnd(animation: Animator?) {
-                    endActions.forEach { it() }
-                }
+    fun withDisposableCancelAction(action: ProgressDisposableRunnable) = cancelActions.add(action)
 
-                override fun onAnimationCancel(animation: Animator?) {
-                    endActions.forEach { it() }
-                }
-            })
-            extraConfigs()
-            start()
-        }
-    }
+    fun withEndAction(action: ProgressRunnable) = withDisposableEndAction(action.asDisposable())
+
+    fun withDisposableEndAction(action: ProgressDisposableRunnable) = endActions.add(action)
 }
+
+private typealias ProgressAction = (Float) -> Unit
+private typealias ProgressDisposableAction = (Float) -> Boolean
+private typealias ProgressRunnable = () -> Unit
+private typealias ProgressDisposableRunnable = () -> Boolean

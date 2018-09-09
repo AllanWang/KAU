@@ -12,8 +12,6 @@
     <item text=":adapter: Add more IAdapter functions to help retrieve selections" />
     <item text=":core: Add deprecation warning to bindView for fragment based extensions; use bindViewResettable instead" />
     <item text=":kpref-activity: Fix seekbar increment" />
-    <item text="" />
-    <item text="" />
 
     <version title="v3.7.1" />
     <item text="Update appcompat to 27.1.0" />
