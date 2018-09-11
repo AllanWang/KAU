@@ -3,6 +3,7 @@ package ca.allanwang.kau.ui
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
+import android.support.annotation.VisibleForTesting
 import ca.allanwang.kau.kotlin.kauRemoveIf
 
 /**
@@ -57,11 +58,16 @@ class ProgressAnimator private constructor() : ValueAnimator() {
     }
 
     private val animators: MutableList<ProgressDisposableAction> = mutableListOf()
-    private val startActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
-    private val cancelActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
-    private val endActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
+    @VisibleForTesting
+    internal val startActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
+    @VisibleForTesting
+    internal val cancelActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
+    @VisibleForTesting
+    internal val endActions: MutableList<ProgressDisposableRunnable> = mutableListOf()
     var isCancelled: Boolean = false
         private set
+
+    val animatorCount get() = animators.size
 
 
     /**
@@ -80,8 +86,10 @@ class ProgressAnimator private constructor() : ValueAnimator() {
         return condition
     }
 
-    private fun MutableList<ProgressDisposableRunnable>.runAll() = kauRemoveIf { it() }
+    @VisibleForTesting
+    internal fun MutableList<ProgressDisposableRunnable>.runAll() = kauRemoveIf { it() }
 
+    @VisibleForTesting
     internal fun apply(progress: Float) {
         animators.kauRemoveIf { it(progress) }
     }
@@ -109,16 +117,16 @@ class ProgressAnimator private constructor() : ValueAnimator() {
         if (min >= max) {
             throw IllegalArgumentException("Range animator must have min < max; currently min=$min, max=$max")
         }
-            withDisposableAnimator {
-                when {
-                    it > max -> true
-                    it < min -> false
-                    else -> {
-                        action(progress(start, end, progress, min, max))
-                        false
-                    }
+        withDisposableAnimator {
+            when {
+                it > max -> true
+                it < min -> false
+                else -> {
+                    action(progress(start, end, progress, min, max))
+                    false
                 }
             }
+        }
     }
 
     fun withPointAnimator(point: Float, action: ProgressAction) {
@@ -141,13 +149,22 @@ class ProgressAnimator private constructor() : ValueAnimator() {
 
     fun withDisposableStartAction(action: ProgressDisposableRunnable) = startActions.add(action)
 
-    fun withCancelAction(action:ProgressRunnable) = withDisposableCancelAction(action.asDisposable())
+    fun withCancelAction(action: ProgressRunnable) = withDisposableCancelAction(action.asDisposable())
 
     fun withDisposableCancelAction(action: ProgressDisposableRunnable) = cancelActions.add(action)
 
     fun withEndAction(action: ProgressRunnable) = withDisposableEndAction(action.asDisposable())
 
     fun withDisposableEndAction(action: ProgressDisposableRunnable) = endActions.add(action)
+
+    fun reset() {
+        if (isRunning) cancel()
+        animators.clear()
+        startActions.clear()
+        cancelActions.clear()
+        endActions.clear()
+        isCancelled = false
+    }
 }
 
 private typealias ProgressAction = (Float) -> Unit
