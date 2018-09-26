@@ -52,11 +52,11 @@ internal object KPrefStringTransaction : KPrefTransaction<String> {
     }
 }
 
-internal object KPrefSetTransaction : KPrefTransaction<Set<String>?> {
-    override fun get(prefs: SharedPreferences, key: String, fallback: Set<String>?) =
-            prefs.getStringSet(key, fallback)
+internal object KPrefSetTransaction : KPrefTransaction<Set<String>> {
+    override fun get(prefs: SharedPreferences, key: String, fallback: Set<String>) =
+            prefs.getStringSet(key, fallback)!!
 
-    override fun set(editor: SharedPreferences.Editor, key: String, data: Set<String>?) {
+    override fun set(editor: SharedPreferences.Editor, key: String, data: Set<String>) {
         editor.putStringSet(key, data)
     }
 }

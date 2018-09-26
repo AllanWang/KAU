@@ -11,6 +11,7 @@ Methods such as `Context.string(id, fallback)` now check against `INVALID_ID` th
 * Kotterknife has been deprecated in favour of `kotlin-android-extensions`. See [official docs](https://kotlinlang.org/docs/tutorials/android-plugin.html#view-binding).
 * `ProgressAnimator` has been completely rewritten to be an extension of `ValueAnimator`.
 This for the most part is not a breaking change, apart from the fact that creating an animator will not start it immediately.
+* KPref has been slightly refactored internally. Preferences backed by `StringSet` can now go back to `Set<String>`
 
 # v3.6.0
 
