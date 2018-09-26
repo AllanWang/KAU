@@ -9,6 +9,9 @@ fun KPref.kpref(key: String, fallback: Boolean, postSetter: (value: Boolean) -> 
 fun KPref.kpref(key: String, fallback: Float, postSetter: (value: Float) -> Unit = {}) =
         KPrefDelegate(key, fallback, this, KPrefFloatTransaction, postSetter)
 
+@Deprecated("Double is not supported in SharedPreferences; cast to float yourself",
+        ReplaceWith("kpref(key, fallback.toFloat(), postSetter)"),
+        DeprecationLevel.WARNING)
 fun KPref.kpref(key: String, fallback: Double, postSetter: (value: Float) -> Unit = {}) =
         kpref(key, fallback.toFloat(), postSetter)
 
