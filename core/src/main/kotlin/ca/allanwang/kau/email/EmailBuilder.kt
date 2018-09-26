@@ -51,7 +51,7 @@ class EmailBuilder(val email: String, val subject: String) {
         val emailBuilder = StringBuilder()
         emailBuilder.append(message).append("\n\n")
         if (deviceDetails) {
-            val deviceItems = mutableMapOf(
+            val deviceItems = linkedMapOf(
                     "OS Version" to "${System.getProperty("os.version")} (${Build.VERSION.INCREMENTAL})",
                     "OS SDK" to Build.VERSION.SDK_INT,
                     "Device (Manufacturer)" to "${Build.DEVICE} (${Build.MANUFACTURER})",
@@ -72,6 +72,7 @@ class EmailBuilder(val email: String, val subject: String) {
                 val versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     appInfo.longVersionCode.toString()
                 } else {
+                    @Suppress("DEPRECATION")
                     appInfo.versionCode.toString()
                 }
                 emailBuilder.append("\nApp: ").append(context.packageName)
