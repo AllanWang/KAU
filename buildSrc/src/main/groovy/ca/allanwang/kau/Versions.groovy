@@ -9,13 +9,13 @@ class Versions {
     static def buildTools = '28.0.2'
 
     // https://developer.android.com/topic/libraries/support-library/revisions
-    static def supportLibs = '27.1.1'
+    static def supportLibs = '28.0.0-rc02'
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    static def kotlin = '1.2.61'
+    static def kotlin = '1.2.71'
 
     // https://github.com/mikepenz/AboutLibraries/releases
-    static def aboutLibraries = '6.0.8'
+    static def aboutLibraries = '6.1.1'
 
     // https://github.com/Kotlin/anko/releases
     static def anko = '0.10.5'
@@ -45,7 +45,7 @@ class Versions {
     static def junit = '4.12'
     static def testRunner = '1.0.1'
 
-    static def gradlePlugin = '3.2.0-rc02'
+    static def gradlePlugin = '3.2.0-rc03'
     static def mavenPlugin = '2.1'
     static def playPublishPlugin = '1.2.2'
 
