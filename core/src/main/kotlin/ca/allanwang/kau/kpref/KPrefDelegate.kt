@@ -11,7 +11,26 @@ fun KPref.kpref(key: String, fallback: Long, postSetter: (value: Long) -> Unit =
 fun KPref.kpref(key: String, fallback: Set<String>, postSetter: (value: Set<String>) -> Unit = {}) = KPrefDelegate(key, StringSet(fallback), this, postSetter)
 fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Unit = {}) = KPrefDelegate(key, fallback, this, postSetter)
 
-class StringSet(set: Collection<String>) : LinkedHashSet<String>(set)
+fun KPref.kpref(key: String, fallback: Float, postSetter: (value: Float) -> Unit = {}) =
+        KPrefDelegate(key, fallback, this, KPrefFloatTransaction, postSetter)
+
+@Deprecated("Double is not supported in SharedPreferences; cast to float yourself",
+        ReplaceWith("kpref(key, fallback.toFloat(), postSetter)"),
+        DeprecationLevel.WARNING)
+fun KPref.kpref(key: String, fallback: Double, postSetter: (value: Float) -> Unit = {}) =
+        kpref(key, fallback.toFloat(), postSetter)
+
+fun KPref.kpref(key: String, fallback: Int, postSetter: (value: Int) -> Unit = {}) =
+        KPrefDelegate(key, fallback, this, KPrefIntTransaction, postSetter)
+
+fun KPref.kpref(key: String, fallback: Long, postSetter: (value: Long) -> Unit = {}) =
+        KPrefDelegate(key, fallback, this, KPrefLongTransaction, postSetter)
+
+fun KPref.kpref(key: String, fallback: Set<String>?, postSetter: (value: Set<String>) -> Unit = {}) =
+        KPrefDelegate(key, fallback, this, KPrefSetTransaction) { postSetter(it ?: emptySet()) }
+
+fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Unit = {}) =
+        KPrefDelegate(key, fallback, this, KPrefStringTransaction, postSetter)
 
 /**
  * Created by Allan Wang on 2017-06-07.
