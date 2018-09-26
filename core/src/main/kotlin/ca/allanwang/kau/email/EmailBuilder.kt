@@ -71,7 +71,7 @@ class EmailBuilder(val email: String, val subject: String) {
                 val appInfo = context.packageManager.getPackageInfo(context.packageName, 0)
                 emailBuilder.append("\nApp: ").append(context.packageName)
                         .append("\nApp Version Name: ").append(appInfo.versionName)
-                        .append("\nApp Version Code: ").append(appInfo.versionCode).append("\n")
+                        .append("\nApp Version Code: ").append(appInfo.longVersionCode).append("\n")
             } catch (e: PackageManager.NameNotFoundException) {
                 KL.e { "EmailBuilder packageInfo not found" }
             }

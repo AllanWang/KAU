@@ -9,7 +9,7 @@ class Versions {
     static def buildTools = '28.0.2'
 
     // https://developer.android.com/topic/libraries/support-library/revisions
-    static def supportLibs = '28.0.0-rc02'
+    static def supportLibs = '28.0.0'
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
     static def kotlin = '1.2.71'
@@ -27,14 +27,14 @@ class Versions {
     static def constraintLayout = '1.1.3'
 
     // https://github.com/mikepenz/FastAdapter#using-maven
-    static def fastAdapter = '3.2.5'
+    static def fastAdapter = '3.2.9'
     static def fastAdapterCommons = fastAdapter
 
     // https://github.com/bumptech/glide/releases
     static def glide = '4.7.1'
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
-    static def iconics = '3.0.3'
+    static def iconics = '3.0.4'
     static def iconicsGoogle = '3.0.1.2'
     static def iconicsMaterial = '2.2.0.4'
     static def iconicsCommunity = '2.0.46.1'
@@ -45,7 +45,7 @@ class Versions {
     static def junit = '4.12'
     static def testRunner = '1.0.1'
 
-    static def gradlePlugin = '3.2.0-rc03'
+    static def gradlePlugin = '3.2.0'
     static def mavenPlugin = '2.1'
     static def playPublishPlugin = '1.2.2'
 
