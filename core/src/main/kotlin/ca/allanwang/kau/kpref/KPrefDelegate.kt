@@ -26,8 +26,8 @@ fun KPref.kpref(key: String, fallback: Int, postSetter: (value: Int) -> Unit = {
 fun KPref.kpref(key: String, fallback: Long, postSetter: (value: Long) -> Unit = {}) =
         KPrefDelegate(key, fallback, this, KPrefLongTransaction, postSetter)
 
-fun KPref.kpref(key: String, fallback: Set<String>?, postSetter: (value: Set<String>) -> Unit = {}) =
-        KPrefDelegate(key, fallback, this, KPrefSetTransaction) { postSetter(it ?: emptySet()) }
+fun KPref.kpref(key: String, fallback: Set<String>, postSetter: (value: Set<String>) -> Unit = {}) =
+        KPrefDelegate(key, fallback, this, KPrefSetTransaction, postSetter)
 
 fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Unit = {}) =
         KPrefDelegate(key, fallback, this, KPrefStringTransaction, postSetter)
