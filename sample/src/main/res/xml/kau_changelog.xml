@@ -12,7 +12,7 @@
     <item text=":adapter: Add more IAdapter functions to help retrieve selections" />
     <item text=":core: Deprecate Kotterknife; use kotlin_android_extensions" />
     <item text=":kpref-activity: Fix seekbar increment" />
-    <item text=":core: Make KPref use Set<String> vs StringSet" />
+    <item text=":core: Make KPref use Set&lt;String&gt; vs StringSet" />
     <item text="" />
 
     <version title="v3.7.1" />
