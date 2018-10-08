@@ -14,8 +14,7 @@ open class KauAnimator(
         val changeAnimator: KauAnimatorChange = FadeAnimatorChange()
 ) : BaseItemAnimator() {
 
-    open fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float)
-            = Math.max(0L, (holder.adapterPosition * duration * factor).toLong())
+    open fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float) = Math.max(0L, (holder.adapterPosition * duration * factor).toLong())
 
     override fun removeAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator {
         return holder.itemView.animate().apply {
@@ -30,8 +29,7 @@ open class KauAnimator(
         holder.itemView.apply { removeAnimator.animationCleanup(holder)() }
     }
 
-    override fun getRemoveDelay(remove: Long, move: Long, change: Long): Long
-            = removeAnimator.getDelay(remove, move, change)
+    override fun getRemoveDelay(remove: Long, move: Long, change: Long): Long = removeAnimator.getDelay(remove, move, change)
 
     override fun addAnimationPrepare(holder: RecyclerView.ViewHolder) {
         holder.itemView.apply { addAnimator.animationPrepare(holder)() }
@@ -50,8 +48,7 @@ open class KauAnimator(
         holder.itemView.apply { addAnimator.animationCleanup(holder)() }
     }
 
-    override fun getAddDelay(remove: Long, move: Long, change: Long): Long
-            = addAnimator.getDelay(remove, move, change)
+    override fun getAddDelay(remove: Long, move: Long, change: Long): Long = addAnimator.getDelay(remove, move, change)
 
     override fun changeOldAnimation(holder: RecyclerView.ViewHolder, changeInfo: ChangeInfo): ViewPropertyAnimator {
         return holder.itemView.animate().apply {

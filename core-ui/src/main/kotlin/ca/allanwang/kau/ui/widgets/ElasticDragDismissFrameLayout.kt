@@ -250,7 +250,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
     fun addExitListener(activity: Activity, transitionBottom: Int = R.transition.kau_exit_slide_bottom, transitionTop: Int = R.transition.kau_exit_slide_top) {
         addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(activity) {
             override fun onDragDismissed() {
-                KL.v{"New transition"}
+                KL.v { "New transition" }
                 activity.window.returnTransition = TransitionInflater.from(activity)
                         .inflateTransition(if (translationY > 0) transitionBottom else transitionTop)
                 activity.finishAfterTransition()

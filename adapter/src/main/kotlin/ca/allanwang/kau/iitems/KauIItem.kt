@@ -21,6 +21,7 @@ open class KauIItem<Item, VH : RecyclerView.ViewHolder>(
 ) : AbstractItem<Item, VH>() where Item : IItem<*, *>, Item : IClickable<*> {
     @SuppressLint("ResourceType")
     final override fun getType(): Int = type
+
     final override fun getViewHolder(v: View): VH = viewHolder(v)
     final override fun getLayoutRes(): Int = layoutRes
 }

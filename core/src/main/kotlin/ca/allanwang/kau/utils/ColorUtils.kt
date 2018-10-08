@@ -94,12 +94,10 @@ fun Int.blendWith(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) ratio:
 }
 
 @ColorInt
-fun Int.withAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int
-        = Color.argb(alpha, Color.red(this), Color.green(this), Color.blue(this))
+fun Int.withAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int = Color.argb(alpha, Color.red(this), Color.green(this), Color.blue(this))
 
 @ColorInt
-fun Int.withMinAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int
-        = Color.argb(Math.max(alpha, Color.alpha(this)), Color.red(this), Color.green(this), Color.blue(this))
+fun Int.withMinAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int = Color.argb(Math.max(alpha, Color.alpha(this)), Color.red(this), Color.green(this), Color.blue(this))
 
 @ColorInt
 fun Int.lighten(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int {
@@ -116,12 +114,10 @@ fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int {
 }
 
 @ColorInt
-fun Int.colorToBackground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int
-        = if (isColorDark) darken(factor) else lighten(factor)
+fun Int.colorToBackground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int = if (isColorDark) darken(factor) else lighten(factor)
 
 @ColorInt
-fun Int.colorToForeground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int
-        = if (isColorDark) lighten(factor) else darken(factor)
+fun Int.colorToForeground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int = if (isColorDark) lighten(factor) else darken(factor)
 
 @Throws(IllegalArgumentException::class)
 fun String.toColor(): Int {

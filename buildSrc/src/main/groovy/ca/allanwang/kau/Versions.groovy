@@ -6,7 +6,7 @@ class Versions {
     static def targetSdk = 28
 
     // https://developer.android.com/studio/releases/build-tools
-    static def buildTools = '28.0.2'
+    static def buildTools = '28.0.3'
 
     // https://developer.android.com/topic/libraries/support-library/revisions
     static def supportLibs = '28.0.0'
@@ -31,7 +31,7 @@ class Versions {
     static def fastAdapterCommons = fastAdapter
 
     // https://github.com/bumptech/glide/releases
-    static def glide = '4.7.1'
+    static def glide = '4.8.0'
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
     static def iconics = '3.0.4'
@@ -39,6 +39,7 @@ class Versions {
     static def iconicsMaterial = '2.2.0.4'
     static def iconicsCommunity = '2.0.46.1'
 
+    // https://github.com/afollestad/material-dialogs/releases
     static def materialDialog = '0.9.6.0'
 
     static def espresso = '3.0.1'
