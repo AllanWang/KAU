@@ -2,6 +2,13 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v4.0.0
+
+## Update ProgressAnimator
+
+`ProgressAnimator` has been completely rewritten to be an extension of `ValueAnimator`.
+This for the most part is not a breaking change, apart from the fact that creating an animator will not start it immediately.
+
 # v3.8.0
 
 Along with the update to support Android Studio 3.1, a lot of changes have occurred with other dependencies and with lint.
@@ -21,11 +28,6 @@ See [official docs](https://kotlinlang.org/docs/tutorials/android-plugin.html#vi
 
 KPref has been slightly refactored internally. 
 Preferences backed by `StringSet` can now go back to `Set<String>`
-
-## Update ProgressAnimator
-
-`ProgressAnimator` has been completely rewritten to be an extension of `ValueAnimator`.
-This for the most part is not a breaking change, apart from the fact that creating an animator will not start it immediately.
 
 # v3.6.0
 
