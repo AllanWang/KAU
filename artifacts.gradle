@@ -31,6 +31,8 @@ artifacts {
 // We assume resources within res-public are public
 task generatepublicxml {
 
+    println "Generating public XML"
+
     def resDir = project.projectDir.absolutePath + "/src/main/res-public"
 
     def publicFolder = file(resDir + "/values")
@@ -97,3 +99,5 @@ task generatepublicxml {
         }
     }
 }
+
+build.dependsOn generatepublicxml
