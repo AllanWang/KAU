@@ -51,6 +51,7 @@ class Versions {
     static def playPublishPlugin = '1.2.2'
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    static def dexCountPlugin = '0.8.3'
-    static def gitVersionPlugin = '0.4.4'
+    static def dexCountPlugin = '0.8.4'
+    // https://github.com/gladed/gradle-android-git-version/releases
+    static def gitVersionPlugin = '0.4.5'
 }
