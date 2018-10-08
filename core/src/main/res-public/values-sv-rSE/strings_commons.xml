@@ -4,4 +4,68 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+  <string name="kau_about_app">Om appen</string>
+  <string name="kau_about_x">Om %s</string>
+  <string name="kau_add_account">Lägg till konto</string>
+  <string name="kau_back">Tillbaka</string>
+  <string name="kau_cancel">Avbryt</string>
+  <string name="kau_changelog">Uppdateringslog</string>
+  <string name="kau_close">Stäng</string>
+  <string name="kau_contact_us">Kontakta oss</string>
+  <string name="kau_copy">Kopiera</string>
+  <string name="kau_custom">Anpassa</string>
+  <string name="kau_dark">Mörk</string>
+  <string name="kau_default">Standard</string>
+  <string name="kau_do_not_show_again">Visa inte igen</string>
+  <string name="kau_done">Klar</string>
+  <string name="kau_error">Fel</string>
+  <string name="kau_exit">Avsluta</string>
+  <string name="kau_exit_confirmation">Är du säker på att du vill avsluta?</string>
+  <string name="kau_exit_confirmation_x">Är du säker på att du vill avsluta %s?</string>
+  <string name="kau_glass">Glas</string>
+  <string name="kau_got_it">Jag förstår</string>
+  <string name="kau_great">Bra</string>
+  <string name="kau_hide">Dölj</string>
+  <string name="kau_light">Ljus</string>
+  <string name="kau_login">Logga in</string>
+  <string name="kau_logout">Logga ut</string>
+  <string name="kau_logout_confirm_as_x">Är du säker på att du vill logga ut %s?</string>
+  <string name="kau_manage_account">Hantera konto</string>
+  <string name="kau_maybe">Kanske</string>
+  <string name="kau_menu">Meny</string>
+  <string name="kau_no">Nej</string>
+  <string name="kau_no_results_found">Inga resultat hittades</string>
+  <string name="kau_none">Inga</string>
+  <string name="kau_ok">OK</string>
+  <string name="kau_play_store">Play Store</string>
+  <string name="kau_rate">Betygsätt</string>
+  <string name="kau_report_bug">Rapportera ett fel</string>
+  <string name="kau_search">Sök</string>
+  <string name="kau_send_feedback">Skicka Feedback</string>
+  <string name="kau_send_via">Skicka via</string>
+  <string name="kau_settings">Inställningar</string>
+  <string name="kau_share">Dela</string>
+  <string name="kau_text_copied">Text kopierad till urklipp.</string>
+  <string name="kau_thank_you">Tack så mycket</string>
+  <string name="kau_uh_oh">Uh-oh</string>
+  <string name="kau_warning">Varning</string>
+  <plurals name="kau_x_days">
+    <item quantity="one">%d dag</item>
+    <item quantity="other">%d dagar</item>
+  </plurals>
+  <plurals name="kau_x_hours">
+    <item quantity="one">%d timme</item>
+    <item quantity="other">%d timmar</item>
+  </plurals>
+  <plurals name="kau_x_minutes">
+    <item quantity="one">%d minut</item>
+    <item quantity="other">%d minuter</item>
+  </plurals>
+  <plurals name="kau_x_seconds">
+    <item quantity="one">%d sekund</item>
+    <item quantity="other">%d sekunder</item>
+  </plurals>
+  <string name="kau_yes">Ja</string>
+  <string name="kau_permission_denied">Åtkomst nekad</string>
+</resources>
