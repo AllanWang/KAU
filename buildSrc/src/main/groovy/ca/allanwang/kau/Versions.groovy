@@ -45,7 +45,7 @@ class Versions {
     static def junit = '4.12'
     static def testRunner = '1.0.1'
 
-    static def gradlePlugin = '3.2.0-rc02'
+    static def gradlePlugin = '3.2.0'
     static def mavenPlugin = '2.1'
     static def playPublishPlugin = '1.2.2'
 
