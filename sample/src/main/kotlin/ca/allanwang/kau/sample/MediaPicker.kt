@@ -11,11 +11,9 @@ import java.io.File
  */
 private fun actions(multiple: Boolean) = listOf(object : MediaActionCamera() {
 
-    override fun createFile(context: Context): File
-            = createMediaFile("KAU", ".jpg")
+    override fun createFile(context: Context): File = createMediaFile("KAU", ".jpg")
 
-    override fun createUri(context: Context, file: File): Uri
-            = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file)
+    override fun createUri(context: Context, file: File): Uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file)
 
 }, MediaActionGallery(multiple))
 

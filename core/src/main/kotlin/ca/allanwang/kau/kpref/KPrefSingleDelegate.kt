@@ -14,7 +14,8 @@ fun KPref.kprefSingle(key: String) = KPrefSingleDelegate(key, this)
  */
 class KPrefSingleDelegate internal constructor(private val key: String, private val pref: KPref, lock: Any? = null) : ILazyResettable<Boolean> {
 
-    @Volatile private var _value: Boolean? = null
+    @Volatile
+    private var _value: Boolean? = null
     private val lock = lock ?: this
 
     init {
