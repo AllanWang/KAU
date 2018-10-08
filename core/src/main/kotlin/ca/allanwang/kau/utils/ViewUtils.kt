@@ -23,7 +23,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
@@ -33,34 +32,47 @@ import com.mikepenz.iconics.typeface.IIcon
  * Created by Allan Wang on 2017-05-31.
  */
 
-@KauUtils inline fun <T : View> T.visible(): T {
+@KauUtils
+inline fun <T : View> T.visible(): T {
     visibility = View.VISIBLE
     return this
 }
 
-@KauUtils inline fun <T : View> T.invisible(): T {
+@KauUtils
+inline fun <T : View> T.invisible(): T {
     visibility = View.INVISIBLE
     return this
 }
 
-@KauUtils inline fun <T : View> T.gone(): T {
+@KauUtils
+inline fun <T : View> T.gone(): T {
     visibility = View.GONE
     return this
 }
 
-@KauUtils inline fun <T : View> T.invisibleIf(invisible: Boolean): T = if (invisible) invisible() else visible()
+@KauUtils
+inline fun <T : View> T.invisibleIf(invisible: Boolean): T = if (invisible) invisible() else visible()
 
-@KauUtils inline fun <T : View> T.visibleIf(visible: Boolean): T = if (visible) visible() else gone()
+@KauUtils
+inline fun <T : View> T.visibleIf(visible: Boolean): T = if (visible) visible() else gone()
 
-@KauUtils inline fun <T : View> T.goneIf(gone: Boolean): T = visibleIf(!gone)
+@KauUtils
+inline fun <T : View> T.goneIf(gone: Boolean): T = visibleIf(!gone)
 
-@KauUtils inline val View.isVisible: Boolean get() = visibility == View.VISIBLE
+@KauUtils
+inline val View.isVisible: Boolean
+    get() = visibility == View.VISIBLE
 
-@KauUtils inline val View.isInvisible: Boolean get() = visibility == View.INVISIBLE
+@KauUtils
+inline val View.isInvisible: Boolean
+    get() = visibility == View.INVISIBLE
 
-@KauUtils inline val View.isGone: Boolean get() = visibility == View.GONE
+@KauUtils
+inline val View.isGone: Boolean
+    get() = visibility == View.GONE
 
-@KauUtils inline fun View.setBackgroundColorRes(@ColorRes color: Int) = setBackgroundColor(context.color(color))
+@KauUtils
+inline fun View.setBackgroundColorRes(@ColorRes color: Int) = setBackgroundColor(context.color(color))
 
 fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}): Snackbar {
     val snackbar = Snackbar.make(this, text, duration)
@@ -69,8 +81,7 @@ fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: S
     return snackbar
 }
 
-fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {})
-        = snackbar(context.string(textId), duration, builder)
+fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) = snackbar(context.string(textId), duration, builder)
 
 @KauUtils
 fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
@@ -78,7 +89,9 @@ fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Col
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
 }
 
-@KauUtils inline val FloatingActionButton.isHidden get() = !isShown
+@KauUtils
+inline val FloatingActionButton.isHidden
+    get() = !isShown
 
 fun FloatingActionButton.showIf(show: Boolean) = if (show) show() else hide()
 
@@ -133,7 +146,8 @@ fun View.setMargin(margin: Int) = setMargins(margin, KAU_ALL)
  * Base margin setter
  * returns true if setting is successful, false otherwise
  */
-@KauUtils private fun View.setMargins(margin: Int, flag: Int): Boolean {
+@KauUtils
+private fun View.setMargins(margin: Int, flag: Int): Boolean {
     val p = (layoutParams as? ViewGroup.MarginLayoutParams) ?: return false
     p.setMargins(
             if (flag and KAU_LEFT > 0) margin else p.leftMargin,
@@ -189,7 +203,8 @@ fun View.setPadding(padding: Int) = setPadding(padding, KAU_ALL)
 /**
  * Base padding setter
  */
-@KauUtils private fun View.setPadding(padding: Int, flag: Int) {
+@KauUtils
+private fun View.setPadding(padding: Int, flag: Int) {
     setPadding(
             if (flag and KAU_LEFT > 0) padding else paddingLeft,
             if (flag and KAU_TOP > 0) padding else paddingTop,
@@ -217,7 +232,9 @@ fun View.setRippleBackground(@ColorInt foregroundColor: Int, @ColorInt backgroun
     background = createSimpleRippleDrawable(foregroundColor, backgroundColor)
 }
 
-@KauUtils inline val View.parentViewGroup: ViewGroup get() = parent as ViewGroup
+@KauUtils
+inline val View.parentViewGroup: ViewGroup
+    get() = parent as ViewGroup
 
 inline val EditText.value: String get() = text.toString().trim()
 

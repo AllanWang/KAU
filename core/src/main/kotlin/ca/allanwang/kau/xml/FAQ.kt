@@ -47,7 +47,8 @@ fun Context.kauParseFaq(
                         }
                         1 -> {
                             items.add(FaqItem(items.size + 1,
-                                    question ?: throw IllegalArgumentException("KAU FAQ answer found without a question"),
+                                    question
+                                            ?: throw IllegalArgumentException("KAU FAQ answer found without a question"),
                                     Html.fromHtml(parser.text.replace("\n", if (parseNewLine) "<br/>" else ""))))
                             question = null
                             flag = -1

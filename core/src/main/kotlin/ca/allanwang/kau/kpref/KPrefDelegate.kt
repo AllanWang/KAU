@@ -26,7 +26,8 @@ class KPrefDelegate<T : Any> internal constructor(
 
     private object UNINITIALIZED
 
-    @Volatile private var _value: Any = UNINITIALIZED
+    @Volatile
+    private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this
 
     init {
@@ -89,5 +90,6 @@ class KPrefDelegate<T : Any> internal constructor(
 }
 
 class KPrefException(message: String) : IllegalAccessException(message) {
-    constructor(element: Any?) : this("Invalid type in pref cache: ${element?.javaClass?.simpleName ?: "null"}")
+    constructor(element: Any?) : this("Invalid type in pref cache: ${element?.javaClass?.simpleName
+            ?: "null"}")
 }

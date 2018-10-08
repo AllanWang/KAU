@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
+
     <style name="Kau.Translucent.SlideBottom">
         <item name="android:windowEnterTransition">@transition/kau_enter_slide_bottom</item>
         <item name="android:windowReturnTransition">@transition/kau_exit_slide_bottom</item>

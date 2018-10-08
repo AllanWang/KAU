@@ -4,7 +4,6 @@ import android.support.v7.widget.AppCompatCheckBox
 import android.widget.CheckBox
 import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.tint
 
 /**

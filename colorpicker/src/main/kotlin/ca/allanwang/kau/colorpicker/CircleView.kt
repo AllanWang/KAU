@@ -1,7 +1,5 @@
 package ca.allanwang.kau.colorpicker
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.ColorStateList

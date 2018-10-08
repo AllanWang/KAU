@@ -16,8 +16,7 @@ internal object SwipeBackHelper {
 
     private val pageStack = Stack<SwipeBackPage>()
 
-    private operator fun get(activity: Activity): SwipeBackPage?
-            = pageStack.firstOrNull { it.activityRef.get() === activity }
+    private operator fun get(activity: Activity): SwipeBackPage? = pageStack.firstOrNull { it.activityRef.get() === activity }
 
     fun onCreate(activity: Activity, builder: SwipeBackContract.() -> Unit = {}) {
         val page = this[activity] ?: pageStack.push(SwipeBackPage(activity).apply { builder() })

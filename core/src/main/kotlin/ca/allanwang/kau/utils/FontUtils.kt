@@ -17,7 +17,8 @@ object FontUtils {
                         context.applicationContext.assets, "fonts/$font.ttf")
                 sTypefaceCache.put(font, tf)
             }
-            return sTypefaceCache.get(font) ?: throw IllegalArgumentException("Font error; typeface does not exist at assets/fonts$font.ttf")
+            return sTypefaceCache.get(font)
+                    ?: throw IllegalArgumentException("Font error; typeface does not exist at assets/fonts$font.ttf")
         }
     }
 
