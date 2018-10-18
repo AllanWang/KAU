@@ -15,9 +15,9 @@ import ca.allanwang.kau.utils.tint
  */
 open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(builder) {
 
-    protected val min get() = builder.min
-    protected val max get() = builder.max
-    protected val increment get() = builder.increments
+    protected inline val min get() = builder.min
+    protected inline val max get() = builder.max
+    protected inline val increment get() = builder.increments
 
     override fun KClick<Int>.defaultOnClick() = Unit
 
