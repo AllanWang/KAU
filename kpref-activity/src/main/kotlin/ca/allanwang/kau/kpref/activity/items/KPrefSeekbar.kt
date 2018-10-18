@@ -15,14 +15,9 @@ import ca.allanwang.kau.utils.tint
  */
 open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(builder) {
 
-    protected val min = builder.min
-    protected val max = builder.max
-    protected val increment = builder.increments
-
-    init {
-        if (increment <= 0)
-            throw IllegalArgumentException("Seekbar must increment by at least 1")
-    }
+    protected val min get() = builder.min
+    protected val max get() = builder.max
+    protected val increment get() = builder.increments
 
     override fun KClick<Int>.defaultOnClick() = Unit
 
@@ -83,6 +78,11 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
         override var max: Int = 100
 
         override var increments: Int = 1
+            set(value) {
+                if (value <= 0)
+                    throw IllegalArgumentException("Seekbar must increment by at least 1")
+                field = value
+            }
 
         override var toText: (Int) -> String = Int::toString
 
