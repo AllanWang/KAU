@@ -118,7 +118,7 @@ inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(th
 inline fun Context.plural(@PluralsRes id: Int, quantity: Number) = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())!!
 
 //Attr retrievers
-fun Context.resolveColor(@AttrRes attr: Int, fallback: Int = 0): Int {
+fun Context.resolveColor(@AttrRes attr: Int, @ColorInt fallback: Int = 0): Int {
     val a = theme.obtainStyledAttributes(intArrayOf(attr))
     try {
         return a.getColor(0, fallback)

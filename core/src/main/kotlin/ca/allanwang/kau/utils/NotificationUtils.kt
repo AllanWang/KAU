@@ -7,5 +7,4 @@ import android.support.v4.app.NotificationManagerCompat
 /**
  * Created by Allan Wang on 2017-08-04.
  */
-fun Context.cancelNotification(notifId: Int)
-        = NotificationManagerCompat.from(this).cancel(notifId)
+fun Context.cancelNotification(notifId: Int) = NotificationManagerCompat.from(this).cancel(notifId)

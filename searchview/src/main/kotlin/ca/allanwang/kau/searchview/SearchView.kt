@@ -9,7 +9,6 @@ import android.support.annotation.IdRes
 import android.support.transition.ChangeBounds
 import android.support.transition.TransitionManager
 import android.support.transition.TransitionSet
-import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,16 +17,15 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.ProgressBar
 import ca.allanwang.kau.kotlin.Debouncer2
 import ca.allanwang.kau.kotlin.debounce
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.searchview.SearchView.Configs
-import ca.allanwang.kau.ui.views.BoundedCardView
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
+import kotlinx.android.synthetic.main.kau_search_view.view.*
 import org.jetbrains.anko.runOnUiThread
 
 
@@ -191,14 +189,14 @@ class SearchView @JvmOverloads constructor(
                     SearchItem.backgroundColor = backgroundColor
                     tintBackground(backgroundColor)
                 }
-                val icons = mutableListOf(navIcon to iconNav, clearIcon to iconClear)
+                val icons = mutableListOf(navIcon to kau_search_nav, clearIcon to kau_search_clear)
                 val extra = extraIcon
-                if (extra != null) icons.add(extra.first to iconExtra)
+                if (extra != null) icons.add(extra.first to kau_search_extra)
                 icons.forEach { (iicon, view) -> view.goneIf(iicon == null).setSearchIcon(iicon) }
 
-                if (extra != null) iconExtra.setOnClickListener(extra.second)
-                divider.invisibleIf(!withDivider)
-                editText.hint = context.string(hintTextRes, hintText)
+                if (extra != null) kau_search_extra.setOnClickListener(extra.second)
+                kau_search_divider.invisibleIf(!withDivider)
+                kau_search_edit_text.hint = context.string(hintTextRes, hintText)
                 textCallback.terminate()
                 textCallback = debounce(textDebounceInterval, this@Configs.textCallback)
             }
@@ -215,7 +213,7 @@ class SearchView @JvmOverloads constructor(
             val list = if (value.isEmpty() && configs.noResultsFound != INVALID_ID)
                 listOf(SearchItem("", context.string(configs.noResultsFound), iicon = null))
             else value
-            if (configs.highlightQueryText && value.isNotEmpty()) list.forEach { it.withHighlights(editText.text?.toString()) }
+            if (configs.highlightQueryText && value.isNotEmpty()) list.forEach { it.withHighlights(kau_search_edit_text.text?.toString()) }
             cardTransition()
             adapter.setNewList(list)
         }
@@ -231,26 +229,17 @@ class SearchView @JvmOverloads constructor(
 
     private val configs = Configs()
     // views
-    private val shadow: View by bindView(R.id.kau_search_shadow)
-    private val card: BoundedCardView by bindView(R.id.kau_search_cardview)
-    private val iconNav: ImageView by bindView(R.id.kau_search_nav)
-    private val editText: AppCompatEditText by bindView(R.id.kau_search_edit_text)
-    private val progress: ProgressBar by bindView(R.id.kau_search_progress)
-    private val iconExtra: ImageView by bindView(R.id.kau_search_extra)
-    private val iconClear: ImageView by bindView(R.id.kau_search_clear)
-    private val divider: View by bindView(R.id.kau_search_divider)
-    private val recycler: RecyclerView by bindView(R.id.kau_search_recycler)
     private var textCallback: Debouncer2<String, SearchView> = debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
     private val adapter = FastItemAdapter<SearchItem>()
     private var menuItem: MenuItem? = null
     val isOpen: Boolean
-        get() = parent != null && card.isVisible
+        get() = parent != null && kau_search_cardview.isVisible
 
     /**
      * The current text located in our searchview
      */
     val query: String
-        get() = editText.text?.toString()?.trim() ?: ""
+        get() = kau_search_edit_text.text?.toString()?.trim() ?: ""
 
     /*
      * Ripple start points and search view offset
@@ -264,11 +253,11 @@ class SearchView @JvmOverloads constructor(
     init {
         View.inflate(context, R.layout.kau_search_view, this)
         z = 99f
-        iconNav.setSearchIcon(configs.navIcon).setOnClickListener { revealClose() }
-        iconClear.setSearchIcon(configs.clearIcon).setOnClickListener { editText.text?.clear() }
+        kau_search_nav.setSearchIcon(configs.navIcon).setOnClickListener { revealClose() }
+        kau_search_clear.setSearchIcon(configs.clearIcon).setOnClickListener { kau_search_edit_text.text?.clear() }
         tintForeground(configs.foregroundColor)
         tintBackground(configs.backgroundColor)
-        with(recycler) {
+        with(kau_search_recycler) {
             isNestedScrollingEnabled = false
             withLinearAdapter(this@SearchView.adapter)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -288,7 +277,7 @@ class SearchView @JvmOverloads constructor(
                 if (item.key.isNotBlank()) configs.onItemLongClick(position, item.key, item.content, this@SearchView); true
             }
         }
-        editText.addTextChangedListener(object : TextWatcher {
+        kau_search_edit_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -302,10 +291,11 @@ class SearchView @JvmOverloads constructor(
                     clearResults()
             }
         })
-        editText.setOnEditorActionListener { _, actionId, _ ->
+        kau_search_edit_text.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (configs.searchCallback(editText.text?.toString() ?: "", this)) revealClose()
-                else editText.hideKeyboard()
+                if (configs.searchCallback(kau_search_edit_text.text?.toString()
+                                ?: "", this)) revealClose()
+                else kau_search_edit_text.hideKeyboard()
                 return@setOnEditorActionListener true
             }
             false
@@ -318,7 +308,7 @@ class SearchView @JvmOverloads constructor(
     }
 
     internal fun cardTransition(builder: TransitionSet.() -> Unit = {}) {
-        TransitionManager.beginDelayedTransition(card,
+        TransitionManager.beginDelayedTransition(kau_search_cardview,
                 //we are only using change bounds, as the recyclerview items may be animated as well,
                 //which causes a measure IllegalStateException
                 TransitionSet().addTransition(ChangeBounds()).apply {
@@ -345,9 +335,9 @@ class SearchView @JvmOverloads constructor(
         val menuItem = menu.findItem(id)
                 ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
         if (menuItem.icon == null) menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
-        card.gone()
+        kau_search_cardview.gone()
         menuItem.setOnMenuItemClickListener { revealOpen(); true }
-        shadow.setOnClickListener { revealClose() }
+        kau_search_shadow.setOnClickListener { revealClose() }
         this.menuItem = menuItem
         return this
     }
@@ -372,10 +362,10 @@ class SearchView @JvmOverloads constructor(
         menuX = (locations[0] + view.width / 2)
         menuHalfHeight = view.height / 2
         menuY = (locations[1] + menuHalfHeight)
-        card.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+        kau_search_cardview.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 view.viewTreeObserver.removeOnPreDrawListener(this)
-                card.setMarginTop(menuY - card.height / 2)
+                kau_search_cardview.setMarginTop(menuY - kau_search_cardview.height / 2)
                 return true
             }
         })
@@ -398,12 +388,12 @@ class SearchView @JvmOverloads constructor(
      * This can be done publicly through [configs], which will also save the color
      */
     internal fun tintForeground(@ColorInt color: Int) {
-        iconNav.drawable.setTint(color)
-        iconClear.drawable.setTint(color)
-        divider.setBackgroundColor(color.adjustAlpha(0.1f))
-        editText.tint(color)
-        editText.setTextColor(ColorStateList.valueOf(color))
-        editText.setHintTextColor(color.adjustAlpha(0.7f))
+        kau_search_nav.drawable.setTint(color)
+        kau_search_clear.drawable.setTint(color)
+        kau_search_divider.setBackgroundColor(color.adjustAlpha(0.1f))
+        kau_search_edit_text.tint(color)
+        kau_search_edit_text.setTextColor(ColorStateList.valueOf(color))
+        kau_search_edit_text.setHintTextColor(color.adjustAlpha(0.7f))
     }
 
     /**
@@ -411,7 +401,7 @@ class SearchView @JvmOverloads constructor(
      * This can be done publicly through [configs], which will also save the color
      */
     internal fun tintBackground(@ColorInt color: Int) {
-        card.setCardBackgroundColor(color)
+        kau_search_cardview.setCardBackgroundColor(color)
     }
 
     fun revealOpen() {
@@ -424,11 +414,11 @@ class SearchView @JvmOverloads constructor(
              */
             configureCoords(menuItem)
             configs.openListener?.invoke(this@SearchView)
-            shadow.fadeIn()
-            editText.showKeyboard()
-            card.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration) {
+            kau_search_shadow.fadeIn()
+            kau_search_edit_text.showKeyboard()
+            kau_search_cardview.circularReveal(menuX, menuHalfHeight, duration = configs.revealDuration) {
                 cardTransition()
-                recycler.visible()
+                kau_search_recycler.visible()
             }
         }
     }
@@ -436,18 +426,18 @@ class SearchView @JvmOverloads constructor(
     fun revealClose() {
         if (parent == null || !isOpen) return
         context.runOnUiThread {
-            shadow.fadeOut(duration = configs.transitionDuration)
+            kau_search_shadow.fadeOut(duration = configs.transitionDuration)
             cardTransition {
                 addEndListener {
-                    card.circularHide(menuX, menuHalfHeight, duration = configs.revealDuration,
+                    kau_search_cardview.circularHide(menuX, menuHalfHeight, duration = configs.revealDuration,
                             onFinish = {
                                 configs.closeListener?.invoke(this@SearchView)
-                                if (configs.shouldClearOnClose) editText.text?.clear()
+                                if (configs.shouldClearOnClose) kau_search_edit_text.text?.clear()
                             })
                 }
             }
-            recycler.gone()
-            editText.hideKeyboard()
+            kau_search_recycler.gone()
+            kau_search_edit_text.hideKeyboard()
         }
     }
 

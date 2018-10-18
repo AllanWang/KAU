@@ -71,7 +71,7 @@ class CardIItem(
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
-        with(holder.itemView.context) context@ {
+        with(holder.itemView.context) context@{
             with(configs) {
                 holder.title.text = string(titleRes, title)
                 val descText = string(descRes, desc)
@@ -82,7 +82,8 @@ class CardIItem(
                     holder.button.text = buttonText
                 }
                 val icon = drawable(imageRes) {
-                    imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor) ?: image
+                    imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor)
+                            ?: image
                 }
                 if (icon != null) holder.icon.visible().setImageDrawable(icon)
             }
@@ -109,12 +110,12 @@ class CardIItem(
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val card: CardView by bindView(R.id.kau_card_container)
-        val icon: ImageView by bindView(R.id.kau_card_image)
-        val title: TextView by bindView(R.id.kau_card_title)
-        val description: TextView by bindView(R.id.kau_card_description)
-        val bottomRow: LinearLayout by bindView(R.id.kau_card_bottom_row)
-        val button: Button by bindView(R.id.kau_card_button)
+        val card: CardView = v.findViewById(R.id.kau_card_container)
+        val icon: ImageView = v.findViewById(R.id.kau_card_image)
+        val title: TextView = v.findViewById(R.id.kau_card_title)
+        val description: TextView = v.findViewById(R.id.kau_card_description)
+        val bottomRow: LinearLayout = v.findViewById(R.id.kau_card_bottom_row)
+        val button: Button = v.findViewById(R.id.kau_card_button)
     }
 
 }

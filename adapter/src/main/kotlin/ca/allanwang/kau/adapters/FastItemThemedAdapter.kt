@@ -172,7 +172,8 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun bindBackgroundRipple(vararg views: View?) {
         val background = backgroundColor ?: return
-        val foreground = accentColor ?: textColor ?: backgroundColor ?: return //default to normal background
+        val foreground = accentColor ?: textColor ?: backgroundColor
+        ?: return //default to normal background
         val ripple = createSimpleRippleDrawable(foreground, background)
         views.forEach { it?.background = ripple }
     }

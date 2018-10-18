@@ -11,8 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import ca.allanwang.kau.R
-import ca.allanwang.kau.utils.bindOptionalView
-import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.use
 import com.afollestad.materialdialogs.MaterialDialog
@@ -64,8 +62,8 @@ internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @C
     override fun getItemCount() = items.size
 
     internal class ChangelogVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val text: TextView by bindView(R.id.kau_changelog_text)
-        val bullet: TextView? by bindOptionalView(R.id.kau_changelog_bullet)
+        val text: TextView = itemView.findViewById(R.id.kau_changelog_text)
+        val bullet: TextView? = itemView.findViewById(R.id.kau_changelog_bullet)
     }
 }
 

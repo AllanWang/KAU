@@ -6,7 +6,6 @@ import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.ui.views.CutoutView
-import ca.allanwang.kau.utils.bindView
 
 /**
  * Created by Allan Wang on 2017-06-28.
@@ -36,7 +35,7 @@ class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val cutout: CutoutView by bindView(R.id.kau_cutout)
+        val cutout: CutoutView = v.findViewById(R.id.kau_cutout)
     }
 
 }

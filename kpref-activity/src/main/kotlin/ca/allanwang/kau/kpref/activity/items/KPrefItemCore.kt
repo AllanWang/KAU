@@ -134,12 +134,12 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val title: TextView by bindView(R.id.kau_pref_title)
-        val container: ViewGroup? by bindOptionalView(R.id.kau_pref_container)
-        val desc: TextView? by bindOptionalView(R.id.kau_pref_desc)
-        val icon: ImageView? by bindOptionalView(R.id.kau_pref_icon)
-        val innerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_inner_frame)
-        val lowerFrame: LinearLayout? by bindOptionalView(R.id.kau_pref_lower_frame)
+        val title: TextView = v.findViewById(R.id.kau_pref_title)
+        val container: ViewGroup? = v.findViewById(R.id.kau_pref_container)
+        val desc: TextView? = v.findViewById(R.id.kau_pref_desc)
+        val icon: ImageView? = v.findViewById(R.id.kau_pref_icon)
+        val innerFrame: LinearLayout? = v.findViewById(R.id.kau_pref_inner_frame)
+        val lowerFrame: LinearLayout? = v.findViewById(R.id.kau_pref_lower_frame)
         val innerView: View?
             get() = itemView.findViewById(R.id.kau_pref_inner_content)
         val lowerContent: View?

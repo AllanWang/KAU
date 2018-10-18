@@ -3,10 +3,8 @@ package ca.allanwang.kau.mediapicker
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import android.support.v7.widget.RecyclerView
-import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
-import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.toast
+import kotlinx.android.synthetic.main.kau_activity_image_picker_overlay.*
 
 /**
  * Created by Allan Wang on 2017-07-23.
@@ -22,23 +20,20 @@ abstract class MediaPickerActivityOverlayBase(
         mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItemBasic>(mediaType, mediaActions) {
 
-    val draggable: ElasticDragDismissFrameLayout by bindView(R.id.kau_draggable)
-    val recycler: RecyclerView by bindView(R.id.kau_recyclerview)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_activity_image_picker_overlay)
-        initializeRecycler(recycler)
+        initializeRecycler(kau_recyclerview)
         MediaItemBasic.bindEvents(this, adapter.fastAdapter)
 
-        draggable.addExitListener(this, R.transition.kau_image_exit_bottom, R.transition.kau_image_exit_top)
-        draggable.setOnClickListener { finishAfterTransition() }
+        kau_draggable.addExitListener(this, R.transition.kau_image_exit_bottom, R.transition.kau_image_exit_top)
+        kau_draggable.setOnClickListener { finishAfterTransition() }
 
         loadItems()
     }
 
     override fun finishAfterTransition() {
-        recycler.stopScroll()
+        kau_recyclerview.stopScroll()
         super.finishAfterTransition()
     }
 

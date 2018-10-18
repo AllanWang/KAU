@@ -9,7 +9,6 @@ import android.widget.TextView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.iitems.KauIItem
-import ca.allanwang.kau.utils.bindView
 import ca.allanwang.kau.utils.gone
 import ca.allanwang.kau.utils.startLink
 import ca.allanwang.kau.utils.visible
@@ -82,14 +81,14 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewH
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val card: CardView by bindView(R.id.lib_item_card)
-        val name: TextView by bindView(R.id.lib_item_name)
-        val creator: TextView by bindView(R.id.lib_item_author)
-        val description: TextView by bindView(R.id.lib_item_description)
-        val version: TextView by bindView(R.id.lib_item_version)
-        val license: TextView by bindView(R.id.lib_item_license)
-        val divider: View by bindView(R.id.lib_item_top_divider)
-        val bottomDivider: View by bindView(R.id.lib_item_bottom_divider)
+        val card: CardView = v.findViewById(R.id.lib_item_card)
+        val name: TextView = v.findViewById(R.id.lib_item_name)
+        val creator: TextView = v.findViewById(R.id.lib_item_author)
+        val description: TextView = v.findViewById(R.id.lib_item_description)
+        val version: TextView = v.findViewById(R.id.lib_item_version)
+        val license: TextView = v.findViewById(R.id.lib_item_license)
+        val divider: View = v.findViewById(R.id.lib_item_top_divider)
+        val bottomDivider: View = v.findViewById(R.id.lib_item_bottom_divider)
     }
 
 }

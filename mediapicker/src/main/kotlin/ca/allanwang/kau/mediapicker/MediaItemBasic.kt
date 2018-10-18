@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.ui.views.MeasuredImageView
-import ca.allanwang.kau.utils.bindView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -58,6 +57,6 @@ class MediaItemBasic(val data: MediaModel)
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val image: MeasuredImageView by bindView(R.id.kau_image)
+        val image: MeasuredImageView = v.findViewById(R.id.kau_image)
     }
 }

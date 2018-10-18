@@ -3,7 +3,6 @@ package ca.allanwang.kau.kpref.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.annotation.StringRes
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
 import ca.allanwang.kau.animators.KauAnimator
@@ -14,6 +13,7 @@ import ca.allanwang.kau.kpref.activity.items.KPrefItemCore
 import ca.allanwang.kau.ui.views.RippleCanvas
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import kotlinx.android.synthetic.main.kau_pref_activity.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
@@ -21,10 +21,9 @@ import java.util.*
 abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
 
     private val adapter: FastItemAdapter<KPrefItemCore> = FastItemAdapter()
-    private val recycler: RecyclerView by bindView(R.id.kau_recycler)
-    val bgCanvas: RippleCanvas by bindView(R.id.kau_ripple)
-    val toolbarCanvas: RippleCanvas by bindView(R.id.kau_toolbar_ripple)
-    val toolbar: Toolbar by bindView(R.id.kau_toolbar)
+    val bgCanvas: RippleCanvas get() = kau_ripple
+    val toolbarCanvas: RippleCanvas get() = kau_toolbar_ripple
+    val toolbar: Toolbar get() = kau_toolbar
     private lateinit var globalOptions: GlobalOptions
     private val kprefStack = Stack<Pair<Int, List<KPrefItemCore>>>()
     /**
@@ -61,28 +60,27 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         }
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         statusBarColor = 0x30000000
-        toolbarCanvas.set(resolveColor(R.attr.colorPrimary))
-        bgCanvas.set(resolveColor(android.R.attr.colorBackground))
+        kau_toolbar_ripple.set(resolveColor(R.attr.colorPrimary))
+        kau_ripple.set(resolveColor(android.R.attr.colorBackground))
         //setup prefs
         val core = CoreAttributeBuilder()
         val builder = kPrefCoreAttributes()
         core.builder()
         globalOptions = GlobalOptions(core, this)
-        recycler.withLinearAdapter(adapter)
+        kau_recycler.withLinearAdapter(adapter)
         adapter.withSelectable(false)
                 .withOnClickListener { v, _, item, _ -> item.onClick(v!!); true }
         showNextPrefs(R.string.kau_settings, onCreateKPrefs(savedInstanceState), true)
     }
 
-    override fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit)
-            = showNextPrefs(toolbarTitleRes, builder, false)
+    override fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit) = showNextPrefs(toolbarTitleRes, builder, false)
 
     private fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit, first: Boolean) {
         doAsync {
             val items = KPrefAdapterBuilder(globalOptions)
             builder(items)
             kprefStack.push(toolbarTitleRes to items.list)
-            recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
+            kau_recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
             uiThread {
                 adapter.clear()
                 adapter.add(items.list.filter { it.core.visible() })
@@ -98,7 +96,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
     override fun showPrevPrefs() {
         kprefStack.pop()
         val (title, list) = kprefStack.peek()
-        recycler.itemAnimator = if (animate) recyclerAnimatorPrev else null
+        kau_recycler.itemAnimator = if (animate) recyclerAnimatorPrev else null
         adapter.clear()
         adapter.add(list.filter { it.core.visible() })
         toolbar.setTitle(title)
@@ -117,7 +115,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
     fun reloadList() {
         // If for some reason we are calling a reload before fetching our first kpref list, we will ignore it
         if (kprefStack.size < 1) return
-        recycler.itemAnimator = null
+        kau_recycler.itemAnimator = null
         val list = kprefStack.peek().second
         adapter.setNewList(list.filter { it.core.visible() })
     }

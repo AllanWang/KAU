@@ -16,8 +16,7 @@ internal object SwipeBackHelper {
 
     private val pageStack = Stack<SwipeBackPage>()
 
-    private operator fun get(activity: Activity): SwipeBackPage?
-            = pageStack.firstOrNull { it.activityRef.get() === activity }
+    private operator fun get(activity: Activity): SwipeBackPage? = pageStack.firstOrNull { it.activityRef.get() === activity }
 
     fun onCreate(activity: Activity, builder: SwipeBackContract.() -> Unit = {}) {
         val page = this[activity] ?: pageStack.push(SwipeBackPage(activity).apply { builder() })
@@ -33,7 +32,7 @@ internal object SwipeBackHelper {
     }
 
     fun onDestroy(activity: Activity) {
-        val page: SwipeBackPage? = this[activity]
+        val page: SwipeBackPage? = this[activity] ?: return
         pageStack.kauRemoveIf { it.activityRef.get() == null || it === page }
         page?.activityRef?.clear()
         KL.v { "KauSwipe onDestroy ${activity.localClassName}" }

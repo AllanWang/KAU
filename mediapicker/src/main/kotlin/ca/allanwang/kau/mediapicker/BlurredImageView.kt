@@ -12,6 +12,7 @@ import ca.allanwang.kau.utils.*
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import jp.wasabeef.blurry.internal.BlurFactor
 import jp.wasabeef.blurry.internal.BlurTask
+import kotlinx.android.synthetic.main.kau_blurred_imageview.view.*
 
 /**
  * Created by Allan Wang on 2017-07-14.
@@ -27,14 +28,12 @@ class BlurredImageView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
     private var blurred = false
-    val imageBase: ImageView by bindView(R.id.image_base)
-    internal val imageBlur: ImageView by bindView(R.id.image_blur)
-    val imageForeground: ImageView by bindView(R.id.image_foreground)
+    val imageBase: ImageView get() = image_base
 
     init {
         inflate(R.layout.kau_blurred_imageview, true)
         initAttrs(context, attrs)
-        imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30)
+        image_foreground.setIcon(GoogleMaterial.Icon.gmd_check, 30)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -45,8 +44,8 @@ class BlurredImageView @JvmOverloads constructor(
     override fun clearAnimation() {
         super.clearAnimation()
         imageBase.clearAnimation()
-        imageBlur.clearAnimation()
-        imageForeground.clearAnimation()
+        image_blur.clearAnimation()
+        image_foreground.clearAnimation()
     }
 
     private fun View.scaleAnimate(scale: Float) = animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
@@ -68,10 +67,10 @@ class BlurredImageView @JvmOverloads constructor(
         factor.width = width
         factor.height = height
         BlurTask(imageBase, factor) {
-            imageBlur.setImageDrawable(it)
+            image_blur.setImageDrawable(it)
             scaleAnimate(ANIMATION_SCALE).start()
-            imageBlur.alphaAnimate(1f).start()
-            imageForeground.alphaAnimate(1f).start()
+            image_blur.alphaAnimate(1f).start()
+            image_foreground.alphaAnimate(1f).start()
         }.execute()
     }
 
@@ -87,10 +86,10 @@ class BlurredImageView @JvmOverloads constructor(
         factor.width = width
         factor.height = height
         BlurTask(imageBase, factor) { drawable ->
-            imageBlur.setImageDrawable(drawable)
+            image_blur.setImageDrawable(drawable)
             scaleXY = ANIMATION_SCALE
-            imageBlur.alpha = 1f
-            imageForeground.alpha = 1f
+            image_blur.alpha = 1f
+            image_foreground.alpha = 1f
         }.execute()
     }
 
@@ -101,8 +100,8 @@ class BlurredImageView @JvmOverloads constructor(
         if (!blurred) return
         blurred = false
         scaleAnimate(1.0f).start()
-        imageBlur.alphaAnimate(0f).withEndAction { imageBlur.setImageDrawable(null) }.start()
-        imageForeground.alphaAnimate(0f).start()
+        image_blur.alphaAnimate(0f).withEndAction { image_blur.setImageDrawable(null) }.start()
+        image_foreground.alphaAnimate(0f).start()
     }
 
 
@@ -114,9 +113,9 @@ class BlurredImageView @JvmOverloads constructor(
         clearAnimation()
         scaleX = 1.0f
         scaleX = 1.0f
-        imageBlur.alpha = 0f
-        imageBlur.setImageDrawable(null)
-        imageForeground.alpha = 0f
+        image_blur.alpha = 0f
+        image_blur.setImageDrawable(null)
+        image_foreground.alpha = 0f
     }
 
     /**
@@ -145,14 +144,14 @@ class BlurredImageView @JvmOverloads constructor(
     fun fullReset() {
         reset()
         fullAction({ it.visible().background = null })
-        imageForeground.setBackgroundColorRes(R.color.kau_blurred_image_selection_overlay)
-        imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30, Color.WHITE)
+        image_foreground.setBackgroundColorRes(R.color.kau_blurred_image_selection_overlay)
+        image_foreground.setIcon(GoogleMaterial.Icon.gmd_check, 30, Color.WHITE)
     }
 
     private fun fullAction(action: (View) -> Unit) {
         action(this)
         action(imageBase)
-        action(imageBlur)
-        action(imageForeground)
+        action(image_blur)
+        action(image_foreground)
     }
 }

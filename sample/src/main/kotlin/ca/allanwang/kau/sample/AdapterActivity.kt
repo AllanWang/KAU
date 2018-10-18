@@ -1,11 +1,12 @@
 package ca.allanwang.kau.sample
 
 import android.os.Bundle
+import ca.allanwang.kau.adapters.fastAdapter
 import ca.allanwang.kau.iitems.CardIItem
 import ca.allanwang.kau.ui.activities.ElasticRecyclerActivity
 import ca.allanwang.kau.utils.toast
 import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 /**
@@ -13,10 +14,9 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
  */
 class AdapterActivity : ElasticRecyclerActivity() {
 
-    val adapter = FastItemAdapter<IItem<*, *>>()
-
     override fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean {
-        recycler.adapter = adapter
+        val adapter = ItemAdapter<IItem<*, *>>()
+        recycler.adapter = fastAdapter(adapter)
         adapter.add(listOf(
                 CardIItem {
                     titleRes = R.string.kau_text_copied
@@ -43,8 +43,7 @@ class AdapterActivity : ElasticRecyclerActivity() {
                     titleRes = R.string.kau_text_copied
                     button = "Test"
                     buttonClick = { toast("HI") }
-                }
-        ))
+                }))
         setOutsideTapListener { finishAfterTransition() }
         return true
     }
