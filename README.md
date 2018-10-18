@@ -44,9 +44,9 @@ Note that if you use any particular submodule, it will automatically include all
 
 ```gradle
 dependencies {
-    // All submodules extend this
+    // all submodules extend this
     implementation "ca.allanwang.kau:core:$KAU"
-    // All submodules with extensive ui extend this
+    // all submodules with extensive ui extend this
     implementation "ca.allanwang.kau:core-ui:$KAU"
     
     implementation "ca.allanwang.kau:about:$KAU"
