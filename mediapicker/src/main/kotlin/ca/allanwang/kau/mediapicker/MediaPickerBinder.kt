@@ -39,6 +39,5 @@ internal const val MEDIA_PICKER_RESULT = "media_picker_result"
 internal const val ANIMATION_DURATION = 200L
 internal const val ANIMATION_SCALE = 0.95f
 
-internal fun <T> RequestBuilder<T>.applyMediaOptions(context: Context)
-        = apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).centerCrop().override(MediaPickerCore.viewSize(context)))
+internal fun <T> RequestBuilder<T>.applyMediaOptions(context: Context) = apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).centerCrop().override(MediaPickerCore.viewSize(context)))
 

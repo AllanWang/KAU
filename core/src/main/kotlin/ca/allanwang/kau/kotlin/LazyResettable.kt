@@ -14,7 +14,8 @@ internal object UNINITIALIZED
 fun <T : Any> lazyResettable(initializer: () -> T): LazyResettable<T> = LazyResettable<T>(initializer)
 
 class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) : ILazyResettable<T>, Serializable {
-    @Volatile private var _value: Any = UNINITIALIZED
+    @Volatile
+    private var _value: Any = UNINITIALIZED
     private val lock = lock ?: this
 
     override fun invalidate() {
@@ -69,8 +70,7 @@ class LazyResettableRegistry : ILazyResettableRegistry {
 
     var lazyRegistry: MutableList<LazyResettable<*>> = mutableListOf()
 
-    override fun <T : Any> lazy(initializer: () -> T): LazyResettable<T>
-            = add(lazyResettable(initializer))
+    override fun <T : Any> lazy(initializer: () -> T): LazyResettable<T> = add(lazyResettable(initializer))
 
     override fun <T : Any> add(resettable: LazyResettable<T>): LazyResettable<T> {
         lazyRegistry.add(resettable)

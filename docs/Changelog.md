@@ -4,8 +4,9 @@
 * Update everything to Android Studio 3.1
 * Fix new lint issues (see Migration for resource related methods)
 * :adapter: Add more IAdapter functions to help retrieve selections
-* :core: Add deprecation warning to bindView for fragment based extensions; use bindViewResettable instead
+* :core: Deprecate Kotterknife; use kotlin_android_extensions
 * :kpref-activity: Fix seekbar increment
+* :core: Make KPref use Set<String> vs StringSet
 
 ## v3.7.1
 * Update appcompat to 27.1.0

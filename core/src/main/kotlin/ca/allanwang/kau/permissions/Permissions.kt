@@ -22,8 +22,7 @@ import android.support.annotation.RequiresApi
 /**
  * Hook that should be added inside all [Activity.onRequestPermissionsResult] so that the Permission manager can handle the responses
  */
-fun Activity.kauOnRequestPermissionsResult(permissions: Array<out String>, grantResults: IntArray)
-        = PermissionManager.onRequestPermissionsResult(this, permissions, grantResults)
+fun Activity.kauOnRequestPermissionsResult(permissions: Array<out String>, grantResults: IntArray) = PermissionManager.onRequestPermissionsResult(this, permissions, grantResults)
 
 /**
  * Request a permission with a callback
@@ -32,8 +31,7 @@ fun Activity.kauOnRequestPermissionsResult(permissions: Array<out String>, grant
  * The [callback] returns [granted], which is true if all permissions are granted
  * [deniedPerm] is the first denied permission, if granted is false
  */
-fun Context.kauRequestPermissions(vararg permissions: String, callback: (granted: Boolean, deniedPerm: String?) -> Unit)
-        = PermissionManager(this, permissions, callback)
+fun Context.kauRequestPermissions(vararg permissions: String, callback: (granted: Boolean, deniedPerm: String?) -> Unit) = PermissionManager(this, permissions, callback)
 
 /**
  * See http://developer.android.com/guide/topics/security/permissions.html#normal-dangerous for a

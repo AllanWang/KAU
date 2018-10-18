@@ -29,7 +29,8 @@ internal object PermissionManager {
      */
     private val manifestPermission = lazyContext<Array<String>> {
         try {
-            it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions ?: emptyArray()
+            it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions
+                    ?: emptyArray()
         } catch (e: Exception) {
             emptyArray()
         }
@@ -47,7 +48,8 @@ internal object PermissionManager {
         } else KL.d { "Request is postponed since another one is still in progress; did you remember to override onRequestPermissionsResult?" }
     }
 
-    @Synchronized private fun requestPermissions(context: Context, permissions: Array<out String>) {
+    @Synchronized
+    private fun requestPermissions(context: Context, permissions: Array<out String>) {
         permissions.forEach {
             if (!manifestPermission(context).contains(it)) {
                 KL.e { "Requested permission $it is not stated in the manifest" }
@@ -55,7 +57,8 @@ internal object PermissionManager {
                 //we'll let the request pass through so it can be denied and so the callback can be triggered
             }
         }
-        val activity = (context as? Activity) ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
+        val activity = (context as? Activity)
+                ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
         KL.i { "Requesting permissions ${permissions.contentToString()}" }
         ActivityCompat.requestPermissions(activity, permissions, 1)
     }
