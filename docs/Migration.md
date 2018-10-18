@@ -2,6 +2,13 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v4.0.0
+
+## Update ProgressAnimator
+
+`ProgressAnimator` has been completely rewritten to be an extension of `ValueAnimator`.
+This for the most part is not a breaking change, apart from the fact that creating an animator will not start it immediately.
+
 # v3.8.0
 
 Along with the update to support Android Studio 3.1, a lot of changes have occurred with other dependencies and with lint.
@@ -11,10 +18,6 @@ Along with the update to support Android Studio 3.1, a lot of changes have occur
 Resource ids can be negatives due to the bit overflow. 
 Instead, `INVALID_ID` has been introduced to signify an unset or invalid id.
 Methods such as `Context.string(id, fallback)` now check against `INVALID_ID` through equality rather than using an inequality to address this.
-* Kotterknife has been deprecated in favour of `kotlin-android-extensions`. See [official docs](https://kotlinlang.org/docs/tutorials/android-plugin.html#view-binding).
-* `ProgressAnimator` has been completely rewritten to be an extension of `ValueAnimator`.
-This for the most part is not a breaking change, apart from the fact that creating an animator will not start it immediately.
-* KPref has been slightly refactored internally. Preferences backed by `StringSet` can now go back to `Set<String>`
 
 ## Deprecate Kotterknife
 
