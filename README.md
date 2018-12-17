@@ -1,3 +1,7 @@
+### I will be migrating this project to androidx during the winter break (Dec 20 2018 - Jan 10 2019), as well as making a bunch of other changes. Stay tuned!
+
+---
+
 <a href="https://allanwang.github.io/KAU/" target="_blank">
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
 </a>
