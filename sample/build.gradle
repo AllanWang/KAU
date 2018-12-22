@@ -101,6 +101,18 @@ android {
             }
         }
     }
+
+    // See https://github.com/facebook/flipper/issues/146
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == "com.android.support") {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion "26.+"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -124,7 +136,7 @@ dependencies {
     testImplementation kauDependency.junit
 
     androidTestImplementation kauDependency.kotlinTest
-    androidTestImplementation kauDependency.espresso
+    androidTestImplementation  kauDependency.espresso
     androidTestImplementation kauDependency.testRules
     androidTestImplementation kauDependency.testRunner
 

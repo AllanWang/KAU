@@ -22,6 +22,8 @@ import kotlin.test.fail
 
 /**
  * Created by Allan Wang on 22/02/2018.
+ *
+ * Tests related to the :colorpicker module
  */
 @RunWith(AndroidJUnit4::class)
 @MediumTest

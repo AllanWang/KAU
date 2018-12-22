@@ -86,8 +86,7 @@ dependencies {
     testImplementation kauDependency.junit
 
     androidTestImplementation kauDependency.kotlinTest
-
-    androidTestImplementation kauDependency.espresso
+    androidTestImplementation  kauDependency.espresso
     androidTestImplementation kauDependency.testRules
     androidTestImplementation kauDependency.testRunner
 }
