@@ -9,8 +9,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.filters.MediumTest
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
 import android.view.View
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import ca.allanwang.kau.colorpicker.CircleView
 import org.hamcrest.Matchers.anything
 import org.junit.Rule

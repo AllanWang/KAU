@@ -54,10 +54,19 @@ class Versions {
     // https://github.com/afollestad/material-dialogs/releases
     static def materialDialog = '0.9.6.0'
 
-    static def espresso = '3.0.1'
-    static def junit = '4.12'
-    static def testRunner = '1.0.1'
+    // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
+    static def espresso = '3.1.1'
 
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    static def junit = '4.12'
+
+
+    static def testRunner = '1.1.0'
+
+    // https://mvnrepository.com/artifact/androidx.test/rules?repo=google
+    static def testRules = '1.1.1'
+
+    // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     static def gradlePlugin = '3.2.1'
     static def mavenPlugin = '2.1'
     static def playPublishPlugin = '1.2.2'

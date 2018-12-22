@@ -125,5 +125,11 @@ dependencies {
 
     androidTestImplementation kauDependency.kotlinTest
     androidTestImplementation kauDependency.espresso
+    androidTestImplementation kauDependency.testRules
     androidTestImplementation kauDependency.testRunner
+
+//    // Optional -- Hamcrest library
+//    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+//    // Optional -- UI testing with UI Automator
+//    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 }
