@@ -3,7 +3,7 @@
 <!--
     Generic card with an imageview, title, description, and button
   -->
-<androidx.appcompat.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/kau_card_container"
     android:layout_width="match_parent"
@@ -71,4 +71,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.appcompat.widget.CardView>
+</androidx.cardview.widget.CardView>

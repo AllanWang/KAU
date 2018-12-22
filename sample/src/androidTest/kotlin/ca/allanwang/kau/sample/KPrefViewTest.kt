@@ -99,7 +99,6 @@ class KPrefViewTest {
         checkbox1.verifyCheck("checkbox1 init", initiallyChecked)
         checkbox1.perform(click())
         checkbox1.verifyCheck("checkbox1 after click", !initiallyChecked)
-
     }
 
     /**
@@ -126,7 +125,6 @@ class KPrefViewTest {
 
         checkbox3.perform(click())
         checkbox3.verifyCheck("checkbox3 after disabled click", false, false)
-
     }
 
     @Test
