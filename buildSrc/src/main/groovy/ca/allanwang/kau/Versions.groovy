@@ -11,6 +11,21 @@ class Versions {
     // https://developer.android.com/topic/libraries/support-library/revisions
     static def supportLibs = '28.0.0'
 
+    // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
+    static def appcompat = '1.0.2'
+
+    // https://mvnrepository.com/artifact/com.google.android.material/material
+    static def googleMaterial = '1.0.0'
+
+    // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
+    static def recyclerView = '1.0.0'
+
+    // https://mvnrepository.com/artifact/androidx.cardview/cardview
+    static def cardView = '1.0.0'
+
+    // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
+    static def constraintLayout = '1.1.3'
+
     // https://kotlinlang.org/docs/reference/using-gradle.html
     static def kotlin = '1.2.71'
 
@@ -23,11 +38,8 @@ class Versions {
     // https://github.com/wasabeef/Blurry/releases
     static def blurry = '2.1.1'
 
-    // https://dl.google.com/dl/android/maven2/com/android/support/constraint/group-index.xml
-    static def constraintLayout = '1.1.3'
-
     // https://github.com/mikepenz/FastAdapter#using-maven
-    static def fastAdapter = '3.2.9'
+    static def fastAdapter = '3.3.1'
     static def fastAdapterCommons = fastAdapter
 
     // https://github.com/bumptech/glide/releases

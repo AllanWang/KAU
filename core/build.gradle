@@ -5,14 +5,13 @@ apply from: '../android-lib.gradle'
 dependencies {
     api kauDependency.kotlin
 
-    api 'androidx.annotation:annotation:1.0.1'
-    api 'androidx.appcompat:appcompat:1.1.0-alpha01'
-    api 'androidx.legacy:legacy-support-v13:1.0.0'
-    api 'com.google.android.material:material:1.1.0-alpha02'
-    api 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
-    api 'androidx.cardview:cardview:1.0.0'
-    api 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
-    api "com.google.android.material:material:1.1.0-alpha02"
+//    api 'androidx.annotation:annotation:1.0.1'
+    api "androidx.appcompat:appcompat:${kau.appcompat}"
+//    api 'androidx.legacy:legacy-support-v13:1.0.0'
+    api "com.google.android.material:material:${kau.googleMaterial}"
+    api "androidx.recyclerview:recyclerview:${kau.recyclerView}"
+    api "androidx.cardview:cardview:${kau.cardView}"
+    api "androidx.constraintlayout:constraintlayout:${kau.constraintLayout}"
 
 
     api "com.mikepenz:iconics-core:${kau.iconics}@aar"

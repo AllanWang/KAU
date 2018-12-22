@@ -9,6 +9,7 @@ dependencies {
 
    //noinspection GradleDependency
     api "com.github.bumptech.glide:glide:${kau.glide}"
+//    kapt "com.github.bumptech.glide:compiler:${kau.glide}"
     implementation "jp.wasabeef:blurry:${kau.blurry}"
 }
 
