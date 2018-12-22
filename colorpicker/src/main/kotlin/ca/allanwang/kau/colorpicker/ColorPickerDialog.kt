@@ -2,8 +2,8 @@ package ca.allanwang.kau.colorpicker
 
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.DimenRes
-import android.support.annotation.StringRes
+import androidx.annotation.DimenRes
+import androidx.annotation.StringRes
 import ca.allanwang.kau.utils.INVALID_ID
 import ca.allanwang.kau.utils.string
 import com.afollestad.materialdialogs.MaterialDialog

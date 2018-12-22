@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 import android.provider.MediaStore
-import android.support.annotation.NonNull
+import androidx.annotation.NonNull
 import java.io.File
 
 
@@ -36,8 +36,8 @@ data class MediaModel(
     )
 
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString()!!,
+            parcel.readString()!!,
             parcel.readLong(),
             parcel.readLong(),
             parcel.readString())

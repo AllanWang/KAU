@@ -2,7 +2,7 @@ package ca.allanwang.kau.ui.widgets
 
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.widget.TextViewCompat
+import androidx.core.widget.TextViewCompat
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity

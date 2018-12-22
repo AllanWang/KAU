@@ -1,11 +1,11 @@
 package ca.allanwang.kau.about
 
 import android.os.Build
-import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.iitems.KauIItem

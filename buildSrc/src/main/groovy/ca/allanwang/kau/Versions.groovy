@@ -34,10 +34,10 @@ class Versions {
     static def glide = '4.8.0'
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
-    static def iconics = '3.0.4'
-    static def iconicsGoogle = '3.0.1.2'
-    static def iconicsMaterial = '2.2.0.4'
-    static def iconicsCommunity = '2.0.46.1'
+    static def iconics = '3.1.0'
+    static def iconicsGoogle = '3.0.1.3'
+    static def iconicsMaterial = '2.2.0.5'
+    static def iconicsCommunity = '2.7.94.1'
 
     // https://github.com/afollestad/material-dialogs/releases
     static def materialDialog = '0.9.6.0'

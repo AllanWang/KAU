@@ -3,7 +3,7 @@ package ca.allanwang.kau.utils
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewPropertyAnimator

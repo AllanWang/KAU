@@ -7,15 +7,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
-import android.support.annotation.RequiresApi
-import android.support.annotation.StringRes
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.support.design.widget.TextInputEditText
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -23,7 +18,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 
@@ -291,7 +291,7 @@ fun FloatingActionButton.hideOnDownwardsScroll(recycler: RecyclerView) {
     recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            if (newState == android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE && !isShown) show()
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && !isShown) show()
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

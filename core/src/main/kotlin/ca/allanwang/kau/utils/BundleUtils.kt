@@ -5,7 +5,7 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.AnimRes
+import androidx.annotation.AnimRes
 import android.util.Pair
 import android.view.View
 import ca.allanwang.kau.R

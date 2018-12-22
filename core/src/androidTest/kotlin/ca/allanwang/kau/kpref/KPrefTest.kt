@@ -1,9 +1,9 @@
 package ca.allanwang.kau.kpref
 
 import android.annotation.SuppressLint
-import android.support.test.InstrumentationRegistry
-import android.support.test.filters.MediumTest
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.InstrumentationRegistry
+import androidx.test.filters.MediumTest
+import androidx.test.runner.AndroidJUnit4
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

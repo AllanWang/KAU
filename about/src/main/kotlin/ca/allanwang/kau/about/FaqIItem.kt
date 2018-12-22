@@ -1,7 +1,7 @@
 package ca.allanwang.kau.about
 
 import android.annotation.SuppressLint
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup

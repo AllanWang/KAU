@@ -2,7 +2,7 @@ package ca.allanwang.kau.xml
 
 import android.content.Context
 import android.content.res.XmlResourceParser
-import android.support.annotation.XmlRes
+import androidx.annotation.XmlRes
 import android.text.Html
 import android.text.Spanned
 import ca.allanwang.kau.utils.use

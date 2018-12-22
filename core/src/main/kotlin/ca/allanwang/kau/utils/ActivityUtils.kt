@@ -11,13 +11,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.ColorInt
-import android.support.annotation.RequiresApi
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
 import android.view.Menu
 import android.view.View
+import androidx.annotation.ColorInt
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import ca.allanwang.kau.R
+import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.iconics.typeface.IIcon
 import org.jetbrains.anko.contentView
 
@@ -135,9 +135,13 @@ fun Context.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg 
     }
 }
 
-inline fun Activity.hideKeyboard() = currentFocus.hideKeyboard()
+inline fun Activity.hideKeyboard() {
+    currentFocus?.hideKeyboard()
+}
 
-inline fun Activity.showKeyboard() = currentFocus.showKeyboard()
+inline fun Activity.showKeyboard() {
+    currentFocus?.showKeyboard()
+}
 
 inline fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, noinline builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(text, duration, builder)
 

@@ -1,6 +1,7 @@
 package ca.allanwang.kau.utils
 
-import android.support.v4.widget.ViewDragHelper
+import androidx.customview.widget.ViewDragHelper
+
 
 /**
  * Created by Allan Wang on 2017-06-08.

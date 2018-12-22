@@ -12,7 +12,7 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:orientation="horizontal">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@id/kau_pref_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
 
         <!--As per Android N, icons (24dp) are aligned to the left rather than centered-->
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@id/kau_pref_icon"
             android:layout_width="56dp"
             android:layout_height="56dp"
@@ -37,7 +37,7 @@
             tools:ignore="RtlSymmetry"
             tools:layout_editor_absoluteX="0dp" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@id/kau_pref_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="-175dp" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@id/kau_pref_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
             app:layout_constraintTop_toBottomOf="@id/kau_pref_desc"
             tools:layout_editor_absoluteX="-175dp" />
 
-        <android.support.constraint.Barrier
+        <androidx.constraintlayout.widget.Barrier
             android:id="@id/kau_pref_barrier"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -105,6 +105,6 @@
             app:layout_constraintVertical_bias="0.5"
             tools:layout_editor_absoluteX="1dp" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

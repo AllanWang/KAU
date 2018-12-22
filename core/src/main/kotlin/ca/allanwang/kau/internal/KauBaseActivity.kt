@@ -1,6 +1,6 @@
 package ca.allanwang.kau.internal
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
 
 /**

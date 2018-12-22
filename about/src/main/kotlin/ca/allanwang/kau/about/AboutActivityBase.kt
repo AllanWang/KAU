@@ -2,12 +2,12 @@ package ca.allanwang.kau.about
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate

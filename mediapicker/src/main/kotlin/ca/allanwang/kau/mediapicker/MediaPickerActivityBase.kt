@@ -2,15 +2,15 @@ package ca.allanwang.kau.mediapicker
 
 import android.database.Cursor
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.v4.content.Loader
-import android.support.v7.widget.LinearLayoutManager
+import androidx.loader.content.Loader
+import androidx.recyclerview.widget.LinearLayoutManager
 import ca.allanwang.kau.adapters.selectedItems
 import ca.allanwang.kau.adapters.selectionSize
 import ca.allanwang.kau.utils.hideOnDownwardsScroll
 import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.toDrawable
 import ca.allanwang.kau.utils.toast
+import com.google.android.material.appbar.AppBarLayout
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import kotlinx.android.synthetic.main.kau_activity_image_picker.*
 

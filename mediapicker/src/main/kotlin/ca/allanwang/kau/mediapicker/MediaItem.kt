@@ -1,7 +1,7 @@
 package ca.allanwang.kau.mediapicker
 
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import ca.allanwang.kau.iitems.KauIItem
 import com.bumptech.glide.load.DataSource

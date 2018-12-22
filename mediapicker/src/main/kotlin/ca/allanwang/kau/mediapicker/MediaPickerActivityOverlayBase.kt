@@ -2,7 +2,7 @@ package ca.allanwang.kau.mediapicker
 
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import ca.allanwang.kau.utils.toast
 import kotlinx.android.synthetic.main.kau_activity_image_picker_overlay.*
 

@@ -8,7 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
-import android.support.annotation.IntRange
+import androidx.annotation.IntRange
 import ca.allanwang.kau.R
 import java.math.RoundingMode
 import java.text.DecimalFormat

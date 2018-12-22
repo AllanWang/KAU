@@ -3,7 +3,7 @@
 <!--
     Generic card with an imageview, title, description, and button
   -->
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/kau_card_container"
     android:layout_width="match_parent"
@@ -11,7 +11,7 @@
     android:background="?android:selectableItemBackground"
     android:minHeight="?android:listPreferredItemHeight">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/kau_padding_normal">
@@ -69,6 +69,6 @@
 
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.appcompat.widget.CardView>

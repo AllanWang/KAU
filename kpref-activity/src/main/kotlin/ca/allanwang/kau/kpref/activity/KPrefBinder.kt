@@ -1,6 +1,6 @@
 package ca.allanwang.kau.kpref.activity
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import ca.allanwang.kau.kpref.activity.items.*
 
 /**
