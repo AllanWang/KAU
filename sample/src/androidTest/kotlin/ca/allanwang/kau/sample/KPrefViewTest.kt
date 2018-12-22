@@ -2,30 +2,24 @@ package ca.allanwang.kau.sample
 
 import android.view.View
 import android.widget.CheckBox
-import androidx.test.espresso.DataInteraction
-import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAssertion
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withChild
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import androidx.test.rule.ActivityTestRule
-import ca.allanwang.kau.colorpicker.CircleView
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.instanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotEquals
-import kotlin.test.fail
 
 
 /**
@@ -39,18 +33,6 @@ class KPrefViewTest {
 
     @get:Rule
     val activity: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
-
-    private fun DataInteraction.click(position: Int) =
-            atPosition(position).perform(click())
-
-    private fun View.colorSelected(selected: Boolean) {
-        val circle = this as? CircleView ?: fail("View is not a CircleView")
-        assertEquals(selected, circle.colorSelected, "CircleView ${circle.tag} ${if (selected) "is not" else "is"} actually selected")
-    }
-
-    private val colorSelected = ViewAssertion { view, _ -> view.colorSelected(true) }
-
-    private val colorNotSelected = ViewAssertion { view, _ -> view.colorSelected(false) }
 
     fun verifyCheck(checked: Boolean): Matcher<View> {
         return object : BoundedMatcher<View, View>(View::class.java) {
@@ -126,21 +108,5 @@ class KPrefViewTest {
         checkbox3.perform(click())
         checkbox3.verifyCheck("checkbox3 after disabled click", false, false)
     }
-
-    @Test
-    fun test() {
-        onView(withText(R.string.accent_color)).perform(click())
-        val colors = onData(anything()).inAdapterView(withId(R.id.md_grid))
-
-        colors.click(0).check(colorNotSelected) // enter sub grid
-        colors.click(0).check(colorSelected)    // click first grid item
-        colors.atPosition(1).check(colorNotSelected)
-        colors.atPosition(2).check(colorNotSelected)
-                .perform(click()).check(colorSelected)
-        colors.atPosition(0).check(colorNotSelected)
-                .perform(click()).check(colorSelected)
-        // first item is now selected
-    }
-
 
 }

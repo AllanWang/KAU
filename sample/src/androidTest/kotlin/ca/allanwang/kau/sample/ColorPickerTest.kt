@@ -45,7 +45,7 @@ class ColorPickerTest {
     private val colorNotSelected = ViewAssertion { view, _ -> view.colorSelected(false) }
 
     @Test
-    fun test() {
+    fun colorClick() {
         onView(withText(R.string.accent_color)).perform(click())
         val colors = onData(anything()).inAdapterView(withId(R.id.md_grid))
 

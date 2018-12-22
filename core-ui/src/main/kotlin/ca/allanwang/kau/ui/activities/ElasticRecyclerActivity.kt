@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.kau_elastic_recycler_activity.*
  *
  * A generic activity comprised of an ElasticDragDismissFrameLayout, CoordinatorLayout, Toolbar, RecyclerView, and Fab
  * [ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout]
- * [android.support.v7.widget.RecyclerView]
+ * [androidx.recyclerview.widget.RecyclerView]
  *
  * The recyclerview defaults to a linearlayoutmanager, and the adapter is automatically bounded
  *

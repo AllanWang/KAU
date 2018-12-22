@@ -8,9 +8,6 @@ class Versions {
     // https://developer.android.com/studio/releases/build-tools
     static def buildTools = '28.0.3'
 
-    // https://developer.android.com/topic/libraries/support-library/revisions
-    static def supportLibs = '28.0.0'
-
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
     static def appcompat = '1.0.2'
 
@@ -30,7 +27,7 @@ class Versions {
     static def kotlin = '1.2.71'
 
     // https://github.com/mikepenz/AboutLibraries/releases
-    static def aboutLibraries = '6.1.1'
+    static def aboutLibraries = '6.2.0'
 
     // https://github.com/Kotlin/anko/releases
     static def anko = '0.10.5'
