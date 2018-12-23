@@ -6,6 +6,9 @@
     <item text="" />
     -->
 
+    <version title="v4.0.0-alpha01" />
+    <item text="Migrated to androidx. See migration for external dependency changes." />
+
     <version title="v3.8.0" />
     <item text="Update everything to Android Studio 3.1" />
     <item text="Fix new lint issues (see Migration for resource related methods)" />
@@ -13,7 +16,6 @@
     <item text=":core: Deprecate Kotterknife; use kotlin_android_extensions" />
     <item text=":kpref-activity: Fix seekbar increment" />
     <item text=":core: Make KPref use Set&lt;String&gt; vs StringSet" />
-    <item text="" />
 
     <version title="v3.7.1" />
     <item text="Update appcompat to 27.1.0" />
