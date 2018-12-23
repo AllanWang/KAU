@@ -1,3 +1,7 @@
+*Note: v3.8.0 is the last release with support dependencies. Starting with 4.0.0-alpha01, androidx will be used*
+
+---
+
 <a href="https://allanwang.github.io/KAU/" target="_blank">
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
 </a>

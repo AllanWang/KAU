@@ -2,6 +2,12 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v4.0.0-alpha01
+
+This is the first introduction of androidx. The goal is to just do a migration with minimal changes.
+Nothing has been changed internally, but the dependencies are updated.
+Notably, Android-Iconics [split their Community Icons](https://github.com/mikepenz/Android-Iconics/blob/develop/MIGRATION.md) into two enums.
+
 # v3.8.0
 
 Along with the update to support Android Studio 3.1, a lot of changes have occurred with other dependencies and with lint.
