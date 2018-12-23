@@ -1,4 +1,4 @@
-*Note: v3.8.0 is the last release with support dependencies. Starting with 4.0.0-alpha01, androidx will be used*
+**Note: v3.8.0 is the last release with support dependencies. Starting with 4.0.0-alpha01, androidx will be used**
 
 ---
 
