@@ -24,7 +24,7 @@ class Versions {
     static def constraintLayout = '1.1.3'
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    static def kotlin = '1.2.71'
+    static def kotlin = '1.3.11'
 
     // https://github.com/mikepenz/AboutLibraries/releases
     static def aboutLibraries = '6.2.0'
