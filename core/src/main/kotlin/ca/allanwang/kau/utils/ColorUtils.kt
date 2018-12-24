@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.utils
 
 import android.annotation.SuppressLint
@@ -67,13 +82,14 @@ inline val Int.isColorOpaque: Boolean
 fun FloatArray.toColor(): Int = Color.HSVToColor(this)
 
 fun Int.isColorVisibleOn(
-    @ColorInt color: Int, @IntRange(from = 0L, to = 255L) delta: Int = 25,
+    @ColorInt color: Int,
+    @IntRange(from = 0L, to = 255L) delta: Int = 25,
     @IntRange(from = 0L, to = 255L) minAlpha: Int = 50
 ): Boolean =
     if (Color.alpha(this) < minAlpha) false
-    else !(Math.abs(Color.red(this) - Color.red(color)) < delta
-        && Math.abs(Color.green(this) - Color.green(color)) < delta
-        && Math.abs(Color.blue(this) - Color.blue(color)) < delta)
+    else !(Math.abs(Color.red(this) - Color.red(color)) < delta &&
+        Math.abs(Color.green(this) - Color.green(color)) < delta &&
+        Math.abs(Color.blue(this) - Color.blue(color)) < delta)
 
 @ColorInt
 fun Context.getDisabledColor(): Int {

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.searchview
 
 import android.app.Activity
@@ -64,7 +79,9 @@ import org.jetbrains.anko.runOnUiThread
  * https://github.com/lapism/SearchView
  */
 class SearchView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     /**
@@ -365,7 +382,9 @@ class SearchView @JvmOverloads constructor(
      * If not, see the extension function [bindSearchView]
      */
     fun bind(
-        menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE,
+        menu: Menu,
+        @IdRes id: Int,
+        @ColorInt menuIconColor: Int = Color.WHITE,
         config: Configs.() -> Unit = {}
     ): SearchView {
         config(config)
@@ -487,7 +506,9 @@ annotation class KauSearch
  */
 @KauSearch
 fun Activity.bindSearchView(
-    menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE,
+    menu: Menu,
+    @IdRes id: Int,
+    @ColorInt menuIconColor: Int = Color.WHITE,
     config: SearchView.Configs.() -> Unit = {}
 ): SearchView = findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
 
@@ -498,7 +519,9 @@ fun Activity.bindSearchView(
  */
 @KauSearch
 fun ViewGroup.bindSearchView(
-    menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE,
+    menu: Menu,
+    @IdRes id: Int,
+    @ColorInt menuIconColor: Int = Color.WHITE,
     config: SearchView.Configs.() -> Unit = {}
 ): SearchView {
     val searchView = SearchView(context)
@@ -508,4 +531,3 @@ fun ViewGroup.bindSearchView(
     searchView.bind(menu, id, menuIconColor, config)
     return searchView
 }
-

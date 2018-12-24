@@ -1,11 +1,11 @@
 /*
- * Copyright 2015 Google Inc.
+ * Copyright 2018 Allan Wang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package ca.allanwang.kau.ui.widgets
 
 import android.app.Activity
@@ -44,7 +43,10 @@ import ca.allanwang.kau.utils.withAlpha
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class ElasticDragDismissFrameLayout @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     // configurable attribs
@@ -84,21 +86,20 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
 
         /**
          * Called for each drag event.
-
-         * @param elasticOffset       Indicating the drag offset with elasticity applied i.e. may
-         * *                            exceed 1.
-         * *
+         * @param elasticOffset Indicating the drag offset with elasticity applied i.e. may exceed 1.
+         *
          * @param elasticOffsetPixels The elastically scaled drag distance in pixels.
-         * *
-         * @param rawOffset           Value from [0, 1] indicating the raw drag offset i.e.
-         * *                            without elasticity applied. A value of 1 indicates that the
-         * *                            dismiss distance has been reached.
-         * *
-         * @param rawOffsetPixels     The raw distance the user has dragged
+         *
+         * @param rawOffset Value from [0, 1] indicating the raw drag offset i.e. without elasticity applied.
+         * A value of 1 indicates that the dismiss distance has been reached.
+         *
+         * @param rawOffsetPixels The raw distance the user has dragged
          */
         internal open fun onDrag(
-            elasticOffset: Float, elasticOffsetPixels: Float,
-            rawOffset: Float, rawOffsetPixels: Float
+            elasticOffset: Float,
+            elasticOffsetPixels: Float,
+            rawOffset: Float,
+            rawOffsetPixels: Float
         ) {
         }
 
@@ -126,8 +127,11 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
     }
 
     override fun onNestedScroll(
-        target: View, dxConsumed: Int, dyConsumed: Int,
-        dxUnconsumed: Int, dyUnconsumed: Int
+        target: View,
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int
     ) {
         dragScale(dyUnconsumed)
     }
@@ -221,8 +225,10 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
     }
 
     private fun dispatchDragCallback(
-        elasticOffset: Float, elasticOffsetPixels: Float,
-        rawOffset: Float, rawOffsetPixels: Float
+        elasticOffset: Float,
+        elasticOffsetPixels: Float,
+        rawOffset: Float,
+        rawOffsetPixels: Float
     ) {
         callbacks.forEach {
             it.onDrag(
@@ -247,8 +253,10 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         private val fadeNavBar: Boolean = activity.isNavBarOnBottom
 
         public override fun onDrag(
-            elasticOffset: Float, elasticOffsetPixels: Float,
-            rawOffset: Float, rawOffsetPixels: Float
+            elasticOffset: Float,
+            elasticOffsetPixels: Float,
+            rawOffset: Float,
+            rawOffsetPixels: Float
         ) {
             if (elasticOffsetPixels > 0) {
                 // dragging downward, fade the status bar in proportion

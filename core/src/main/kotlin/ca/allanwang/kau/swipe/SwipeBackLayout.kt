@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.swipe
 
 import android.annotation.SuppressLint
@@ -24,7 +39,9 @@ import java.lang.ref.WeakReference
  * Use the [swipeEnabled] toggle if you need the scroll events on the same axis
  */
 internal class SwipeBackLayout @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle), SwipeBackContract, SwipeBackContractInternal {
 
     override val swipeBackLayout: SwipeBackLayout
@@ -376,10 +393,10 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             var result = Pair(0, 0)
             if (scrollPercent <= scrollThreshold) {
                 //threshold not met; check velocities
-                if ((edgeFlag == SWIPE_EDGE_LEFT && xvel > MIN_FLING_VELOCITY)
-                    || (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY)
-                    || (edgeFlag == SWIPE_EDGE_TOP && yvel > MIN_FLING_VELOCITY)
-                    || (edgeFlag == SWIPE_EDGE_BOTTOM && yvel < -MIN_FLING_VELOCITY)
+                if ((edgeFlag == SWIPE_EDGE_LEFT && xvel > MIN_FLING_VELOCITY) ||
+                    (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY) ||
+                    (edgeFlag == SWIPE_EDGE_TOP && yvel > MIN_FLING_VELOCITY) ||
+                    (edgeFlag == SWIPE_EDGE_BOTTOM && yvel < -MIN_FLING_VELOCITY)
                 )
                     result = exitCaptureOffsets(edgeFlag, releasedChild)
             } else {
