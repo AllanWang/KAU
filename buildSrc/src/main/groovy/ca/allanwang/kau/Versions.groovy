@@ -26,6 +26,9 @@ class Versions {
     // https://kotlinlang.org/docs/reference/using-gradle.html
     static def kotlin = '1.3.11'
 
+    // https://github.com/Kotlin/kotlinx.coroutines/releases
+    static def coroutines = '1.0.1'
+
     // https://github.com/mikepenz/AboutLibraries/releases
     static def aboutLibraries = '6.2.0'
 

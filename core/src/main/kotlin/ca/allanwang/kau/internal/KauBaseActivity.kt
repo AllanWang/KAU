@@ -15,8 +15,13 @@
  */
 package ca.allanwang.kau.internal
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Allan Wang on 2017-08-01.
@@ -27,7 +32,21 @@ import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
  * This is simply a convenience class;
  * you can always copy and paste this to your own class.
  */
-abstract class KauBaseActivity : AppCompatActivity() {
+abstract class KauBaseActivity : AppCompatActivity(), CoroutineScope {
+
+    open lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        job = Job()
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

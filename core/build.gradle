@@ -11,6 +11,8 @@ dependencies {
     api "androidx.constraintlayout:constraintlayout:${kau.constraintLayout}"
     api "com.google.android.material:material:${kau.googleMaterial}"
 
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kau.coroutines}"
+
     api "com.mikepenz:iconics-core:${kau.iconics}@aar"
     api "com.mikepenz:google-material-typeface:${kau.iconicsGoogle}.original@aar"
 
