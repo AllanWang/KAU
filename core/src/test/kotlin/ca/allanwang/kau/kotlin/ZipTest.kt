@@ -1,8 +1,23 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.kotlin
 
 import org.jetbrains.anko.doAsync
 import org.junit.Test
-import java.util.*
+import java.util.Random
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.test.assertTrue
@@ -40,7 +55,6 @@ class ZipTest {
             assertTrue((0..10).toList().toTypedArray().contentEquals(results), "Basic zip results do not match")
             assertTrue(finish - start < 1000L, "Basic zip does not seem to be running asynchronously")
             latch.countDown()
-
         }
         latch.await(1100, TimeUnit.MILLISECONDS)
     }
@@ -66,5 +80,4 @@ class ZipTest {
         }
         latch.await(1100, TimeUnit.MILLISECONDS)
     }
-
 }

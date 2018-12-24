@@ -14,4 +14,5 @@ class Plugins {
     def dexCount = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${Versions.dexCountPlugin}"
     static
     def gitVersion = "gradle.plugin.com.gladed.gradle.androidgitversion:gradle-android-git-version:${Versions.gitVersionPlugin}"
+    static def spotless = "com.diffplug.spotless:spotless-plugin-gradle:${Versions.spotless}"
 }

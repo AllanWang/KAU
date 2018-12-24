@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.mediapicker
 
 import android.database.Cursor
@@ -22,8 +37,8 @@ import kotlinx.android.synthetic.main.kau_activity_image_picker.*
  * Having three layered images makes this slightly slower than [MediaPickerActivityOverlayBase]
  */
 abstract class MediaPickerActivityBase(
-        mediaType: MediaType,
-        mediaActions: List<MediaAction> = emptyList()
+    mediaType: MediaType,
+    mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,19 +93,21 @@ abstract class MediaPickerActivityBase(
     private fun setToolbarScrollable(scrollable: Boolean) {
         val params = kau_toolbar.layoutParams as AppBarLayout.LayoutParams
         if (scrollable)
-            params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+            params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
+                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
         else
             params.scrollFlags = 0
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         super.onLoadFinished(loader, data)
-        setToolbarScrollable((kau_recyclerview.layoutManager as LinearLayoutManager)
-                .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1)
+        setToolbarScrollable(
+            (kau_recyclerview.layoutManager as LinearLayoutManager)
+                .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1
+        )
     }
 
     override fun onStatusChange(loaded: Boolean) {
         setToolbarScrollable(loaded)
     }
-
 }

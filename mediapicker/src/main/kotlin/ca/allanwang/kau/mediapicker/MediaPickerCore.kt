@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.mediapicker
 
 import android.Manifest
@@ -45,8 +60,8 @@ import java.util.concurrent.Future
  * Container for the main logic behind the both pickers
  */
 abstract class MediaPickerCore<T : IItem<*, *>>(
-        val mediaType: MediaType,
-        val mediaActions: List<MediaAction>
+    val mediaType: MediaType,
+    val mediaActions: List<MediaAction>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
@@ -79,10 +94,10 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
             val sizePx = MediaPickerCore.computeViewSize(context)
             return IconicsDrawable(context, iicon)
-                    .sizePx(sizePx)
-                    .backgroundColor(color)
-                    .paddingPx(sizePx / 3)
-                    .color(Color.WHITE)
+                .sizePx(sizePx)
+                .backgroundColor(color)
+                .paddingPx(sizePx / 3)
+                .color(Color.WHITE)
         }
 
         var accentColor: Int = 0xff666666.toInt()
@@ -183,8 +198,8 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             prefetcher = doAsync {
                 models.subList(0, Math.min(models.size, 50)).map { it.data }.forEach {
                     val target = glide.load(it)
-                            .applyMediaOptions(this@MediaPickerCore)
-                            .submit()
+                        .applyMediaOptions(this@MediaPickerCore)
+                        .submit()
                     try {
                         target.get()
                     } catch (ignored: InterruptedException) {

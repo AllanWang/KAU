@@ -1,11 +1,26 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.about
 
 import android.annotation.SuppressLint
-import androidx.recyclerview.widget.RecyclerView
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.iitems.KauIItem
@@ -22,23 +37,24 @@ import com.mikepenz.fastadapter.listeners.ClickEventHook
  * Created by Allan Wang on 2017-08-02.
  */
 class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolder>(
-        R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq
+    R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
             fastAdapter.withSelectable(false)
-                    .withEventHook(object : ClickEventHook<IItem<*, *>>() {
+                .withEventHook(object : ClickEventHook<IItem<*, *>>() {
 
-                        override fun onBind(viewHolder: RecyclerView.ViewHolder): View? = (viewHolder as? ViewHolder)?.questionContainer
+                    override fun onBind(viewHolder: RecyclerView.ViewHolder): View? =
+                        (viewHolder as? ViewHolder)?.questionContainer
 
-                        override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*, *>>, item: IItem<*, *>) {
-                            if (item !is FaqIItem) return
-                            item.isExpanded = !item.isExpanded
-                            v.parentViewGroup.findViewById<CollapsibleTextView>(R.id.faq_item_answer).setExpanded(item.isExpanded)
-                        }
-
-                    })
+                    override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*, *>>, item: IItem<*, *>) {
+                        if (item !is FaqIItem) return
+                        item.isExpanded = !item.isExpanded
+                        v.parentViewGroup.findViewById<CollapsibleTextView>(R.id.faq_item_answer)
+                            .setExpanded(item.isExpanded)
+                    }
+                })
         }
     }
 
@@ -83,5 +99,4 @@ class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolde
             answer.movementMethod = LinkMovementMethod.getInstance()
         }
     }
-
 }

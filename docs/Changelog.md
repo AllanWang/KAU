@@ -1,7 +1,8 @@
 # Changelog
 
 ## v4.0.0-alpha01
-* Migrated to androidx. See migration for external dependency changes.
+* Migrate to androidx. See migration for external dependency changes.
+* :core: Remove deprecation warning for Kotterknife
 
 ## v3.8.0
 * Update everything to Android Studio 3.1

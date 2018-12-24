@@ -63,6 +63,9 @@ class Versions {
     // https://mvnrepository.com/artifact/androidx.test/rules?repo=google
     static def testRules = '1.1.1'
 
+    // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
+    static def spotless = '3.17.0'
+
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     static def gradlePlugin = '3.2.1'
     static def mavenPlugin = '2.1'

@@ -1,8 +1,22 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.ui.widgets
 
 import android.content.Context
 import android.graphics.Color
-import androidx.core.widget.TextViewCompat
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity
@@ -10,8 +24,10 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextSwitcher
 import android.widget.TextView
+import androidx.core.widget.TextViewCompat
 import ca.allanwang.kau.ui.R
-import java.util.*
+import java.util.EmptyStackException
+import java.util.Stack
 
 /**
  * Created by Allan Wang on 2017-06-21.
@@ -19,7 +35,9 @@ import java.util.*
  * Text switcher with global text color and embedded sliding animations
  * Also has a stack to keep track of title changes
  */
-class TextSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null
+class TextSlider @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
 ) : TextSwitcher(context, attrs) {
 
     val titleStack: Stack<CharSequence?> = Stack()
@@ -28,20 +46,26 @@ class TextSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet
      * Holds a mapping of animation types to their respective animations
      */
     val animationMap = mapOf(
-            ANIMATION_NONE to null,
-            ANIMATION_SLIDE_HORIZONTAL to AnimationBundle(
-                    R.anim.kau_slide_in_right, R.anim.kau_slide_out_left,
-                    R.anim.kau_slide_in_left, R.anim.kau_slide_out_right),
-            ANIMATION_SLIDE_VERTICAL to AnimationBundle(
-                    R.anim.kau_slide_in_bottom, R.anim.kau_slide_out_top,
-                    R.anim.kau_slide_in_top, R.anim.kau_slide_out_bottom
-            )
+        ANIMATION_NONE to null,
+        ANIMATION_SLIDE_HORIZONTAL to AnimationBundle(
+            R.anim.kau_slide_in_right, R.anim.kau_slide_out_left,
+            R.anim.kau_slide_in_left, R.anim.kau_slide_out_right
+        ),
+        ANIMATION_SLIDE_VERTICAL to AnimationBundle(
+            R.anim.kau_slide_in_bottom, R.anim.kau_slide_out_top,
+            R.anim.kau_slide_in_top, R.anim.kau_slide_out_bottom
+        )
     )
 
     /**
      * Holds lazy instances of the animations
      */
-    inner class AnimationBundle(private val nextIn: Int, private val nextOut: Int, private val prevIn: Int, private val prevOut: Int) {
+    inner class AnimationBundle(
+        private val nextIn: Int,
+        private val nextOut: Int,
+        private val prevIn: Int,
+        private val prevOut: Int
+    ) {
         val NEXT_IN: Animation by lazy { AnimationUtils.loadAnimation(context, nextIn) }
         val NEXT_OUT: Animation by lazy { AnimationUtils.loadAnimation(context, nextOut) }
         val PREV_IN: Animation by lazy { AnimationUtils.loadAnimation(context, prevIn) }

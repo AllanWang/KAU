@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.colorpicker
 
 import android.animation.ValueAnimator
@@ -13,15 +28,15 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.StateListDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.os.Build
+import android.util.AttributeSet
+import android.view.Gravity
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.FloatRange
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
-import android.util.AttributeSet
-import android.view.Gravity
-import android.widget.FrameLayout
-import android.widget.Toast
 import ca.allanwang.kau.utils.getDip
 import ca.allanwang.kau.utils.setBackgroundColorRes
 import ca.allanwang.kau.utils.toColor
@@ -33,7 +48,8 @@ import ca.allanwang.kau.utils.toHSV
  * An extension of MaterialDialog's CircleView with animation selection
  * [https://github.com/afollestad/material-dialogs/blob/master/commons/src/main/java/com/afollestad/materialdialogs/color/CircleView.java]
  */
-class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : FrameLayout(context, attrs, defStyleAttr) {
+class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    FrameLayout(context, attrs, defStyleAttr) {
 
     private val borderWidthMicro: Float = context.getDip(1f)
     private val borderWidthSmall: Float = context.getDip(3f)
@@ -108,14 +124,14 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     fun animateSelected(selected: Boolean) {
         if (this.selected == selected) return
         this.selected = selected // We need to draw the other bands
-        val range = if (selected) Pair(-borderWidthSmall, borderWidthLarge) else Pair(borderWidthLarge, -borderWidthSmall)
+        val range =
+            if (selected) Pair(-borderWidthSmall, borderWidthLarge) else Pair(borderWidthLarge, -borderWidthSmall)
         ValueAnimator.ofFloat(range.first, range.second).apply {
             reverse()
             duration = 150L
             addUpdateListener { animation ->
                 whiteOuterBound = animation.animatedValue as Float
                 invalidate()
-
             }
             start()
         }
@@ -137,12 +153,22 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             if (whiteRadius >= centerWidth) {
                 canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
             } else {
-                canvas.drawCircle(centerWidth, centerHeight, if (withBorder) centerWidth - borderWidthMicro else centerWidth, outerPaint)
+                canvas.drawCircle(
+                    centerWidth,
+                    centerHeight,
+                    if (withBorder) centerWidth - borderWidthMicro else centerWidth,
+                    outerPaint
+                )
                 canvas.drawCircle(centerWidth, centerHeight, whiteRadius, whitePaint)
             }
             canvas.drawCircle(centerWidth, centerHeight, innerRadius, innerPaint)
         } else {
-            canvas.drawCircle(centerWidth, centerHeight, if (withBorder) centerWidth - borderWidthMicro else centerWidth, innerPaint)
+            canvas.drawCircle(
+                centerWidth,
+                centerHeight,
+                if (withBorder) centerWidth - borderWidthMicro else centerWidth,
+                innerPaint
+            )
         }
     }
 
@@ -169,11 +195,13 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             referenceX = screenWidth - referenceX // mirror
         }
         val cheatSheet = Toast
-                .makeText(context, String.format("#%06X", 0xFFFFFF and color), Toast.LENGTH_SHORT)
+            .makeText(context, String.format("#%06X", 0xFFFFFF and color), Toast.LENGTH_SHORT)
         if (midy < displayFrame.height()) {
             // Show along the top; follow action buttons
-            cheatSheet.setGravity(Gravity.TOP or GravityCompat.END, referenceX,
-                    screenPos[1] + height - displayFrame.top)
+            cheatSheet.setGravity(
+                Gravity.TOP or GravityCompat.END, referenceX,
+                screenPos[1] + height - displayFrame.top
+            )
         } else {
             // Show along the bottom center
             cheatSheet.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, height)
@@ -194,8 +222,10 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
 
         @ColorInt
-        fun shiftColor(@ColorInt color: Int,
-                       @FloatRange(from = 0.0, to = 2.0) by: Float): Int {
+        fun shiftColor(
+            @ColorInt color: Int,
+            @FloatRange(from = 0.0, to = 2.0) by: Float
+        ): Int {
             if (by == 1f) return color
             val hsv = color.toHSV()
             hsv[2] *= by // value component

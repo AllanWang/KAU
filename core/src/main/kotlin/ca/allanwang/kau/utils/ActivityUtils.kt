@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 @file:Suppress("NOTHING_TO_INLINE")
 
 package ca.allanwang.kau.utils
@@ -36,19 +51,22 @@ annotation class KauActivity
  */
 @Suppress("DEPRECATION")
 inline fun <reified T : Activity> Activity.startActivityForResult(
-        requestCode: Int,
-        bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}
+    requestCode: Int,
+    bundleBuilder: Bundle.() -> Unit = {},
+    intentBuilder: Intent.() -> Unit = {}
 ) = startActivityForResult(T::class.java, requestCode, bundleBuilder, intentBuilder)
 
-@Deprecated("Use reified generic instead of passing class",
-        ReplaceWith("startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)"),
-        DeprecationLevel.WARNING)
+@Deprecated(
+    "Use reified generic instead of passing class",
+    ReplaceWith("startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)"),
+    DeprecationLevel.WARNING
+)
 inline fun <T : Activity> Activity.startActivityForResult(
-        clazz: Class<T>,
-        requestCode: Int,
-        bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}) {
+    clazz: Class<T>,
+    requestCode: Int,
+    bundleBuilder: Bundle.() -> Unit = {},
+    intentBuilder: Intent.() -> Unit = {}
+) {
     val intent = Intent(this, clazz)
     intent.intentBuilder()
     val bundle = Bundle()
@@ -71,7 +89,6 @@ inline fun Activity.restart(intentBuilder: Intent.() -> Unit = {}) {
     finish()
     overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out)
 }
-
 
 /**
  * Force restart an entire application
@@ -119,8 +136,8 @@ inline var Activity.statusBarLight: Boolean
         if (buildIsMarshmallowAndUp) {
             val flags = window.decorView.systemUiVisibility
             window.decorView.systemUiVisibility =
-                    if (value) flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    else flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                if (value) flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                else flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
         }
     }
 
@@ -143,6 +160,14 @@ inline fun Activity.showKeyboard() {
     currentFocus?.showKeyboard()
 }
 
-inline fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, noinline builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(text, duration, builder)
+inline fun Activity.snackbar(
+    text: String,
+    duration: Int = Snackbar.LENGTH_LONG,
+    noinline builder: Snackbar.() -> Unit = {}
+) = contentView!!.snackbar(text, duration, builder)
 
-inline fun Activity.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, noinline builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(textId, duration, builder)
+inline fun Activity.snackbar(
+    @StringRes textId: Int,
+    duration: Int = Snackbar.LENGTH_LONG,
+    noinline builder: Snackbar.() -> Unit = {}
+) = contentView!!.snackbar(textId, duration, builder)

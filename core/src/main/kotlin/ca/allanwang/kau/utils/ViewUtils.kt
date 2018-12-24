@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 @file:Suppress("NOTHING_TO_INLINE")
 
 package ca.allanwang.kau.utils
@@ -7,10 +22,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.RequiresApi
-import androidx.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -18,6 +29,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
@@ -26,7 +41,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
-
 
 /**
  * Created by Allan Wang on 2017-05-31.
@@ -81,10 +95,16 @@ fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: S
     return snackbar
 }
 
-fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) = snackbar(context.string(textId), duration, builder)
+fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) =
+    snackbar(context.string(textId), duration, builder)
 
 @KauUtils
-fun ImageView.setIcon(icon: IIcon?, sizeDp: Int = 24, @ColorInt color: Int = Color.WHITE, builder: IconicsDrawable.() -> Unit = {}) {
+fun ImageView.setIcon(
+    icon: IIcon?,
+    sizeDp: Int = 24,
+    @ColorInt color: Int = Color.WHITE,
+    builder: IconicsDrawable.() -> Unit = {}
+) {
     if (icon == null) return
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
 }
@@ -98,7 +118,8 @@ fun FloatingActionButton.showIf(show: Boolean) = if (show) show() else hide()
 fun FloatingActionButton.hideIf(hide: Boolean) = if (hide) hide() else show()
 
 @KauUtils
-fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View = LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
+fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
+    LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
 /**
  * Set left margin to a value in px
@@ -150,10 +171,10 @@ fun View.setMargin(margin: Int) = setMargins(margin, KAU_ALL)
 private fun View.setMargins(margin: Int, flag: Int): Boolean {
     val p = (layoutParams as? ViewGroup.MarginLayoutParams) ?: return false
     p.setMargins(
-            if (flag and KAU_LEFT > 0) margin else p.leftMargin,
-            if (flag and KAU_TOP > 0) margin else p.topMargin,
-            if (flag and KAU_RIGHT > 0) margin else p.rightMargin,
-            if (flag and KAU_BOTTOM > 0) margin else p.bottomMargin
+        if (flag and KAU_LEFT > 0) margin else p.leftMargin,
+        if (flag and KAU_TOP > 0) margin else p.topMargin,
+        if (flag and KAU_RIGHT > 0) margin else p.rightMargin,
+        if (flag and KAU_BOTTOM > 0) margin else p.bottomMargin
     )
     return true
 }
@@ -206,25 +227,30 @@ fun View.setPadding(padding: Int) = setPadding(padding, KAU_ALL)
 @KauUtils
 private fun View.setPadding(padding: Int, flag: Int) {
     setPadding(
-            if (flag and KAU_LEFT > 0) padding else paddingLeft,
-            if (flag and KAU_TOP > 0) padding else paddingTop,
-            if (flag and KAU_RIGHT > 0) padding else paddingRight,
-            if (flag and KAU_BOTTOM > 0) padding else paddingBottom
+        if (flag and KAU_LEFT > 0) padding else paddingLeft,
+        if (flag and KAU_TOP > 0) padding else paddingTop,
+        if (flag and KAU_RIGHT > 0) padding else paddingRight,
+        if (flag and KAU_BOTTOM > 0) padding else paddingBottom
     )
 }
 
 @KauUtils
 fun View.hideKeyboard() {
     clearFocus()
-    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+        windowToken,
+        0
+    )
 }
 
 @KauUtils
 fun View.showKeyboard() {
     requestFocus()
-    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
+        this,
+        InputMethodManager.SHOW_IMPLICIT
+    )
 }
-
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 @KauUtils
@@ -243,12 +269,14 @@ inline val TextInputEditText.value: String get() = text.toString().trim()
 /**
  * Generates a recycler view with match parent and a linearlayoutmanager, since it's so commonly used
  */
-fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, configs: RecyclerView.() -> Unit = {}) = RecyclerView(this).apply {
-    layoutManager = LinearLayoutManager(this@fullLinearRecycler)
-    layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
-    if (rvAdapter != null) adapter = rvAdapter
-    configs()
-}
+fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, configs: RecyclerView.() -> Unit = {}) =
+    RecyclerView(this).apply {
+        layoutManager = LinearLayoutManager(this@fullLinearRecycler)
+        layoutParams =
+            RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
+        if (rvAdapter != null) adapter = rvAdapter
+        configs()
+    }
 
 /**
  * Sets a linear layout manager along with an adapter
@@ -263,7 +291,11 @@ fun RecyclerView.withLinearAdapter(rvAdapter: RecyclerView.Adapter<*>) = apply {
  * If it is not shown, the action will be invoked directly and no further actions will be made
  * If it is already shown, scaling and alpha animations will be added to the action
  */
-inline fun <T : ImageView> T.fadeScaleTransition(duration: Long = 500L, minScale: Float = 0.7f, crossinline action: T.() -> Unit) {
+inline fun <T : ImageView> T.fadeScaleTransition(
+    duration: Long = 500L,
+    minScale: Float = 0.7f,
+    crossinline action: T.() -> Unit
+) {
     if (!isVisible) action()
     else {
         var transitioned = false
