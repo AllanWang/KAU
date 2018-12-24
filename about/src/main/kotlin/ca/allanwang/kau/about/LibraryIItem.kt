@@ -1,11 +1,11 @@
 package ca.allanwang.kau.about
 
 import android.os.Build
-import androidx.recyclerview.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.iitems.KauIItem
@@ -20,21 +20,21 @@ import com.mikepenz.fastadapter.IItem
  * Created by Allan Wang on 2017-06-27.
  */
 class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewHolder>(
-        R.layout.kau_iitem_library, ::ViewHolder, R.id.kau_item_library
+    R.layout.kau_iitem_library, ::ViewHolder, R.id.kau_item_library
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
             fastAdapter.withSelectable(false)
-                    .withOnClickListener { v, _, item, _ ->
-                        if (item !is LibraryIItem)
-                            false
-                        else
-                            with(item.lib) {
-                                v!!.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
-                                true
-                            }
-                    }
+                .withOnClickListener { v, _, item, _ ->
+                    if (item !is LibraryIItem)
+                        false
+                    else
+                        with(item.lib) {
+                            v!!.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
+                            true
+                        }
+                }
         }
     }
 
@@ -48,7 +48,10 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewH
             @Suppress("DEPRECATION")
             description.text = when {
                 lib.libraryDescription.isBlank() -> lib.libraryDescription
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(lib.libraryDescription, Html.FROM_HTML_MODE_LEGACY)
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
+                    lib.libraryDescription,
+                    Html.FROM_HTML_MODE_LEGACY
+                )
                 else -> Html.fromHtml(lib.libraryDescription)
             }
             bottomDivider.gone()
@@ -90,5 +93,4 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewH
         val divider: View = v.findViewById(R.id.lib_item_top_divider)
         val bottomDivider: View = v.findViewById(R.id.lib_item_bottom_divider)
     }
-
 }

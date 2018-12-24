@@ -11,16 +11,25 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import androidx.annotation.*
-import androidx.core.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.annotation.AnimRes
+import androidx.annotation.AttrRes
+import androidx.annotation.BoolRes
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.IntegerRes
+import androidx.annotation.InterpolatorRes
+import androidx.annotation.PluralsRes
+import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
 import com.afollestad.materialdialogs.MaterialDialog
-
 
 /**
  * Created by Allan Wang on 2017-06-03.
@@ -33,19 +42,22 @@ import com.afollestad.materialdialogs.MaterialDialog
  */
 @Suppress("DEPRECATION")
 inline fun <reified T : Activity> Context.startActivity(
-        clearStack: Boolean = false,
-        bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}
+    clearStack: Boolean = false,
+    bundleBuilder: Bundle.() -> Unit = {},
+    intentBuilder: Intent.() -> Unit = {}
 ) = startActivity(T::class.java, clearStack, bundleBuilder, intentBuilder)
 
-@Deprecated("Use reified generic instead of passing class",
-        ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
-        DeprecationLevel.WARNING)
+@Deprecated(
+    "Use reified generic instead of passing class",
+    ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
+    DeprecationLevel.WARNING
+)
 inline fun <T : Activity> Context.startActivity(
-        clazz: Class<T>,
-        clearStack: Boolean = false,
-        bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}) {
+    clazz: Class<T>,
+    clearStack: Boolean = false,
+    bundleBuilder: Bundle.() -> Unit = {},
+    intentBuilder: Intent.() -> Unit = {}
+) {
     val intent = Intent(this, clazz)
     if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.intentBuilder()
@@ -54,7 +66,6 @@ inline fun <T : Activity> Context.startActivity(
     startActivity(intent, if (bundle.isEmpty) null else bundle)
     if (clearStack && this is Activity) finish()
 }
-
 
 fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))
 
@@ -82,11 +93,14 @@ fun Context.startLink(vararg url: String?) {
 fun Context.startLink(@StringRes url: Int) = startLink(string(url))
 
 //Toast helpers
-inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) = context.toast(id, duration, log)
+inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
+    context.toast(id, duration, log)
 
-inline fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) = toast(this.string(id), duration, log)
+inline fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
+    toast(this.string(id), duration, log)
 
-inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) = context.toast(text, duration, log)
+inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
+    context.toast(text, duration, log)
 
 inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) {
     Toast.makeText(this, text, duration).show()
@@ -98,24 +112,33 @@ const val INVALID_ID = 0
 //Resource retrievers
 inline fun Context.string(@StringRes id: Int): String = getString(id)
 
-inline fun Context.string(@StringRes id: Int, fallback: String?): String? = if (id != INVALID_ID) string(id) else fallback
-inline fun Context.string(@StringRes id: Int, fallback: () -> String?): String? = if (id != INVALID_ID) string(id) else fallback()
+inline fun Context.string(@StringRes id: Int, fallback: String?): String? =
+    if (id != INVALID_ID) string(id) else fallback
+
+inline fun Context.string(@StringRes id: Int, fallback: () -> String?): String? =
+    if (id != INVALID_ID) string(id) else fallback()
+
 inline fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 inline fun Context.boolean(@BoolRes id: Int): Boolean = resources.getBoolean(id)
 inline fun Context.integer(@IntegerRes id: Int): Int = resources.getInteger(id)
 inline fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
 inline fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
 inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)
-        ?: throw KauException("Drawable with id $id not found")
+    ?: throw KauException("Drawable with id $id not found")
 
-inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? = if (id != INVALID_ID) drawable(id) else fallback
-inline fun Context.drawable(@DrawableRes id: Int, fallback: () -> Drawable?): Drawable? = if (id != INVALID_ID) drawable(id) else fallback()
+inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? =
+    if (id != INVALID_ID) drawable(id) else fallback
+
+inline fun Context.drawable(@DrawableRes id: Int, fallback: () -> Drawable?): Drawable? =
+    if (id != INVALID_ID) drawable(id) else fallback()
+
 inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)!!
 inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)!!
 /**
  * Returns plural form of res. The quantity is also passed to the formatter as an int
  */
-inline fun Context.plural(@PluralsRes id: Int, quantity: Number) = resources.getQuantityString(id, quantity.toInt(), quantity.toInt())!!
+inline fun Context.plural(@PluralsRes id: Int, quantity: Number) =
+    resources.getQuantityString(id, quantity.toInt(), quantity.toInt())!!
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, @ColorInt fallback: Int = 0): Int {
@@ -164,7 +187,8 @@ inline fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): Ma
     return builder.show()
 }
 
-fun Context.getDip(value: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
+fun Context.getDip(value: Float): Float =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
 
 inline val Context.isRtl: Boolean
     get() = resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
@@ -181,7 +205,10 @@ inline val Context.isNavBarOnBottom: Boolean
         return !canMove || dm.widthPixels < dm.heightPixels
     }
 
-fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || ContextCompat.checkSelfPermission(this, permissions) == PackageManager.PERMISSION_GRANTED
+fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || ContextCompat.checkSelfPermission(
+    this,
+    permissions
+) == PackageManager.PERMISSION_GRANTED
 
 fun Context.copyToClipboard(text: String?, label: String = "Copied Text", showToast: Boolean = true) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

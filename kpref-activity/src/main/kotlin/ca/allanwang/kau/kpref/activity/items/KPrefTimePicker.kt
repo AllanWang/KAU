@@ -5,7 +5,7 @@ import android.widget.TimePicker
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by Allan Wang on 2017-06-14.
@@ -30,10 +30,10 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
      * Default implementation of [KPrefTimeContract]
      */
     class KPrefTimeBuilder(
-            globalOptions: GlobalOptions,
-            titleId: Int,
-            getter: () -> Int,
-            setter: (value: Int) -> Unit
+        globalOptions: GlobalOptions,
+        titleId: Int,
+        getter: () -> Int,
+        setter: (value: Int) -> Unit
     ) : KPrefTimeContract, BaseContract<Int> by BaseBuilder<Int>(globalOptions, titleId, getter, setter) {
 
         override var use24HourFormat: Boolean = false
@@ -50,11 +50,9 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
             else
                 String.format(Locale.CANADA, "%d:%02d %s", hour % 12, min, if (hour >= 12) "PM" else "AM")
         }
-
     }
 
     override fun getType(): Int = R.id.kau_item_pref_time_picker
-
 }
 
 private val Int.splitTime: Pair<Int, Int>

@@ -1,9 +1,9 @@
 package ca.allanwang.kau.iitems
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapter.R
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
@@ -17,9 +17,9 @@ import ca.allanwang.kau.utils.string
  * Contains only one text view
  */
 class HeaderIItem(
-        text: String? = null, var textRes: Int = INVALID_ID
+    text: String? = null, var textRes: Int = INVALID_ID
 ) : KauIItem<HeaderIItem, HeaderIItem.ViewHolder>(
-        R.layout.kau_iitem_header, { ViewHolder(it) }, R.id.kau_item_header_big_margin_top
+    R.layout.kau_iitem_header, { ViewHolder(it) }, R.id.kau_item_header_big_margin_top
 ), ThemableIItem by ThemableIItemDelegate() {
 
     var text: String = text ?: "Header Placeholder"
@@ -40,5 +40,4 @@ class HeaderIItem(
         val text: TextView = v.findViewById(R.id.kau_header_text)
         val container: CardView = v.findViewById(R.id.kau_header_container)
     }
-
 }

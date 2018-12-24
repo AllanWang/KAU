@@ -14,10 +14,10 @@ import com.mikepenz.fastadapter.select.SelectExtension
  * Add kotlin's generic syntax to better support out types
  */
 fun <Item : IItem<*, *>> fastAdapter(vararg adapter: IAdapter<out Item>) =
-        FastAdapter.with<Item, IAdapter<out Item>>(adapter.toList())!!
+    FastAdapter.with<Item, IAdapter<out Item>>(adapter.toList())!!
 
 inline fun <reified T : IAdapterExtension<Item>, Item : IItem<*, *>> FastAdapter<Item>.getExtension(): T? =
-        getExtension(T::class.java)
+    getExtension(T::class.java)
 
 /**
  * Returns selection size, or -1 if selection is disabled

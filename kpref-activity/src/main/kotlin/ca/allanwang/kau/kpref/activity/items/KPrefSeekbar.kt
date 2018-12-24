@@ -67,10 +67,10 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
      * Default implementation of [KPrefSeekbarContract]
      */
     class KPrefSeekbarBuilder(
-            globalOptions: GlobalOptions,
-            titleId: Int,
-            getter: () -> Int,
-            setter: (value: Int) -> Unit
+        globalOptions: GlobalOptions,
+        titleId: Int,
+        getter: () -> Int,
+        setter: (value: Int) -> Unit
     ) : KPrefSeekbarContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
         override var min: Int = 0
@@ -103,5 +103,4 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
         get() = this * increment + min
 
     override fun getType(): Int = R.id.kau_item_pref_seekbar
-
 }

@@ -45,8 +45,8 @@ import java.util.concurrent.Future
  * Container for the main logic behind the both pickers
  */
 abstract class MediaPickerCore<T : IItem<*, *>>(
-        val mediaType: MediaType,
-        val mediaActions: List<MediaAction>
+    val mediaType: MediaType,
+    val mediaActions: List<MediaAction>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
@@ -79,10 +79,10 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
             val sizePx = MediaPickerCore.computeViewSize(context)
             return IconicsDrawable(context, iicon)
-                    .sizePx(sizePx)
-                    .backgroundColor(color)
-                    .paddingPx(sizePx / 3)
-                    .color(Color.WHITE)
+                .sizePx(sizePx)
+                .backgroundColor(color)
+                .paddingPx(sizePx / 3)
+                .color(Color.WHITE)
         }
 
         var accentColor: Int = 0xff666666.toInt()
@@ -183,8 +183,8 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             prefetcher = doAsync {
                 models.subList(0, Math.min(models.size, 50)).map { it.data }.forEach {
                     val target = glide.load(it)
-                            .applyMediaOptions(this@MediaPickerCore)
-                            .submit()
+                        .applyMediaOptions(this@MediaPickerCore)
+                        .submit()
                     try {
                         target.get()
                     } catch (ignored: InterruptedException) {

@@ -15,14 +15,17 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
 import java.io.File
 
-
 /**
  * Created by Allan Wang on 2017-08-17.
  */
 class MediaActionItem(
-        val action: MediaAction,
-        val mediaType: MediaType
-) : KauIItem<MediaActionItem, MediaItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { MediaItemBasic.ViewHolder(it) }, R.id.kau_item_media_action) {
+    val action: MediaAction,
+    val mediaType: MediaType
+) : KauIItem<MediaActionItem, MediaItemBasic.ViewHolder>(
+    R.layout.kau_iitem_image_basic,
+    { MediaItemBasic.ViewHolder(it) },
+    R.id.kau_item_media_action
+) {
 
     override fun isSelectable(): Boolean = false
 
@@ -60,7 +63,7 @@ internal const val MEDIA_ACTION_REQUEST_PICKER = 101
  * If you just wish to use videos, see [MediaActionCameraVideo]
  */
 abstract class MediaActionCamera(
-        override var color: Int = MediaPickerCore.accentColor
+    override var color: Int = MediaPickerCore.accentColor
 ) : MediaAction {
 
     abstract fun createFile(context: Context): File
@@ -105,7 +108,7 @@ abstract class MediaActionCamera(
  * Basic camera action just for videos
  */
 class MediaActionCameraVideo(
-        override var color: Int = MediaPickerCore.accentColor
+    override var color: Int = MediaPickerCore.accentColor
 ) : MediaAction {
     override fun iicon(item: MediaActionItem) = GoogleMaterial.Icon.gmd_videocam
     override operator fun invoke(c: Context, item: MediaActionItem) {
@@ -126,8 +129,8 @@ class MediaActionCameraVideo(
  * The type will be added programmatically
  */
 class MediaActionGallery(
-        val multiple: Boolean = false,
-        override var color: Int = MediaPickerCore.accentColor
+    val multiple: Boolean = false,
+    override var color: Int = MediaPickerCore.accentColor
 ) : MediaAction {
 
     override fun iicon(item: MediaActionItem) = when (item.mediaType) {
@@ -144,8 +147,9 @@ class MediaActionGallery(
                     putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple)
                 }
                 (c as Activity).startActivityForResult(
-                        Intent.createChooser(intent, c.string(R.string.kau_select_media)),
-                        MEDIA_ACTION_REQUEST_PICKER)
+                    Intent.createChooser(intent, c.string(R.string.kau_select_media)),
+                    MEDIA_ACTION_REQUEST_PICKER
+                )
             }
         }
     }

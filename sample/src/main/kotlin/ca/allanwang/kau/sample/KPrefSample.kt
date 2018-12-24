@@ -19,5 +19,4 @@ object KPrefSample : KPref() {
     var seekbar: Int by kpref("seekbar", 20)
     var time12: Int by kpref("time_12", 315)
     var time24: Int by kpref("time_24", 2220)
-
 }

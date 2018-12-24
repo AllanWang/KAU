@@ -18,5 +18,4 @@ open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
     }
 
     override fun getType() = R.id.kau_item_pref_header
-
 }

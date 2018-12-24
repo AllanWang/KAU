@@ -33,5 +33,4 @@ class LazyResettableTest {
         assertEquals(t1, t2, "Lazy resettable not returning same value after second call")
         assertNotEquals(t1, t3, "Lazy resettable not invalidated by registry")
     }
-
 }

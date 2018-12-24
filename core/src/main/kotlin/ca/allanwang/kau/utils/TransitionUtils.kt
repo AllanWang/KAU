@@ -1,13 +1,13 @@
 package ca.allanwang.kau.utils
 
 import android.os.Build
+import android.transition.Transition
+import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.annotation.TransitionRes
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
-import android.transition.Transition
-import android.view.ViewGroup
 import androidx.transition.Transition as SupportTransition
 
 /**
@@ -29,7 +29,8 @@ fun Transition.addEndListener(onEnd: (transition: Transition) -> Unit) {
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class SupportTransitionEndListener(val onEnd: (transition: SupportTransition) -> Unit) : SupportTransition.TransitionListener {
+class SupportTransitionEndListener(val onEnd: (transition: SupportTransition) -> Unit) :
+    SupportTransition.TransitionListener {
     override fun onTransitionEnd(transition: SupportTransition) = onEnd(transition)
     override fun onTransitionResume(transition: SupportTransition) {}
     override fun onTransitionPause(transition: SupportTransition) {}

@@ -43,7 +43,7 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
         kau_draggable.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 window.returnTransition = TransitionInflater.from(this@ElasticRecyclerActivity)
-                        .inflateTransition(if (kau_draggable.translationY > 0) configs.exitTransitionBottom else configs.exitTransitionTop)
+                    .inflateTransition(if (kau_draggable.translationY > 0) configs.exitTransitionBottom else configs.exitTransitionTop)
                 kau_recycler.stopScroll()
                 finishAfterTransition()
             }
@@ -64,6 +64,5 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
     fun setOutsideTapListener(listener: () -> Unit) {
         kau_draggable.setOnClickListener { listener() }
     }
-
 }
 

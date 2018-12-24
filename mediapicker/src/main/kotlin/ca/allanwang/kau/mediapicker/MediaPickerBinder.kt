@@ -31,7 +31,8 @@ inline fun <reified T : MediaPickerCore<*>> Activity.kauLaunchMediaPicker(reques
  * call under [Activity.onActivityResult]
  * and make sure that the requestCode matches first
  */
-fun Activity.kauOnMediaPickerResult(resultCode: Int, data: Intent?) = MediaPickerCore.onMediaPickerResult(resultCode, data)
+fun Activity.kauOnMediaPickerResult(resultCode: Int, data: Intent?) =
+    MediaPickerCore.onMediaPickerResult(resultCode, data)
 
 internal const val LOADER_ID = 42
 internal const val MEDIA_PICKER_RESULT = "media_picker_result"
@@ -39,5 +40,9 @@ internal const val MEDIA_PICKER_RESULT = "media_picker_result"
 internal const val ANIMATION_DURATION = 200L
 internal const val ANIMATION_SCALE = 0.95f
 
-internal fun <T> RequestBuilder<T>.applyMediaOptions(context: Context) = apply(RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).centerCrop().override(MediaPickerCore.viewSize(context)))
+internal fun <T> RequestBuilder<T>.applyMediaOptions(context: Context) = apply(
+    RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).centerCrop().override(
+        MediaPickerCore.viewSize(context)
+    )
+)
 

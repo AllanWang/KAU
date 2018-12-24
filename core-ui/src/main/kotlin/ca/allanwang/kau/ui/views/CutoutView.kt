@@ -17,7 +17,12 @@
 package ca.allanwang.kau.ui.views
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import android.util.AttributeSet
@@ -34,7 +39,7 @@ import ca.allanwang.kau.utils.toBitmap
  * A view which punches out some text from an opaque color block, allowing you to see through it.
  */
 class CutoutView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
     companion object {
@@ -107,8 +112,10 @@ class CutoutView @JvmOverloads constructor(
 
     private fun calculateTextPosition() {
         val targetWidth = width / PHI
-        textSize = getSingleLineTextSize(text!!, paint, targetWidth, 0f, maxTextSize,
-                0.5f, resources.displayMetrics)
+        textSize = getSingleLineTextSize(
+            text!!, paint, targetWidth, 0f, maxTextSize,
+            0.5f, resources.displayMetrics
+        )
         paint.textSize = textSize
 
         // measuring text is fun :] see: https://chris.banes.me/2014/03/27/measuring-text/
@@ -145,13 +152,15 @@ class CutoutView @JvmOverloads constructor(
 
      * Adapted from https://github.com/grantland/android-autofittextview
      */
-    fun getSingleLineTextSize(text: String,
-                              paint: TextPaint,
-                              targetWidth: Float,
-                              low: Float,
-                              high: Float,
-                              precision: Float,
-                              metrics: DisplayMetrics): Float {
+    fun getSingleLineTextSize(
+        text: String,
+        paint: TextPaint,
+        targetWidth: Float,
+        low: Float,
+        high: Float,
+        precision: Float,
+        metrics: DisplayMetrics
+    ): Float {
         val mid = (low + high) / 2.0f
 
         paint.textSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, mid, metrics)
@@ -180,7 +189,12 @@ class CutoutView @JvmOverloads constructor(
                 cutoutCanvas.drawText(text!!, cutoutX, cutoutY, paint)
             }
             TYPE_DRAWABLE -> {
-                cutoutCanvas.drawBitmap(drawable!!.toBitmap(bitmapScaling, Bitmap.Config.ALPHA_8), cutoutX, cutoutY, paint)
+                cutoutCanvas.drawBitmap(
+                    drawable!!.toBitmap(bitmapScaling, Bitmap.Config.ALPHA_8),
+                    cutoutX,
+                    cutoutY,
+                    paint
+                )
             }
             TYPE_EMPTY -> {
                 // do nothing
@@ -193,5 +207,4 @@ class CutoutView @JvmOverloads constructor(
     }
 
     override fun hasOverlappingRendering(): Boolean = true
-
 }

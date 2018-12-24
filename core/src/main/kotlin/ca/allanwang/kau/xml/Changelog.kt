@@ -2,13 +2,13 @@ package ca.allanwang.kau.xml
 
 import android.content.Context
 import android.content.res.XmlResourceParser
-import androidx.annotation.ColorInt
-import androidx.annotation.LayoutRes
-import androidx.annotation.XmlRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.LayoutRes
+import androidx.annotation.XmlRes
 import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.R
 import ca.allanwang.kau.utils.materialDialog
@@ -17,7 +17,6 @@ import com.afollestad.materialdialogs.MaterialDialog
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.xmlpull.v1.XmlPullParser
-
 
 /**
  * Created by Allan Wang on 2017-05-28.
@@ -42,10 +41,13 @@ fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null,
  * Internals of the changelog dialog
  * Contains an mainAdapter for each item, as well as the tags to parse
  */
-internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @ColorInt val textColor: Int? = null) : RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
+internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @ColorInt val textColor: Int? = null) :
+    RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ChangelogVH(LayoutInflater.from(parent.context)
-            .inflate(items[viewType].second.layout, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ChangelogVH(
+        LayoutInflater.from(parent.context)
+            .inflate(items[viewType].second.layout, parent, false)
+    )
 
     override fun onBindViewHolder(holder: ChangelogVH, position: Int) {
         holder.text.text = items[position].first

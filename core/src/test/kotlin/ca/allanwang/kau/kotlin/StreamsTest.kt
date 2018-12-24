@@ -38,5 +38,4 @@ class StreamsTest {
         items.kauRemoveIf { it == thePotato } //removal by equality
         assertEquals(result.size - 1, items.size, "Invalid list removal based on equality")
     }
-
 }

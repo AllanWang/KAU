@@ -1,11 +1,11 @@
 package ca.allanwang.kau.kotlin
 
 import android.content.Context
-import androidx.annotation.AnimRes
-import androidx.annotation.InterpolatorRes
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
+import androidx.annotation.AnimRes
+import androidx.annotation.InterpolatorRes
 
 /**
  * Created by Allan Wang on 2017-05-30.
@@ -47,5 +47,4 @@ class LazyContext<out T>(private val initializer: (context: Context) -> T, lock:
             }
         }
     }
-
 }

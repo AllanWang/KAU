@@ -59,5 +59,4 @@ open class DefaultAnimator : BaseItemAnimator() {
     override fun changeAnimationCleanup(holder: RecyclerView.ViewHolder) {
         holder.itemView.alpha = 1f
     }
-
 }

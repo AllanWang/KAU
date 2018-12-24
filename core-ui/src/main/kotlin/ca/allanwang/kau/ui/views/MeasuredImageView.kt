@@ -1,14 +1,14 @@
 package ca.allanwang.kau.ui.views
 
 import android.content.Context
-import androidx.appcompat.widget.AppCompatImageView
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatImageView
 
 /**
  * Created by Allan Wang on 2017-07-14.
  */
 class MeasuredImageView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
     init {
@@ -19,5 +19,4 @@ class MeasuredImageView @JvmOverloads constructor(
         val result = onMeasure(this, widthMeasureSpec, heightMeasureSpec)
         super.onMeasure(result.first, result.second)
     }
-
 }

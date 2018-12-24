@@ -1,7 +1,7 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import androidx.appcompat.widget.AppCompatCheckBox
 import android.widget.CheckBox
+import androidx.appcompat.widget.AppCompatCheckBox
 import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.tint
@@ -28,5 +28,4 @@ open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean
     }
 
     override fun getType(): Int = R.id.kau_item_pref_checkbox
-
 }

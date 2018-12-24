@@ -13,7 +13,6 @@ import ca.allanwang.kau.R
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-
 /**
  * Created by Allan Wang on 2017-05-28.
  */
@@ -132,5 +131,5 @@ inline val kauIsMainThread: Boolean
 class KauException(message: String) : RuntimeException(message)
 
 fun String.withMaxLength(n: Int): String =
-        if (length <= n) this
-        else substring(0, n - 1) + KAU_ELLIPSIS
+    if (length <= n) this
+    else substring(0, n - 1) + KAU_ELLIPSIS

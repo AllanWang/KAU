@@ -12,7 +12,6 @@ import ca.allanwang.kau.utils.hasPermission
 import ca.allanwang.kau.utils.toast
 import java.lang.ref.WeakReference
 
-
 /**
  * Created by Allan Wang on 2017-07-03.
  *
@@ -30,13 +29,17 @@ internal object PermissionManager {
     private val manifestPermission = lazyContext<Array<String>> {
         try {
             it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions
-                    ?: emptyArray()
+                ?: emptyArray()
         } catch (e: Exception) {
             emptyArray()
         }
     }
 
-    operator fun invoke(context: Context, permissions: Array<out String>, callback: (granted: Boolean, deniedPerm: String?) -> Unit) {
+    operator fun invoke(
+        context: Context,
+        permissions: Array<out String>,
+        callback: (granted: Boolean, deniedPerm: String?) -> Unit
+    ) {
         KL.d { "Permission manager for: ${permissions.contentToString()}" }
         if (!buildIsMarshmallowAndUp) return callback(true, null)
         val missingPermissions = permissions.filter { !context.hasPermission(it) }
@@ -58,7 +61,7 @@ internal object PermissionManager {
             }
         }
         val activity = (context as? Activity)
-                ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
+            ?: throw KauException("Context is not an instance of an activity; cannot request permissions")
         KL.i { "Requesting permissions ${permissions.contentToString()}" }
         ActivityCompat.requestPermissions(activity, permissions, 1)
     }
@@ -89,5 +92,4 @@ internal object PermissionManager {
         }
         KL.i { "Post on permission result: pending ${pendingResults.size}" }
     }
-
 }

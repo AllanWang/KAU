@@ -22,8 +22,8 @@ import kotlinx.android.synthetic.main.kau_activity_image_picker.*
  * Having three layered images makes this slightly slower than [MediaPickerActivityOverlayBase]
  */
 abstract class MediaPickerActivityBase(
-        mediaType: MediaType,
-        mediaActions: List<MediaAction> = emptyList()
+    mediaType: MediaType,
+    mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,19 +78,21 @@ abstract class MediaPickerActivityBase(
     private fun setToolbarScrollable(scrollable: Boolean) {
         val params = kau_toolbar.layoutParams as AppBarLayout.LayoutParams
         if (scrollable)
-            params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+            params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
+                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
         else
             params.scrollFlags = 0
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         super.onLoadFinished(loader, data)
-        setToolbarScrollable((kau_recyclerview.layoutManager as LinearLayoutManager)
-                .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1)
+        setToolbarScrollable(
+            (kau_recyclerview.layoutManager as LinearLayoutManager)
+                .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1
+        )
     }
 
     override fun onStatusChange(loaded: Boolean) {
         setToolbarScrollable(loaded)
     }
-
 }

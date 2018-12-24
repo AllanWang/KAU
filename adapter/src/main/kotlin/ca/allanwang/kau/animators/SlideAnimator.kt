@@ -1,8 +1,8 @@
 package ca.allanwang.kau.animators
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.view.ViewPropertyAnimator
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.utils.KAU_BOTTOM
 import ca.allanwang.kau.utils.KAU_LEFT
 import ca.allanwang.kau.utils.KAU_RIGHT
@@ -11,7 +11,8 @@ import ca.allanwang.kau.utils.KAU_TOP
 /**
  * Created by Allan Wang on 2017-07-11.
  */
-class SlideAnimatorAdd(val fromEdge: Int, val slideFactor: Float = 1f, override var itemDelayFactor: Float = 0.125f) : KauAnimatorAdd {
+class SlideAnimatorAdd(val fromEdge: Int, val slideFactor: Float = 1f, override var itemDelayFactor: Float = 0.125f) :
+    KauAnimatorAdd {
 
     override fun animationPrepare(holder: RecyclerView.ViewHolder): View.() -> Unit = {
         when (fromEdge) {
@@ -37,10 +38,13 @@ class SlideAnimatorAdd(val fromEdge: Int, val slideFactor: Float = 1f, override 
     }
 
     override fun getDelay(remove: Long, move: Long, change: Long): Long = 0L
-
 }
 
-class SlideAnimatorRemove(val fromEdge: Int, val slideFactor: Float = 1f, override var itemDelayFactor: Float = 0.125f) : KauAnimatorRemove {
+class SlideAnimatorRemove(
+    val fromEdge: Int,
+    val slideFactor: Float = 1f,
+    override var itemDelayFactor: Float = 0.125f
+) : KauAnimatorRemove {
     override fun animation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = {
         with(holder.itemView) {
             when (fromEdge) {

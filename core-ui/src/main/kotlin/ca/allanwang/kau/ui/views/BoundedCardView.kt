@@ -7,7 +7,6 @@ import androidx.cardview.widget.CardView
 import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.utils.parentViewGroup
 
-
 /**
  * Created by Allan Wang on 2017-06-26.
  *
@@ -16,7 +15,7 @@ import ca.allanwang.kau.utils.parentViewGroup
  * Defaults to at most the parent's visible height
  */
 class BoundedCardView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
 
     /**
@@ -48,5 +47,4 @@ class BoundedCardView @JvmOverloads constructor(
         val trueHeightMeasureSpec = MeasureSpec.makeMeasureSpec(maxMeasureHeight, MeasureSpec.AT_MOST)
         super.onMeasure(widthMeasureSpec, trueHeightMeasureSpec)
     }
-
 }

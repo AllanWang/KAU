@@ -1,7 +1,7 @@
 package ca.allanwang.kau.animators
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewPropertyAnimator
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.utils.KAU_BOTTOM
 import ca.allanwang.kau.utils.KAU_RIGHT
 
@@ -9,12 +9,13 @@ import ca.allanwang.kau.utils.KAU_RIGHT
  * Created by Allan Wang on 2017-06-27.
  */
 open class KauAnimator(
-        val addAnimator: KauAnimatorAdd = SlideAnimatorAdd(KAU_BOTTOM),
-        val removeAnimator: KauAnimatorRemove = SlideAnimatorRemove(KAU_RIGHT),
-        val changeAnimator: KauAnimatorChange = FadeAnimatorChange()
+    val addAnimator: KauAnimatorAdd = SlideAnimatorAdd(KAU_BOTTOM),
+    val removeAnimator: KauAnimatorRemove = SlideAnimatorRemove(KAU_RIGHT),
+    val changeAnimator: KauAnimatorChange = FadeAnimatorChange()
 ) : BaseItemAnimator() {
 
-    open fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float) = Math.max(0L, (holder.adapterPosition * duration * factor).toLong())
+    open fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float) =
+        Math.max(0L, (holder.adapterPosition * duration * factor).toLong())
 
     override fun removeAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator {
         return holder.itemView.animate().apply {
@@ -29,7 +30,8 @@ open class KauAnimator(
         holder.itemView.apply { removeAnimator.animationCleanup(holder)() }
     }
 
-    override fun getRemoveDelay(remove: Long, move: Long, change: Long): Long = removeAnimator.getDelay(remove, move, change)
+    override fun getRemoveDelay(remove: Long, move: Long, change: Long): Long =
+        removeAnimator.getDelay(remove, move, change)
 
     override fun addAnimationPrepare(holder: RecyclerView.ViewHolder) {
         holder.itemView.apply { addAnimator.animationPrepare(holder)() }
@@ -69,5 +71,4 @@ open class KauAnimator(
     override fun changeAnimationCleanup(holder: RecyclerView.ViewHolder) {
         holder.itemView.apply { changeAnimator.changeAnimationCleanup(holder)() }
     }
-
 }

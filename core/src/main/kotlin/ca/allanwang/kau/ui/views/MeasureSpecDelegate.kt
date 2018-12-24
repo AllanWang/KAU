@@ -84,10 +84,13 @@ class MeasureSpecDelegate : MeasureSpecContract {
         val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.MeasureSpecDelegate)
         relativeWidth = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeWidth, relativeWidth)
         relativeHeight = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeHeight, relativeHeight)
-        relativeWidthToParent = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeWidthToParent, relativeWidthToParent)
-        relativeHeightToParent = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeHeightToParent, relativeHeightToParent)
+        relativeWidthToParent =
+            styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeWidthToParent, relativeWidthToParent)
+        relativeHeightToParent =
+            styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeHeightToParent, relativeHeightToParent)
         postRelativeWidth = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_postRelativeWidth, postRelativeWidth)
-        postRelativeHeight = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_postRelativeHeight, postRelativeHeight)
+        postRelativeHeight =
+            styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_postRelativeHeight, postRelativeHeight)
         styledAttrs.recycle()
     }
 
@@ -115,5 +118,4 @@ class MeasureSpecDelegate : MeasureSpecContract {
 
     private val Float.measureSpec: Int
         get() = View.MeasureSpec.makeMeasureSpec(this.toInt(), View.MeasureSpec.EXACTLY)
-
 }

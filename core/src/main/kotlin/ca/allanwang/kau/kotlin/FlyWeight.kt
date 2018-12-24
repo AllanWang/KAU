@@ -36,5 +36,4 @@ class FlyWeight<K : Any, V : Any>(private val creator: (key: K) -> V) : Map<K, V
             map.put(key, creator(key))
         return map[key]!!
     }
-
 }

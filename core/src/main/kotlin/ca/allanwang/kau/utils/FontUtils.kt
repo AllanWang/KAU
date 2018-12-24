@@ -14,16 +14,16 @@ object FontUtils {
         synchronized(sTypefaceCache) {
             if (!sTypefaceCache.containsKey(font)) {
                 val tf = Typeface.createFromAsset(
-                        context.applicationContext.assets, "fonts/$font.ttf")
+                    context.applicationContext.assets, "fonts/$font.ttf"
+                )
                 sTypefaceCache.put(font, tf)
             }
             return sTypefaceCache.get(font)
-                    ?: throw IllegalArgumentException("Font error; typeface does not exist at assets/fonts$font.ttf")
+                ?: throw IllegalArgumentException("Font error; typeface does not exist at assets/fonts$font.ttf")
         }
     }
 
     fun getName(typeface: Typeface): String? = sTypefaceCache.entries.firstOrNull { it.value == typeface }?.key
-
 }
 
 fun Context.getFont(font: String) = FontUtils.get(this, font)

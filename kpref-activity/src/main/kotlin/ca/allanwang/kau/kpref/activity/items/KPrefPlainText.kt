@@ -17,10 +17,9 @@ open class KPrefPlainText(open val builder: KPrefPlainTextBuilder) : KPrefItemBa
     override fun KClick<Unit>.defaultOnClick() = Unit
 
     class KPrefPlainTextBuilder(
-            globalOptions: GlobalOptions,
-            titleId: Int
+        globalOptions: GlobalOptions,
+        titleId: Int
     ) : BaseContract<Unit> by BaseBuilder(globalOptions, titleId, {}, {})
 
     override fun getType(): Int = R.id.kau_item_pref_plain_text
-
 }

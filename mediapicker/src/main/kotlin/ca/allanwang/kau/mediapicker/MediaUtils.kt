@@ -11,8 +11,9 @@ import ca.allanwang.kau.utils.buildIsLollipopAndUp
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
-
+import java.util.ArrayList
+import java.util.Date
+import java.util.Locale
 
 /**
  * Created by Allan Wang on 2017-08-17.

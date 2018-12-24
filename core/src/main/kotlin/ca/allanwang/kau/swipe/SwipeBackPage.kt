@@ -24,7 +24,8 @@ internal class SwipeBackPage(activity: Activity) : SwipeBackContractInternal by 
     init {
         activity.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         activity.window.decorView.setBackgroundColor(Color.TRANSPARENT)
-        swipeBackLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        swipeBackLayout.layoutParams =
+            ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         slider = RelativeSlider(this)
     }
 
@@ -41,7 +42,7 @@ internal class SwipeBackPage(activity: Activity) : SwipeBackContractInternal by 
 
     private fun handleLayout() {
         val activity = activityRef.get()
-                ?: return KL.v { "KauSwipe activity ref gone during handleLayout" }
+            ?: return KL.v { "KauSwipe activity ref gone during handleLayout" }
         if (swipeEnabled) swipeBackLayout.attachToActivity(activity)
         else swipeBackLayout.removeFromActivity(activity)
     }
@@ -50,7 +51,6 @@ internal class SwipeBackPage(activity: Activity) : SwipeBackContractInternal by 
         swipeBackLayout.scrollThreshold = percent
         return this
     }
-
 }
 
 internal interface SwipeBackContractInternal : SwipeBackContract {

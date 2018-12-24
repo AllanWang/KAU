@@ -1,7 +1,7 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import androidx.annotation.CallSuper
 import android.view.View
+import androidx.annotation.CallSuper
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R
@@ -84,14 +84,14 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
     /**
      * Default implementation of [BaseContract]
      */
-    class BaseBuilder<T>(globalOptions: GlobalOptions,
-                         titleId: Int,
-                         override val getter: () -> T,
-                         override val setter: (value: T) -> Unit
+    class BaseBuilder<T>(
+        globalOptions: GlobalOptions,
+        titleId: Int,
+        override val getter: () -> T,
+        override val setter: (value: T) -> Unit
     ) : CoreContract by CoreBuilder(globalOptions, titleId), BaseContract<T> {
         override var enabler: () -> Boolean = { true }
         override var onClick: (KClick<T>.() -> Unit)? = null
         override var onDisabledClick: (KClick<T>.() -> Unit)? = null
     }
-
 }

@@ -2,7 +2,11 @@ package ca.allanwang.kau.ui.views
 
 import android.animation.ValueAnimator
 import android.view.View
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.KAU_COLLAPSED
+import ca.allanwang.kau.utils.KAU_COLLAPSING
+import ca.allanwang.kau.utils.KAU_EXPANDED
+import ca.allanwang.kau.utils.KAU_EXPANDING
+import ca.allanwang.kau.utils.goneIf
 import java.lang.ref.WeakReference
 
 /**
@@ -48,10 +52,10 @@ class CollapsibleViewDelegate : CollapsibleView {
             if (v > 1) v = 1f
             else if (v < 0) v = 0f
             stateHolder =
-                    if (v == 0f) KAU_COLLAPSED
-                    else if (v == 1f) KAU_EXPANDED
-                    else if (v - field < 0) KAU_COLLAPSING
-                    else KAU_EXPANDING
+                if (v == 0f) KAU_COLLAPSED
+                else if (v == 1f) KAU_EXPANDED
+                else if (v - field < 0) KAU_COLLAPSING
+                else KAU_EXPANDING
             field = v
             view?.goneIf(state == KAU_COLLAPSED)
             view?.requestLayout()
@@ -101,5 +105,4 @@ class CollapsibleViewDelegate : CollapsibleView {
         val target = if (expand) 1f else 0f
         if (animate) animateSize(target) else expansion = target
     }
-
 }

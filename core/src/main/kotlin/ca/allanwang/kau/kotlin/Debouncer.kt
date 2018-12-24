@@ -56,7 +56,6 @@ open class Debouncer(var interval: Long) {
             task = null
         }
     }
-
 }
 
 /*

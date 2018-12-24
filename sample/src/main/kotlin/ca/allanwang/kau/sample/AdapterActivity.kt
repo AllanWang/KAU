@@ -17,7 +17,8 @@ class AdapterActivity : ElasticRecyclerActivity() {
     override fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean {
         val adapter = ItemAdapter<IItem<*, *>>()
         recycler.adapter = fastAdapter(adapter)
-        adapter.add(listOf(
+        adapter.add(
+            listOf(
                 CardIItem {
                     titleRes = R.string.kau_text_copied
                     descRes = R.string.kau_lorem_ipsum
@@ -43,7 +44,8 @@ class AdapterActivity : ElasticRecyclerActivity() {
                     titleRes = R.string.kau_text_copied
                     button = "Test"
                     buttonClick = { toast("HI") }
-                }))
+                })
+        )
         setOutsideTapListener { finishAfterTransition() }
         return true
     }

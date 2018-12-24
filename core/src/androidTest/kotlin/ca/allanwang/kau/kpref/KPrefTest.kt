@@ -84,11 +84,9 @@ class KPrefTest {
         assertEquals(-1, pref.one, "Kpref did not refetch from shared prefs upon reset")
     }
 
-
     @Test
     fun single() {
         assertTrue(pref.oneShot)
         assertFalse(pref.oneShot)
     }
-
 }

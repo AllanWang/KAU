@@ -10,7 +10,11 @@ import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.kauSwipeOnCreate
 import ca.allanwang.kau.swipe.kauSwipeOnDestroy
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.fullLinearRecycler
+import ca.allanwang.kau.utils.startActivity
+import ca.allanwang.kau.utils.toast
+import ca.allanwang.kau.utils.withAlpha
+import ca.allanwang.kau.utils.withSlideOut
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 
 /**
@@ -27,9 +31,9 @@ class AnimActivity : KauBaseActivity() {
         setContentView(fullLinearRecycler(adapter).apply { setBackgroundColor(KPrefSample.bgColor.withAlpha(255)) })
 
         adapter.add(listOf(
-                PERMISSION_ACCESS_COARSE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_CAMERA
+            PERMISSION_ACCESS_COARSE_LOCATION,
+            PERMISSION_ACCESS_FINE_LOCATION,
+            PERMISSION_CAMERA
         ).map { PermissionCheckbox(it) })
         adapter.withOnClickListener { _, _, item, _ ->
             KL.d { "Perm Click" }
@@ -54,5 +58,4 @@ class AnimActivity : KauBaseActivity() {
             withSlideOut(this@AnimActivity)
         })
     }
-
 }

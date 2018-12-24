@@ -21,5 +21,4 @@ interface SearchViewHolder {
         searchView?.unBind(replacementMenuItemClickListener)
         searchView = null
     }
-
 }

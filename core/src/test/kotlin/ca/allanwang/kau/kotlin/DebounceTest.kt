@@ -48,5 +48,4 @@ class DebounceTest {
         Thread.sleep(30)
         assertEquals(10, i)
     }
-
 }

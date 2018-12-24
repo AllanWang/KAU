@@ -12,7 +12,8 @@ fun KPref.kprefSingle(key: String) = KPrefSingleDelegate(key, this)
  * All subsequent retrievals will be [false]
  * This is useful for one time toggles such as showcasing items
  */
-class KPrefSingleDelegate internal constructor(private val key: String, private val pref: KPref, lock: Any? = null) : ILazyResettable<Boolean> {
+class KPrefSingleDelegate internal constructor(private val key: String, private val pref: KPref, lock: Any? = null) :
+    ILazyResettable<Boolean> {
 
     @Volatile
     private var _value: Boolean? = null
@@ -52,5 +53,4 @@ class KPrefSingleDelegate internal constructor(private val key: String, private 
     override fun isInitialized(): Boolean = _value != null
 
     override fun toString(): String = if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
-
 }

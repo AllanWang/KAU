@@ -48,7 +48,7 @@ class ZipEmptyCallback(val onReceived: () -> Unit) : ZipCallbackBase() {
  * ALl tasks must invoke the task callback for [onFinished] to execute
  */
 inline fun <reified T> Collection<(ZipCallback<T>) -> Unit>.zip(
-        defaultResult: T, crossinline onFinished: (results: Array<T>) -> Unit
+    defaultResult: T, crossinline onFinished: (results: Array<T>) -> Unit
 ) {
     val result = Array(size) { defaultResult }
     val countDown = AtomicInteger(size)

@@ -20,15 +20,22 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import androidx.annotation.RequiresApi
 import android.transition.TransitionInflater
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import androidx.annotation.RequiresApi
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.ui.R
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.AnimHolder
+import ca.allanwang.kau.utils.dimen
+import ca.allanwang.kau.utils.dpToPx
+import ca.allanwang.kau.utils.isNavBarOnBottom
+import ca.allanwang.kau.utils.navigationBarColor
+import ca.allanwang.kau.utils.scaleXY
+import ca.allanwang.kau.utils.statusBarColor
+import ca.allanwang.kau.utils.withAlpha
 
 /**
  * A [FrameLayout] which responds to nested scrolls to create drag-dismissable layouts.
@@ -37,7 +44,7 @@ import ca.allanwang.kau.utils.*
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class ElasticDragDismissFrameLayout @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     // configurable attribs
@@ -62,8 +69,11 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
     init {
         if (attrs != null) {
             val a = getContext().obtainStyledAttributes(attrs, R.styleable.ElasticDragDismissFrameLayout, 0, 0)
-            dragDismissDistance = a.getDimensionPixelSize(R.styleable.ElasticDragDismissFrameLayout_dragDismissDistance, Int.MAX_VALUE).toFloat()
-            dragDismissFraction = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissFraction, dragDismissFraction)
+            dragDismissDistance =
+                a.getDimensionPixelSize(R.styleable.ElasticDragDismissFrameLayout_dragDismissDistance, Int.MAX_VALUE)
+                    .toFloat()
+            dragDismissFraction =
+                a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissFraction, dragDismissFraction)
             dragDismissScale = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissScale, dragDismissScale)
             dragElacticity = a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragElasticity, dragElacticity)
             a.recycle()
@@ -86,15 +96,16 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
          * *
          * @param rawOffsetPixels     The raw distance the user has dragged
          */
-        internal open fun onDrag(elasticOffset: Float, elasticOffsetPixels: Float,
-                                 rawOffset: Float, rawOffsetPixels: Float) {
+        internal open fun onDrag(
+            elasticOffset: Float, elasticOffsetPixels: Float,
+            rawOffset: Float, rawOffsetPixels: Float
+        ) {
         }
 
         /**
          * Called when dragging is released and has exceeded the threshold dismiss distance.
          */
         internal open fun onDragDismissed() {}
-
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent): Boolean {
@@ -114,8 +125,10 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         }
     }
 
-    override fun onNestedScroll(target: View, dxConsumed: Int, dyConsumed: Int,
-                                dxUnconsumed: Int, dyUnconsumed: Int) {
+    override fun onNestedScroll(
+        target: View, dxConsumed: Int, dyConsumed: Int,
+        dxUnconsumed: Int, dyUnconsumed: Int
+    ) {
         dragScale(dyUnconsumed)
     }
 
@@ -129,12 +142,12 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
                 scaleXY = 1f
             } else {
                 animate()
-                        .translationY(0f)
-                        .scaleXY(1f)
-                        .setDuration(200L)
-                        .setInterpolator(AnimHolder.fastOutSlowInInterpolator(context))
-                        .setListener(null)
-                        .start()
+                    .translationY(0f)
+                    .scaleXY(1f)
+                    .setDuration(200L)
+                    .setInterpolator(AnimHolder.fastOutSlowInInterpolator(context))
+                    .setListener(null)
+                    .start()
             }
 
             totalDrag = 0f
@@ -201,15 +214,21 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
             translationY = 0f
             scaleXY = 1f
         }
-        dispatchDragCallback(dragFraction, dragTo,
-                Math.min(1f, Math.abs(totalDrag) / dragDismissDistance), totalDrag)
+        dispatchDragCallback(
+            dragFraction, dragTo,
+            Math.min(1f, Math.abs(totalDrag) / dragDismissDistance), totalDrag
+        )
     }
 
-    private fun dispatchDragCallback(elasticOffset: Float, elasticOffsetPixels: Float,
-                                     rawOffset: Float, rawOffsetPixels: Float) {
+    private fun dispatchDragCallback(
+        elasticOffset: Float, elasticOffsetPixels: Float,
+        rawOffset: Float, rawOffsetPixels: Float
+    ) {
         callbacks.forEach {
-            it.onDrag(elasticOffset, elasticOffsetPixels,
-                    rawOffset, rawOffsetPixels)
+            it.onDrag(
+                elasticOffset, elasticOffsetPixels,
+                rawOffset, rawOffsetPixels
+            )
         }
     }
 
@@ -227,8 +246,10 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         private val navBarAlpha: Int = Color.alpha(activity.navigationBarColor)
         private val fadeNavBar: Boolean = activity.isNavBarOnBottom
 
-        public override fun onDrag(elasticOffset: Float, elasticOffsetPixels: Float,
-                                   rawOffset: Float, rawOffsetPixels: Float) {
+        public override fun onDrag(
+            elasticOffset: Float, elasticOffsetPixels: Float,
+            rawOffset: Float, rawOffsetPixels: Float
+        ) {
             if (elasticOffsetPixels > 0) {
                 // dragging downward, fade the status bar in proportion
                 activity.statusBarColor = activity.statusBarColor.withAlpha(((1f - rawOffset) * statusBarAlpha).toInt())
@@ -238,7 +259,8 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
                 activity.navigationBarColor = activity.navigationBarColor.withAlpha(navBarAlpha)
             } else if (fadeNavBar) {
                 // dragging upward, fade the navigation bar in proportion
-                activity.navigationBarColor = activity.navigationBarColor.withAlpha(((1f - rawOffset) * navBarAlpha).toInt())
+                activity.navigationBarColor =
+                    activity.navigationBarColor.withAlpha(((1f - rawOffset) * navBarAlpha).toInt())
             }
         }
 
@@ -247,15 +269,18 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         }
     }
 
-    fun addExitListener(activity: Activity, transitionBottom: Int = R.transition.kau_exit_slide_bottom, transitionTop: Int = R.transition.kau_exit_slide_top) {
+    fun addExitListener(
+        activity: Activity,
+        transitionBottom: Int = R.transition.kau_exit_slide_bottom,
+        transitionTop: Int = R.transition.kau_exit_slide_top
+    ) {
         addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(activity) {
             override fun onDragDismissed() {
                 KL.v { "New transition" }
                 activity.window.returnTransition = TransitionInflater.from(activity)
-                        .inflateTransition(if (translationY > 0) transitionBottom else transitionTop)
+                    .inflateTransition(if (translationY > 0) transitionBottom else transitionTop)
                 activity.finishAfterTransition()
             }
         })
     }
-
 }

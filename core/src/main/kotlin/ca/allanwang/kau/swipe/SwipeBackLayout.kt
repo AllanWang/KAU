@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Canvas
-import androidx.core.view.ViewCompat
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.ViewCompat
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.adjustAlpha
 import ca.allanwang.kau.utils.navigationBarColor
@@ -23,7 +23,8 @@ import java.lang.ref.WeakReference
  * If an edge detection occurs, this layout consumes all the touch events
  * Use the [swipeEnabled] toggle if you need the scroll events on the same axis
  */
-internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
+internal class SwipeBackLayout @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle), SwipeBackContract, SwipeBackContractInternal {
 
     override val swipeBackLayout: SwipeBackLayout
@@ -96,10 +97,8 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
             override fun onEdgeTouch() {}
 
             override fun onScrollToClose(edgeFlag: Int) {}
-
         }
     }
-
 
     private var inLayout: Boolean = false
 
@@ -158,7 +157,8 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
     }
 
     override fun setEdgeSizePercent(swipeEdgePercent: Float) {
-        edgeSize = ((if (horizontal) resources.displayMetrics.widthPixels else resources.displayMetrics.heightPixels) * swipeEdgePercent).toInt()
+        edgeSize =
+            ((if (horizontal) resources.displayMetrics.widthPixels else resources.displayMetrics.heightPixels) * swipeEdgePercent).toInt()
     }
 
     /**
@@ -206,7 +206,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
      */
     override fun scrollToFinishActivity() {
         val contentView = contentViewRef.get()
-                ?: return KL.e { "KauSwipe cannot scroll to finish as contentView is null. Is onPostCreate called?" }
+            ?: return KL.e { "KauSwipe cannot scroll to finish as contentView is null. Is onPostCreate called?" }
         val swipeWidth = contentView.width + OVERSCROLL_DISTANCE
         val swipeHeight = contentView.height + OVERSCROLL_DISTANCE
         var top = 0
@@ -243,7 +243,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         val contentView = contentViewRef.get()
-                ?: return KL.e { "KauSwipe cannot change layout as contentView is null. Is onPostCreate called?" }
+            ?: return KL.e { "KauSwipe cannot change layout as contentView is null. Is onPostCreate called?" }
         inLayout = true
         val xOffset: Int
         val yOffset: Int
@@ -346,11 +346,12 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
         override fun onViewPositionChanged(changedView: View, left: Int, top: Int, dx: Int, dy: Int) {
             super.onViewPositionChanged(changedView, left, top, dx, dy)
             val contentView = contentViewRef.get()
-                    ?: return KL.e { "KauSwipe cannot change view position as contentView is null; is onPostCreate called?" }
+                ?: return KL.e { "KauSwipe cannot change view position as contentView is null; is onPostCreate called?" }
             //make sure that we are using the proper axis
             scrollPercent = Math.abs(
-                    if (horizontal) left.toFloat() / contentView.width
-                    else (top.toFloat() / contentView.height))
+                if (horizontal) left.toFloat() / contentView.width
+                else (top.toFloat() / contentView.height)
+            )
             contentOffset = if (horizontal) left else top
             invalidate()
             if (scrollPercent < scrollThreshold && !isScrollOverValid)
@@ -376,9 +377,10 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
             if (scrollPercent <= scrollThreshold) {
                 //threshold not met; check velocities
                 if ((edgeFlag == SWIPE_EDGE_LEFT && xvel > MIN_FLING_VELOCITY)
-                        || (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY)
-                        || (edgeFlag == SWIPE_EDGE_TOP && yvel > MIN_FLING_VELOCITY)
-                        || (edgeFlag == SWIPE_EDGE_BOTTOM && yvel < -MIN_FLING_VELOCITY))
+                    || (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY)
+                    || (edgeFlag == SWIPE_EDGE_TOP && yvel > MIN_FLING_VELOCITY)
+                    || (edgeFlag == SWIPE_EDGE_BOTTOM && yvel < -MIN_FLING_VELOCITY)
+                )
                     result = exitCaptureOffsets(edgeFlag, releasedChild)
             } else {
                 //threshold met; fling to designated side
@@ -431,6 +433,5 @@ internal class SwipeBackLayout @JvmOverloads constructor(context: Context, attrs
         const val DEFAULT_SCROLL_THRESHOLD = 0.3f
 
         const val OVERSCROLL_DISTANCE = 10
-
     }
 }

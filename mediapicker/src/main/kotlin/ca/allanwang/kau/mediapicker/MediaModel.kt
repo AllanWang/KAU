@@ -9,38 +9,38 @@ import android.provider.MediaStore
 import androidx.annotation.NonNull
 import java.io.File
 
-
 /**
  * Created by Allan Wang on 2017-07-14.
  */
 
 data class MediaModel(
-        val data: String, val mimeType: String, val size: Long, val dateModified: Long, val displayName: String?
+    val data: String, val mimeType: String, val size: Long, val dateModified: Long, val displayName: String?
 ) : Parcelable {
 
     @Throws(SQLException::class)
     constructor(@NonNull cursor: Cursor) : this(
-            cursor.getString(0),
-            cursor.getString(1) ?: "",
-            cursor.getLong(2),
-            cursor.getLong(3),
-            cursor.getString(4)
+        cursor.getString(0),
+        cursor.getString(1) ?: "",
+        cursor.getLong(2),
+        cursor.getLong(3),
+        cursor.getString(4)
     )
 
     constructor(f: File) : this(
-            f.absolutePath,
-            f.extension, // this isn't a mime type, but it does give some info
-            f.length(),
-            f.lastModified(),
-            f.nameWithoutExtension
+        f.absolutePath,
+        f.extension, // this isn't a mime type, but it does give some info
+        f.length(),
+        f.lastModified(),
+        f.nameWithoutExtension
     )
 
     constructor(parcel: Parcel) : this(
-            parcel.readString()!!,
-            parcel.readString()!!,
-            parcel.readLong(),
-            parcel.readLong(),
-            parcel.readString())
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readLong(),
+        parcel.readLong(),
+        parcel.readString()
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(this.data)
@@ -67,11 +67,11 @@ data class MediaModel(
 
     companion object CREATOR : Parcelable.Creator<MediaModel> {
         val projection = arrayOf(
-                MediaStore.MediaColumns.DATA,
-                MediaStore.MediaColumns.MIME_TYPE,
-                MediaStore.MediaColumns.SIZE,
-                MediaStore.MediaColumns.DATE_MODIFIED,
-                MediaStore.MediaColumns.DISPLAY_NAME
+            MediaStore.MediaColumns.DATA,
+            MediaStore.MediaColumns.MIME_TYPE,
+            MediaStore.MediaColumns.SIZE,
+            MediaStore.MediaColumns.DATE_MODIFIED,
+            MediaStore.MediaColumns.DISPLAY_NAME
         )
 
         override fun createFromParcel(parcel: Parcel): MediaModel {
@@ -82,5 +82,4 @@ data class MediaModel(
             return arrayOfNulls(size)
         }
     }
-
 }

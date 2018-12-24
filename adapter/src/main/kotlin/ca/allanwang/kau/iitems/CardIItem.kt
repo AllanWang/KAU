@@ -2,17 +2,22 @@ package ca.allanwang.kau.iitems
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapter.R
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.INVALID_ID
+import ca.allanwang.kau.utils.drawable
+import ca.allanwang.kau.utils.gone
+import ca.allanwang.kau.utils.string
+import ca.allanwang.kau.utils.toDrawable
+import ca.allanwang.kau.utils.visible
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
@@ -25,9 +30,9 @@ import com.mikepenz.iconics.typeface.IIcon
  * The icon and button are hidden by default unless values are given
  */
 class CardIItem(
-        val builder: Config.() -> Unit = {}
+    val builder: Config.() -> Unit = {}
 ) : KauIItem<CardIItem, CardIItem.ViewHolder>(
-        R.layout.kau_iitem_card, ::ViewHolder, R.id.kau_item_card
+    R.layout.kau_iitem_card, ::ViewHolder, R.id.kau_item_card
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
@@ -83,7 +88,7 @@ class CardIItem(
                 }
                 val icon = drawable(imageRes) {
                     imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor)
-                            ?: image
+                        ?: image
                 }
                 if (icon != null) holder.icon.visible().setImageDrawable(icon)
             }
@@ -117,5 +122,4 @@ class CardIItem(
         val bottomRow: LinearLayout = v.findViewById(R.id.kau_card_bottom_row)
         val button: Button = v.findViewById(R.id.kau_card_button)
     }
-
 }

@@ -1,9 +1,9 @@
 package ca.allanwang.kau.sample
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.iitems.KauIItem
 import ca.allanwang.kau.utils.hasPermission
 
@@ -11,7 +11,7 @@ import ca.allanwang.kau.utils.hasPermission
  * Created by Allan Wang on 2017-07-03.
  */
 class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox, PermissionCheckbox.ViewHolder>(
-        R.layout.permission_checkbox, { ViewHolder(it) }) {
+    R.layout.permission_checkbox, { ViewHolder(it) }) {
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)

@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.main.kau_activity_image_picker_overlay.*
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 abstract class MediaPickerActivityOverlayBase(
-        mediaType: MediaType,
-        mediaActions: List<MediaAction> = emptyList()
+    mediaType: MediaType,
+    mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItemBasic>(mediaType, mediaActions) {
 
     override fun onCreate(savedInstanceState: Bundle?) {

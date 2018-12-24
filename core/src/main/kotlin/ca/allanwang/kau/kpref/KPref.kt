@@ -47,5 +47,4 @@ open class KPref {
     operator fun get(key: String): ILazyResettable<*>? = prefMap[key]
 
     open fun deleteKeys(): Array<String> = arrayOf()
-
 }

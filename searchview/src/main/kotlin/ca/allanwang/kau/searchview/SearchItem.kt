@@ -2,7 +2,6 @@ package ca.allanwang.kau.searchview
 
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
-import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
@@ -10,8 +9,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.iitems.KauIItem
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.adjustAlpha
+import ca.allanwang.kau.utils.gone
+import ca.allanwang.kau.utils.setIcon
+import ca.allanwang.kau.utils.setRippleBackground
+import ca.allanwang.kau.utils.visible
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
 
@@ -22,15 +26,16 @@ import com.mikepenz.iconics.typeface.IIcon
  * Contains a [key] which acts as a unique identifier (eg url)
  * and a [content] which is displayed in the item
  */
-class SearchItem(val key: String,
-                 val content: String = key,
-                 val description: String? = null,
-                 val iicon: IIcon? = GoogleMaterial.Icon.gmd_search,
-                 val image: Drawable? = null
+class SearchItem(
+    val key: String,
+    val content: String = key,
+    val description: String? = null,
+    val iicon: IIcon? = GoogleMaterial.Icon.gmd_search,
+    val image: Drawable? = null
 ) : KauIItem<SearchItem, SearchItem.ViewHolder>(
-        R.layout.kau_search_iitem,
-        { ViewHolder(it) },
-        R.id.kau_item_search
+    R.layout.kau_search_iitem,
+    { ViewHolder(it) },
+    R.id.kau_item_search
 ) {
 
     companion object {
@@ -48,7 +53,12 @@ class SearchItem(val key: String,
         val index = content.indexOf(subText, ignoreCase = true)
         if (index == -1) return
         styledContent = SpannableStringBuilder(content)
-        styledContent!!.setSpan(StyleSpan(Typeface.BOLD), index, index + subText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        styledContent!!.setSpan(
+            StyleSpan(Typeface.BOLD),
+            index,
+            index + subText.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
     }
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {

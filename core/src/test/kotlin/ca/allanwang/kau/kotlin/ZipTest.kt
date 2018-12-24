@@ -2,7 +2,7 @@ package ca.allanwang.kau.kotlin
 
 import org.jetbrains.anko.doAsync
 import org.junit.Test
-import java.util.*
+import java.util.Random
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import kotlin.test.assertTrue
@@ -66,5 +66,4 @@ class ZipTest {
         }
         latch.await(1100, TimeUnit.MILLISECONDS)
     }
-
 }
