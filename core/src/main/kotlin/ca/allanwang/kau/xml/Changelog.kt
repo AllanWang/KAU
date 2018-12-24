@@ -29,8 +29,10 @@ import ca.allanwang.kau.R
 import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.use
 import com.afollestad.materialdialogs.MaterialDialog
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import org.xmlpull.v1.XmlPullParser
 
 /**
@@ -39,15 +41,14 @@ import org.xmlpull.v1.XmlPullParser
  * Easy changelog loader
  */
 fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null, customize: MaterialDialog.Builder.() -> Unit = {}) {
-    doAsync {
-        val items = parse(this@showChangelog, xmlRes)
-        uiThread {
-            materialDialog {
-                title(R.string.kau_changelog)
-                positiveText(R.string.kau_great)
-                adapter(ChangelogAdapter(items, textColor), null)
-                customize()
-            }
+    val scope = this as? CoroutineScope ?: GlobalScope
+    scope.launch {
+        val items = async { parse(this@showChangelog, xmlRes) }.await()
+        materialDialog {
+            title(R.string.kau_changelog)
+            positiveText(R.string.kau_great)
+            adapter(ChangelogAdapter(items, textColor), null)
+            customize()
         }
     }
 }

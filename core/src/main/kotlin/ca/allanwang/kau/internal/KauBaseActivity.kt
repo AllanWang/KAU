@@ -21,6 +21,7 @@ import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -31,6 +32,10 @@ import kotlin.coroutines.CoroutineContext
  * Ensures that some singleton methods are called.
  * This is simply a convenience class;
  * you can always copy and paste this to your own class.
+ *
+ * This also implements [CoroutineScope] that adheres to the activity lifecycle.
+ * Note that by default, [SupervisorJob] is used, to avoid exceptions in one child from affecting that of another.
+ * The default job can be overridden within [defaultJob]
  */
 abstract class KauBaseActivity : AppCompatActivity(), CoroutineScope {
 
@@ -38,9 +43,11 @@ abstract class KauBaseActivity : AppCompatActivity(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
+    open fun defaultJob(): Job = SupervisorJob()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        job = Job()
+        job = defaultJob()
     }
 
     override fun onDestroy() {
