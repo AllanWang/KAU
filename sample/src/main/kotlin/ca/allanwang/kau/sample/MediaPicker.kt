@@ -2,7 +2,7 @@ package ca.allanwang.kau.sample
 
 import android.content.Context
 import android.net.Uri
-import android.support.v4.content.FileProvider
+import androidx.core.content.FileProvider
 import ca.allanwang.kau.mediapicker.*
 import java.io.File
 

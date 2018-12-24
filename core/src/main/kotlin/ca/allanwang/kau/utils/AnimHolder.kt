@@ -1,7 +1,7 @@
 package ca.allanwang.kau.utils
 
 import android.os.Build
-import android.support.annotation.RequiresApi
+import androidx.annotation.RequiresApi
 import ca.allanwang.kau.kotlin.lazyInterpolator
 
 /**

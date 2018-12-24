@@ -13,11 +13,11 @@ import android.os.Bundle
 import android.provider.BaseColumns
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.CursorLoader
-import android.support.v4.content.Loader
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.CursorLoader
+import androidx.loader.content.Loader
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapters.fastAdapter
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
@@ -274,7 +274,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             f = File(tempPath)
             tempPath = null
         } else if (data?.data != null) {
-            f = File(data.data.path)
+            f = File(data.data!!.path)
         } else {
             KL.d { "Media camera no file found" }
             return
@@ -291,8 +291,8 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     private fun onPickerResult(data: Intent?) {
         val items = mutableListOf<Uri>()
         if (data?.data != null) {
-            KL.v { "Media picker data uri: ${data.data.path}" }
-            items.add(data.data)
+            KL.v { "Media picker data uri: ${data.data!!.path}" }
+            items.add(data.data!!)
         } else if (data != null) {
             val clip = data.clipData
             if (clip != null) {

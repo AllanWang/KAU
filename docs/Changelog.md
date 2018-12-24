@@ -1,5 +1,8 @@
 # Changelog
 
+## v4.0.0-alpha01
+* Migrated to androidx. See migration for external dependency changes.
+
 ## v3.8.0
 * Update everything to Android Studio 3.1
 * Fix new lint issues (see Migration for resource related methods)

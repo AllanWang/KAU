@@ -2,8 +2,8 @@ package ca.allanwang.kau.ui.views
 
 import android.content.Context
 import android.graphics.Rect
-import android.support.v7.widget.CardView
 import android.util.AttributeSet
+import androidx.cardview.widget.CardView
 import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.utils.parentViewGroup
 

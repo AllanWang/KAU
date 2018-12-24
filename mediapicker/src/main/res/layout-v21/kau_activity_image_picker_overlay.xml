@@ -7,7 +7,7 @@
     app:dragDismissDistance="@dimen/kau_drag_dismiss_distance_large"
     app:dragDismissScale="0.95">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/kau_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,9 +1,10 @@
 package ca.allanwang.kau.kpref
 
 import android.annotation.SuppressLint
-import android.support.test.InstrumentationRegistry
-import android.support.test.filters.MediumTest
-import android.support.test.runner.AndroidJUnit4
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,7 +24,7 @@ class KPrefTest {
     class TestPref : KPref() {
 
         init {
-            initialize(InstrumentationRegistry.getTargetContext(), "kpref_test_${System.currentTimeMillis()}")
+            initialize(ApplicationProvider.getApplicationContext<Context>(), "kpref_test_${System.currentTimeMillis()}")
         }
 
         var one by kpref("one", 1)

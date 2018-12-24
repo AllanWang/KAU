@@ -1,8 +1,8 @@
 package ca.allanwang.kau.animators
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewPropertyAnimator
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by Allan Wang on 2017-07-11.

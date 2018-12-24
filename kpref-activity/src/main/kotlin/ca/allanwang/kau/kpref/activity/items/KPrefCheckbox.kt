@@ -1,6 +1,6 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import android.support.v7.widget.AppCompatCheckBox
+import androidx.appcompat.widget.AppCompatCheckBox
 import android.widget.CheckBox
 import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.R

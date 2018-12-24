@@ -1,12 +1,12 @@
 package ca.allanwang.kau.utils
 
 import android.content.Context
-import android.support.test.InstrumentationRegistry
-import android.support.test.filters.MediumTest
-import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,7 +25,7 @@ class KotterknifeTest {
 
     @Before
     fun init() {
-        context = InstrumentationRegistry.getContext()
+        context = InstrumentationRegistry.getInstrumentation().context
     }
 
     @Test

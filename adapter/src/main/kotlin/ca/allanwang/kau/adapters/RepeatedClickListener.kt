@@ -1,6 +1,6 @@
 package ca.allanwang.kau.adapters
 
-import android.support.annotation.IntRange
+import androidx.annotation.IntRange
 import android.view.View
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IAdapter

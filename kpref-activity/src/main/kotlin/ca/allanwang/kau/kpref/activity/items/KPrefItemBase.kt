@@ -1,6 +1,6 @@
 package ca.allanwang.kau.kpref.activity.items
 
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
 import android.view.View
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick

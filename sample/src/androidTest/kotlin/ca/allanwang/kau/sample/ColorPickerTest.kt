@@ -1,16 +1,16 @@
 package ca.allanwang.kau.sample
 
-import android.support.test.espresso.DataInteraction
-import android.support.test.espresso.Espresso.onData
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.ViewAssertion
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withText
-import android.support.test.filters.MediumTest
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.espresso.DataInteraction
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.filters.MediumTest
+import androidx.test.rule.ActivityTestRule
 import android.view.View
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import ca.allanwang.kau.colorpicker.CircleView
 import org.hamcrest.Matchers.anything
 import org.junit.Rule
@@ -22,6 +22,8 @@ import kotlin.test.fail
 
 /**
  * Created by Allan Wang on 22/02/2018.
+ *
+ * Tests related to the :colorpicker module
  */
 @RunWith(AndroidJUnit4::class)
 @MediumTest
@@ -43,7 +45,7 @@ class ColorPickerTest {
     private val colorNotSelected = ViewAssertion { view, _ -> view.colorSelected(false) }
 
     @Test
-    fun test() {
+    fun colorClick() {
         onView(withText(R.string.accent_color)).perform(click())
         val colors = onData(anything()).inAdapterView(withId(R.id.md_grid))
 

@@ -2,7 +2,7 @@ package ca.allanwang.kau.about
 
 import android.content.Context
 import android.content.res.Configuration
-import android.support.v7.widget.AppCompatTextView
+import androidx.appcompat.widget.AppCompatTextView
 import android.util.AttributeSet
 import ca.allanwang.kau.ui.views.CollapsibleView
 import ca.allanwang.kau.ui.views.CollapsibleViewDelegate

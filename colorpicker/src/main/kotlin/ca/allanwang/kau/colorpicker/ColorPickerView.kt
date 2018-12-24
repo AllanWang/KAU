@@ -3,8 +3,8 @@ package ca.allanwang.kau.colorpicker
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.v4.content.res.ResourcesCompat
+import androidx.annotation.ColorInt
+import androidx.core.content.res.ResourcesCompat
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher

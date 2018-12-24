@@ -1,4 +1,4 @@
-@file:Suppress("UNCHECKED_CAST")
+@file:Suppress("UNCHECKED_CAST", "DEPRECATION")
 
 package ca.allanwang.kau.utils
 
@@ -8,146 +8,118 @@ package ca.allanwang.kau.utils
  * Courtesy of Jake Wharton
  *
  * https://github.com/JakeWharton/kotterknife/blob/master/src/main/kotlin/kotterknife/ButterKnife.kt
+ *
+ * Note that while this is useful for binding ids, there also exists other alternatives, such as
+ * `kotlin-android-extensions`.
+ *
+ * For fragments, make sure that the views are reset after the fragment lifecycle.
  */
 import android.app.Activity
 import android.app.Dialog
 import android.app.DialogFragment
 import android.app.Fragment
-import android.support.v7.widget.RecyclerView.ViewHolder
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import java.util.*
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-import android.support.v4.app.DialogFragment as SupportDialogFragment
-import android.support.v4.app.Fragment as SupportFragment
+import androidx.fragment.app.DialogFragment as SupportDialogFragment
+import androidx.fragment.app.Fragment as SupportFragment
 
-private const val DEPRECATION_MESSAGE = "Kotterknife will be removed in favour of the kotlin_android_extensions plugin"
-
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> View.bindView(id: Int)
         : ReadOnlyProperty<View, V> = required(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Activity.bindView(id: Int)
         : ReadOnlyProperty<Activity, V> = required(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Dialog.bindView(id: Int)
         : ReadOnlyProperty<Dialog, V> = required(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> DialogFragment.bindView(id: Int)
         : ReadOnlyProperty<DialogFragment, V> = required(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportDialogFragment.bindView(id: Int)
-        : ReadOnlyProperty<android.support.v4.app.DialogFragment, V> = required(id, viewFinder)
+        : ReadOnlyProperty<SupportDialogFragment, V> = required(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Fragment.bindView(id: Int)
         : ReadOnlyProperty<Fragment, V> = required(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportFragment.bindView(id: Int)
-        : ReadOnlyProperty<android.support.v4.app.Fragment, V> = required(id, viewFinder)
+        : ReadOnlyProperty<SupportFragment, V> = required(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
-fun <V : View> ViewHolder.bindView(id: Int)
-        : ReadOnlyProperty<ViewHolder, V> = required(id, viewFinder)
+fun <V : View> RecyclerView.ViewHolder.bindView(id: Int)
+        : ReadOnlyProperty<RecyclerView.ViewHolder, V> = required(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> View.bindOptionalView(id: Int)
         : ReadOnlyProperty<View, V?> = optional(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Activity.bindOptionalView(id: Int)
         : ReadOnlyProperty<Activity, V?> = optional(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Dialog.bindOptionalView(id: Int)
         : ReadOnlyProperty<Dialog, V?> = optional(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> DialogFragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<DialogFragment, V?> = optional(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportDialogFragment.bindOptionalView(id: Int)
-        : ReadOnlyProperty<android.support.v4.app.DialogFragment, V?> = optional(id, viewFinder)
+        : ReadOnlyProperty<SupportDialogFragment, V?> = optional(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Fragment.bindOptionalView(id: Int)
         : ReadOnlyProperty<Fragment, V?> = optional(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportFragment.bindOptionalView(id: Int)
-        : ReadOnlyProperty<android.support.v4.app.Fragment, V?> = optional(id, viewFinder)
+        : ReadOnlyProperty<SupportFragment, V?> = optional(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
-fun <V : View> ViewHolder.bindOptionalView(id: Int)
-        : ReadOnlyProperty<ViewHolder, V?> = optional(id, viewFinder)
+fun <V : View> RecyclerView.ViewHolder.bindOptionalView(id: Int)
+        : ReadOnlyProperty<RecyclerView.ViewHolder, V?> = optional(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> View.bindViews(vararg ids: Int)
         : ReadOnlyProperty<View, List<V>> = required(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Activity.bindViews(vararg ids: Int)
         : ReadOnlyProperty<Activity, List<V>> = required(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Dialog.bindViews(vararg ids: Int)
         : ReadOnlyProperty<Dialog, List<V>> = required(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> DialogFragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<DialogFragment, List<V>> = required(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportDialogFragment.bindViews(vararg ids: Int)
-        : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = required(ids, viewFinder)
+        : ReadOnlyProperty<SupportDialogFragment, List<V>> = required(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Fragment.bindViews(vararg ids: Int)
         : ReadOnlyProperty<Fragment, List<V>> = required(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportFragment.bindViews(vararg ids: Int)
-        : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = required(ids, viewFinder)
+        : ReadOnlyProperty<SupportFragment, List<V>> = required(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> ViewHolder.bindViews(vararg ids: Int)
         : ReadOnlyProperty<ViewHolder, List<V>> = required(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> View.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<View, List<V>> = optional(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Activity.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<Activity, List<V>> = optional(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Dialog.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<Dialog, List<V>> = optional(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> DialogFragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<DialogFragment, List<V>> = optional(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportDialogFragment.bindOptionalViews(vararg ids: Int)
-        : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = optional(ids, viewFinder)
+        : ReadOnlyProperty<SupportDialogFragment, List<V>> = optional(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Fragment.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<Fragment, List<V>> = optional(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportFragment.bindOptionalViews(vararg ids: Int)
-        : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = optional(ids, viewFinder)
+        : ReadOnlyProperty<SupportFragment, List<V>> = optional(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> ViewHolder.bindOptionalViews(vararg ids: Int)
         : ReadOnlyProperty<ViewHolder, List<V>> = optional(ids, viewFinder)
 
@@ -189,13 +161,13 @@ private fun <T, V : View> optional(ids: IntArray, finder: T.(Int) -> View?) = La
 private open class Lazy<in T, out V>(private val initializer: (T, KProperty<*>) -> V) : ReadOnlyProperty<T, V> {
     protected object EMPTY
 
-    protected var value: Any? = EMPTY
+protected var value: Any? = EMPTY
 
-    override fun getValue(thisRef: T, property: KProperty<*>): V {
+override fun getValue(thisRef: T, property: KProperty<*>): V {
         if (value == EMPTY)
             value = initializer(thisRef, property)
 
-        return value as V
+return value as V
     }
 }
 
@@ -209,133 +181,101 @@ private open class Lazy<in T, out V>(private val initializer: (T, KProperty<*>) 
  * Credits to <a href="https://github.com/MichaelRocks">MichaelRocks</a>
  */
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> View.bindViewResettable(id: Int)
         : ReadOnlyProperty<View, V> = requiredResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Activity.bindViewResettable(id: Int)
         : ReadOnlyProperty<Activity, V> = requiredResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Dialog.bindViewResettable(id: Int)
         : ReadOnlyProperty<Dialog, V> = requiredResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> DialogFragment.bindViewResettable(id: Int)
         : ReadOnlyProperty<DialogFragment, V> = requiredResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportDialogFragment.bindViewResettable(id: Int)
-        : ReadOnlyProperty<android.support.v4.app.DialogFragment, V> = requiredResettable(id, viewFinder)
+        : ReadOnlyProperty<SupportDialogFragment, V> = requiredResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Fragment.bindViewResettable(id: Int)
         : ReadOnlyProperty<Fragment, V> = requiredResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportFragment.bindViewResettable(id: Int)
-        : ReadOnlyProperty<android.support.v4.app.Fragment, V> = requiredResettable(id, viewFinder)
+        : ReadOnlyProperty<SupportFragment, V> = requiredResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> ViewHolder.bindViewResettable(id: Int)
         : ReadOnlyProperty<ViewHolder, V> = requiredResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> View.bindOptionalViewResettable(id: Int)
         : ReadOnlyProperty<View, V?> = optionalResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Activity.bindOptionalViewResettable(id: Int)
         : ReadOnlyProperty<Activity, V?> = optionalResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Dialog.bindOptionalViewResettable(id: Int)
         : ReadOnlyProperty<Dialog, V?> = optionalResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> DialogFragment.bindOptionalViewResettable(id: Int)
         : ReadOnlyProperty<DialogFragment, V?> = optionalResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportDialogFragment.bindOptionalViewResettable(id: Int)
-        : ReadOnlyProperty<android.support.v4.app.DialogFragment, V?> = optionalResettable(id, viewFinder)
+        : ReadOnlyProperty<SupportDialogFragment, V?> = optionalResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Fragment.bindOptionalViewResettable(id: Int)
         : ReadOnlyProperty<Fragment, V?> = optionalResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportFragment.bindOptionalViewResettable(id: Int)
-        : ReadOnlyProperty<android.support.v4.app.Fragment, V?> = optionalResettable(id, viewFinder)
+        : ReadOnlyProperty<SupportFragment, V?> = optionalResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> ViewHolder.bindOptionalViewResettable(id: Int)
         : ReadOnlyProperty<ViewHolder, V?> = optionalResettable(id, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> View.bindViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<View, List<V>> = requiredResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Activity.bindViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<Activity, List<V>> = requiredResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Dialog.bindViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<Dialog, List<V>> = requiredResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> DialogFragment.bindViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<DialogFragment, List<V>> = requiredResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportDialogFragment.bindViewsResettable(vararg ids: Int)
-        : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = requiredResettable(ids, viewFinder)
+        : ReadOnlyProperty<SupportDialogFragment, List<V>> = requiredResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Fragment.bindViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<Fragment, List<V>> = requiredResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportFragment.bindViewsResettable(vararg ids: Int)
-        : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = requiredResettable(ids, viewFinder)
+        : ReadOnlyProperty<SupportFragment, List<V>> = requiredResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> ViewHolder.bindViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<ViewHolder, List<V>> = requiredResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> View.bindOptionalViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<View, List<V>> = optionalResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Activity.bindOptionalViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<Activity, List<V>> = optionalResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Dialog.bindOptionalViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<Dialog, List<V>> = optionalResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> DialogFragment.bindOptionalViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<DialogFragment, List<V>> = optionalResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportDialogFragment.bindOptionalViewsResettable(vararg ids: Int)
-        : ReadOnlyProperty<android.support.v4.app.DialogFragment, List<V>> = optionalResettable(ids, viewFinder)
+        : ReadOnlyProperty<SupportDialogFragment, List<V>> = optionalResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> Fragment.bindOptionalViewsResettable(vararg ids: Int)
         : ReadOnlyProperty<Fragment, List<V>> = optionalResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> SupportFragment.bindOptionalViewsResettable(vararg ids: Int)
-        : ReadOnlyProperty<android.support.v4.app.Fragment, List<V>> = optionalResettable(ids, viewFinder)
+        : ReadOnlyProperty<SupportFragment, List<V>> = optionalResettable(ids, viewFinder)
 
-@Deprecated(DEPRECATION_MESSAGE)
 fun <V : View> ViewHolder.bindOptionalViewsResettable(vararg ids: Int)
-        : ReadOnlyProperty<ViewHolder, List<V>> = optionalResettable(ids, viewFinder)
+        : ReadOnlyProperty<RecyclerView.ViewHolder, List<V>> = optionalResettable(ids, viewFinder)
 
 private fun <T, V : View> requiredResettable(id: Int, finder: T.(Int) -> View?) = LazyResettable { t: T, desc ->
     (t.finder(id) as V?)?.apply { } ?: viewNotFound(id, desc)
@@ -358,12 +298,11 @@ private class LazyResettable<in T, out V>(initializer: (T, KProperty<*>) -> V) :
         return super.getValue(thisRef, property)
     }
 
-    fun reset() {
+fun reset() {
         value = EMPTY
     }
 }
 
-@Deprecated(DEPRECATION_MESSAGE)
 object Kotterknife {
     fun reset(target: Any) {
         KotterknifeRegistry.reset(target)
@@ -373,7 +312,7 @@ object Kotterknife {
 private object KotterknifeRegistry {
     private val lazyMap = WeakHashMap<Any, MutableCollection<LazyResettable<*, *>>>()
 
-    fun register(target: Any, lazy: LazyResettable<*, *>) = lazyMap.getOrPut(target, { Collections.newSetFromMap(WeakHashMap()) }).add(lazy)
+fun register(target: Any, lazy: LazyResettable<*, *>) = lazyMap.getOrPut(target, { Collections.newSetFromMap(WeakHashMap()) }).add(lazy)
 
-    fun reset(target: Any) = lazyMap[target]?.forEach(LazyResettable<*, *>::reset)
+fun reset(target: Any) = lazyMap[target]?.forEach(LazyResettable<*, *>::reset)
 }

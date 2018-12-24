@@ -1,7 +1,7 @@
 package ca.allanwang.kau.utils
 
 import android.content.Context
-import android.support.v4.app.NotificationManagerCompat
+import androidx.core.app.NotificationManagerCompat
 
 
 /**

@@ -2,8 +2,8 @@ package ca.allanwang.kau.kpref.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.v7.widget.Toolbar
+import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
 import android.view.View
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.animators.SlideAnimatorAdd

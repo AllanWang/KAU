@@ -27,7 +27,7 @@ android {
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
         multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     def releaseSigning = file("../files/kau.properties")
@@ -101,6 +101,18 @@ android {
             }
         }
     }
+
+    // See https://github.com/facebook/flipper/issues/146
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == "com.android.support") {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion "26.+"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -113,17 +125,13 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
-//    androidTestImplementation("com.android.support.test.espresso:espresso-core:${kau.espresso}") {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    }
-//    androidTestImplementation("com.android.support.test:runner:${kau.testRunner}") {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    }
-//    androidTestImplementation kauDependency.kotlinTest
     testImplementation kauDependency.kotlinTest
     testImplementation kauDependency.junit
 
     androidTestImplementation kauDependency.kotlinTest
     androidTestImplementation kauDependency.espresso
+    androidTestImplementation "androidx.test.espresso:espresso-intents:${kau.espresso}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${kau.espresso}"
+    androidTestImplementation kauDependency.testRules
     androidTestImplementation kauDependency.testRunner
 }

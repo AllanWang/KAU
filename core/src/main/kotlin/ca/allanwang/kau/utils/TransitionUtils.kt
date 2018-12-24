@@ -1,14 +1,14 @@
 package ca.allanwang.kau.utils
 
 import android.os.Build
-import android.support.annotation.RequiresApi
-import android.support.annotation.TransitionRes
-import android.support.transition.AutoTransition
-import android.support.transition.TransitionInflater
-import android.support.transition.TransitionManager
+import androidx.annotation.RequiresApi
+import androidx.annotation.TransitionRes
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionInflater
+import androidx.transition.TransitionManager
 import android.transition.Transition
 import android.view.ViewGroup
-import android.support.transition.Transition as SupportTransition
+import androidx.transition.Transition as SupportTransition
 
 /**
  * Created by Allan Wang on 2017-06-24.
@@ -52,7 +52,7 @@ fun ViewGroup.transitionAuto(builder: AutoTransition.() -> Unit = {}) {
 }
 
 @KauUtils
-fun ViewGroup.transitionDelayed(@TransitionRes id: Int, builder: android.support.transition.Transition.() -> Unit = {}) {
+fun ViewGroup.transitionDelayed(@TransitionRes id: Int, builder: androidx.transition.Transition.() -> Unit = {}) {
     if (!buildIsLollipopAndUp) return
     val transition = TransitionInflater.from(context).inflateTransition(id)
     transition.builder()

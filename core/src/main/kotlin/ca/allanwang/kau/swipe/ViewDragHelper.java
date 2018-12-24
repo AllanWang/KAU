@@ -1,7 +1,7 @@
 package ca.allanwang.kau.swipe;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
+import androidx.core.view.ViewCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -25,7 +25,7 @@ import static ca.allanwang.kau.swipe.SwipeBackHelperKt.SWIPE_EDGE_TOP;
  * of useful operations and state tracking for allowing a user to drag and reposition
  * views within their parent ViewGroup.
  * <p>
- * This is an extension of {@link android.support.v4.widget.ViewDragHelper}
+ * This is an extension of {@link androidx.core.widget.ViewDragHelper}
  * Along with additional methods defined in {@link ViewDragHelperExtras}
  */
 class ViewDragHelper implements ViewDragHelperExtras {

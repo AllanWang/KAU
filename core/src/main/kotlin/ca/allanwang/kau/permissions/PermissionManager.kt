@@ -3,7 +3,7 @@ package ca.allanwang.kau.permissions
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.support.v4.app.ActivityCompat
+import androidx.core.app.ActivityCompat
 import ca.allanwang.kau.kotlin.lazyContext
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.KauException
