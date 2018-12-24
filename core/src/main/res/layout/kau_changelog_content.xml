@@ -3,9 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="8.4sp"
     android:paddingLeft="@dimen/kau_dialog_margin"
-    android:paddingRight="@dimen/kau_dialog_margin">
+    android:paddingRight="@dimen/kau_dialog_margin"
+    android:paddingBottom="8.4sp">
 
     <!--padding bottom is 14sp * 0.6-->
 
