@@ -8,6 +8,9 @@ This is the first introduction of androidx. The goal is to just do a migration w
 Nothing has been changed internally, but the dependencies are updated.
 Notably, Android-Iconics [split their Community Icons](https://github.com/mikepenz/Android-Iconics/blob/develop/MIGRATION.md) into two enums.
 
+Kotterknife is also no longer deprecated. There are some use cases where `kotlin-android-extensions` isn't the best, such as when multiple layout files are used, or when ids are defined in the id.xml.
+It is still recommended to use the extension where applicable.
+
 # v3.8.0
 
 Along with the update to support Android Studio 3.1, a lot of changes have occurred with other dependencies and with lint.
