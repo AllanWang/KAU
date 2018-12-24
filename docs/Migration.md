@@ -2,6 +2,10 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v4.0.1-alpha02
+
+* `kauParseFaq` is now synchronous. 
+
 # v4.0.0-alpha01
 
 This is the first introduction of androidx. The goal is to just do a migration with minimal changes.

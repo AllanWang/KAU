@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Allan Wang
+ * Copyright 2017 Allan Wang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,10 +45,30 @@ import androidx.core.content.ContextCompat
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
 import com.afollestad.materialdialogs.MaterialDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Allan Wang on 2017-06-03.
  */
+
+/**
+ * Equivalent to [GlobalScope], but with the Android main dispatcher as the context
+ */
+object GlobalContextScope : CoroutineScope {
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
+}
+
+/**
+ * Most context items implement [CoroutineScope] by default.
+ * We will add a fallback just in case.
+ * It is expected that the scope returned always has the Android main dispatcher as part of the context.
+ */
+internal inline val Context.ctxCoroutine: CoroutineScope
+    get() = this as? CoroutineScope ?: GlobalContextScope
 
 /**
  * Helper class to launch an activity from a context

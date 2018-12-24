@@ -35,8 +35,9 @@ import ca.allanwang.kau.utils.withMarginDecoration
 import ca.allanwang.kau.xml.kauParseFaq
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.fastadapter.IItem
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 /**
  * Created by Allan Wang on 2017-08-02.
@@ -174,13 +175,16 @@ open class AboutPanelLibs : AboutPanelRecycler() {
     }
 
     override fun loadItems(activity: AboutActivityBase, position: Int) {
-        doAsync {
-            with(activity) {
-                items =
-                    getLibraries(if (rClass == null) Libs(activity) else Libs(this, Libs.toStringArray(rClass.fields)))
-                        .map(::LibraryIItem)
+        with(activity) {
+            launch {
+                items = async {
+                    getLibraries(
+                        if (rClass == null) Libs(activity)
+                        else Libs(activity, Libs.toStringArray(rClass.fields))
+                    ).map(::LibraryIItem)
+                }.await()
                 if (pageStatus[position] == 1)
-                    uiThread { addItems(activity, position) }
+                    addItems(activity, position)
             }
         }
     }
@@ -202,8 +206,8 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
 
     override fun loadItems(activity: AboutActivityBase, position: Int) {
         with(activity) {
-            kauParseFaq(configs.faqXmlRes, configs.faqParseNewLine) {
-                items = it.map(::FaqIItem)
+            launch {
+                items = async { kauParseFaq(configs.faqXmlRes, configs.faqParseNewLine) }.await().map(::FaqIItem)
                 if (pageStatus[position] == 1)
                     addItems(activity, position)
             }
