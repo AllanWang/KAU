@@ -23,6 +23,8 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Pair
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.AnimRes
 import ca.allanwang.kau.R
 import java.io.Serializable
@@ -112,7 +114,7 @@ fun Bundle.withSceneTransitionAnimation(parent: View, data: Map<Int, String>) =
  * create a scene transition animation
  */
 @SuppressLint("NewApi")
-fun Bundle.withSceneTransitionAnimation(context: Context, data: Map<View, String>) {
+fun Bundle.withSceneTransitionAnimation(context: Context, data: Map<out View, String>) {
     if (context !is Activity || !buildIsLollipopAndUp) return
     val options = ActivityOptions.makeSceneTransitionAnimation(
         context,
