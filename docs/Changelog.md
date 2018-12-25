@@ -1,5 +1,10 @@
 # Changelog
 
+## v4.0.0-alpha02
+* :core: Remove anko dependency. Methods that used it now use coroutines; see the migration doc for minor changes
+* :core: Add default CoroutineScope implementation to KauBaseActivity
+* :core: Remove zip class. Coroutines and join can be used as an alternative
+
 ## v4.0.0-alpha01
 * Migrate to androidx. See migration for external dependency changes.
 * :core: Remove deprecation warning for Kotterknife
