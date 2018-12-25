@@ -26,6 +26,8 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -53,11 +55,10 @@ import kotlin.coroutines.CoroutineContext
 /**
  * Created by Allan Wang on 2017-06-03.
  */
+private object ContextHelper: CoroutineScope {
 
-/**
- * Equivalent to [GlobalScope], but with the Android main dispatcher as the context
- */
-object GlobalContextScope : CoroutineScope {
+    val handler = Handler(Looper.getMainLooper())
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 }
@@ -68,7 +69,11 @@ object GlobalContextScope : CoroutineScope {
  * It is expected that the scope returned always has the Android main dispatcher as part of the context.
  */
 internal inline val Context.ctxCoroutine: CoroutineScope
-    get() = this as? CoroutineScope ?: GlobalContextScope
+    get() = this as? CoroutineScope ?: ContextHelper
+
+fun Context.runOnUiThread(f: Context.() -> Unit) {
+    if (Looper.getMainLooper() === Looper.myLooper()) f() else ContextHelper.handler.post { f() }
+}
 
 /**
  * Helper class to launch an activity from a context

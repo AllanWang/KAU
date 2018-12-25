@@ -6,6 +6,15 @@ Below are some highlights on major refactoring/breaking changes
 
 * `kauParseFaq` is now synchronous. 
 
+## Anko has been removed
+
+A lot of the methods are already implemented in KAU, and it was primarily imported for its `doAsync` methods. Now, they have been replaced with coroutines.
+Some methods have been copied over:
+
+* import org.jetbrains.anko.runOnUiThread > import ca.allanwang.kau.utils.runOnUiThread
+* import org.jetbrains.anko.contentView > import ca.allanwang.kau.utils.contentView
+* import org.jetbrains.anko.bundleOf > import ca.allanwang.kau.utils.bundleOf
+
 # v4.0.0-alpha01
 
 This is the first introduction of androidx. The goal is to just do a migration with minimal changes.

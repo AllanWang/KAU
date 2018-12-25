@@ -131,6 +131,9 @@ These variants are weakly held in the private `KotterknifeRegistry` object, and 
 values through the `Kotterknife.reset` method. This is typically useful for Fragments, as they do not follow
 the same lifecycle as Activities and Views.
 
+Note that this is useful for views that have ids in multiple layout files or in `id.xml` files.
+Kotlin has another solution, [`kotlin-android-extensions`](https://kotlinlang.org/docs/tutorials/android-plugin.html), which is more convenient.
+
 ## Ripple Canvas
 
 Ripple canvas provides a way to create simultaneous ripples against a background color. 
@@ -210,7 +213,6 @@ Include your email and subject, along with other optional configurations such as
 ## Extension Functions
 
 > "[Extensions](https://kotlinlang.org/docs/reference/extensions.html) provide the ability to extend a class with new functionality without having to inherit from the class"
-<br/>Note that since KAU depends on [ANKO](https://github.com/Kotlin/anko), all of the extensions in its core package is also in KAU.
 
 KAU's vast collection of extensions is one of its strongest features. 
 There are too many to explain here, but you may check out the [utils package](https://github.com/AllanWang/KAU/tree/master/core/src/main/kotlin/ca/allanwang/kau/utils)

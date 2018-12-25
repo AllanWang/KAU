@@ -32,9 +32,6 @@ class Versions {
     // https://github.com/mikepenz/AboutLibraries/releases
     static def aboutLibraries = '6.2.0'
 
-    // https://github.com/Kotlin/anko/releases
-    static def anko = '0.10.5'
-
     // https://github.com/wasabeef/Blurry/releases
     static def blurry = '2.1.1'
 

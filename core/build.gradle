@@ -17,8 +17,6 @@ dependencies {
     api "com.mikepenz:google-material-typeface:${kau.iconicsGoogle}.original@aar"
 
     api "com.afollestad.material-dialogs:core:${kau.materialDialog}"
-
-    api "org.jetbrains.anko:anko-commons:${kau.anko}"
 }
 
 apply from: '../artifacts.gradle'
