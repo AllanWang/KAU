@@ -33,8 +33,8 @@ import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.withLinearAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import kotlinx.android.synthetic.main.kau_pref_activity.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.util.Stack
 
 abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
@@ -104,17 +104,22 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         builder: KPrefAdapterBuilder.() -> Unit,
         first: Boolean
     ) {
-        doAsync {
-            val items = KPrefAdapterBuilder(globalOptions)
-            builder(items)
-            kprefStack.push(toolbarTitleRes to items.list)
+        launch {
+            val items = async {
+                val items = KPrefAdapterBuilder(globalOptions)
+                builder(items)
+                kprefStack.push(toolbarTitleRes to items.list)
+                items.list
+            }.await()
             kau_recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
-            uiThread {
-                adapter.clear()
-                adapter.add(items.list.filter { it.core.visible() })
-                toolbar.setTitle(toolbarTitleRes)
-            }
+            show(toolbarTitleRes, items)
         }
+    }
+
+    private fun show(@StringRes toolbarTitleRes: Int, items: List<KPrefItemCore>) {
+        toolbar.setTitle(toolbarTitleRes)
+        adapter.clear()
+        adapter.add(items.filter { it.core.visible() })
     }
 
     /**
@@ -125,9 +130,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         kprefStack.pop()
         val (title, list) = kprefStack.peek()
         kau_recycler.itemAnimator = if (animate) recyclerAnimatorPrev else null
-        adapter.clear()
-        adapter.add(list.filter { it.core.visible() })
-        toolbar.setTitle(title)
+        show(title, list)
     }
 
     /**

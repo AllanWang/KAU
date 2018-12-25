@@ -15,8 +15,14 @@
  */
 package ca.allanwang.kau.internal
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Allan Wang on 2017-08-01.
@@ -26,8 +32,28 @@ import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
  * Ensures that some singleton methods are called.
  * This is simply a convenience class;
  * you can always copy and paste this to your own class.
+ *
+ * This also implements [CoroutineScope] that adheres to the activity lifecycle.
+ * Note that by default, [SupervisorJob] is used, to avoid exceptions in one child from affecting that of another.
+ * The default job can be overridden within [defaultJob]
  */
-abstract class KauBaseActivity : AppCompatActivity() {
+abstract class KauBaseActivity : AppCompatActivity(), CoroutineScope {
+
+    open lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
+
+    open fun defaultJob(): Job = SupervisorJob()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        job = defaultJob()
+    }
+
+    override fun onDestroy() {
+        job.cancel()
+        super.onDestroy()
+    }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

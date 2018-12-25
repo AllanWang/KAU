@@ -53,6 +53,7 @@ import ca.allanwang.kau.utils.hideKeyboard
 import ca.allanwang.kau.utils.invisibleIf
 import ca.allanwang.kau.utils.isVisible
 import ca.allanwang.kau.utils.parentViewGroup
+import ca.allanwang.kau.utils.runOnUiThread
 import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.setMarginTop
 import ca.allanwang.kau.utils.showKeyboard
@@ -65,7 +66,6 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
 import kotlinx.android.synthetic.main.kau_search_view.view.*
-import org.jetbrains.anko.runOnUiThread
 
 /**
  * Created by Allan Wang on 2017-06-23.

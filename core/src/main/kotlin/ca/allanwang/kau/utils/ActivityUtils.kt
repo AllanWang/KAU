@@ -28,13 +28,13 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import ca.allanwang.kau.R
 import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.iconics.typeface.IIcon
-import org.jetbrains.anko.contentView
 
 /**
  * Created by Allan Wang on 2017-06-21.
@@ -159,6 +159,17 @@ inline fun Activity.hideKeyboard() {
 inline fun Activity.showKeyboard() {
     currentFocus?.showKeyboard()
 }
+
+/**
+ * Gets the view set by [Activity.setContentView] if it exists.
+ *
+ * Taken courtesy of <a href="https://github.com/Kotlin/anko">Anko</a>
+ *
+ * Previously, Anko was a dependency in KAU, but has been removed on 12/24/2018
+ * as most of the methods weren't used
+ */
+inline val Activity.contentView: View?
+    get() = (findViewById(android.R.id.content) as? ViewGroup)?.getChildAt(0)
 
 inline fun Activity.snackbar(
     text: String,

@@ -49,10 +49,8 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
-import org.jetbrains.anko.doAsync
+import kotlinx.coroutines.CancellationException
 import java.io.File
-import java.util.concurrent.ExecutionException
-import java.util.concurrent.Future
 
 /**
  * Created by Allan Wang on 2017-07-23.
@@ -121,7 +119,6 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     lateinit var glide: RequestManager
     private var hasPreloaded = false
-    private var prefetcher: Future<*>? = null
 
     val adapter = ItemAdapter<T>()
 
@@ -137,7 +134,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterHeader = ItemAdapter<MediaActionItem>()
-        val fulladapter = fastAdapter(adapterHeader, adapter)
+        val fulladapter = fastAdapter<IItem<*, *>>(adapterHeader, adapter)
         adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
@@ -146,7 +143,6 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
                 }
             }
             setItemViewCacheSize(CACHE_SIZE)
-            isDrawingCacheEnabled = true
             layoutManager = manager
             adapter = fulladapter
             setHasFixedSize(true)
@@ -195,18 +191,14 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         addItems(models.map { converter(it) })
         if (!hasPreloaded && mediaType == MediaType.VIDEO) {
             hasPreloaded = true
-            prefetcher = doAsync {
-                models.subList(0, Math.min(models.size, 50)).map { it.data }.forEach {
-                    val target = glide.load(it)
-                        .applyMediaOptions(this@MediaPickerCore)
-                        .submit()
-                    try {
-                        target.get()
-                    } catch (ignored: InterruptedException) {
-                    } catch (ignored: ExecutionException) {
-                    } finally {
-                        glide.clear(target)
-                    }
+            val preloads = models.subList(0, Math.min(models.size, 50)).map {
+                glide.load(it.data)
+                    .applyMediaOptions(this@MediaPickerCore)
+                    .preload()
+            }
+            job.invokeOnCompletion {
+                if (it is CancellationException) {
+                    preloads.forEach(glide::clear)
                 }
             }
         }
@@ -241,11 +233,6 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     open fun shouldLoad(model: MediaModel): Boolean = model.size > 10000L
 
     open fun onStatusChange(loaded: Boolean) {}
-
-    override fun onDestroy() {
-        prefetcher?.cancel(true)
-        super.onDestroy()
-    }
 
     /**
      * Method used to retrieve uri data for API 19+

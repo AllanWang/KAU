@@ -22,4 +22,9 @@ import ca.allanwang.kau.BuildConfig
  *
  * Internal KAU logger
  */
-object KL : KauLogger("KAU", { BuildConfig.DEBUG })
+object KL : KauLogger("KAU", { BuildConfig.DEBUG }) {
+    internal inline fun test(message: () -> Any?) {
+        if (BuildConfig.DEBUG)
+            d { "Test1234 ${message()}" }
+    }
+}

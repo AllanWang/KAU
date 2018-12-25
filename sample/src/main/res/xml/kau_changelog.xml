@@ -6,6 +6,16 @@
     <item text="" />
     -->
 
+    <version title="v4.0.0-alpha02" />
+    <item text=":core: Remove anko dependency. Methods that used it now use coroutines; see the migration doc for minor changes" />
+    <item text=":core: Add default CoroutineScope implementation to KauBaseActivity" />
+    <item text=":core: Remove zip class. Coroutines and join can be used as an alternative" />
+    <item text=":mediapicker: Use video preloading instead of full async loading" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+
     <version title="v4.0.0-alpha01" />
     <item text="Migrate to androidx. See migration for external dependency changes." />
     <item text=":core: Remove deprecation warning for Kotterknife" />
