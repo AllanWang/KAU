@@ -90,7 +90,7 @@ class CutoutView @JvmOverloads constructor(
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.CutoutView, 0, 0)
             if (a.hasValue(R.styleable.CutoutView_font))
-                paint.typeface = context.getFont(a.getString(R.styleable.CutoutView_font))
+                paint.typeface = context.getFont(a.getString(R.styleable.CutoutView_font)!!)
             foregroundColor = a.getColor(R.styleable.CutoutView_foregroundColor, foregroundColor)
             text = a.getString(R.styleable.CutoutView_android_text) ?: text
             minHeight = a.getDimension(R.styleable.CutoutView_android_minHeight, minHeight)

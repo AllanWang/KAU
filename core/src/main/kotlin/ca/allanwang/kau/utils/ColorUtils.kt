@@ -118,25 +118,28 @@ fun Int.blendWith(@ColorInt color: Int, @FloatRange(from = 0.0, to = 1.0) ratio:
 }
 
 @ColorInt
-fun Int.withAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int =
-    Color.argb(alpha, Color.red(this), Color.green(this), Color.blue(this))
+fun Int.withAlpha(@IntRange(from = 0, to = 0xFF) alpha: Int): Int =
+    this and 0x00FFFFFF or (alpha shl 24)
 
 @ColorInt
-fun Int.withMinAlpha(@IntRange(from = 0L, to = 255L) alpha: Int): Int =
-    Color.argb(Math.max(alpha, Color.alpha(this)), Color.red(this), Color.green(this), Color.blue(this))
+fun Int.withMinAlpha(@IntRange(from = 0, to = 0xFF) alpha: Int): Int =
+    withAlpha(Math.max(alpha, this ushr 24))
 
 @ColorInt
-fun Int.lighten(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int {
+private inline fun Int.colorFactor(rgbFactor: (Int) -> Float): Int {
     val (red, green, blue) = intArrayOf(Color.red(this), Color.green(this), Color.blue(this))
-        .map { (it * (1f - factor) + 255f * factor).toInt() }
+        .map { rgbFactor(it).toInt() }
     return Color.argb(Color.alpha(this), red, green, blue)
 }
 
 @ColorInt
-fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int {
-    val (red, green, blue) = intArrayOf(Color.red(this), Color.green(this), Color.blue(this))
-        .map { (it * (1f - factor)).toInt() }
-    return Color.argb(Color.alpha(this), red, green, blue)
+fun Int.lighten(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int = colorFactor {
+    (it * (1f - factor) + 255f * factor)
+}
+
+@ColorInt
+fun Int.darken(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int = colorFactor {
+    it * (1f - factor)
 }
 
 @ColorInt
@@ -147,13 +150,11 @@ fun Int.colorToBackground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f
 fun Int.colorToForeground(@FloatRange(from = 0.0, to = 1.0) factor: Float = 0.1f): Int =
     if (isColorDark) lighten(factor) else darken(factor)
 
-@Throws(IllegalArgumentException::class)
 fun String.toColor(): Int {
-    val toParse: String
-    if (startsWith("#") && length == 4)
-        toParse = "#${this[1]}${this[1]}${this[2]}${this[2]}${this[3]}${this[3]}"
+    val toParse: String = if (startsWith("#") && length == 4)
+        "#${this[1]}${this[1]}${this[2]}${this[2]}${this[3]}${this[3]}"
     else
-        toParse = this
+        this
     return Color.parseColor(toParse)
 }
 
