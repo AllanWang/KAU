@@ -49,13 +49,12 @@ import ca.allanwang.kau.logging.KL
 import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Allan Wang on 2017-06-03.
  */
-private object ContextHelper: CoroutineScope {
+private object ContextHelper : CoroutineScope {
 
     val handler = Handler(Looper.getMainLooper())
 

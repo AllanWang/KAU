@@ -36,8 +36,8 @@ import ca.allanwang.kau.xml.kauParseFaq
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.fastadapter.IItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Created by Allan Wang on 2017-08-02.
@@ -177,12 +177,12 @@ open class AboutPanelLibs : AboutPanelRecycler() {
     override fun loadItems(activity: AboutActivityBase, position: Int) {
         with(activity) {
             launch {
-                items = async {
+                items = withContext(Dispatchers.Default) {
                     getLibraries(
                         if (rClass == null) Libs(activity)
                         else Libs(activity, Libs.toStringArray(rClass.fields))
                     ).map(::LibraryIItem)
-                }.await()
+                }
                 if (pageStatus[position] == 1)
                     addItems(activity, position)
             }
@@ -207,7 +207,12 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
     override fun loadItems(activity: AboutActivityBase, position: Int) {
         with(activity) {
             launch {
-                items = async { kauParseFaq(configs.faqXmlRes, configs.faqParseNewLine) }.await().map(::FaqIItem)
+                items = withContext(Dispatchers.IO) {
+                    kauParseFaq(
+                        configs.faqXmlRes,
+                        configs.faqParseNewLine
+                    )
+                }.map(::FaqIItem)
                 if (pageStatus[position] == 1)
                     addItems(activity, position)
             }

@@ -30,8 +30,9 @@ import ca.allanwang.kau.utils.ctxCoroutine
 import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.use
 import com.afollestad.materialdialogs.MaterialDialog
-import kotlinx.coroutines.async
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 
 /**
@@ -41,7 +42,7 @@ import org.xmlpull.v1.XmlPullParser
  */
 fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null, customize: MaterialDialog.Builder.() -> Unit = {}) {
     ctxCoroutine.launch {
-        val items = async { parse(this@showChangelog, xmlRes) }.await()
+        val items = withContext(Dispatchers.Default) { parse(this@showChangelog, xmlRes) }
         materialDialog {
             title(R.string.kau_changelog)
             positiveText(R.string.kau_great)

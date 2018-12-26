@@ -23,8 +23,12 @@ import ca.allanwang.kau.BuildConfig
  * Internal KAU logger
  */
 object KL : KauLogger("KAU", { BuildConfig.DEBUG }) {
-    internal inline fun test(message: () -> Any?) {
+
+    /**
+     * Logger with searchable tag and thread info
+     */
+    inline fun test(message: () -> Any?) {
         if (BuildConfig.DEBUG)
-            d { "Test1234 ${message()}" }
+            d { "Test1234 ${Thread.currentThread().name} ${message()}" }
     }
 }

@@ -23,8 +23,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Pair
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.annotation.AnimRes
 import ca.allanwang.kau.R
 import java.io.Serializable

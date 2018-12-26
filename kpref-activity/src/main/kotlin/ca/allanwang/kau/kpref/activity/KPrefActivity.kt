@@ -33,8 +33,9 @@ import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.withLinearAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import kotlinx.android.synthetic.main.kau_pref_activity.*
-import kotlinx.coroutines.async
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Stack
 
 abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
@@ -105,12 +106,12 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         first: Boolean
     ) {
         launch {
-            val items = async {
+            val items = withContext(Dispatchers.Default) {
                 val items = KPrefAdapterBuilder(globalOptions)
                 builder(items)
                 kprefStack.push(toolbarTitleRes to items.list)
                 items.list
-            }.await()
+            }
             kau_recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
             show(toolbarTitleRes, items)
         }
