@@ -4,6 +4,7 @@
 * :core: Remove anko dependency. Methods that used it now use coroutines; see the migration doc for minor changes
 * :core: Add default CoroutineScope implementation to KauBaseActivity
 * :core: Remove zip class. Coroutines and join can be used as an alternative
+* :core: Delete flyweight implementation. Kotlin already has getOrPut
 * :mediapicker: Use video preloading instead of full async loading
 
 ## v4.0.0-alpha01
