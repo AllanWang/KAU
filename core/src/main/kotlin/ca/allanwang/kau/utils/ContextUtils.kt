@@ -48,18 +48,25 @@ import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
 import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.android.asCoroutineDispatcher
 import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Allan Wang on 2017-06-03.
  */
-private object ContextHelper : CoroutineScope {
+object ContextHelper : CoroutineScope {
 
-    val handler = Handler(Looper.getMainLooper())
+    val looper = Looper.getMainLooper()
 
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
+    val handler = Handler(looper)
+
+    /**
+     * Creating dispatcher from main handler to avoid IO
+     * See https://github.com/Kotlin/kotlinx.coroutines/issues/878
+     */
+    val dispatcher = handler.asCoroutineDispatcher("kau-main")
+
+    override val coroutineContext: CoroutineContext get() = dispatcher
 }
 
 /**
@@ -71,7 +78,7 @@ internal inline val Context.ctxCoroutine: CoroutineScope
     get() = this as? CoroutineScope ?: ContextHelper
 
 fun Context.runOnUiThread(f: Context.() -> Unit) {
-    if (Looper.getMainLooper() === Looper.myLooper()) f() else ContextHelper.handler.post { f() }
+    if (ContextHelper.looper === Looper.myLooper()) f() else ContextHelper.handler.post { f() }
 }
 
 /**

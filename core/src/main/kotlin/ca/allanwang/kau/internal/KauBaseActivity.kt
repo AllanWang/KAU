@@ -18,6 +18,7 @@ package ca.allanwang.kau.internal
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
+import ca.allanwang.kau.utils.ContextHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -41,7 +42,7 @@ abstract class KauBaseActivity : AppCompatActivity(), CoroutineScope {
 
     open lateinit var job: Job
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+        get() = ContextHelper.dispatcher + job
 
     open fun defaultJob(): Job = SupervisorJob()
 

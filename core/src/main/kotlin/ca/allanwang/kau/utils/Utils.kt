@@ -141,7 +141,7 @@ fun postDelayed(delay: Long, action: () -> Unit) {
 }
 
 inline val kauIsMainThread: Boolean
-    get() = Looper.myLooper() == Looper.getMainLooper()
+    get() = Looper.myLooper() == ContextHelper.looper
 
 class KauException(message: String) : RuntimeException(message)
 

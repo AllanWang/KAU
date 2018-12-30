@@ -17,8 +17,8 @@
 
 package ca.allanwang.kau.logging
 
-import android.os.Looper
 import android.util.Log
+import ca.allanwang.kau.utils.kauIsMainThread
 
 /**
  * Created by Allan Wang on 2017-05-28.
@@ -82,7 +82,7 @@ open class KauLogger(
     inline fun checkThread(id: Int) {
         d {
             val name = Thread.currentThread().name
-            val status = if (Looper.myLooper() == Looper.getMainLooper()) "is" else "is not"
+            val status = if (kauIsMainThread) "is" else "is not"
             "$id $status in the main thread - thread name: $name"
         }
     }
@@ -120,7 +120,7 @@ class KauLoggerExtension(val tag: String, val logger: KauLogger) {
     inline fun checkThread(id: Int) {
         d {
             val name = Thread.currentThread().name
-            val status = if (Looper.myLooper() == Looper.getMainLooper()) "is" else "is not"
+            val status = if (kauIsMainThread) "is" else "is not"
             "$id $status in the main thread - thread name: $name"
         }
     }
