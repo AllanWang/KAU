@@ -56,5 +56,5 @@ fun CoroutineScope.asyncMain(
 /**
  * Calls [withContext] with an explicit dispatcher for Android's main thread
  */
-suspend fun <T> CoroutineScope.withMainContext(block: suspend CoroutineScope.() -> T) =
+suspend fun <T> withMainContext(block: suspend CoroutineScope.() -> T) =
     withContext(ContextHelper.dispatcher, block)
