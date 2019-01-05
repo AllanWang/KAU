@@ -42,14 +42,17 @@ internal fun Activity.finish(data: ArrayList<MediaModel>) {
     else finish()
 }
 
+/**
+ * Creates a folder named [prefix] as well as a new file with the prefix, current time, and extension.
+ */
 @Throws(IOException::class)
 fun createMediaFile(prefix: String, extension: String): File {
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
     val imageFileName = "${prefix}_${timeStamp}_"
     val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-    val frostDir = File(storageDir, prefix)
-    if (!frostDir.exists()) frostDir.mkdirs()
-    return File.createTempFile(imageFileName, extension, frostDir)
+    val prefixDir = File(storageDir, prefix)
+    if (!prefixDir.exists()) prefixDir.mkdirs()
+    return File.createTempFile(imageFileName, extension, prefixDir)
 }
 
 @Throws(IOException::class)
