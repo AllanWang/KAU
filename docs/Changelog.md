@@ -5,6 +5,7 @@
 * :core: Add default CoroutineScope implementation to KauBaseActivity
 * :core: Remove zip class. Coroutines and join can be used as an alternative
 * :core: Delete flyweight implementation. Kotlin already has getOrPut
+* :core: Introduce ContextHelper, where you can get the default looper, handler, and dispatcher for Android
 * :mediapicker: Use video preloading instead of full async loading
 
 ## v4.0.0-alpha01

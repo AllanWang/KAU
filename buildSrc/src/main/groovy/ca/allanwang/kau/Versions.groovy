@@ -27,7 +27,7 @@ class Versions {
     static def kotlin = '1.3.11'
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    static def coroutines = '1.0.1'
+    static def coroutines = '1.1.0'
 
     // https://github.com/mikepenz/AboutLibraries/releases
     static def aboutLibraries = '6.2.0'
@@ -72,6 +72,8 @@ class Versions {
     static def playPublishPlugin = '1.2.2'
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    static def dexCountPlugin = '0.8.3'
-    static def gitVersionPlugin = '0.4.4'
+    static def dexCountPlugin = '0.8.5'
+
+    // https://github.com/gladed/gradle-android-git-version/releases
+    static def gitVersionPlugin = '0.4.7'
 }
