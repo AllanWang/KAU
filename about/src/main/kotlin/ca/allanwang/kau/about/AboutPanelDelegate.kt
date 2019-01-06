@@ -1,20 +1,43 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.about
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.animators.NoAnimatorChange
 import ca.allanwang.kau.iitems.HeaderIItem
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.AnimHolder
+import ca.allanwang.kau.utils.KAU_BOTTOM
+import ca.allanwang.kau.utils.colorToForeground
+import ca.allanwang.kau.utils.drawable
+import ca.allanwang.kau.utils.fullLinearRecycler
+import ca.allanwang.kau.utils.postDelayed
+import ca.allanwang.kau.utils.string
+import ca.allanwang.kau.utils.withMarginDecoration
 import ca.allanwang.kau.xml.kauParseFaq
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.fastadapter.IItem
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Created by Allan Wang on 2017-08-02.
@@ -76,8 +99,8 @@ abstract class AboutPanelRecycler : AboutPanelContract {
     override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {
         recycler.adapter = adapter
         recycler.itemAnimator = KauAnimator(
-                addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f),
-                changeAnimator = NoAnimatorChange()
+            addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f),
+            changeAnimator = NoAnimatorChange()
         ).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(recycler.context) }
     }
 
@@ -136,7 +159,6 @@ open class AboutPanelMain : AboutPanelRecycler() {
     }
 
     override fun addItemsImpl(activity: AboutActivityBase, position: Int) {}
-
 }
 
 /**
@@ -153,12 +175,16 @@ open class AboutPanelLibs : AboutPanelRecycler() {
     }
 
     override fun loadItems(activity: AboutActivityBase, position: Int) {
-        doAsync {
-            with(activity) {
-                items = getLibraries(if (rClass == null) Libs(activity) else Libs(this, Libs.toStringArray(rClass.fields)))
-                        .map(::LibraryIItem)
+        with(activity) {
+            launch {
+                items = withContext(Dispatchers.Default) {
+                    getLibraries(
+                        if (rClass == null) Libs(activity)
+                        else Libs(activity, Libs.toStringArray(rClass.fields))
+                    ).map(::LibraryIItem)
+                }
                 if (pageStatus[position] == 1)
-                    uiThread { addItems(activity, position) }
+                    addItems(activity, position)
             }
         }
     }
@@ -166,7 +192,7 @@ open class AboutPanelLibs : AboutPanelRecycler() {
     override fun addItemsImpl(activity: AboutActivityBase, position: Int) {
         with(activity.configs) {
             adapter.add(HeaderIItem(text = libPageTitle, textRes = libPageTitleRes))
-                    .add(items)
+                .add(items)
         }
     }
 }
@@ -180,8 +206,13 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
 
     override fun loadItems(activity: AboutActivityBase, position: Int) {
         with(activity) {
-            kauParseFaq(configs.faqXmlRes, configs.faqParseNewLine) {
-                items = it.map(::FaqIItem)
+            launch {
+                items = withContext(Dispatchers.IO) {
+                    kauParseFaq(
+                        configs.faqXmlRes,
+                        configs.faqParseNewLine
+                    )
+                }.map(::FaqIItem)
                 if (pageStatus[position] == 1)
                     addItems(activity, position)
             }
@@ -191,8 +222,7 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
     override fun addItemsImpl(activity: AboutActivityBase, position: Int) {
         with(activity.configs) {
             adapter.add(HeaderIItem(text = faqPageTitle, textRes = faqPageTitleRes))
-                    .add(items)
+                .add(items)
         }
     }
-
 }

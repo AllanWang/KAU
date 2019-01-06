@@ -26,10 +26,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.support.v7.widget.SimpleItemAnimator;
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
+import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.Interpolator;
@@ -38,11 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This implementation of {@link android.support.v7.widget.RecyclerView.ItemAnimator} provides basic
+ * This implementation of {@link androidx.recyclerview.widget.RecyclerView.ItemAnimator} provides basic
  * animations on remove, add, and move events that happen to the items in
  * a RecyclerView. RecyclerView uses a DefaultItemAnimator by default.
  *
- * @see android.support.v7.widget.RecyclerView#setItemAnimator(android.support.v7.widget.RecyclerView.ItemAnimator)
+ * @see androidx.recyclerview.widget.RecyclerView#setItemAnimator(androidx.recyclerview.widget.RecyclerView.ItemAnimator)
  */
 public abstract class BaseItemAnimator extends SimpleItemAnimator {
     private static final boolean DEBUG = false;

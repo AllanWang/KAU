@@ -27,14 +27,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.support.annotation.ColorInt;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.ColorInt;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Interpolator;
 
 import java.util.Arrays;
 
+import androidx.viewpager.widget.ViewPager;
 import ca.allanwang.kau.ui.R;
 import ca.allanwang.kau.utils.AnimHolder;
 import ca.allanwang.kau.utils.ColorUtilsKt;

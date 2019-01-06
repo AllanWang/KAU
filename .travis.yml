@@ -4,20 +4,20 @@ jdk:
 env:
   global:
   - ANDROID_API=28
-  - EMULATOR_API=24
+  - EMULATOR_API=19
   - ANDROID_BUILD_TOOLS=28.0.3
 android:
   components:
   - tools
-#  - android-$EMULATOR_API
   - platform-tools
   - tools
   - build-tools-$ANDROID_BUILD_TOOLS
   - android-$ANDROID_API
-  - extra-android-support
+#  - android-$EMULATOR_API
   - extra-android-m2repository
   - extra-google-m2repository
-#  - sys-img-armeabi-v7a-android-$EMULATOR_API
+#  - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+#  - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
   licenses:
   - ".+"
 #before_script:
@@ -25,8 +25,11 @@ android:
 #- echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-$EMULATOR_API
 #- android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
 #- echo no | android create avd --force -n test -t android-$EMULATOR_API --abi armeabi-v7a
-#- emulator -avd test -no-skin -no-window &
+#- emulator -avd test -skin -no-audio -no-window &
 #- android-wait-for-emulator
+#- adb shell settings put global window_animation_scale 0 &
+#- adb shell settings put global transition_animation_scale 0 &
+#- adb shell settings put global animator_duration_scale 0 &
 #- adb shell input keyevent 82 &
 script:
 - chmod +x gradlew
@@ -50,7 +53,7 @@ cache:
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
 before_install:
-- yes | sdkmanager "platforms;android-28"
+- yes | sdkmanager "platforms;android-$ANDROID_API"
 - openssl aes-256-cbc -K $encrypted_12e8842891a3_key -iv $encrypted_12e8842891a3_iv
   -in files/kau.tar.enc -out kau.tar -d
 - tar xvf kau.tar

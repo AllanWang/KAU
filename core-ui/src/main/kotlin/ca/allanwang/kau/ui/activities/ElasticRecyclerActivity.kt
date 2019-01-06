@@ -1,11 +1,26 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.ui.activities
 
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
+import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
@@ -16,7 +31,7 @@ import kotlinx.android.synthetic.main.kau_elastic_recycler_activity.*
  *
  * A generic activity comprised of an ElasticDragDismissFrameLayout, CoordinatorLayout, Toolbar, RecyclerView, and Fab
  * [ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout]
- * [android.support.v7.widget.RecyclerView]
+ * [androidx.recyclerview.widget.RecyclerView]
  *
  * The recyclerview defaults to a linearlayoutmanager, and the adapter is automatically bounded
  *
@@ -39,10 +54,11 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
         setContentView(R.layout.kau_elastic_recycler_activity)
         setSupportActionBar(kau_toolbar)
         if (!onCreate(savedInstanceState, configs)) return
+
         kau_draggable.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 window.returnTransition = TransitionInflater.from(this@ElasticRecyclerActivity)
-                        .inflateTransition(if (kau_draggable.translationY > 0) configs.exitTransitionBottom else configs.exitTransitionTop)
+                    .inflateTransition(if (kau_draggable.translationY > 0) configs.exitTransitionBottom else configs.exitTransitionTop)
                 kau_recycler.stopScroll()
                 finishAfterTransition()
             }
@@ -63,6 +79,4 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
     fun setOutsideTapListener(listener: () -> Unit) {
         kau_draggable.setOnClickListener { listener() }
     }
-
 }
-

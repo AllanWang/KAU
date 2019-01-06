@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 @file:Suppress("NOTHING_TO_INLINE")
 
 package ca.allanwang.kau.utils
@@ -11,15 +26,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.ColorInt
-import android.support.annotation.RequiresApi
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
 import android.view.Menu
 import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.ColorInt
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import ca.allanwang.kau.R
+import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.iconics.typeface.IIcon
-import org.jetbrains.anko.contentView
 
 /**
  * Created by Allan Wang on 2017-06-21.
@@ -36,19 +51,22 @@ annotation class KauActivity
  */
 @Suppress("DEPRECATION")
 inline fun <reified T : Activity> Activity.startActivityForResult(
-        requestCode: Int,
-        bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}
+    requestCode: Int,
+    bundleBuilder: Bundle.() -> Unit = {},
+    intentBuilder: Intent.() -> Unit = {}
 ) = startActivityForResult(T::class.java, requestCode, bundleBuilder, intentBuilder)
 
-@Deprecated("Use reified generic instead of passing class",
-        ReplaceWith("startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)"),
-        DeprecationLevel.WARNING)
+@Deprecated(
+    "Use reified generic instead of passing class",
+    ReplaceWith("startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)"),
+    DeprecationLevel.WARNING
+)
 inline fun <T : Activity> Activity.startActivityForResult(
-        clazz: Class<T>,
-        requestCode: Int,
-        bundleBuilder: Bundle.() -> Unit = {},
-        intentBuilder: Intent.() -> Unit = {}) {
+    clazz: Class<T>,
+    requestCode: Int,
+    bundleBuilder: Bundle.() -> Unit = {},
+    intentBuilder: Intent.() -> Unit = {}
+) {
     val intent = Intent(this, clazz)
     intent.intentBuilder()
     val bundle = Bundle()
@@ -71,7 +89,6 @@ inline fun Activity.restart(intentBuilder: Intent.() -> Unit = {}) {
     finish()
     overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out)
 }
-
 
 /**
  * Force restart an entire application
@@ -119,8 +136,8 @@ inline var Activity.statusBarLight: Boolean
         if (buildIsMarshmallowAndUp) {
             val flags = window.decorView.systemUiVisibility
             window.decorView.systemUiVisibility =
-                    if (value) flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                    else flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                if (value) flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                else flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
         }
     }
 
@@ -135,10 +152,33 @@ fun Context.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg 
     }
 }
 
-inline fun Activity.hideKeyboard() = currentFocus.hideKeyboard()
+inline fun Activity.hideKeyboard() {
+    currentFocus?.hideKeyboard()
+}
 
-inline fun Activity.showKeyboard() = currentFocus.showKeyboard()
+inline fun Activity.showKeyboard() {
+    currentFocus?.showKeyboard()
+}
 
-inline fun Activity.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, noinline builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(text, duration, builder)
+/**
+ * Gets the view set by [Activity.setContentView] if it exists.
+ *
+ * Taken courtesy of <a href="https://github.com/Kotlin/anko">Anko</a>
+ *
+ * Previously, Anko was a dependency in KAU, but has been removed on 12/24/2018
+ * as most of the methods weren't used
+ */
+inline val Activity.contentView: View?
+    get() = (findViewById(android.R.id.content) as? ViewGroup)?.getChildAt(0)
 
-inline fun Activity.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, noinline builder: Snackbar.() -> Unit = {}) = contentView!!.snackbar(textId, duration, builder)
+inline fun Activity.snackbar(
+    text: String,
+    duration: Int = Snackbar.LENGTH_LONG,
+    noinline builder: Snackbar.() -> Unit = {}
+) = contentView!!.snackbar(text, duration, builder)
+
+inline fun Activity.snackbar(
+    @StringRes textId: Int,
+    duration: Int = Snackbar.LENGTH_LONG,
+    noinline builder: Snackbar.() -> Unit = {}
+) = contentView!!.snackbar(textId, duration, builder)

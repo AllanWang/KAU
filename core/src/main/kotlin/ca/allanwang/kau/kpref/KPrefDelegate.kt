@@ -1,31 +1,47 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.kpref
 
 import ca.allanwang.kau.kotlin.ILazyResettable
 
-
 fun KPref.kpref(key: String, fallback: Boolean, postSetter: (value: Boolean) -> Unit = {}) =
-        KPrefDelegate(key, fallback, this, KPrefBooleanTransaction, postSetter)
+    KPrefDelegate(key, fallback, this, KPrefBooleanTransaction, postSetter)
 
 fun KPref.kpref(key: String, fallback: Float, postSetter: (value: Float) -> Unit = {}) =
-        KPrefDelegate(key, fallback, this, KPrefFloatTransaction, postSetter)
+    KPrefDelegate(key, fallback, this, KPrefFloatTransaction, postSetter)
 
-@Deprecated("Double is not supported in SharedPreferences; cast to float yourself",
-        ReplaceWith("kpref(key, fallback.toFloat(), postSetter)"),
-        DeprecationLevel.WARNING)
+@Deprecated(
+    "Double is not supported in SharedPreferences; cast to float yourself",
+    ReplaceWith("kpref(key, fallback.toFloat(), postSetter)"),
+    DeprecationLevel.WARNING
+)
 fun KPref.kpref(key: String, fallback: Double, postSetter: (value: Float) -> Unit = {}) =
-        kpref(key, fallback.toFloat(), postSetter)
+    kpref(key, fallback.toFloat(), postSetter)
 
 fun KPref.kpref(key: String, fallback: Int, postSetter: (value: Int) -> Unit = {}) =
-        KPrefDelegate(key, fallback, this, KPrefIntTransaction, postSetter)
+    KPrefDelegate(key, fallback, this, KPrefIntTransaction, postSetter)
 
 fun KPref.kpref(key: String, fallback: Long, postSetter: (value: Long) -> Unit = {}) =
-        KPrefDelegate(key, fallback, this, KPrefLongTransaction, postSetter)
+    KPrefDelegate(key, fallback, this, KPrefLongTransaction, postSetter)
 
 fun KPref.kpref(key: String, fallback: Set<String>, postSetter: (value: Set<String>) -> Unit = {}) =
-        KPrefDelegate(key, fallback, this, KPrefSetTransaction, postSetter)
+    KPrefDelegate(key, fallback, this, KPrefSetTransaction, postSetter)
 
 fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Unit = {}) =
-        KPrefDelegate(key, fallback, this, KPrefStringTransaction, postSetter)
+    KPrefDelegate(key, fallback, this, KPrefStringTransaction, postSetter)
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -35,11 +51,11 @@ fun KPref.kpref(key: String, fallback: String, postSetter: (value: String) -> Un
  * Also contains an optional mutable postSetter that will be called every time a new value is given
  */
 class KPrefDelegate<T> internal constructor(
-        private val key: String,
-        private val fallback: T,
-        private val pref: KPref,
-        private val transaction: KPrefTransaction<T>,
-        private var postSetter: (value: T) -> Unit = {}
+    private val key: String,
+    private val fallback: T,
+    private val pref: KPref,
+    private val transaction: KPrefTransaction<T>,
+    private var postSetter: (value: T) -> Unit = {}
 ) : ILazyResettable<T> {
 
     private object UNINITIALIZED

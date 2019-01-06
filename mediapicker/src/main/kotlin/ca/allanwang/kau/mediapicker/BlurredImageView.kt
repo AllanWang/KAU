@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.mediapicker
 
 import android.content.Context
@@ -8,7 +23,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import ca.allanwang.kau.ui.views.MeasureSpecContract
 import ca.allanwang.kau.ui.views.MeasureSpecDelegate
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.inflate
+import ca.allanwang.kau.utils.scaleXY
+import ca.allanwang.kau.utils.setBackgroundColorRes
+import ca.allanwang.kau.utils.setIcon
+import ca.allanwang.kau.utils.visible
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import jp.wasabeef.blurry.internal.BlurFactor
 import jp.wasabeef.blurry.internal.BlurTask
@@ -24,7 +43,9 @@ import kotlinx.android.synthetic.main.kau_blurred_imageview.view.*
  * The foreground by default contains a white checkmark, but can be customized or hidden depending on the situation
  */
 class BlurredImageView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
     private var blurred = false
@@ -50,7 +71,6 @@ class BlurredImageView @JvmOverloads constructor(
 
     private fun View.scaleAnimate(scale: Float) = animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
     private fun View.alphaAnimate(alpha: Float) = animate().alpha(alpha).setDuration(ANIMATION_DURATION)
-
 
     fun isBlurred(): Boolean {
         return blurred
@@ -103,7 +123,6 @@ class BlurredImageView @JvmOverloads constructor(
         image_blur.alphaAnimate(0f).withEndAction { image_blur.setImageDrawable(null) }.start()
         image_foreground.alphaAnimate(0f).start()
     }
-
 
     /**
      * Clear all animations and unblur the image

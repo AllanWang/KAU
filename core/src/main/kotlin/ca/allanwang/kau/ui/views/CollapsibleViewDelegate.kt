@@ -1,8 +1,27 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.ui.views
 
 import android.animation.ValueAnimator
 import android.view.View
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.KAU_COLLAPSED
+import ca.allanwang.kau.utils.KAU_COLLAPSING
+import ca.allanwang.kau.utils.KAU_EXPANDED
+import ca.allanwang.kau.utils.KAU_EXPANDING
+import ca.allanwang.kau.utils.goneIf
 import java.lang.ref.WeakReference
 
 /**
@@ -48,10 +67,10 @@ class CollapsibleViewDelegate : CollapsibleView {
             if (v > 1) v = 1f
             else if (v < 0) v = 0f
             stateHolder =
-                    if (v == 0f) KAU_COLLAPSED
-                    else if (v == 1f) KAU_EXPANDED
-                    else if (v - field < 0) KAU_COLLAPSING
-                    else KAU_EXPANDING
+                if (v == 0f) KAU_COLLAPSED
+                else if (v == 1f) KAU_EXPANDED
+                else if (v - field < 0) KAU_COLLAPSING
+                else KAU_EXPANDING
             field = v
             view?.goneIf(state == KAU_COLLAPSED)
             view?.requestLayout()
@@ -101,5 +120,4 @@ class CollapsibleViewDelegate : CollapsibleView {
         val target = if (expand) 1f else 0f
         if (animate) animateSize(target) else expansion = target
     }
-
 }

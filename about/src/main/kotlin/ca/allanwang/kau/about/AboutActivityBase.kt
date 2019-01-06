@@ -1,13 +1,28 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.about
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.view.PagerAdapter
-import android.support.v4.view.ViewPager
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate
@@ -32,7 +47,8 @@ import kotlinx.android.synthetic.main.kau_activity_about.*
  * Note that for the auto detection to work, the R fields must be excluded from Proguard
  * Manual lib listings and other extra modifications can be done so by overriding the open functions
  */
-abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilder: Configs.() -> Unit = {}) : KauBaseActivity(), ViewPager.OnPageChangeListener {
+abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilder: Configs.() -> Unit = {}) :
+    KauBaseActivity(), ViewPager.OnPageChangeListener {
 
     val currentPage: Int
         get() = about_pager.currentItem
@@ -73,7 +89,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         about_draggable_frame.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
-                        .inflateTransition(if (about_draggable_frame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
+                    .inflateTransition(if (about_draggable_frame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
                 panels[currentPage].recycler?.stopScroll()
                 finishAfterTransition()
             }
@@ -113,7 +129,6 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
      * Feel free to add your own items to the adapter in here
      */
     open fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*, *>>) {
-
     }
 
     /**
@@ -123,7 +138,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
      * This is fetched asynchronously and you may override it to customize the list
      */
     open fun getLibraries(libs: Libs): List<Library> =
-            libs.prepareLibraries(this, null, null, true, true, true)!!
+        libs.prepareLibraries(this, null, null, true, true, true)!!
 
     /*
      * -------------------------------------------------------------------
@@ -156,7 +171,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
          */
         private fun getPage(position: Int, parent: ViewGroup): View {
             if (views[position] == null) views[position] = panels[position]
-                    .inflatePage(this@AboutActivityBase, parent, position)
+                .inflatePage(this@AboutActivityBase, parent, position)
             return views[position]!!
         }
     }

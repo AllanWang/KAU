@@ -1,22 +1,54 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.colorpicker
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.v4.content.res.ResourcesCompat
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import ca.allanwang.kau.utils.*
+import android.widget.AbsListView
+import android.widget.BaseAdapter
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.SeekBar
+import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.core.content.res.ResourcesCompat
+import ca.allanwang.kau.utils.colorToForeground
+import ca.allanwang.kau.utils.dimen
+import ca.allanwang.kau.utils.fadeIn
+import ca.allanwang.kau.utils.fadeOut
+import ca.allanwang.kau.utils.gone
+import ca.allanwang.kau.utils.isColorDark
+import ca.allanwang.kau.utils.isColorVisibleOn
+import ca.allanwang.kau.utils.isVisible
+import ca.allanwang.kau.utils.resolveColor
+import ca.allanwang.kau.utils.tint
+import ca.allanwang.kau.utils.toHexString
+import ca.allanwang.kau.utils.visible
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.color.FillGridView
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by Allan Wang on 2017-06-08.
@@ -24,7 +56,9 @@ import java.util.*
  * ColorPicker component of the ColorPickerDialog
  */
 internal class ColorPickerView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : ScrollView(context, attrs, defStyleAttr) {
     val selectedColor: Int
         get() = _selectedColor
@@ -33,8 +67,10 @@ internal class ColorPickerView @JvmOverloads constructor(
     private var isInCustom: Boolean = false
     private var circleSize: Int = context.dimen(R.dimen.kau_color_circle_size).toInt()
     @SuppressLint("PrivateResource")
-    private val backgroundColor = context.resolveColor(R.attr.md_background_color,
-            if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark) Color.WHITE else 0xff424242.toInt())
+    private val backgroundColor = context.resolveColor(
+        R.attr.md_background_color,
+        if (context.resolveColor(android.R.attr.textColorPrimary).isColorDark) Color.WHITE else 0xff424242.toInt()
+    )
     private val backgroundColorTint = backgroundColor.colorToForeground()
     private lateinit var dialog: MaterialDialog
     private lateinit var builder: ColorContract
@@ -175,13 +211,17 @@ internal class ColorPickerView @JvmOverloads constructor(
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                     if (fromUser) {
                         val color = if (builder.allowCustomAlpha)
-                            Color.argb(alphaSeekbar.progress,
-                                    redSeekbar.progress,
-                                    greenSeekbar.progress,
-                                    blueSeekbar.progress)
-                        else Color.rgb(redSeekbar.progress,
+                            Color.argb(
+                                alphaSeekbar.progress,
+                                redSeekbar.progress,
                                 greenSeekbar.progress,
-                                blueSeekbar.progress)
+                                blueSeekbar.progress
+                            )
+                        else Color.rgb(
+                            redSeekbar.progress,
+                            greenSeekbar.progress,
+                            blueSeekbar.progress
+                        )
 
                         hexInput.setText(color.toHexString(builder.allowCustomAlpha, false))
                     }
@@ -279,8 +319,8 @@ internal class ColorPickerView @JvmOverloads constructor(
         }
 
         private fun circleAt(index: Int): CircleView? =
-                if (index == -1) null
-                else gridView.getChildAt(index) as? CircleView
+            if (index == -1) null
+            else gridView.getChildAt(index) as? CircleView
 
         private val View.tagData: Pair<Int, Int>?
             get() {

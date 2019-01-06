@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.mediapicker
 
 import android.annotation.SuppressLint
@@ -6,13 +21,14 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import ca.allanwang.kau.utils.buildIsLollipopAndUp
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
-
+import java.util.ArrayList
+import java.util.Date
+import java.util.Locale
 
 /**
  * Created by Allan Wang on 2017-08-17.
@@ -26,14 +42,17 @@ internal fun Activity.finish(data: ArrayList<MediaModel>) {
     else finish()
 }
 
+/**
+ * Creates a folder named [prefix] as well as a new file with the prefix, current time, and extension.
+ */
 @Throws(IOException::class)
 fun createMediaFile(prefix: String, extension: String): File {
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
     val imageFileName = "${prefix}_${timeStamp}_"
     val storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-    val frostDir = File(storageDir, prefix)
-    if (!frostDir.exists()) frostDir.mkdirs()
-    return File.createTempFile(imageFileName, extension, frostDir)
+    val prefixDir = File(storageDir, prefix)
+    if (!prefixDir.exists()) prefixDir.mkdirs()
+    return File.createTempFile(imageFileName, extension, prefixDir)
 }
 
 @Throws(IOException::class)

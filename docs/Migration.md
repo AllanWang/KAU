@@ -2,6 +2,28 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v4.0.1-alpha02
+
+* `kauParseFaq` is now synchronous. 
+
+## Anko has been removed
+
+A lot of the methods are already implemented in KAU, and it was primarily imported for its `doAsync` methods. Now, they have been replaced with coroutines.
+Some methods have been copied over:
+
+* import org.jetbrains.anko.runOnUiThread > import ca.allanwang.kau.utils.runOnUiThread
+* import org.jetbrains.anko.contentView > import ca.allanwang.kau.utils.contentView
+* import org.jetbrains.anko.bundleOf > import ca.allanwang.kau.utils.bundleOf
+
+# v4.0.0-alpha01
+
+This is the first introduction of androidx. The goal is to just do a migration with minimal changes.
+Nothing has been changed internally, but the dependencies are updated.
+Notably, Android-Iconics [split their Community Icons](https://github.com/mikepenz/Android-Iconics/blob/develop/MIGRATION.md) into two enums.
+
+Kotterknife is also no longer deprecated. There are some use cases where `kotlin-android-extensions` isn't the best, such as when multiple layout files are used, or when ids are defined in the id.xml.
+It is still recommended to use the extension where applicable.
+
 # v3.8.0
 
 Along with the update to support Android Studio 3.1, a lot of changes have occurred with other dependencies and with lint.

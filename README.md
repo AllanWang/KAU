@@ -1,3 +1,7 @@
+**Note: v3.8.0 is the last release with support dependencies. Starting with 4.0.0-alpha01, androidx will be used**
+
+---
+
 <a href="https://allanwang.github.io/KAU/" target="_blank">
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
 </a>
@@ -99,10 +103,9 @@ This means that you'll need to explicitly include each submodule you'd like to u
   * [Extension Functions](core#extension-functions)
   * [Lazy Resettable](core#lazy-resettable)
 * Includes 
-[`AppCompat`](https://developer.android.com/topic/libraries/support-library/index.html), 
+[`AndroidX Components`](https://developer.android.com/topic/libraries/support-library/index.html), 
 [`Material Dialogs (core)`](https://github.com/afollestad/material-dialogs),
 [`Iconics`](https://github.com/mikepenz/Android-Iconics), 
-[`Anko`](https://github.com/Kotlin/anko),
 [`Kotlin stdlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
 
 ## [Core UI](core-ui#readme)
