@@ -190,7 +190,7 @@ Special thanks to the following awesome people for translating significant porti
 | Serbian | [Nikola Radmanović](https://crowdin.com/profile/nikoladradmanovic) |
 | Spanish | [Jahir Fiquitiva](https://jahirfiquitiva.me/) &bull; [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431)|
 | Thai | [Thanawat Hanthong](https://crowdin.com/profile/peet6015) |
-| Turkish | |
+| Turkish | [zuma17](https://crowdin.com/profile/zuma17) |
 | Vietnamese | [Alienz](https://crowdin.com/profile/alienyd) |
 
 The full activity stream for the translations can be found [here](https://crowdin.com/project/kotlin-android-utils/activity_stream)
