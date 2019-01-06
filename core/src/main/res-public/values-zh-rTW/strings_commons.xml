@@ -4,4 +4,64 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">關於此程式</string>
+    <string name="kau_about_x">關於 %s</string>
+    <string name="kau_add_account">新增帳號</string>
+    <string name="kau_back">回上頁</string>
+    <string name="kau_cancel">取消</string>
+    <string name="kau_changelog">更新資訊</string>
+    <string name="kau_close">關閉</string>
+    <string name="kau_contact_us">與我們聯繫</string>
+    <string name="kau_copy">複製</string>
+    <string name="kau_custom">自訂</string>
+    <string name="kau_dark">黑色主題</string>
+    <string name="kau_default">默認</string>
+    <string name="kau_do_not_show_again">不要再顯示</string>
+    <string name="kau_done">完成</string>
+    <string name="kau_error">錯誤</string>
+    <string name="kau_exit">結束</string>
+    <string name="kau_exit_confirmation">您確定要離開嗎？</string>
+    <string name="kau_exit_confirmation_x">您確定要離開%s嗎？</string>
+    <string name="kau_glass">玻璃</string>
+    <string name="kau_got_it">知道了</string>
+    <string name="kau_great">讚</string>
+    <string name="kau_hide">隱藏</string>
+    <string name="kau_light">亮色調</string>
+    <string name="kau_login">登入</string>
+    <string name="kau_logout">登出</string>
+    <string name="kau_logout_confirm_as_x">您確定要登出%s嗎？</string>
+    <string name="kau_manage_account">帳戶管理</string>
+    <string name="kau_maybe">可能</string>
+    <string name="kau_menu">選單</string>
+    <string name="kau_no">不</string>
+    <string name="kau_no_results_found">找不到相符的結果</string>
+    <string name="kau_none">無</string>
+    <string name="kau_ok">確定</string>
+    <string name="kau_play_store">Play商店</string>
+    <string name="kau_rate">評分</string>
+    <string name="kau_report_bug">回報程式錯誤</string>
+    <string name="kau_search">搜尋</string>
+    <string name="kau_send_feedback">回饋意見</string>
+    <string name="kau_send_via">來發送</string>
+    <string name="kau_settings">設定</string>
+    <string name="kau_share">分享</string>
+    <string name="kau_text_copied">文字已複製到剪貼簿</string>
+    <string name="kau_thank_you">感謝</string>
+    <string name="kau_uh_oh">噢！</string>
+    <string name="kau_warning">警告</string>
+    <plurals name="kau_x_days">
+        <item quantity="other">%d 天</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="other">%d 小時</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="other">%d 分鐘</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="other">%d 秒</item>
+    </plurals>
+    <string name="kau_yes">是</string>
+    <string name="kau_permission_denied">權限不足</string>
+</resources>
