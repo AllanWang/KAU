@@ -4,4 +4,11 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">Acerca</string>
+    <string name="kau_about_x">Acerca de %s</string>
+    <string name="kau_add_account">Adicionar conta</string>
+    <string name="kau_back">Voltar</string>
+    <string name="kau_cancel">Cancelar</string>
+    <string name="kau_changelog">Registo de alterações</string>
+</resources>
