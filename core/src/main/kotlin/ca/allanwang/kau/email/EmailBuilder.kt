@@ -90,6 +90,7 @@ class EmailBuilder(val email: String, val subject: String) {
                 val versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     appInfo.longVersionCode.toString()
                 } else {
+                    @Suppress("DEPRECATION")
                     appInfo.versionCode.toString()
                 }
                 emailBuilder.append("\nApp: ").append(context.packageName)

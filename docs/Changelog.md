@@ -1,6 +1,7 @@
 # Changelog
 
 ## v4.0.0-alpha02
+* Update translations
 * :core: Remove anko dependency. Methods that used it now use coroutines; see the migration doc for minor changes
 * :core: Add default CoroutineScope implementation to KauBaseActivity
 * :core: Remove zip class. Coroutines and join can be used as an alternative

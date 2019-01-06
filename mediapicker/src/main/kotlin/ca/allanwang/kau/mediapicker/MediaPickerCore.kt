@@ -166,7 +166,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     open fun loadItems() {
         kauRequestPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) { granted, _ ->
             if (granted) {
-                supportLoaderManager.initLoader(LOADER_ID, null, this)
+                LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this)
                 onStatusChange(true)
             } else {
                 toast(R.string.kau_permission_denied)
