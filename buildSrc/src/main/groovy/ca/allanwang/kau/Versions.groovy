@@ -24,13 +24,13 @@ class Versions {
     static def constraintLayout = '1.1.3'
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    static def kotlin = '1.3.11'
+    static def kotlin = '1.3.21'
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    static def coroutines = '1.1.0'
+    static def coroutines = '1.1.1'
 
     // https://github.com/mikepenz/AboutLibraries/releases
-    static def aboutLibraries = '6.2.0'
+    static def aboutLibraries = '6.2.3'
 
     // https://github.com/wasabeef/Blurry/releases
     static def blurry = '2.1.1'
@@ -40,7 +40,7 @@ class Versions {
     static def fastAdapterCommons = fastAdapter
 
     // https://github.com/bumptech/glide/releases
-    static def glide = '4.8.0'
+    static def glide = '4.9.0'
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
     static def iconics = '3.1.0'
@@ -64,15 +64,17 @@ class Versions {
     static def testRules = '1.1.1'
 
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
-    static def spotless = '3.17.0'
+    static def spotless = '3.18.0'
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    static def gradlePlugin = '3.2.1'
+    static def gradlePlugin = '3.3.1'
+    // https://github.com/dcendents/android-maven-gradle-plugin/releases
     static def mavenPlugin = '2.1'
-    static def playPublishPlugin = '1.2.2'
+    // https://github.com/Triple-T/gradle-play-publisher/releases
+    static def playPublishPlugin = '2.1.0'
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    static def dexCountPlugin = '0.8.5'
+    static def dexCountPlugin = '0.8.6'
 
     // https://github.com/gladed/gradle-android-git-version/releases
     static def gitVersionPlugin = '0.4.7'
