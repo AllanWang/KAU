@@ -4,4 +4,68 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">Over de app</string>
+    <string name="kau_about_x">Over %s</string>
+    <string name="kau_add_account">Account toevoegen</string>
+    <string name="kau_back">Terug</string>
+    <string name="kau_cancel">Annuleren</string>
+    <string name="kau_changelog">Veranderingen</string>
+    <string name="kau_close">Sluiten</string>
+    <string name="kau_contact_us">Contact opnemen</string>
+    <string name="kau_copy">Kopiëren</string>
+    <string name="kau_custom">Aangepast</string>
+    <string name="kau_dark">Donker</string>
+    <string name="kau_default">Standaard</string>
+    <string name="kau_do_not_show_again">Niet opnieuw tonen</string>
+    <string name="kau_done">Gereed</string>
+    <string name="kau_error">Fout</string>
+    <string name="kau_exit">Afsluiten</string>
+    <string name="kau_exit_confirmation">Afsluiten?</string>
+    <string name="kau_exit_confirmation_x">%s afsluiten?</string>
+    <string name="kau_glass">Glas</string>
+    <string name="kau_got_it">Begrepen</string>
+    <string name="kau_great">Geweldig</string>
+    <string name="kau_hide">Verbergen</string>
+    <string name="kau_light">Licht</string>
+    <string name="kau_login">Aanmelden</string>
+    <string name="kau_logout">Afmelden</string>
+    <string name="kau_logout_confirm_as_x">%s uitloggen?</string>
+    <string name="kau_manage_account">Account beheren</string>
+    <string name="kau_maybe">Misschien</string>
+    <string name="kau_menu">Menu</string>
+    <string name="kau_no">Nee</string>
+    <string name="kau_no_results_found">Geen resultaten</string>
+    <string name="kau_none">Geen</string>
+    <string name="kau_ok">OK</string>
+    <string name="kau_play_store">Play Store</string>
+    <string name="kau_rate">Beoordelen</string>
+    <string name="kau_report_bug">Een fout melden</string>
+    <string name="kau_search">Zoeken</string>
+    <string name="kau_send_feedback">Feedback geven</string>
+    <string name="kau_send_via">Verzenden via</string>
+    <string name="kau_settings">Instellingen</string>
+    <string name="kau_share">Delen</string>
+    <string name="kau_text_copied">Tekst naar klembord gekopieerd.</string>
+    <string name="kau_thank_you">Bedankt</string>
+    <string name="kau_uh_oh">Oeps</string>
+    <string name="kau_warning">Waarschuwing</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d uur</item>
+        <item quantity="other">%d uren</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d minuut</item>
+        <item quantity="other">%d minuten</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="one">%d seconde</item>
+        <item quantity="other">%d seconden</item>
+    </plurals>
+    <string name="kau_yes">Ja</string>
+    <string name="kau_permission_denied">Toestemming geweigerd</string>
+</resources>
