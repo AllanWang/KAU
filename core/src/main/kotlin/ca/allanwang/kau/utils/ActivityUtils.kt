@@ -95,7 +95,7 @@ inline fun Activity.restart(intentBuilder: Intent.() -> Unit = {}) {
  */
 @RequiresApi(Build.VERSION_CODES.M)
 inline fun Activity.restartApplication() {
-    val intent = packageManager.getLaunchIntentForPackage(packageName)
+    val intent = packageManager.getLaunchIntentForPackage(packageName)!!
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
     val pending = PendingIntent.getActivity(this, 666, intent, PendingIntent.FLAG_CANCEL_CURRENT)
     val alarm = getSystemService(Context.ALARM_SERVICE) as AlarmManager

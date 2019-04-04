@@ -157,7 +157,7 @@ inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(th
  * Returns plural form of res. The quantity is also passed to the formatter as an int
  */
 inline fun Context.plural(@PluralsRes id: Int, quantity: Number) =
-    resources.getQuantityString(id, quantity.toInt(), quantity.toInt())!!
+    resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
 
 //Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, @ColorInt fallback: Int = 0): Int {
