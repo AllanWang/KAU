@@ -6,6 +6,9 @@
     <item text="" />
     -->
 
+    <version title="v4.0.0" />
+    <item text="Update translations" />
+
     <version title="v4.0.0-alpha02" />
     <item text="Update translations" />
     <item text=":core: Remove anko dependency. Methods that used it now use coroutines; see the migration doc for minor changes" />
@@ -14,7 +17,6 @@
     <item text=":core: Delete flyweight implementation. Kotlin already has getOrPut" />
     <item text=":core: Introduce ContextHelper, where you can get the default looper, handler, and dispatcher for Android" />
     <item text=":mediapicker: Use video preloading instead of full async loading" />
-    <item text="" />
 
     <version title="v4.0.0-alpha01" />
     <item text="Migrate to androidx. See migration for external dependency changes." />
