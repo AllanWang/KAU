@@ -1,7 +1,3 @@
-**Note: v3.8.0 is the last release with support dependencies. Starting with 4.0.0-alpha01, androidx will be used**
-
----
-
 <a href="https://allanwang.github.io/KAU/" target="_blank">
 <img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/>
 </a>
@@ -39,8 +35,6 @@ allprojects {
 }
 ```
 
-(If you are using gradle < 4.0, use `maven { url "https://maven.google.com" }` instead of `google()`)
-
 And add the following dependencies (You can use a specific version, commit, or -SNAPSHOT):
 
 Note that only `core` is required if you want the basic features.
@@ -74,8 +68,6 @@ buildscript {
 }
 
 ```
-
-(If you are using gradle < 4.0, use `compile` instead of `implementation`)
 
 -----------
 

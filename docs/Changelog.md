@@ -1,5 +1,8 @@
 # Changelog
 
+## v4.0.0
+* Update translations
+
 ## v4.0.0-alpha02
 * Update translations
 * :core: Remove anko dependency. Methods that used it now use coroutines; see the migration doc for minor changes
