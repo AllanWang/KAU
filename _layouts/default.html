@@ -1,22 +1,34 @@
-<!doctype html>
-<!--https://help.github.com/articles/repository-metadata-on-github-pages/#available-repository-metadata-->
-<html>
+<!--See https://github.com/pages-themes/minimal/blob/master/_layouts/default.html-->
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <meta name="viewport" content="width=device-width">
+    {% seo %}
+    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
+
+    <!--Begin favicon-->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ '/favicon/apple-touch-icon.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/favicon/favicon-32x32.png' | relative_url }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ '/favicon/favicon-16x16.png' | relative_url }}">
+    <link rel="manifest" href="{{ '/favicon/site.webmanifest' | relative_url }}">
+    <link rel="mask-icon" href="{{ '/favicon/safari-pinned-tab.svg' | relative_url }}" color="#3b5998">
+    <link rel="shortcut icon" href="{{ '/favicon.ico' | relative_url }}">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="{{ '/favicon/browserconfig.xml' | relative_url }}">
+    <meta name="theme-color" content="#ffffff">
+    <!--End favicon-->
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
 </head>
 <body>
 <div class="wrapper">
     <header>
         <a href="{{ site.github.url }}"><img src="https://cdn.rawgit.com/AllanWang/KAU/master/files/images/logo.svg" alt="KAU" width="30%"/></a>
-        <!--<h1><a href="{{ site.github.url }}">{{ site.title | default: site.github.repository_name }}</a></h1>-->
+
         <p>{{ site.description | default: site.github.project_tagline }}</p>
 
         {% if page.url == '/core/' or
@@ -60,18 +72,16 @@
     </footer>
 </div>
 <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
-
-
 {% if site.google_analytics %}
 <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        ga('create', '{{ site.google_analytics }}', 'auto');
-        ga('send', 'pageview');
-    </script>
+    ga('create', '{{ site.google_analytics }}', 'auto');
+    ga('send', 'pageview');
+</script>
 {% endif %}
 </body>
 </html>
