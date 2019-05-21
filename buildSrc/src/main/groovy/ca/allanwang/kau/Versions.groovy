@@ -24,16 +24,16 @@ class Versions {
     static def constraintLayout = '1.1.3'
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    static def kotlin = '1.3.21'
+    static def kotlin = '1.3.31'
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    static def coroutines = '1.1.1'
+    static def coroutines = '1.2.1'
 
     // https://github.com/mikepenz/AboutLibraries/releases
     static def aboutLibraries = '6.2.3'
 
     // https://github.com/wasabeef/Blurry/releases
-    static def blurry = '2.1.1'
+    static def blurry = '3.0.0'
 
     // https://github.com/mikepenz/FastAdapter#using-maven
     static def fastAdapter = '3.3.1'
@@ -43,10 +43,10 @@ class Versions {
     static def glide = '4.9.0'
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
-    static def iconics = '3.1.0'
+    static def iconics = '3.2.5'
     static def iconicsGoogle = '3.0.1.3'
     static def iconicsMaterial = '2.2.0.5'
-    static def iconicsCommunity = '2.7.94.1'
+    static def iconicsCommunity = '3.5.95.1'
 
     // https://github.com/afollestad/material-dialogs/releases
     static def materialDialog = '0.9.6.0'
@@ -67,7 +67,7 @@ class Versions {
     static def spotless = '3.18.0'
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    static def gradlePlugin = '3.3.1'
+    static def gradlePlugin = '3.4.1'
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     static def mavenPlugin = '2.1'
     // https://github.com/Triple-T/gradle-play-publisher/releases
