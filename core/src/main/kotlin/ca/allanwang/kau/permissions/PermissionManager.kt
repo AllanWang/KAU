@@ -36,7 +36,7 @@ import java.lang.ref.WeakReference
 internal object PermissionManager {
 
     private var requestInProgress = false
-    private val pendingResults: MutableList<WeakReference<PermissionResult>> by lazy { mutableListOf<WeakReference<PermissionResult>>() }
+    private val pendingResults = mutableListOf<WeakReference<PermissionResult>>()
 
     /**
      * Retrieve permissions requested in our manifest
