@@ -18,6 +18,7 @@ package ca.allanwang.kau.kpref.activity.items
 import android.widget.TextView
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
+import ca.allanwang.kau.kpref.activity.KPrefItemActions
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.toast
 
@@ -35,9 +36,9 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
      * Automatically reload on set
      */
     override var pref: T
-        get() = base.getter()
+        get() = base.getter(this)
         set(value) {
-            base.setter(value)
+            base.setter(this, value)
             builder.reloadSelf()
         }
 
@@ -65,8 +66,8 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
     class KPrefTextBuilder<T>(
         globalOptions: GlobalOptions,
         titleId: Int,
-        getter: () -> T,
-        setter: (value: T) -> Unit
+        getter: KPrefItemActions.() -> T,
+        setter: KPrefItemActions.(value: T) -> Unit
     ) : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>(globalOptions, titleId, getter, setter) {
         override var textGetter: (T) -> String? = { it?.toString() }
     }
