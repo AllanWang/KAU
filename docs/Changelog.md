@@ -2,6 +2,7 @@
 
 ## v4.1.0
 * :core: Deprecate NetworkUtils, as the underlying functions are deprecated
+* :kpref-activity: Getter and setter now have action context, with the option to reload self
 
 ## v4.0.0
 * Update translations
