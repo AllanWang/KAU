@@ -41,12 +41,12 @@ internal object PermissionManager {
     /**
      * Retrieve permissions requested in our manifest
      */
-    private val manifestPermission = lazyContext<Array<String>> {
+    private val manifestPermission = lazyContext<Set<String>> {
         try {
-            it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions
-                ?: emptyArray()
+            it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions?.toSet()
+                ?: emptySet()
         } catch (e: Exception) {
-            emptyArray()
+            emptySet()
         }
     }
 
