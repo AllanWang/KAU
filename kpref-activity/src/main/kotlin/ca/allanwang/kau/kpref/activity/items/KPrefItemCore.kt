@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.KPrefItemActions
 import ca.allanwang.kau.kpref.activity.KPrefMarker
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.INVALID_ID
@@ -47,7 +48,7 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 
-abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>(),
+abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>(), KPrefItemActions by core,
     ThemableIItem by ThemableIItemDelegate() {
 
     final override fun getViewHolder(v: View) = ViewHolder(v)
@@ -119,7 +120,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
      * Core values for all kpref items
      */
     @KPrefMarker
-    interface CoreContract {
+    interface CoreContract : KPrefItemActions {
         val globalOptions: GlobalOptions
         val titleId: Int
         var titleFun: () -> Int
@@ -128,11 +129,6 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         var descFun: () -> Int
         var iicon: IIcon?
         var visible: () -> Boolean
-
-        /**
-         * Attempts to reload current item by identifying it with its [id]
-         */
-        fun reloadSelf()
     }
 
     /**

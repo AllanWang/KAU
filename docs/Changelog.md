@@ -1,5 +1,8 @@
 # Changelog
 
+## v4.1.0
+* :core: Deprecate NetworkUtils, as the underlying functions are deprecated
+
 ## v4.0.0
 * Update translations
 

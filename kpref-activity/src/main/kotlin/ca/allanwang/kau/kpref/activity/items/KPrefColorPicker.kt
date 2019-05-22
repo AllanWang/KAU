@@ -21,6 +21,7 @@ import ca.allanwang.kau.colorpicker.ColorContract
 import ca.allanwang.kau.colorpicker.colorPickerDialog
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
+import ca.allanwang.kau.kpref.activity.KPrefItemActions
 import ca.allanwang.kau.kpref.activity.R
 
 /**
@@ -71,8 +72,8 @@ open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBas
     class KPrefColorBuilder(
         globalOptions: GlobalOptions,
         titleId: Int,
-        getter: () -> Int,
-        setter: (value: Int) -> Unit
+        getter: KPrefItemActions.() -> Int,
+        setter: KPrefItemActions.(value: Int) -> Unit
     ) : KPrefColorContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter),
         ColorContract by ColorBuilder() {
         override var showPreview: Boolean = true
