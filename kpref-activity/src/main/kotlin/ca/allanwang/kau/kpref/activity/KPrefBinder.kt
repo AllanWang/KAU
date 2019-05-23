@@ -82,7 +82,7 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun checkbox(
         @StringRes title: Int,
-        getter: KPrefItemActions.() -> Boolean,
+        getter: () -> Boolean,
         setter: KPrefItemActions.(value: Boolean) -> Unit,
         builder: KPrefItemBase.BaseContract<Boolean>.() -> Unit = {}
     ) = list.add(
@@ -93,7 +93,7 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun colorPicker(
         @StringRes title: Int,
-        getter: KPrefItemActions.() -> Int,
+        getter: () -> Int,
         setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefColorPicker.KPrefColorContract.() -> Unit = {}
     ) = list.add(
@@ -104,7 +104,7 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun <T> text(
         @StringRes title: Int,
-        getter: KPrefItemActions.() -> T,
+        getter: () -> T,
         setter: KPrefItemActions.(value: T) -> Unit,
         builder: KPrefText.KPrefTextContract<T>.() -> Unit = {}
     ) = list.add(
@@ -134,7 +134,7 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun seekbar(
         @StringRes title: Int,
-        getter: KPrefItemActions.() -> Int,
+        getter: () -> Int,
         setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefSeekbar.KPrefSeekbarContract.() -> Unit = {}
     ) = list.add(
@@ -145,7 +145,7 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun timePicker(
         @StringRes title: Int,
-        getter: KPrefItemActions.() -> Int,
+        getter: () -> Int,
         setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefTimePicker.KPrefTimeContract.() -> Unit = {}
     ) = list.add(

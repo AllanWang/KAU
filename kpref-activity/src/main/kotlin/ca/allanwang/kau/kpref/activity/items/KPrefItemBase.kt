@@ -31,7 +31,7 @@ import ca.allanwang.kau.utils.resolveDrawable
 abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItemCore(base) {
 
     open var pref: T
-        get() = base.getter(this)
+        get() = base.getter()
         set(value) {
             base.setter(this, value)
         }
@@ -93,7 +93,7 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
         var enabler: () -> Boolean
         var onClick: (KClick<T>.() -> Unit)?
         var onDisabledClick: (KClick<T>.() -> Unit)?
-        val getter: KPrefItemActions.() -> T
+        val getter: () -> T
         val setter: KPrefItemActions.(value: T) -> Unit
     }
 
@@ -103,7 +103,7 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
     class BaseBuilder<T>(
         globalOptions: GlobalOptions,
         titleId: Int,
-        override val getter: KPrefItemActions.() -> T,
+        override val getter: () -> T,
         override val setter: KPrefItemActions.(value: T) -> Unit
     ) : CoreContract by CoreBuilder(globalOptions, titleId), BaseContract<T> {
         override var enabler: () -> Boolean = { true }

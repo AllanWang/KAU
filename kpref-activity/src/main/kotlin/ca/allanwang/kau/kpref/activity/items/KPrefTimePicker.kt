@@ -48,7 +48,7 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
     class KPrefTimeBuilder(
         globalOptions: GlobalOptions,
         titleId: Int,
-        getter: KPrefItemActions.() -> Int,
+        getter: () -> Int,
         setter: KPrefItemActions.(value: Int) -> Unit
     ) : KPrefTimeContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
