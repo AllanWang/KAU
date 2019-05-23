@@ -31,8 +31,8 @@ import java.lang.ref.WeakReference
 /**
  * Created by Allan Wang on 2017-07-03.
  *
- * Permission manager that is decoupled from activities
- * Keeps track of pending requests, and warns about invalid requests
+ * Permission manager that is decoupled from activities.
+ * Keeps track of pending requests, and warns about invalid requests.
  */
 internal object PermissionManager {
 
@@ -43,13 +43,20 @@ internal object PermissionManager {
      */
     private val manifestPermission = lazyContext<Set<String>> {
         try {
-            it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions?.toSet()
+            it.packageManager.getPackageInfo(
+                it.packageName,
+                PackageManager.GET_PERMISSIONS
+            )?.requestedPermissions?.toSet()
                 ?: emptySet()
         } catch (e: Exception) {
             emptySet()
         }
     }
 
+    /**
+     * Registers a new permission request.
+     * It is expected that the callback will be called eventually, unless the parent activity is destroyed.
+     */
     operator fun invoke(
         context: Context,
         permissions: Array<out String>,
@@ -67,6 +74,9 @@ internal object PermissionManager {
         }
     }
 
+    /**
+     * Checks that the listed permissions can be requested, and submits the request to the provided activity
+     */
     private fun requestPermissions(context: Context, permissions: Array<out String>) {
         permissions.forEach {
             if (!manifestPermission(context).contains(it)) {
@@ -82,8 +92,8 @@ internal object PermissionManager {
     }
 
     /**
-     * Handles permission result by allowing accepted permissions for all pending requests
-     * Also cleans up destroyed or completed pending requests
+     * Handles permission result by allowing accepted permissions for all pending requests.
+     * Also cleans up destroyed or completed pending requests.
      */
     fun onRequestPermissionsResult(context: Context, permissions: Array<out String>, grantResults: IntArray) {
         KL.i { "On permission result: pending ${pendingResults.size}" }
@@ -93,7 +103,7 @@ internal object PermissionManager {
             action == null || (0 until count).any { i -> action.onResult(permissions[i], grantResults[i]) }
         }
         val action = pendingResults.asSequence().map { it.get() }.firstOrNull { it != null }
-        if (action == null) { //actions have been unlinked from their weak references
+        if (action == null) { // actions have been unlinked from their weak references
             pendingResults.clear()
             return
         }
