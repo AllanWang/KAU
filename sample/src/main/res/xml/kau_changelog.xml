@@ -8,8 +8,8 @@
 
     <version title="v4.1.0" />
     <item text=":core: Deprecate NetworkUtils, as the underlying functions are deprecated" />
+    <item text=":core: Permission manager no longer synchronized, as all actions should occur in the main thread" />
     <item text=":kpref-activity: Getter and setter now have action context, with the option to reload self" />
-    <item text="" />
     <item text="" />
 
     <version title="v4.0.0" />
