@@ -72,7 +72,7 @@ open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBas
     class KPrefColorBuilder(
         globalOptions: GlobalOptions,
         titleId: Int,
-        getter: KPrefItemActions.() -> Int,
+        getter: () -> Int,
         setter: KPrefItemActions.(value: Int) -> Unit
     ) : KPrefColorContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter),
         ColorContract by ColorBuilder() {

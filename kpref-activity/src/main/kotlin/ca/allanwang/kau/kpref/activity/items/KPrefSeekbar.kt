@@ -85,7 +85,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
     class KPrefSeekbarBuilder(
         globalOptions: GlobalOptions,
         titleId: Int,
-        getter: KPrefItemActions.() -> Int,
+        getter: () -> Int,
         setter: KPrefItemActions.(value: Int) -> Unit
     ) : KPrefSeekbarContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
