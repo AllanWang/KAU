@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    apply plugin: "ca.allanwang.kau"
+
+    dependencies {
+        classpath kauPlugin.android
+        classpath kauPlugin.kotlin
+        classpath kauPlugin.androidMaven
+        classpath kauPlugin.playPublisher
+        classpath kauPlugin.dexCount
+        classpath kauPlugin.gitVersion
+        classpath kauPlugin.spotless
+    }
+
+    wrapper.setDistributionType(Wrapper.DistributionType.ALL)
+}
+
+apply plugin: "ca.allanwang.kau"
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+task generateChangelogMd {
+    kauChangelog.generate("$project.rootDir/sample/src/main/res/xml/kau_changelog.xml")
+}
+
+subprojects {
+
+    if (it.name == 'gradle-plugin')
+        return
+
+    apply plugin: 'com.gladed.androidgitversion'
+
+    apply from: '../spotless.gradle'
+
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
