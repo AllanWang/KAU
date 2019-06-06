@@ -72,7 +72,7 @@ open class ChangelogGenerator(private val project: Project) {
     }
 
     @JvmOverloads
-    fun generate(inputUri: String, outputUri: String = "${project.rootDir}/docs/Changelog.md") {
+    fun generate(inputUri: String, outputUri: String = "${project.rootDir}/docs/Changelog.md"): List<ChangelogEntry> {
         val entries = read(inputUri)
         val output = File(outputUri)
         if (output.exists()) {
@@ -100,5 +100,6 @@ open class ChangelogGenerator(private val project: Project) {
         }
         output.writeText(markdown)
         println("Generated changelog at ${output.absolutePath}")
+        return entries
     }
 }
