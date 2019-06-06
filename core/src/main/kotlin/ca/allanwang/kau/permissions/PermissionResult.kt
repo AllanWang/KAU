@@ -36,7 +36,9 @@ class PermissionResult(permissions: Array<out String>, val callback: (granted: B
             return true
         }
         permissions.remove(permission)
-        if (permissions.isNotEmpty()) return false
+        if (permissions.isNotEmpty()) {
+            return false
+        }
         callback(true, null)
         return true
     }
