@@ -260,12 +260,7 @@ class MainActivity : KPrefActivity() {
         if (KPrefSample.version < BuildConfig.VERSION_CODE) {
             KPrefSample.version = BuildConfig.VERSION_CODE
             if (!BuildConfig.DEBUG)
-                showChangelog(R.xml.kau_changelog, KPrefSample.textColor) {
-                    // TODO MD Color
-//                    titleColor(KPrefSample.textColor)
-//                    backgroundColor(KPrefSample.bgColor)
-//                    positiveColor(KPrefSample.accentColor)
-                }
+                showChangelog(R.xml.kau_changelog, KPrefSample.textColor)
         }
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(false)
@@ -298,12 +293,7 @@ class MainActivity : KPrefActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_changelog -> showChangelog(R.xml.kau_changelog, KPrefSample.textColor) {
-                // TODO MD Color
-//                titleColor(KPrefSample.textColor)
-//                backgroundColor(KPrefSample.bgColor)
-//                positiveColor(KPrefSample.accentColor)
-            }
+            R.id.action_changelog -> showChangelog(R.xml.kau_changelog, KPrefSample.textColor)
             R.id.action_settings -> startActivity<AnimActivity>()
             R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
             else -> return super.onOptionsItemSelected(item)
