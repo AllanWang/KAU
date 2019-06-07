@@ -2,6 +2,12 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v5.0.0
+
+* Material Dialog is now 3.x. This leads to a whole new API, but fortunately it is based around kotlin. Please refer to [MD's documents](https://github.com/afollestad/material-dialogs/tree/3.0.0-rc2/documentation) for the new methods.
+  * Alongside such changes, `:colorpicker` is no longer as necessary. It exists mainly to provide an internal interface for other submodules.
+  
+
 # v4.0.1-alpha02
 
 * `kauParseFaq` is now synchronous. 

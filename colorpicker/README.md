@@ -1,10 +1,9 @@
 # KAU :colorpicker
 
-Material Dialogs by default contains a color picker, but it requires an activity that also implements the color callback.
-KAU's colorpicker decouples the two, so it only needs a context and a separate callback.
-The color picker also animates the selection, and uses Kotlin's DSL to provide easy calling.
+As of Material Dialog 2.x, `:colorpicker` is effectively a very thin wrapper around [Material Dialog's color picker](https://github.com/afollestad/material-dialogs/blob/master/documentation/COLOR.md).
+The main difference is that it exposes an interface internal to KAU, which allows a greater level of consistency within other submodules.
+It also contains an extra palette for accent colors.
 
-To use it, call `Context.colorPickerDialog` and specify and configs as required through the builder.
+To use it, call `MaterialDialog.kauColorChooser` and specify the configs.
 
 ![Color Picker Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker.gif)
-![Color Picker Custom Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker_custom.gif)
