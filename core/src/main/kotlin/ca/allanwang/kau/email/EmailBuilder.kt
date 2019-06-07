@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.email
 
 import android.app.Activity
@@ -6,12 +21,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.support.annotation.StringRes
 import android.util.DisplayMetrics
+import androidx.annotation.StringRes
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
-import ca.allanwang.kau.utils.*
-
+import ca.allanwang.kau.utils.boolean
+import ca.allanwang.kau.utils.installerPackageName
+import ca.allanwang.kau.utils.isAppInstalled
+import ca.allanwang.kau.utils.string
+import ca.allanwang.kau.utils.toast
 
 /**
  * Created by Allan Wang on 2017-06-20.
@@ -28,7 +46,7 @@ class EmailBuilder(val email: String, val subject: String) {
     private var attachment: Uri? = null
 
     fun checkPackage(packageName: String, appName: String) =
-            packages.add(Package(packageName, appName))
+        packages.add(Package(packageName, appName))
 
     fun addItem(key: String, value: String) = pairs.put(key, value)
 
@@ -45,24 +63,24 @@ class EmailBuilder(val email: String, val subject: String) {
 
     fun getIntent(context: Context): Intent {
         val intent = Intent(Intent.ACTION_SEND)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-                .putExtra(Intent.EXTRA_SUBJECT, subject)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+            .putExtra(Intent.EXTRA_SUBJECT, subject)
         val emailBuilder = StringBuilder()
         emailBuilder.append(message).append("\n\n")
         if (deviceDetails) {
-            val deviceItems = linkedMapOf(
-                    "OS Version" to "${System.getProperty("os.version")} (${Build.VERSION.INCREMENTAL})",
-                    "OS SDK" to Build.VERSION.SDK_INT,
-                    "Device (Manufacturer)" to "${Build.DEVICE} (${Build.MANUFACTURER})",
-                    "Model (Product)" to "${Build.MODEL} (${Build.PRODUCT})",
-                    "Package Installer" to (context.installerPackageName ?: "None"),
-                    "Tablet" to context.boolean(R.bool.kau_is_tablet)
+            val deviceItems = mutableListOf(
+                "OS Version" to "${System.getProperty("os.version")} (${Build.VERSION.INCREMENTAL})",
+                "OS SDK" to Build.VERSION.SDK_INT,
+                "Device (Manufacturer)" to "${Build.DEVICE} (${Build.MANUFACTURER})",
+                "Model (Product)" to "${Build.MODEL} (${Build.PRODUCT})",
+                "Package Installer" to (context.installerPackageName ?: "None"),
+                "Tablet" to context.boolean(R.bool.kau_is_tablet)
             )
             if (context is Activity) {
                 val metric = DisplayMetrics()
                 context.windowManager.defaultDisplay.getMetrics(metric)
-                deviceItems["Screen Dimensions"] = "${metric.widthPixels} x ${metric.heightPixels}"
+                deviceItems.add("Screen Dimensions" to "${metric.widthPixels} x ${metric.heightPixels}")
             }
             deviceItems.forEach { (k, v) -> emailBuilder.append("$k: $v\n") }
         }
@@ -76,8 +94,8 @@ class EmailBuilder(val email: String, val subject: String) {
                     appInfo.versionCode.toString()
                 }
                 emailBuilder.append("\nApp: ").append(context.packageName)
-                        .append("\nApp Version Name: ").append(appInfo.versionName)
-                        .append("\nApp Version Code: ").append(versionCode).append("\n")
+                    .append("\nApp Version Name: ").append(appInfo.versionName)
+                    .append("\nApp Version Code: ").append(versionCode).append("\n")
             } catch (e: PackageManager.NameNotFoundException) {
                 KL.e { "EmailBuilder packageInfo not found" }
             }
@@ -112,7 +130,7 @@ class EmailBuilder(val email: String, val subject: String) {
         val intent = getIntent(context)
         intent.extras()
         val packageName = intent.resolveActivity(context.packageManager)?.packageName
-                ?: return context.toast(R.string.kau_error_no_email, log = true)
+            ?: return context.toast(R.string.kau_error_no_email, log = true)
 
         val attachment = this.attachment
         if (attachment != null) {
@@ -124,8 +142,8 @@ class EmailBuilder(val email: String, val subject: String) {
     }
 }
 
-fun Context.sendEmail(@StringRes emailId: Int, @StringRes subjectId: Int, builder: EmailBuilder.() -> Unit = {}) = sendEmail(string(emailId), string(subjectId), builder)
-
+fun Context.sendEmail(@StringRes emailId: Int, @StringRes subjectId: Int, builder: EmailBuilder.() -> Unit = {}) =
+    sendEmail(string(emailId), string(subjectId), builder)
 
 fun Context.sendEmail(email: String, subject: String, builder: EmailBuilder.() -> Unit = {}) {
     EmailBuilder(email, subject).apply {

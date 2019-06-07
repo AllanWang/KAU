@@ -1,22 +1,42 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.kpref.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.v7.widget.Toolbar
 import android.view.View
+import androidx.annotation.StringRes
+import androidx.appcompat.widget.Toolbar
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.animators.SlideAnimatorAdd
 import ca.allanwang.kau.animators.SlideAnimatorRemove
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.kpref.activity.items.KPrefItemCore
 import ca.allanwang.kau.ui.views.RippleCanvas
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.KAU_LEFT
+import ca.allanwang.kau.utils.KAU_RIGHT
+import ca.allanwang.kau.utils.resolveColor
+import ca.allanwang.kau.utils.statusBarColor
+import ca.allanwang.kau.utils.withLinearAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import kotlinx.android.synthetic.main.kau_pref_activity.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
-import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Stack
 
 abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
 
@@ -32,12 +52,16 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
     var animate: Boolean = true
 
     private val recyclerAnimatorNext: KauAnimator by lazy {
-        KauAnimator(SlideAnimatorAdd(KAU_RIGHT, itemDelayFactor = 0f),
-                SlideAnimatorRemove(KAU_LEFT, itemDelayFactor = 0f))
+        KauAnimator(
+            SlideAnimatorAdd(KAU_RIGHT, itemDelayFactor = 0f),
+            SlideAnimatorRemove(KAU_LEFT, itemDelayFactor = 0f)
+        )
     }
     private val recyclerAnimatorPrev: KauAnimator by lazy {
-        KauAnimator(SlideAnimatorAdd(KAU_LEFT, itemDelayFactor = 0f),
-                SlideAnimatorRemove(KAU_RIGHT, itemDelayFactor = 0f))
+        KauAnimator(
+            SlideAnimatorAdd(KAU_LEFT, itemDelayFactor = 0f),
+            SlideAnimatorRemove(KAU_RIGHT, itemDelayFactor = 0f)
+        )
     }
 
     /**
@@ -69,24 +93,34 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         globalOptions = GlobalOptions(core, this)
         kau_recycler.withLinearAdapter(adapter)
         adapter.withSelectable(false)
-                .withOnClickListener { v, _, item, _ -> item.onClick(v!!); true }
+            .withOnClickListener { v, _, item, _ -> item.onClick(v!!); true }
         showNextPrefs(R.string.kau_settings, onCreateKPrefs(savedInstanceState), true)
     }
 
-    override fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit) = showNextPrefs(toolbarTitleRes, builder, false)
+    override fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit) =
+        showNextPrefs(toolbarTitleRes, builder, false)
 
-    private fun showNextPrefs(@StringRes toolbarTitleRes: Int, builder: KPrefAdapterBuilder.() -> Unit, first: Boolean) {
-        doAsync {
-            val items = KPrefAdapterBuilder(globalOptions)
-            builder(items)
-            kprefStack.push(toolbarTitleRes to items.list)
-            kau_recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
-            uiThread {
-                adapter.clear()
-                adapter.add(items.list.filter { it.core.visible() })
-                toolbar.setTitle(toolbarTitleRes)
+    private fun showNextPrefs(
+        @StringRes toolbarTitleRes: Int,
+        builder: KPrefAdapterBuilder.() -> Unit,
+        first: Boolean
+    ) {
+        launch {
+            val items = withContext(Dispatchers.Default) {
+                val items = KPrefAdapterBuilder(globalOptions)
+                builder(items)
+                kprefStack.push(toolbarTitleRes to items.list)
+                items.list
             }
+            kau_recycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
+            show(toolbarTitleRes, items)
         }
+    }
+
+    private fun show(@StringRes toolbarTitleRes: Int, items: List<KPrefItemCore>) {
+        toolbar.setTitle(toolbarTitleRes)
+        adapter.clear()
+        adapter.add(items.filter { it.core.visible() })
     }
 
     /**
@@ -97,9 +131,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         kprefStack.pop()
         val (title, list) = kprefStack.peek()
         kau_recycler.itemAnimator = if (animate) recyclerAnimatorPrev else null
-        adapter.clear()
-        adapter.add(list.filter { it.core.visible() })
-        toolbar.setTitle(title)
+        show(title, list)
     }
 
     /**
@@ -162,4 +194,3 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         return false
     }
 }
-

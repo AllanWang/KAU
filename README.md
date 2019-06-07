@@ -35,8 +35,6 @@ allprojects {
 }
 ```
 
-(If you are using gradle < 4.0, use `maven { url "https://maven.google.com" }` instead of `google()`)
-
 And add the following dependencies (You can use a specific version, commit, or -SNAPSHOT):
 
 Note that only `core` is required if you want the basic features.
@@ -71,8 +69,6 @@ buildscript {
 
 ```
 
-(If you are using gradle < 4.0, use `compile` instead of `implementation`)
-
 -----------
 
 # Submodules 
@@ -99,10 +95,9 @@ This means that you'll need to explicitly include each submodule you'd like to u
   * [Extension Functions](core#extension-functions)
   * [Lazy Resettable](core#lazy-resettable)
 * Includes 
-[`AppCompat`](https://developer.android.com/topic/libraries/support-library/index.html), 
+[`AndroidX Components`](https://developer.android.com/topic/libraries/support-library/index.html), 
 [`Material Dialogs (core)`](https://github.com/afollestad/material-dialogs),
 [`Iconics`](https://github.com/mikepenz/Android-Iconics), 
-[`Anko`](https://github.com/Kotlin/anko),
 [`Kotlin stdlib`](https://kotlinlang.org/api/latest/jvm/stdlib/)
 
 ## [Core UI](core-ui#readme)
@@ -148,7 +143,6 @@ This means that you'll need to explicitly include each submodule you'd like to u
 ![About Activity Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_about_activity.gif)
 ![Ink Indicator Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_ink_indicator.gif)
 ![Color Picker Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker.gif)
-![Color Picker Custom Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_color_picker_custom.gif)
 ![KPref Items Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_kpref_items.gif)
 ![SearchView Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_search_view.gif)
 ![Swipe Gif](https://raw.githubusercontent.com/AllanWang/Storage-Hub/master/kau/kau_swipe.gif)
@@ -172,7 +166,8 @@ Special thanks to the following awesome people for translating significant porti
 
 | Language | Contributors |
 |----------|--------------|
-| Chinese (Simplified) | |
+| Chinese (Simplified) | [Alcatelia](https://crowdin.com/profile/Alcatelia) |
+| Chinese (Traditional) | [yipinghuang](https://crowdin.com/profile/yipinghuang) &bull; [Su, Jun-Ming](https://crowdin.com/profile/sujunmin) &bull; [Wei](https://crowdin.com/profile/wei4green) |
 | French | [Vincent Kulak](https://github.com/VonOx) &bull; [Jean-Philippe Gravel](https://crowdin.com/profile/wokija) |
 | Galician | [Xesús M. Mosquera](https://twitter.com/xesusmmc?lang=en) |
 | German | [Bushido1992](https://forum.xda-developers.com/member.php?u=5179246) &bull; [Marcel Soehnchen](https://crowdin.com/profile/msoehnchen) &bull; [3LD0mi HA](https://forum.xda-developers.com/member.php?u=5860523) |
@@ -180,11 +175,14 @@ Special thanks to the following awesome people for translating significant porti
 | Italian | [Bonnee](https://github.com/Bonnee) |
 | Korean | [잇스테이크](https://crowdin.com/profile/bexco2010) |
 | Norwegian | |
-| Polish | |
-| Portuguese | [TheusKhan](https://crowdin.com/profile/TheusKhan) |
+| Polish | [pantinPL](https://crowdin.com/profile/pantinPL) |
+| Portuguese | [Sérgio Marques](https://crowdin.com/profile/smarquespt) &bull; [Miguel Dos Reis](https://crowdin.com/profile/siersod) |
+| Portuguese (Brazilian) | [TheusKhan](https://crowdin.com/profile/TheusKhan) |
+| Serbian | [Nikola Radmanović](https://crowdin.com/profile/nikoladradmanovic) |
 | Spanish | [Jahir Fiquitiva](https://jahirfiquitiva.me/) &bull; [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431)|
-| Thai | |
-| Turkish | |
+| Thai | [Thanawat Hanthong](https://crowdin.com/profile/peet6015) |
+| Turkish | [zuma17](https://crowdin.com/profile/zuma17) |
 | Vietnamese | [Alienz](https://crowdin.com/profile/alienyd) |
 
 The full activity stream for the translations can be found [here](https://crowdin.com/project/kotlin-android-utils/activity_stream)
+

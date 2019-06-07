@@ -1,33 +1,71 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.searchview
 
 import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.annotation.IdRes
-import android.support.transition.ChangeBounds
-import android.support.transition.TransitionManager
-import android.support.transition.TransitionSet
-import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
+import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
+import androidx.transition.TransitionSet
 import ca.allanwang.kau.kotlin.Debouncer2
 import ca.allanwang.kau.kotlin.debounce
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.searchview.SearchView.Configs
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.INVALID_ID
+import ca.allanwang.kau.utils.addEndListener
+import ca.allanwang.kau.utils.adjustAlpha
+import ca.allanwang.kau.utils.circularHide
+import ca.allanwang.kau.utils.circularReveal
+import ca.allanwang.kau.utils.fadeIn
+import ca.allanwang.kau.utils.fadeOut
+import ca.allanwang.kau.utils.gone
+import ca.allanwang.kau.utils.goneIf
+import ca.allanwang.kau.utils.hideKeyboard
+import ca.allanwang.kau.utils.invisibleIf
+import ca.allanwang.kau.utils.isVisible
+import ca.allanwang.kau.utils.parentViewGroup
+import ca.allanwang.kau.utils.runOnUiThread
+import ca.allanwang.kau.utils.setIcon
+import ca.allanwang.kau.utils.setMarginTop
+import ca.allanwang.kau.utils.showKeyboard
+import ca.allanwang.kau.utils.string
+import ca.allanwang.kau.utils.tint
+import ca.allanwang.kau.utils.toDrawable
+import ca.allanwang.kau.utils.visible
+import ca.allanwang.kau.utils.withLinearAdapter
 import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
 import kotlinx.android.synthetic.main.kau_search_view.view.*
-import org.jetbrains.anko.runOnUiThread
-
 
 /**
  * Created by Allan Wang on 2017-06-23.
@@ -41,7 +79,9 @@ import org.jetbrains.anko.runOnUiThread
  * https://github.com/lapism/SearchView
  */
 class SearchView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     /**
@@ -162,13 +202,15 @@ class SearchView @JvmOverloads constructor(
          * Click event for suggestion items
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
          */
-        var onItemClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit = { _, _, _, _ -> }
+        var onItemClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit =
+            { _, _, _, _ -> }
 
         /**
          * Long click event for suggestion items
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
          */
-        var onItemLongClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit = { _, _, _, _ -> }
+        var onItemLongClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit =
+            { _, _, _, _ -> }
 
         /**
          * If a [SearchItem]'s title contains the submitted query, make that portion bold
@@ -229,7 +271,8 @@ class SearchView @JvmOverloads constructor(
 
     private val configs = Configs()
     // views
-    private var textCallback: Debouncer2<String, SearchView> = debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
+    private var textCallback: Debouncer2<String, SearchView> =
+        debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
     private val adapter = FastItemAdapter<SearchItem>()
     private var menuItem: MenuItem? = null
     val isOpen: Boolean
@@ -274,7 +317,12 @@ class SearchView @JvmOverloads constructor(
                 if (item.key.isNotBlank()) configs.onItemClick(position, item.key, item.content, this@SearchView); true
             }
             withOnLongClickListener { _, _, item, position ->
-                if (item.key.isNotBlank()) configs.onItemLongClick(position, item.key, item.content, this@SearchView); true
+                if (item.key.isNotBlank()) configs.onItemLongClick(
+                    position,
+                    item.key,
+                    item.content,
+                    this@SearchView
+                ); true
             }
         }
         kau_search_edit_text.addTextChangedListener(object : TextWatcher {
@@ -293,8 +341,11 @@ class SearchView @JvmOverloads constructor(
         })
         kau_search_edit_text.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (configs.searchCallback(kau_search_edit_text.text?.toString()
-                                ?: "", this)) revealClose()
+                if (configs.searchCallback(
+                        kau_search_edit_text.text?.toString()
+                            ?: "", this
+                    )
+                ) revealClose()
                 else kau_search_edit_text.hideKeyboard()
                 return@setOnEditorActionListener true
             }
@@ -309,12 +360,12 @@ class SearchView @JvmOverloads constructor(
 
     internal fun cardTransition(builder: TransitionSet.() -> Unit = {}) {
         TransitionManager.beginDelayedTransition(kau_search_cardview,
-                //we are only using change bounds, as the recyclerview items may be animated as well,
-                //which causes a measure IllegalStateException
-                TransitionSet().addTransition(ChangeBounds()).apply {
-                    duration = configs.transitionDuration
-                    builder()
-                })
+            //we are only using change bounds, as the recyclerview items may be animated as well,
+            //which causes a measure IllegalStateException
+            TransitionSet().addTransition(ChangeBounds()).apply {
+                duration = configs.transitionDuration
+                builder()
+            })
     }
 
     /**
@@ -330,10 +381,15 @@ class SearchView @JvmOverloads constructor(
      * This is assuming that SearchView has already been added to a ViewGroup
      * If not, see the extension function [bindSearchView]
      */
-    fun bind(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: Configs.() -> Unit = {}): SearchView {
+    fun bind(
+        menu: Menu,
+        @IdRes id: Int,
+        @ColorInt menuIconColor: Int = Color.WHITE,
+        config: Configs.() -> Unit = {}
+    ): SearchView {
         config(config)
         val menuItem = menu.findItem(id)
-                ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
+            ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
         if (menuItem.icon == null) menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         kau_search_cardview.gone()
         menuItem.setOnMenuItemClickListener { revealOpen(); true }
@@ -430,17 +486,16 @@ class SearchView @JvmOverloads constructor(
             cardTransition {
                 addEndListener {
                     kau_search_cardview.circularHide(menuX, menuHalfHeight, duration = configs.revealDuration,
-                            onFinish = {
-                                configs.closeListener?.invoke(this@SearchView)
-                                if (configs.shouldClearOnClose) kau_search_edit_text.text?.clear()
-                            })
+                        onFinish = {
+                            configs.closeListener?.invoke(this@SearchView)
+                            if (configs.shouldClearOnClose) kau_search_edit_text.text?.clear()
+                        })
                 }
             }
             kau_search_recycler.gone()
             kau_search_edit_text.hideKeyboard()
         }
     }
-
 }
 
 @DslMarker
@@ -450,7 +505,12 @@ annotation class KauSearch
  * Helper function that binds to an activity's main view
  */
 @KauSearch
-fun Activity.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView = findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
+fun Activity.bindSearchView(
+    menu: Menu,
+    @IdRes id: Int,
+    @ColorInt menuIconColor: Int = Color.WHITE,
+    config: SearchView.Configs.() -> Unit = {}
+): SearchView = findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
 
 /**
  * Bind searchView to a menu item; call this in [Activity.onCreateOptionsMenu]
@@ -458,11 +518,16 @@ fun Activity.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor:
  * it may be worthwhile to hold a reference to the searchview and only bind it if it hasn't been bound before
  */
 @KauSearch
-fun ViewGroup.bindSearchView(menu: Menu, @IdRes id: Int, @ColorInt menuIconColor: Int = Color.WHITE, config: SearchView.Configs.() -> Unit = {}): SearchView {
+fun ViewGroup.bindSearchView(
+    menu: Menu,
+    @IdRes id: Int,
+    @ColorInt menuIconColor: Int = Color.WHITE,
+    config: SearchView.Configs.() -> Unit = {}
+): SearchView {
     val searchView = SearchView(context)
-    searchView.layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+    searchView.layoutParams =
+        FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
     addView(searchView)
     searchView.bind(menu, id, menuIconColor, config)
     return searchView
 }
-

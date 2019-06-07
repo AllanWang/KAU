@@ -1,7 +1,22 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.about
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.iitems.KauIItem
@@ -13,7 +28,7 @@ import ca.allanwang.kau.ui.views.CutoutView
  * Just a cutout item with some defaults in [R.layout.kau_iitem_cutout]
  */
 class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem, CutoutIItem.ViewHolder>(
-        R.layout.kau_iitem_cutout, ::ViewHolder, R.id.kau_item_cutout
+    R.layout.kau_iitem_cutout, ::ViewHolder, R.id.kau_item_cutout
 ), ThemableIItem by ThemableIItemDelegate() {
 
     override fun isSelectable(): Boolean = false
@@ -37,5 +52,4 @@ class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         val cutout: CutoutView = v.findViewById(R.id.kau_cutout)
     }
-
 }

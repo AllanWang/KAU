@@ -1,9 +1,24 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.ui
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import ca.allanwang.kau.kotlin.kauRemoveIf
 
 /**
@@ -37,8 +52,7 @@ class ProgressAnimator private constructor() : ValueAnimator() {
                     isCancelled = false
                 }
             })
-            apply(builder)
-        }
+        }.apply(builder)
 
         /**
          * Gets output of a linear function starting at [start] when [progress] is 0 and [end] when [progress] is 1 at point [progress].
@@ -54,7 +68,6 @@ class ProgressAnimator private constructor() : ValueAnimator() {
                 start + (end - start) * trueProgress
             }
         }
-
     }
 
     private val animators: MutableList<ProgressDisposableAction> = mutableListOf()
@@ -68,7 +81,6 @@ class ProgressAnimator private constructor() : ValueAnimator() {
         private set
 
     val animatorCount get() = animators.size
-
 
     /**
      * Converts an action to a disposable action
@@ -95,13 +107,13 @@ class ProgressAnimator private constructor() : ValueAnimator() {
     }
 
     fun withAnimator(action: ProgressAction) =
-            withDisposableAnimator(action.asDisposable())
+        withDisposableAnimator(action.asDisposable())
 
     /**
      * Range animator. Multiples the range by the current float progress before emission
      */
     fun withAnimator(from: Float, to: Float, action: ProgressAction) =
-            withDisposableAnimator(from, to, action.asDisposable())
+        withDisposableAnimator(from, to, action.asDisposable())
 
     fun withDisposableAnimator(action: ProgressDisposableAction) = animators.add(action)
 

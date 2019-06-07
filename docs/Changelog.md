@@ -1,5 +1,26 @@
 # Changelog
 
+## v4.1.0
+* :core: Deprecate NetworkUtils, as the underlying functions are deprecated
+* :core: Permission manager no longer synchronized, as all actions should occur in the main thread
+* :kpref-activity: Getter and setter now have action context, with the option to reload self
+
+## v4.0.0
+* Update translations
+
+## v4.0.0-alpha02
+* Update translations
+* :core: Remove anko dependency. Methods that used it now use coroutines; see the migration doc for minor changes
+* :core: Add default CoroutineScope implementation to KauBaseActivity
+* :core: Remove zip class. Coroutines and join can be used as an alternative
+* :core: Delete flyweight implementation. Kotlin already has getOrPut
+* :core: Introduce ContextHelper, where you can get the default looper, handler, and dispatcher for Android
+* :mediapicker: Use video preloading instead of full async loading
+
+## v4.0.0-alpha01
+* Migrate to androidx. See migration for external dependency changes.
+* :core: Remove deprecation warning for Kotterknife
+
 ## v3.8.0
 * Update everything to Android Studio 3.1
 * Fix new lint issues (see Migration for resource related methods)

@@ -48,7 +48,7 @@ You are free to use the values through `kau.[tagName]`.
 As an example, AppCompat is imported in KAU using
 
 ```gradle
-api "com.android.support:appcompat-v7:${kau.supportLibs}"
+api "androidx.appcompat:appcompat:${kau.appcompat}"
 ```
 
 # Plugins

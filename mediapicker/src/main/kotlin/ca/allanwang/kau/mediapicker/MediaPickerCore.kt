@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.mediapicker
 
 import android.Manifest
@@ -13,11 +28,11 @@ import android.os.Bundle
 import android.provider.BaseColumns
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.support.v4.app.LoaderManager
-import android.support.v4.content.CursorLoader
-import android.support.v4.content.Loader
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.CursorLoader
+import androidx.loader.content.Loader
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapters.fastAdapter
 import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
@@ -34,10 +49,8 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
-import org.jetbrains.anko.doAsync
+import kotlinx.coroutines.CancellationException
 import java.io.File
-import java.util.concurrent.ExecutionException
-import java.util.concurrent.Future
 
 /**
  * Created by Allan Wang on 2017-07-23.
@@ -45,8 +58,8 @@ import java.util.concurrent.Future
  * Container for the main logic behind the both pickers
  */
 abstract class MediaPickerCore<T : IItem<*, *>>(
-        val mediaType: MediaType,
-        val mediaActions: List<MediaAction>
+    val mediaType: MediaType,
+    val mediaActions: List<MediaAction>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
     companion object {
@@ -79,10 +92,10 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
             val sizePx = MediaPickerCore.computeViewSize(context)
             return IconicsDrawable(context, iicon)
-                    .sizePx(sizePx)
-                    .backgroundColor(color)
-                    .paddingPx(sizePx / 3)
-                    .color(Color.WHITE)
+                .sizePx(sizePx)
+                .backgroundColor(color)
+                .paddingPx(sizePx / 3)
+                .color(Color.WHITE)
         }
 
         var accentColor: Int = 0xff666666.toInt()
@@ -106,7 +119,6 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     lateinit var glide: RequestManager
     private var hasPreloaded = false
-    private var prefetcher: Future<*>? = null
 
     val adapter = ItemAdapter<T>()
 
@@ -122,7 +134,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterHeader = ItemAdapter<MediaActionItem>()
-        val fulladapter = fastAdapter(adapterHeader, adapter)
+        val fulladapter = fastAdapter<IItem<*, *>>(adapterHeader, adapter)
         adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
@@ -131,7 +143,6 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
                 }
             }
             setItemViewCacheSize(CACHE_SIZE)
-            isDrawingCacheEnabled = true
             layoutManager = manager
             adapter = fulladapter
             setHasFixedSize(true)
@@ -155,7 +166,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     open fun loadItems() {
         kauRequestPermissions(Manifest.permission.READ_EXTERNAL_STORAGE) { granted, _ ->
             if (granted) {
-                supportLoaderManager.initLoader(LOADER_ID, null, this)
+                LoaderManager.getInstance(this).initLoader(LOADER_ID, null, this)
                 onStatusChange(true)
             } else {
                 toast(R.string.kau_permission_denied)
@@ -180,18 +191,14 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         addItems(models.map { converter(it) })
         if (!hasPreloaded && mediaType == MediaType.VIDEO) {
             hasPreloaded = true
-            prefetcher = doAsync {
-                models.subList(0, Math.min(models.size, 50)).map { it.data }.forEach {
-                    val target = glide.load(it)
-                            .applyMediaOptions(this@MediaPickerCore)
-                            .submit()
-                    try {
-                        target.get()
-                    } catch (ignored: InterruptedException) {
-                    } catch (ignored: ExecutionException) {
-                    } finally {
-                        glide.clear(target)
-                    }
+            val preloads = models.subList(0, Math.min(models.size, 50)).map {
+                glide.load(it.data)
+                    .applyMediaOptions(this@MediaPickerCore)
+                    .preload()
+            }
+            job.invokeOnCompletion {
+                if (it is CancellationException) {
+                    preloads.forEach(glide::clear)
                 }
             }
         }
@@ -226,11 +233,6 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     open fun shouldLoad(model: MediaModel): Boolean = model.size > 10000L
 
     open fun onStatusChange(loaded: Boolean) {}
-
-    override fun onDestroy() {
-        prefetcher?.cancel(true)
-        super.onDestroy()
-    }
 
     /**
      * Method used to retrieve uri data for API 19+
@@ -274,7 +276,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             f = File(tempPath)
             tempPath = null
         } else if (data?.data != null) {
-            f = File(data.data.path)
+            f = File(data.data!!.path)
         } else {
             KL.d { "Media camera no file found" }
             return
@@ -291,8 +293,8 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     private fun onPickerResult(data: Intent?) {
         val items = mutableListOf<Uri>()
         if (data?.data != null) {
-            KL.v { "Media picker data uri: ${data.data.path}" }
-            items.add(data.data)
+            KL.v { "Media picker data uri: ${data.data!!.path}" }
+            items.add(data.data!!)
         } else if (data != null) {
             val clip = data.clipData
             if (clip != null) {

@@ -2,12 +2,43 @@
 
 Below are some highlights on major refactoring/breaking changes
 
-# v4.0.0
+# v5.0.0
+
+## Material Dialog Update
+
+Material Dialog is now 3.x. 
+This leads to a whole new API, but fortunately it is based around kotlin. 
+Please refer to [MD's documents](https://github.com/afollestad/material-dialogs/tree/3.0.0-rc2/documentation) for the new methods.
+
+Alongside such changes, `:colorpicker` is no longer as necessary. It exists mainly to provide an internal interface for other submodules.
 
 ## Update ProgressAnimator
 
 `ProgressAnimator` has been completely rewritten to be an extension of `ValueAnimator`.
 This for the most part is not a breaking change, apart from the fact that creating an animator will not start it immediately.
+Make sure to call `.start()` to begin the animation.
+
+# v4.0.1-alpha02
+
+* `kauParseFaq` is now synchronous. 
+
+## Anko has been removed
+
+A lot of the methods are already implemented in KAU, and it was primarily imported for its `doAsync` methods. Now, they have been replaced with coroutines.
+Some methods have been copied over:
+
+* import org.jetbrains.anko.runOnUiThread > import ca.allanwang.kau.utils.runOnUiThread
+* import org.jetbrains.anko.contentView > import ca.allanwang.kau.utils.contentView
+* import org.jetbrains.anko.bundleOf > import ca.allanwang.kau.utils.bundleOf
+
+# v4.0.0-alpha01
+
+This is the first introduction of androidx. The goal is to just do a migration with minimal changes.
+Nothing has been changed internally, but the dependencies are updated.
+Notably, Android-Iconics [split their Community Icons](https://github.com/mikepenz/Android-Iconics/blob/develop/MIGRATION.md) into two enums.
+
+Kotterknife is also no longer deprecated. There are some use cases where `kotlin-android-extensions` isn't the best, such as when multiple layout files are used, or when ids are defined in the id.xml.
+It is still recommended to use the extension where applicable.
 
 # v3.8.0
 

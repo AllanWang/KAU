@@ -43,7 +43,7 @@
                     android:focusable="true"
                     android:scaleType="centerInside" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@id/kau_search_edit_text"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -98,7 +98,7 @@
                 android:layout_height="@dimen/kau_search_divider"
                 android:background="?android:attr/listDivider" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@id/kau_search_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

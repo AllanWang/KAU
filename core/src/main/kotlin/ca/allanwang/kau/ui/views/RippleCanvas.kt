@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.ui.views
 
 import android.animation.Animator
@@ -5,7 +20,11 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.View
 
@@ -17,7 +36,9 @@ import android.view.View
  * Supports multiple ripples from varying locations
  */
 class RippleCanvas @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
     private val paint: Paint = Paint().apply {
         isAntiAlias = true
@@ -53,11 +74,13 @@ class RippleCanvas @JvmOverloads constructor(
     /**
      * Creates a ripple effect from the given starting values
      */
-    fun ripple(color: Int,
-               startX: Float = 0f,
-               startY: Float = 0f,
-               duration: Long = 600L,
-               callback: (() -> Unit)? = null) {
+    fun ripple(
+        color: Int,
+        startX: Float = 0f,
+        startY: Float = 0f,
+        duration: Long = 600L,
+        callback: (() -> Unit)? = null
+    ) {
         val w = width.toFloat()
         val h = height.toFloat()
         val x = when (startX) {
@@ -112,11 +135,13 @@ class RippleCanvas @JvmOverloads constructor(
         animator.start()
     }
 
-    internal class Ripple(val color: Int,
-                          val x: Float,
-                          val y: Float,
-                          var radius: Float,
-                          val maxRadius: Float)
+    internal class Ripple(
+        val color: Int,
+        val x: Float,
+        val y: Float,
+        var radius: Float,
+        val maxRadius: Float
+    )
 
     companion object {
         const val MIDDLE = -1.0f

@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.swipe
 
 import android.app.Activity
@@ -24,7 +39,8 @@ internal class SwipeBackPage(activity: Activity) : SwipeBackContractInternal by 
     init {
         activity.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         activity.window.decorView.setBackgroundColor(Color.TRANSPARENT)
-        swipeBackLayout.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        swipeBackLayout.layoutParams =
+            ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         slider = RelativeSlider(this)
     }
 
@@ -41,7 +57,7 @@ internal class SwipeBackPage(activity: Activity) : SwipeBackContractInternal by 
 
     private fun handleLayout() {
         val activity = activityRef.get()
-                ?: return KL.v { "KauSwipe activity ref gone during handleLayout" }
+            ?: return KL.v { "KauSwipe activity ref gone during handleLayout" }
         if (swipeEnabled) swipeBackLayout.attachToActivity(activity)
         else swipeBackLayout.removeFromActivity(activity)
     }
@@ -50,7 +66,6 @@ internal class SwipeBackPage(activity: Activity) : SwipeBackContractInternal by 
         swipeBackLayout.scrollThreshold = percent
         return this
     }
-
 }
 
 internal interface SwipeBackContractInternal : SwipeBackContract {

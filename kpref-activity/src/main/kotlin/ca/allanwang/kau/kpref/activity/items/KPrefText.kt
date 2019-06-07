@@ -1,8 +1,24 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.kpref.activity.items
 
 import android.widget.TextView
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
+import ca.allanwang.kau.kpref.activity.KPrefItemActions
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.toast
 
@@ -22,7 +38,7 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
     override var pref: T
         get() = base.getter()
         set(value) {
-            base.setter(value)
+            base.setter(this, value)
             builder.reloadSelf()
         }
 
@@ -48,14 +64,13 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
      * Default implementation of [KPrefTextContract]
      */
     class KPrefTextBuilder<T>(
-            globalOptions: GlobalOptions,
-            titleId: Int,
-            getter: () -> T,
-            setter: (value: T) -> Unit
+        globalOptions: GlobalOptions,
+        titleId: Int,
+        getter: () -> T,
+        setter: KPrefItemActions.(value: T) -> Unit
     ) : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>(globalOptions, titleId, getter, setter) {
         override var textGetter: (T) -> String? = { it?.toString() }
     }
 
     override fun getType(): Int = R.id.kau_item_pref_text
-
 }

@@ -31,7 +31,7 @@ android {
         versionCode androidGitVersion.code()
         consumerProguardFiles 'progress-proguard.txt'
         multiDexEnabled true
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -87,5 +87,6 @@ dependencies {
 
     androidTestImplementation kauDependency.kotlinTest
     androidTestImplementation kauDependency.espresso
+    androidTestImplementation kauDependency.testRules
     androidTestImplementation kauDependency.testRunner
 }

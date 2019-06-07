@@ -1,23 +1,44 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.kpref.activity.items
 
 import android.annotation.SuppressLint
-import android.support.annotation.CallSuper
-import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.StringRes
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.CallSuper
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
+import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.adapters.ThemableIItem
 import ca.allanwang.kau.adapters.ThemableIItemDelegate
 import ca.allanwang.kau.kpref.activity.GlobalOptions
+import ca.allanwang.kau.kpref.activity.KPrefItemActions
 import ca.allanwang.kau.kpref.activity.KPrefMarker
 import ca.allanwang.kau.kpref.activity.R
-import ca.allanwang.kau.utils.*
+import ca.allanwang.kau.utils.INVALID_ID
+import ca.allanwang.kau.utils.adjustAlpha
+import ca.allanwang.kau.utils.buildIsLollipopAndUp
+import ca.allanwang.kau.utils.gone
+import ca.allanwang.kau.utils.setIcon
+import ca.allanwang.kau.utils.visible
 import com.mikepenz.fastadapter.items.AbstractItem
 import com.mikepenz.iconics.typeface.IIcon
 
@@ -27,8 +48,8 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 
-abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>(),
-        ThemableIItem by ThemableIItemDelegate() {
+abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>(), KPrefItemActions by core,
+    ThemableIItem by ThemableIItemDelegate() {
 
     final override fun getViewHolder(v: View) = ViewHolder(v)
 
@@ -69,13 +90,15 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
     }
 
     protected inline fun withAccentColor(action: (color: Int) -> Unit) =
-            withColor(core.globalOptions.accentColor, action)
+        withColor(core.globalOptions.accentColor, action)
 
     protected inline fun withTextColor(action: (color: Int) -> Unit) =
-            withColor(core.globalOptions.textColor, action)
+        withColor(core.globalOptions.textColor, action)
 
-    protected inline fun withColor(noinline supplier: (() -> Int)?,
-                                   action: (color: Int) -> Unit) {
+    protected inline fun withColor(
+        noinline supplier: (() -> Int)?,
+        action: (color: Int) -> Unit
+    ) {
         val color = supplier?.invoke() ?: return
         action(color)
     }
@@ -97,7 +120,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
      * Core values for all kpref items
      */
     @KPrefMarker
-    interface CoreContract {
+    interface CoreContract : KPrefItemActions {
         val globalOptions: GlobalOptions
         val titleId: Int
         var titleFun: () -> Int
@@ -106,18 +129,15 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
         var descFun: () -> Int
         var iicon: IIcon?
         var visible: () -> Boolean
-
-        /**
-         * Attempts to reload current item by identifying it with its [id]
-         */
-        fun reloadSelf()
     }
 
     /**
      * Default implementation of [CoreContract]
      */
-    class CoreBuilder(override val globalOptions: GlobalOptions,
-                      override val titleId: Int) : CoreContract {
+    class CoreBuilder(
+        override val globalOptions: GlobalOptions,
+        override val titleId: Int
+    ) : CoreContract {
         override var descRes: Int = INVALID_ID
             set(value) {
                 field = value
@@ -149,7 +169,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
 
         inline fun <reified T : View> bindInnerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
             val innerFrame = this.innerFrame
-                    ?: throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
+                ?: throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
             if (innerView !is T) {
                 innerFrame.removeAllViews()
                 LayoutInflater.from(innerFrame.context).inflate(id, innerFrame)
@@ -162,7 +182,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
 
         inline fun <reified T : View> bindLowerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
             val lowerFrame = this.lowerFrame
-                    ?: throw IllegalStateException("Cannot bind inner view when lowerContent does not exist")
+                ?: throw IllegalStateException("Cannot bind inner view when lowerContent does not exist")
             if (lowerContent !is T) {
                 lowerFrame.removeAllViews()
                 LayoutInflater.from(lowerFrame.context).inflate(id, lowerFrame)

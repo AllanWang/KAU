@@ -1,3 +1,18 @@
+/*
+ * Copyright 2018 Allan Wang
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ca.allanwang.kau.ui.views
 
 import android.content.Context
@@ -84,10 +99,13 @@ class MeasureSpecDelegate : MeasureSpecContract {
         val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.MeasureSpecDelegate)
         relativeWidth = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeWidth, relativeWidth)
         relativeHeight = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeHeight, relativeHeight)
-        relativeWidthToParent = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeWidthToParent, relativeWidthToParent)
-        relativeHeightToParent = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeHeightToParent, relativeHeightToParent)
+        relativeWidthToParent =
+            styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeWidthToParent, relativeWidthToParent)
+        relativeHeightToParent =
+            styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeHeightToParent, relativeHeightToParent)
         postRelativeWidth = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_postRelativeWidth, postRelativeWidth)
-        postRelativeHeight = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_postRelativeHeight, postRelativeHeight)
+        postRelativeHeight =
+            styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_postRelativeHeight, postRelativeHeight)
         styledAttrs.recycle()
     }
 
@@ -115,5 +133,4 @@ class MeasureSpecDelegate : MeasureSpecContract {
 
     private val Float.measureSpec: Int
         get() = View.MeasureSpec.makeMeasureSpec(this.toInt(), View.MeasureSpec.EXACTLY)
-
 }
