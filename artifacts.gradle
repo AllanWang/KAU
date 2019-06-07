@@ -31,8 +31,6 @@ artifacts {
 // We assume resources within res-public are public
 task generatepublicxml {
 
-    println "Generating public XML"
-
     def resDir = project.projectDir.absolutePath + "/src/main/res-public"
 
     def publicFolder = file(resDir + "/values")
@@ -51,10 +49,12 @@ task generatepublicxml {
                        '**/values/*.xml'
             ],
             exclude: '**/public.xml'
-    );
+    )
+
+    println "Generating public XML: ${project.name}"
 
     // Create new public.xml with writer
-    new File(resDir + "/values/public.xml").withWriter { writer ->
+    file(resDir + "/values/public.xml").withWriter { writer ->
         // Create MarkupBuilder with 4 space indent
         def destXml = new MarkupBuilder(new IndentPrinter(writer, "    ", true));
         def destXmlMkp = destXml.getMkp();

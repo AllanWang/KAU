@@ -69,7 +69,7 @@ class EmailBuilder(val email: String, val subject: String) {
         val emailBuilder = StringBuilder()
         emailBuilder.append(message).append("\n\n")
         if (deviceDetails) {
-            val deviceItems = mutableMapOf(
+            val deviceItems = mutableListOf(
                 "OS Version" to "${System.getProperty("os.version")} (${Build.VERSION.INCREMENTAL})",
                 "OS SDK" to Build.VERSION.SDK_INT,
                 "Device (Manufacturer)" to "${Build.DEVICE} (${Build.MANUFACTURER})",
@@ -80,7 +80,7 @@ class EmailBuilder(val email: String, val subject: String) {
             if (context is Activity) {
                 val metric = DisplayMetrics()
                 context.windowManager.defaultDisplay.getMetrics(metric)
-                deviceItems["Screen Dimensions"] = "${metric.widthPixels} x ${metric.heightPixels}"
+                deviceItems.add("Screen Dimensions" to "${metric.widthPixels} x ${metric.heightPixels}")
             }
             deviceItems.forEach { (k, v) -> emailBuilder.append("$k: $v\n") }
         }
