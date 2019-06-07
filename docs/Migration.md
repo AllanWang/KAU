@@ -13,7 +13,7 @@ Please refer to [MD's documents](https://github.com/afollestad/material-dialogs/
 Alongside such changes, `:colorpicker` is no longer as necessary. It exists mainly to provide an internal interface for other submodules.
 
 After Material Dialog 2.x, a decision was made to enforce theming through xml styles only to avoid reflection.
-As a result, options to supply custom dialog colors are now removed.
+As a result, options to supply custom dialog colors are now removed (ie in the changelog dialog and color picker kprefs).
 
 ## Update ProgressAnimator
 
