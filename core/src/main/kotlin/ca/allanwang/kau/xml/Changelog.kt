@@ -21,7 +21,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.annotation.XmlRes
 import androidx.recyclerview.widget.RecyclerView
@@ -41,13 +40,13 @@ import org.xmlpull.v1.XmlPullParser
  *
  * Easy changelog loader
  */
-fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null, customize: MaterialDialog.() -> Unit = {}) {
-    ctxCoroutine.launch {
-        val items = withContext(Dispatchers.Default) { parse(this@showChangelog, xmlRes) }
+fun Context.showChangelog(@XmlRes xmlRes: Int, customize: MaterialDialog.() -> Unit = {}) {
+    ctxCoroutine.launch(Dispatchers.Main) {
+        val items = withContext(Dispatchers.IO) { parse(this@showChangelog, xmlRes) }
         materialDialog {
             title(R.string.kau_changelog)
             positiveButton(R.string.kau_great)
-            customListAdapter(ChangelogAdapter(items, textColor), null)
+            customListAdapter(ChangelogAdapter(items), null)
             customize()
         }
     }
@@ -57,7 +56,7 @@ fun Context.showChangelog(@XmlRes xmlRes: Int, @ColorInt textColor: Int? = null,
  * Internals of the changelog dialog
  * Contains an mainAdapter for each item, as well as the tags to parse
  */
-internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @ColorInt val textColor: Int? = null) :
+internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>) :
     RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ChangelogVH(
@@ -67,10 +66,6 @@ internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @C
 
     override fun onBindViewHolder(holder: ChangelogVH, position: Int) {
         holder.text.text = items[position].first
-        if (textColor != null) {
-            holder.text.setTextColor(textColor)
-            holder.bullet?.setTextColor(textColor)
-        }
     }
 
     override fun getItemId(position: Int) = position.toLong()
@@ -81,7 +76,6 @@ internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>, @C
 
     internal class ChangelogVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val text: TextView = itemView.findViewById(R.id.kau_changelog_text)
-        val bullet: TextView? = itemView.findViewById(R.id.kau_changelog_bullet)
     }
 }
 
