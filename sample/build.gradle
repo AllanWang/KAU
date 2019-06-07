@@ -124,13 +124,13 @@ dependencies {
 
     implementation "com.afollestad.material-dialogs:input:${Versions.materialDialog}"
 
-    testImplementation Dependencies..kotlinTest
-    testImplementation Dependencies..junit
+    testImplementation Dependencies.kotlinTest
+    testImplementation Dependencies.junit
 
-    androidTestImplementation Dependencies..kotlinTest
-    androidTestImplementation Dependencies..espresso
+    androidTestImplementation Dependencies.kotlinTest
+    androidTestImplementation Dependencies.espresso
     androidTestImplementation "androidx.test.espresso:espresso-intents:${Versions.espresso}"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
-    androidTestImplementation Dependencies..testRules
-    androidTestImplementation Dependencies..testRunner
+    androidTestImplementation Dependencies.testRules
+    androidTestImplementation Dependencies.testRunner
 }

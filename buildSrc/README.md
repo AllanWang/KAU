@@ -65,12 +65,12 @@ The versions are taken from `Versions.groovy`, so it is always in sync.
 > [Dependencies.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Dependencies.groovy)
 
 Contains the dependency string for common libraries.
-You are free to use the values through `Dependencies..[tagName]`.
+You are free to use the values through `Dependencies.[tagName]`.
 
 As an example, adding junit can be done through
 
 ```gradle
-testImplementation Dependencies..junit
+testImplementation Dependencies.junit
 ```
 
 # Changelog Generator

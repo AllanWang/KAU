@@ -3,7 +3,7 @@ ext.kauSubModuleMinSdk = Versions.coreMinSdk
 apply from: '../android-lib.gradle'
 
 dependencies {
-    api Dependencies..kotlin
+    api Dependencies.kotlin
 
     api "androidx.appcompat:appcompat:${Versions.appcompat}"
     api "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
