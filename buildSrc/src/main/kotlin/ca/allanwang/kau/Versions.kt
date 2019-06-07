@@ -27,7 +27,7 @@ open class Versions {
     val kotlin = "1.3.31"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    val coroutines = "1.2.1"
+    val coroutines = "1.3.0-M1"
 
     // https://github.com/mikepenz/AboutLibraries/releases
     val aboutLibraries = "6.2.3"
@@ -70,11 +70,11 @@ open class Versions {
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
-    val playPublishPlugin = "2.1.0"
+    val playPublishPlugin = "2.2.1"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
     val dexCountPlugin = "0.8.6"
 
     // https://github.com/gladed/gradle-android-git-version/releases
-    val gitVersionPlugin = "0.4.7"
+    val gitVersionPlugin = "0.4.9"
 }

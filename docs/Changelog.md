@@ -1,5 +1,9 @@
 # Changelog
 
+## v5.0.0
+* :core: Update Material Dialogs to 3.x
+* :colorpicker: Strip down to just the interface; unless you require the accent palette, it may be fine to just use MD's color extension
+
 ## v4.1.0
 * :core: Deprecate NetworkUtils, as the underlying functions are deprecated
 * :core: Permission manager no longer synchronized, as all actions should occur in the main thread

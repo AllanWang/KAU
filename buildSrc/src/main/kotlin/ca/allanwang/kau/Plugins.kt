@@ -10,7 +10,6 @@ open class Plugins {
     val androidMaven = "com.github.dcendents:android-maven-gradle-plugin:${v.mavenPlugin}"
     val playPublisher = "com.github.triplet.gradle:play-publisher:${v.playPublishPlugin}"
     val dexCount = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${v.dexCountPlugin}"
-    val gitVersion =
-        "gradle.plugin.com.gladed.gradle.androidgitversion:gradle-android-git-version:${v.gitVersionPlugin}"
+    val gitVersion = "com.gladed.androidgitversion:gradle-android-git-version:${v.gitVersionPlugin}"
     val spotless = "com.diffplug.spotless:spotless-plugin-gradle:${v.spotless}"
 }
