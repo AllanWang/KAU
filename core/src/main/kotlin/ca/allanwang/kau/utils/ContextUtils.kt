@@ -203,12 +203,15 @@ fun Context.resolveString(@AttrRes attr: Int, fallback: String = ""): String {
 inline fun Context.materialDialog(
     dialogBehavior: DialogBehavior = ModalDialog,
     action: MaterialDialog.() -> Unit
-) {
+): MaterialDialog {
     val dialog = MaterialDialog(this, dialogBehavior)
+    dialog.action()
     if (isFinishing) {
-        return KL.d { "Material Dialog triggered from finishing context; did not show" }
+        KL.d { "Material Dialog triggered from finishing context; did not show" }
+    } else {
+        dialog.show()
     }
-    dialog.show(action)
+    return dialog
 }
 
 fun Context.getDip(value: Float): Float =
