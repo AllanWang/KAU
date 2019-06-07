@@ -61,6 +61,11 @@ android {
         pickFirst 'META-INF/library_release.kotlin_module'
     }
 
+    compileOptions {
+        sourceCompatibility '1.8'
+        targetCompatibility '1.8'
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
