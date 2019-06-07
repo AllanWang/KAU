@@ -1,3 +1,5 @@
+package kau
+
 /**
  * Some common buildscript plugins, backed by the supplied versions
  */

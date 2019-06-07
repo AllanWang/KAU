@@ -1,4 +1,4 @@
-ext.kauSubModuleMinSdk = Versions.coreMinSdk
+ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
 
 ext.kauSubModuleResourcePrefix = "kau_pref_"
 

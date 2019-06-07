@@ -1,3 +1,5 @@
+package kau
+
 /**
  * Some common dependencies, backed by the supplied versions
  */

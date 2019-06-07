@@ -9,8 +9,8 @@ play {
 }
 
 android {
-    compileSdkVersion Versions.targetSdk
-    buildToolsVersion Versions.buildTools
+    compileSdkVersion kau.Versions.targetSdk
+    buildToolsVersion kau.Versions.buildTools
 
     androidGitVersion {
         codeFormat = 'MMNNPPXX'
@@ -19,8 +19,8 @@ android {
 
     defaultConfig {
         applicationId "ca.allanwang.kau.sample"
-        minSdkVersion Versions.minSdk
-        targetSdkVersion Versions.targetSdk
+        minSdkVersion kau.Versions.minSdk
+        targetSdkVersion kau.Versions.targetSdk
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
         multiDexEnabled true
@@ -127,15 +127,15 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
-    implementation "com.afollestad.material-dialogs:input:${Versions.materialDialog}"
+    implementation "com.afollestad.material-dialogs:input:${kau.Versions.materialDialog}"
 
-    testImplementation Dependencies.kotlinTest
-    testImplementation Dependencies.junit
+    testImplementation kau.Dependencies.kotlinTest
+    testImplementation kau.Dependencies.junit
 
-    androidTestImplementation Dependencies.kotlinTest
-    androidTestImplementation Dependencies.espresso
-    androidTestImplementation "androidx.test.espresso:espresso-intents:${Versions.espresso}"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
-    androidTestImplementation Dependencies.testRules
-    androidTestImplementation Dependencies.testRunner
+    androidTestImplementation kau.Dependencies.kotlinTest
+    androidTestImplementation kau.Dependencies.espresso
+    androidTestImplementation "androidx.test.espresso:espresso-intents:${kau.Versions.espresso}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${kau.Versions.espresso}"
+    androidTestImplementation kau.Dependencies.testRules
+    androidTestImplementation kau.Dependencies.testRunner
 }

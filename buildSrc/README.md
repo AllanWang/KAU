@@ -9,9 +9,9 @@ As a note, this is located under `buildSrc` as it is automatically included when
 Everything here is used when generating the library, so it's always tested.
 
 ## Contents
-* [Versions](#versions)
-* [Plugins](#plugins)
-* [Dependencies](#dependencies)
+* [kau.Versions](#versions)
+* [kau.Plugins](#plugins)
+* [kau.Dependencies](#dependencies)
 * [Changelog Generator](#changelog-generator)
 
 ## Usage
@@ -38,9 +38,9 @@ Then where necessary, apply the plugin using
 apply plugin: 'ca.allanwang.kau'
 ```
 
-# Versions
+# kau.Versions
 
-> [Versions.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Versions.groovy)
+> [kau.Versions.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Versions.groovy)
 
 Contains the version code for any external library used in KAU.
 You are free to use the values through `kau.[tagName]`.
@@ -51,26 +51,26 @@ As an example, AppCompat is imported in KAU using
 api "androidx.appcompat:appcompat:${kau.appcompat}"
 ```
 
-# Plugins
+# kau.Plugins
 
-> [Plugins.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Plugins.groovy)
+> [kau.Plugins.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Plugins.groovy)
 
 Unfortunately, it seems like you can't use the plugin directly in the buildscript, so this is mainly internal.
 
 The plugins data, found using `kauPlugins.[tagName]` contains a collection of useful plugin classpaths.
-The versions are taken from `Versions.groovy`, so it is always in sync.
+The versions are taken from `kau.Versions.groovy`, so it is always in sync.
 
-# Dependencies
+# kau.Dependencies
 
-> [Dependencies.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Dependencies.groovy)
+> [kau.Dependencies.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Dependencies.groovy)
 
 Contains the dependency string for common libraries.
-You are free to use the values through `Dependencies.[tagName]`.
+You are free to use the values through `kau.Dependencies.[tagName]`.
 
 As an example, adding junit can be done through
 
 ```gradle
-testImplementation Dependencies.junit
+testImplementation kau.Dependencies.junit
 ```
 
 # Changelog Generator

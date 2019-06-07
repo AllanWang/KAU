@@ -6,15 +6,15 @@ apply plugin: 'com.getkeepsafe.dexcount'
 group = "ca.allanwang"
 
 android {
-    compileSdkVersion Versions.targetSdk
-    buildToolsVersion Versions.buildTools
+    compileSdkVersion kau.Versions.targetSdk
+    buildToolsVersion kau.Versions.buildTools
 
     androidGitVersion {
         codeFormat = 'MMNNPPXX'
         format = '%tag%%.count%%-commit%'
     }
 
-    def kauMinSdk = Versions.minSdk
+    def kauMinSdk = kau.Versions.minSdk
     if (project.hasProperty('kauSubModuleMinSdk'))
         kauMinSdk = kauSubModuleMinSdk
 
@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         minSdkVersion kauMinSdk
-        targetSdkVersion Versions.targetSdk
+        targetSdkVersion kau.Versions.targetSdk
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
         consumerProguardFiles 'progress-proguard.txt'
@@ -87,11 +87,11 @@ android {
 }
 
 dependencies {
-    testImplementation Dependencies.kotlinTest
-    testImplementation Dependencies.junit
+    testImplementation kau.Dependencies.kotlinTest
+    testImplementation kau.Dependencies.junit
 
-    androidTestImplementation Dependencies.kotlinTest
-    androidTestImplementation Dependencies.espresso
-    androidTestImplementation Dependencies.testRules
-    androidTestImplementation Dependencies.testRunner
+    androidTestImplementation kau.Dependencies.kotlinTest
+    androidTestImplementation kau.Dependencies.espresso
+    androidTestImplementation kau.Dependencies.testRules
+    androidTestImplementation kau.Dependencies.testRunner
 }

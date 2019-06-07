@@ -6,5 +6,5 @@ plugins {
 group = "ca.allanwang"
 
 repositories {
-    mavenCentral()
+    jcenter()
 }

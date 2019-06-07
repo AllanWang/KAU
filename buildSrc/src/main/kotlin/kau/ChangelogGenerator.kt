@@ -1,3 +1,5 @@
+package kau
+
 import groovy.util.Node
 import groovy.util.XmlParser
 import org.gradle.api.GradleException
