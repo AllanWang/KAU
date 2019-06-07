@@ -6,8 +6,8 @@ apply from: '../android-lib.gradle'
 
 dependencies {
     implementation project(':core')
-    implementation project(':adapter')
     implementation project(':colorpicker')
+    implementation project(':adapter')
 }
 
 apply from: '../artifacts.gradle'

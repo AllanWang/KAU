@@ -49,7 +49,7 @@ open class Versions {
     val iconicsCommunity = "3.5.95.1"
 
     // https://github.com/afollestad/material-dialogs/releases
-    val materialDialog = "0.9.6.0"
+    val materialDialog = "3.0.0-rc2"
 
     // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
     val espresso = "3.1.1"

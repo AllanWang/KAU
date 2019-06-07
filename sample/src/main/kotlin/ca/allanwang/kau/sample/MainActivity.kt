@@ -38,6 +38,7 @@ import ca.allanwang.kau.utils.string
 import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.utils.withSceneTransitionAnimation
 import ca.allanwang.kau.xml.showChangelog
+import com.afollestad.materialdialogs.input.input
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 class MainActivity : KPrefActivity() {
@@ -162,9 +163,10 @@ class MainActivity : KPrefActivity() {
             descRes = R.string.text_desc
             onClick = {
                 itemView.context.materialDialog {
-                    title("Type Text")
-                    input("Type here", item.pref, { _, input -> item.pref = input.toString() })
-                    inputRange(0, 20)
+                    title(text = "Type Text")
+                    input("Type here", prefill = item.pref, maxLength = 20, allowEmpty = true) { _, input ->
+                        item.pref = input.toString()
+                    }
                 }
             }
         }
@@ -240,12 +242,11 @@ class MainActivity : KPrefActivity() {
             descRes = R.string.text_desc
             onClick = {
                 itemView.context.materialDialog {
-                    title("Type Text")
-                    input("Type here", item.pref) { _, input ->
+                    title(text = "Type Text")
+                    input("Type here", prefill = item.pref, maxLength = 20, allowEmpty = true) { _, input ->
                         item.pref = input.toString()
                         reloadSelf()
                     }
-                    inputRange(0, 20)
                 }
             }
         }
@@ -260,9 +261,10 @@ class MainActivity : KPrefActivity() {
             KPrefSample.version = BuildConfig.VERSION_CODE
             if (!BuildConfig.DEBUG)
                 showChangelog(R.xml.kau_changelog, KPrefSample.textColor) {
-                    titleColor(KPrefSample.textColor)
-                    backgroundColor(KPrefSample.bgColor)
-                    positiveColor(KPrefSample.accentColor)
+                    // TODO MD Color
+//                    titleColor(KPrefSample.textColor)
+//                    backgroundColor(KPrefSample.bgColor)
+//                    positiveColor(KPrefSample.accentColor)
                 }
         }
         supportActionBar?.apply {
@@ -297,9 +299,10 @@ class MainActivity : KPrefActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_changelog -> showChangelog(R.xml.kau_changelog, KPrefSample.textColor) {
-                titleColor(KPrefSample.textColor)
-                backgroundColor(KPrefSample.bgColor)
-                positiveColor(KPrefSample.accentColor)
+                // TODO MD Color
+//                titleColor(KPrefSample.textColor)
+//                backgroundColor(KPrefSample.bgColor)
+//                positiveColor(KPrefSample.accentColor)
             }
             R.id.action_settings -> startActivity<AnimActivity>()
             R.id.action_email -> sendEmail(R.string.your_email, R.string.your_subject)
