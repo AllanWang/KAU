@@ -3,7 +3,6 @@ package ca.allanwang.kau
 import groovy.util.Node
 import groovy.util.XmlParser
 import org.gradle.api.GradleException
-import org.gradle.api.Project
 import java.io.File
 
 /**
@@ -20,7 +19,7 @@ import java.io.File
  *
  * Outputs a changelog in markdown format
  */
-open class ChangelogGenerator(private val project: Project) {
+object ChangelogGenerator {
 
     class ChangelogException(message: String) : GradleException(message)
 
@@ -71,8 +70,7 @@ open class ChangelogGenerator(private val project: Project) {
         return entries
     }
 
-    @JvmOverloads
-    fun generate(inputUri: String, outputUri: String = "${project.rootDir}/docs/Changelog.md"): List<ChangelogEntry> {
+    fun generate(inputUri: String, outputUri: String): List<ChangelogEntry> {
         val entries = read(inputUri)
         val output = File(outputUri)
         if (output.exists()) {
