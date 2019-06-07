@@ -1,5 +1,3 @@
-package ca.allanwang.kau
-
 import groovy.util.Node
 import groovy.util.XmlParser
 import org.gradle.api.GradleException
@@ -34,6 +32,7 @@ object ChangelogGenerator {
         }
     }
 
+    @JvmStatic
     fun read(inputUri: String): List<ChangelogEntry> {
         val input = File(inputUri)
         if (!input.exists()) {
@@ -70,6 +69,7 @@ object ChangelogGenerator {
         return entries
     }
 
+    @JvmStatic
     fun generate(inputUri: String, outputUri: String): List<ChangelogEntry> {
         val entries = read(inputUri)
         val output = File(outputUri)

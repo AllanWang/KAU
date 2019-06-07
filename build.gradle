@@ -6,29 +6,25 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
 
-    apply plugin: "ca.allanwang.kau"
-
     dependencies {
-        classpath kauPlugin.android
-        classpath kauPlugin.kotlin
-        classpath kauPlugin.androidMaven
-        classpath kauPlugin.playPublisher
-        classpath kauPlugin.dexCount
-        classpath kauPlugin.gitVersion
-        classpath kauPlugin.spotless
+        classpath Plugins.android
+        classpath Plugins.kotlin
+        classpath Plugins.androidMaven
+        classpath Plugins.playPublisher
+        classpath Plugins.dexCount
+        classpath Plugins.gitVersion
+        classpath Plugins.spotless
     }
 
     wrapper.setDistributionType(Wrapper.DistributionType.ALL)
 }
-
-apply plugin: "ca.allanwang.kau"
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
 task generateChangelogMd {
-    kauChangelog.generate("${project.rootDir}/sample/src/main/res/xml/kau_changelog.xml")
+    ChangelogGenerator.generate("${project.rootDir}/sample/src/main/res/xml/kau_changelog.xml", "${project.rootDir}/docs/Changelog.md")
 }
 
 subprojects {

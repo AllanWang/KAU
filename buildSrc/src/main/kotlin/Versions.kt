@@ -1,5 +1,3 @@
-package ca.allanwang.kau
-
 object Versions {
     const val coreMinSdk = 19
     const val minSdk = 21
