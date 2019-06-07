@@ -1,4 +1,4 @@
-ext.kauSubModuleMinSdk = kau.coreMinSdk
+ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
 
 apply from: '../android-lib.gradle'
 apply plugin: 'kotlin-kapt'
@@ -8,8 +8,8 @@ dependencies {
     implementation project(':adapter')
 
    //noinspection GradleDependency
-    api "com.github.bumptech.glide:glide:${kau.glide}"
-    implementation "jp.wasabeef:blurry:${kau.blurry}"
+    api "com.github.bumptech.glide:glide:${kau.Versions.glide}"
+    implementation "jp.wasabeef:blurry:${kau.Versions.blurry}"
 }
 
 apply from: '../artifacts.gradle'

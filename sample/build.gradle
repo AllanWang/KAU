@@ -9,8 +9,8 @@ play {
 }
 
 android {
-    compileSdkVersion kau.targetSdk
-    buildToolsVersion kau.buildTools
+    compileSdkVersion kau.Versions.targetSdk
+    buildToolsVersion kau.Versions.buildTools
 
     androidGitVersion {
         codeFormat = 'MMNNPPXX'
@@ -19,8 +19,8 @@ android {
 
     defaultConfig {
         applicationId "ca.allanwang.kau.sample"
-        minSdkVersion kau.minSdk
-        targetSdkVersion kau.targetSdk
+        minSdkVersion kau.Versions.minSdk
+        targetSdkVersion kau.Versions.targetSdk
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
         multiDexEnabled true
@@ -81,8 +81,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility '1.8'
-        targetCompatibility '1.8'
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     sourceSets {
@@ -127,15 +127,15 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
-    implementation "com.afollestad.material-dialogs:input:${kau.materialDialog}"
+    implementation "com.afollestad.material-dialogs:input:${kau.Versions.materialDialog}"
 
-    testImplementation kauDependency.kotlinTest
-    testImplementation kauDependency.junit
+    testImplementation kau.Dependencies.kotlinTest
+    testImplementation kau.Dependencies.junit
 
-    androidTestImplementation kauDependency.kotlinTest
-    androidTestImplementation kauDependency.espresso
-    androidTestImplementation "androidx.test.espresso:espresso-intents:${kau.espresso}"
-    androidTestImplementation "androidx.test.espresso:espresso-contrib:${kau.espresso}"
-    androidTestImplementation kauDependency.testRules
-    androidTestImplementation kauDependency.testRunner
+    androidTestImplementation kau.Dependencies.kotlinTest
+    androidTestImplementation kau.Dependencies.espresso
+    androidTestImplementation "androidx.test.espresso:espresso-intents:${kau.Versions.espresso}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${kau.Versions.espresso}"
+    androidTestImplementation kau.Dependencies.testRules
+    androidTestImplementation kau.Dependencies.testRunner
 }

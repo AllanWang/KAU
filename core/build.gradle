@@ -1,22 +1,22 @@
-ext.kauSubModuleMinSdk = kau.coreMinSdk
+ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
 
 apply from: '../android-lib.gradle'
 
 dependencies {
-    api kauDependency.kotlin
+    api kau.Dependencies.kotlin
 
-    api "androidx.appcompat:appcompat:${kau.appcompat}"
-    api "androidx.recyclerview:recyclerview:${kau.recyclerView}"
-    api "androidx.cardview:cardview:${kau.cardView}"
-    api "androidx.constraintlayout:constraintlayout:${kau.constraintLayout}"
-    api "com.google.android.material:material:${kau.googleMaterial}"
+    api "androidx.appcompat:appcompat:${kau.Versions.appcompat}"
+    api "androidx.recyclerview:recyclerview:${kau.Versions.recyclerView}"
+    api "androidx.cardview:cardview:${kau.Versions.cardView}"
+    api "androidx.constraintlayout:constraintlayout:${kau.Versions.constraintLayout}"
+    api "com.google.android.material:material:${kau.Versions.googleMaterial}"
 
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kau.coroutines}"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kau.Versions.coroutines}"
 
-    api "com.mikepenz:iconics-core:${kau.iconics}@aar"
-    api "com.mikepenz:google-material-typeface:${kau.iconicsGoogle}.original@aar"
+    api "com.mikepenz:iconics-core:${kau.Versions.iconics}@aar"
+    api "com.mikepenz:google-material-typeface:${kau.Versions.iconicsGoogle}.original@aar"
 
-    api "com.afollestad.material-dialogs:core:${kau.materialDialog}"
+    api "com.afollestad.material-dialogs:core:${kau.Versions.materialDialog}"
 }
 
 apply from: '../artifacts.gradle'
