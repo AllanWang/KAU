@@ -37,7 +37,6 @@ object Versions {
 
     // https://github.com/mikepenz/FastAdapter#using-maven
     const val fastAdapter = "3.3.1"
-    const val fastAdapterCommons = fastAdapter
 
     // https://github.com/bumptech/glide/releases
     const val glide = "4.9.0"

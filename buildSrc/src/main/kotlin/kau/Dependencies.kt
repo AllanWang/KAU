@@ -6,6 +6,7 @@ package kau
 object Dependencies {
     @JvmStatic
     fun kotlin(type: String) = "org.jetbrains.kotlin:kotlin-$type:${Versions.kotlin}"
+
     @JvmField
     val kotlin = kotlin("stdlib")
     @JvmField
@@ -36,16 +37,21 @@ object Dependencies {
 
     @JvmStatic
     fun materialDialog(type: String) = "com.afollestad.material-dialogs:$type:${Versions.materialDialog}"
+
     @JvmField
     val materialDialog = materialDialog("core")
 
     const val fastAdapter = "com.mikepenz:fastadapter:${Versions.fastAdapter}"
-    const val fastAdapterCommons = "com.mikepenz:fastadapter-commons:${Versions.fastAdapterCommons}"
+    @JvmStatic
+    fun fastAdapter(type: String) = "com.mikepenz:fastadapter-$type:${Versions.fastAdapter}"
+    @JvmField
+    val fastAdapterCommons = fastAdapter("commons")
 
     const val bugsnag = "com.bugsnag:bugsnag-android:${Versions.bugsnag}"
 
     @JvmStatic
     fun espresso(type: String) = "androidx.test.espresso:espresso-$type:${Versions.espresso}"
+
     @JvmField
     val espresso = espresso("core")
 
