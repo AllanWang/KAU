@@ -28,7 +28,7 @@ import ca.allanwang.kau.utils.scaleXY
 import ca.allanwang.kau.utils.setBackgroundColorRes
 import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.visible
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import jp.wasabeef.blurry.internal.BlurFactor
 import jp.wasabeef.blurry.internal.BlurTask
 import kotlinx.android.synthetic.main.kau_blurred_imageview.view.*

@@ -26,7 +26,7 @@ import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.toDrawable
 import ca.allanwang.kau.utils.toast
 import com.google.android.material.appbar.AppBarLayout
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import kotlinx.android.synthetic.main.kau_activity_image_picker.*
 
 /**
