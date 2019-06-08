@@ -53,20 +53,6 @@ dependencies {
     implementation "ca.allanwang.kau:mediapicker:$KAU"
     implementation "ca.allanwang.kau:searchview:$KAU"
 }
-
-// optional buildscript plugin (see below)
-buildscript {
-    repositories {
-        ...
-        maven { url "https://jitpack.io" }
-    }
-
-    dependencies {
-        ...
-        classpath "ca.allanwang:kau:${KAU}"
-    }
-}
-
 ```
 
 -----------
