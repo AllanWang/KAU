@@ -7,7 +7,7 @@ apply from: '../android-lib.gradle'
 dependencies {
     implementation project(':core')
 
-    implementation "com.afollestad.material-dialogs:color:${kau.Versions.materialDialog}"
+    implementation kau.Dependencies.materialDialog("color")
 }
 
 apply from: '../artifacts.gradle'

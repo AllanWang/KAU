@@ -5,6 +5,7 @@ package kau
  */
 object Plugins {
     const val android = "com.android.tools.build:gradle:${Versions.gradlePlugin}"
+    const val bugsnag = "com.bugsnag:bugsnag-android-gradle-plugin:${Versions.bugsnagPlugin}"
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val androidMaven = "com.github.dcendents:android-maven-gradle-plugin:${Versions.mavenPlugin}"
     const val playPublisher = "com.github.triplet.gradle:play-publisher:${Versions.playPublishPlugin}"

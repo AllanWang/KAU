@@ -44,8 +44,8 @@ object Versions {
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
     const val iconics = "3.2.5"
-    const val iconicsGoogle = "3.0.1.3"
-    const val iconicsMaterial = "2.2.0.5"
+    const val iconicsGoogle = "3.0.1.4"
+    const val iconicsMaterial = "2.2.0.6"
     const val iconicsCommunity = "3.5.95.1"
 
     // https://github.com/afollestad/material-dialogs/releases
@@ -64,6 +64,12 @@ object Versions {
 
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
     const val spotless = "3.18.0"
+
+    // https://github.com/bugsnag/bugsnag-android/releases
+    const val bugsnag = "4.12.0"
+
+    // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
+    const val bugsnagPlugin="4.1.1"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     const val gradlePlugin = "3.4.1"

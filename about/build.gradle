@@ -10,9 +10,7 @@ dependencies {
     implementation project(':core-ui')
     implementation project(':adapter')
 
-    api("com.mikepenz:aboutlibraries:${kau.Versions.aboutLibraries}@aar") {
-        transitive = false
-    }
+    api kau.Dependencies.aboutLibraries
 }
 
 apply from: '../artifacts.gradle'

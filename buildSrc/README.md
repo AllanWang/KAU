@@ -34,16 +34,21 @@ Currently, the plugin is a collection of simple classes.
 
 ## Constants
 
-`Versions`, `Plugins`, and `Dependencies` supply constants you can use for your classpath and dependencies
+`Versions`, `Plugins`, and `Dependencies` supply constants you can use for your classpath and dependencies.
+Some dependencies are also exposed as functions
 
 Eg
 
 ```gradle
 dependencies {
     ...
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kau.Versions.coroutines}"
+    // The three dependencies below are all the same thing
+    implementation "org.jetbrains.kotlin:kotlin-test-junit:${kau.Versions.kotlin}"
+    implementation kau.Dependencies.kotlinTest
+    implementation kau.Dependencies.kotlin("test-junit")
 }
 ```
+
 
 ## Changelog Generator
 

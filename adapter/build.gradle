@@ -5,8 +5,8 @@ apply from: '../android-lib.gradle'
 dependencies {
     implementation project(':core')
 
-    api "com.mikepenz:fastadapter-commons:${kau.Versions.fastAdapterCommons}@aar"
-    api "com.mikepenz:fastadapter:${kau.Versions.fastAdapter}@aar"
+    api kau.Dependencies.fastAdapter
+    api kau.Dependencies.fastAdapterCommons
 }
 
 apply from: '../artifacts.gradle'
