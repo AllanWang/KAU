@@ -40,6 +40,7 @@ import ca.allanwang.kau.utils.withSceneTransitionAnimation
 import ca.allanwang.kau.xml.showChangelog
 import com.afollestad.materialdialogs.input.input
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import java.lang.RuntimeException
 
 class MainActivity : KPrefActivity() {
 

@@ -390,7 +390,9 @@ class SearchView @JvmOverloads constructor(
         config(config)
         val menuItem = menu.findItem(id)
             ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
-        if (menuItem.icon == null) menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
+        if (menuItem.icon == null) {
+            menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
+        }
         kau_search_cardview.gone()
         menuItem.setOnMenuItemClickListener { revealOpen(); true }
         kau_search_shadow.setOnClickListener { revealClose() }
@@ -509,7 +511,7 @@ fun Activity.bindSearchView(
     menu: Menu,
     @IdRes id: Int,
     @ColorInt menuIconColor: Int = Color.WHITE,
-    config: SearchView.Configs.() -> Unit = {}
+    config: Configs.() -> Unit = {}
 ): SearchView = findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
 
 /**
@@ -522,7 +524,7 @@ fun ViewGroup.bindSearchView(
     menu: Menu,
     @IdRes id: Int,
     @ColorInt menuIconColor: Int = Color.WHITE,
-    config: SearchView.Configs.() -> Unit = {}
+    config: Configs.() -> Unit = {}
 ): SearchView {
     val searchView = SearchView(context)
     searchView.layoutParams =

@@ -46,9 +46,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import com.mikepenz.iconics.IconicsColor
 import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.IconicsSize
+import com.mikepenz.iconics.colorInt
+import com.mikepenz.iconics.paddingPx
+import com.mikepenz.iconics.sizePx
 import com.mikepenz.iconics.typeface.IIcon
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import com.mikepenz.iconics.utils.toIconicsColor
+import com.mikepenz.iconics.utils.toIconicsSizePx
 import kotlinx.coroutines.CancellationException
 import java.io.File
 
@@ -93,9 +100,9 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
             val sizePx = MediaPickerCore.computeViewSize(context)
             return IconicsDrawable(context, iicon)
                 .sizePx(sizePx)
-                .backgroundColor(color)
+                .backgroundColor(color.toIconicsColor())
                 .paddingPx(sizePx / 3)
-                .color(Color.WHITE)
+                .colorInt(Color.WHITE)
         }
 
         var accentColor: Int = 0xff666666.toInt()
