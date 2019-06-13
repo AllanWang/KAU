@@ -3,10 +3,10 @@ package kau
 object Versions {
     const val coreMinSdk = 19
     const val minSdk = 21
-    const val targetSdk = 28
+    const val targetSdk = 29
 
     // https://developer.android.com/studio/releases/build-tools
-    const val buildTools = "28.0.3"
+    const val buildTools = "29.0.0"
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
     const val appcompat = "1.0.2"
