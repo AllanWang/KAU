@@ -30,7 +30,7 @@ import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 class AdapterActivity : ElasticRecyclerActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean {
-        val adapter = ItemAdapter<IItem<*, *>>()
+        val adapter = ItemAdapter<IItem<*>>()
         recycler.adapter = fastAdapter(adapter)
         adapter.add(
             listOf(

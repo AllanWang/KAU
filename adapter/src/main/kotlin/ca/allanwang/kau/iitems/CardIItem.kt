@@ -51,13 +51,13 @@ class CardIItem(
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        fun bindClickEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
-            fastAdapter.withEventHook(object : ClickEventHook<IItem<*, *>>() {
+        fun bindClickEvents(fastAdapter: FastAdapter<IItem<*>>) {
+            fastAdapter.withEventHook(object : ClickEventHook<IItem<*>>() {
                 override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
                     return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button) else null
                 }
 
-                override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*, *>>, item: IItem<*, *>) {
+                override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*>>, item: IItem<*>) {
                     if (item !is CardIItem) return
                     with(item.configs) {
                         when (v.id) {

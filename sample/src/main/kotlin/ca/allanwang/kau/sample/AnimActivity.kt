@@ -30,7 +30,7 @@ import ca.allanwang.kau.utils.startActivity
 import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.utils.withAlpha
 import ca.allanwang.kau.utils.withSlideOut
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
 /**
  * Created by Allan Wang on 2017-06-12.

@@ -33,7 +33,7 @@ class AboutActivity : AboutActivityBase(R.string::class.java, {
     faqParseNewLine = false
 }) {
 
-    override fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*, *>>) {
+    override fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*>>) {
         adapter.add(CardIItem {
             title = "About KAU"
             descRes = R.string.about_kau

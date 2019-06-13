@@ -62,7 +62,7 @@ import ca.allanwang.kau.utils.tint
 import ca.allanwang.kau.utils.toDrawable
 import ca.allanwang.kau.utils.visible
 import ca.allanwang.kau.utils.withLinearAdapter
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import kotlinx.android.synthetic.main.kau_search_view.view.*

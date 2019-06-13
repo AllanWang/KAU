@@ -48,11 +48,11 @@ interface AboutPanelContract {
     /**
      * Model list to be added to [adapter]
      */
-    var items: List<IItem<*, *>>?
+    var items: List<IItem<*>>?
     /**
      * The adapter, will be late initialized as it depends on configs
      */
-    var adapter: FastItemThemedAdapter<IItem<*, *>>
+    var adapter: FastItemThemedAdapter<IItem<*>>
     /**
      * Reference to the recyclerview, will be used to stop scrolling upon exit
      */
@@ -90,9 +90,9 @@ interface AboutPanelContract {
 
 abstract class AboutPanelRecycler : AboutPanelContract {
 
-    override var items: List<IItem<*, *>>? = null
+    override var items: List<IItem<*>>? = null
 
-    override lateinit var adapter: FastItemThemedAdapter<IItem<*, *>>
+    override lateinit var adapter: FastItemThemedAdapter<IItem<*>>
 
     override var recycler: RecyclerView? = null
 

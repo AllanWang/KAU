@@ -128,7 +128,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
      * Open hook called just before the main page view is returned
      * Feel free to add your own items to the adapter in here
      */
-    open fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*, *>>) {
+    open fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*>>) {
     }
 
     /**

@@ -43,9 +43,7 @@ object Dependencies {
 
     const val fastAdapter = "com.mikepenz:fastadapter:${Versions.fastAdapter}"
     @JvmStatic
-    fun fastAdapter(type: String) = "com.mikepenz:fastadapter-$type:${Versions.fastAdapter}"
-    @JvmField
-    val fastAdapterCommons = fastAdapter("commons")
+    fun fastAdapter(type: String) = "com.mikepenz:fastadapter-extensions-$type:${Versions.fastAdapter}"
 
     const val bugsnag = "com.bugsnag:bugsnag-android:${Versions.bugsnag}"
 

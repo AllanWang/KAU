@@ -6,7 +6,7 @@ dependencies {
     implementation project(':core')
 
     api kau.Dependencies.fastAdapter
-    api kau.Dependencies.fastAdapterCommons
+    api kau.Dependencies.fastAdapter('utils')
 }
 
 apply from: '../artifacts.gradle'

@@ -31,7 +31,7 @@ import ca.allanwang.kau.utils.KAU_RIGHT
 import ca.allanwang.kau.utils.resolveColor
 import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.withLinearAdapter
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import kotlinx.android.synthetic.main.kau_pref_activity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -41,14 +41,14 @@ class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolde
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
+        fun bindEvents(fastAdapter: FastAdapter<IItem<*>>) {
             fastAdapter.withSelectable(false)
-                .withEventHook(object : ClickEventHook<IItem<*, *>>() {
+                .withEventHook(object : ClickEventHook<IItem<*>>() {
 
                     override fun onBind(viewHolder: RecyclerView.ViewHolder): View? =
                         (viewHolder as? ViewHolder)?.questionContainer
 
-                    override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*, *>>, item: IItem<*, *>) {
+                    override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*>>, item: IItem<*>) {
                         if (item !is FaqIItem) return
                         item.isExpanded = !item.isExpanded
                         v.parentViewGroup.findViewById<CollapsibleTextView>(R.id.faq_item_answer)

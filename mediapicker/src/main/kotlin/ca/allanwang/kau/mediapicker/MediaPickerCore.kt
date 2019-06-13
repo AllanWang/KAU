@@ -64,7 +64,7 @@ import java.io.File
  *
  * Container for the main logic behind the both pickers
  */
-abstract class MediaPickerCore<T : IItem<*, *>>(
+abstract class MediaPickerCore<T : IItem<*>>(
     val mediaType: MediaType,
     val mediaActions: List<MediaAction>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
@@ -141,7 +141,7 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterHeader = ItemAdapter<MediaActionItem>()
-        val fulladapter = fastAdapter<IItem<*, *>>(adapterHeader, adapter)
+        val fulladapter = fastAdapter<IItem<*>>(adapterHeader, adapter)
         adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
