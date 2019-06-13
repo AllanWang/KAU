@@ -29,10 +29,6 @@ For instance, instead of using `kauDependencies`, we now use `kau.Dependencies`.
 There is also no longer a need to use `apply plugin 'ca.allanwang.kau'`;
 adding the plugin to the classpath suffices.
 
-## Iconics
-
-With an iconics update, most of the package names have changed.
-
 # v4.0.1-alpha02
 
 * `kauParseFaq` is now synchronous. 

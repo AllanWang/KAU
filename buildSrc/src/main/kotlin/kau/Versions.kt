@@ -43,8 +43,8 @@ object Versions {
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
     const val iconics = "3.2.5"
-    const val iconicsGoogle = "3.0.1.4"
-    const val iconicsMaterial = "2.2.0.6"
+    const val iconicsGoogle = "3.0.1.3"
+    const val iconicsMaterial = "2.2.0.5"
     const val iconicsCommunity = "3.5.95.1"
 
     // https://github.com/afollestad/material-dialogs/releases

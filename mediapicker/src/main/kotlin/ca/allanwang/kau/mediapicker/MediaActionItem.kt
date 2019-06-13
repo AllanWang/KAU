@@ -26,8 +26,8 @@ import ca.allanwang.kau.permissions.PERMISSION_WRITE_EXTERNAL_STORAGE
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.string
+import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import java.io.File
 
 /**

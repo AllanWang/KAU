@@ -39,7 +39,7 @@ import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.utils.withSceneTransitionAnimation
 import ca.allanwang.kau.xml.showChangelog
 import com.afollestad.materialdialogs.input.input
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 class MainActivity : KPrefActivity() {
 

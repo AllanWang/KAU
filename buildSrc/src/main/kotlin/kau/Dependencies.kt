@@ -24,9 +24,9 @@ object Dependencies {
     const val googleMaterial = "com.google.android.material:material:${Versions.googleMaterial}"
 
     const val iconics = "com.mikepenz:iconics-core:${Versions.iconics}"
-    const val iconicsGoogle = "com.mikepenz:google-material-typeface:${Versions.iconicsGoogle}.original-kotlin@aar"
-    const val iconicsMaterial = "com.mikepenz:material-design-iconic-typeface:${Versions.iconicsMaterial}-kotlin@aar"
-    const val iconicsCommunity = "com.mikepenz:community-material-typeface:${Versions.iconicsCommunity}-kotlin@aar"
+    const val iconicsGoogle = "com.mikepenz:google-material-typeface:${Versions.iconicsGoogle}.original@aar"
+    const val iconicsMaterial = "com.mikepenz:material-design-iconic-typeface:${Versions.iconicsMaterial}@aar"
+    const val iconicsCommunity = "com.mikepenz:community-material-typeface:${Versions.iconicsCommunity}@aar"
 
     const val aboutLibraries = "com.mikepenz:aboutlibraries:${Versions.aboutLibraries}"
 
