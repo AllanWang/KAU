@@ -167,6 +167,7 @@ Special thanks to the following awesome people for translating significant porti
 
 | Language | Contributors |
 |----------|--------------|
+| Arabic | [Mohammed Qubati](https://crowdin.com/profile/Mrkqubati) |
 | Chinese (Simplified) | [Alcatelia](https://crowdin.com/profile/Alcatelia) |
 | Chinese (Traditional) | [yipinghuang](https://crowdin.com/profile/yipinghuang) &bull; [Su, Jun-Ming](https://crowdin.com/profile/sujunmin) &bull; [Wei](https://crowdin.com/profile/wei4green) |
 | French | [Vincent Kulak](https://github.com/VonOx) &bull; [Jean-Philippe Gravel](https://crowdin.com/profile/wokija) |
