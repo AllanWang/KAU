@@ -4,6 +4,7 @@
 * Update Android SDK to 29 and Kotlin to 1.3.31
 * :core: Update Material Dialogs to 3.x
 * :core: Change ProgressAnimator API
+* :core: Remove cursor tinting in EditText as it used reflection
 * :colorpicker: Strip down to just the interface; unless you require the accent palette, it may be fine to just use MD's color extension
 * :gradle-plugin: Convert to kotlin, rework dependencies, and remove extension hooks
 
