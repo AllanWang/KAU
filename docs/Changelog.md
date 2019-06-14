@@ -2,6 +2,7 @@
 
 ## v5.0.0
 * Update Android SDK to 29 and Kotlin to 1.3.31
+* Update translations
 * :core: Update Material Dialogs to 3.x
 * :core: Change ProgressAnimator API
 * :core: Remove cursor tinting in EditText as it used reflection
