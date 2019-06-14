@@ -20,7 +20,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.widget.CheckBox
 import android.widget.EditText
@@ -28,13 +27,13 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.SeekBar
-import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.Toolbar
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.ViewCompat
 import com.afollestad.materialdialogs.R
 import java.util.Random
 
@@ -248,36 +247,15 @@ fun Context.textColorStateList(@ColorInt color: Int): ColorStateList {
     return ColorStateList(states, colors)
 }
 
-@SuppressLint("RestrictedApi")
+/**
+ * Note that this does not tint the cursor, as there is no public api to do so.
+ */
 fun EditText.tint(@ColorInt color: Int) {
     val editTextColorStateList = context.textColorStateList(color)
     if (this is AppCompatEditText) {
-        supportBackgroundTintList = editTextColorStateList
+        ViewCompat.setBackgroundTintList(this, editTextColorStateList)
     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
         backgroundTintList = editTextColorStateList
-    }
-    tintCursor(color)
-}
-
-fun EditText.tintCursor(@ColorInt color: Int) {
-    try {
-        val fCursorDrawableRes = TextView::class.java.getDeclaredField("mCursorDrawableRes")
-        fCursorDrawableRes.isAccessible = true
-        val mCursorDrawableRes = fCursorDrawableRes.getInt(this)
-        val fEditor = TextView::class.java.getDeclaredField("mEditor")
-        fEditor.isAccessible = true
-        val editor = fEditor.get(this)
-        val clazz = editor.javaClass
-        val fCursorDrawable = clazz.getDeclaredField("mCursorDrawable")
-        fCursorDrawable.isAccessible = true
-        val drawables: Array<Drawable> = Array(2, {
-            val drawable = context.drawable(mCursorDrawableRes)
-            drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-            drawable
-        })
-        fCursorDrawable.set(editor, drawables)
-    } catch (e: Exception) {
-        e.printStackTrace()
     }
 }
 
