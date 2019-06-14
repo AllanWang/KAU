@@ -4,4 +4,52 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">عن التطبيق</string>
+    <string name="kau_about_x">حول %s</string>
+    <string name="kau_add_account">إضافة حساب</string>
+    <string name="kau_back">العودة</string>
+    <string name="kau_cancel">إلغاء</string>
+    <string name="kau_changelog">سجل التغييرات</string>
+    <string name="kau_close">إغلاق</string>
+    <string name="kau_contact_us">التواصل معنا</string>
+    <string name="kau_copy">نسخ</string>
+    <string name="kau_custom">مخصص</string>
+    <string name="kau_dark">مظلم</string>
+    <string name="kau_default">الافتراضي</string>
+    <string name="kau_do_not_show_again">لا تظهر مجدداً</string>
+    <string name="kau_done">تم</string>
+    <string name="kau_error">خطأ</string>
+    <string name="kau_exit">خروج</string>
+    <string name="kau_exit_confirmation">هل أنت متأكد بأنك تريد الخروج؟</string>
+    <string name="kau_exit_confirmation_x">هل أنت متأكد بأنك تريد الخروج %s؟</string>
+    <string name="kau_glass">زجاجي</string>
+    <string name="kau_got_it">فهمت</string>
+    <string name="kau_great">رائع</string>
+    <string name="kau_hide">إخفاء</string>
+    <string name="kau_light">فاتح</string>
+    <string name="kau_login">تسجيل الدخول</string>
+    <string name="kau_logout">تسجيل الخروج</string>
+    <string name="kau_logout_confirm_as_x">هل أنت متأكد بأنك تريد تسجيل الخروج %s؟</string>
+    <string name="kau_manage_account">إدارة الحساب</string>
+    <string name="kau_maybe">ربما</string>
+    <string name="kau_menu">القائمة</string>
+    <string name="kau_no">لا</string>
+    <string name="kau_no_results_found">لم يتم العثور على نتائج</string>
+    <string name="kau_none">لا يوجد</string>
+    <string name="kau_ok">حسناً</string>
+    <string name="kau_play_store">Google play</string>
+    <string name="kau_rate">تقييم</string>
+    <string name="kau_report_bug">الإبلاغ عن خطأ</string>
+    <string name="kau_search">البحث</string>
+    <string name="kau_send_feedback">إرسال ملاحظات</string>
+    <string name="kau_send_via">الإرسال عبر</string>
+    <string name="kau_settings">الاعدادات</string>
+    <string name="kau_share">المشاركة</string>
+    <string name="kau_text_copied">تم نسخ النص إلى الحافظة.</string>
+    <string name="kau_thank_you">شكراً</string>
+    <string name="kau_uh_oh">أوبس</string>
+    <string name="kau_warning">تحذير</string>
+    <string name="kau_yes">نعم</string>
+    <string name="kau_permission_denied">الإذن مرفوض</string>
+</resources>
