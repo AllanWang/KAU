@@ -153,9 +153,12 @@ Special thanks to the following awesome people for translating significant porti
 |----------|--------------|
 | Chinese (Simplified) | [Alcatelia](https://crowdin.com/profile/Alcatelia) |
 | Chinese (Traditional) | [yipinghuang](https://crowdin.com/profile/yipinghuang) &bull; [Su, Jun-Ming](https://crowdin.com/profile/sujunmin) &bull; [Wei](https://crowdin.com/profile/wei4green) |
+| Danish | [mhtorp](https://crowdin.com/profile/mhtorp) |
+| Dutch | [ItGuillaume](https://crowdin.com/profile/ltGuillaume) &bull; [Tatum ter Kuile](https://crowdin.com/profile/Teitr) |
 | French | [Vincent Kulak](https://github.com/VonOx) &bull; [Jean-Philippe Gravel](https://crowdin.com/profile/wokija) |
 | Galician | [Xesús M. Mosquera](https://twitter.com/xesusmmc?lang=en) |
 | German | [Bushido1992](https://forum.xda-developers.com/member.php?u=5179246) &bull; [Marcel Soehnchen](https://crowdin.com/profile/msoehnchen) &bull; [3LD0mi HA](https://forum.xda-developers.com/member.php?u=5860523) |
+| Hungarian | [János Erkli](https://crowdin.com/profile/erklijani0521) |
 | Indonesian | [M. Angga Ariska](https://www.youtube.com/channel/UCkqMw81s2aw7bYO-U2YhD7w) |
 | Italian | [Bonnee](https://github.com/Bonnee) |
 | Korean | [잇스테이크](https://crowdin.com/profile/bexco2010) |
@@ -165,8 +168,10 @@ Special thanks to the following awesome people for translating significant porti
 | Portuguese (Brazilian) | [TheusKhan](https://crowdin.com/profile/TheusKhan) |
 | Serbian | [Nikola Radmanović](https://crowdin.com/profile/nikoladradmanovic) |
 | Spanish | [Jahir Fiquitiva](https://jahirfiquitiva.me/) &bull; [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431)|
+| Swedish | [Artswitcher](https://crowdin.com/profile/Artswitcher) |
 | Thai | [Thanawat Hanthong](https://crowdin.com/profile/peet6015) |
 | Turkish | [zuma17](https://crowdin.com/profile/zuma17) |
+| Ukrainian | [Вадим Жушман](https://crowdin.com/profile/android54544) |
 | Vietnamese | [Alienz](https://crowdin.com/profile/alienyd) |
 
 The full activity stream for the translations can be found [here](https://crowdin.com/project/kotlin-android-utils/activity_stream)
