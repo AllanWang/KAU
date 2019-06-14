@@ -8,7 +8,7 @@ This library contains small helper functions used throughout almost all of my ot
 
 <a href='https://play.google.com/store/apps/details?id=ca.allanwang.kau.sample&utm_source=github'><img alt='Get it on Google Play' width="30%" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
-[Changelog](docs/Changelog.md)
+[Changelog](docs/Changelog.md) &bull;
 [Migration](docs/Migration.md)
 
 ------------
@@ -102,8 +102,7 @@ This means that you'll need to explicitly include each submodule you'd like to u
 
 ## [Color Picker](colorpicker#readme)
 * Implementation of a color picker dialog with subtle transitions and a decoupled callback
-* Includes `:core`, 
-([`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs))
+* Includes `:core`
 
 ## [KPref Activity](kpref-activity#readme)
 * Fully programmatic implementation of a Preference Activity, backed by a RecyclerView
