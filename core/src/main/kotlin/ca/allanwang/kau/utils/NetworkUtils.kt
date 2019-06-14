@@ -22,6 +22,8 @@ import android.net.ConnectivityManager
 /**
  * Created by Allan Wang on 2017-07-07.
  */
+@Suppress("DEPRECATION")
+@Deprecated("Applications should make use of network callbacks instead of individual queries")
 inline val Context.isNetworkAvailable: Boolean
     @SuppressLint("MissingPermission")
     get() {
@@ -30,6 +32,8 @@ inline val Context.isNetworkAvailable: Boolean
         return activeNetworkInfo?.isConnectedOrConnecting ?: false
     }
 
+@Suppress("DEPRECATION")
+@Deprecated("Applications should make use of network callbacks instead of individual queries")
 inline val Context.isWifiConnected: Boolean
     @SuppressLint("MissingPermission")
     get() {
@@ -38,6 +42,8 @@ inline val Context.isWifiConnected: Boolean
         return (activeNetworkInfo?.type ?: -1) == ConnectivityManager.TYPE_WIFI
     }
 
+@Suppress("DEPRECATION")
+@Deprecated("Applications should make use of network callbacks instead of individual queries")
 inline val Context.isMobileDataConnected: Boolean
     @SuppressLint("MissingPermission")
     get() {

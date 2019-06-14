@@ -1,4 +1,4 @@
-ext.kauSubModuleMinSdk = kau.coreMinSdk
+ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
 
 ext.kauSubModuleResourcePrefix = "kau_pref_"
 
@@ -6,8 +6,8 @@ apply from: '../android-lib.gradle'
 
 dependencies {
     implementation project(':core')
-    implementation project(':adapter')
     implementation project(':colorpicker')
+    implementation project(':adapter')
 }
 
 apply from: '../artifacts.gradle'

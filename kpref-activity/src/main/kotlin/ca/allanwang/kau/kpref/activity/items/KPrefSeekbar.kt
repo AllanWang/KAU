@@ -19,6 +19,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
+import ca.allanwang.kau.kpref.activity.KPrefItemActions
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.tint
 
@@ -85,7 +86,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
         globalOptions: GlobalOptions,
         titleId: Int,
         getter: () -> Int,
-        setter: (value: Int) -> Unit
+        setter: KPrefItemActions.(value: Int) -> Unit
     ) : KPrefSeekbarContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
         override var min: Int = 0

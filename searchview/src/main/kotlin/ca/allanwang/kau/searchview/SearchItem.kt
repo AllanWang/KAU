@@ -31,8 +31,8 @@ import ca.allanwang.kau.utils.gone
 import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.setRippleBackground
 import ca.allanwang.kau.utils.visible
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
+import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 /**
  * Created by Allan Wang on 2017-06-23.

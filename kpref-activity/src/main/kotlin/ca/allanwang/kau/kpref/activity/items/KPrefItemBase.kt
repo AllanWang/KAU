@@ -19,6 +19,7 @@ import android.view.View
 import androidx.annotation.CallSuper
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
+import ca.allanwang.kau.kpref.activity.KPrefItemActions
 import ca.allanwang.kau.kpref.activity.R
 import ca.allanwang.kau.utils.resolveDrawable
 
@@ -32,7 +33,7 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
     open var pref: T
         get() = base.getter()
         set(value) {
-            base.setter(value)
+            base.setter(this, value)
         }
 
     private var _enabled: Boolean = true
@@ -93,7 +94,7 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
         var onClick: (KClick<T>.() -> Unit)?
         var onDisabledClick: (KClick<T>.() -> Unit)?
         val getter: () -> T
-        val setter: (value: T) -> Unit
+        val setter: KPrefItemActions.(value: T) -> Unit
     }
 
     /**
@@ -103,7 +104,7 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
         globalOptions: GlobalOptions,
         titleId: Int,
         override val getter: () -> T,
-        override val setter: (value: T) -> Unit
+        override val setter: KPrefItemActions.(value: T) -> Unit
     ) : CoreContract by CoreBuilder(globalOptions, titleId), BaseContract<T> {
         override var enabler: () -> Boolean = { true }
         override var onClick: (KClick<T>.() -> Unit)? = null

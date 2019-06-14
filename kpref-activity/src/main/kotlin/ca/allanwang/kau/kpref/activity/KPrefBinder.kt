@@ -82,8 +82,8 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun checkbox(
         @StringRes title: Int,
-        getter: (() -> Boolean),
-        setter: ((value: Boolean) -> Unit),
+        getter: () -> Boolean,
+        setter: KPrefItemActions.(value: Boolean) -> Unit,
         builder: KPrefItemBase.BaseContract<Boolean>.() -> Unit = {}
     ) = list.add(
         KPrefCheckbox(KPrefItemBase.BaseBuilder(globalOptions, title, getter, setter)
@@ -93,8 +93,8 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun colorPicker(
         @StringRes title: Int,
-        getter: (() -> Int),
-        setter: ((value: Int) -> Unit),
+        getter: () -> Int,
+        setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefColorPicker.KPrefColorContract.() -> Unit = {}
     ) = list.add(
         KPrefColorPicker(KPrefColorPicker.KPrefColorBuilder(globalOptions, title, getter, setter)
@@ -104,8 +104,8 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun <T> text(
         @StringRes title: Int,
-        getter: (() -> T),
-        setter: ((value: T) -> Unit),
+        getter: () -> T,
+        setter: KPrefItemActions.(value: T) -> Unit,
         builder: KPrefText.KPrefTextContract<T>.() -> Unit = {}
     ) = list.add(
         KPrefText(KPrefText.KPrefTextBuilder(globalOptions, title, getter, setter)
@@ -134,8 +134,8 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun seekbar(
         @StringRes title: Int,
-        getter: (() -> Int),
-        setter: ((value: Int) -> Unit),
+        getter: () -> Int,
+        setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefSeekbar.KPrefSeekbarContract.() -> Unit = {}
     ) = list.add(
         KPrefSeekbar(KPrefSeekbar.KPrefSeekbarBuilder(globalOptions, title, getter, setter)
@@ -145,8 +145,8 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
     @KPrefMarker
     fun timePicker(
         @StringRes title: Int,
-        getter: (() -> Int),
-        setter: ((value: Int) -> Unit),
+        getter: () -> Int,
+        setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefTimePicker.KPrefTimeContract.() -> Unit = {}
     ) = list.add(
         KPrefTimePicker(KPrefTimePicker.KPrefTimeBuilder(globalOptions, title, getter, setter)

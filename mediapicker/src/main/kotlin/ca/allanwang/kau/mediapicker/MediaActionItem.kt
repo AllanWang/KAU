@@ -96,7 +96,7 @@ abstract class MediaActionCamera(
                 if (intent.resolveActivity(c.packageManager) == null) {
                     c.materialDialog {
                         title(R.string.kau_no_camera_found)
-                        content(R.string.kau_no_camera_found_content)
+                        message(R.string.kau_no_camera_found_content)
                     }
                     return@kauRequestPermissions
                 }
@@ -106,7 +106,7 @@ abstract class MediaActionCamera(
                     } catch (e: java.io.IOException) {
                         c.materialDialog {
                             title(R.string.kau_error)
-                            content(R.string.kau_temp_file_creation_failed)
+                            message(R.string.kau_temp_file_creation_failed)
                         }
                         return@kauRequestPermissions
                     }
@@ -131,7 +131,7 @@ class MediaActionCameraVideo(
         if (intent.resolveActivity(c.packageManager) == null) {
             c.materialDialog {
                 title(R.string.kau_no_camera_found)
-                content(R.string.kau_no_camera_found_content)
+                message(R.string.kau_no_camera_found_content)
             }
             return
         }

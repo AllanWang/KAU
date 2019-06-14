@@ -31,18 +31,23 @@ artifacts {
 // We assume resources within res-public are public
 task generatepublicxml {
 
-    println "Generating public XML"
-
-    def resDir = project.projectDir.absolutePath + "/src/main/res-public"
-
-    def publicFolder = file(resDir + "/values")
-    if (!publicFolder.exists()) publicFolder.mkdirs()
+    def resDir = project.projectDir.absolutePath + "/src/main/res"
+    def publicDir = resDir + "-public"
+    def resFolder = file(resDir + "/values")
+    def publicFolder = file(publicDir + "/values")
+    if (!publicFolder.exists()) {
+        // No res; no need for contents
+        if (!resFolder.exists()) {
+            return
+        }
+        publicFolder.mkdirs()
+    }
 
     // Include the desired res types
     // Note: we don't need the qualified resource directories,
     // since those resources will already be defined in the unqualified directories
     // however, there are special cases like transition-v21 that is only available on lollipop and up
-    def tree = fileTree(dir: resDir,
+    def tree = fileTree(dir: publicDir,
             includes: ['**/anim/*.xml',
                        '**/color/*.xml',
                        '**/drawable/*.xml',
@@ -51,15 +56,17 @@ task generatepublicxml {
                        '**/values/*.xml'
             ],
             exclude: '**/public.xml'
-    );
+    )
+
+    println "Generating public XML: ${project.name}"
 
     // Create new public.xml with writer
-    new File(resDir + "/values/public.xml").withWriter { writer ->
+    file(publicDir + "/values/public.xml").withWriter { writer ->
         // Create MarkupBuilder with 4 space indent
-        def destXml = new MarkupBuilder(new IndentPrinter(writer, "    ", true));
-        def destXmlMkp = destXml.getMkp();
+        def destXml = new MarkupBuilder(new IndentPrinter(writer, "    ", true))
+        def destXmlMkp = destXml.getMkp()
 
-        // GIST NOTE: our project needed the ResourceName suppression, but its not needed in general
+        // GIST NOTE: our project needed the ResourceName suppression, but it's not needed in general
         destXml.resources(
                 'xmlns:tools': 'http://schemas.android.com/tools',
                 'tools:ignore': 'ResourceName'
@@ -74,7 +81,7 @@ task generatepublicxml {
                 tree.each { resFile ->
 
                     // use the directory name to get the type
-                    def type = resFile.getParentFile().getName()
+                    String type = resFile.getParentFile().getName()
 
                     if (type == "values") {
                         // Resource files under values. Parse the file, and pull out the resource definitions

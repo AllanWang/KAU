@@ -19,6 +19,8 @@ import android.graphics.Color
 
 /**
  * @author Aidan Follestad (afollestad)
+ *
+ * Modified by Allan Wang
  */
 internal object ColorPalette {
 

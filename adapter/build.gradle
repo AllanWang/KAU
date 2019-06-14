@@ -1,12 +1,12 @@
-ext.kauSubModuleMinSdk = kau.coreMinSdk
+ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
 
 apply from: '../android-lib.gradle'
 
 dependencies {
     implementation project(':core')
 
-    api "com.mikepenz:fastadapter-commons:${kau.fastAdapterCommons}@aar"
-    api "com.mikepenz:fastadapter:${kau.fastAdapter}@aar"
+    api kau.Dependencies.fastAdapter
+    api kau.Dependencies.fastAdapterCommons
 }
 
 apply from: '../artifacts.gradle'

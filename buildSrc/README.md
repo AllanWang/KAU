@@ -5,75 +5,52 @@
 KAU holds quite a big collection of projects, with the intent on making it easy to reuse complex features, and also to update.
 This plugin aims to help maintain version updates straight from the source, and also adds on a few nice functions.
 
-As a note, this is located under `buildSrc` as it is automatically included when building KAU.
+As a note, this is located under `buildSrc` as it is automatically included when building 
 Everything here is used when generating the library, so it's always tested.
 
 ## Contents
-* [Versions](#versions)
-* [Plugins](#plugins)
-* [Dependencies](#dependencies)
+* [Usage](#usage)
+* [Constants](#constants)
 * [Changelog Generator](#changelog-generator)
 
 ## Usage
 
-Firstly, add KAU to the buildscript:
+The easiest way to use this is to create your own `buildSrc` folder, and include `ca.allanwang.kau:gradle-plugin:${KAU}` as a dependency.
+This way, you can also use items in your buildscript.
+You can also add your own classes to manage versions in your app.
+
+When making your own `buildSrc`, make sure you add the jitpack repository:
 
 ```gradle
-buildscript {
-    repositories {
-        ...
-        maven { url "https://jitpack.io" }
-    }
-
-    dependencies {
-        ...
-        classpath "ca.allanwang:kau:${KAU}"
-    }
+repositories {
+    ...
+    maven { url "https://jitpack.io" }
 }
 ```
 
-Then where necessary, apply the plugin using
+---
+
+Currently, the plugin is a collection of simple classes.
+
+## Constants
+
+`Versions`, `Plugins`, and `Dependencies` supply constants you can use for your classpath and dependencies.
+Some dependencies are also exposed as functions
+
+Eg
 
 ```gradle
-apply plugin: 'ca.allanwang.kau'
+dependencies {
+    ...
+    // The three dependencies below are all the same thing
+    implementation "org.jetbrains.kotlin:kotlin-test-junit:${kau.Versions.kotlin}"
+    implementation kau.Dependencies.kotlinTest
+    implementation kau.Dependencies.kotlin("test-junit")
+}
 ```
 
-# Versions
 
-> [Versions.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Versions.groovy)
-
-Contains the version code for any external library used in KAU.
-You are free to use the values through `kau.[tagName]`.
-
-As an example, AppCompat is imported in KAU using
-
-```gradle
-api "androidx.appcompat:appcompat:${kau.appcompat}"
-```
-
-# Plugins
-
-> [Plugins.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Plugins.groovy)
-
-Unfortunately, it seems like you can't use the plugin directly in the buildscript, so this is mainly internal.
-
-The plugins data, found using `kauPlugins.[tagName]` contains a collection of useful plugin classpaths.
-The versions are taken from `Versions.groovy`, so it is always in sync.
-
-# Dependencies
-
-> [Dependencies.groovy](/buildSrc/src/main/groovy/ca/allanwang/kau/Dependencies.groovy)
-
-Contains the dependency string for common libraries.
-You are free to use the values through `kauDependency.[tagName]`.
-
-As an example, adding junit can be done through
-
-```gradle
-testImplementation kauDependency.junit
-```
-
-# Changelog Generator
+## Changelog Generator
 
 In conjunction with [core](/core#changelog-xml), 
 the xml changelog can be converted to markdown.
@@ -82,7 +59,7 @@ To allow for compilation per build, add your own task:
 
 ```gradle
 task generateChangelogMd() {
-    kauChangelog.generate([inputPath], [outputPath])
+    kau.ChangelogGenerator.generate([inputPath], [outputPath])
 }
 ```
 

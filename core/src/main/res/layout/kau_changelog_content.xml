@@ -10,6 +10,7 @@
     <!--padding bottom is 14sp * 0.6-->
 
     <TextView
+        android:textColor="?android:textColorSecondary"
         android:id="@+id/kau_changelog_bullet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     <TextView
+        android:textColor="?android:textColorPrimary"
         android:id="@+id/kau_changelog_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

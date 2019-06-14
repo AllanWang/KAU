@@ -45,7 +45,9 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
+import com.afollestad.materialdialogs.DialogBehavior
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.ModalDialog
 
 /**
  * Created by Allan Wang on 2017-06-03.
@@ -193,17 +195,23 @@ fun Context.resolveString(@AttrRes attr: Int, fallback: String = ""): String {
 }
 
 /**
- * Wrapper function for the MaterialDialog adapterBuilder
- * There is no need to call build() or show() as those are done by default
+ * Wrapper function for MaterialDialog
+ *
+ * Mainly handles invalid creations, such as showing a dialog when an activity is finishing
+ * See https://github.com/afollestad/material-dialogs/issues/1778
  */
-inline fun Context.materialDialog(action: MaterialDialog.Builder.() -> Unit): MaterialDialog {
-    val builder = MaterialDialog.Builder(this)
-    builder.action()
+inline fun Context.materialDialog(
+    dialogBehavior: DialogBehavior = ModalDialog,
+    action: MaterialDialog.() -> Unit
+): MaterialDialog {
+    val dialog = MaterialDialog(this, dialogBehavior)
+    dialog.action()
     if (isFinishing) {
         KL.d { "Material Dialog triggered from finishing context; did not show" }
-        return builder.build()
+    } else {
+        dialog.show()
     }
-    return builder.show()
+    return dialog
 }
 
 fun Context.getDip(value: Float): Float =
@@ -231,7 +239,7 @@ fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || Con
 
 fun Context.copyToClipboard(text: String?, label: String = "Copied Text", showToast: Boolean = true) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clipboard.primaryClip = ClipData.newPlainText(label, text ?: "")
+    clipboard.setPrimaryClip(ClipData.newPlainText(label, text ?: ""))
     if (showToast) toast(R.string.kau_text_copied)
 }
 

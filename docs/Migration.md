@@ -2,6 +2,33 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v5.0.0
+
+## Material Dialog Update
+
+Material Dialog is now 3.x. 
+This leads to a whole new API, but fortunately it is based around kotlin. 
+Please refer to [MD's documents](https://github.com/afollestad/material-dialogs/tree/3.0.0-rc2/documentation) for the new methods.
+
+Alongside such changes, `:colorpicker` is no longer as necessary. It exists mainly to provide an internal interface for other submodules.
+
+After Material Dialog 2.x, a decision was made to enforce theming through xml styles only to avoid reflection.
+As a result, options to supply custom dialog colors are now removed (ie in the changelog dialog and color picker kprefs).
+
+## ProgressAnimator
+
+`ProgressAnimator` has been completely rewritten to be an extension of `ValueAnimator`.
+This for the most part is not a breaking change, apart from the fact that creating an animator will not start it immediately.
+Make sure to call `.start()` to begin the animation.
+
+## Gradle Plugin
+
+The plugin has been converted to kotlin objects.
+Now, usage is done through the classes directly, and no extensions are provided within the project.
+For instance, instead of using `kauDependencies`, we now use `kau.Dependencies`.
+There is also no longer a need to use `apply plugin 'ca.allanwang.kau'`;
+adding the plugin to the classpath suffices.
+
 # v4.0.1-alpha02
 
 * `kauParseFaq` is now synchronous. 

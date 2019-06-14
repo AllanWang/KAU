@@ -60,7 +60,7 @@ internal object KPrefFloatTransaction : KPrefTransaction<Float> {
 
 internal object KPrefStringTransaction : KPrefTransaction<String> {
     override fun get(prefs: SharedPreferences, key: String, fallback: String) =
-        prefs.getString(key, fallback)
+        prefs.getString(key, fallback) ?: ""
 
     override fun set(editor: SharedPreferences.Editor, key: String, data: String) {
         editor.putString(key, data)

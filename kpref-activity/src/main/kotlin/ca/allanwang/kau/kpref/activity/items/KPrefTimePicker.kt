@@ -19,6 +19,7 @@ import android.app.TimePickerDialog
 import android.widget.TimePicker
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
+import ca.allanwang.kau.kpref.activity.KPrefItemActions
 import ca.allanwang.kau.kpref.activity.R
 import java.util.Locale
 
@@ -48,8 +49,8 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
         globalOptions: GlobalOptions,
         titleId: Int,
         getter: () -> Int,
-        setter: (value: Int) -> Unit
-    ) : KPrefTimeContract, BaseContract<Int> by BaseBuilder<Int>(globalOptions, titleId, getter, setter) {
+        setter: KPrefItemActions.(value: Int) -> Unit
+    ) : KPrefTimeContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
         override var use24HourFormat: Boolean = false
 

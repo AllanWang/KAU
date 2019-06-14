@@ -19,6 +19,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import ca.allanwang.kau.kotlin.kauRemoveIf
 import ca.allanwang.kau.kotlin.lazyContext
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.utils.KauException
@@ -30,26 +31,32 @@ import java.lang.ref.WeakReference
 /**
  * Created by Allan Wang on 2017-07-03.
  *
- * Permission manager that is decoupled from activities
- * Keeps track of pending requests, and warns about invalid requests
+ * Permission manager that is decoupled from activities.
+ * Keeps track of pending requests, and warns about invalid requests.
  */
 internal object PermissionManager {
 
-    private var requestInProgress = false
-    private val pendingResults: MutableList<WeakReference<PermissionResult>> by lazy { mutableListOf<WeakReference<PermissionResult>>() }
+    private val pendingResults = mutableListOf<WeakReference<PermissionResult>>()
 
     /**
      * Retrieve permissions requested in our manifest
      */
-    private val manifestPermission = lazyContext<Array<String>> {
+    private val manifestPermission = lazyContext<Set<String>> {
         try {
-            it.packageManager.getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)?.requestedPermissions
-                ?: emptyArray()
+            it.packageManager.getPackageInfo(
+                it.packageName,
+                PackageManager.GET_PERMISSIONS
+            )?.requestedPermissions?.toSet()
+                ?: emptySet()
         } catch (e: Exception) {
-            emptyArray()
+            emptySet()
         }
     }
 
+    /**
+     * Registers a new permission request.
+     * It is expected that the callback will be called eventually, unless the parent activity is destroyed.
+     */
     operator fun invoke(
         context: Context,
         permissions: Array<out String>,
@@ -60,13 +67,16 @@ internal object PermissionManager {
         val missingPermissions = permissions.filter { !context.hasPermission(it) }
         if (missingPermissions.isEmpty()) return callback(true, null)
         pendingResults.add(WeakReference(PermissionResult(permissions, callback = callback)))
-        if (!requestInProgress) {
-            requestInProgress = true
+        if (pendingResults.size == 1) {
             requestPermissions(context, missingPermissions.toTypedArray())
-        } else KL.d { "Request is postponed since another one is still in progress; did you remember to override onRequestPermissionsResult?" }
+        } else {
+            KL.d { "Request is postponed since another one is still in progress; did you remember to override onRequestPermissionsResult?" }
+        }
     }
 
-    @Synchronized
+    /**
+     * Checks that the listed permissions can be requested, and submits the request to the provided activity
+     */
     private fun requestPermissions(context: Context, permissions: Array<out String>) {
         permissions.forEach {
             if (!manifestPermission(context).contains(it)) {
@@ -82,29 +92,21 @@ internal object PermissionManager {
     }
 
     /**
-     * Handles permission result by allowing accepted permissions for all pending requests
-     * Also cleans up destroyed or completed pending requests
+     * Handles permission result by allowing accepted permissions for all pending requests.
+     * Also cleans up destroyed or completed pending requests.
      */
     fun onRequestPermissionsResult(context: Context, permissions: Array<out String>, grantResults: IntArray) {
         KL.i { "On permission result: pending ${pendingResults.size}" }
         val count = Math.min(permissions.size, grantResults.size)
-        val iter = pendingResults.iterator()
-        while (iter.hasNext()) {
-            val action = iter.next().get()
-            if ((0 until count).any { action?.onResult(permissions[it], grantResults[it]) != false })
-                iter.remove()
+        pendingResults.kauRemoveIf {
+            val action = it.get()
+            action == null || (0 until count).any { i -> action.onResult(permissions[i], grantResults[i]) }
         }
-        if (pendingResults.isEmpty())
-            requestInProgress = false
-        else {
-            val action = pendingResults.map { it.get() }.firstOrNull { it != null }
-            if (action == null) { //actions have been unlinked from their weak references
-                pendingResults.clear()
-                requestInProgress = false
-                return
-            }
-            requestPermissions(context, action.permissions.toTypedArray())
+        val action = pendingResults.asSequence().map { it.get() }.firstOrNull { it != null }
+        if (action == null) { // actions have been unlinked from their weak references
+            pendingResults.clear()
+            return
         }
-        KL.i { "Post on permission result: pending ${pendingResults.size}" }
+        requestPermissions(context, action.permissions.toTypedArray())
     }
 }
