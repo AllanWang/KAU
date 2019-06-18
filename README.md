@@ -88,25 +88,29 @@ This means that you'll need to explicitly include each submodule you'd like to u
 
 ## [Core UI](core-ui#readme)
 * Collection of complex views and widgets
-* Includes `:core`, `:adapter`
+* Includes `:core`
 
 ## [About](about#readme)
 * Modularized overlaying about section. Comes with a main panel, automatic lib detection, and a FAQ parser; also includes the lib strings for KAU.
-* Includes `:core-ui`, `:adapter`, 
+* Includes `:core-ui`, `:fastadapter`, 
 [`About Libraries`](https://github.com/mikepenz/AboutLibraries)
 
 ## [Adapter](adapter#readme)
-* Kotlin bindings for the fast adapter, as well as modularized RecyclerView animations
-* Includes `:core`, 
-[`Fast Adapter`](https://github.com/mikepenz/FastAdapter)
+* RecyclerView animations
+* Includes `:core`
 
 ## [Color Picker](colorpicker#readme)
 * Implementation of a color picker dialog with subtle transitions and a decoupled callback
 * Includes `:core`
 
+## [FastAdapter](fastadapter#readme)
+* Kotlin bindings for the fast adapter
+* Includes `:core`, `:adapter`,
+[`Fast Adapter`](https://github.com/mikepenz/FastAdapter)
+
 ## [KPref Activity](kpref-activity#readme)
 * Fully programmatic implementation of a Preference Activity, backed by a RecyclerView
-* Includes `:core`, `:adapter`, `:colorpicker`
+* Includes `:core`, `:fastadapter`, `:colorpicker`
 
 ## [Media Picker](mediapicker#readme)
 * Fully functional image and video pickers, both as an overlay and as a requested activity.
@@ -116,7 +120,7 @@ This means that you'll need to explicitly include each submodule you'd like to u
 
 ## [SearchView](searchview#readme)
 * Material searchview with kotlin bindings
-* Includes `:core-ui`, `:adapter`
+* Includes `:core-ui`, `:fastadapter`
 
 ## [Gradle Plugin](buildSrc#readme)
 * Gradle plugin to help facilitate versioning and other gradle functions

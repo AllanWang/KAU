@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 dependencies {
     implementation project(':core-ui')
-    implementation project(':adapter')
+    implementation project(':fastadapter')
 
     api kau.Dependencies.glide
     api kau.Dependencies.blurry

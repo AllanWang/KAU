@@ -4,9 +4,6 @@ apply from: '../android-lib.gradle'
 
 dependencies {
     implementation project(':core')
-
-    api kau.Dependencies.fastAdapter
-    api kau.Dependencies.fastAdapterCommons
 }
 
 apply from: '../artifacts.gradle'

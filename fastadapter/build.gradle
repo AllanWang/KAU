@@ -3,7 +3,10 @@ ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
 apply from: '../android-lib.gradle'
 
 dependencies {
-    api project(':core')
+    api project(':adapter')
+
+    api kau.Dependencies.fastAdapter
+    api kau.Dependencies.fastAdapterCommons
 }
 
 apply from: '../artifacts.gradle'
