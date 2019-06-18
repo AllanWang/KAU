@@ -6,6 +6,13 @@
     <item text="" />
     -->
 
+    <version title="v5.0.1" />
+    <item text=":adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+
     <version title="v5.0.0" />
     <item text="Update Android SDK to 29 and Kotlin to 1.3.31" />
     <item text="Update translations" />
