@@ -5,6 +5,12 @@ package kau
  */
 object Dependencies {
     @JvmStatic
+    fun kau(version: String) = "ca.allanwang:kau:$version"
+
+    @JvmStatic
+    fun kau(type: String, version: String) = "ca.allanwang.kau:$type:$version"
+
+    @JvmStatic
     fun kotlin(type: String) = "org.jetbrains.kotlin:kotlin-$type:${Versions.kotlin}"
 
     @JvmField
@@ -44,6 +50,7 @@ object Dependencies {
     const val fastAdapter = "com.mikepenz:fastadapter:${Versions.fastAdapter}"
     @JvmStatic
     fun fastAdapter(type: String) = "com.mikepenz:fastadapter-$type:${Versions.fastAdapter}"
+
     @JvmField
     val fastAdapterCommons = fastAdapter("commons")
 
