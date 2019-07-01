@@ -41,11 +41,15 @@ class KPrefTest {
             initialize(ApplicationProvider.getApplicationContext<Context>(), "kpref_test_${System.currentTimeMillis()}")
         }
 
+        var postSetterCount: Int = 0
+
         var one by kpref("one", 1)
 
         var two by kpref("two", 2f)
 
-        var `true` by kpref("true", true)
+        var `true` by kpref("true", true, postSetter = {
+            postSetterCount++
+        })
 
         var hello by kpref("hello", "hello")
 
@@ -112,5 +116,11 @@ class KPrefTest {
     fun single() {
         assertPrefEquals(true, { oneShot })
         assertPrefEquals(false, { androidPref.oneShot })
+    }
+
+    @Test
+    fun postSetter() {
+        pref { `true` = true }
+        assertPrefEquals(1, { postSetterCount }, "Post setter was not called")
     }
 }
