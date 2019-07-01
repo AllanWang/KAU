@@ -1,5 +1,8 @@
 # Changelog
 
+## v5.0.1
+* :adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary
+
 ## v5.0.0
 * Update Android SDK to 29 and Kotlin to 1.3.31
 * Update translations
