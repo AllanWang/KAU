@@ -2,6 +2,7 @@
 
 ## v5.0.1
 * :adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary
+* :adapter: Make NoAnimatorChange an object; previously a class
 
 ## v5.0.0
 * Update Android SDK to 29 and Kotlin to 1.3.31

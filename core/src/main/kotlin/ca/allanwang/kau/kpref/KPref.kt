@@ -36,14 +36,18 @@ import ca.allanwang.kau.logging.KL
  * You may optionally override [deleteKeys]. This will be called on initialization
  * And delete all keys returned from that method
  */
-open class KPref {
+open class KPref(builder: KPrefBuilder = KPrefBuilderAndroid) : KPrefBuilder by builder {
 
     lateinit var PREFERENCE_NAME: String
     lateinit var sp: SharedPreferences
 
-    fun initialize(c: Context, preferenceName: String) {
+    fun initialize(
+        c: Context,
+        preferenceName: String,
+        sharedPrefs: SharedPreferences = c.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
+    ) {
         PREFERENCE_NAME = preferenceName
-        sp = c.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
+        sp = sharedPrefs
         KL.d { "Shared Preference $preferenceName has been initialized" }
         val toDelete = deleteKeys()
         if (toDelete.isNotEmpty()) {
