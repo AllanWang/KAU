@@ -100,7 +100,7 @@ abstract class AboutPanelRecycler : AboutPanelContract {
         recycler.adapter = adapter
         recycler.itemAnimator = KauAnimator(
             addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f),
-            changeAnimator = NoAnimatorChange()
+            changeAnimator = NoAnimatorChange
         ).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(recycler.context) }
     }
 
