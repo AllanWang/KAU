@@ -1,6 +1,6 @@
 # Changelog
 
-## v5.0.1
+## v5.1.0
 * :adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary
 * :adapter: Make NoAnimatorChange an object; previously a class
 * :core: KPref now supports in memory only variants for testing; pass KPrefBuilderInMemory to KPref constructor
