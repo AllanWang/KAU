@@ -8,7 +8,7 @@
 
     <version title="v5.0.1" />
     <item text=":adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary" />
-    <item text="" />
+    <item text=":adapter: Make NoAnimatorChange an object; previously a class" />
     <item text="" />
     <item text="" />
     <item text="" />
