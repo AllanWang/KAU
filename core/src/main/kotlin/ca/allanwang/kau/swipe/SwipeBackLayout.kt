@@ -236,10 +236,10 @@ internal class SwipeBackLayout @JvmOverloads constructor(
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
         if (!swipeEnabled || disallowIntercept) return false
-        try {
-            return dragHelper.shouldInterceptTouchEvent(event)
+        return try {
+            dragHelper.shouldInterceptTouchEvent(event)
         } catch (e: Exception) {
-            return false
+            false
         }
     }
 

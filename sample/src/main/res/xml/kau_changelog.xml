@@ -11,7 +11,6 @@
     <item text=":adapter: Make NoAnimatorChange an object; previously a class" />
     <item text=":core: KPref now supports in memory only variants for testing; pass KPrefBuilderInMemory to KPref constructor" />
     <item text=":core: KPref initializer takes in SharedPreferences so user can configure it" />
-    <item text=":core: Enhanced swipe view and make drag helper public" />
     <item text="" />
     <item text="" />
     <item text="" />
