@@ -162,12 +162,8 @@ internal class SwipeBackLayout @JvmOverloads constructor(
 
     init {
         dragHelper = ViewDragHelper.create(this, ViewDragCallback())
-        val density = resources.displayMetrics.density
-        val minVel = MIN_FLING_VELOCITY * density
         //allow touch from anywhere on the screen
         edgeSize = Math.max(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
-        minVelocity = minVel
-//        maxVelocity = 2.5f * minVel
         edgeFlag = edgeFlag
         sensitivity = 0.3f
         addListener(chromeFadeListener)
