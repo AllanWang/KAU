@@ -245,7 +245,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (!swipeEnabled) return false
+        if (!swipeEnabled || disallowIntercept) return false
         try {
             dragHelper.processTouchEvent(event)
         } catch (e: Exception) {

@@ -75,6 +75,7 @@ internal interface SwipeBackContractInternal : SwipeBackContract {
 interface SwipeBackContract {
     /**
      * Toggle main touch intercept
+     * Disabling will remove the swipe back handler
      */
     var swipeEnabled: Boolean
     /**
@@ -91,6 +92,10 @@ interface SwipeBackContract {
      * Set the scrolling threshold for wish a page is deemed closing
      */
     var scrollThreshold: Float
+    /**
+     * Toggle main touch intercept
+     * Disabling will just ignore touch events, but the handler will remain attached
+     */
     var disallowIntercept: Boolean
     /**
      * Set the min velocity of the view drag helper
