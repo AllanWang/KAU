@@ -24,10 +24,10 @@ object Versions {
     const val constraintLayout = "1.1.3"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    const val kotlin = "1.3.31"
+    const val kotlin = "1.3.41"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    const val coroutines = "1.3.0-M1"
+    const val coroutines = "1.3.0-RC"
 
     // https://github.com/mikepenz/AboutLibraries/releases
     const val aboutLibraries = "6.2.3"
@@ -71,7 +71,7 @@ object Versions {
     const val bugsnagPlugin="4.1.1"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "3.4.1"
+    const val gradlePlugin = "3.5.0-rc01"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases

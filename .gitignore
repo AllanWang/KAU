@@ -29,3 +29,5 @@
 .idea/**/caches
 .idea/modules.xml
 .idea/modules
+.idea/vcs.xml
+.idea/codeStyles/Project.xml
