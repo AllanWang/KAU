@@ -30,7 +30,7 @@ import ca.allanwang.kau.utils.startActivity
 import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.utils.withAlpha
 import ca.allanwang.kau.utils.withSlideOut
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
 /**
  * Created by Allan Wang on 2017-06-12.
@@ -43,14 +43,18 @@ class AnimActivity : KauBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val adapter = FastItemAdapter<PermissionCheckbox>()
-        setContentView(fullLinearRecycler(adapter).apply { setBackgroundColor(KPrefSample.bgColor.withAlpha(255)) })
+        setContentView(fullLinearRecycler(adapter).apply {
+            setBackgroundColor(
+                KPrefSample.bgColor.withAlpha(255)
+            )
+        })
 
         adapter.add(listOf(
             PERMISSION_ACCESS_COARSE_LOCATION,
             PERMISSION_ACCESS_FINE_LOCATION,
             PERMISSION_CAMERA
         ).map { PermissionCheckbox(it) })
-        adapter.withOnClickListener { _, _, item, _ ->
+        adapter.onClickListener = { _, _, item, _ ->
             KL.d { "Perm Click" }
             kauRequestPermissions(item.permission) { granted, _ ->
                 toast("${item.permission} enabled: $granted")

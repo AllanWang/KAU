@@ -26,8 +26,8 @@ import ca.allanwang.kau.permissions.PERMISSION_WRITE_EXTERNAL_STORAGE
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.string
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
 import com.mikepenz.iconics.typeface.IIcon
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import java.io.File
 
 /**
@@ -36,18 +36,26 @@ import java.io.File
 class MediaActionItem(
     val action: MediaAction,
     val mediaType: MediaType
-) : KauIItem<MediaActionItem, MediaItemBasic.ViewHolder>(
+) : KauIItem<MediaItemBasic.ViewHolder>(
     R.layout.kau_iitem_image_basic,
     { MediaItemBasic.ViewHolder(it) },
     R.id.kau_item_media_action
 ) {
 
-    override fun isSelectable(): Boolean = false
+    override var isSelectable: Boolean
+        get() = false
+        set(_) {}
 
     override fun bindView(holder: MediaItemBasic.ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         holder.image.apply {
-            setImageDrawable(MediaPickerCore.getIconDrawable(context, action.iicon(this@MediaActionItem), action.color))
+            setImageDrawable(
+                MediaPickerCore.getIconDrawable(
+                    context,
+                    action.iicon(this@MediaActionItem),
+                    action.color
+                )
+            )
             setOnClickListener { action(context, this@MediaActionItem) }
         }
     }

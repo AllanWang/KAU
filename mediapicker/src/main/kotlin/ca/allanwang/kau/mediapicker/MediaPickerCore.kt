@@ -44,11 +44,11 @@ import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
-import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
-import com.mikepenz.iconics.IconicsDrawable
+import com.mikepenz.iconics.dsl.iconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import kotlinx.coroutines.CancellationException
 import java.io.File
 
@@ -57,7 +57,7 @@ import java.io.File
  *
  * Container for the main logic behind the both pickers
  */
-abstract class MediaPickerCore<T : IItem<*, *>>(
+abstract class MediaPickerCore<T : GenericItem>(
     val mediaType: MediaType,
     val mediaActions: List<MediaAction>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
@@ -87,15 +87,17 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         /**
          * Create error tile for a given item
          */
-        fun getErrorDrawable(context: Context) = getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
+        fun getErrorDrawable(context: Context) =
+            getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
 
         fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
-            val sizePx = MediaPickerCore.computeViewSize(context)
-            return IconicsDrawable(context, iicon)
-                .sizePx(sizePx)
-                .backgroundColor(color)
-                .paddingPx(sizePx / 3)
-                .color(Color.WHITE)
+            val sizePx = computeViewSize(context)
+            return context.iconicsDrawable(iicon) {
+                size = sizePx(sizePx)
+                backgroundColor = colorInt(color)
+                padding = sizePx(sizePx / 3)
+                this.color = colorInt(Color.WHITE)
+            }
         }
 
         var accentColor: Int = 0xff666666.toInt()
@@ -105,9 +107,12 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
          * This is used for both single and multiple photo picks
          */
         fun onMediaPickerResult(resultCode: Int, data: Intent?): List<MediaModel> {
-            if (resultCode != Activity.RESULT_OK || data == null || !data.hasExtra(MEDIA_PICKER_RESULT))
+            if (resultCode != Activity.RESULT_OK ||
+                data?.hasExtra(MEDIA_PICKER_RESULT) != true
+            ) {
                 return emptyList()
-            return data.getParcelableArrayListExtra(MEDIA_PICKER_RESULT)
+            }
+            return data.getParcelableArrayListExtra(MEDIA_PICKER_RESULT) ?: emptyList()
         }
 
         /**
@@ -134,12 +139,14 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterHeader = ItemAdapter<MediaActionItem>()
-        val fulladapter = fastAdapter<IItem<*, *>>(adapterHeader, adapter)
+        val fulladapter = fastAdapter<GenericItem>(adapterHeader, adapter)
         adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
                 override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
-                    return if (mediaType != MediaType.VIDEO) extraSpace else super.getExtraLayoutSpace(state)
+                    return if (mediaType != MediaType.VIDEO) extraSpace else super.getExtraLayoutSpace(
+                        state
+                    )
                 }
             }
             setItemViewCacheSize(CACHE_SIZE)
@@ -154,7 +161,14 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
     var sortQuery = MediaStore.MediaColumns.DATE_MODIFIED + " DESC"
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-        return CursorLoader(this, mediaType.contentUri, MediaModel.projection, null, null, sortQuery)
+        return CursorLoader(
+            this,
+            mediaType.contentUri,
+            MediaModel.projection,
+            null,
+            null,
+            sortQuery
+        )
     }
 
     /**
@@ -238,7 +252,11 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
      * Method used to retrieve uri data for API 19+
      * See <a href="http://hmkcode.com/android-display-selected-image-and-its-real-path/"></a>
      */
-    private fun <R> ContentResolver.query(baseUri: Uri, uris: List<Uri>, block: (cursor: Cursor) -> R) {
+    private fun <R> ContentResolver.query(
+        baseUri: Uri,
+        uris: List<Uri>,
+        block: (cursor: Cursor) -> R
+    ) {
         val ids = uris.filter {
             val valid = DocumentsContract.isDocumentUri(this@MediaPickerCore, it)
             if (!valid) KL.d { "Non document uri: ${it.encodedPath}" }
@@ -248,15 +266,17 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
         }.joinToString(prefix = "(", separator = ",", postfix = ")")
         //? query replacements are done for one arg at a time
         //since we potentially have a list of ids, we'll just format the WHERE clause ourself
-        query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(block)
+        query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(
+            block
+        )
     }
 
     internal var tempPath: String? = null
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != RESULT_OK) {
-            if (tempPath != null) {
-                val f = File(tempPath)
+            tempPath?.let {
+                val f = File(it)
                 if (f.exists()) f.delete()
                 tempPath = null
             }
@@ -272,14 +292,18 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     private fun onCameraResult(data: Intent?) {
         val f: File
-        if (tempPath != null) {
-            f = File(tempPath)
-            tempPath = null
-        } else if (data?.data != null) {
-            f = File(data.data!!.path)
-        } else {
-            KL.d { "Media camera no file found" }
-            return
+        val tempPath = tempPath
+        val dataPath = data?.data?.path
+        when {
+            tempPath != null -> {
+                f = File(tempPath)
+                this.tempPath = null
+            }
+            dataPath != null -> f = File(dataPath)
+            else -> {
+                KL.d { "Media camera no file found" }
+                return
+            }
         }
         if (f.exists()) {
             KL.v { "Media camera path found: ${f.absolutePath}" }
@@ -292,9 +316,10 @@ abstract class MediaPickerCore<T : IItem<*, *>>(
 
     private fun onPickerResult(data: Intent?) {
         val items = mutableListOf<Uri>()
-        if (data?.data != null) {
-            KL.v { "Media picker data uri: ${data.data!!.path}" }
-            items.add(data.data!!)
+        val _data = data?.data
+        if (_data != null) {
+            KL.v { "Media picker data uri: ${_data.path}" }
+            items.add(_data)
         } else if (data != null) {
             val clip = data.clipData
             if (clip != null) {

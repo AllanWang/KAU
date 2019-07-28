@@ -33,7 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog
  */
 open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBase<Int>(builder) {
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         if (builder.showPreview) {
             val preview = holder.bindInnerView<CircleView>(R.layout.kau_pref_color)
@@ -63,7 +63,7 @@ open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBas
     /**
      * Extension of the base contract and [ColorContract] along with a showPreview option
      */
-    interface KPrefColorContract : KPrefItemBase.BaseContract<Int>, ColorContract {
+    interface KPrefColorContract : BaseContract<Int>, ColorContract {
         var showPreview: Boolean
         var dialogBuilder: MaterialDialog.() -> Unit
     }
@@ -76,11 +76,13 @@ open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBas
         titleId: Int,
         getter: () -> Int,
         setter: KPrefItemActions.(value: Int) -> Unit
-    ) : KPrefColorContract, KPrefItemBase.BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter),
+    ) : KPrefColorContract,
+        BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter),
         ColorContract by ColorBuilder() {
         override var showPreview: Boolean = true
         override var dialogBuilder: MaterialDialog.() -> Unit = {}
     }
 
-    override fun getType(): Int = R.id.kau_item_pref_color_picker
+    override val type: Int
+        get() = R.id.kau_item_pref_color_picker
 }

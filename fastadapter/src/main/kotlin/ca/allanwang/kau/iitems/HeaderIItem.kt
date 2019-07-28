@@ -34,7 +34,7 @@ import ca.allanwang.kau.utils.string
 class HeaderIItem(
     text: String? = null,
     var textRes: Int = INVALID_ID
-) : KauIItem<HeaderIItem, HeaderIItem.ViewHolder>(
+) : KauIItem<HeaderIItem.ViewHolder>(
     R.layout.kau_iitem_header, { ViewHolder(it) }, R.id.kau_item_header_big_margin_top
 ), ThemableIItem by ThemableIItemDelegate() {
 

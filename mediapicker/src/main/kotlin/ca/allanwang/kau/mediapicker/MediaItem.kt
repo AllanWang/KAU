@@ -24,33 +24,37 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.select.getSelectExtension
 
 /**
  * Created by Allan Wang on 2017-07-04.
  */
 class MediaItem(val data: MediaModel) :
-    KauIItem<MediaItem, MediaItem.ViewHolder>(R.layout.kau_iitem_image, { ViewHolder(it) }),
+    KauIItem<MediaItem.ViewHolder>(R.layout.kau_iitem_image, { ViewHolder(it) }),
     GlideContract by GlideDelegate() {
 
     private var failedToLoad = false
 
     companion object {
         fun bindEvents(fastAdapter: FastAdapter<MediaItem>) {
-            fastAdapter.withMultiSelect(true)
-                .withSelectable(true)
-                //adapter selector occurs before the on click event
-                .withOnClickListener { v, _, item, _ ->
-                    val image = v as BlurredImageView
-                    if (item.isSelected) image.blur()
-                    else image.removeBlur()
-                    true
-                }
+            fastAdapter.getSelectExtension().apply {
+                isSelectable = true
+                multiSelect = true
+            }
+            fastAdapter.onClickListener = { v, _, item, _ ->
+                val image = v as BlurredImageView
+                if (item.isSelected) image.blur()
+                else image.removeBlur()
+                true
+            }
         }
     }
 
-    override fun isSelectable(): Boolean = !failedToLoad
+    override var isSelectable: Boolean
+        get() = !failedToLoad
+        set(_) {}
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         glide(holder.itemView)
             .load(data.data)
@@ -63,7 +67,11 @@ class MediaItem(val data: MediaModel) :
                     isFirstResource: Boolean
                 ): Boolean {
                     failedToLoad = true
-                    holder.container.imageBase.setImageDrawable(MediaPickerCore.getErrorDrawable(holder.itemView.context))
+                    holder.container.imageBase.setImageDrawable(
+                        MediaPickerCore.getErrorDrawable(
+                            holder.itemView.context
+                        )
+                    )
                     return true
                 }
 

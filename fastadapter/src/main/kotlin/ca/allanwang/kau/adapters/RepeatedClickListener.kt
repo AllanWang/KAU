@@ -17,31 +17,33 @@ package ca.allanwang.kau.adapters
 
 import android.view.View
 import androidx.annotation.IntRange
+import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IAdapter
-import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.listeners.OnClickListener
 
 /**
  * Created by Allan Wang on 26/12/17.
  */
-fun <Item : IItem<*, *>> FastAdapter<Item>.withOnRepeatedClickListener(
+fun <Item : GenericItem> FastAdapter<Item>.withOnRepeatedClickListener(
     count: Int,
     duration: Long,
-    event: OnClickListener<Item>
-) =
-    withOnClickListener(RepeatedClickListener(count, duration, event))
+    event: ClickListener<Item>
+): FastAdapter<Item> {
+    onClickListener = RepeatedClickListener(count, duration, event)
+    return this
+}
 
 /**
  * Registers and skips each click until the designated [count] clicks are triggered,
  * each within [duration] from each other.
  * Only then will the [event] be fired, and everything will be reset.
  */
-private class RepeatedClickListener<Item : IItem<*, *>>(
+private class RepeatedClickListener<Item : GenericItem>(
     @IntRange(from = 1) val count: Int,
     @IntRange(from = 1) val duration: Long,
-    val event: OnClickListener<Item>
-) : OnClickListener<Item> {
+    val event: ClickListener<Item>
+) : ClickListener<Item> {
 
     init {
         if (count <= 0)
@@ -53,7 +55,7 @@ private class RepeatedClickListener<Item : IItem<*, *>>(
     private var chain = 0
     private var time = -1L
 
-    override fun onClick(v: View?, adapter: IAdapter<Item>, item: Item, position: Int): Boolean {
+    override fun invoke(v: View?, adapter: IAdapter<Item>, item: Item, position: Int): Boolean {
         val now = System.currentTimeMillis()
         if (time - now < duration)
             chain++
@@ -62,7 +64,7 @@ private class RepeatedClickListener<Item : IItem<*, *>>(
         time = now
         if (chain == count) {
             chain = 0
-            event.onClick(v, adapter, item, position)
+            event(v, adapter, item, position)
             return true
         }
         return false

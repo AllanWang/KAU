@@ -30,31 +30,37 @@ import ca.allanwang.kau.utils.parentViewGroup
 import ca.allanwang.kau.utils.setPaddingLeft
 import ca.allanwang.kau.xml.FaqItem
 import com.mikepenz.fastadapter.FastAdapter
-import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
+import com.mikepenz.fastadapter.select.getSelectExtension
 
 /**
  * Created by Allan Wang on 2017-08-02.
  */
-class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolder>(
+class FaqIItem(val content: FaqItem) : KauIItem<FaqIItem.ViewHolder>(
     R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        fun bindEvents(fastAdapter: FastAdapter<IItem<*, *>>) {
-            fastAdapter.withSelectable(false)
-                .withEventHook(object : ClickEventHook<IItem<*, *>>() {
+        fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
+            fastAdapter.getSelectExtension().isSelectable = true
+            fastAdapter.addEventHook(object : ClickEventHook<GenericItem>() {
 
-                    override fun onBind(viewHolder: RecyclerView.ViewHolder): View? =
-                        (viewHolder as? ViewHolder)?.questionContainer
+                override fun onBind(viewHolder: RecyclerView.ViewHolder): View? =
+                    (viewHolder as? ViewHolder)?.questionContainer
 
-                    override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*, *>>, item: IItem<*, *>) {
-                        if (item !is FaqIItem) return
-                        item.isExpanded = !item.isExpanded
-                        v.parentViewGroup.findViewById<CollapsibleTextView>(R.id.faq_item_answer)
-                            .setExpanded(item.isExpanded)
-                    }
-                })
+                override fun onClick(
+                    v: View,
+                    position: Int,
+                    fastAdapter: FastAdapter<GenericItem>,
+                    item: GenericItem
+                ) {
+                    if (item !is FaqIItem) return
+                    item.isExpanded = !item.isExpanded
+                    v.parentViewGroup.findViewById<CollapsibleTextView>(R.id.faq_item_answer)
+                        .setExpanded(item.isExpanded)
+                }
+            })
         }
     }
 
@@ -69,7 +75,7 @@ class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolde
             answer.setExpanded(isExpanded, false)
             if (accentColor != null) answer.setLinkTextColor(accentColor!!)
             answer.text = content.answer
-            answer.post { answer.setPaddingLeft(16.dpToPx + number.width) }
+            answer.post { answer.setPaddingLeft(16.dpToPx + number.width) } // TODO not performant at all; and doesn't align across all items
             bindTextColor(number, question)
             bindTextColorSecondary(answer)
             val bg2 = backgroundColor?.colorToForeground(0.1f)

@@ -34,7 +34,7 @@ open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean
         (innerView as AppCompatCheckBox).isChecked = pref
     }
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         val checkbox = holder.bindInnerView<CheckBox>(R.layout.kau_pref_checkbox)
         withAccentColor(checkbox::tint)
@@ -42,5 +42,6 @@ open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean
         checkbox.jumpDrawablesToCurrentState() //Cancel the animation
     }
 
-    override fun getType(): Int = R.id.kau_item_pref_checkbox
+    override val type: Int
+        get() = R.id.kau_item_pref_checkbox
 }

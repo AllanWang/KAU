@@ -18,7 +18,7 @@ package ca.allanwang.kau.sample
 import ca.allanwang.kau.about.AboutActivityBase
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.iitems.CardIItem
-import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.GenericItem
 
 /**
  * Created by Allan Wang on 2017-06-27.
@@ -33,7 +33,7 @@ class AboutActivity : AboutActivityBase(R.string::class.java, {
     faqParseNewLine = false
 }) {
 
-    override fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*, *>>) {
+    override fun postInflateMainPage(adapter: FastItemThemedAdapter<GenericItem>) {
         adapter.add(CardIItem {
             title = "About KAU"
             descRes = R.string.about_kau

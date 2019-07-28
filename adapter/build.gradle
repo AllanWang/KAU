@@ -1,4 +1,6 @@
-ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
+import kau.Versions
+
+ext.kauSubModuleMinSdk = Versions.coreMinSdk
 
 apply from: '../android-lib.gradle'
 

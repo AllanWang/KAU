@@ -46,7 +46,7 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
         context.toast("No click function set")
     }
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         val textView = holder.bindInnerView<TextView>(R.layout.kau_pref_text)
         withTextColor(textView::setTextColor)
@@ -68,9 +68,11 @@ open class KPrefText<T>(open val builder: KPrefTextContract<T>) : KPrefItemBase<
         titleId: Int,
         getter: () -> T,
         setter: KPrefItemActions.(value: T) -> Unit
-    ) : KPrefTextContract<T>, BaseContract<T> by BaseBuilder<T>(globalOptions, titleId, getter, setter) {
+    ) : KPrefTextContract<T>,
+        BaseContract<T> by BaseBuilder<T>(globalOptions, titleId, getter, setter) {
         override var textGetter: (T) -> String? = { it?.toString() }
     }
 
-    override fun getType(): Int = R.id.kau_item_pref_text
+    override val type: Int
+        get() = R.id.kau_item_pref_text
 }

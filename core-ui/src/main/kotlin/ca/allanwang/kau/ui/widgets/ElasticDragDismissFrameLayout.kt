@@ -29,7 +29,6 @@ import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.utils.AnimHolder
 import ca.allanwang.kau.utils.dimen
-import ca.allanwang.kau.utils.dpToPx
 import ca.allanwang.kau.utils.isNavBarOnBottom
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.scaleXY

@@ -15,12 +15,9 @@
  */
 package ca.allanwang.kau.iitems
 
-import android.annotation.SuppressLint
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.mikepenz.fastadapter.IClickable
-import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.items.AbstractItem
 
 /**
@@ -29,14 +26,10 @@ import com.mikepenz.fastadapter.items.AbstractItem
  * Kotlin implementation of the [AbstractItem] to make things shorter
  * If only one iitem type extends the given [layoutRes], you may use it as the type and not worry about another id
  */
-open class KauIItem<Item, VH : RecyclerView.ViewHolder>(
-    @param:LayoutRes private val layoutRes: Int,
+open class KauIItem<VH : RecyclerView.ViewHolder>(
+    @param:LayoutRes override val layoutRes: Int,
     private val viewHolder: (v: View) -> VH,
-    private val type: Int = layoutRes
-) : AbstractItem<Item, VH>() where Item : IItem<*, *>, Item : IClickable<*> {
-    @SuppressLint("ResourceType")
-    final override fun getType(): Int = type
-
+    override val type: Int = layoutRes
+) : AbstractItem<VH>() {
     final override fun getViewHolder(v: View): VH = viewHolder(v)
-    final override fun getLayoutRes(): Int = layoutRes
 }

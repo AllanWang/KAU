@@ -25,12 +25,14 @@ import ca.allanwang.kau.kpref.activity.R
  */
 open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
 
-    override fun getLayoutRes(): Int = R.layout.kau_pref_header
+    override val layoutRes: Int
+        get() = R.layout.kau_pref_header
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         withAccentColor(holder.title::setTextColor)
     }
 
-    override fun getType() = R.id.kau_item_pref_header
+    override val type: Int
+        get() = R.id.kau_item_pref_header
 }
