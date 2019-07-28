@@ -46,7 +46,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.iconics.dsl.ExperimentalIconicsDSL
 import com.mikepenz.iconics.dsl.iconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
@@ -88,11 +87,9 @@ abstract class MediaPickerCore<T : GenericItem>(
         /**
          * Create error tile for a given item
          */
-        @ExperimentalIconicsDSL
         fun getErrorDrawable(context: Context) =
             getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
 
-        @ExperimentalIconicsDSL
         fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
             val sizePx = computeViewSize(context)
             return context.iconicsDrawable(iicon) {

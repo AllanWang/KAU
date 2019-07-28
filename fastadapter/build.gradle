@@ -10,6 +10,7 @@ dependencies {
     api project(':adapter')
 
     api Dependencies.fastAdapter
+    api Dependencies.fastAdapter("utils")
 }
 
 apply from: '../artifacts.gradle'

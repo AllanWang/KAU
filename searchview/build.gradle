@@ -7,7 +7,6 @@ apply from: '../android-lib.gradle'
 dependencies {
     implementation project(':core-ui')
     implementation project(':fastadapter')
-    implementation Dependencies.fastAdapter('utils')
 }
 
 apply from: '../artifacts.gradle'

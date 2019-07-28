@@ -129,7 +129,6 @@ dependencies {
     implementation project(':mediapicker')
 
     implementation Dependencies.materialDialog("input")
-    implementation Dependencies.fastAdapter("utils")
 
     testImplementation Dependencies.kotlinTest
     testImplementation Dependencies.junit
