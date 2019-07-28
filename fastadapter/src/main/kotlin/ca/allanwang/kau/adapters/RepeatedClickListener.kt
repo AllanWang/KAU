@@ -19,13 +19,14 @@ import android.view.View
 import androidx.annotation.IntRange
 import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.IItem
 
 /**
  * Created by Allan Wang on 26/12/17.
  */
-fun <Item : IItem<*>> FastAdapter<Item>.withOnRepeatedClickListener(
+fun <Item : GenericItem> FastAdapter<Item>.withOnRepeatedClickListener(
     count: Int,
     duration: Long,
     event: ClickListener<Item>
@@ -39,7 +40,7 @@ fun <Item : IItem<*>> FastAdapter<Item>.withOnRepeatedClickListener(
  * each within [duration] from each other.
  * Only then will the [event] be fired, and everything will be reset.
  */
-private class RepeatedClickListener<Item : IItem<*>>(
+private class RepeatedClickListener<Item : GenericItem>(
     @IntRange(from = 1) val count: Int,
     @IntRange(from = 1) val duration: Long,
     val event: ClickListener<Item>

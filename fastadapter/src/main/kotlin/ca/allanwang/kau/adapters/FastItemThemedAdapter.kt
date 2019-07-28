@@ -23,6 +23,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
 import ca.allanwang.kau.utils.adjustAlpha
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.IItemAdapter
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
@@ -36,7 +37,7 @@ import com.mikepenz.fastadapter.adapters.FastItemAdapter
  * This adapter overrides every method where an item is added
  * If that item extends [ThemableIItem], then the colors will be set
  */
-class FastItemThemedAdapter<Item : IItem<*>>(
+class FastItemThemedAdapter<Item : GenericItem>(
     textColor: Int? = null,
     backgroundColor: Int? = null,
     accentColor: Int? = null
@@ -85,11 +86,11 @@ class FastItemThemedAdapter<Item : IItem<*>>(
         notifyAdapterDataSetChanged()
     }
 
-    private fun injectTheme(items: Collection<IItem<*>?>?) {
+    private fun injectTheme(items: Collection<GenericItem?>?) {
         items?.forEach { injectTheme(it) }
     }
 
-    protected fun injectTheme(item: IItem<*>?) {
+    protected fun injectTheme(item: GenericItem?) {
         if (item is ThemableIItem && item.themeEnabled) {
             item.textColor = textColor
             item.backgroundColor = backgroundColor

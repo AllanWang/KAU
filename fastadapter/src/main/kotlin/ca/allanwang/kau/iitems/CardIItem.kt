@@ -34,6 +34,7 @@ import ca.allanwang.kau.utils.string
 import ca.allanwang.kau.utils.toDrawable
 import ca.allanwang.kau.utils.visible
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.iconics.typeface.IIcon
@@ -51,13 +52,13 @@ class CardIItem(
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        fun bindClickEvents(fastAdapter: FastAdapter<IItem<*>>) {
-            fastAdapter.addEventHook(object : ClickEventHook<IItem<*>>() {
+        fun bindClickEvents(fastAdapter: FastAdapter<GenericItem>) {
+            fastAdapter.addEventHook(object : ClickEventHook<GenericItem>() {
                 override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
                     return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button) else null
                 }
 
-                override fun onClick(v: View, position: Int, fastAdapter: FastAdapter<IItem<*>>, item: IItem<*>) {
+                override fun onClick(v: View, position: Int, fastAdapter: FastAdapter<GenericItem>, item: GenericItem) {
                     if (item !is CardIItem) return
                     with(item.configs) {
                         when (v.id) {

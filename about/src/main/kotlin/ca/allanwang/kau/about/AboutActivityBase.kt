@@ -33,6 +33,7 @@ import ca.allanwang.kau.utils.INVALID_ID
 import ca.allanwang.kau.utils.dimenPixelSize
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IItem
 import kotlinx.android.synthetic.main.kau_activity_about.*
 
@@ -128,7 +129,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
      * Open hook called just before the main page view is returned
      * Feel free to add your own items to the adapter in here
      */
-    open fun postInflateMainPage(adapter: FastItemThemedAdapter<IItem<*>>) {
+    open fun postInflateMainPage(adapter: FastItemThemedAdapter<GenericItem>) {
     }
 
     /**

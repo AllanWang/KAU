@@ -1,3 +1,6 @@
+import kau.Dependencies
+import kau.Versions
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -6,15 +9,15 @@ apply plugin: 'com.getkeepsafe.dexcount'
 group = "ca.allanwang"
 
 android {
-    compileSdkVersion kau.Versions.targetSdk
-    buildToolsVersion kau.Versions.buildTools
+    compileSdkVersion Versions.targetSdk
+    buildToolsVersion Versions.buildTools
 
     androidGitVersion {
         codeFormat = 'MMNNPPXX'
         format = '%tag%%.count%%-commit%'
     }
 
-    def kauMinSdk = kau.Versions.minSdk
+    def kauMinSdk = Versions.minSdk
     if (project.hasProperty('kauSubModuleMinSdk'))
         kauMinSdk = kauSubModuleMinSdk
 
@@ -26,7 +29,7 @@ android {
 
     defaultConfig {
         minSdkVersion kauMinSdk
-        targetSdkVersion kau.Versions.targetSdk
+        targetSdkVersion Versions.targetSdk
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
         consumerProguardFiles 'progress-proguard.txt'
@@ -88,11 +91,11 @@ android {
 }
 
 dependencies {
-    testImplementation kau.Dependencies.kotlinTest
-    testImplementation kau.Dependencies.junit
+    testImplementation Dependencies.kotlinTest
+    testImplementation Dependencies.junit
 
-    androidTestImplementation kau.Dependencies.kotlinTest
-    androidTestImplementation kau.Dependencies.espresso
-    androidTestImplementation kau.Dependencies.testRules
-    androidTestImplementation kau.Dependencies.testRunner
+    androidTestImplementation Dependencies.kotlinTest
+    androidTestImplementation Dependencies.espresso
+    androidTestImplementation Dependencies.testRules
+    androidTestImplementation Dependencies.testRunner
 }

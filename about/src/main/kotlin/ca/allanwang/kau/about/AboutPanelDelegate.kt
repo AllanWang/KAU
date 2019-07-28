@@ -34,6 +34,7 @@ import ca.allanwang.kau.utils.string
 import ca.allanwang.kau.utils.withMarginDecoration
 import ca.allanwang.kau.xml.kauParseFaq
 import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,11 +49,11 @@ interface AboutPanelContract {
     /**
      * Model list to be added to [adapter]
      */
-    var items: List<IItem<*>>
+    var items: List<GenericItem>
     /**
      * The adapter, will be late initialized as it depends on configs
      */
-    var adapter: FastItemThemedAdapter<IItem<*>>
+    var adapter: FastItemThemedAdapter<GenericItem>
     /**
      * Reference to the recyclerview, will be used to stop scrolling upon exit
      */
@@ -90,9 +91,9 @@ interface AboutPanelContract {
 
 abstract class AboutPanelRecycler : AboutPanelContract {
 
-    override var items: List<IItem<*>> = emptyList()
+    override var items: List<GenericItem> = emptyList()
 
-    override lateinit var adapter: FastItemThemedAdapter<IItem<*>>
+    override lateinit var adapter: FastItemThemedAdapter<GenericItem>
 
     override var recycler: RecyclerView? = null
 

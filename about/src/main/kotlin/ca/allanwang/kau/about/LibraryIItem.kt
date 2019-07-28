@@ -29,6 +29,7 @@ import ca.allanwang.kau.utils.startLink
 import ca.allanwang.kau.utils.visible
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.select.getSelectExtension
 
@@ -40,7 +41,7 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem.ViewHolder>(
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        fun bindEvents(fastAdapter: FastAdapter<IItem<*>>) {
+        fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
             fastAdapter.getSelectExtension().isSelectable = true
             fastAdapter.onClickListener = { v, _, item, _ ->
                 if (item !is LibraryIItem)

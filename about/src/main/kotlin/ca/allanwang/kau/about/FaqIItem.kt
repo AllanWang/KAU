@@ -30,6 +30,7 @@ import ca.allanwang.kau.utils.parentViewGroup
 import ca.allanwang.kau.utils.setPaddingLeft
 import ca.allanwang.kau.xml.FaqItem
 import com.mikepenz.fastadapter.FastAdapter
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.fastadapter.select.getSelectExtension
@@ -42,9 +43,9 @@ class FaqIItem(val content: FaqItem) : KauIItem<FaqIItem.ViewHolder>(
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
-        fun bindEvents(fastAdapter: FastAdapter<IItem<*>>) {
+        fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
             fastAdapter.getSelectExtension().isSelectable = true
-            fastAdapter.addEventHook(object : ClickEventHook<IItem<*>>() {
+            fastAdapter.addEventHook(object : ClickEventHook<GenericItem>() {
 
                 override fun onBind(viewHolder: RecyclerView.ViewHolder): View? =
                     (viewHolder as? ViewHolder)?.questionContainer
@@ -52,8 +53,8 @@ class FaqIItem(val content: FaqItem) : KauIItem<FaqIItem.ViewHolder>(
                 override fun onClick(
                     v: View,
                     position: Int,
-                    fastAdapter: FastAdapter<IItem<*>>,
-                    item: IItem<*>
+                    fastAdapter: FastAdapter<GenericItem>,
+                    item: GenericItem
                 ) {
                     if (item !is FaqIItem) return
                     item.isExpanded = !item.isExpanded

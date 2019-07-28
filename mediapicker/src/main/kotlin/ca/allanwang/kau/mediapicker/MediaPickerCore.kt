@@ -44,6 +44,7 @@ import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.iconics.dsl.ExperimentalIconicsDSL
@@ -58,7 +59,7 @@ import java.io.File
  *
  * Container for the main logic behind the both pickers
  */
-abstract class MediaPickerCore<T : IItem<*>>(
+abstract class MediaPickerCore<T : GenericItem>(
     val mediaType: MediaType,
     val mediaActions: List<MediaAction>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
@@ -142,7 +143,7 @@ abstract class MediaPickerCore<T : IItem<*>>(
 
     fun initializeRecycler(recycler: RecyclerView) {
         val adapterHeader = ItemAdapter<MediaActionItem>()
-        val fulladapter = fastAdapter<IItem<*>>(adapterHeader, adapter)
+        val fulladapter = fastAdapter<GenericItem>(adapterHeader, adapter)
         adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
