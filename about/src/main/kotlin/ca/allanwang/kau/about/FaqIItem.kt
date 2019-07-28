@@ -32,23 +32,24 @@ import ca.allanwang.kau.xml.FaqItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
+import com.mikepenz.fastadapter.select.getSelectExtension
 
 /**
  * Created by Allan Wang on 2017-08-02.
  */
-class FaqIItem(val content: FaqItem) : KauIItem<LibraryIItem, FaqIItem.ViewHolder>(
+class FaqIItem(val content: FaqItem) : KauIItem< FaqIItem.ViewHolder>(
     R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindEvents(fastAdapter: FastAdapter<IItem<*>>) {
-            fastAdapter.withSelectable(false)
-                .withEventHook(object : ClickEventHook<IItem<*>>() {
+            fastAdapter.getSelectExtension().isSelectable = true
+            fastAdapter.addEventHook(object : ClickEventHook<IItem<*>>() {
 
                     override fun onBind(viewHolder: RecyclerView.ViewHolder): View? =
                         (viewHolder as? ViewHolder)?.questionContainer
 
-                    override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*>>, item: IItem<*>) {
+                    override fun onClick(v: View, position: Int, fastAdapter: FastAdapter<IItem<*>>, item: IItem<*>) {
                         if (item !is FaqIItem) return
                         item.isExpanded = !item.isExpanded
                         v.parentViewGroup.findViewById<CollapsibleTextView>(R.id.faq_item_answer)

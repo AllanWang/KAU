@@ -46,18 +46,18 @@ import com.mikepenz.iconics.typeface.IIcon
  */
 class CardIItem(
     val builder: Config.() -> Unit = {}
-) : KauIItem<CardIItem, CardIItem.ViewHolder>(
+) : KauIItem< CardIItem.ViewHolder>(
     R.layout.kau_iitem_card, ::ViewHolder, R.id.kau_item_card
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindClickEvents(fastAdapter: FastAdapter<IItem<*>>) {
-            fastAdapter.withEventHook(object : ClickEventHook<IItem<*>>() {
+            fastAdapter.addEventHook(object : ClickEventHook<IItem<*>>() {
                 override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
                     return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button) else null
                 }
 
-                override fun onClick(v: View, position: Int, adapter: FastAdapter<IItem<*>>, item: IItem<*>) {
+                override fun onClick(v: View, position: Int, fastAdapter: FastAdapter<IItem<*>>, item: IItem<*>) {
                     if (item !is CardIItem) return
                     with(item.configs) {
                         when (v.id) {

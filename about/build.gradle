@@ -1,3 +1,5 @@
+import kau.Dependencies
+
 apply from: '../android-lib.gradle'
 
 android {
@@ -10,7 +12,7 @@ dependencies {
     implementation project(':core-ui')
     implementation project(':fastadapter')
 
-    api kau.Dependencies.aboutLibraries
+    api Dependencies.aboutLibraries
 }
 
 apply from: '../artifacts.gradle'

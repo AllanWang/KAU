@@ -30,26 +30,27 @@ import ca.allanwang.kau.utils.visible
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.select.getSelectExtension
 
 /**
  * Created by Allan Wang on 2017-06-27.
  */
-class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem, LibraryIItem.ViewHolder>(
+class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem.ViewHolder>(
     R.layout.kau_iitem_library, ::ViewHolder, R.id.kau_item_library
 ), ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindEvents(fastAdapter: FastAdapter<IItem<*>>) {
-            fastAdapter.withSelectable(false)
-                .withOnClickListener { v, _, item, _ ->
-                    if (item !is LibraryIItem)
-                        false
-                    else
-                        with(item.lib) {
-                            v!!.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
-                            true
-                        }
-                }
+            fastAdapter.getSelectExtension().isSelectable = true
+            fastAdapter.onClickListener = { v, _, item, _ ->
+                if (item !is LibraryIItem)
+                    false
+                else
+                    with(item.lib) {
+                        v!!.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
+                        true
+                    }
+            }
         }
     }
 
