@@ -47,6 +47,13 @@ class FastItemThemedAdapter<Item : IItem<*>>(
         colors.accentColor
     )
 
+    init {
+        itemAdapter.interceptor = {
+            injectTheme(it)
+            it
+        }
+    }
+
     var textColor: Int? = textColor
         set(value) {
             if (field == value) return
@@ -76,41 +83,6 @@ class FastItemThemedAdapter<Item : IItem<*>>(
         if (adapterItemCount == 0) return
         injectTheme(adapterItems)
         notifyAdapterDataSetChanged()
-    }
-
-    override fun add(position: Int, items: List<Item>): IItemAdapter<Item, Item> {
-        injectTheme(items)
-        return super.add(position, items)
-    }
-
-    override fun add(position: Int, vararg items: Item): IItemAdapter<Item, Item> {
-        injectTheme(items.toList())
-        return super.add(position, *items)
-    }
-
-    override fun add(vararg items: Item): IItemAdapter<Item, Item> {
-        injectTheme(items.toList())
-        return super.add(*items)
-    }
-
-    override fun add(items: List<Item>): IItemAdapter<Item, Item> {
-        injectTheme(items)
-        return super.add(items)
-    }
-
-    override fun set(items: List<Item>): IItemAdapter<Item, Item> {
-        injectTheme(items)
-        return super.set(items)
-    }
-
-    override fun set(position: Int, item: Item): IItemAdapter<Item, Item> {
-        injectTheme(item)
-        return super.set(position, item)
-    }
-
-    override fun setNewList(items: List<Item>, retainFilter: Boolean): IItemAdapter<Item, Item> {
-        injectTheme(items)
-        return super.setNewList(items, retainFilter)
     }
 
     private fun injectTheme(items: Collection<IItem<*>?>?) {
