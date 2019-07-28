@@ -8,7 +8,7 @@ This library contains small helper functions used throughout almost all of my ot
 
 <a href='https://play.google.com/store/apps/details?id=ca.allanwang.kau.sample&utm_source=github'><img alt='Get it on Google Play' width="30%" src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
 
-[Changelog](docs/Changelog.md)
+[Changelog](docs/Changelog.md) &bull;
 [Migration](docs/Migration.md)
 
 ------------
@@ -88,26 +88,29 @@ This means that you'll need to explicitly include each submodule you'd like to u
 
 ## [Core UI](core-ui#readme)
 * Collection of complex views and widgets
-* Includes `:core`, `:adapter`
+* Includes `:core`
 
 ## [About](about#readme)
 * Modularized overlaying about section. Comes with a main panel, automatic lib detection, and a FAQ parser; also includes the lib strings for KAU.
-* Includes `:core-ui`, `:adapter`, 
+* Includes `:core-ui`, `:fastadapter`, 
 [`About Libraries`](https://github.com/mikepenz/AboutLibraries)
 
 ## [Adapter](adapter#readme)
-* Kotlin bindings for the fast adapter, as well as modularized RecyclerView animations
-* Includes `:core`, 
-[`Fast Adapter`](https://github.com/mikepenz/FastAdapter)
+* RecyclerView animations
+* Includes `:core`
 
 ## [Color Picker](colorpicker#readme)
 * Implementation of a color picker dialog with subtle transitions and a decoupled callback
-* Includes `:core`, 
-([`Material Dialogs (commons)`](https://github.com/afollestad/material-dialogs))
+* Includes `:core`
+
+## [FastAdapter](fastadapter#readme)
+* Kotlin bindings for the fast adapter
+* Includes `:core`, `:adapter`,
+[`Fast Adapter`](https://github.com/mikepenz/FastAdapter)
 
 ## [KPref Activity](kpref-activity#readme)
 * Fully programmatic implementation of a Preference Activity, backed by a RecyclerView
-* Includes `:core`, `:adapter`, `:colorpicker`
+* Includes `:core`, `:fastadapter`, `:colorpicker`
 
 ## [Media Picker](mediapicker#readme)
 * Fully functional image and video pickers, both as an overlay and as a requested activity.
@@ -117,7 +120,7 @@ This means that you'll need to explicitly include each submodule you'd like to u
 
 ## [SearchView](searchview#readme)
 * Material searchview with kotlin bindings
-* Includes `:core-ui`, `:adapter`
+* Includes `:core-ui`, `:fastadapter`
 
 ## [Gradle Plugin](buildSrc#readme)
 * Gradle plugin to help facilitate versioning and other gradle functions
@@ -152,11 +155,15 @@ Special thanks to the following awesome people for translating significant porti
 
 | Language | Contributors |
 |----------|--------------|
+| Arabic | [Mohammed Qubati](https://crowdin.com/profile/Mrkqubati) |
 | Chinese (Simplified) | [Alcatelia](https://crowdin.com/profile/Alcatelia) |
 | Chinese (Traditional) | [yipinghuang](https://crowdin.com/profile/yipinghuang) &bull; [Su, Jun-Ming](https://crowdin.com/profile/sujunmin) &bull; [Wei](https://crowdin.com/profile/wei4green) |
+| Danish | [mhtorp](https://crowdin.com/profile/mhtorp) |
+| Dutch | [ItGuillaume](https://crowdin.com/profile/ltGuillaume) &bull; [Tatum ter Kuile](https://crowdin.com/profile/Teitr) |
 | French | [Vincent Kulak](https://github.com/VonOx) &bull; [Jean-Philippe Gravel](https://crowdin.com/profile/wokija) |
 | Galician | [Xesús M. Mosquera](https://twitter.com/xesusmmc?lang=en) |
 | German | [Bushido1992](https://forum.xda-developers.com/member.php?u=5179246) &bull; [Marcel Soehnchen](https://crowdin.com/profile/msoehnchen) &bull; [3LD0mi HA](https://forum.xda-developers.com/member.php?u=5860523) |
+| Hungarian | [János Erkli](https://crowdin.com/profile/erklijani0521) |
 | Indonesian | [M. Angga Ariska](https://www.youtube.com/channel/UCkqMw81s2aw7bYO-U2YhD7w) |
 | Italian | [Bonnee](https://github.com/Bonnee) |
 | Korean | [잇스테이크](https://crowdin.com/profile/bexco2010) |
@@ -166,8 +173,10 @@ Special thanks to the following awesome people for translating significant porti
 | Portuguese (Brazilian) | [TheusKhan](https://crowdin.com/profile/TheusKhan) |
 | Serbian | [Nikola Radmanović](https://crowdin.com/profile/nikoladradmanovic) |
 | Spanish | [Jahir Fiquitiva](https://jahirfiquitiva.me/) &bull; [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431)|
+| Swedish | [Artswitcher](https://crowdin.com/profile/Artswitcher) |
 | Thai | [Thanawat Hanthong](https://crowdin.com/profile/peet6015) |
 | Turkish | [zuma17](https://crowdin.com/profile/zuma17) |
+| Ukrainian | [Вадим Жушман](https://crowdin.com/profile/android54544) |
 | Vietnamese | [Alienz](https://crowdin.com/profile/alienyd) |
 
 The full activity stream for the translations can be found [here](https://crowdin.com/project/kotlin-android-utils/activity_stream)

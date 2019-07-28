@@ -239,7 +239,7 @@ fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || Con
 
 fun Context.copyToClipboard(text: String?, label: String = "Copied Text", showToast: Boolean = true) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clipboard.primaryClip = ClipData.newPlainText(label, text ?: "")
+    clipboard.setPrimaryClip(ClipData.newPlainText(label, text ?: ""))
     if (showToast) toast(R.string.kau_text_copied)
 }
 

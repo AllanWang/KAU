@@ -71,6 +71,14 @@ object MyPrefs : KPref() {
 
 Notice that it is a `val` and takes no default. It will return true the first time and false for all subsequent calls.
 
+### KPref Testing
+
+If your android components can be tested without an emulator, you can also modify KPref to operate without shared preferences.
+To do so, call `KPref(KPrefBuilderInMemory)` when creating your preferences. 
+This variant does not pass updates to the shared preferences.
+To set the builder, you may wish to use dependency injection or service locators to supply the builder and the KPref.
+In that case, your preferences would be a class instead of an object.
+
 ## Changelog XML
 
 Create an xml resource with the following structure:

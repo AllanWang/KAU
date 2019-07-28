@@ -3,6 +3,7 @@ include ':core',
 
         ':about',
         ':adapter',
+        ':fastadapter',
         ':colorpicker',
         ':mediapicker',
         ':kpref-activity',

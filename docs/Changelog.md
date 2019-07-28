@@ -1,8 +1,19 @@
 # Changelog
 
+## v5.1.0
+* :adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary
+* :adapter: Make NoAnimatorChange an object; previously a class
+* :core: KPref now supports in memory only variants for testing; pass KPrefBuilderInMemory to KPref constructor
+* :core: KPref initializer takes in SharedPreferences so user can configure it
+
 ## v5.0.0
+* Update Android SDK to 29 and Kotlin to 1.3.31
+* Update translations
 * :core: Update Material Dialogs to 3.x
+* :core: Change ProgressAnimator API
+* :core: Remove cursor tinting in EditText as it used reflection
 * :colorpicker: Strip down to just the interface; unless you require the accent palette, it may be fine to just use MD's color extension
+* :gradle-plugin: Convert to kotlin, rework dependencies, and remove extension hooks
 
 ## v4.1.0
 * :core: Deprecate NetworkUtils, as the underlying functions are deprecated

@@ -46,16 +46,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.iconics.IconicsColor
 import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.IconicsSize
 import com.mikepenz.iconics.colorInt
 import com.mikepenz.iconics.paddingPx
 import com.mikepenz.iconics.sizePx
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import com.mikepenz.iconics.utils.toIconicsColor
-import com.mikepenz.iconics.utils.toIconicsSizePx
 import kotlinx.coroutines.CancellationException
 import java.io.File
 
@@ -94,7 +91,8 @@ abstract class MediaPickerCore<T : IItem<*>>(
         /**
          * Create error tile for a given item
          */
-        fun getErrorDrawable(context: Context) = getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
+        fun getErrorDrawable(context: Context) =
+            getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
 
         fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
             val sizePx = MediaPickerCore.computeViewSize(context)
@@ -112,7 +110,10 @@ abstract class MediaPickerCore<T : IItem<*>>(
          * This is used for both single and multiple photo picks
          */
         fun onMediaPickerResult(resultCode: Int, data: Intent?): List<MediaModel> {
-            if (resultCode != Activity.RESULT_OK || data == null || !data.hasExtra(MEDIA_PICKER_RESULT))
+            if (resultCode != Activity.RESULT_OK || data == null || !data.hasExtra(
+                    MEDIA_PICKER_RESULT
+                )
+            )
                 return emptyList()
             return data.getParcelableArrayListExtra(MEDIA_PICKER_RESULT)
         }
@@ -146,7 +147,9 @@ abstract class MediaPickerCore<T : IItem<*>>(
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
                 override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
-                    return if (mediaType != MediaType.VIDEO) extraSpace else super.getExtraLayoutSpace(state)
+                    return if (mediaType != MediaType.VIDEO) extraSpace else super.getExtraLayoutSpace(
+                        state
+                    )
                 }
             }
             setItemViewCacheSize(CACHE_SIZE)
@@ -161,7 +164,14 @@ abstract class MediaPickerCore<T : IItem<*>>(
     var sortQuery = MediaStore.MediaColumns.DATE_MODIFIED + " DESC"
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
-        return CursorLoader(this, mediaType.contentUri, MediaModel.projection, null, null, sortQuery)
+        return CursorLoader(
+            this,
+            mediaType.contentUri,
+            MediaModel.projection,
+            null,
+            null,
+            sortQuery
+        )
     }
 
     /**
@@ -245,7 +255,11 @@ abstract class MediaPickerCore<T : IItem<*>>(
      * Method used to retrieve uri data for API 19+
      * See <a href="http://hmkcode.com/android-display-selected-image-and-its-real-path/"></a>
      */
-    private fun <R> ContentResolver.query(baseUri: Uri, uris: List<Uri>, block: (cursor: Cursor) -> R) {
+    private fun <R> ContentResolver.query(
+        baseUri: Uri,
+        uris: List<Uri>,
+        block: (cursor: Cursor) -> R
+    ) {
         val ids = uris.filter {
             val valid = DocumentsContract.isDocumentUri(this@MediaPickerCore, it)
             if (!valid) KL.d { "Non document uri: ${it.encodedPath}" }
@@ -255,7 +269,9 @@ abstract class MediaPickerCore<T : IItem<*>>(
         }.joinToString(prefix = "(", separator = ",", postfix = ")")
         //? query replacements are done for one arg at a time
         //since we potentially have a list of ids, we'll just format the WHERE clause ourself
-        query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(block)
+        query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(
+            block
+        )
     }
 
     internal var tempPath: String? = null

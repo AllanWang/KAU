@@ -117,7 +117,7 @@ android {
 
 dependencies {
     implementation project(':about')
-    implementation project(':adapter')
+    implementation project(':fastadapter')
     implementation project(':colorpicker')
     implementation project(':core')
     implementation project(':core-ui')

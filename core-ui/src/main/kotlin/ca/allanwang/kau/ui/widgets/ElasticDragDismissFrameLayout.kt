@@ -50,7 +50,7 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
     // configurable attribs
-    var dragDismissDistance = context.dimen(R.dimen.kau_drag_dismiss_distance).dpToPx
+    var dragDismissDistance = context.dimen(R.dimen.kau_drag_dismiss_distance)
     var dragDismissFraction = -1f
     var dragDismissScale = 1f
         set(value) {

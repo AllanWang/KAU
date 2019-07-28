@@ -18,6 +18,7 @@ package ca.allanwang.kau.utils
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import ca.allanwang.kau.internal.KauBaseActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.android.asCoroutineDispatcher
@@ -43,11 +44,11 @@ object ContextHelper : CoroutineScope {
 }
 
 /**
- * Most context items implement [CoroutineScope] by default.
+ * Most context items implement [CoroutineScope] by default (through [KauBaseActivity]).
  * We will add a fallback just in case.
  * It is expected that the scope returned always has the Android main dispatcher as part of the context.
  */
-internal inline val Context.ctxCoroutine: CoroutineScope
+inline val Context.ctxCoroutine: CoroutineScope
     get() = this as? CoroutineScope ?: ContextHelper
 
 /**

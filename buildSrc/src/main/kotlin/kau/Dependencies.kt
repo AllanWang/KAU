@@ -5,6 +5,12 @@ package kau
  */
 object Dependencies {
     @JvmStatic
+    fun kau(version: String) = "ca.allanwang:kau:$version"
+
+    @JvmStatic
+    fun kau(type: String, version: String) = "ca.allanwang.kau:$type:$version"
+
+    @JvmStatic
     fun kotlin(type: String) = "org.jetbrains.kotlin:kotlin-$type:${Versions.kotlin}"
 
     @JvmField

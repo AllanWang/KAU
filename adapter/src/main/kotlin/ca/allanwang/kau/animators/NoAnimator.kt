@@ -42,7 +42,7 @@ class NoAnimatorRemove(override var itemDelayFactor: Float = 0f) : KauAnimatorRe
     override fun getDelay(remove: Long, move: Long, change: Long): Long = 0L
 }
 
-class NoAnimatorChange : KauAnimatorChange {
+object NoAnimatorChange : KauAnimatorChange {
 
     override fun changeOldAnimation(
         holder: RecyclerView.ViewHolder,

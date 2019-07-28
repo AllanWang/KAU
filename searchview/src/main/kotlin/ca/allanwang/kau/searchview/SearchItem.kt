@@ -32,7 +32,7 @@ import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.setRippleBackground
 import ca.allanwang.kau.utils.visible
 import com.mikepenz.iconics.typeface.IIcon
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import com.mikepenz.google_material_typeface_library.GoogleMaterial
 
 /**
  * Created by Allan Wang on 2017-06-23.

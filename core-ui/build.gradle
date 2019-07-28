@@ -4,8 +4,6 @@ apply from: '../android-lib.gradle'
 
 dependencies {
     api project(':core')
-    implementation project(':adapter')
-
 }
 
 apply from: '../artifacts.gradle'

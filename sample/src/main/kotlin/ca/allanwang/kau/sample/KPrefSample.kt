@@ -17,7 +17,6 @@ package ca.allanwang.kau.sample
 
 import android.graphics.Color
 import ca.allanwang.kau.kpref.KPref
-import ca.allanwang.kau.kpref.kpref
 
 /**
  * Created by Allan Wang on 2017-06-07.

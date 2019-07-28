@@ -24,8 +24,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 /**
  * Created by Allan Wang on 2017-08-01.
@@ -34,19 +32,24 @@ import kotlin.test.assertTrue
 @MediumTest
 class KPrefTest {
 
-    lateinit var pref: TestPref
+    lateinit var androidPref: TestPref
+    lateinit var memPref: TestPref
 
-    class TestPref : KPref() {
+    class TestPref(builder: KPrefBuilder) : KPref(builder) {
 
         init {
             initialize(ApplicationProvider.getApplicationContext<Context>(), "kpref_test_${System.currentTimeMillis()}")
         }
 
+        var postSetterCount: Int = 0
+
         var one by kpref("one", 1)
 
         var two by kpref("two", 2f)
 
-        var `true` by kpref("true", true)
+        var `true` by kpref("true", true, postSetter = {
+            postSetterCount++
+        })
 
         var hello by kpref("hello", "hello")
 
@@ -57,51 +60,67 @@ class KPrefTest {
 
     @Before
     fun init() {
-        pref = TestPref()
-        pref.sp.edit().clear().commit()
+        androidPref = TestPref(KPrefBuilderAndroid)
+        androidPref.sp.edit().clear().commit()
+        memPref = TestPref(KPrefBuilderInMemory)
+    }
+
+    private fun pref(action: TestPref.() -> Unit) {
+        androidPref.action()
+        memPref.action()
+    }
+
+    private fun <T> assertPrefEquals(expected: T, actual: TestPref.() -> T, message: String? = null) {
+        assertEquals(expected, androidPref.actual(), "Android KPrefs: $message")
+        assertEquals(expected, memPref.actual(), "In Mem KPrefs: $message")
     }
 
     @Test
     fun getDefaults() {
-        assertEquals(1, pref.one)
-        assertEquals(2f, pref.two)
-        assertEquals(true, pref.`true`)
-        assertEquals("hello", pref.hello)
-        assertEquals(3, pref.set.size)
-        assertTrue(pref.set.contains("po"))
-        assertTrue(pref.set.contains("ta"))
-        assertTrue(pref.set.contains("to"))
-        assertEquals(0, pref.sp.all.size, "Defaults should not be set automatically")
+        assertPrefEquals(1, { one })
+        assertPrefEquals(2f, { two })
+        assertPrefEquals(true, { `true` })
+        assertPrefEquals("hello", { hello })
+        assertPrefEquals(3, { set.size })
+        assertPrefEquals(setOf("po", "ta", "to"), { set })
+        assertEquals(0, androidPref.sp.all.size, "Defaults should not be set automatically")
     }
 
     @Test
     fun setter() {
-        assertEquals(1, pref.one)
-        pref.one = 2
-        assertEquals(2, pref.one)
-        pref.hello = "goodbye"
-        assertEquals("goodbye", pref.hello)
-        assertEquals(pref.hello, pref.sp.getString("hello", "hello"))
-        assertEquals(2, pref.sp.all.size)
+        assertPrefEquals(1, { one })
+        pref { one = 2 }
+        assertPrefEquals(2, { one })
+        pref { hello = "goodbye" }
+        assertPrefEquals("goodbye", { hello })
+        assertEquals(androidPref.hello, androidPref.sp.getString("hello", "badfallback"))
+        assertEquals(2, androidPref.sp.all.size)
     }
 
     @SuppressLint("CommitPrefEdits")
     @Test
     fun reset() {
-        pref.one = 2
-        assertEquals(2, pref.one)
-        assertEquals(6, pref.prefMap.size, "Prefmap does not have all elements")
-        pref.reset() //only invalidates our lazy delegate; doesn't change the actual pref
-        assertEquals(2, pref.one, "Kpref did not properly fetch from shared prefs")
-        pref.sp.edit().putInt("one", -1).commit()
-        assertEquals(2, pref.one, "Lazy kpref should still retain old value")
-        pref.reset()
-        assertEquals(-1, pref.one, "Kpref did not refetch from shared prefs upon reset")
+        pref { one = 2 }
+        assertPrefEquals(2, { one })
+        assertPrefEquals(6, { prefMap.size }, "Prefmap does not have all elements")
+        pref { reset() } //only invalidates our lazy delegate; doesn't change the actual pref
+        assertPrefEquals(2, { one }, "Kpref did not properly fetch from shared prefs")
+        // Android pref only
+        androidPref.sp.edit().putInt("one", -1).commit()
+        assertEquals(2, androidPref.one, "Lazy kpref should still retain old value")
+        androidPref.reset()
+        assertEquals(-1, androidPref.one, "Kpref did not refetch from shared prefs upon reset")
     }
 
     @Test
     fun single() {
-        assertTrue(pref.oneShot)
-        assertFalse(pref.oneShot)
+        assertPrefEquals(true, { oneShot })
+        assertPrefEquals(false, { androidPref.oneShot })
+    }
+
+    @Test
+    fun postSetter() {
+        pref { `true` = true }
+        assertPrefEquals(1, { postSetterCount }, "Post setter was not called")
     }
 }

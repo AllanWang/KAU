@@ -89,16 +89,6 @@ fun bundleOf(vararg params: kotlin.Pair<String, Any?>): Bundle {
 }
 
 /**
- * Adds transition bundle if context is activity and build is lollipop+
- */
-@SuppressLint("NewApi")
-fun Bundle.withSceneTransitionAnimation(context: Context) {
-    if (context !is Activity || !buildIsLollipopAndUp) return
-    val options = ActivityOptions.makeSceneTransitionAnimation(context)
-    putAll(options.toBundle())
-}
-
-/**
  * Given the parent view and map of view ids to tags,
  * create a scene transition animation
  */
@@ -112,7 +102,7 @@ fun Bundle.withSceneTransitionAnimation(parent: View, data: Map<Int, String>) =
  * create a scene transition animation
  */
 @SuppressLint("NewApi")
-fun Bundle.withSceneTransitionAnimation(context: Context, data: Map<out View, String>) {
+fun Bundle.withSceneTransitionAnimation(context: Context, data: Map<out View, String> = emptyMap()) {
     if (context !is Activity || !buildIsLollipopAndUp) return
     val options = ActivityOptions.makeSceneTransitionAnimation(
         context,

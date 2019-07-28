@@ -17,8 +17,6 @@ package ca.allanwang.kau.kpref
 
 import ca.allanwang.kau.kotlin.ILazyResettable
 
-fun KPref.kprefSingle(key: String) = KPrefSingleDelegate(key, this)
-
 /**
  * Created by Allan Wang on 2017-06-07.
  *
@@ -27,17 +25,21 @@ fun KPref.kprefSingle(key: String) = KPrefSingleDelegate(key, this)
  * All subsequent retrievals will be [false]
  * This is useful for one time toggles such as showcasing items
  */
-class KPrefSingleDelegate internal constructor(private val key: String, private val pref: KPref, lock: Any? = null) :
-    ILazyResettable<Boolean> {
+interface KPrefSingleDelegate : ILazyResettable<Boolean>
+
+class KPrefSingleDelegateAndroid internal constructor(
+    private val key: String,
+    private val pref: KPref
+) : KPrefSingleDelegate {
 
     @Volatile
     private var _value: Boolean? = null
-    private val lock = lock ?: this
+    private val lock = this
 
     init {
         if (pref.prefMap.containsKey(key))
             throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
-        pref.prefMap.put(key, this@KPrefSingleDelegate)
+        pref.prefMap[key] = this
     }
 
     override fun invalidate() {
@@ -47,9 +49,9 @@ class KPrefSingleDelegate internal constructor(private val key: String, private 
     override val value: Boolean
         get() {
             val _v1 = _value
-            if (_v1 != null)
+            if (_v1 != null) {
                 return _v1
-
+            }
             return synchronized(lock) {
                 val _v2 = _value
                 if (_v2 != null) {
@@ -61,6 +63,46 @@ class KPrefSingleDelegate internal constructor(private val key: String, private 
                         _value = false
                         true
                     } else false
+                }
+            }
+        }
+
+    override fun isInitialized(): Boolean = _value != null
+
+    override fun toString(): String = if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+}
+
+class KPrefSingleDelegateInMemory internal constructor(
+    private val key: String,
+    private val pref: KPref
+) : KPrefSingleDelegate {
+    @Volatile
+    private var _value: Boolean? = null
+    private val lock = this
+
+    init {
+        if (pref.prefMap.containsKey(key))
+            throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
+        pref.prefMap[key] = this
+    }
+
+    override fun invalidate() {
+        // No op
+    }
+
+    override val value: Boolean
+        get() {
+            val _v1 = _value
+            if (_v1 != null) {
+                return _v1
+            }
+            return synchronized(lock) {
+                val _v2 = _value
+                if (_v2 != null) {
+                    _v2
+                } else {
+                    _value = false
+                    true
                 }
             }
         }
