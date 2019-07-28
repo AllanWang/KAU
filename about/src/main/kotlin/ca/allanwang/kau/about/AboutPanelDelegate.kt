@@ -35,7 +35,6 @@ import ca.allanwang.kau.utils.withMarginDecoration
 import ca.allanwang.kau.xml.kauParseFaq
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.fastadapter.GenericItem
-import com.mikepenz.fastadapter.IItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -31,7 +31,6 @@ import ca.allanwang.kau.utils.setPaddingLeft
 import ca.allanwang.kau.xml.FaqItem
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
-import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.fastadapter.select.getSelectExtension
 

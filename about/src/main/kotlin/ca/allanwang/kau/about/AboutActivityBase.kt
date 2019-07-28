@@ -34,7 +34,6 @@ import ca.allanwang.kau.utils.dimenPixelSize
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.GenericItem
-import com.mikepenz.fastadapter.IItem
 import kotlinx.android.synthetic.main.kau_activity_about.*
 
 /**

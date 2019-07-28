@@ -30,7 +30,6 @@ import ca.allanwang.kau.utils.visible
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
-import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.select.getSelectExtension
 
 /**

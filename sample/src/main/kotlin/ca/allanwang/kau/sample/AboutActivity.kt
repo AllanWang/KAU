@@ -19,7 +19,6 @@ import ca.allanwang.kau.about.AboutActivityBase
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.iitems.CardIItem
 import com.mikepenz.fastadapter.GenericItem
-import com.mikepenz.fastadapter.IItem
 
 /**
  * Created by Allan Wang on 2017-06-27.

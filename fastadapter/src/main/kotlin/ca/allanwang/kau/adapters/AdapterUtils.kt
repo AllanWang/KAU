@@ -18,8 +18,6 @@ package ca.allanwang.kau.adapters
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IAdapter
-import com.mikepenz.fastadapter.IAdapterExtension
-import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.select.SelectExtension
 
 /**

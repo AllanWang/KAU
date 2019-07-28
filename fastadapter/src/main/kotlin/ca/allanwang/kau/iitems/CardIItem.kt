@@ -35,7 +35,6 @@ import ca.allanwang.kau.utils.toDrawable
 import ca.allanwang.kau.utils.visible
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
-import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.iconics.typeface.IIcon
 

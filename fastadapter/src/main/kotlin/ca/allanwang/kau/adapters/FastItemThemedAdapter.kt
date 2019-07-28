@@ -24,8 +24,6 @@ import androidx.annotation.RequiresApi
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
 import ca.allanwang.kau.utils.adjustAlpha
 import com.mikepenz.fastadapter.GenericItem
-import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.IItemAdapter
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
 /**

@@ -21,7 +21,6 @@ import com.mikepenz.fastadapter.ClickListener
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IAdapter
-import com.mikepenz.fastadapter.IItem
 
 /**
  * Created by Allan Wang on 26/12/17.

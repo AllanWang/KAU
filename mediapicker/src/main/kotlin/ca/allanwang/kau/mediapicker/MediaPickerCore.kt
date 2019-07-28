@@ -45,7 +45,6 @@ import ca.allanwang.kau.utils.toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.mikepenz.fastadapter.GenericItem
-import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.iconics.dsl.ExperimentalIconicsDSL
 import com.mikepenz.iconics.dsl.iconicsDrawable
