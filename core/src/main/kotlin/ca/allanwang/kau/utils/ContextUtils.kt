@@ -80,22 +80,27 @@ inline fun <T : Activity> Context.startActivity(
     intentBuilder: Intent.() -> Unit = {}
 ) {
     val intent = Intent(this, clazz)
-    if (clearStack) intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+    if (clearStack) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
     intent.intentBuilder()
     val bundle = Bundle()
     bundle.bundleBuilder()
-    startActivity(intent, if (bundle.isEmpty) null else bundle)
-    if (clearStack && this is Activity) finish()
+    startActivity(intent, bundle.takeIf { !it.isEmpty })
+    if (clearStack && this is Activity) {
+        finish()
+    }
 }
 
 fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))
 
 fun Context.startPlayStoreLink(packageId: String) {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageId"))
-    if (intent.resolveActivity(packageManager) != null)
+    if (intent.resolveActivity(packageManager) != null) {
         startActivity(intent)
-    else
+    } else {
         toast("Cannot resolve play store", log = true)
+    }
 }
 
 /**
@@ -105,10 +110,11 @@ fun Context.startPlayStoreLink(packageId: String) {
 fun Context.startLink(vararg url: String?) {
     val link = url.firstOrNull { !it.isNullOrBlank() } ?: return
     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    if (browserIntent.resolveActivity(packageManager) != null)
+    if (browserIntent.resolveActivity(packageManager) != null) {
         startActivity(browserIntent)
-    else
+    } else {
         toast("Cannot resolve browser", log = true)
+    }
 }
 
 fun Context.startLink(@StringRes url: Int) = startLink(string(url))
@@ -240,19 +246,22 @@ fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || Con
 fun Context.copyToClipboard(text: String?, label: String = "Copied Text", showToast: Boolean = true) {
     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     clipboard.setPrimaryClip(ClipData.newPlainText(label, text ?: ""))
-    if (showToast) toast(R.string.kau_text_copied)
+    if (showToast) {
+        toast(R.string.kau_text_copied)
+    }
 }
 
 fun Context.shareText(text: String?) {
-    if (text == null) return toast("Share text is null")
+    text ?: return toast("Share text is null")
     val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"
     intent.putExtra(Intent.EXTRA_TEXT, text)
     val chooserIntent = Intent.createChooser(intent, string(R.string.kau_share))
-    if (chooserIntent.resolveActivity(packageManager) != null)
+    if (chooserIntent.resolveActivity(packageManager) != null) {
         startActivity(chooserIntent)
-    else
+    } else {
         toast("Cannot resolve activity to share text", log = true)
+    }
 }
 
 /**

@@ -62,15 +62,22 @@ class CollapsibleViewDelegate : CollapsibleView {
 
     override var expansion = 0f
         set(value) {
-            if (value == field) return
+            if (value == field) {
+                return
+            }
             var v = value
-            if (v > 1) v = 1f
-            else if (v < 0) v = 0f
+            if (v > 1) {
+                v = 1f
+            } else if (v < 0) {
+                v = 0f
+            }
             stateHolder =
-                if (v == 0f) KAU_COLLAPSED
-                else if (v == 1f) KAU_EXPANDED
-                else if (v - field < 0) KAU_COLLAPSING
-                else KAU_EXPANDING
+                when {
+                    v == 0f -> KAU_COLLAPSED
+                    v == 1f -> KAU_EXPANDED
+                    v - field < 0 -> KAU_COLLAPSING
+                    else -> KAU_EXPANDING
+                }
             field = v
             view?.goneIf(state == KAU_COLLAPSED)
             view?.requestLayout()
@@ -89,8 +96,11 @@ class CollapsibleViewDelegate : CollapsibleView {
     override fun resetCollapsibleAnimation() {
         animator?.cancel()
         animator = null
-        if (stateHolder == KAU_COLLAPSING) stateHolder = KAU_COLLAPSED
-        else if (stateHolder == KAU_EXPANDING) stateHolder = KAU_EXPANDED
+        if (stateHolder == KAU_COLLAPSING) {
+            stateHolder = KAU_COLLAPSED
+        } else if (stateHolder == KAU_EXPANDING) {
+            stateHolder = KAU_EXPANDED
+        }
     }
 
     override fun getCollapsibleDimension(): Pair<Int, Int> {
@@ -116,8 +126,14 @@ class CollapsibleViewDelegate : CollapsibleView {
     override fun collapse(animate: Boolean) = setExpanded(false, animate)
     override fun setExpanded(expand: Boolean) = setExpanded(expand, true)
     override fun setExpanded(expand: Boolean, animate: Boolean) {
-        if (expand == expanded) return //state already matches
+        if (expand == expanded) {
+            return //state already matches
+        }
         val target = if (expand) 1f else 0f
-        if (animate) animateSize(target) else expansion = target
+        if (animate) {
+            animateSize(target)
+        } else {
+            expansion = target
+        }
     }
 }

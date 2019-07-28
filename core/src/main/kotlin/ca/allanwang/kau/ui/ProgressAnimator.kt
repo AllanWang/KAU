@@ -94,7 +94,9 @@ class ProgressAnimator private constructor() : ValueAnimator() {
      * @return [condition]
      */
     private fun ProgressAction.runIf(condition: Boolean, progress: Float): Boolean {
-        if (condition) this(progress)
+        if (condition) {
+            this(progress)
+        }
         return condition
     }
 
@@ -170,7 +172,9 @@ class ProgressAnimator private constructor() : ValueAnimator() {
     fun withDisposableEndAction(action: ProgressDisposableRunnable) = endActions.add(action)
 
     fun reset() {
-        if (isRunning) cancel()
+        if (isRunning) {
+            cancel()
+        }
         animators.clear()
         startActions.clear()
         cancelActions.clear()

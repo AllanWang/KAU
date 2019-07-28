@@ -204,7 +204,9 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         }
         translationY = dragTo
 
-        if (shouldScale) scaleXY = 1 - (1 - dragDismissScale) * dragFraction
+        if (shouldScale) {
+            scaleXY = 1 - (1 - dragDismissScale) * dragFraction
+        }
 
         // if we've reversed direction and gone past the settle point then clear the flags to
         // allow the list to get the scroll events & reset any transforms

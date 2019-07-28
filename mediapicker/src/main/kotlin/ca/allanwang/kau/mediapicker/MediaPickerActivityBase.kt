@@ -110,11 +110,12 @@ abstract class MediaPickerActivityBase(
      */
     private fun setToolbarScrollable(scrollable: Boolean) {
         val params = kau_toolbar.layoutParams as AppBarLayout.LayoutParams
-        if (scrollable)
+        if (scrollable) {
             params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
                 AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-        else
+        } else {
             params.scrollFlags = 0
+        }
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {

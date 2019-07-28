@@ -102,11 +102,12 @@ class RippleCanvas @JvmOverloads constructor(
             ripple.radius = animation.animatedValue as Float
             invalidate()
         }
-        if (callback != null)
+        if (callback != null) {
             animator.addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationCancel(animation: Animator?) = callback()
                 override fun onAnimationEnd(animation: Animator?) = callback()
             })
+        }
         animator.start()
     }
 

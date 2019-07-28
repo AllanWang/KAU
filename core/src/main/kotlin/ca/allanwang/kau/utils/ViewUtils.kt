@@ -105,7 +105,7 @@ fun ImageView.setIcon(
     @ColorInt color: Int = Color.WHITE,
     builder: IconicsDrawable.() -> Unit = {}
 ) {
-    if (icon == null) return
+    icon ?: return
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
 }
 
@@ -274,7 +274,9 @@ fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, confi
         layoutManager = LinearLayoutManager(this@fullLinearRecycler)
         layoutParams =
             RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
-        if (rvAdapter != null) adapter = rvAdapter
+        if (rvAdapter != null) {
+            adapter = rvAdapter
+        }
         configs()
     }
 
@@ -296,8 +298,9 @@ inline fun <T : ImageView> T.fadeScaleTransition(
     minScale: Float = 0.7f,
     crossinline action: T.() -> Unit
 ) {
-    if (!isVisible) action()
-    else {
+    if (!isVisible) {
+        action()
+    } else {
         var transitioned = false
         ValueAnimator.ofFloat(1.0f, 0.0f, 1.0f).apply {
             this.duration = duration
@@ -323,12 +326,17 @@ fun FloatingActionButton.hideOnDownwardsScroll(recycler: RecyclerView) {
     recycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            if (newState == RecyclerView.SCROLL_STATE_IDLE && !isShown) show()
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && !isShown) {
+                show()
+            }
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            if (dy > 0 && isShown) hide()
-            else if (dy < 0 && isHidden) show()
+            if (dy > 0 && isShown) {
+                hide()
+            } else if (dy < 0 && isHidden) {
+                show()
+            }
         }
     })
 }

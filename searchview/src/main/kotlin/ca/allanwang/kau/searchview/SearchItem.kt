@@ -66,7 +66,9 @@ class SearchItem(
     internal fun withHighlights(subText: String?) {
         subText ?: return
         val index = content.indexOf(subText, ignoreCase = true)
-        if (index == -1) return
+        if (index == -1) {
+            return
+        }
         styledContent = SpannableStringBuilder(content)
         styledContent!!.setSpan(
             StyleSpan(Typeface.BOLD),
@@ -81,12 +83,17 @@ class SearchItem(
         holder.title.setTextColor(foregroundColor)
         holder.desc.setTextColor(foregroundColor.adjustAlpha(0.6f))
 
-        if (image != null) holder.icon.setImageDrawable(image)
-        else holder.icon.setIcon(iicon, sizeDp = 18, color = foregroundColor)
+        if (image != null) {
+            holder.icon.setImageDrawable(image)
+        } else {
+            holder.icon.setIcon(iicon, sizeDp = 18, color = foregroundColor)
+        }
 
         holder.container.setRippleBackground(foregroundColor, backgroundColor)
         holder.title.text = styledContent ?: content
-        if (description?.isNotBlank() == true) holder.desc.visible().text = description
+        if (description?.isNotBlank() == true) {
+            holder.desc.visible().text = description
+        }
     }
 
     override fun unbindView(holder: ViewHolder) {

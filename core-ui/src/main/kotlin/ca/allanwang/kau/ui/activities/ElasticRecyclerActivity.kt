@@ -53,7 +53,9 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_elastic_recycler_activity)
         setSupportActionBar(kau_toolbar)
-        if (!onCreate(savedInstanceState, configs)) return
+        if (!onCreate(savedInstanceState, configs)) {
+            return
+        }
 
         kau_draggable.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {

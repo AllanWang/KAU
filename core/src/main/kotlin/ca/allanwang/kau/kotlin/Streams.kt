@@ -26,8 +26,11 @@ package ca.allanwang.kau.kotlin
  */
 inline fun <T, C : MutableIterable<T>> C.kauRemoveIf(filter: (item: T) -> Boolean): C {
     val iter = iterator()
-    while (iter.hasNext())
-        if (filter(iter.next())) iter.remove()
+    while (iter.hasNext()) {
+        if (filter(iter.next())) {
+            iter.remove()
+        }
+    }
     return this
 }
 
@@ -38,7 +41,9 @@ inline fun <T, C : MutableIterable<T>> C.kauRemoveIf(filter: (item: T) -> Boolea
 inline fun <T : Any> Iterator<T>.firstOrNull(predicate: (T) -> Boolean): T? {
     while (hasNext()) {
         val data = next()
-        if (predicate(data)) return data
+        if (predicate(data)) {
+            return data
+        }
     }
     return null
 }

@@ -125,7 +125,9 @@ inline var Activity.statusBarColor: Int
     get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
     @SuppressLint("NewApi")
     set(value) {
-        if (buildIsLollipopAndUp) window.statusBarColor = value
+        if (buildIsLollipopAndUp) {
+            window.statusBarColor = value
+        }
     }
 
 inline var Activity.statusBarLight: Boolean

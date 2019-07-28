@@ -95,7 +95,9 @@ class MeasureSpecDelegate : MeasureSpecContract {
     private val parentFrame = Rect()
 
     override fun initAttrs(context: Context, attrs: AttributeSet?) {
-        if (attrs == null) return
+        if (attrs == null) {
+            return
+        }
         val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.MeasureSpecDelegate)
         relativeWidth = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeWidth, relativeWidth)
         relativeHeight = styledAttrs.getFloat(R.styleable.MeasureSpecDelegate_relativeHeight, relativeHeight)
@@ -114,20 +116,24 @@ class MeasureSpecDelegate : MeasureSpecContract {
         var width = View.MeasureSpec.getSize(widthMeasureSpec).toFloat()
         var height = View.MeasureSpec.getSize(heightMeasureSpec).toFloat()
         //first cycle - relative to parent
-        if (relativeHeightToParent > 0)
+        if (relativeHeightToParent > 0) {
             height = relativeHeightToParent * parentFrame.height()
-        if (relativeWidthToParent > 0)
+        }
+        if (relativeWidthToParent > 0) {
             width = relativeWidthToParent * parentFrame.width()
+        }
         //second cycle - relative to each other
-        if (relativeHeight > 0)
+        if (relativeHeight > 0) {
             height = relativeHeight * width
-        else if (relativeWidth > 0)
+        } else if (relativeWidth > 0) {
             width = relativeWidth * height
+        }
         //third cycle - relative to each other
-        if (postRelativeHeight > 0)
+        if (postRelativeHeight > 0) {
             height = postRelativeHeight * width
-        else if (postRelativeWidth > 0)
+        } else if (postRelativeWidth > 0) {
             width = postRelativeWidth * height
+        }
         return Pair(width.measureSpec, height.measureSpec)
     }
 
