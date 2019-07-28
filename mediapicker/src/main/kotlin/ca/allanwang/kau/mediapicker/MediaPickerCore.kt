@@ -46,13 +46,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.mikepenz.fastadapter.IItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.colorInt
-import com.mikepenz.iconics.paddingPx
-import com.mikepenz.iconics.sizePx
+import com.mikepenz.iconics.dsl.ExperimentalIconicsDSL
+import com.mikepenz.iconics.dsl.iconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
-import com.mikepenz.iconics.utils.toIconicsColor
 import kotlinx.coroutines.CancellationException
 import java.io.File
 
@@ -91,16 +88,19 @@ abstract class MediaPickerCore<T : IItem<*>>(
         /**
          * Create error tile for a given item
          */
+        @ExperimentalIconicsDSL
         fun getErrorDrawable(context: Context) =
             getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
 
+        @ExperimentalIconicsDSL
         fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
-            val sizePx = MediaPickerCore.computeViewSize(context)
-            return IconicsDrawable(context, iicon)
-                .sizePx(sizePx)
-                .backgroundColor(color.toIconicsColor())
-                .paddingPx(sizePx / 3)
-                .colorInt(Color.WHITE)
+            val sizePx = computeViewSize(context)
+            return context.iconicsDrawable(iicon) {
+                size = sizePx(sizePx)
+                backgroundColor = colorInt(color)
+                padding = sizePx(sizePx / 3)
+                this.color = colorInt(Color.WHITE)
+            }
         }
 
         var accentColor: Int = 0xff666666.toInt()
@@ -110,12 +110,12 @@ abstract class MediaPickerCore<T : IItem<*>>(
          * This is used for both single and multiple photo picks
          */
         fun onMediaPickerResult(resultCode: Int, data: Intent?): List<MediaModel> {
-            if (resultCode != Activity.RESULT_OK || data == null || !data.hasExtra(
-                    MEDIA_PICKER_RESULT
-                )
-            )
+            if (resultCode != Activity.RESULT_OK ||
+                data?.hasExtra(MEDIA_PICKER_RESULT) != true
+            ) {
                 return emptyList()
-            return data.getParcelableArrayListExtra(MEDIA_PICKER_RESULT)
+            }
+            return data.getParcelableArrayListExtra(MEDIA_PICKER_RESULT) ?: emptyList()
         }
 
         /**
@@ -278,8 +278,8 @@ abstract class MediaPickerCore<T : IItem<*>>(
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != RESULT_OK) {
-            if (tempPath != null) {
-                val f = File(tempPath)
+            tempPath?.let {
+                val f = File(it)
                 if (f.exists()) f.delete()
                 tempPath = null
             }
@@ -295,14 +295,18 @@ abstract class MediaPickerCore<T : IItem<*>>(
 
     private fun onCameraResult(data: Intent?) {
         val f: File
-        if (tempPath != null) {
-            f = File(tempPath)
-            tempPath = null
-        } else if (data?.data != null) {
-            f = File(data.data!!.path)
-        } else {
-            KL.d { "Media camera no file found" }
-            return
+        val tempPath = tempPath
+        val dataPath = data?.data?.path
+        when {
+            tempPath != null -> {
+                f = File(tempPath)
+                this.tempPath = null
+            }
+            dataPath != null -> f = File(dataPath)
+            else -> {
+                KL.d { "Media camera no file found" }
+                return
+            }
         }
         if (f.exists()) {
             KL.v { "Media camera path found: ${f.absolutePath}" }
@@ -315,9 +319,10 @@ abstract class MediaPickerCore<T : IItem<*>>(
 
     private fun onPickerResult(data: Intent?) {
         val items = mutableListOf<Uri>()
-        if (data?.data != null) {
-            KL.v { "Media picker data uri: ${data.data!!.path}" }
-            items.add(data.data!!)
+        val _data = data?.data
+        if (_data != null) {
+            KL.v { "Media picker data uri: ${_data.path}" }
+            items.add(_data)
         } else if (data != null) {
             val clip = data.clipData
             if (clip != null) {

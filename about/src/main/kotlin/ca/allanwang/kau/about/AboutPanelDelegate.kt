@@ -48,7 +48,7 @@ interface AboutPanelContract {
     /**
      * Model list to be added to [adapter]
      */
-    var items: List<IItem<*>>?
+    var items: List<IItem<*>>
     /**
      * The adapter, will be late initialized as it depends on configs
      */
@@ -90,7 +90,7 @@ interface AboutPanelContract {
 
 abstract class AboutPanelRecycler : AboutPanelContract {
 
-    override var items: List<IItem<*>>? = null
+    override var items: List<IItem<*>> = emptyList()
 
     override lateinit var adapter: FastItemThemedAdapter<IItem<*>>
 
@@ -116,7 +116,9 @@ abstract class AboutPanelRecycler : AboutPanelContract {
     }
 
     override fun addItems(activity: AboutActivityBase, position: Int) {
-        if (items == null) return
+        if (items.isEmpty()) {
+            return
+        }
         activity.pageStatus[position] = 2
         postDelayed(300) { addItemsImpl(activity, position) }
     }

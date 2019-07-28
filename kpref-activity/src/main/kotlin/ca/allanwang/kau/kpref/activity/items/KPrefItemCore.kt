@@ -48,7 +48,7 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 
-abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore, KPrefItemCore.ViewHolder>(), KPrefItemActions by core,
+abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore.ViewHolder>(), KPrefItemActions by core,
     ThemableIItem by ThemableIItemDelegate() {
 
     final override fun getViewHolder(v: View) = ViewHolder(v)
@@ -70,7 +70,7 @@ abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCor
      */
     @SuppressLint("NewApi")
     @CallSuper
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         with(holder) {
             updateTitle()

@@ -24,6 +24,7 @@ import androidx.annotation.RequiresApi
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
 import ca.allanwang.kau.utils.adjustAlpha
 import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.IItemAdapter
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
 /**
@@ -40,7 +41,11 @@ class FastItemThemedAdapter<Item : IItem<*>>(
     backgroundColor: Int? = null,
     accentColor: Int? = null
 ) : FastItemAdapter<Item>() {
-    constructor(colors: ThemableIItemColors) : this(colors.textColor, colors.backgroundColor, colors.accentColor)
+    constructor(colors: ThemableIItemColors) : this(
+        colors.textColor,
+        colors.backgroundColor,
+        colors.accentColor
+    )
 
     var textColor: Int? = textColor
         set(value) {
@@ -73,44 +78,39 @@ class FastItemThemedAdapter<Item : IItem<*>>(
         notifyAdapterDataSetChanged()
     }
 
-    override fun add(position: Int, items: List<Item>): FastItemAdapter<Item> {
+    override fun add(position: Int, items: List<Item>): IItemAdapter<Item, Item> {
         injectTheme(items)
         return super.add(position, items)
     }
 
-    override fun add(position: Int, item: Item): FastItemAdapter<Item> {
-        injectTheme(item)
-        return super.add(position, item)
+    override fun add(position: Int, vararg items: Item): IItemAdapter<Item, Item> {
+        injectTheme(items.toList())
+        return super.add(position, *items)
     }
 
-    override fun add(item: Item): FastItemAdapter<Item> {
-        injectTheme(item)
-        return super.add(item)
+    override fun add(vararg items: Item): IItemAdapter<Item, Item> {
+        injectTheme(items.toList())
+        return super.add(*items)
     }
 
-    override fun add(items: List<Item>?): FastItemAdapter<Item> {
+    override fun add(items: List<Item>): IItemAdapter<Item, Item> {
         injectTheme(items)
         return super.add(items)
     }
 
-    override fun set(items: List<Item>?): FastItemAdapter<Item> {
+    override fun set(items: List<Item>): IItemAdapter<Item, Item> {
         injectTheme(items)
         return super.set(items)
     }
 
-    override fun set(position: Int, item: Item): FastItemAdapter<Item> {
+    override fun set(position: Int, item: Item): IItemAdapter<Item, Item> {
         injectTheme(item)
         return super.set(position, item)
     }
 
-    override fun setNewList(items: List<Item>?, retainFilter: Boolean): FastItemAdapter<Item> {
+    override fun setNewList(items: List<Item>, retainFilter: Boolean): IItemAdapter<Item, Item> {
         injectTheme(items)
         return super.setNewList(items, retainFilter)
-    }
-
-    override fun setNewList(items: List<Item>?): FastItemAdapter<Item> {
-        injectTheme(items)
-        return super.setNewList(items)
     }
 
     private fun injectTheme(items: Collection<IItem<*>?>?) {

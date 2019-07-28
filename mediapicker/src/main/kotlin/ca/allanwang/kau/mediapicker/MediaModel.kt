@@ -85,6 +85,8 @@ data class MediaModel(
     }
 
     companion object CREATOR : Parcelable.Creator<MediaModel> {
+        @Suppress("DEPRECATION")
+        // TODO verify data deprecation
         val projection = arrayOf(
             MediaStore.MediaColumns.DATA,
             MediaStore.MediaColumns.MIME_TYPE,

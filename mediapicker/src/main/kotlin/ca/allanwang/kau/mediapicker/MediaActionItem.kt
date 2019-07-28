@@ -42,6 +42,10 @@ class MediaActionItem(
     R.id.kau_item_media_action
 ) {
 
+    override var isSelectable: Boolean
+        get() = false
+        set(_) {}
+
     override fun bindView(holder: MediaItemBasic.ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         holder.image.apply {

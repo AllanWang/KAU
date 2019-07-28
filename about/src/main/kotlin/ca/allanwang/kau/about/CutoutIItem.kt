@@ -27,11 +27,13 @@ import ca.allanwang.kau.ui.views.CutoutView
  *
  * Just a cutout item with some defaults in [R.layout.kau_iitem_cutout]
  */
-class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem, CutoutIItem.ViewHolder>(
+class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem.ViewHolder>(
     R.layout.kau_iitem_cutout, ::ViewHolder, R.id.kau_item_cutout
 ), ThemableIItem by ThemableIItemDelegate() {
 
-    override fun isSelectable(): Boolean = false
+    override var isSelectable: Boolean
+        get() = false
+        set(_) {}
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)

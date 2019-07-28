@@ -52,7 +52,7 @@ class MediaItem(val data: MediaModel) :
 
     override var isSelectable: Boolean
         get() = !failedToLoad
-        set(value) {}
+        set(_) {}
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)

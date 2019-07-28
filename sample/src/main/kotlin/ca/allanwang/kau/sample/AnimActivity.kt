@@ -43,14 +43,20 @@ class AnimActivity : KauBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val adapter = FastItemAdapter<PermissionCheckbox>()
-        setContentView(fullLinearRecycler(adapter).apply { setBackgroundColor(KPrefSample.bgColor.withAlpha(255)) })
+        setContentView(fullLinearRecycler(adapter).apply {
+            setBackgroundColor(
+                KPrefSample.bgColor.withAlpha(
+                    255
+                )
+            )
+        })
 
         adapter.add(listOf(
             PERMISSION_ACCESS_COARSE_LOCATION,
             PERMISSION_ACCESS_FINE_LOCATION,
             PERMISSION_CAMERA
         ).map { PermissionCheckbox(it) })
-        adapter.withOnClickListener { _, _, item, _ ->
+        adapter.onClickListener = { _, _, item, _ ->
             KL.d { "Perm Click" }
             kauRequestPermissions(item.permission) { granted, _ ->
                 toast("${item.permission} enabled: $granted")

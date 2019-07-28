@@ -33,7 +33,8 @@ open class KPrefSubItems(open val builder: KPrefSubItemsContract) : KPrefItemCor
         builder.globalOptions.showNextPrefs(builder.titleFun(), builder.itemBuilder)
     }
 
-    override fun getLayoutRes(): Int = R.layout.kau_pref_core
+    override val layoutRes: Int
+        get() = R.layout.kau_pref_core
 
     /**
      * Extension of the base contract with an optional text getter
@@ -51,5 +52,6 @@ open class KPrefSubItems(open val builder: KPrefSubItemsContract) : KPrefItemCor
         override val itemBuilder: KPrefAdapterBuilder.() -> Unit
     ) : KPrefSubItemsContract, CoreContract by CoreBuilder(globalOptions, titleId)
 
-    override fun getType(): Int = R.id.kau_item_pref_sub_item
+    override val type: Int
+        get() = R.id.kau_item_pref_sub_item
 }

@@ -54,7 +54,9 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem.ViewHolder>(
         }
     }
 
-    override fun isSelectable(): Boolean = false
+    override var isSelectable: Boolean
+        get() = false
+        set(_) {}
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)

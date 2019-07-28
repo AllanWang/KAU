@@ -28,7 +28,7 @@ import ca.allanwang.kau.utils.scaleXY
 import ca.allanwang.kau.utils.setBackgroundColorRes
 import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.visible
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import jp.wasabeef.blurry.internal.BlurFactor
 import jp.wasabeef.blurry.internal.BlurTask
 import kotlinx.android.synthetic.main.kau_blurred_imageview.view.*
@@ -48,7 +48,9 @@ class BlurredImageView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
-    private var blurred = false
+    var isBlurred = false
+        private set
+
     val imageBase: ImageView get() = image_base
 
     init {
@@ -69,20 +71,19 @@ class BlurredImageView @JvmOverloads constructor(
         image_foreground.clearAnimation()
     }
 
-    private fun View.scaleAnimate(scale: Float) = animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
-    private fun View.alphaAnimate(alpha: Float) = animate().alpha(alpha).setDuration(ANIMATION_DURATION)
+    private fun View.scaleAnimate(scale: Float) =
+        animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
 
-    fun isBlurred(): Boolean {
-        return blurred
-    }
+    private fun View.alphaAnimate(alpha: Float) =
+        animate().alpha(alpha).setDuration(ANIMATION_DURATION)
 
     /**
      * Applies a blur and fills the blur image asynchronously
      * When ready, scales the image down and shows the blur & foreground
      */
     fun blur() {
-        if (blurred) return
-        blurred = true
+        if (isBlurred) return
+        isBlurred = true
         val factor = BlurFactor()
         factor.width = width
         factor.height = height
@@ -100,7 +101,7 @@ class BlurredImageView @JvmOverloads constructor(
      * is still asynchronous and takes time
      */
     fun blurInstantly() {
-        blurred = true
+        isBlurred = true
         clearAnimation()
         val factor = BlurFactor()
         factor.width = width
@@ -117,8 +118,8 @@ class BlurredImageView @JvmOverloads constructor(
      * Animate view back to original state and remove drawable when finished
      */
     fun removeBlur() {
-        if (!blurred) return
-        blurred = false
+        if (!isBlurred) return
+        isBlurred = false
         scaleAnimate(1.0f).start()
         image_blur.alphaAnimate(0f).withEndAction { image_blur.setImageDrawable(null) }.start()
         image_foreground.alphaAnimate(0f).start()
@@ -128,7 +129,7 @@ class BlurredImageView @JvmOverloads constructor(
      * Clear all animations and unblur the image
      */
     fun removeBlurInstantly() {
-        blurred = false
+        isBlurred = false
         clearAnimation()
         scaleX = 1.0f
         scaleX = 1.0f
@@ -143,9 +144,9 @@ class BlurredImageView @JvmOverloads constructor(
      * @return true if new state is blurred; false otherwise
      */
     fun toggleBlur(): Boolean {
-        if (blurred) removeBlur()
+        if (isBlurred) removeBlur()
         else blur()
-        return blurred
+        return isBlurred
     }
 
     /**
@@ -162,7 +163,7 @@ class BlurredImageView @JvmOverloads constructor(
      */
     fun fullReset() {
         reset()
-        fullAction({ it.visible().background = null })
+        fullAction { it.visible().background = null }
         image_foreground.setBackgroundColorRes(R.color.kau_blurred_image_selection_overlay)
         image_foreground.setIcon(GoogleMaterial.Icon.gmd_check, 30, Color.WHITE)
     }

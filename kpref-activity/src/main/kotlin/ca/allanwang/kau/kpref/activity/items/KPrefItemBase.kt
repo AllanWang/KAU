@@ -46,7 +46,7 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
     }
 
     @CallSuper
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         _enabled = base.enabler()
         with(holder) {
@@ -77,12 +77,14 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
         super.unbindView(holder)
         holder.container?.apply {
             isEnabled = true
-            background = holder.itemView.context.resolveDrawable(android.R.attr.selectableItemBackground)
+            background =
+                holder.itemView.context.resolveDrawable(android.R.attr.selectableItemBackground)
             alpha = 1.0f
         }
     }
 
-    final override fun getLayoutRes(): Int = R.layout.kau_pref_core
+    final override val layoutRes: Int
+        get() = R.layout.kau_pref_core
 
     /**
      * Extension of the core contract

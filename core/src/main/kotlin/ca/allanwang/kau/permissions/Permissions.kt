@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package ca.allanwang.kau.permissions
 
 import android.Manifest
@@ -76,6 +77,8 @@ const val PERMISSION_READ_CALL_LOG = Manifest.permission.READ_CALL_LOG
 const val PERMISSION_WRITE_CALL_LOG = Manifest.permission.WRITE_CALL_LOG
 const val PERMISSION_ADD_VOICEMAIL = Manifest.permission.ADD_VOICEMAIL
 const val PERMISSION_USE_SIP = Manifest.permission.USE_SIP
+@Deprecated(level = DeprecationLevel.WARNING, message = "Permission is deprecated")
+@Suppress("DEPRECATION")
 const val PERMISSION_PROCESS_OUTGOING_CALLS = Manifest.permission.PROCESS_OUTGOING_CALLS
 
 @RequiresApi(Build.VERSION_CODES.KITKAT_WATCH)
