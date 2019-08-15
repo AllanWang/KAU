@@ -74,7 +74,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setup layout
+        // setup layout
         setContentView(R.layout.kau_pref_activity)
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -88,7 +88,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
         statusBarColor = 0x30000000
         kau_toolbar_ripple.set(resolveColor(R.attr.colorPrimary))
         kau_ripple.set(resolveColor(android.R.attr.colorBackground))
-        //setup prefs
+        // setup prefs
         val core = CoreAttributeBuilder()
         val builder = kPrefCoreAttributes()
         core.builder()

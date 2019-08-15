@@ -138,7 +138,7 @@ class TextSlider @JvmOverloads constructor(
     init {
         setFactory {
             TextView(context).apply {
-                //replica of toolbar title
+                // replica of toolbar title
                 gravity = Gravity.START
                 setSingleLine()
                 ellipsize = TextUtils.TruncateAt.END

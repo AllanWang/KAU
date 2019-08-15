@@ -37,7 +37,7 @@ internal class RelativeSlider(var curPage: SwipeBackPage) : SwipeListener {
      * Set offset of previous page based on the edge flag and percentage scrolled
      */
     override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
-        if (offset == 0f) return //relative slider is not enabled
+        if (offset == 0f) return // relative slider is not enabled
         val page = SwipeBackHelper.getPrePage(curPage) ?: return
         if (percent == 0f) {
             page.swipeBackLayout.x = 0f

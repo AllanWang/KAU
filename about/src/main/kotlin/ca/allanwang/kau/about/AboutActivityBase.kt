@@ -77,7 +77,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_activity_about)
         pageStatus = IntArray(panels.size)
-        pageStatus[0] = 2 //the first page is instantly visible
+        pageStatus[0] = 2 // the first page is instantly visible
         if (configs.textColor != null) about_indicator.setColour(configs.textColor!!)
         with(about_pager) {
             adapter = AboutPagerAdapter()
@@ -107,14 +107,14 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         var libPageTitle: String? = null
             set(value) {
                 field = value
-                libPageTitleRes = INVALID_ID //reset res so we don't use our default
+                libPageTitleRes = INVALID_ID // reset res so we don't use our default
             }
         var faqXmlRes: Int = INVALID_ID
         var faqPageTitleRes: Int = R.string.kau_about_faq_intro
         var faqPageTitle: String? = null
             set(value) {
                 field = value
-                faqPageTitleRes = INVALID_ID //reset res so we don't use our default
+                faqPageTitleRes = INVALID_ID // reset res so we don't use our default
             }
         /**
          * Whether new lines should be included
@@ -186,7 +186,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
     }
 
     override fun onDestroy() {
-        AnimHolder.decelerateInterpolator.invalidate() //clear the reference to the interpolators we've used
+        AnimHolder.decelerateInterpolator.invalidate() // clear the reference to the interpolators we've used
         super.onDestroy()
     }
 }

@@ -164,7 +164,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
         dragHelper = ViewDragHelper.create(this, ViewDragCallback())
         val density = resources.displayMetrics.density
         val minVel = MIN_FLING_VELOCITY * density
-        //allow touch from anywhere on the screen
+        // allow touch from anywhere on the screen
         edgeSize = Math.max(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
         minVelocity = minVel
 //        maxVelocity = 2.5f * minVel
@@ -364,7 +364,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             super.onViewPositionChanged(changedView, left, top, dx, dy)
             val contentView = contentViewRef.get()
                 ?: return KL.e { "KauSwipe cannot change view position as contentView is null; is onPostCreate called?" }
-            //make sure that we are using the proper axis
+            // make sure that we are using the proper axis
             scrollPercent = Math.abs(
                 if (horizontal) left.toFloat() / contentView.width
                 else (top.toFloat() / contentView.height)
@@ -392,7 +392,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
         override fun onViewReleased(releasedChild: View, xvel: Float, yvel: Float) {
             var result = Pair(0, 0)
             if (scrollPercent <= scrollThreshold) {
-                //threshold not met; check velocities
+                // threshold not met; check velocities
                 if ((edgeFlag == SWIPE_EDGE_LEFT && xvel > MIN_FLING_VELOCITY) ||
                     (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY) ||
                     (edgeFlag == SWIPE_EDGE_TOP && yvel > MIN_FLING_VELOCITY) ||
@@ -400,7 +400,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
                 )
                     result = exitCaptureOffsets(edgeFlag, releasedChild)
             } else {
-                //threshold met; fling to designated side
+                // threshold met; fling to designated side
                 result = exitCaptureOffsets(edgeFlag, releasedChild)
             }
             dragHelper.settleCapturedViewAt(result.first, result.second)

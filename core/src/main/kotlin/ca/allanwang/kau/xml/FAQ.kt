@@ -43,7 +43,7 @@ fun Context.kauParseFaq(
     resources.getXml(xmlRes).use { parser: XmlResourceParser ->
         var eventType = parser.eventType
         var question: Spanned? = null
-        var flag = -1 //-1, 0, 1 -> invalid, question, answer
+        var flag = -1 // -1, 0, 1 -> invalid, question, answer
         while (eventType != XmlPullParser.END_DOCUMENT) {
             if (eventType == XmlPullParser.START_TAG) {
                 flag = when (parser.name) {

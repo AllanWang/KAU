@@ -157,7 +157,7 @@ fun String.toColor(): Int {
     return Color.parseColor(toParse)
 }
 
-//Get ColorStateList
+// Get ColorStateList
 fun Context.colorStateList(@ColorInt color: Int): ColorStateList {
     val disabledColor = color.adjustAlpha(0.3f)
     return ColorStateList(
