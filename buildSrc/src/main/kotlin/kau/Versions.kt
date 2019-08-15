@@ -9,25 +9,25 @@ object Versions {
     const val buildTools = "29.0.0"
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
-    const val appcompat = "1.0.2"
+    const val appcompat = "1.1.0-rc01"
 
     // https://mvnrepository.com/artifact/com.google.android.material/material
     const val googleMaterial = "1.0.0"
 
     // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
-    const val recyclerView = "1.0.0"
+    const val recyclerView = "1.1.0-beta02"
 
     // https://mvnrepository.com/artifact/androidx.cardview/cardview
     const val cardView = "1.0.0"
 
     // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
-    const val constraintLayout = "1.1.3"
+    const val constraintLayout = "2.0.0-beta2"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
     const val kotlin = "1.3.41"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    const val coroutines = "1.3.0-RC"
+    const val coroutines = "1.3.0-RC2"
 
     // https://github.com/mikepenz/AboutLibraries/releases
     const val aboutLibraries = "6.2.3"
@@ -35,7 +35,7 @@ object Versions {
     // https://github.com/wasabeef/Blurry/releases
     const val blurry = "3.0.0"
 
-    // https://github.com/mikepenz/FastAdapter#using-maven
+    // https://github.com/mikepenz/FastAdapter/releases
     const val fastAdapter = "4.1.0-b01"
 
     // https://github.com/bumptech/glide/releases
@@ -48,7 +48,7 @@ object Versions {
     const val iconicsCommunity = "3.5.95.1"
 
     // https://github.com/afollestad/material-dialogs/releases
-    const val materialDialog = "3.0.0-rc2"
+    const val materialDialog = "3.1.0"
 
     // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
     const val espresso = "3.1.1"
@@ -62,13 +62,13 @@ object Versions {
     const val testRules = "1.1.1"
 
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
-    const val spotless = "3.18.0"
+    const val spotless = "3.24.1"
 
     // https://github.com/bugsnag/bugsnag-android/releases
-    const val bugsnag = "4.12.0"
+    const val bugsnag = "4.18.0"
 
     // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
-    const val bugsnagPlugin="4.1.1"
+    const val bugsnagPlugin="4.5.2"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     const val gradlePlugin = "3.5.0-rc03"
