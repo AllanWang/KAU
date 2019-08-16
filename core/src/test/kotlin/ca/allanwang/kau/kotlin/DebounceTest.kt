@@ -50,16 +50,16 @@ class DebounceTest {
     fun multipleDebounces() {
         var i = 0
         val debounce = debounce<Int>(20) { i += it }
-        debounce(1) //ignore -> i = 0
+        debounce(1) // ignore -> i = 0
         Thread.sleep(10)
         assertEquals(0, i)
-        debounce(2) //accept -> i = 2
+        debounce(2) // accept -> i = 2
         Thread.sleep(30)
         assertEquals(2, i)
-        debounce(4) //ignore -> i = 2
+        debounce(4) // ignore -> i = 2
         Thread.sleep(10)
         assertEquals(2, i)
-        debounce(8) //accept -> i = 10
+        debounce(8) // accept -> i = 10
         Thread.sleep(30)
         assertEquals(10, i)
     }

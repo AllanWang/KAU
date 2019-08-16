@@ -47,10 +47,10 @@ class StreamsTest {
         items.add(3, thePotato)
         assertEquals(result.size + 1, items.size, "Invalid list addition")
         assertEquals(2, items.filter { it.id == 9 }.size, "Invalid number of potatoes with id 9")
-        items.kauRemoveIf { it === thePotato } //removal by reference
+        items.kauRemoveIf { it === thePotato } // removal by reference
         assertEquals(result.size, items.size, "Invalid list size after removal")
         assertEquals(result, items)
-        items.kauRemoveIf { it == thePotato } //removal by equality
+        items.kauRemoveIf { it == thePotato } // removal by equality
         assertEquals(result.size - 1, items.size, "Invalid list removal based on equality")
     }
 }

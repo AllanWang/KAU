@@ -85,7 +85,7 @@ inline fun Activity.restart(intentBuilder: Intent.() -> Unit = {}) {
         i.putExtras(oldExtras)
     i.intentBuilder()
     startActivity(i)
-    overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out) //No transitions
+    overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out) // No transitions
     finish()
     overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out)
 }

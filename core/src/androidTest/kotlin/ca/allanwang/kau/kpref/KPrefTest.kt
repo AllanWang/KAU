@@ -103,7 +103,7 @@ class KPrefTest {
         pref { one = 2 }
         assertPrefEquals(2, { one })
         assertPrefEquals(6, { prefMap.size }, "Prefmap does not have all elements")
-        pref { reset() } //only invalidates our lazy delegate; doesn't change the actual pref
+        pref { reset() } // only invalidates our lazy delegate; doesn't change the actual pref
         assertPrefEquals(2, { one }, "Kpref did not properly fetch from shared prefs")
         // Android pref only
         androidPref.sp.edit().putInt("one", -1).commit()

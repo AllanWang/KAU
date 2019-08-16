@@ -61,7 +61,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
         }
         withAccentColor(seekbar::tint)
         text.text =
-            builder.toText(seekbar.progress.fromProgress) //set initial text in case no change occurs
+            builder.toText(seekbar.progress.fromProgress) // set initial text in case no change occurs
         seekbar.progress = pref.toProgress
         seekbar.isEnabled = builder.enabler()
     }

@@ -122,7 +122,7 @@ class MeasureSpecDelegate : MeasureSpecContract {
         if (relativeWidthToParent > 0) {
             width = relativeWidthToParent * parentFrame.width()
         }
-        //second cycle - relative to each other
+        // second cycle - relative to each other
         if (relativeHeight > 0) {
             height = relativeHeight * width
         } else if (relativeWidth > 0) {

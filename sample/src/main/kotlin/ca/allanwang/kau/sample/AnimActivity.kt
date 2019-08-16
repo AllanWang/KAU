@@ -45,9 +45,7 @@ class AnimActivity : KauBaseActivity() {
         val adapter = FastItemAdapter<PermissionCheckbox>()
         setContentView(fullLinearRecycler(adapter).apply {
             setBackgroundColor(
-                KPrefSample.bgColor.withAlpha(
-                    255
-                )
+                KPrefSample.bgColor.withAlpha(255)
             )
         })
 

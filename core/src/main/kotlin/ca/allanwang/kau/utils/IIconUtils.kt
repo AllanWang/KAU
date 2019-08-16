@@ -20,8 +20,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorInt
 import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.colorInt
-import com.mikepenz.iconics.sizeDp
+import com.mikepenz.iconics.dsl.iconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 
 /**
@@ -33,9 +32,9 @@ fun IIcon.toDrawable(
     sizeDp: Int = 24,
     @ColorInt color: Int = Color.WHITE,
     builder: IconicsDrawable.() -> Unit = {}
-): Drawable {
-    val icon = IconicsDrawable(c).icon(this).colorInt(color)
-    if (sizeDp > 0) icon.sizeDp(sizeDp)
-    icon.builder()
-    return icon
-}
+): Drawable = c.iconicsDrawable(this) {
+    this.color = colorInt(color)
+    if (sizeDp > 0) {
+        size = sizeDp(sizeDp)
+    }
+}.apply(builder)

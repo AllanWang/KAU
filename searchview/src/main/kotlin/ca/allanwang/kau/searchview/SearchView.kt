@@ -298,9 +298,9 @@ class SearchView @JvmOverloads constructor(
      * These are calculated every time the search view is opened,
      * and can be overridden with the open listener if necessary
      */
-    var menuX: Int = -1             //starting x for circular reveal
-    var menuY: Int = -1             //reference for cardview's marginTop
-    var menuHalfHeight: Int = -1    //starting y for circular reveal (relative to the cardview)
+    var menuX: Int = -1 // starting x for circular reveal
+    var menuY: Int = -1 // reference for cardview's marginTop
+    var menuHalfHeight: Int = -1 // starting y for circular reveal (relative to the cardview)
 
     init {
         View.inflate(context, R.layout.kau_search_view, this)
@@ -383,8 +383,8 @@ class SearchView @JvmOverloads constructor(
 
     internal fun cardTransition(builder: TransitionSet.() -> Unit = {}) {
         TransitionManager.beginDelayedTransition(kau_search_cardview,
-            //we are only using change bounds, as the recyclerview items may be animated as well,
-            //which causes a measure IllegalStateException
+            // we are only using change bounds, as the recyclerview items may be animated as well,
+            // which causes a measure IllegalStateException
             TransitionSet().addTransition(ChangeBounds()).apply {
                 duration = configs.transitionDuration
                 builder()

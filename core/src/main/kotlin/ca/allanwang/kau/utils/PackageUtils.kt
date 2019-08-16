@@ -54,13 +54,13 @@ fun Context.isAppEnabled(packageName: String): Boolean {
 @KauUtils
 fun Context.showAppInfo(packageName: String) {
     try {
-        //Open the specific App Info page:
+        // Open the specific App Info page:
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         intent.data = Uri.parse("package:$packageName")
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
-        //Open the generic Apps page:
+        // Open the generic Apps page:
         val intent = Intent(Settings.ACTION_MANAGE_APPLICATIONS_SETTINGS)
         startActivity(intent)
     }

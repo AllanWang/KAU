@@ -39,7 +39,7 @@ open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean
         val checkbox = holder.bindInnerView<CheckBox>(R.layout.kau_pref_checkbox)
         withAccentColor(checkbox::tint)
         checkbox.isChecked = pref
-        checkbox.jumpDrawablesToCurrentState() //Cancel the animation
+        checkbox.jumpDrawablesToCurrentState() // Cancel the animation
     }
 
     override val type: Int

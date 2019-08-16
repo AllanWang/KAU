@@ -40,7 +40,7 @@ class MediaItemBasic(val data: MediaModel) :
         @SuppressLint("NewApi")
         fun bindEvents(activity: Activity, fastAdapter: FastAdapter<MediaItemBasic>) {
             fastAdapter.getSelectExtension().isSelectable = true
-            //add image data and return right away
+            // add image data and return right away
             fastAdapter.onClickListener = { _, _, item, _ ->
                 activity.finish(arrayListOf(item.data))
                 true

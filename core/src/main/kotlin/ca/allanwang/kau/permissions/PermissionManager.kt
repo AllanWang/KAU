@@ -82,7 +82,7 @@ internal object PermissionManager {
             if (!manifestPermission(context).contains(it)) {
                 KL.e { "Requested permission $it is not stated in the manifest" }
                 context.toast("$it is not in the manifest")
-                //we'll let the request pass through so it can be denied and so the callback can be triggered
+                // we'll let the request pass through so it can be denied and so the callback can be triggered
             }
         }
         val activity = (context as? Activity)

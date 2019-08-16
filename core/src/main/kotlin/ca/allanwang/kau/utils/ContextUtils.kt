@@ -119,7 +119,7 @@ fun Context.startLink(vararg url: String?) {
 
 fun Context.startLink(@StringRes url: Int) = startLink(string(url))
 
-//Toast helpers
+// Toast helpers
 inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
     context.toast(id, duration, log)
 
@@ -136,7 +136,7 @@ inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: B
 
 const val INVALID_ID = 0
 
-//Resource retrievers
+// Resource retrievers
 inline fun Context.string(@StringRes id: Int): String = getString(id)
 
 inline fun Context.string(@StringRes id: Int, fallback: String?): String? =
@@ -167,7 +167,7 @@ inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(th
 inline fun Context.plural(@PluralsRes id: Int, quantity: Number) =
     resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
 
-//Attr retrievers
+// Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, @ColorInt fallback: Int = 0): Int {
     val a = theme.obtainStyledAttributes(intArrayOf(attr))
     try {

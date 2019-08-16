@@ -111,14 +111,14 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         var libPageTitle: String? = null
             set(value) {
                 field = value
-                libPageTitleRes = INVALID_ID //reset res so we don't use our default
+                libPageTitleRes = INVALID_ID // reset res so we don't use our default
             }
         var faqXmlRes: Int = INVALID_ID
         var faqPageTitleRes: Int = R.string.kau_about_faq_intro
         var faqPageTitle: String? = null
             set(value) {
                 field = value
-                faqPageTitleRes = INVALID_ID //reset res so we don't use our default
+                faqPageTitleRes = INVALID_ID // reset res so we don't use our default
             }
         /**
          * Whether new lines should be included
@@ -190,7 +190,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
     }
 
     override fun onDestroy() {
-        AnimHolder.decelerateInterpolator.invalidate() //clear the reference to the interpolators we've used
+        AnimHolder.decelerateInterpolator.invalidate() // clear the reference to the interpolators we've used
         super.onDestroy()
     }
 }

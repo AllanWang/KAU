@@ -1,3 +1,5 @@
+import kau.Dependencies
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -126,15 +128,15 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
-    implementation kau.Dependencies.materialDialog("input")
+    implementation Dependencies.materialDialog("input")
 
-    testImplementation kau.Dependencies.kotlinTest
-    testImplementation kau.Dependencies.junit
+    testImplementation Dependencies.kotlinTest
+    testImplementation Dependencies.junit
 
-    androidTestImplementation kau.Dependencies.kotlinTest
-    androidTestImplementation kau.Dependencies.espresso
-    androidTestImplementation kau.Dependencies.espresso("intents")
-    androidTestImplementation kau.Dependencies.espresso("contrib")
-    androidTestImplementation kau.Dependencies.testRules
-    androidTestImplementation kau.Dependencies.testRunner
+    androidTestImplementation Dependencies.kotlinTest
+    androidTestImplementation Dependencies.espresso
+    androidTestImplementation Dependencies.espresso("intents")
+    androidTestImplementation Dependencies.espresso("contrib")
+    androidTestImplementation Dependencies.testRules
+    androidTestImplementation Dependencies.testRunner
 }
