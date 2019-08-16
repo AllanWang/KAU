@@ -57,7 +57,7 @@ internal object SwipeBackHelper {
     fun finish(activity: Activity) = this[activity]?.scrollToFinishActivity()
 
     internal fun getPrePage(page: SwipeBackPage): SwipeBackPage? {
-        //clean invalid pages
+        // clean invalid pages
         pageStack.kauRemoveIf { it.activityRef.get() == null }
         return pageStack.getOrNull(pageStack.indexOf(page) - 1)
     }

@@ -47,7 +47,7 @@ class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem
         super.unbindView(holder)
         with(holder) {
             cutout.drawable = null
-            cutout.text = "Text" //back to default
+            cutout.text = "Text" // back to default
         }
     }
 

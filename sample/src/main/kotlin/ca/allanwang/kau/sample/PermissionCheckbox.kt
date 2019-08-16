@@ -33,7 +33,7 @@ class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox.V
         holder.text.text = permission
         holder.checkbox.isChecked = holder.itemView.context.hasPermission(permission)
         holder.checkbox.isClickable = false
-        holder.checkbox.jumpDrawablesToCurrentState() //Cancel the animation
+        holder.checkbox.jumpDrawablesToCurrentState() // Cancel the animation
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

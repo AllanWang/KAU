@@ -246,7 +246,7 @@ private fun <T, V : View> requiredResettable(ids: IntArray, finder: T.(Int) -> V
 private fun <T, V : View> optionalResettable(ids: IntArray, finder: T.(Int) -> View?) =
     LazyResettable { t: T, _ -> ids.map { t.finder(it) as V? }.filterNotNull() }
 
-//Like Kotterknife's lazy delegate but is resettable
+// Like Kotterknife's lazy delegate but is resettable
 private class LazyResettable<in T, out V>(initializer: (T, KProperty<*>) -> V) : Lazy<T, V>(initializer) {
     override fun getValue(thisRef: T, property: KProperty<*>): V {
         KotterknifeRegistry.register(thisRef!!, this)

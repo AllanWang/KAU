@@ -157,7 +157,7 @@ abstract class MediaPickerCore<T : GenericItem>(
         }
     }
 
-    //Sort by descending date
+    // Sort by descending date
     var sortQuery = MediaStore.MediaColumns.DATE_MODIFIED + " DESC"
 
     override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> {
@@ -264,8 +264,8 @@ abstract class MediaPickerCore<T : GenericItem>(
         }.mapNotNull {
             DocumentsContract.getDocumentId(it).split(":").getOrNull(1)
         }.joinToString(prefix = "(", separator = ",", postfix = ")")
-        //? query replacements are done for one arg at a time
-        //since we potentially have a list of ids, we'll just format the WHERE clause ourself
+        // ? query replacements are done for one arg at a time
+        // since we potentially have a list of ids, we'll just format the WHERE clause ourself
         query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(
             block
         )

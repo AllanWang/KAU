@@ -47,7 +47,7 @@ class MainActivity : KPrefActivity() {
 
     companion object {
 
-        //some of the most common english words for show
+        // some of the most common english words for show
         val wordBank: List<String> by lazy {
             listOf(
                 "the", "name", "of", "very", "to", "through",
