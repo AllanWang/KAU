@@ -115,7 +115,7 @@ class MeasureSpecDelegate : MeasureSpecContract {
         view.parentViewGroup.getWindowVisibleDisplayFrame(parentFrame)
         var width = View.MeasureSpec.getSize(widthMeasureSpec).toFloat()
         var height = View.MeasureSpec.getSize(heightMeasureSpec).toFloat()
-        //first cycle - relative to parent
+        // first cycle - relative to parent
         if (relativeHeightToParent > 0) {
             height = relativeHeightToParent * parentFrame.height()
         }
@@ -128,7 +128,7 @@ class MeasureSpecDelegate : MeasureSpecContract {
         } else if (relativeWidth > 0) {
             width = relativeWidth * height
         }
-        //third cycle - relative to each other
+        // third cycle - relative to each other
         if (postRelativeHeight > 0) {
             height = postRelativeHeight * width
         } else if (postRelativeWidth > 0) {

@@ -127,7 +127,7 @@ class CollapsibleViewDelegate : CollapsibleView {
     override fun setExpanded(expand: Boolean) = setExpanded(expand, true)
     override fun setExpanded(expand: Boolean, animate: Boolean) {
         if (expand == expanded) {
-            return //state already matches
+            return // state already matches
         }
         val target = if (expand) 1f else 0f
         if (animate) {

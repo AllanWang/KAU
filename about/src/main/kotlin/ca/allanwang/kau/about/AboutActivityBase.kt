@@ -79,7 +79,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         super.onCreate(savedInstanceState)
         setContentView(R.layout.kau_activity_about)
         pageStatus = IntArray(panels.size)
-        pageStatus[0] = 2 //the first page is instantly visible
+        pageStatus[0] = 2 // the first page is instantly visible
         if (configs.textColor != null) {
             about_indicator.setColour(configs.textColor!!)
         }
