@@ -144,9 +144,8 @@ abstract class MediaPickerCore<T : GenericItem>(
         recycler.apply {
             val manager = object : GridLayoutManager(context, computeColumnCount(context)) {
                 override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
-                    return if (mediaType != MediaType.VIDEO) extraSpace else super.getExtraLayoutSpace(
-                        state
-                    )
+                    return if (mediaType != MediaType.VIDEO) extraSpace
+                    else super.getExtraLayoutSpace(state)
                 }
             }
             setItemViewCacheSize(CACHE_SIZE)

@@ -79,7 +79,9 @@ class FastItemThemedAdapter<Item : GenericItem>(
     }
 
     fun themeChanged() {
-        if (adapterItemCount == 0) return
+        if (adapterItemCount == 0) {
+            return
+        }
         injectTheme(adapterItems)
         notifyAdapterDataSetChanged()
     }

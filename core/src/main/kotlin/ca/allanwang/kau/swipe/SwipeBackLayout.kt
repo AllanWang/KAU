@@ -52,7 +52,9 @@ internal class SwipeBackLayout @JvmOverloads constructor(
      */
     override var scrollThreshold = DEFAULT_SCROLL_THRESHOLD
         set(value) {
-            if (value >= 1.0f || value <= 0f) throw IllegalArgumentException("Threshold value should be between 0.0 and 1.0")
+            if (value >= 1.0f || value <= 0f) {
+                throw IllegalArgumentException("Threshold value should be between 0.0 and 1.0")
+            }
             field = value
         }
 
@@ -130,8 +132,9 @@ internal class SwipeBackLayout @JvmOverloads constructor(
          * We will verify that only one axis is used at a time
          */
         set(value) {
-            if (value !in arrayOf(SWIPE_EDGE_TOP, SWIPE_EDGE_BOTTOM, SWIPE_EDGE_LEFT, SWIPE_EDGE_RIGHT))
+            if (value !in arrayOf(SWIPE_EDGE_TOP, SWIPE_EDGE_BOTTOM, SWIPE_EDGE_LEFT, SWIPE_EDGE_RIGHT)) {
                 throw IllegalArgumentException("Edge flag is not valid; use one of the SWIPE_EDGE_* values")
+            }
             field = value
             horizontal = edgeFlag == SWIPE_EDGE_LEFT || edgeFlag == SWIPE_EDGE_RIGHT
             dragHelper.setEdgeTrackingEnabled(value)
@@ -197,8 +200,9 @@ internal class SwipeBackLayout @JvmOverloads constructor(
         val iter = listeners.iterator()
         while (iter.hasNext()) {
             val l = iter.next().get()
-            if (l == null || l == listener)
+            if (l == null || l == listener) {
                 iter.remove()
+            }
         }
     }
 
@@ -210,10 +214,11 @@ internal class SwipeBackLayout @JvmOverloads constructor(
         val iter = listeners.iterator()
         while (iter.hasNext()) {
             val l = iter.next().get()
-            if (l == null)
+            if (l == null) {
                 iter.remove()
-            else if (l == listener)
+            } else if (l == listener) {
                 return true
+            }
         }
         return false
     }
@@ -239,11 +244,13 @@ internal class SwipeBackLayout @JvmOverloads constructor(
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        if (!swipeEnabled || disallowIntercept) return false
-        try {
-            return dragHelper.shouldInterceptTouchEvent(event)
-        } catch (e: Exception) {
+        if (!swipeEnabled || disallowIntercept) {
             return false
+        }
+        return try {
+            dragHelper.shouldInterceptTouchEvent(event)
+        } catch (e: Exception) {
+            false
         }
     }
 

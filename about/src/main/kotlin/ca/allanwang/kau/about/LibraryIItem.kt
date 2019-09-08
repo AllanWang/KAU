@@ -43,13 +43,14 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem.ViewHolder>(
         fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
             fastAdapter.getSelectExtension().isSelectable = true
             fastAdapter.onClickListener = { v, _, item, _ ->
-                if (item !is LibraryIItem)
+                if (item !is LibraryIItem) {
                     false
-                else
+                } else {
                     with(item.lib) {
                         v!!.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
                         true
                     }
+                }
             }
         }
     }

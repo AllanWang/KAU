@@ -69,7 +69,9 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
 
     val panels: List<AboutPanelContract> by lazy {
         val defaultPanels = mutableListOf(AboutPanelMain(), AboutPanelLibs())
-        if (configs.faqXmlRes != INVALID_ID) defaultPanels.add(AboutPanelFaqs())
+        if (configs.faqXmlRes != INVALID_ID) {
+            defaultPanels.add(AboutPanelFaqs())
+        }
         defaultPanels
     }
 
@@ -78,7 +80,9 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
         setContentView(R.layout.kau_activity_about)
         pageStatus = IntArray(panels.size)
         pageStatus[0] = 2 // the first page is instantly visible
-        if (configs.textColor != null) about_indicator.setColour(configs.textColor!!)
+        if (configs.textColor != null) {
+            about_indicator.setColour(configs.textColor!!)
+        }
         with(about_pager) {
             adapter = AboutPagerAdapter()
             pageMargin = dimenPixelSize(R.dimen.kau_spacing_normal)

@@ -104,8 +104,9 @@ class EmailBuilder(val email: String, val subject: String) {
         if (packages.isNotEmpty()) {
             emailBuilder.append("\n")
             packages.forEach {
-                if (context.isAppInstalled(it.packageName))
+                if (context.isAppInstalled(it.packageName)) {
                     emailBuilder.append(String.format("\n%s is installed", it.appName))
+                }
             }
         }
 
