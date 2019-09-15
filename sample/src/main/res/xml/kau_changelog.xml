@@ -8,7 +8,7 @@
 
     <version title="v5.2.0" />
     <item text=":fastadapter: Migrate fastadapter to v4.x.x" />
-    <item text="" />
+    <item text=":fastadapter: Remove fastadapter utils from api" />
     <item text="" />
 
     <version title="v5.1.0" />
@@ -16,7 +16,6 @@
     <item text=":adapter: Make NoAnimatorChange an object; previously a class" />
     <item text=":core: KPref now supports in memory only variants for testing; pass KPrefBuilderInMemory to KPref constructor" />
     <item text=":core: KPref initializer takes in SharedPreferences so user can configure it" />
-    <item text="" />
 
     <version title="v5.0.0" />
     <item text="Update Android SDK to 29 and Kotlin to 1.3.31" />
@@ -26,13 +25,11 @@
     <item text=":core: Remove cursor tinting in EditText as it used reflection" />
     <item text=":colorpicker: Strip down to just the interface; unless you require the accent palette, it may be fine to just use MD's color extension" />
     <item text=":gradle-plugin: Convert to kotlin, rework dependencies, and remove extension hooks" />
-    <item text="" />
 
     <version title="v4.1.0" />
     <item text=":core: Deprecate NetworkUtils, as the underlying functions are deprecated" />
     <item text=":core: Permission manager no longer synchronized, as all actions should occur in the main thread" />
     <item text=":kpref-activity: Getter and setter now have action context, with the option to reload self" />
-    <item text="" />
 
     <version title="v4.0.0" />
     <item text="Update translations" />
