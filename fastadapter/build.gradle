@@ -10,8 +10,8 @@ dependencies {
     api project(':adapter')
 
     api Dependencies.fastAdapter
+    api Dependencies.fastAdapter("utils")
     implementation Dependencies.fastAdapter("diff")
-    implementation Dependencies.fastAdapter("utils")
 }
 
 apply from: '../artifacts.gradle'

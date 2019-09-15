@@ -8,7 +8,6 @@
 
     <version title="v5.2.0" />
     <item text=":fastadapter: Migrate fastadapter to v4.x.x" />
-    <item text=":fastadapter: Remove fastadapter utils from api" />
     <item text="" />
 
     <version title="v5.1.0" />

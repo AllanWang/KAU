@@ -2,7 +2,6 @@
 
 ## v5.2.0
 * :fastadapter: Migrate fastadapter to v4.x.x
-* :fastadapter: Remove fastadapter utils from api
 
 ## v5.1.0
 * :adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary
