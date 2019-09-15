@@ -15,7 +15,7 @@ object Versions {
     const val googleMaterial = "1.0.0"
 
     // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
-    const val recyclerView = "1.1.0-beta02"
+    const val recyclerView = "1.1.0-beta04"
 
     // https://mvnrepository.com/artifact/androidx.cardview/cardview
     const val cardView = "1.0.0"
@@ -24,7 +24,7 @@ object Versions {
     const val constraintLayout = "2.0.0-beta2"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    const val kotlin = "1.3.41"
+    const val kotlin = "1.3.50"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
     const val coroutines = "1.3.1"
@@ -42,13 +42,13 @@ object Versions {
     const val glide = "4.9.0"
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
-    const val iconics = "4.0.1-b01"
+    const val iconics = "4.0.1-b02"
     const val iconicsGoogle = "3.0.1.4"
     const val iconicsMaterial = "2.2.0.6"
     const val iconicsCommunity = "3.5.95.1"
 
     // https://github.com/afollestad/material-dialogs/releases
-    const val materialDialog = "3.1.0"
+    const val materialDialog = "3.1.1"
 
     // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
     const val espresso = "3.1.1"
@@ -62,10 +62,10 @@ object Versions {
     const val testRules = "1.1.1"
 
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
-    const val spotless = "3.24.1"
+    const val spotless = "3.24.2"
 
     // https://github.com/bugsnag/bugsnag-android/releases
-    const val bugsnag = "4.18.0"
+    const val bugsnag = "4.19.1"
 
     // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
     const val bugsnagPlugin="4.5.2"
@@ -75,7 +75,7 @@ object Versions {
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
-    const val playPublishPlugin = "2.2.1"
+    const val playPublishPlugin = "2.4.1"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
     const val dexCountPlugin = "0.8.6"

@@ -5,13 +5,17 @@ ext.kauSubModuleMinSdk = Versions.coreMinSdk
 
 apply from: '../android-lib.gradle'
 
+android {
+    dataBinding {
+        enabled = true
+    }
+}
+
 dependencies {
     implementation project(':core')
-    api project(':adapter')
 
     api Dependencies.fastAdapter
     api Dependencies.fastAdapter("utils")
-    implementation Dependencies.fastAdapter("diff")
 }
 
 apply from: '../artifacts.gradle'

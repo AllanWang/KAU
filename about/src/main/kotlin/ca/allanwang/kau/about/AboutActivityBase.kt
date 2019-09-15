@@ -47,7 +47,10 @@ import kotlinx.android.synthetic.main.kau_activity_about.*
  * Note that for the auto detection to work, the R fields must be excluded from Proguard
  * Manual lib listings and other extra modifications can be done so by overriding the open functions
  */
-abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilder: Configs.() -> Unit = {}) :
+abstract class AboutActivityBase(
+    val rClass: Class<*>?,
+    private val configBuilder: Configs.() -> Unit = {}
+) :
     KauBaseActivity(), ViewPager.OnPageChangeListener {
 
     val currentPage: Int
@@ -90,7 +93,8 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
             addOnPageChangeListener(this@AboutActivityBase)
         }
         about_indicator.setViewPager(about_pager)
-        about_draggable_frame.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
+        about_draggable_frame.addListener(object :
+            ElasticDragDismissFrameLayout.SystemChromeFader(this) {
             override fun onDragDismissed() {
                 window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
                     .inflateTransition(if (about_draggable_frame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
@@ -142,7 +146,14 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
      * This is fetched asynchronously and you may override it to customize the list
      */
     open fun getLibraries(libs: Libs): List<Library> =
-        libs.prepareLibraries(this, null, null, true, true, true)!!
+        libs.prepareLibraries(
+            this,
+            null,
+            null,
+            true,
+            true,
+            true
+        )
 
     /*
      * -------------------------------------------------------------------
@@ -182,7 +193,8 @@ abstract class AboutActivityBase(val rClass: Class<*>?, private val configBuilde
 
     override fun onPageScrollStateChanged(state: Int) = Unit
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) = Unit
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) =
+        Unit
 
     override fun onPageSelected(position: Int) {
         if (pageStatus[position] == 0) pageStatus[position] = 1 // mark as seen if previously null
