@@ -27,7 +27,7 @@ object Versions {
     const val kotlin = "1.3.41"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    const val coroutines = "1.3.0-RC2"
+    const val coroutines = "1.3.1"
 
     // https://github.com/mikepenz/AboutLibraries/releases
     const val aboutLibraries = "6.2.3"
@@ -36,7 +36,7 @@ object Versions {
     const val blurry = "3.0.0"
 
     // https://github.com/mikepenz/FastAdapter/releases
-    const val fastAdapter = "4.1.0-b01"
+    const val fastAdapter = "4.1.0-b02"
 
     // https://github.com/bumptech/glide/releases
     const val glide = "4.9.0"
@@ -71,7 +71,7 @@ object Versions {
     const val bugsnagPlugin="4.5.2"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "3.5.0-rc03"
+    const val gradlePlugin = "3.5.0"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
@@ -81,5 +81,5 @@ object Versions {
     const val dexCountPlugin = "0.8.6"
 
     // https://github.com/gladed/gradle-android-git-version/releases
-    const val gitVersionPlugin = "0.4.9"
+    const val gitVersionPlugin = "0.4.10"
 }
