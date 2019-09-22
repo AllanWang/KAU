@@ -117,7 +117,20 @@ inline var Activity.navigationBarColor: Int
     get() = if (buildIsLollipopAndUp) window.navigationBarColor else Color.BLACK
     @SuppressLint("NewApi")
     set(value) {
-        if (buildIsLollipopAndUp) window.navigationBarColor = value
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return
+        }
+        window.navigationBarColor = value
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return
+        }
+        var prevSystemUiVisibility = window.decorView.systemUiVisibility
+        prevSystemUiVisibility = if (value.isColorDark) {
+            prevSystemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        } else {
+            prevSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
+        window.decorView.systemUiVisibility = prevSystemUiVisibility
     }
 
 inline var Activity.statusBarColor: Int
@@ -125,9 +138,20 @@ inline var Activity.statusBarColor: Int
     get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
     @SuppressLint("NewApi")
     set(value) {
-        if (buildIsLollipopAndUp) {
-            window.statusBarColor = value
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return
         }
+        window.statusBarColor = value
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            return
+        }
+        var prevSystemUiVisibility = window.decorView.systemUiVisibility
+        prevSystemUiVisibility = if (value.isColorDark) {
+            prevSystemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        } else {
+            prevSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+        window.decorView.systemUiVisibility = prevSystemUiVisibility
     }
 
 inline var Activity.statusBarLight: Boolean
@@ -148,7 +172,10 @@ inline var Activity.statusBarLight: Boolean
  *
  * Call in [Activity.onCreateOptionsMenu]
  */
-fun Context.setMenuIcons(menu: Menu, @ColorInt color: Int = Color.WHITE, vararg iicons: Pair<Int, IIcon>) {
+fun Context.setMenuIcons(
+    menu: Menu, @ColorInt color: Int = Color.WHITE,
+    vararg iicons: Pair<Int, IIcon>
+) {
     iicons.forEach { (id, iicon) ->
         menu.findItem(id).icon = iicon.toDrawable(this, sizeDp = 18, color = color)
     }
