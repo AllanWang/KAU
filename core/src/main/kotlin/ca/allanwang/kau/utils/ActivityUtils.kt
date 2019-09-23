@@ -17,7 +17,6 @@
 
 package ca.allanwang.kau.utils
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -35,6 +34,7 @@ import androidx.annotation.StringRes
 import ca.allanwang.kau.R
 import com.google.android.material.snackbar.Snackbar
 import com.mikepenz.iconics.typeface.IIcon
+import kotlin.system.exitProcess
 
 /**
  * Created by Allan Wang on 2017-06-21.
@@ -104,7 +104,7 @@ inline fun Activity.restartApplication() {
     else
         alarm.setExact(AlarmManager.RTC, System.currentTimeMillis() + 100, pending)
     finish()
-    System.exit(0)
+    exitProcess(0)
 }
 
 fun Activity.finishSlideOut() {
@@ -113,9 +113,7 @@ fun Activity.finishSlideOut() {
 }
 
 inline var Activity.navigationBarColor: Int
-    @SuppressLint("NewApi")
-    get() = if (buildIsLollipopAndUp) window.navigationBarColor else Color.BLACK
-    @SuppressLint("NewApi")
+    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor else Color.BLACK
     set(value) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return
@@ -134,15 +132,13 @@ inline var Activity.navigationBarColor: Int
     }
 
 inline var Activity.statusBarColor: Int
-    @SuppressLint("NewApi")
-    get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
-    @SuppressLint("NewApi")
+    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.statusBarColor else Color.BLACK
     set(value) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             return
         }
         window.statusBarColor = value
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return
         }
         var prevSystemUiVisibility = window.decorView.systemUiVisibility
@@ -154,26 +150,14 @@ inline var Activity.statusBarColor: Int
         window.decorView.systemUiVisibility = prevSystemUiVisibility
     }
 
-inline var Activity.statusBarLight: Boolean
-    @SuppressLint("InlinedApi")
-    get() = if (buildIsMarshmallowAndUp) window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR > 0 else false
-    @SuppressLint("InlinedApi")
-    set(value) {
-        if (buildIsMarshmallowAndUp) {
-            val flags = window.decorView.systemUiVisibility
-            window.decorView.systemUiVisibility =
-                if (value) flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                else flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-        }
-    }
-
 /**
  * Themes the base menu icons and adds iicons programmatically based on ids
  *
  * Call in [Activity.onCreateOptionsMenu]
  */
 fun Context.setMenuIcons(
-    menu: Menu, @ColorInt color: Int = Color.WHITE,
+    menu: Menu,
+    @ColorInt color: Int = Color.WHITE,
     vararg iicons: Pair<Int, IIcon>
 ) {
     iicons.forEach { (id, iicon) ->

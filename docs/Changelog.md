@@ -2,6 +2,8 @@
 
 ## v5.2.0
 * :fastadapter: Migrate fastadapter to v4.x.x
+* :core: Automatically switch light mode for navigationBarColor and statusBarColor
+* :core: Remove statusBarLight toggle
 
 ## v5.1.0
 * :adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary

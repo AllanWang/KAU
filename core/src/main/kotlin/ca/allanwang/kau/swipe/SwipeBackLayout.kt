@@ -248,7 +248,6 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             dragHelper.shouldInterceptTouchEvent(event)
         } catch (e: Exception) {
             false
-
         }
     }
 
