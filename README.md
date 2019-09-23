@@ -48,7 +48,9 @@ dependencies {
     implementation "ca.allanwang.kau:core-ui:$KAU"
     
     implementation "ca.allanwang.kau:about:$KAU"
+    implementation "ca.allanwang.kau:adapter:$KAU"
     implementation "ca.allanwang.kau:colorpicker:$KAU"
+    implementation "ca.allanwang.kau:fastadapter:$KAU"
     implementation "ca.allanwang.kau:kpref-activity:$KAU"
     implementation "ca.allanwang.kau:mediapicker:$KAU"
     implementation "ca.allanwang.kau:searchview:$KAU"

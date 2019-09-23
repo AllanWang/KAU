@@ -30,6 +30,9 @@ import ca.allanwang.kau.utils.adjustAlpha
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.statusBarColor
 import java.lang.ref.WeakReference
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * The layout that handles all the touch events
@@ -165,12 +168,8 @@ internal class SwipeBackLayout @JvmOverloads constructor(
 
     init {
         dragHelper = ViewDragHelper.create(this, ViewDragCallback())
-        val density = resources.displayMetrics.density
-        val minVel = MIN_FLING_VELOCITY * density
         // allow touch from anywhere on the screen
-        edgeSize = Math.max(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
-        minVelocity = minVel
-//        maxVelocity = 2.5f * minVel
+        edgeSize = max(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
         edgeFlag = edgeFlag
         sensitivity = 0.3f
         addListener(chromeFadeListener)
@@ -244,19 +243,18 @@ internal class SwipeBackLayout @JvmOverloads constructor(
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent): Boolean {
-        if (!swipeEnabled || disallowIntercept) {
-            return false
-        }
+        if (!swipeEnabled || disallowIntercept) return false
         return try {
             dragHelper.shouldInterceptTouchEvent(event)
         } catch (e: Exception) {
             false
+
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (!swipeEnabled) return false
+        if (!swipeEnabled || disallowIntercept) return false
         try {
             dragHelper.processTouchEvent(event)
         } catch (e: Exception) {
@@ -372,10 +370,8 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             val contentView = contentViewRef.get()
                 ?: return KL.e { "KauSwipe cannot change view position as contentView is null; is onPostCreate called?" }
             // make sure that we are using the proper axis
-            scrollPercent = Math.abs(
-                if (horizontal) left.toFloat() / contentView.width
-                else (top.toFloat() / contentView.height)
-            )
+            scrollPercent = abs(if (horizontal) left.toFloat() / contentView.width
+                else (top.toFloat() / contentView.height))
             contentOffset = if (horizontal) left else top
             invalidate()
             if (scrollPercent < scrollThreshold && !isScrollOverValid)
@@ -400,10 +396,10 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             var result = Pair(0, 0)
             if (scrollPercent <= scrollThreshold) {
                 // threshold not met; check velocities
-                if ((edgeFlag == SWIPE_EDGE_LEFT && xvel > MIN_FLING_VELOCITY) ||
-                    (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY) ||
-                    (edgeFlag == SWIPE_EDGE_TOP && yvel > MIN_FLING_VELOCITY) ||
-                    (edgeFlag == SWIPE_EDGE_BOTTOM && yvel < -MIN_FLING_VELOCITY)
+                if ((edgeFlag == SWIPE_EDGE_LEFT && xvel > minVelocity) ||
+                    (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -minVelocity) ||
+                    (edgeFlag == SWIPE_EDGE_TOP && yvel > minVelocity) ||
+                    (edgeFlag == SWIPE_EDGE_BOTTOM && yvel < -minVelocity)
                 )
                     result = exitCaptureOffsets(edgeFlag, releasedChild)
             } else {
@@ -428,26 +424,22 @@ internal class SwipeBackLayout @JvmOverloads constructor(
 
         override fun clampViewPositionHorizontal(child: View, left: Int, dx: Int): Int {
             return when (edgeFlag) {
-                SWIPE_EDGE_RIGHT -> Math.min(0, Math.max(left, -child.width))
-                SWIPE_EDGE_LEFT -> Math.min(child.width, Math.max(left, 0))
+                SWIPE_EDGE_RIGHT -> min(0, max(left, -child.width))
+                SWIPE_EDGE_LEFT -> min(child.width, max(left, 0))
                 else -> 0
             }
         }
 
         override fun clampViewPositionVertical(child: View, top: Int, dy: Int): Int {
             return when (edgeFlag) {
-                SWIPE_EDGE_BOTTOM -> Math.min(0, Math.max(top, -child.height))
-                SWIPE_EDGE_TOP -> Math.min(child.height, Math.max(top, 0))
+                SWIPE_EDGE_BOTTOM -> min(0, max(top, -child.height))
+                SWIPE_EDGE_TOP -> min(child.height, max(top, 0))
                 else -> 0
             }
         }
     }
 
     companion object {
-        /**
-         * Minimum velocity that will be detected as a fling
-         */
-        const val MIN_FLING_VELOCITY = 400 // dips per second
 
         const val DEFAULT_SCRIM_COLOR = 0x99000000.toInt()
 
