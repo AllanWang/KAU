@@ -20,9 +20,9 @@ import ca.allanwang.kau.adapters.fastAdapter
 import ca.allanwang.kau.iitems.CardIItem
 import ca.allanwang.kau.ui.activities.ElasticRecyclerActivity
 import ca.allanwang.kau.utils.toast
-import com.mikepenz.fastadapter.IItem
+import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.adapters.ItemAdapter
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 
 /**
  * Created by Allan Wang on 2017-07-17.
@@ -30,7 +30,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial
 class AdapterActivity : ElasticRecyclerActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean {
-        val adapter = ItemAdapter<IItem<*, *>>()
+        val adapter = ItemAdapter<GenericItem>()
         recycler.adapter = fastAdapter(adapter)
         adapter.add(
             listOf(

@@ -1,4 +1,8 @@
+import kau.ChangelogGenerator
+import kau.Plugins
+
 buildscript {
+
     repositories {
         google()
         jcenter()
@@ -7,13 +11,13 @@ buildscript {
     }
 
     dependencies {
-        classpath kau.Plugins.android
-        classpath kau.Plugins.kotlin
-        classpath kau.Plugins.androidMaven
-        classpath kau.Plugins.playPublisher
-        classpath kau.Plugins.dexCount
-        classpath kau.Plugins.gitVersion
-        classpath kau.Plugins.spotless
+        classpath Plugins.android
+        classpath Plugins.kotlin
+        classpath Plugins.androidMaven
+        classpath Plugins.playPublisher
+        classpath Plugins.dexCount
+        classpath Plugins.gitVersion
+        classpath Plugins.spotless
     }
 
     wrapper.setDistributionType(Wrapper.DistributionType.ALL)
@@ -24,7 +28,7 @@ task clean(type: Delete) {
 }
 
 task generateChangelogMd {
-    kau.ChangelogGenerator.generate("${project.rootDir}/sample/src/main/res/xml/kau_changelog.xml", "${project.rootDir}/docs/Changelog.md")
+    ChangelogGenerator.generate("${project.rootDir}/sample/src/main/res/xml/kau_changelog.xml", "${project.rootDir}/docs/Changelog.md")
 }
 
 subprojects {

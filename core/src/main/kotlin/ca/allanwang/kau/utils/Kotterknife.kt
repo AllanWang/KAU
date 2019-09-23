@@ -116,11 +116,11 @@ private inline val Dialog.viewFinder: Dialog.(Int) -> View?
 private inline val DialogFragment.viewFinder: DialogFragment.(Int) -> View?
     get() = { dialog.findViewById(it) }
 private inline val SupportDialogFragment.viewFinder: SupportDialogFragment.(Int) -> View?
-    get() = { dialog.findViewById(it) }
+    get() = { dialog?.findViewById(it) }
 private inline val Fragment.viewFinder: Fragment.(Int) -> View?
-    get() = { view!!.findViewById(it) }
+    get() = { view?.findViewById(it) }
 private inline val SupportFragment.viewFinder: SupportFragment.(Int) -> View?
-    get() = { view!!.findViewById(it) }
+    get() = { view?.findViewById(it) }
 private inline val ViewHolder.viewFinder: ViewHolder.(Int) -> View?
     get() = { itemView.findViewById(it) }
 
@@ -246,7 +246,7 @@ private fun <T, V : View> requiredResettable(ids: IntArray, finder: T.(Int) -> V
 private fun <T, V : View> optionalResettable(ids: IntArray, finder: T.(Int) -> View?) =
     LazyResettable { t: T, _ -> ids.map { t.finder(it) as V? }.filterNotNull() }
 
-//Like Kotterknife's lazy delegate but is resettable
+// Like Kotterknife's lazy delegate but is resettable
 private class LazyResettable<in T, out V>(initializer: (T, KProperty<*>) -> V) : Lazy<T, V>(initializer) {
     override fun getValue(thisRef: T, property: KProperty<*>): V {
         KotterknifeRegistry.register(thisRef!!, this)

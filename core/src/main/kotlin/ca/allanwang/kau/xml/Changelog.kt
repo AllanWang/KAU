@@ -84,8 +84,9 @@ internal fun parse(context: Context, @XmlRes xmlRes: Int): List<Pair<String, Cha
     context.resources.getXml(xmlRes).use { parser: XmlResourceParser ->
         var eventType = parser.eventType
         while (eventType != XmlPullParser.END_DOCUMENT) {
-            if (eventType == XmlPullParser.START_TAG)
+            if (eventType == XmlPullParser.START_TAG) {
                 ChangelogType.values.any { it.add(parser, items) }
+            }
             eventType = parser.next()
         }
     }
@@ -104,9 +105,12 @@ internal enum class ChangelogType(val tag: String, val attr: String, @LayoutRes 
      * Returns true if tag matches; false otherwise
      */
     fun add(parser: XmlResourceParser, list: MutableList<Pair<String, ChangelogType>>): Boolean {
-        if (parser.name != tag) return false
-        if (parser.getAttributeValue(null, attr).isNotBlank())
+        if (parser.name != tag) {
+            return false
+        }
+        if (parser.getAttributeValue(null, attr).isNotBlank()) {
             list.add(Pair(parser.getAttributeValue(null, attr), this))
+        }
         return true
     }
 }

@@ -1,3 +1,5 @@
+import kau.Dependencies
+
 ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
 
 ext.kauSubModuleResourcePrefix = "kau_pref_"

@@ -26,7 +26,9 @@ import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.toDrawable
 import ca.allanwang.kau.utils.toast
 import com.google.android.material.appbar.AppBarLayout
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import com.mikepenz.fastadapter.ISelectionListener
+import com.mikepenz.fastadapter.select.selectExtension
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import kotlinx.android.synthetic.main.kau_activity_image_picker.*
 
 /**
@@ -46,21 +48,37 @@ abstract class MediaPickerActivityBase(
 
         setContentView(R.layout.kau_activity_image_picker)
 
-        kau_selection_count.setCompoundDrawables(null, null, GoogleMaterial.Icon.gmd_image.toDrawable(this, 18), null)
+        kau_selection_count.setCompoundDrawables(
+            null,
+            null,
+            GoogleMaterial.Icon.gmd_image.toDrawable(this, 18),
+            null
+        )
 
         setSupportActionBar(kau_toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
-            setHomeAsUpIndicator(GoogleMaterial.Icon.gmd_close.toDrawable(this@MediaPickerActivityBase, 18))
+            setHomeAsUpIndicator(
+                GoogleMaterial.Icon.gmd_close.toDrawable(
+                    this@MediaPickerActivityBase,
+                    18
+                )
+            )
         }
         kau_toolbar.setNavigationOnClickListener { onBackPressed() }
 
         initializeRecycler(kau_recyclerview)
 
-        MediaItem.bindEvents(adapter.fastAdapter)
-        adapter.fastAdapter.withSelectionListener { _, _ ->
-            kau_selection_count.text = adapter.selectionSize.toString()
+        adapter.fastAdapter!!.let {
+            MediaItem.bindEvents(it)
+            it.selectExtension {
+                selectionListener = object : ISelectionListener<MediaItem> {
+                    override fun onSelectionChanged(item: MediaItem?, selected: Boolean) {
+                        kau_selection_count.text = adapter.selectionSize.toString()
+                    }
+                }
+            }
         }
 
         kau_fab.apply {
@@ -92,11 +110,12 @@ abstract class MediaPickerActivityBase(
      */
     private fun setToolbarScrollable(scrollable: Boolean) {
         val params = kau_toolbar.layoutParams as AppBarLayout.LayoutParams
-        if (scrollable)
+        if (scrollable) {
             params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
                 AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-        else
+        } else {
             params.scrollFlags = 0
+        }
     }
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {

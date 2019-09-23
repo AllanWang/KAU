@@ -29,7 +29,6 @@ import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.ui.R
 import ca.allanwang.kau.utils.AnimHolder
 import ca.allanwang.kau.utils.dimen
-import ca.allanwang.kau.utils.dpToPx
 import ca.allanwang.kau.utils.isNavBarOnBottom
 import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.scaleXY
@@ -205,7 +204,9 @@ class ElasticDragDismissFrameLayout @JvmOverloads constructor(
         }
         translationY = dragTo
 
-        if (shouldScale) scaleXY = 1 - (1 - dragDismissScale) * dragFraction
+        if (shouldScale) {
+            scaleXY = 1 - (1 - dragDismissScale) * dragFraction
+        }
 
         // if we've reversed direction and gone past the settle point then clear the flags to
         // allow the list to get the scroll events & reset any transforms

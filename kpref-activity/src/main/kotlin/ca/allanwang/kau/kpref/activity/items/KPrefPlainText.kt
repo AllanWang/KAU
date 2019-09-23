@@ -36,5 +36,6 @@ open class KPrefPlainText(open val builder: KPrefPlainTextBuilder) : KPrefItemBa
         titleId: Int
     ) : BaseContract<Unit> by BaseBuilder(globalOptions, titleId, {}, {})
 
-    override fun getType(): Int = R.id.kau_item_pref_plain_text
+    override val type: Int
+        get() = R.id.kau_item_pref_plain_text
 }

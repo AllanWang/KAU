@@ -31,7 +31,8 @@ import ca.allanwang.kau.utils.KAU_RIGHT
 import ca.allanwang.kau.utils.resolveColor
 import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.withLinearAdapter
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.select.getSelectExtension
 import kotlinx.android.synthetic.main.kau_pref_activity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -73,7 +74,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
     @SuppressLint("NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setup layout
+        // setup layout
         setContentView(R.layout.kau_pref_activity)
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -82,18 +83,24 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
             toolbar.setNavigationOnClickListener { onBackPressed() }
             setDisplayShowTitleEnabled(false)
         }
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         statusBarColor = 0x30000000
         kau_toolbar_ripple.set(resolveColor(R.attr.colorPrimary))
         kau_ripple.set(resolveColor(android.R.attr.colorBackground))
-        //setup prefs
+        // setup prefs
         val core = CoreAttributeBuilder()
         val builder = kPrefCoreAttributes()
         core.builder()
         globalOptions = GlobalOptions(core, this)
         kau_recycler.withLinearAdapter(adapter)
-        adapter.withSelectable(false)
-            .withOnClickListener { v, _, item, _ -> item.onClick(v!!); true }
+        adapter.apply {
+            getSelectExtension().isSelectable = true
+            onClickListener = { v, _, item, _ ->
+                item.onClick(v!!)
+                true
+            }
+        }
         showNextPrefs(R.string.kau_settings, onCreateKPrefs(savedInstanceState), true)
     }
 

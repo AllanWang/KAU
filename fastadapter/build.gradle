@@ -1,4 +1,7 @@
-ext.kauSubModuleMinSdk = kau.Versions.coreMinSdk
+import kau.Dependencies
+import kau.Versions
+
+ext.kauSubModuleMinSdk = Versions.coreMinSdk
 
 apply from: '../android-lib.gradle'
 
@@ -6,8 +9,9 @@ dependencies {
     implementation project(':core')
     api project(':adapter')
 
-    api kau.Dependencies.fastAdapter
-    api kau.Dependencies.fastAdapterCommons
+    api Dependencies.fastAdapter
+    api Dependencies.fastAdapter("utils")
+    implementation Dependencies.fastAdapter("diff")
 }
 
 apply from: '../artifacts.gradle'

@@ -52,7 +52,9 @@ internal class SwipeBackLayout @JvmOverloads constructor(
      */
     override var scrollThreshold = DEFAULT_SCROLL_THRESHOLD
         set(value) {
-            if (value >= 1.0f || value <= 0f) throw IllegalArgumentException("Threshold value should be between 0.0 and 1.0")
+            if (value >= 1.0f || value <= 0f) {
+                throw IllegalArgumentException("Threshold value should be between 0.0 and 1.0")
+            }
             field = value
         }
 
@@ -130,8 +132,9 @@ internal class SwipeBackLayout @JvmOverloads constructor(
          * We will verify that only one axis is used at a time
          */
         set(value) {
-            if (value !in arrayOf(SWIPE_EDGE_TOP, SWIPE_EDGE_BOTTOM, SWIPE_EDGE_LEFT, SWIPE_EDGE_RIGHT))
+            if (value !in arrayOf(SWIPE_EDGE_TOP, SWIPE_EDGE_BOTTOM, SWIPE_EDGE_LEFT, SWIPE_EDGE_RIGHT)) {
                 throw IllegalArgumentException("Edge flag is not valid; use one of the SWIPE_EDGE_* values")
+            }
             field = value
             horizontal = edgeFlag == SWIPE_EDGE_LEFT || edgeFlag == SWIPE_EDGE_RIGHT
             dragHelper.setEdgeTrackingEnabled(value)
@@ -162,7 +165,9 @@ internal class SwipeBackLayout @JvmOverloads constructor(
 
     init {
         dragHelper = ViewDragHelper.create(this, ViewDragCallback())
-        //allow touch from anywhere on the screen
+        val density = resources.displayMetrics.density
+        val minVel = MIN_FLING_VELOCITY * density
+        // allow touch from anywhere on the screen
         edgeSize = Math.max(resources.displayMetrics.widthPixels, resources.displayMetrics.heightPixels)
         edgeFlag = edgeFlag
         sensitivity = 0.3f
@@ -193,8 +198,9 @@ internal class SwipeBackLayout @JvmOverloads constructor(
         val iter = listeners.iterator()
         while (iter.hasNext()) {
             val l = iter.next().get()
-            if (l == null || l == listener)
+            if (l == null || l == listener) {
                 iter.remove()
+            }
         }
     }
 
@@ -206,10 +212,11 @@ internal class SwipeBackLayout @JvmOverloads constructor(
         val iter = listeners.iterator()
         while (iter.hasNext()) {
             val l = iter.next().get()
-            if (l == null)
+            if (l == null) {
                 iter.remove()
-            else if (l == listener)
+            } else if (l == listener) {
                 return true
+            }
         }
         return false
     }
@@ -240,6 +247,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             dragHelper.shouldInterceptTouchEvent(event)
         } catch (e: Exception) {
             false
+
         }
     }
 
@@ -360,7 +368,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             super.onViewPositionChanged(changedView, left, top, dx, dy)
             val contentView = contentViewRef.get()
                 ?: return KL.e { "KauSwipe cannot change view position as contentView is null; is onPostCreate called?" }
-            //make sure that we are using the proper axis
+            // make sure that we are using the proper axis
             scrollPercent = Math.abs(
                 if (horizontal) left.toFloat() / contentView.width
                 else (top.toFloat() / contentView.height)
@@ -388,7 +396,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
         override fun onViewReleased(releasedChild: View, xvel: Float, yvel: Float) {
             var result = Pair(0, 0)
             if (scrollPercent <= scrollThreshold) {
-                //threshold not met; check velocities
+                // threshold not met; check velocities
                 if ((edgeFlag == SWIPE_EDGE_LEFT && xvel > MIN_FLING_VELOCITY) ||
                     (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -MIN_FLING_VELOCITY) ||
                     (edgeFlag == SWIPE_EDGE_TOP && yvel > MIN_FLING_VELOCITY) ||
@@ -396,7 +404,7 @@ internal class SwipeBackLayout @JvmOverloads constructor(
                 )
                     result = exitCaptureOffsets(edgeFlag, releasedChild)
             } else {
-                //threshold met; fling to designated side
+                // threshold met; fling to designated side
                 result = exitCaptureOffsets(edgeFlag, releasedChild)
             }
             dragHelper.settleCapturedViewAt(result.first, result.second)

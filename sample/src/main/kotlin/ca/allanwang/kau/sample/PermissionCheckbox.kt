@@ -25,7 +25,7 @@ import ca.allanwang.kau.utils.hasPermission
 /**
  * Created by Allan Wang on 2017-07-03.
  */
-class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox, PermissionCheckbox.ViewHolder>(
+class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox.ViewHolder>(
     R.layout.permission_checkbox, { ViewHolder(it) }) {
 
     override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
@@ -33,7 +33,7 @@ class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox, 
         holder.text.text = permission
         holder.checkbox.isChecked = holder.itemView.context.hasPermission(permission)
         holder.checkbox.isClickable = false
-        holder.checkbox.jumpDrawablesToCurrentState() //Cancel the animation
+        holder.checkbox.jumpDrawablesToCurrentState() // Cancel the animation
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {

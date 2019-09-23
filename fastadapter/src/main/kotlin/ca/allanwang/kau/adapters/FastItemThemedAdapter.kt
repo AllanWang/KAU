@@ -23,8 +23,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import ca.allanwang.kau.ui.createSimpleRippleDrawable
 import ca.allanwang.kau.utils.adjustAlpha
-import com.mikepenz.fastadapter.IItem
-import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
+import com.mikepenz.fastadapter.GenericItem
+import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
 /**
  * Created by Allan Wang on 2017-06-29.
@@ -35,12 +35,23 @@ import com.mikepenz.fastadapter.commons.adapters.FastItemAdapter
  * This adapter overrides every method where an item is added
  * If that item extends [ThemableIItem], then the colors will be set
  */
-class FastItemThemedAdapter<Item : IItem<*, *>>(
+class FastItemThemedAdapter<Item : GenericItem>(
     textColor: Int? = null,
     backgroundColor: Int? = null,
     accentColor: Int? = null
 ) : FastItemAdapter<Item>() {
-    constructor(colors: ThemableIItemColors) : this(colors.textColor, colors.backgroundColor, colors.accentColor)
+    constructor(colors: ThemableIItemColors) : this(
+        colors.textColor,
+        colors.backgroundColor,
+        colors.accentColor
+    )
+
+    init {
+        itemAdapter.interceptor = {
+            injectTheme(it)
+            it
+        }
+    }
 
     var textColor: Int? = textColor
         set(value) {
@@ -68,56 +79,18 @@ class FastItemThemedAdapter<Item : IItem<*, *>>(
     }
 
     fun themeChanged() {
-        if (adapterItemCount == 0) return
+        if (adapterItemCount == 0) {
+            return
+        }
         injectTheme(adapterItems)
         notifyAdapterDataSetChanged()
     }
 
-    override fun add(position: Int, items: List<Item>): FastItemAdapter<Item> {
-        injectTheme(items)
-        return super.add(position, items)
-    }
-
-    override fun add(position: Int, item: Item): FastItemAdapter<Item> {
-        injectTheme(item)
-        return super.add(position, item)
-    }
-
-    override fun add(item: Item): FastItemAdapter<Item> {
-        injectTheme(item)
-        return super.add(item)
-    }
-
-    override fun add(items: List<Item>?): FastItemAdapter<Item> {
-        injectTheme(items)
-        return super.add(items)
-    }
-
-    override fun set(items: List<Item>?): FastItemAdapter<Item> {
-        injectTheme(items)
-        return super.set(items)
-    }
-
-    override fun set(position: Int, item: Item): FastItemAdapter<Item> {
-        injectTheme(item)
-        return super.set(position, item)
-    }
-
-    override fun setNewList(items: List<Item>?, retainFilter: Boolean): FastItemAdapter<Item> {
-        injectTheme(items)
-        return super.setNewList(items, retainFilter)
-    }
-
-    override fun setNewList(items: List<Item>?): FastItemAdapter<Item> {
-        injectTheme(items)
-        return super.setNewList(items)
-    }
-
-    private fun injectTheme(items: Collection<IItem<*, *>?>?) {
+    private fun injectTheme(items: Collection<GenericItem?>?) {
         items?.forEach { injectTheme(it) }
     }
 
-    protected fun injectTheme(item: IItem<*, *>?) {
+    protected fun injectTheme(item: GenericItem?) {
         if (item is ThemableIItem && item.themeEnabled) {
             item.textColor = textColor
             item.backgroundColor = backgroundColor
@@ -188,7 +161,7 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
     override fun bindBackgroundRipple(vararg views: View?) {
         val background = backgroundColor ?: return
         val foreground = accentColor ?: textColor ?: backgroundColor
-        ?: return //default to normal background
+        ?: return // default to normal background
         val ripple = createSimpleRippleDrawable(foreground, background)
         views.forEach { it?.background = ripple }
     }

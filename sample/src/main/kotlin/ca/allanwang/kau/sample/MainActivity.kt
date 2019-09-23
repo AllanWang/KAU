@@ -39,7 +39,7 @@ import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.utils.withSceneTransitionAnimation
 import ca.allanwang.kau.xml.showChangelog
 import com.afollestad.materialdialogs.input.input
-import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 
 class MainActivity : KPrefActivity() {
 
@@ -47,7 +47,7 @@ class MainActivity : KPrefActivity() {
 
     companion object {
 
-        //some of the most common english words for show
+        // some of the most common english words for show
         val wordBank: List<String> by lazy {
             listOf(
                 "the", "name", "of", "very", "to", "through",
@@ -106,7 +106,7 @@ class MainActivity : KPrefActivity() {
         accentColor = KPrefSample::accentColor
     }
 
-    override fun onCreateKPrefs(savedInstanceState: android.os.Bundle?): KPrefAdapterBuilder.() -> Unit = {
+    override fun onCreateKPrefs(savedInstanceState: Bundle?): KPrefAdapterBuilder.() -> Unit = {
 
         header(R.string.header)
 

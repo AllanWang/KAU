@@ -1,3 +1,5 @@
+import kau.Dependencies
+
 ext.kauSubModuleResourcePrefix = "kau_search_"
 
 apply from: '../android-lib.gradle'

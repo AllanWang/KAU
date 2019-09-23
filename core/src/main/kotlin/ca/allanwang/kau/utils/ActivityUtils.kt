@@ -85,7 +85,7 @@ inline fun Activity.restart(intentBuilder: Intent.() -> Unit = {}) {
         i.putExtras(oldExtras)
     i.intentBuilder()
     startActivity(i)
-    overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out) //No transitions
+    overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out) // No transitions
     finish()
     overridePendingTransition(R.anim.kau_fade_in, R.anim.kau_fade_out)
 }
@@ -125,7 +125,9 @@ inline var Activity.statusBarColor: Int
     get() = if (buildIsLollipopAndUp) window.statusBarColor else Color.BLACK
     @SuppressLint("NewApi")
     set(value) {
-        if (buildIsLollipopAndUp) window.statusBarColor = value
+        if (buildIsLollipopAndUp) {
+            window.statusBarColor = value
+        }
     }
 
 inline var Activity.statusBarLight: Boolean

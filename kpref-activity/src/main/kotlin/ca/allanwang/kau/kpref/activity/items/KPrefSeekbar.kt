@@ -37,7 +37,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
     override fun KClick<Int>.defaultOnClick() = Unit
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
         super.bindView(holder, payloads)
         val text = holder.bindInnerView<TextView>(R.layout.kau_pref_seekbar_text)
         withTextColor(text::setTextColor)
@@ -60,7 +60,8 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
             })
         }
         withAccentColor(seekbar::tint)
-        text.text = builder.toText(seekbar.progress.fromProgress) //set initial text in case no change occurs
+        text.text =
+            builder.toText(seekbar.progress.fromProgress) // set initial text in case no change occurs
         seekbar.progress = pref.toProgress
         seekbar.isEnabled = builder.enabler()
     }
@@ -87,7 +88,8 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
         titleId: Int,
         getter: () -> Int,
         setter: KPrefItemActions.(value: Int) -> Unit
-    ) : KPrefSeekbarContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
+    ) : KPrefSeekbarContract,
+        BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
         override var min: Int = 0
 
@@ -118,5 +120,6 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
     protected inline val Int.fromProgress: Int
         get() = this * increment + min
 
-    override fun getType(): Int = R.id.kau_item_pref_seekbar
+    override val type: Int
+        get() = R.id.kau_item_pref_seekbar
 }
