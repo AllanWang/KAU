@@ -8,6 +8,10 @@
 
     <version title="v5.2.0" />
     <item text=":fastadapter: Migrate fastadapter to v4.x.x" />
+    <item text=":core: Automatically switch light mode for navigationBarColor and statusBarColor" />
+    <item text=":core: Remove statusBarLight toggle" />
+    <item text="" />
+    <item text="" />
     <item text="" />
 
     <version title="v5.1.0" />
@@ -15,9 +19,6 @@
     <item text=":adapter: Make NoAnimatorChange an object; previously a class" />
     <item text=":core: KPref now supports in memory only variants for testing; pass KPrefBuilderInMemory to KPref constructor" />
     <item text=":core: KPref initializer takes in SharedPreferences so user can configure it" />
-    <item text="" />
-    <item text="" />
-    <item text="" />
 
     <version title="v5.0.0" />
     <item text="Update Android SDK to 29 and Kotlin to 1.3.31" />
