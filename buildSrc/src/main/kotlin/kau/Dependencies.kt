@@ -7,7 +7,8 @@ object Dependencies {
     @JvmStatic
     fun kau(version: String) = "ca.allanwang:kau:$version"
 
-    private fun kau(type: String, version: String) = "ca.allanwang.kau:$type:$version"
+    @JvmStatic
+    fun kau(type: String, version: String) = "ca.allanwang.kau:$type:$version"
 
     @JvmStatic
     fun kauAbout(version: String) = kau("about", version)
