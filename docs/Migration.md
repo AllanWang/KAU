@@ -2,6 +2,13 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v5.1.0
+
+## KPref
+
+You'll notice some errors with kpref imports. You can simply remove (optimize) them.
+Extension functions were converted to interfaces to allow for mocking, so imports are no longer necessary.
+
 # v5.0.0
 
 ## Material Dialog Update
