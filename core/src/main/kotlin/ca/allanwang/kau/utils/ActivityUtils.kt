@@ -126,7 +126,7 @@ inline var Activity.navigationBarColor: Int
         }
         var prevSystemUiVisibility = window.decorView.systemUiVisibility
         prevSystemUiVisibility = if (value.isColorDark) {
-            prevSystemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            prevSystemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
         } else {
             prevSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
@@ -147,7 +147,7 @@ inline var Activity.statusBarColor: Int
         }
         var prevSystemUiVisibility = window.decorView.systemUiVisibility
         prevSystemUiVisibility = if (value.isColorDark) {
-            prevSystemUiVisibility xor View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            prevSystemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
         } else {
             prevSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
