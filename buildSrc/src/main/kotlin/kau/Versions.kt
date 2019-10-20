@@ -17,6 +17,9 @@ object Versions {
     // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
     const val recyclerView = "1.1.0-beta05"
 
+    // https://mvnrepository.com/artifact/androidx.swiperefreshlayout/swiperefreshlayout
+    const val swipeRefreshLayout = "1.0.0"
+
     // https://mvnrepository.com/artifact/androidx.cardview/cardview
     const val cardView = "1.0.0"
 
