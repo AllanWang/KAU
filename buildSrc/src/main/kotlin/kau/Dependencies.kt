@@ -52,6 +52,7 @@ object Dependencies {
 
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
+    const val swipeRefreshLayout = "androidx.swipeRefreshLayout:swipeRefreshLayout:${Versions.swipeRefreshLayout}"
     const val cardView = "androidx.cardview:cardview:${Versions.cardView}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
