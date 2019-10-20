@@ -31,11 +31,59 @@ interface VhModel {
     fun vh(): GenericItem
 }
 
+/**
+ * Layout container. Should be implemented in a [BindingItem] companion.
+ */
 interface BindingLayout<Binding : ViewBinding> {
     val layoutRes: Int
-    fun createBinding(context: Context, parent: ViewGroup?): Binding
-    fun Binding.bindView(holder: ViewHolder, payloads: MutableList<Any>)
-    fun Binding.unbindView(holder: ViewHolder)
+}
+
+abstract class BindingItem<Binding : ViewBinding>(open val data: Any?) :
+    AbstractItem<BindingItem.ViewHolder>(),
+    BindingLayout<Binding> {
+
+    override val type: Int
+        get() = layoutRes
+
+    abstract fun createBinding(context: Context, parent: ViewGroup?): Binding
+
+    override fun createView(ctx: Context, parent: ViewGroup?): View {
+        val binding = createBinding(ctx, parent)
+        setBinding(binding.root, binding)
+        return binding.root
+    }
+
+    final override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+        super.bindView(holder, payloads)
+        val binding = holder.getBinding<Binding>()
+        binding.bindView(holder, payloads)
+    }
+
+    abstract fun Binding.bindView(holder: ViewHolder, payloads: MutableList<Any>)
+
+    final override fun unbindView(holder: ViewHolder) {
+        super.unbindView(holder)
+        val binding = holder.getBinding<Binding>()
+        binding.unbindView(holder)
+    }
+
+    open fun Binding.unbindView(holder: ViewHolder) {}
+
+    final override fun getViewHolder(v: View): ViewHolder =
+        ViewHolder(v, layoutRes)
+
+    override fun failedToRecycle(holder: ViewHolder): Boolean {
+        KL.e { "Failed to recycle" }
+        return super.failedToRecycle(holder)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is BindingItem<*>) return false
+        return identifier == other.identifier && data == other.data
+    }
+
+    override fun hashCode(): Int = data.hashCode()
 
     class ViewHolder(itemView: View, internal val layoutRes: Int) :
         RecyclerView.ViewHolder(itemView) {
@@ -43,7 +91,7 @@ interface BindingLayout<Binding : ViewBinding> {
         /**
          * Retrieves a binding.
          *
-         * It is assumed that the binding is set on view holder creation,
+         * It is assumed that the binding is set prior to this call,
          * and that its type matches the supplied generic.
          */
         fun <T> getBinding(): T = getBinding(itemView)
@@ -59,78 +107,21 @@ interface BindingLayout<Binding : ViewBinding> {
     }
 }
 
-abstract class BindingItem<Binding : ViewBinding>(open val data: Any?) :
-    AbstractItem<BindingLayout.ViewHolder>(),
-    BindingLayout<Binding> {
-
-    override val type: Int
-        get() = layoutRes
-
-    override fun createView(ctx: Context, parent: ViewGroup?): View {
-        val binding = createBinding(ctx, parent)
-        BindingLayout.setBinding(binding.root, binding)
-        return binding.root
-    }
-
-    final override fun bindView(holder: BindingLayout.ViewHolder, payloads: MutableList<Any>) {
-        super.bindView(holder, payloads)
-        val binding = holder.getBinding<Binding>()
-        binding.bindView(holder, payloads)
-    }
-
-    final override fun unbindView(holder: BindingLayout.ViewHolder) {
-        super.unbindView(holder)
-        val binding = holder.getBinding<Binding>()
-        binding.unbindView(holder)
-    }
-
-    override fun Binding.unbindView(holder: BindingLayout.ViewHolder) {}
-
-    final override fun getViewHolder(v: View): BindingLayout.ViewHolder =
-        BindingLayout.ViewHolder(v, layoutRes)
-
-    override fun failedToRecycle(holder: BindingLayout.ViewHolder): Boolean {
-        KL.e { "Failed to recycle" }
-        return super.failedToRecycle(holder)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is BindingItem<*>) return false
-        return identifier == other.identifier && data == other.data
-    }
-
-    override fun hashCode(): Int = data.hashCode()
-}
-
 abstract class BindingClickEventHook<Binding : ViewBinding, Item : BindingItem<Binding>>(val identifier: BindingLayout<Binding>) :
     ClickEventHook<Item>() {
 
     private fun RecyclerView.ViewHolder.binding(): Binding? {
-        val holder = this as? BindingLayout.ViewHolder ?: return null
+        val holder = this as? BindingItem.ViewHolder ?: return null
         if (holder.layoutRes != identifier.layoutRes) {
             return null
         }
         return getBinding()
     }
 
-    /**
-     * All bound views must set the view root, which will be used to find the binding.
-     * We avoid attaching the binding directly
-     */
-    private fun View.setRoot(root: View) {
-        setTag(R.id.kau_view_binding_root, root)
-    }
-
-    private fun View.findBinding(): Binding {
-        val root = getTag(R.id.kau_view_binding_root) as View
-        return BindingLayout.getBinding(root)
-    }
-
     final override fun onBind(viewHolder: RecyclerView.ViewHolder): View? {
         val binding = viewHolder.binding() ?: return super.onBind(viewHolder)
         val view = binding.onBind(viewHolder) ?: return super.onBind(viewHolder)
-        view.setRoot(binding.root)
+        BindingItem.setBinding(view, binding)
         return view
     }
 
@@ -139,7 +130,7 @@ abstract class BindingClickEventHook<Binding : ViewBinding, Item : BindingItem<B
     final override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
         val binding = viewHolder.binding() ?: return super.onBindMany(viewHolder)
         val views = binding.onBindMany(viewHolder) ?: return super.onBindMany(viewHolder)
-        views.forEach { it.setRoot(binding.root) }
+        views.forEach { BindingItem.setBinding(it, binding) }
         return views
     }
 
@@ -147,7 +138,7 @@ abstract class BindingClickEventHook<Binding : ViewBinding, Item : BindingItem<B
         super.onBindMany(viewHolder)
 
     final override fun onClick(v: View, position: Int, fastAdapter: FastAdapter<Item>, item: Item) {
-        v.findBinding().onClick(v, position, fastAdapter, item)
+        BindingItem.getBinding<Binding>(v).onClick(v, position, fastAdapter, item)
     }
 
     abstract fun Binding.onClick(v: View, position: Int, fastAdapter: FastAdapter<Item>, item: Item)
