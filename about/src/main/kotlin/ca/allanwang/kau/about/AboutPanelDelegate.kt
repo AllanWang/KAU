@@ -38,6 +38,7 @@ import com.mikepenz.fastadapter.GenericItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.reflect.Field
 
 /**
  * Created by Allan Wang on 2017-08-02.
@@ -96,16 +97,23 @@ abstract class AboutPanelRecycler : AboutPanelContract {
 
     override var recycler: RecyclerView? = null
 
-    override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {
+    override fun onInflatingPage(
+        activity: AboutActivityBase,
+        recycler: RecyclerView,
+        position: Int
+    ) {
         recycler.adapter = adapter
         recycler.itemAnimator = KauAnimator(
             addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f),
             changeAnimator = NoAnimatorChange
-        ).apply { addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(recycler.context) }
+        ).apply {
+            addDuration = 300; interpolator = AnimHolder.decelerateInterpolator(recycler.context)
+        }
     }
 
     override fun inflatePage(activity: AboutActivityBase, parent: ViewGroup, position: Int): View {
-        val v = LayoutInflater.from(activity).inflate(R.layout.kau_recycler_detached_background, parent, false)
+        val v = LayoutInflater.from(activity)
+            .inflate(R.layout.kau_recycler_detached_background, parent, false)
         adapter = FastItemThemedAdapter(activity.configs)
         recycler = v.findViewById(R.id.kau_recycler_detached)
         onInflatingPage(activity, recycler!!, position)
@@ -135,7 +143,12 @@ abstract class AboutPanelRecycler : AboutPanelContract {
  */
 open class AboutPanelMain : AboutPanelRecycler() {
 
-    override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {}
+    override fun onInflatingPage(
+        activity: AboutActivityBase,
+        recycler: RecyclerView,
+        position: Int
+    ) {
+    }
 
     override fun inflatePage(activity: AboutActivityBase, parent: ViewGroup, position: Int): View {
         with(activity) {
@@ -145,7 +158,8 @@ open class AboutPanelMain : AboutPanelRecycler() {
                 with(configs) {
                     text = string(cutoutTextRes, cutoutText)
                     drawable = drawable(cutoutDrawableRes, cutoutDrawable)
-                    if (configs.cutoutForeground != null) foregroundColor = configs.cutoutForeground!!
+                    if (configs.cutoutForeground != null) foregroundColor =
+                        configs.cutoutForeground!!
                 }
             }.apply {
                 themeEnabled = configs.cutoutForeground == null
@@ -170,7 +184,11 @@ open class AboutPanelMain : AboutPanelRecycler() {
  */
 open class AboutPanelLibs : AboutPanelRecycler() {
 
-    override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {
+    override fun onInflatingPage(
+        activity: AboutActivityBase,
+        recycler: RecyclerView,
+        position: Int
+    ) {
         super.onInflatingPage(activity, recycler, position)
         recycler.withMarginDecoration(16, KAU_BOTTOM)
         LibraryIItem.bindEvents(adapter)
@@ -182,7 +200,7 @@ open class AboutPanelLibs : AboutPanelRecycler() {
                 items = withContext(Dispatchers.Default) {
                     getLibraries(
                         if (rClass == null) Libs(activity)
-                        else Libs(activity, Libs.toStringArray(rClass.fields))
+                        else Libs(activity, rClass.fields.toStringArray())
                     ).map(::LibraryIItem)
                 }
                 if (pageStatus[position] == 1)
@@ -190,6 +208,11 @@ open class AboutPanelLibs : AboutPanelRecycler() {
             }
         }
     }
+
+    // TODO remove and use from AboutLibrary
+    // https://github.com/mikepenz/AboutLibraries/issues/449
+    private fun Array<Field>.toStringArray(): Array<String> =
+        map { it.name }.filter { it.contains("define_") }.toTypedArray()
 
     override fun addItemsImpl(activity: AboutActivityBase, position: Int) {
         with(activity.configs) {
@@ -201,7 +224,11 @@ open class AboutPanelLibs : AboutPanelRecycler() {
 
 open class AboutPanelFaqs : AboutPanelRecycler() {
 
-    override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {
+    override fun onInflatingPage(
+        activity: AboutActivityBase,
+        recycler: RecyclerView,
+        position: Int
+    ) {
         super.onInflatingPage(activity, recycler, position)
         FaqIItem.bindEvents(adapter)
     }
