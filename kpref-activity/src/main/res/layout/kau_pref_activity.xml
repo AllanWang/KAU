@@ -13,11 +13,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Margin top will be set to status bar height programmatically -->
     <androidx.appcompat.widget.Toolbar
         android:id="@id/kau_toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="@dimen/kau_status_bar_height"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

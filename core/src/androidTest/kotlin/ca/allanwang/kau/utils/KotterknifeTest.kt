@@ -22,12 +22,12 @@ import android.widget.TextView
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
  * Created by Allan Wang on 2017-07-30.

@@ -28,18 +28,17 @@ import ca.allanwang.kau.kpref.activity.items.KPrefItemCore
 import ca.allanwang.kau.ui.views.RippleCanvas
 import ca.allanwang.kau.utils.KAU_LEFT
 import ca.allanwang.kau.utils.KAU_RIGHT
-import ca.allanwang.kau.utils.contentView
 import ca.allanwang.kau.utils.resolveColor
 import ca.allanwang.kau.utils.setMarginTop
 import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.withLinearAdapter
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import com.mikepenz.fastadapter.select.getSelectExtension
+import java.util.Stack
 import kotlinx.android.synthetic.main.kau_pref_activity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Stack
 
 abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
 

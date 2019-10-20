@@ -35,10 +35,10 @@ import ca.allanwang.kau.utils.withMarginDecoration
 import ca.allanwang.kau.xml.kauParseFaq
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.fastadapter.GenericItem
+import java.lang.reflect.Field
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.reflect.Field
 
 /**
  * Created by Allan Wang on 2017-08-02.
