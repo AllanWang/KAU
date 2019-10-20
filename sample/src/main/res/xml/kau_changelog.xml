@@ -7,9 +7,11 @@
     -->
 
     <version title="v5.2.0" />
-    <item text=":fastadapter: Migrate fastadapter to v4.x.x" />
+    <item text=":about: Migrate about libraries to v7.x.x" />
+    <item text=":core: Migrate iconics to v4.x.x" />
     <item text=":core: Automatically switch light mode for navigationBarColor and statusBarColor" />
     <item text=":core: Remove statusBarLight toggle" />
+    <item text=":fastadapter: Migrate fastadapter to v4.x.x" />
     <item text="" />
     <item text="" />
     <item text="" />
