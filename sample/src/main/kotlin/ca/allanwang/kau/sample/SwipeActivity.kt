@@ -18,6 +18,7 @@ package ca.allanwang.kau.sample
 import android.app.Activity
 import android.os.Bundle
 import ca.allanwang.kau.internal.KauBaseActivity
+import ca.allanwang.kau.sample.databinding.ActivitySwipeBinding
 import ca.allanwang.kau.swipe.SWIPE_EDGE_BOTTOM
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.SWIPE_EDGE_RIGHT
@@ -30,7 +31,6 @@ import ca.allanwang.kau.utils.navigationBarColor
 import ca.allanwang.kau.utils.rndColor
 import ca.allanwang.kau.utils.startActivity
 import ca.allanwang.kau.utils.statusBarColor
-import kotlinx.android.synthetic.main.activity_swipe.*
 
 /**
  * Created by Allan Wang on 2017-08-05.
@@ -45,29 +45,40 @@ fun Activity.startActivityWithEdge(flag: Int) {
 
 class SwipeActivity : KauBaseActivity() {
 
+    private lateinit var binding: ActivitySwipeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_swipe)
-        listOf(swipe_from_left, swipe_from_right, swipe_from_top, swipe_from_bottom)
-            .zip(listOf(SWIPE_EDGE_LEFT, SWIPE_EDGE_RIGHT, SWIPE_EDGE_TOP, SWIPE_EDGE_BOTTOM))
-            .forEach { (button, edge) -> button.setOnClickListener { startActivityWithEdge(edge) } }
-        val flag = intent.getIntExtra(SWIPE_EDGE, -1)
-        swipe_toolbar.title = when (flag) {
-            SWIPE_EDGE_LEFT -> "Left Edge Swipe"
-            SWIPE_EDGE_RIGHT -> "Right Edge Swipe"
-            SWIPE_EDGE_TOP -> "Top Edge Swipe"
-            SWIPE_EDGE_BOTTOM -> "Bottom Edge Swipe"
-            else -> "Invalid Edge Swipe"
-        }
-        setSupportActionBar(swipe_toolbar)
-        val headerColor = rndColor.darken(0.6f)
-        swipe_toolbar.setBackgroundColor(headerColor)
-        statusBarColor = headerColor
-        val bg = headerColor.darken(0.2f)
-        swipe_container.setBackgroundColor(bg)
-        navigationBarColor = bg
-        kauSwipeOnCreate {
-            edgeFlag = flag
+        binding = ActivitySwipeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.apply {
+            mapOf(
+                swipeFromLeft to SWIPE_EDGE_LEFT,
+                swipeFromRight to SWIPE_EDGE_RIGHT,
+                swipeFromTop to SWIPE_EDGE_TOP,
+                swipeFromBottom to SWIPE_EDGE_BOTTOM
+            ).forEach { (button, edge) ->
+                button.setOnClickListener { startActivityWithEdge(edge) }
+            }
+            val flag = intent.getIntExtra(SWIPE_EDGE, -1)
+            swipeToolbar.title = when (flag) {
+                SWIPE_EDGE_LEFT -> "Left Edge Swipe"
+                SWIPE_EDGE_RIGHT -> "Right Edge Swipe"
+                SWIPE_EDGE_TOP -> "Top Edge Swipe"
+                SWIPE_EDGE_BOTTOM -> "Bottom Edge Swipe"
+                else -> "Invalid Edge Swipe"
+            }
+            setSupportActionBar(swipeToolbar)
+            val headerColor = rndColor.darken(0.6f)
+            swipeToolbar.setBackgroundColor(headerColor)
+            statusBarColor = headerColor
+            val bg = headerColor.darken(0.2f)
+            swipeContainer.setBackgroundColor(bg)
+            navigationBarColor = bg
+            kauSwipeOnCreate {
+                edgeFlag = flag
+            }
         }
     }
 

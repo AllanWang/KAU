@@ -16,6 +16,7 @@
 package ca.allanwang.fastadapter.viewbinding
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -45,10 +46,10 @@ abstract class BindingItem<Binding : ViewBinding>(open val data: Any?) :
     override val type: Int
         get() = layoutRes
 
-    abstract fun createBinding(context: Context, parent: ViewGroup?): Binding
+    abstract fun createBinding(layoutInflater: LayoutInflater, parent: ViewGroup?): Binding
 
     override fun createView(ctx: Context, parent: ViewGroup?): View {
-        val binding = createBinding(ctx, parent)
+        val binding = createBinding(LayoutInflater.from(ctx), parent)
         setBinding(binding.root, binding)
         return binding.root
     }

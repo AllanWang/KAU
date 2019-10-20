@@ -16,6 +16,7 @@
 package ca.allanwang.kau.sample
 
 import android.os.Bundle
+import ca.allanwang.kau.adapters.SingleFastAdapter
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
@@ -42,7 +43,7 @@ class AnimActivity : KauBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val adapter = FastItemAdapter<PermissionCheckbox>()
+        val adapter = SingleFastAdapter()
         setContentView(fullLinearRecycler(adapter).apply {
             setBackgroundColor(
                 KPrefSample.bgColor.withAlpha(255)
@@ -53,15 +54,8 @@ class AnimActivity : KauBaseActivity() {
             PERMISSION_ACCESS_COARSE_LOCATION,
             PERMISSION_ACCESS_FINE_LOCATION,
             PERMISSION_CAMERA
-        ).map { PermissionCheckbox(it) })
-        adapter.onClickListener = { _, _, item, _ ->
-            KL.d { "Perm Click" }
-            kauRequestPermissions(item.permission) { granted, _ ->
-                toast("${item.permission} enabled: $granted")
-                adapter.notifyAdapterDataSetChanged()
-            }
-            true
-        }
+        ).map { PermissionCheckboxModel(it).vh() })
+        adapter.addEventHook(PermissionCheckboxViewBinding.clickHook())
         kauSwipeOnCreate {
             edgeFlag = SWIPE_EDGE_LEFT
         }

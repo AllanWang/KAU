@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!-- Resources missing; see https://issuetracker.google.com/issues/136103084 -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+    <attr name="flow_horizontalSeparator" />
+    <attr name="flow_verticalSeparator" />
+    <attr name="motionProgress" />
+    <attr name="waveDecay" />
+    <attr name="motionPathRotate" />
+    <attr name="duration" />
+</resources>
