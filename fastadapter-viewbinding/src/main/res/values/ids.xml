@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="kau_view_binding_model" type="id" />
+    <item name="kau_view_binding_root" type="id" />
+</resources>

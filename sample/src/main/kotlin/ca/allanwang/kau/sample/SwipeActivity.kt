@@ -17,7 +17,9 @@ package ca.allanwang.kau.sample
 
 import android.app.Activity
 import android.os.Bundle
+import androidx.viewbinding.ViewBinding
 import ca.allanwang.kau.internal.KauBaseActivity
+import ca.allanwang.kau.sample.databinding.ActivitySwipeBinding
 import ca.allanwang.kau.swipe.SWIPE_EDGE_BOTTOM
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.SWIPE_EDGE_RIGHT
