@@ -26,6 +26,9 @@ object Versions {
     // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
     const val constraintLayout = "2.0.0-beta2"
 
+    // https://mvnrepository.com/artifact/androidx.core/core-ktx
+    const val coreKtx = "1.1.0"
+
     // https://kotlinlang.org/docs/reference/using-gradle.html
     const val kotlin = "1.3.50"
 
