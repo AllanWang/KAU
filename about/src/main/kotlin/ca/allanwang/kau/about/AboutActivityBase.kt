@@ -148,11 +148,11 @@ abstract class AboutActivityBase(
     open fun getLibraries(libs: Libs): List<Library> =
         libs.prepareLibraries(
             this,
-            null,
-            null,
-            true,
-            true,
-            true
+            internalLibraries = emptyArray(), // TODO remove parameter declarations; https://github.com/mikepenz/AboutLibraries/issues/449
+            excludeLibraries = emptyArray(),
+            autoDetect = true,
+            checkCachedDetection = true,
+            sort = true
         )
 
     /*
