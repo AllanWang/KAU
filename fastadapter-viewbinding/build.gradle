@@ -6,9 +6,6 @@ ext.kauSubModuleMinSdk = Versions.coreMinSdk
 apply from: '../android-lib.gradle'
 
 android {
-    dataBinding {
-        enabled = true
-    }
     viewBinding {
         enabled = true
     }

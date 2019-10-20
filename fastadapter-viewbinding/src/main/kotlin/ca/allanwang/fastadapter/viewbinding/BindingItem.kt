@@ -20,7 +20,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import ca.allanwang.kau.fastadapter.databinding.R
+import ca.allanwang.kau.fastadapter.viewbinding.R
 import ca.allanwang.kau.logging.KL
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
