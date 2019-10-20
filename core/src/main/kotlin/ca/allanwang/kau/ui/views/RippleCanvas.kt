@@ -27,6 +27,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.View
+import kotlin.math.hypot
+import kotlin.math.max
 
 /**
  * Created by Allan Wang on 2016-11-17.
@@ -93,7 +95,7 @@ class RippleCanvas @JvmOverloads constructor(
             END -> h
             else -> startY
         }
-        val maxRadius = Math.hypot(Math.max(x, w - x).toDouble(), Math.max(y, h - y).toDouble()).toFloat()
+        val maxRadius = hypot(max(x, w - x).toDouble(), max(y, h - y).toDouble()).toFloat()
         val ripple = Ripple(color, x, y, 0f, maxRadius)
         ripples.add(ripple)
         val animator = ValueAnimator.ofFloat(0f, maxRadius)

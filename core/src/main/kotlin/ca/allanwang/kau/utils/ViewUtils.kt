@@ -41,6 +41,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
+import kotlin.math.max
 
 /**
  * Created by Allan Wang on 2017-05-31.
@@ -342,7 +343,7 @@ fun FloatingActionButton.hideOnDownwardsScroll(recycler: RecyclerView) {
 }
 
 inline var View.scaleXY
-    get() = Math.max(scaleX, scaleY)
+    get() = max(scaleX, scaleY)
     set(value) {
         scaleX = value
         scaleY = value

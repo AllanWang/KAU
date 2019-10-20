@@ -19,6 +19,7 @@ import android.view.ViewPropertyAnimator
 import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.utils.KAU_BOTTOM
 import ca.allanwang.kau.utils.KAU_RIGHT
+import kotlin.math.max
 
 /**
  * Created by Allan Wang on 2017-06-27.
@@ -30,7 +31,7 @@ open class KauAnimator(
 ) : BaseItemAnimator() {
 
     open fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float) =
-        Math.max(0L, (holder.adapterPosition * duration * factor).toLong())
+        max(0L, (holder.adapterPosition * duration * factor).toLong())
 
     override fun removeAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator {
         return holder.itemView.animate().apply {

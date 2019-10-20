@@ -25,6 +25,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.annotation.StringRes
+import kotlin.math.hypot
+import kotlin.math.max
 
 /**
  * Created by Allan Wang on 2017-06-01.
@@ -52,10 +54,7 @@ fun View.circularReveal(
     if (!buildIsLollipopAndUp) return fadeIn(offset, duration, onStart, onFinish)
 
     val r = if (radius >= 0) radius
-    else Math.max(
-        Math.hypot(x.toDouble(), y.toDouble()),
-        Math.hypot((width - x.toDouble()), (height - y.toDouble()))
-    ).toFloat()
+    else max(hypot(x.toDouble(), y.toDouble()), hypot((width - x.toDouble()), (height - y.toDouble()))).toFloat()
 
     val anim = ViewAnimationUtils.createCircularReveal(this, x, y, 0f, r).setDuration(duration)
     anim.startDelay = offset
@@ -91,10 +90,7 @@ fun View.circularHide(
     if (!buildIsLollipopAndUp) return fadeOut(offset, duration, onStart, onFinish)
 
     val r = if (radius >= 0) radius
-    else Math.max(
-        Math.hypot(x.toDouble(), y.toDouble()),
-        Math.hypot((width - x.toDouble()), (height - y.toDouble()))
-    ).toFloat()
+    else max(hypot(x.toDouble(), y.toDouble()), hypot((width - x.toDouble()), (height - y.toDouble()))).toFloat()
 
     val anim = ViewAnimationUtils.createCircularReveal(this, x, y, r, 0f).setDuration(duration)
     anim.startDelay = offset

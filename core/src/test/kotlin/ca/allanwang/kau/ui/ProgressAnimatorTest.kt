@@ -16,6 +16,7 @@
 package ca.allanwang.kau.ui
 
 import org.junit.Test
+import kotlin.math.min
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -67,7 +68,7 @@ class ProgressAnimatorTest {
                 i > 0.5f
             }
             withAnimator {
-                assertEquals(Math.min(it, 0.5f), i)
+                assertEquals(min(it, 0.5f), i)
             }
         }.test()
     }
