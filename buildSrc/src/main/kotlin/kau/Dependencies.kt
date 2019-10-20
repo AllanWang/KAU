@@ -52,11 +52,13 @@ object Dependencies {
 
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
-    const val swipeRefreshLayout = "androidx.swipeRefreshLayout:swipeRefreshLayout:${Versions.swipeRefreshLayout}"
+    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
     const val cardView = "androidx.cardview:cardview:${Versions.cardView}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val googleMaterial = "com.google.android.material:material:${Versions.googleMaterial}"
+
+    const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
 
     const val iconics = "com.mikepenz:iconics-core:${Versions.iconics}"
     const val iconicsGoogle =
