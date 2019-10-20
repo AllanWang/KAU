@@ -28,6 +28,9 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    viewBinding {
+        enabled = true
+    }
 
     def releaseSigning = file("../files/kau.properties")
     def hasSigning = releaseSigning.exists()
