@@ -51,6 +51,7 @@ import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import kotlinx.coroutines.CancellationException
 import java.io.File
+import kotlin.math.min
 
 /**
  * Created by Allan Wang on 2017-07-23.
@@ -204,7 +205,7 @@ abstract class MediaPickerCore<T : GenericItem>(
         addItems(models.map { converter(it) })
         if (!hasPreloaded && mediaType == MediaType.VIDEO) {
             hasPreloaded = true
-            val preloads = models.subList(0, Math.min(models.size, 50)).map {
+            val preloads = models.subList(0, min(models.size, 50)).map {
                 glide.load(it.data)
                     .applyMediaOptions(this@MediaPickerCore)
                     .preload()

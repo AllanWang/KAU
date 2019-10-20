@@ -33,6 +33,8 @@ import ca.allanwang.kau.utils.dimenPixelSize
 import ca.allanwang.kau.utils.getFont
 import ca.allanwang.kau.utils.parentViewGroup
 import ca.allanwang.kau.utils.toBitmap
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * A view which punches out some text from an opaque color block, allowing you to see through it.
@@ -133,7 +135,7 @@ class CutoutView @JvmOverloads constructor(
         if (drawable!!.intrinsicHeight <= 0 || drawable!!.intrinsicWidth <= 0) throw IllegalArgumentException("Drawable's intrinsic size cannot be less than 0")
         val targetWidth = width / PHI
         val targetHeight = height / PHI
-        bitmapScaling = Math.min(targetHeight / drawable!!.intrinsicHeight, targetWidth / drawable!!.intrinsicWidth)
+        bitmapScaling = min(targetHeight / drawable!!.intrinsicHeight, targetWidth / drawable!!.intrinsicWidth)
         cutoutX = (width - drawable!!.intrinsicWidth * bitmapScaling) / 2
         cutoutY = (height - drawable!!.intrinsicHeight * bitmapScaling) / 2
     }
@@ -143,9 +145,9 @@ class CutoutView @JvmOverloads constructor(
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         parentViewGroup.getWindowVisibleDisplayFrame(parentFrame)
-        val minHeight = Math.max(minHeight, heightPercentage * parentFrame.height())
+        val minHeight = max(minHeight, heightPercentage * parentFrame.height())
         val trueHeightMeasureSpec = if (minHeight > 0)
-            MeasureSpec.makeMeasureSpec(Math.max(minHeight.toInt(), measuredHeight), MeasureSpec.EXACTLY)
+            MeasureSpec.makeMeasureSpec(max(minHeight.toInt(), measuredHeight), MeasureSpec.EXACTLY)
         else heightMeasureSpec
         super.onMeasure(widthMeasureSpec, trueHeightMeasureSpec)
     }

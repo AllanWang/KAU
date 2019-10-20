@@ -41,6 +41,7 @@ import ca.allanwang.kau.utils.getDip
 import ca.allanwang.kau.utils.setBackgroundColorRes
 import ca.allanwang.kau.utils.toColor
 import ca.allanwang.kau.utils.toHSV
+import kotlin.math.roundToInt
 
 /**
  * Created by Allan Wang on 2017-06-10.
@@ -214,7 +215,7 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         @ColorInt
         fun translucentColor(color: Int): Int {
             val factor = 0.7f
-            val alpha = Math.round(Color.alpha(color) * factor)
+            val alpha = (Color.alpha(color) * factor).roundToInt()
             val red = Color.red(color)
             val green = Color.green(color)
             val blue = Color.blue(color)

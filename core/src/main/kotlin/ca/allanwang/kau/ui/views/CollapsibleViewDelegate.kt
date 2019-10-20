@@ -23,6 +23,7 @@ import ca.allanwang.kau.utils.KAU_EXPANDED
 import ca.allanwang.kau.utils.KAU_EXPANDING
 import ca.allanwang.kau.utils.goneIf
 import java.lang.ref.WeakReference
+import kotlin.math.roundToInt
 
 /**
  * Created by Allan Wang on 2017-08-03.
@@ -107,7 +108,7 @@ class CollapsibleViewDelegate : CollapsibleView {
         val v = view ?: return Pair(0, 0)
         val size = v.measuredHeight
         v.goneIf(expansion == 0f && size == 0)
-        return Pair(v.measuredWidth, Math.round(size * expansion))
+        return Pair(v.measuredWidth, (size * expansion).roundToInt())
     }
 
     private fun animateSize(target: Float) {

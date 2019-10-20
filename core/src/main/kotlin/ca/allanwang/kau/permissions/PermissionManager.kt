@@ -27,6 +27,7 @@ import ca.allanwang.kau.utils.buildIsMarshmallowAndUp
 import ca.allanwang.kau.utils.hasPermission
 import ca.allanwang.kau.utils.toast
 import java.lang.ref.WeakReference
+import kotlin.math.min
 
 /**
  * Created by Allan Wang on 2017-07-03.
@@ -97,7 +98,7 @@ internal object PermissionManager {
      */
     fun onRequestPermissionsResult(context: Context, permissions: Array<out String>, grantResults: IntArray) {
         KL.i { "On permission result: pending ${pendingResults.size}" }
-        val count = Math.min(permissions.size, grantResults.size)
+        val count = min(permissions.size, grantResults.size)
         pendingResults.kauRemoveIf {
             val action = it.get()
             action == null || (0 until count).any { i -> action.onResult(permissions[i], grantResults[i]) }

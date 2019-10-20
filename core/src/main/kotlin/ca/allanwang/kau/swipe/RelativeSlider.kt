@@ -15,6 +15,9 @@
  */
 package ca.allanwang.kau.swipe
 
+import kotlin.math.max
+import kotlin.math.min
+
 /**
  * Created by Mr.Jude on 2015/8/26.
  *
@@ -46,13 +49,13 @@ internal class RelativeSlider(var curPage: SwipeBackPage) : SwipeListener {
         }
         when (edgeFlag) {
             SWIPE_EDGE_LEFT -> page.swipeBackLayout.x =
-                Math.min(-offset * Math.max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
+                min(-offset * max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
             SWIPE_EDGE_RIGHT -> page.swipeBackLayout.x =
-                Math.min(offset * Math.max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
+                min(offset * max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
             SWIPE_EDGE_TOP -> page.swipeBackLayout.y =
-                Math.min(-offset * Math.max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
+                min(-offset * max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
             SWIPE_EDGE_BOTTOM -> page.swipeBackLayout.y =
-                Math.min(offset * Math.max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
+                min(offset * max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
         }
     }
 
