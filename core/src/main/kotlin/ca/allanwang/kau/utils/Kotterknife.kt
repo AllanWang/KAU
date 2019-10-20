@@ -34,14 +34,14 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.app.Fragment
 import android.view.View
+import androidx.fragment.app.DialogFragment as SupportDialogFragment
+import androidx.fragment.app.Fragment as SupportFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import java.util.Collections
 import java.util.WeakHashMap
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-import androidx.fragment.app.DialogFragment as SupportDialogFragment
-import androidx.fragment.app.Fragment as SupportFragment
 
 fun <V : View> View.bindView(id: Int): ReadOnlyProperty<View, V> = required(id, viewFinder)
 

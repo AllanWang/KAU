@@ -24,7 +24,6 @@
     <public name='kau_splash_logo' type='dimen' />
     <public name='kau_progress_bar_height' type='dimen' />
     <public name='kau_account_image_size' type='dimen' />
-    <public name='kau_status_bar_height' type='dimen' />
     <public name='kau_drag_dismiss_distance' type='dimen' />
     <public name='kau_drag_dismiss_distance_large' type='dimen' />
     <public name='kau_spacing_normal' type='dimen' />

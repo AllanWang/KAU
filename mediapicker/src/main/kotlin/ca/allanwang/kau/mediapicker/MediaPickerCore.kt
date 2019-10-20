@@ -49,9 +49,9 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.iconics.dsl.iconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
-import kotlinx.coroutines.CancellationException
 import java.io.File
 import kotlin.math.min
+import kotlinx.coroutines.CancellationException
 
 /**
  * Created by Allan Wang on 2017-07-23.

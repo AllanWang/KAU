@@ -15,11 +15,11 @@
  */
 package ca.allanwang.kau.ui
 
-import org.junit.Test
 import kotlin.math.min
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import org.junit.Test
 
 class ProgressAnimatorTest {
 

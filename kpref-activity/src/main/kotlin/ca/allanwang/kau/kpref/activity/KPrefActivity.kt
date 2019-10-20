@@ -29,15 +29,16 @@ import ca.allanwang.kau.ui.views.RippleCanvas
 import ca.allanwang.kau.utils.KAU_LEFT
 import ca.allanwang.kau.utils.KAU_RIGHT
 import ca.allanwang.kau.utils.resolveColor
+import ca.allanwang.kau.utils.setMarginTop
 import ca.allanwang.kau.utils.statusBarColor
 import ca.allanwang.kau.utils.withLinearAdapter
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import com.mikepenz.fastadapter.select.getSelectExtension
+import java.util.Stack
 import kotlinx.android.synthetic.main.kau_pref_activity.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Stack
 
 abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
 
@@ -82,6 +83,10 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
             setDisplayShowHomeEnabled(true)
             toolbar.setNavigationOnClickListener { onBackPressed() }
             setDisplayShowTitleEnabled(false)
+        }
+        findViewById<View>(android.R.id.content).setOnApplyWindowInsetsListener { _, insets ->
+            kau_toolbar.setMarginTop(insets.systemWindowInsetTop)
+            insets
         }
         window.decorView.systemUiVisibility =
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

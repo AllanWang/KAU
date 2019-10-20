@@ -11,8 +11,8 @@
     <item text=":core: Migrate iconics to v4.x.x" />
     <item text=":core: Automatically switch light mode for navigationBarColor and statusBarColor" />
     <item text=":core: Remove statusBarLight toggle" />
+    <item text=":core: Remove kau_status_bar_height; height should be found programmatically" />
     <item text=":fastadapter: Migrate fastadapter to v4.x.x" />
-    <item text="" />
     <item text="" />
     <item text="" />
 
