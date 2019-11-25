@@ -77,7 +77,7 @@ object Versions {
     const val bugsnagPlugin="4.7.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "3.6.0-beta03"
+    const val gradlePlugin = "3.6.0-beta04"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
