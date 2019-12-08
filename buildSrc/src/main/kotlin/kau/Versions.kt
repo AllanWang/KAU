@@ -84,7 +84,7 @@ object Versions {
     const val playPublishPlugin = "2.6.1"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    const val dexCountPlugin = "1.0.0"
+    const val dexCountPlugin = "1.0.2"
 
     // https://github.com/gladed/gradle-android-git-version/releases
     const val gitVersionPlugin = "0.4.11"
