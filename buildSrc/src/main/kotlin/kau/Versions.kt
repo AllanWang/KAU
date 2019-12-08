@@ -12,7 +12,7 @@ object Versions {
     const val appcompat = "1.1.0"
 
     // https://mvnrepository.com/artifact/com.google.android.material/material
-    const val googleMaterial = "1.1.0-beta02"
+    const val googleMaterial = "1.0.0"
 
     // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
     const val recyclerView = "1.1.0"
