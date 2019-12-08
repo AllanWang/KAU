@@ -74,7 +74,7 @@ abstract class MediaPickerActivityBase(
             MediaItem.bindEvents(it)
             it.selectExtension {
                 selectionListener = object : ISelectionListener<MediaItem> {
-                    override fun onSelectionChanged(item: MediaItem?, selected: Boolean) {
+                    override fun onSelectionChanged(item: MediaItem, selected: Boolean) {
                         kau_selection_count.text = adapter.selectionSize.toString()
                     }
                 }
