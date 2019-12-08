@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dip"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingRight"
+    android:clickable="false"
+    android:focusable="false"
     android:paddingStart="?android:attr/listPreferredItemPaddingLeft"
     android:paddingTop="16dip"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingRight"
     android:textColor="?colorAccent"
     android:textSize="14sp" />

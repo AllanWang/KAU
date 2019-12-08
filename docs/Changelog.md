@@ -7,6 +7,7 @@
 * :core: Remove statusBarLight toggle
 * :core: Remove kau_status_bar_height; height should be found programmatically
 * :fastadapter: Migrate fastadapter to v4.x.x
+* :fastadapter-viewbinding: Create helper items for ViewBinding
 
 ## v5.1.0
 * :adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary

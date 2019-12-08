@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="header">This is a header</string>
     <string name="desc">This is a description</string>
     <string name="checkbox_1">Checkbox 1</string>
