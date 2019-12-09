@@ -36,7 +36,7 @@ object Versions {
     const val coroutines = "1.3.2"
 
     // https://github.com/mikepenz/AboutLibraries/releases
-    const val aboutLibraries = "7.0.4"
+    const val aboutLibraries = "7.0.3"
 
     // https://github.com/wasabeef/Blurry/releases
     const val blurry = "3.0.0"
@@ -54,7 +54,7 @@ object Versions {
     const val iconicsCommunity = "3.5.95.1"
 
     // https://github.com/afollestad/material-dialogs/releases
-    const val materialDialog = "3.1.1"
+    const val materialDialog = "3.0.1"
 
     // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
     const val espresso = "3.2.0"
