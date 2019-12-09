@@ -9,7 +9,7 @@ object Versions {
     const val buildTools = "29.0.0"
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
-    const val appcompat = "1.1.0"
+    const val appcompat = "1.0.0"
 
     // https://mvnrepository.com/artifact/com.google.android.material/material
     const val googleMaterial = "1.0.0"
