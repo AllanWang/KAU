@@ -38,6 +38,7 @@ import ca.allanwang.kau.animators.FadeScaleAnimatorAdd
 import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.kotlin.lazyContext
+import ca.allanwang.kau.kotlin.lazyUi
 import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.utils.dimenPixelSize
@@ -131,7 +132,7 @@ abstract class MediaPickerCore<T : GenericItem>(
     /**
      * Further improve preloading by extending the layout space
      */
-    val extraSpace: Int by lazy { resources.displayMetrics.heightPixels }
+    val extraSpace: Int by lazyUi { resources.displayMetrics.heightPixels }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

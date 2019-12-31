@@ -24,6 +24,7 @@ import ca.allanwang.kau.animators.KauAnimator
 import ca.allanwang.kau.animators.SlideAnimatorAdd
 import ca.allanwang.kau.animators.SlideAnimatorRemove
 import ca.allanwang.kau.internal.KauBaseActivity
+import ca.allanwang.kau.kotlin.lazyUi
 import ca.allanwang.kau.kpref.activity.items.KPrefItemCore
 import ca.allanwang.kau.ui.views.RippleCanvas
 import ca.allanwang.kau.utils.KAU_LEFT
@@ -53,13 +54,13 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
      */
     var animate: Boolean = true
 
-    private val recyclerAnimatorNext: KauAnimator by lazy {
+    private val recyclerAnimatorNext: KauAnimator by lazyUi {
         KauAnimator(
             SlideAnimatorAdd(KAU_RIGHT, itemDelayFactor = 0f),
             SlideAnimatorRemove(KAU_LEFT, itemDelayFactor = 0f)
         )
     }
-    private val recyclerAnimatorPrev: KauAnimator by lazy {
+    private val recyclerAnimatorPrev: KauAnimator by lazyUi {
         KauAnimator(
             SlideAnimatorAdd(KAU_LEFT, itemDelayFactor = 0f),
             SlideAnimatorRemove(KAU_RIGHT, itemDelayFactor = 0f)
