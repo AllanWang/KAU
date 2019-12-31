@@ -4,4 +4,68 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">Σχετικά με την εφαρμογή</string>
+    <string name="kau_about_x">Περί %s</string>
+    <string name="kau_add_account">Προσθήκη Λογαριασμού</string>
+    <string name="kau_back">Πίσω</string>
+    <string name="kau_cancel">Ακύρωση</string>
+    <string name="kau_changelog">Αρχείο καταγραφής αλλαγών</string>
+    <string name="kau_close">Κλείσιμο</string>
+    <string name="kau_contact_us">Επικοινωνία</string>
+    <string name="kau_copy">Αντιγραφή</string>
+    <string name="kau_custom">Προσαρμοσμένο</string>
+    <string name="kau_dark">Σκοτεινό</string>
+    <string name="kau_default">Προεπιλεγμένο</string>
+    <string name="kau_do_not_show_again">Να μην εμφανιστεί ξανά</string>
+    <string name="kau_done">Τέλος</string>
+    <string name="kau_error">Σφάλμα</string>
+    <string name="kau_exit">Έξοδος</string>
+    <string name="kau_exit_confirmation">Είστε βέβαιοι ότι θέλετε να κλείσετε;</string>
+    <string name="kau_exit_confirmation_x">Είστε βέβαιοι ότι θέλετε να κλείσετε %s;</string>
+    <string name="kau_glass">Γυαλί</string>
+    <string name="kau_got_it">Το \'πιασα</string>
+    <string name="kau_great">Τέλεια</string>
+    <string name="kau_hide">Απόκρυψη</string>
+    <string name="kau_light">Φωτεινό</string>
+    <string name="kau_login">Σύνδεση</string>
+    <string name="kau_logout">Αποσύνδεση</string>
+    <string name="kau_logout_confirm_as_x">Είστε βέβαιοι ότι θέλετε να αποσυνδεθείτε ως %s;</string>
+    <string name="kau_manage_account">Διαχείριση λογαριασμού</string>
+    <string name="kau_maybe">Ίσως</string>
+    <string name="kau_menu">Μενού</string>
+    <string name="kau_no">Όχι</string>
+    <string name="kau_no_results_found">Δε βρέθηκαν αποτελέσματα</string>
+    <string name="kau_none">Κανένα</string>
+    <string name="kau_ok">Εντάξει</string>
+    <string name="kau_play_store">Κατάστημα Play</string>
+    <string name="kau_rate">Βαθμολογηστε</string>
+    <string name="kau_report_bug">Αναφέρετε ένα Σφάλμα</string>
+    <string name="kau_search">Αναζήτηση</string>
+    <string name="kau_send_feedback">Αποστολή σχολίων</string>
+    <string name="kau_send_via">Αποστολή μέσω</string>
+    <string name="kau_settings">Ρυθμίσεις</string>
+    <string name="kau_share">Κοινοποίηση</string>
+    <string name="kau_text_copied">Το κείμενο αντιγράφηκε στο πρόχειρο.</string>
+    <string name="kau_thank_you">Ευχαριστούμε</string>
+    <string name="kau_uh_oh">Ουπς</string>
+    <string name="kau_warning">Προσοχή</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d ημέρα</item>
+        <item quantity="other">%d ημέρες</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d ώρα</item>
+        <item quantity="other">%d ώρες</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d λεπτό</item>
+        <item quantity="other">%d λεπτά</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="one">%d δευτερόλεπτο</item>
+        <item quantity="other">%d δευτερόλεπτα</item>
+    </plurals>
+    <string name="kau_yes">Ναι</string>
+    <string name="kau_permission_denied">Η άδεια απορρίφθηκε</string>
+</resources>
