@@ -4,4 +4,68 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">О приложении</string>
+    <string name="kau_about_x">О %s</string>
+    <string name="kau_add_account">Добавить аккаунт</string>
+    <string name="kau_back">Назад</string>
+    <string name="kau_cancel">Отменить</string>
+    <string name="kau_changelog">Список изменений</string>
+    <string name="kau_close">Закрыть</string>
+    <string name="kau_contact_us">Связаться с нами</string>
+    <string name="kau_copy">Копировать</string>
+    <string name="kau_custom">Пользовательский</string>
+    <string name="kau_dark">Тёмный</string>
+    <string name="kau_default">По умолчанию</string>
+    <string name="kau_do_not_show_again">Не показывать снова</string>
+    <string name="kau_done">Готово</string>
+    <string name="kau_error">Ошибка</string>
+    <string name="kau_exit">Выйти</string>
+    <string name="kau_exit_confirmation">Вы уверены, что хотите выйти?</string>
+    <string name="kau_exit_confirmation_x">Вы уверены, что хотите выйти из %s?</string>
+    <string name="kau_glass">Стекло</string>
+    <string name="kau_got_it">Понятно</string>
+    <string name="kau_great">Отлично</string>
+    <string name="kau_hide">Скрыть</string>
+    <string name="kau_light">Светлая</string>
+    <string name="kau_login">Войти</string>
+    <string name="kau_logout">Выйти</string>
+    <string name="kau_logout_confirm_as_x">Вы уверены, что хотите выйти с %s?</string>
+    <string name="kau_manage_account">Управление аккаунтом</string>
+    <string name="kau_maybe">Может быть</string>
+    <string name="kau_menu">Меню</string>
+    <string name="kau_no">Нет</string>
+    <string name="kau_no_results_found">Результаты не найдены</string>
+    <string name="kau_none">Ни один</string>
+    <string name="kau_ok">ОК</string>
+    <string name="kau_play_store">Play Маркет</string>
+    <string name="kau_rate">Оценить</string>
+    <string name="kau_report_bug">Сообщить об ошибке</string>
+    <string name="kau_search">Поиск</string>
+    <string name="kau_send_feedback">Отправить отзыв</string>
+    <string name="kau_send_via">Отправить через</string>
+    <string name="kau_settings">Настройки</string>
+    <string name="kau_share">Поделиться</string>
+    <string name="kau_text_copied">Текст скопирован в буфер обмена.</string>
+    <string name="kau_thank_you">Благодарим вас</string>
+    <string name="kau_uh_oh">Ой-ой</string>
+    <string name="kau_warning">Внимание</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дней</item>
+        <item quantity="many">%d дней</item>
+        <item quantity="other">%d дней</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d час</item>
+        <item quantity="few">%d часа</item>
+        <item quantity="many">%d часов</item>
+        <item quantity="other">%d часов</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d минута</item>
+        <item quantity="few">%d минуты</item>
+        <item quantity="many">%d минут</item>
+        <item quantity="other">%d минут</item>
+    </plurals>
+</resources>
