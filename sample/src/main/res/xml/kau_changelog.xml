@@ -8,13 +8,13 @@
 
     <version title="v5.2.0" />
     <item text=":about: Migrate about libraries to v7.x.x" />
+    <item text=":color: Draw CircleView in foreground instead of background" />
     <item text=":core: Migrate iconics to v4.x.x" />
     <item text=":core: Automatically switch light mode for navigationBarColor and statusBarColor" />
     <item text=":core: Remove statusBarLight toggle" />
     <item text=":core: Remove kau_status_bar_height; height should be found programmatically" />
     <item text=":fastadapter: Migrate fastadapter to v4.x.x" />
     <item text=":fastadapter-viewbinding: Create helper items for ViewBinding" />
-    <item text="" />
 
     <version title="v5.1.0" />
     <item text=":adapter: Moved fastadapter elements to new module, :fastadapter:. To migrate, simply rename the dependency. If you don't use fast adapter, no changes are necessary" />

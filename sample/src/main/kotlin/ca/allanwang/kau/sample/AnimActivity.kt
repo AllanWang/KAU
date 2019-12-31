@@ -18,20 +18,16 @@ package ca.allanwang.kau.sample
 import android.os.Bundle
 import ca.allanwang.kau.adapters.SingleFastAdapter
 import ca.allanwang.kau.internal.KauBaseActivity
-import ca.allanwang.kau.logging.KL
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_COARSE_LOCATION
 import ca.allanwang.kau.permissions.PERMISSION_ACCESS_FINE_LOCATION
 import ca.allanwang.kau.permissions.PERMISSION_CAMERA
-import ca.allanwang.kau.permissions.kauRequestPermissions
 import ca.allanwang.kau.swipe.SWIPE_EDGE_LEFT
 import ca.allanwang.kau.swipe.kauSwipeOnCreate
 import ca.allanwang.kau.swipe.kauSwipeOnDestroy
 import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivity
-import ca.allanwang.kau.utils.toast
 import ca.allanwang.kau.utils.withAlpha
 import ca.allanwang.kau.utils.withSlideOut
-import com.mikepenz.fastadapter.adapters.FastItemAdapter
 
 /**
  * Created by Allan Wang on 2017-06-12.

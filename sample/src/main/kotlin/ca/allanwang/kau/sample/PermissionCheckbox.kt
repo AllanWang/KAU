@@ -15,7 +15,6 @@
  */
 package ca.allanwang.kau.sample
 
-import android.Manifest
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -98,7 +97,7 @@ class PermissionCheckboxViewBinding(
                 item: PermissionCheckboxViewBinding
             ) {
                 KL.d { "Perm Click" }
-                with (v.context) {
+                with(v.context) {
                     kauRequestPermissions(item.data.permission) { granted, _ ->
                         toast("${item.data.permission} enabled: $granted")
                         fastAdapter.notifyAdapterDataSetChanged()

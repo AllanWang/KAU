@@ -2,6 +2,7 @@
 
 ## v5.2.0
 * :about: Migrate about libraries to v7.x.x
+* :color: Draw CircleView in foreground instead of background
 * :core: Migrate iconics to v4.x.x
 * :core: Automatically switch light mode for navigationBarColor and statusBarColor
 * :core: Remove statusBarLight toggle

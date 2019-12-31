@@ -143,8 +143,8 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         setMeasuredDimension(measuredWidth, measuredWidth)
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
+    override fun onDrawForeground(canvas: Canvas) {
+        super.onDrawForeground(canvas)
         val centerWidth = (measuredWidth / 2).toFloat()
         val centerHeight = (measuredHeight / 2).toFloat()
         if (withBorder) canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
