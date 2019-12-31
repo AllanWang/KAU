@@ -17,6 +17,7 @@ package ca.allanwang.kau.kpref.activity.items
 
 import android.view.View
 import androidx.annotation.CallSuper
+import ca.allanwang.kau.kotlin.lazyUi
 import ca.allanwang.kau.kpref.activity.GlobalOptions
 import ca.allanwang.kau.kpref.activity.KClick
 import ca.allanwang.kau.kpref.activity.KPrefItemActions
@@ -59,7 +60,7 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
         val kclick = object : KClick<T> {
             override val context = itemView.context
             override val itemView = itemView
-            override val innerView: View? by lazy { itemView.findViewById<View>(R.id.kau_pref_inner_content) }
+            override val innerView: View? by lazyUi { itemView.findViewById<View>(R.id.kau_pref_inner_content) }
             override val item = this@KPrefItemBase
         }
         if (_enabled) {

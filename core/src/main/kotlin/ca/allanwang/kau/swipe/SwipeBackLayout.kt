@@ -105,21 +105,18 @@ internal class SwipeBackLayout @JvmOverloads constructor(
     private var statusBarBase: Int = 0
     private var navBarBase: Int = 0
 
-    val chromeFadeListener: SwipeListener by lazy {
-        object : SwipeListener {
-            @SuppressLint("NewApi")
-            override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
-                if (!transitionSystemBars) return
-                activity?.apply {
-                    statusBarColor = statusBarBase.adjustAlpha(scrimOpacity)
-                    navigationBarColor = navBarBase.adjustAlpha(scrimOpacity)
-                }
+    private val chromeFadeListener: SwipeListener = object : SwipeListener {
+        override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
+            if (!transitionSystemBars) return
+            activity?.apply {
+                statusBarColor = statusBarBase.adjustAlpha(scrimOpacity)
+                navigationBarColor = navBarBase.adjustAlpha(scrimOpacity)
             }
-
-            override fun onEdgeTouch() {}
-
-            override fun onScrollToClose(edgeFlag: Int) {}
         }
+
+        override fun onEdgeTouch() {}
+
+        override fun onScrollToClose(edgeFlag: Int) {}
     }
 
     private var inLayout: Boolean = false
@@ -135,7 +132,13 @@ internal class SwipeBackLayout @JvmOverloads constructor(
          * We will verify that only one axis is used at a time
          */
         set(value) {
-            if (value !in arrayOf(SWIPE_EDGE_TOP, SWIPE_EDGE_BOTTOM, SWIPE_EDGE_LEFT, SWIPE_EDGE_RIGHT)) {
+            if (value !in arrayOf(
+                    SWIPE_EDGE_TOP,
+                    SWIPE_EDGE_BOTTOM,
+                    SWIPE_EDGE_LEFT,
+                    SWIPE_EDGE_RIGHT
+                )
+            ) {
                 throw IllegalArgumentException("Edge flag is not valid; use one of the SWIPE_EDGE_* values")
             }
             field = value
@@ -275,7 +278,12 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             xOffset = 0
             yOffset = contentOffset
         }
-        contentView.layout(xOffset, yOffset, xOffset + contentView.measuredWidth, yOffset + contentView.measuredHeight)
+        contentView.layout(
+            xOffset,
+            yOffset,
+            xOffset + contentView.measuredWidth,
+            yOffset + contentView.measuredHeight
+        )
         inLayout = false
     }
 
@@ -364,13 +372,21 @@ internal class SwipeBackLayout @JvmOverloads constructor(
             return if (!horizontal) 1 else 0
         }
 
-        override fun onViewPositionChanged(changedView: View, left: Int, top: Int, dx: Int, dy: Int) {
+        override fun onViewPositionChanged(
+            changedView: View,
+            left: Int,
+            top: Int,
+            dx: Int,
+            dy: Int
+        ) {
             super.onViewPositionChanged(changedView, left, top, dx, dy)
             val contentView = contentViewRef.get()
                 ?: return KL.e { "KauSwipe cannot change view position as contentView is null; is onPostCreate called?" }
             // make sure that we are using the proper axis
-            scrollPercent = abs(if (horizontal) left.toFloat() / contentView.width
-                else (top.toFloat() / contentView.height))
+            scrollPercent = abs(
+                if (horizontal) left.toFloat() / contentView.width
+                else (top.toFloat() / contentView.height)
+            )
             contentOffset = if (horizontal) left else top
             invalidate()
             if (scrollPercent < scrollThreshold && !isScrollOverValid)

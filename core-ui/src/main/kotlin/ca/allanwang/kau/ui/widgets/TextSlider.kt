@@ -25,6 +25,7 @@ import android.view.animation.AnimationUtils
 import android.widget.TextSwitcher
 import android.widget.TextView
 import androidx.core.widget.TextViewCompat
+import ca.allanwang.kau.kotlin.lazyUi
 import ca.allanwang.kau.ui.R
 import java.util.EmptyStackException
 import java.util.Stack
@@ -66,10 +67,10 @@ class TextSlider @JvmOverloads constructor(
         private val prevIn: Int,
         private val prevOut: Int
     ) {
-        val NEXT_IN: Animation by lazy { AnimationUtils.loadAnimation(context, nextIn) }
-        val NEXT_OUT: Animation by lazy { AnimationUtils.loadAnimation(context, nextOut) }
-        val PREV_IN: Animation by lazy { AnimationUtils.loadAnimation(context, prevIn) }
-        val PREV_OUT: Animation by lazy { AnimationUtils.loadAnimation(context, prevOut) }
+        val NEXT_IN: Animation by lazyUi { AnimationUtils.loadAnimation(context, nextIn) }
+        val NEXT_OUT: Animation by lazyUi { AnimationUtils.loadAnimation(context, nextOut) }
+        val PREV_IN: Animation by lazyUi { AnimationUtils.loadAnimation(context, prevIn) }
+        val PREV_OUT: Animation by lazyUi { AnimationUtils.loadAnimation(context, prevOut) }
     }
 
     companion object {
