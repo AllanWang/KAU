@@ -9,10 +9,10 @@ object Versions {
     const val buildTools = "29.0.0"
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
-    const val appcompat = "1.0.0"
+    const val appcompat = "1.1.0"
 
     // https://mvnrepository.com/artifact/com.google.android.material/material
-    const val googleMaterial = "1.0.0"
+    const val googleMaterial = "1.1.0-beta02"
 
     // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
     const val recyclerView = "1.1.0"
@@ -24,16 +24,16 @@ object Versions {
     const val cardView = "1.0.0"
 
     // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
-    const val constraintLayout = "2.0.0-beta3"
+    const val constraintLayout = "2.0.0-beta4"
 
     // https://mvnrepository.com/artifact/androidx.core/core-ktx
-    const val coreKtx = "1.1.0"
+    const val coreKtx = "1.2.0-rc01"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
     const val kotlin = "1.3.61"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    const val coroutines = "1.3.2"
+    const val coroutines = "1.3.3"
 
     // https://github.com/mikepenz/AboutLibraries/releases
     const val aboutLibraries = "7.1.0"
@@ -42,7 +42,7 @@ object Versions {
     const val blurry = "3.0.0"
 
     // https://github.com/mikepenz/FastAdapter/releases
-    const val fastAdapter = "4.1.1"
+    const val fastAdapter = "4.1.2"
 
     // https://github.com/bumptech/glide/releases
     const val glide = "4.10.0"
@@ -54,7 +54,7 @@ object Versions {
     const val iconicsCommunity = "3.5.95.1"
 
     // https://github.com/afollestad/material-dialogs/releases
-    const val materialDialog = "3.0.1"
+    const val materialDialog = "3.1.1"
 
     // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
     const val espresso = "3.2.0"
@@ -77,7 +77,7 @@ object Versions {
     const val bugsnagPlugin="4.7.2"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "3.6.0-beta05"
+    const val gradlePlugin = "3.6.0-rc01"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
