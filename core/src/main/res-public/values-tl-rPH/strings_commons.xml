@@ -4,4 +4,68 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">Tungkol sa App</string>
+    <string name="kau_about_x">Tungkol sa %s</string>
+    <string name="kau_add_account">Magdagdag ng Account</string>
+    <string name="kau_back">Bumalik</string>
+    <string name="kau_cancel">Kanselahin</string>
+    <string name="kau_changelog">Changelog</string>
+    <string name="kau_close">Isara</string>
+    <string name="kau_contact_us">Ikontak Kami</string>
+    <string name="kau_copy">Kopya</string>
+    <string name="kau_custom">Custom</string>
+    <string name="kau_dark">Madilim</string>
+    <string name="kau_default">Default</string>
+    <string name="kau_do_not_show_again">Huwag nang ipakita muli</string>
+    <string name="kau_done">Tapos Na</string>
+    <string name="kau_error">Error</string>
+    <string name="kau_exit">Labas</string>
+    <string name="kau_exit_confirmation">Sigurado ka bang gusto mong lumabas?</string>
+    <string name="kau_exit_confirmation_x">Sigurado ka bang gusto mong lumabas %s?</string>
+    <string name="kau_glass">Salamin</string>
+    <string name="kau_got_it">Kuha</string>
+    <string name="kau_great">Magaling</string>
+    <string name="kau_hide">Itago</string>
+    <string name="kau_light">Maliwanag</string>
+    <string name="kau_login">Login</string>
+    <string name="kau_logout">Logout</string>
+    <string name="kau_logout_confirm_as_x">Sigurado ka bang gusto mong mag log out bilang %s?</string>
+    <string name="kau_manage_account">I-manage ang Account</string>
+    <string name="kau_maybe">Siguro</string>
+    <string name="kau_menu">Menu</string>
+    <string name="kau_no">Hindi</string>
+    <string name="kau_no_results_found">Walang Resultang Nakita</string>
+    <string name="kau_none">Wala</string>
+    <string name="kau_ok">OK</string>
+    <string name="kau_play_store">Play Store</string>
+    <string name="kau_rate">Rate</string>
+    <string name="kau_report_bug">Magreport ng Bug</string>
+    <string name="kau_search">Hanapin</string>
+    <string name="kau_send_feedback">Magbigay ng Feedback</string>
+    <string name="kau_send_via">Ipadala gamit ang</string>
+    <string name="kau_settings">Settings</string>
+    <string name="kau_share">Ibahagi</string>
+    <string name="kau_text_copied">Nakopya na ang text sa clipboard.</string>
+    <string name="kau_thank_you">Salamat</string>
+    <string name="kau_uh_oh">Hala</string>
+    <string name="kau_warning">Babala</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d na araw</item>
+        <item quantity="other">%d mga araw</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d oras</item>
+        <item quantity="other">%d mga oras</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d minuto</item>
+        <item quantity="other">%d mga minuto</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="one">%d segundo</item>
+        <item quantity="other">%d mga segundo</item>
+    </plurals>
+    <string name="kau_yes">Oo</string>
+    <string name="kau_permission_denied">Hindi pinahintulutan</string>
+</resources>
