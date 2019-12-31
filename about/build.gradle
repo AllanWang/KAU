@@ -12,7 +12,7 @@ dependencies {
     implementation project(':core-ui')
     implementation project(':fastadapter')
 
-    api Dependencies.aboutLibraries
+    api Dependencies.aboutLibrariesCore
 }
 
 apply from: '../artifacts.gradle'
