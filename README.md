@@ -158,6 +158,7 @@ Special thanks to the following awesome people for translating significant porti
 | Language | Contributors |
 |----------|--------------|
 | Arabic | [Mohammed Qubati](https://crowdin.com/profile/Mrkqubati) |
+| Catalan | [Jaime Muñoz Martín](https://crowdin.com/profile/jmmartin_5) |
 | Chinese (Simplified) | [Alcatelia](https://crowdin.com/profile/Alcatelia) |
 | Chinese (Traditional) | [yipinghuang](https://crowdin.com/profile/yipinghuang) &bull; [Su, Jun-Ming](https://crowdin.com/profile/sujunmin) &bull; [Wei](https://crowdin.com/profile/wei4green) |
 | Danish | [mhtorp](https://crowdin.com/profile/mhtorp) |
@@ -165,6 +166,7 @@ Special thanks to the following awesome people for translating significant porti
 | French | [Vincent Kulak](https://github.com/VonOx) &bull; [Jean-Philippe Gravel](https://crowdin.com/profile/wokija) |
 | Galician | [Xesús M. Mosquera](https://twitter.com/xesusmmc?lang=en) |
 | German | [Bushido1992](https://forum.xda-developers.com/member.php?u=5179246) &bull; [Marcel Soehnchen](https://crowdin.com/profile/msoehnchen) &bull; [3LD0mi HA](https://forum.xda-developers.com/member.php?u=5860523) |
+| Greek | [George Kitsopoulos](https://crowdin.com/profile/GeorgeKitsopoulos) |
 | Hungarian | [János Erkli](https://crowdin.com/profile/erklijani0521) |
 | Indonesian | [M. Angga Ariska](https://www.youtube.com/channel/UCkqMw81s2aw7bYO-U2YhD7w) |
 | Italian | [Bonnee](https://github.com/Bonnee) |
@@ -173,9 +175,11 @@ Special thanks to the following awesome people for translating significant porti
 | Polish | [pantinPL](https://crowdin.com/profile/pantinPL) |
 | Portuguese | [Sérgio Marques](https://crowdin.com/profile/smarquespt) &bull; [Miguel Dos Reis](https://crowdin.com/profile/siersod) |
 | Portuguese (Brazilian) | [TheusKhan](https://crowdin.com/profile/TheusKhan) |
+| Russian | [Вадим Жушман](https://crowdin.com/profile/android54544) |
 | Serbian | [Nikola Radmanović](https://crowdin.com/profile/nikoladradmanovic) |
 | Spanish | [Jahir Fiquitiva](https://jahirfiquitiva.me/) &bull; [Nefi Salazar](https://plus.google.com/u/0/105547968033551087431)|
 | Swedish | [Artswitcher](https://crowdin.com/profile/Artswitcher) |
+| Tagalog | [Fray Damaso](https://crowdin.com/profile/Fray_Damaso) |
 | Thai | [Thanawat Hanthong](https://crowdin.com/profile/peet6015) |
 | Turkish | [zuma17](https://crowdin.com/profile/zuma17) |
 | Ukrainian | [Вадим Жушман](https://crowdin.com/profile/android54544) |
