@@ -20,6 +20,7 @@ package ca.allanwang.kau.utils
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
@@ -66,7 +67,8 @@ inline fun <T : View> T.gone(): T {
 }
 
 @KauUtils
-inline fun <T : View> T.invisibleIf(invisible: Boolean): T = if (invisible) invisible() else visible()
+inline fun <T : View> T.invisibleIf(invisible: Boolean): T =
+    if (invisible) invisible() else visible()
 
 @KauUtils
 inline fun <T : View> T.visibleIf(visible: Boolean): T = if (visible) visible() else gone()
@@ -87,16 +89,24 @@ inline val View.isGone: Boolean
     get() = visibility == View.GONE
 
 @KauUtils
-inline fun View.setBackgroundColorRes(@ColorRes color: Int) = setBackgroundColor(context.color(color))
+inline fun View.setBackgroundColorRes(@ColorRes color: Int) =
+    setBackgroundColor(context.color(color))
 
-fun View.snackbar(text: String, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}): Snackbar {
+fun View.snackbar(
+    text: String,
+    duration: Int = Snackbar.LENGTH_LONG,
+    builder: Snackbar.() -> Unit = {}
+): Snackbar {
     val snackbar = Snackbar.make(this, text, duration)
     snackbar.builder()
     snackbar.show()
     return snackbar
 }
 
-fun View.snackbar(@StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG, builder: Snackbar.() -> Unit = {}) =
+fun View.snackbar(
+    @StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG,
+    builder: Snackbar.() -> Unit = {}
+) =
     snackbar(context.string(textId), duration, builder)
 
 @KauUtils
@@ -108,6 +118,9 @@ fun ImageView.setIcon(
 ) {
     icon ?: return
     setImageDrawable(icon.toDrawable(context, sizeDp = sizeDp, color = color, builder = builder))
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        imageTintList = ColorStateList.valueOf(color)
+    }
 }
 
 @KauUtils
@@ -270,11 +283,17 @@ inline val TextInputEditText.value: String get() = text.toString().trim()
 /**
  * Generates a recycler view with match parent and a linearlayoutmanager, since it's so commonly used
  */
-fun Context.fullLinearRecycler(rvAdapter: RecyclerView.Adapter<*>? = null, configs: RecyclerView.() -> Unit = {}) =
+fun Context.fullLinearRecycler(
+    rvAdapter: RecyclerView.Adapter<*>? = null,
+    configs: RecyclerView.() -> Unit = {}
+) =
     RecyclerView(this).apply {
         layoutManager = LinearLayoutManager(this@fullLinearRecycler)
         layoutParams =
-            RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
+            RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.MATCH_PARENT
+            )
         if (rvAdapter != null) {
             adapter = rvAdapter
         }
