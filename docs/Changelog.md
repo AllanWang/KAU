@@ -1,5 +1,8 @@
 # Changelog
 
+## v5.2.1
+* :color: Allow option to disable selected ring
+
 ## v5.2.0
 * :about: Migrate about libraries to v7.x.x
 * :color: Draw CircleView in foreground instead of background

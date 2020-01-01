@@ -6,6 +6,12 @@
     <item text="" />
     -->
 
+    <version title="v5.2.1" />
+    <item text=":color: Allow option to disable selected ring" />
+    <item text="" />
+    <item text="" />
+    <item text="" />
+
     <version title="v5.2.0" />
     <item text=":about: Migrate about libraries to v7.x.x" />
     <item text=":color: Draw CircleView in foreground instead of background" />
