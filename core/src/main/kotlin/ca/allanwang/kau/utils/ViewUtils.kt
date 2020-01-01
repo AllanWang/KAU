@@ -104,7 +104,8 @@ fun View.snackbar(
 }
 
 fun View.snackbar(
-    @StringRes textId: Int, duration: Int = Snackbar.LENGTH_LONG,
+    @StringRes textId: Int,
+    duration: Int = Snackbar.LENGTH_LONG,
     builder: Snackbar.() -> Unit = {}
 ) =
     snackbar(context.string(textId), duration, builder)

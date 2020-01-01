@@ -49,7 +49,11 @@ import kotlin.math.roundToInt
  * An extension of MaterialDialog's CircleView with animation selection
  * [https://github.com/afollestad/material-dialogs/blob/master/commons/src/main/java/com/afollestad/materialdialogs/color/CircleView.java]
  */
-class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+class CircleView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) :
     FrameLayout(context, attrs, defStyleAttr) {
 
     private val borderWidthMicro: Float = context.getDip(1f)
@@ -70,10 +74,22 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 invalidate()
             }
         }
+    var selectedRing: Boolean = true
 
     init {
         update(Color.DKGRAY)
         setWillNotDraw(false)
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.CircleView,
+            0, 0
+        ).apply {
+            try {
+                selectedRing = getBoolean(R.styleable.CircleView_selectedRing, selectedRing)
+            } finally {
+                recycle()
+            }
+        }
     }
 
     private fun update(@ColorInt color: Int) {
@@ -123,10 +139,13 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     fun animateSelected(selected: Boolean) {
-        if (this.selected == selected) return
+        if (!this.selectedRing || this.selected == selected) return
         this.selected = selected // We need to draw the other bands
         val range =
-            if (selected) Pair(-borderWidthSmall, borderWidthLarge) else Pair(borderWidthLarge, -borderWidthSmall)
+            if (selected) Pair(-borderWidthSmall, borderWidthLarge) else Pair(
+                borderWidthLarge,
+                -borderWidthSmall
+            )
         ValueAnimator.ofFloat(range.first, range.second).apply {
             reverse()
             duration = 150L
@@ -148,7 +167,7 @@ class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         val centerWidth = (measuredWidth / 2).toFloat()
         val centerHeight = (measuredHeight / 2).toFloat()
         if (withBorder) canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
-        if (selected) {
+        if (selected && selectedRing) {
             val whiteRadius = centerWidth - whiteOuterBound
             val innerRadius = whiteRadius - borderWidthSmall
             if (whiteRadius >= centerWidth) {
