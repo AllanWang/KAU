@@ -33,7 +33,7 @@ class ProgressAnimator private constructor() : ValueAnimator() {
 
     companion object {
 
-        fun ofFloat(builder: ProgressAnimator.() -> Unit): ProgressAnimator = ProgressAnimator().apply {
+        fun ofFloat(builder: ProgressAnimator.() -> Unit = {}): ProgressAnimator = ProgressAnimator().apply {
             setFloatValues(0f, 1f)
             addUpdateListener { apply(it.animatedValue as Float) }
             addListener(object : AnimatorListenerAdapter() {
@@ -143,30 +143,36 @@ class ProgressAnimator private constructor() : ValueAnimator() {
         }
     }
 
-    fun withRangeAnimator(min: Float, max: Float, start: Float, end: Float, progress: Float, action: ProgressAction) {
-        if (min >= max) {
-            throw IllegalArgumentException("Range animator must have min < max; currently min=$min, max=$max")
-        }
+    fun withRangeAnimator(min: Float, max: Float, start: Float, end: Float, action: ProgressAction) {
+        require(min < max) { "Range animator must have min < max; currently min=$min, max=$max" }
         withDisposableAnimator {
             when {
                 it > max -> true
                 it < min -> false
                 else -> {
-                    action(progress(start, end, progress, min, max))
+                    action(progress(start, end, it, min, max))
                     false
                 }
             }
         }
     }
 
-    fun withPointAnimator(point: Float, action: ProgressAction) {
+    @Deprecated(level = DeprecationLevel.WARNING,
+            message = "Renamed to withPointAction",
+            replaceWith = ReplaceWith("withPointAction(point, action)"))
+    fun withPointAnimator(point: Float, action: ProgressAction) = withPointAction(point, isAscendingProgress = true, action = action)
+
+    fun withPointAction(point: Float, isAscendingProgress: Boolean = true, action: ProgressAction) {
         animators.add {
-            action.runIf(it >= point, it)
+            action.runIf((isAscendingProgress && (it >= point) || !isAscendingProgress && (it <= point)), it)
         }
     }
 
     fun withDelayedStartAction(skipCount: Int, action: ProgressAction) {
         var count = 0
+        withStartAction {
+            count = 0
+        }
         animators.add {
             action.runIf(count++ >= skipCount, it)
         }
