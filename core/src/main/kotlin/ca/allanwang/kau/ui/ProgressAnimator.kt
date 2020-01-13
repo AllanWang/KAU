@@ -68,6 +68,11 @@ class ProgressAnimator private constructor() : ValueAnimator() {
                 start + (end - start) * trueProgress
             }
         }
+
+        /**
+         * Progress variant that takes in and returns int
+         */
+        fun progress(start: Int, end: Int, progress: Float): Int = (start + (end - start) * progress).toInt()
     }
 
     private val animators: MutableList<ProgressDisposableAction> = mutableListOf()
@@ -85,7 +90,7 @@ class ProgressAnimator private constructor() : ValueAnimator() {
     /**
      * Converts an action to a disposable action
      */
-    private fun ProgressAction.asDisposable(): ProgressDisposableAction = { this(it); false }
+    private fun <T> ((T) -> Unit).asDisposable(): (T) -> Boolean = { this(it); false }
 
     private fun ProgressRunnable.asDisposable(): ProgressDisposableRunnable = { this(); false }
 
@@ -109,17 +114,28 @@ class ProgressAnimator private constructor() : ValueAnimator() {
     }
 
     fun withAnimator(action: ProgressAction) =
-        withDisposableAnimator(action.asDisposable())
+            withDisposableAnimator(action.asDisposable())
 
     /**
      * Range animator. Multiples the range by the current float progress before emission
      */
     fun withAnimator(from: Float, to: Float, action: ProgressAction) =
-        withDisposableAnimator(from, to, action.asDisposable())
+            withDisposableAnimator(from, to, action.asDisposable())
+
+    fun withAnimator(from: Int, to: Int, action: ProgressIntAction) =
+            withDisposableAnimator(from, to, action.asDisposable())
 
     fun withDisposableAnimator(action: ProgressDisposableAction) = animators.add(action)
 
     fun withDisposableAnimator(from: Float, to: Float, action: ProgressDisposableAction) {
+        if (to != from) {
+            animators.add {
+                action(progress(from, to, it))
+            }
+        }
+    }
+
+    fun withDisposableAnimator(from: Int, to: Int, action: ProgressIntDisposableAction) {
         if (to != from) {
             animators.add {
                 action(progress(from, to, it))
@@ -185,5 +201,7 @@ class ProgressAnimator private constructor() : ValueAnimator() {
 
 private typealias ProgressAction = (Float) -> Unit
 private typealias ProgressDisposableAction = (Float) -> Boolean
+private typealias ProgressIntAction = (Int) -> Unit
+private typealias ProgressIntDisposableAction = (Int) -> Boolean
 private typealias ProgressRunnable = () -> Unit
 private typealias ProgressDisposableRunnable = () -> Boolean
