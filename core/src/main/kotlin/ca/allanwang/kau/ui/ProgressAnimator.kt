@@ -147,7 +147,10 @@ class ProgressAnimator private constructor() : ValueAnimator() {
         require(min < max) { "Range animator must have min < max; currently min=$min, max=$max" }
         withDisposableAnimator {
             when {
-                it > max -> true
+                it > max -> {
+                  action(end) // apply action in case frames were skipped
+                  true
+                }
                 it < min -> false
                 else -> {
                     action(progress(start, end, it, min, max))
