@@ -33,46 +33,50 @@ class ProgressAnimator private constructor() : ValueAnimator() {
 
     companion object {
 
-        fun ofFloat(builder: ProgressAnimator.() -> Unit = {}): ProgressAnimator = ProgressAnimator().apply {
-            setFloatValues(0f, 1f)
-            addUpdateListener { apply(it.animatedValue as Float) }
-            addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationStart(animation: Animator?, isReverse: Boolean) {
-                    isCancelled = false
-                    startActions.runAll()
-                }
+        fun ofFloat(builder: ProgressAnimator.() -> Unit = {}): ProgressAnimator =
+            ProgressAnimator().apply {
+                setFloatValues(0f, 1f)
+                addUpdateListener { apply(it.animatedValue as Float) }
+                addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationStart(animation: Animator?, isReverse: Boolean) {
+                        isCancelled = false
+                        startActions.runAll()
+                    }
 
-                override fun onAnimationCancel(animation: Animator?) {
-                    isCancelled = true
-                    cancelActions.runAll()
-                }
+                    override fun onAnimationCancel(animation: Animator?) {
+                        isCancelled = true
+                        cancelActions.runAll()
+                    }
 
-                override fun onAnimationEnd(animation: Animator?) {
-                    endActions.runAll()
-                    isCancelled = false
-                }
-            })
-        }.apply(builder)
+                    override fun onAnimationEnd(animation: Animator?) {
+                        endActions.runAll()
+                        isCancelled = false
+                    }
+                })
+            }.apply(builder)
 
         /**
          * Gets output of a linear function starting at [start] when [progress] is 0 and [end] when [progress] is 1 at point [progress].
          */
-        fun progress(start: Float, end: Float, progress: Float): Float = start + (end - start) * progress
+        fun progress(start: Float, end: Float, progress: Float): Float =
+            start + (end - start) * progress
 
-        fun progress(start: Float, end: Float, progress: Float, min: Float, max: Float): Float = when {
-            min == max -> throw IllegalArgumentException("Progress range cannot be 0 (min == max == $min")
-            progress <= min -> start
-            progress >= max -> end
-            else -> {
-                val trueProgress = (progress - min) / (max - min)
-                start + (end - start) * trueProgress
+        fun progress(start: Float, end: Float, progress: Float, min: Float, max: Float): Float =
+            when {
+                min == max -> throw IllegalArgumentException("Progress range cannot be 0 (min == max == $min")
+                progress <= min -> start
+                progress >= max -> end
+                else -> {
+                    val trueProgress = (progress - min) / (max - min)
+                    start + (end - start) * trueProgress
+                }
             }
-        }
 
         /**
          * Progress variant that takes in and returns int
          */
-        fun progress(start: Int, end: Int, progress: Float): Int = (start + (end - start) * progress).toInt()
+        fun progress(start: Int, end: Int, progress: Float): Int =
+            (start + (end - start) * progress).toInt()
     }
 
     private val animators: MutableList<ProgressDisposableAction> = mutableListOf()
@@ -114,16 +118,16 @@ class ProgressAnimator private constructor() : ValueAnimator() {
     }
 
     fun withAnimator(action: ProgressAction) =
-            withDisposableAnimator(action.asDisposable())
+        withDisposableAnimator(action.asDisposable())
 
     /**
      * Range animator. Multiples the range by the current float progress before emission
      */
     fun withAnimator(from: Float, to: Float, action: ProgressAction) =
-            withDisposableAnimator(from, to, action.asDisposable())
+        withDisposableAnimator(from, to, action.asDisposable())
 
     fun withAnimator(from: Int, to: Int, action: ProgressIntAction) =
-            withDisposableAnimator(from, to, action.asDisposable())
+        withDisposableAnimator(from, to, action.asDisposable())
 
     fun withDisposableAnimator(action: ProgressDisposableAction) = animators.add(action)
 
@@ -143,13 +147,19 @@ class ProgressAnimator private constructor() : ValueAnimator() {
         }
     }
 
-    fun withRangeAnimator(min: Float, max: Float, start: Float, end: Float, action: ProgressAction) {
+    fun withRangeAnimator(
+        min: Float,
+        max: Float,
+        start: Float,
+        end: Float,
+        action: ProgressAction
+    ) {
         require(min < max) { "Range animator must have min < max; currently min=$min, max=$max" }
         withDisposableAnimator {
             when {
                 it > max -> {
-                  action(end) // apply action in case frames were skipped
-                  true
+                    action(end) // apply action in case frames were skipped
+                    true
                 }
                 it < min -> false
                 else -> {
@@ -160,14 +170,20 @@ class ProgressAnimator private constructor() : ValueAnimator() {
         }
     }
 
-    @Deprecated(level = DeprecationLevel.WARNING,
-            message = "Renamed to withPointAction",
-            replaceWith = ReplaceWith("withPointAction(point, action)"))
-    fun withPointAnimator(point: Float, action: ProgressAction) = withPointAction(point, isAscendingProgress = true, action = action)
+    @Deprecated(
+        level = DeprecationLevel.WARNING,
+        message = "Renamed to withPointAction",
+        replaceWith = ReplaceWith("withPointAction(point, action)")
+    )
+    fun withPointAnimator(point: Float, action: ProgressAction) =
+        withPointAction(point, isAscendingProgress = true, action = action)
 
     fun withPointAction(point: Float, isAscendingProgress: Boolean = true, action: ProgressAction) {
         animators.add {
-            action.runIf((isAscendingProgress && (it >= point) || !isAscendingProgress && (it <= point)), it)
+            action.runIf(
+                (isAscendingProgress && (it >= point) || !isAscendingProgress && (it <= point)),
+                it
+            )
         }
     }
 
@@ -188,7 +204,8 @@ class ProgressAnimator private constructor() : ValueAnimator() {
 
     fun withDisposableStartAction(action: ProgressDisposableRunnable) = startActions.add(action)
 
-    fun withCancelAction(action: ProgressRunnable) = withDisposableCancelAction(action.asDisposable())
+    fun withCancelAction(action: ProgressRunnable) =
+        withDisposableCancelAction(action.asDisposable())
 
     fun withDisposableCancelAction(action: ProgressDisposableRunnable) = cancelActions.add(action)
 
