@@ -89,7 +89,8 @@ inline val View.isGone: Boolean
     get() = visibility == View.GONE
 
 /**
- * Measure the height of a view if it had match_parent for width and no height restrictions
+ * Measure the height of a view if it had match_parent for width and no height restrictions.
+ * Note that the view should be visible for this to work.
  */
 inline val View.unboundedHeight: Int
     get() {
