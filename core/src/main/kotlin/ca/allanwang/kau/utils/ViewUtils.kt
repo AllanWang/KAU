@@ -88,6 +88,15 @@ inline val View.isInvisible: Boolean
 inline val View.isGone: Boolean
     get() = visibility == View.GONE
 
+/**
+ * Measure the height of a view if it had match_parent for width and no height restrictions
+ */
+inline val View.unboundedHeight: Int
+    get() {
+        measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        return measuredHeight
+    }
+
 @KauUtils
 inline fun View.setBackgroundColorRes(@ColorRes color: Int) =
     setBackgroundColor(context.color(color))
