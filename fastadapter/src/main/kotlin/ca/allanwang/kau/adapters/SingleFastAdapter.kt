@@ -20,6 +20,7 @@ import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.IItemAdapter
 import com.mikepenz.fastadapter.adapters.ItemAdapter
+import com.mikepenz.fastadapter.diff.DiffCallback
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 
 /**
@@ -51,7 +52,15 @@ class SingleFastAdapter private constructor(val adapter: ItemAdapter<GenericItem
         throw IllegalStateException("SingleFastAdapter only allows one adapter.")
     }
 
-    fun setWithDiff(items: List<GenericItem>, detectMoves: Boolean = true) {
-        FastAdapterDiffUtil.set(adapter, items, detectMoves)
+    fun setWithDiff(
+        items: List<GenericItem>,
+        detectMoves: Boolean = true,
+        callback: DiffCallback<GenericItem>? = null
+    ) {
+        if (callback == null) {
+            FastAdapterDiffUtil.set(adapter, items, detectMoves)
+        } else {
+            FastAdapterDiffUtil.set(adapter, items, callback, detectMoves)
+        }
     }
 }
