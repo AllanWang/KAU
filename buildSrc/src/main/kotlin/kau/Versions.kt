@@ -67,8 +67,9 @@ object Versions {
     // https://mvnrepository.com/artifact/androidx.test/rules?repo=google
     const val testRules = "1.2.0"
 
+    // Keep version for now, see https://github.com/diffplug/spotless/issues/521
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
-    const val spotless = "3.27.0"
+    const val spotless = "3.26.1"
 
     // https://github.com/bugsnag/bugsnag-android/releases
     const val bugsnag = "4.22.3"
