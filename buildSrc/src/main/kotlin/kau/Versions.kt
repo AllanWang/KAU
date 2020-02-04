@@ -12,7 +12,7 @@ object Versions {
     const val appcompat = "1.1.0"
 
     // https://mvnrepository.com/artifact/com.google.android.material/material
-    const val googleMaterial = "1.1.0-beta02"
+    const val googleMaterial = "1.1.0-rc02"
 
     // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
     const val recyclerView = "1.1.0"
@@ -45,7 +45,7 @@ object Versions {
     const val fastAdapter = "4.1.2"
 
     // https://github.com/bumptech/glide/releases
-    const val glide = "4.10.0"
+    const val glide = "4.11.0"
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
     const val iconics = "4.0.2"
@@ -67,25 +67,26 @@ object Versions {
     // https://mvnrepository.com/artifact/androidx.test/rules?repo=google
     const val testRules = "1.2.0"
 
+    // Keep version for now, see https://github.com/diffplug/spotless/issues/521
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
     const val spotless = "3.26.1"
 
     // https://github.com/bugsnag/bugsnag-android/releases
-    const val bugsnag = "4.21.1"
+    const val bugsnag = "4.22.3"
 
     // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
-    const val bugsnagPlugin="4.7.2"
+    const val bugsnagPlugin="4.7.3"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "3.6.0-rc01"
+    const val gradlePlugin = "3.6.0-rc02"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
-    const val playPublishPlugin = "2.6.1"
+    const val playPublishPlugin = "2.6.2"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
     const val dexCountPlugin = "1.0.2"
 
     // https://github.com/gladed/gradle-android-git-version/releases
-    const val gitVersionPlugin = "0.4.11"
+    const val gitVersionPlugin = "0.4.12"
 }
