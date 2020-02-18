@@ -53,6 +53,9 @@ object Dependencies {
     @JvmField
     val koin = koin("android")
 
+    @JvmField
+    val koinTest = koin("test")
+
     @JvmStatic
     fun koin(type: String) = "org.koin:koin-$type:${Versions.koin}"
 
