@@ -28,6 +28,7 @@ import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivity
 import ca.allanwang.kau.utils.withAlpha
 import ca.allanwang.kau.utils.withSlideOut
+import org.koin.android.ext.android.inject
 
 /**
  * Created by Allan Wang on 2017-06-12.
@@ -37,12 +38,14 @@ import ca.allanwang.kau.utils.withSlideOut
  */
 class AnimActivity : KauBaseActivity() {
 
+    private val pref: KPrefSample by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val adapter = SingleFastAdapter()
         setContentView(fullLinearRecycler(adapter).apply {
             setBackgroundColor(
-                KPrefSample.bgColor.withAlpha(255)
+                pref.bgColor.withAlpha(255)
             )
         })
 

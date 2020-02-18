@@ -26,6 +26,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withChild
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -35,6 +36,15 @@ import org.hamcrest.Matchers.instanceOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * Created by Allan Wang on 21/12/2018.
@@ -43,10 +53,25 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 @MediumTest
-class KPrefViewTest {
+class KPrefViewTest : KoinTest {
 
     @get:Rule
     val activity: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
+
+    @BeforeTest
+    fun before() {
+        startKoin {
+            androidContext(InstrumentationRegistry.getInstrumentation().context)
+            modules(listOf(SampleApp.prefModule(), SampleTestApp.prefFactoryModule()))
+        }
+    }
+
+    @AfterTest
+    fun after() {
+        stopKoin()
+    }
+
+    private val pref: KPrefSample by inject()
 
     fun verifyCheck(checked: Boolean): Matcher<View> {
         return object : BoundedMatcher<View, View>(View::class.java) {
@@ -93,11 +118,11 @@ class KPrefViewTest {
     fun basicCheckboxToggle() {
         val checkbox1 = onCheckboxView(withChild(withText(R.string.checkbox_1)))
 
-        val initiallyChecked = KPrefSample.check1
+        assertTrue(pref.check1, "check1 not normalized")
 
-        checkbox1.verifyCheck("checkbox1 init", initiallyChecked)
+        checkbox1.verifyCheck("checkbox1 init", true)
         checkbox1.perform(click())
-        checkbox1.verifyCheck("checkbox1 after click", !initiallyChecked)
+        checkbox1.verifyCheck("checkbox1 after click", false)
     }
 
     /**
@@ -109,11 +134,8 @@ class KPrefViewTest {
         val checkbox3 =
             onCheckboxView(withChild(withText(R.string.checkbox_3)), withChild(withText(R.string.desc_dependent)))
 
-        // normalize so that both are checked
-        if (!KPrefSample.check2)
-            checkbox2.perform(click())
-        if (!KPrefSample.check3)
-            checkbox3.perform(click())
+        assertFalse(pref.check2, "check2 not normalized")
+        assertFalse(pref.check3, "check3 not normalized")
 
         checkbox3.verifyCheck("checkbox3 init", true, true)
         checkbox3.perform(click())

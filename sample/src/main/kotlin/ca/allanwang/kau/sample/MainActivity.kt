@@ -40,6 +40,7 @@ import ca.allanwang.kau.utils.withSceneTransitionAnimation
 import ca.allanwang.kau.xml.showChangelog
 import com.afollestad.materialdialogs.input.input
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import org.koin.android.ext.android.inject
 
 class MainActivity : KPrefActivity() {
 
@@ -101,9 +102,11 @@ class MainActivity : KPrefActivity() {
         const val REQUEST_MEDIA = 27
     }
 
+    private val pref: KPrefSample by inject()
+
     override fun kPrefCoreAttributes(): CoreAttributeContract.() -> Unit = {
-        textColor = KPrefSample::textColor
-        accentColor = KPrefSample::accentColor
+        textColor = pref::textColor
+        accentColor = pref::accentColor
     }
 
     override fun onCreateKPrefs(savedInstanceState: Bundle?): KPrefAdapterBuilder.() -> Unit = {
@@ -113,7 +116,7 @@ class MainActivity : KPrefActivity() {
         /**
          * This is how the setup looks like with all the proper tags
          */
-        checkbox(title = R.string.checkbox_1, getter = KPrefSample::check1, setter = { KPrefSample.check1 = it },
+        checkbox(title = R.string.checkbox_1, getter = pref::check1, setter = { pref.check1 = it },
             builder = {
                 descRes = R.string.desc
             })
@@ -123,25 +126,25 @@ class MainActivity : KPrefActivity() {
          */
         checkbox(
             R.string.checkbox_2,
-            KPrefSample::check2,
-            { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) })
+            pref::check2,
+            { pref.check2 = it; reloadByTitle(R.string.checkbox_3) })
 
         /**
          * Since the builder is the last argument and is a lambda, we may write the setup cleanly like so:
          */
-        checkbox(R.string.checkbox_3, KPrefSample::check3, { KPrefSample.check3 = it }) {
+        checkbox(R.string.checkbox_3, pref::check3, { pref.check3 = it }) {
             descRes = R.string.desc_dependent
-            enabler = { KPrefSample.check2 }
+            enabler = { pref.check2 }
             onDisabledClick = { itemView.context.toast("I am still disabled") }
         }
 
-        colorPicker(R.string.text_color, KPrefSample::textColor, { KPrefSample.textColor = it; reload() }) {
+        colorPicker(R.string.text_color, pref::textColor, { pref.textColor = it; reload() }) {
             descRes = R.string.color_custom
             allowCustom = true
         }
 
-        colorPicker(R.string.accent_color, KPrefSample::accentColor, {
-            KPrefSample.accentColor = it
+        colorPicker(R.string.accent_color, pref::accentColor, {
+            pref.accentColor = it
             reload()
             this@MainActivity.navigationBarColor = it
             toolbarCanvas.ripple(it, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500L)
@@ -150,8 +153,8 @@ class MainActivity : KPrefActivity() {
             allowCustom = false
         }
 
-        colorPicker(R.string.background_color, KPrefSample::bgColor, {
-            KPrefSample.bgColor = it; bgCanvas.ripple(it, duration = 500L)
+        colorPicker(R.string.background_color, pref::bgColor, {
+            pref.bgColor = it; bgCanvas.ripple(it, duration = 500L)
         }) {
             iicon = GoogleMaterial.Icon.gmd_colorize
             descRes = R.string.color_custom_alpha
@@ -159,7 +162,7 @@ class MainActivity : KPrefActivity() {
             allowCustom = true
         }
 
-        text(R.string.text, KPrefSample::text, { KPrefSample.text = it }) {
+        text(R.string.text, pref::text, { pref.text = it }) {
             descRes = R.string.text_desc
             onClick = {
                 itemView.context.materialDialog {
@@ -171,7 +174,7 @@ class MainActivity : KPrefActivity() {
             }
         }
 
-        seekbar(R.string.seekbar, KPrefSample::seekbar, { KPrefSample.seekbar = it }) {
+        seekbar(R.string.seekbar, pref::seekbar, { pref.seekbar = it }) {
             descRes = R.string.kau_lorem_ipsum
             increments = 5
             textViewConfigs = {
@@ -215,30 +218,30 @@ class MainActivity : KPrefActivity() {
          */
         checkbox(
             R.string.checkbox_2,
-            KPrefSample::check2,
-            { KPrefSample.check2 = it; reloadByTitle(R.string.checkbox_3) }) {
+            pref::check2,
+            { pref.check2 = it; reloadByTitle(R.string.checkbox_3) }) {
             titleFun = { R.string.checkbox_3 }
             descRes = R.string.kau_lorem_ipsum
         }
 
-        text(R.string.text, KPrefSample::text, { KPrefSample.text = it }) {
+        text(R.string.text, pref::text, { pref.text = it }) {
             descRes = R.string.kau_lorem_ipsum
             textGetter = { string(R.string.kau_lorem_ipsum) }
         }
 
-        timePicker(R.string.time, KPrefSample::time12, { KPrefSample.time12 = it }) {
+        timePicker(R.string.time, pref::time12, { pref.time12 = it }) {
             descRes = R.string.time_desc_12
             use24HourFormat = false
         }
 
-        timePicker(R.string.time, KPrefSample::time24, { KPrefSample.time24 = it }) {
+        timePicker(R.string.time, pref::time24, { pref.time24 = it }) {
             descRes = R.string.time_desc_24
             use24HourFormat = true
         }
     }
 
     fun subPrefs(): KPrefAdapterBuilder.() -> Unit = {
-        text(R.string.text, { KPrefSample.text }, { KPrefSample.text = it }) {
+        text(R.string.text, { pref.text }, { pref.text = it }) {
             descRes = R.string.text_desc
             onClick = {
                 itemView.context.materialDialog {
@@ -254,11 +257,11 @@ class MainActivity : KPrefActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bgCanvas.set(KPrefSample.bgColor)
-        toolbarCanvas.set(KPrefSample.accentColor)
-        this.navigationBarColor = KPrefSample.accentColor
-        if (KPrefSample.version < BuildConfig.VERSION_CODE) {
-            KPrefSample.version = BuildConfig.VERSION_CODE
+        bgCanvas.set(pref.bgColor)
+        toolbarCanvas.set(pref.accentColor)
+        this.navigationBarColor = pref.accentColor
+        if (pref.version < BuildConfig.VERSION_CODE) {
+            pref.version = BuildConfig.VERSION_CODE
             if (!BuildConfig.DEBUG)
                 showChangelog(R.xml.kau_changelog)
         }

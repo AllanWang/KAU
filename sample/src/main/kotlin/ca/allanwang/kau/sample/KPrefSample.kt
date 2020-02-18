@@ -17,11 +17,12 @@ package ca.allanwang.kau.sample
 
 import android.graphics.Color
 import ca.allanwang.kau.kpref.KPref
+import ca.allanwang.kau.kpref.KPrefFactory
 
 /**
  * Created by Allan Wang on 2017-06-07.
  */
-object KPrefSample : KPref() {
+class KPrefSample(factory: KPrefFactory) : KPref("pref_sample", factory = factory) {
     var version: Int by kpref("version", -1)
     var textColor: Int by kpref("TEXT_COLOR", Color.WHITE)
     var accentColor: Int by kpref("ACCENT_COLOR", 0xffff8900.toInt())
