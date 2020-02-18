@@ -15,6 +15,7 @@
  */
 package ca.allanwang.kau.kpref
 
+import android.content.SharedPreferences
 import ca.allanwang.kau.kotlin.ILazyResettable
 
 /**
@@ -29,16 +30,19 @@ interface KPrefSingleDelegate : ILazyResettable<Boolean>
 
 class KPrefSingleDelegateAndroid internal constructor(
     private val key: String,
-    private val pref: KPref
+    private val pref: KPref,
+    private val prefBuilder: KPrefBuilderAndroid
 ) : KPrefSingleDelegate {
 
     @Volatile
     private var _value: Boolean? = null
     private val lock = this
 
+    private val sp: SharedPreferences get() = prefBuilder.sp
+
     init {
         if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
+            throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
         pref.prefMap[key] = this
     }
 
@@ -57,9 +61,9 @@ class KPrefSingleDelegateAndroid internal constructor(
                 if (_v2 != null) {
                     _v2
                 } else {
-                    _value = pref.sp.getBoolean(key, true)
+                    _value = sp.getBoolean(key, true)
                     if (_value!!) {
-                        pref.sp.edit().putBoolean(key, false).apply()
+                        sp.edit().putBoolean(key, false).apply()
                         _value = false
                         true
                     } else false
@@ -82,7 +86,7 @@ class KPrefSingleDelegateInMemory internal constructor(
 
     init {
         if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
+            throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
         pref.prefMap[key] = this
     }
 

@@ -15,6 +15,7 @@
  */
 package ca.allanwang.kau.kpref
 
+import android.content.SharedPreferences
 import ca.allanwang.kau.kotlin.ILazyResettable
 
 /**
@@ -35,11 +36,14 @@ class KPrefDelegateAndroid<T> internal constructor(
     private val key: String,
     private val fallback: T,
     private val pref: KPref,
+    private val prefBuilder: KPrefBuilderAndroid,
     private val transaction: KPrefTransaction<T>,
     private var postSetter: (value: T) -> Unit = {}
 ) : KPrefDelegate<T> {
 
     private object UNINITIALIZED
+
+    private val sp: SharedPreferences get() = prefBuilder.sp
 
     @Volatile
     private var _value: Any? = UNINITIALIZED
@@ -47,7 +51,7 @@ class KPrefDelegateAndroid<T> internal constructor(
 
     init {
         if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
+            throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
         pref.prefMap[key] = this@KPrefDelegateAndroid
     }
 
@@ -67,7 +71,7 @@ class KPrefDelegateAndroid<T> internal constructor(
                 if (_v2 !== UNINITIALIZED) {
                     _v2 as T
                 } else {
-                    _value = transaction.get(pref.sp, key, fallback)
+                    _value = transaction.get(sp, key, fallback)
                     _value as T
                 }
             }
@@ -79,7 +83,7 @@ class KPrefDelegateAndroid<T> internal constructor(
 
     override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
         _value = t
-        val editor = pref.sp.edit()
+        val editor = sp.edit()
         transaction.set(editor, key, t)
         editor.apply()
         postSetter(t)
@@ -101,7 +105,7 @@ class KPrefDelegateInMemory<T> internal constructor(
 
     init {
         if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
+            throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
         pref.prefMap[key] = this
     }
 

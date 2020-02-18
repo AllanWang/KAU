@@ -15,10 +15,7 @@
  */
 package ca.allanwang.kau.kpref
 
-import android.content.Context
-import android.content.SharedPreferences
 import ca.allanwang.kau.kotlin.ILazyResettable
-import ca.allanwang.kau.logging.KL
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -32,30 +29,16 @@ import ca.allanwang.kau.logging.KL
  * Furthermore, all kprefs are held in the [prefMap],
  * so if you wish to reset a preference, you must also invalidate the kpref
  * from that map
- *
- * You may optionally override [deleteKeys]. This will be called on initialization
- * And delete all keys returned from that method
  */
-open class KPref(builder: KPrefBuilder = KPrefBuilderAndroid) : KPrefBuilder by builder {
+open class KPref private constructor(
+    val preferenceName: String,
+    val builder: KPrefBuilder
+) : KPrefBuilder by builder {
 
-    lateinit var PREFERENCE_NAME: String
-    lateinit var sp: SharedPreferences
-
-    fun initialize(
-        c: Context,
-        preferenceName: String,
-        sharedPrefs: SharedPreferences = c.applicationContext.getSharedPreferences(preferenceName, Context.MODE_PRIVATE)
-    ) {
-        PREFERENCE_NAME = preferenceName
-        sp = sharedPrefs
-        KL.d { "Shared Preference $preferenceName has been initialized" }
-        val toDelete = deleteKeys()
-        if (toDelete.isNotEmpty()) {
-            val edit = sp.edit()
-            toDelete.forEach { edit.remove(it) }
-            edit.apply()
-        }
-    }
+    constructor(preferenceName: String, factory: KPrefFactory) : this(
+        preferenceName,
+        factory.createBuilder(preferenceName)
+    )
 
     internal val prefMap: MutableMap<String, ILazyResettable<*>> = mutableMapOf()
 
@@ -64,6 +47,4 @@ open class KPref(builder: KPrefBuilder = KPrefBuilderAndroid) : KPrefBuilder by 
     }
 
     operator fun get(key: String): ILazyResettable<*>? = prefMap[key]
-
-    open fun deleteKeys(): Array<String> = arrayOf()
 }
