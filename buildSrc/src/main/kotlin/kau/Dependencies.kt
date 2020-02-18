@@ -29,6 +29,9 @@ object Dependencies {
     fun kauFastAdapter(version: String) = kau("fastadapter", version)
 
     @JvmStatic
+    fun kauFastAdapterViewBinding(version: String) = kau("fastadapter-viewbinding", version)
+
+    @JvmStatic
     fun kauKprefActivity(version: String) = kau("kpref-activity", version)
 
     @JvmStatic
@@ -46,6 +49,15 @@ object Dependencies {
     val kotlinTest = kotlin("test-junit")
     @JvmField
     val kotlinReflect = kotlin("reflect")
+
+    @JvmField
+    val koin = koin("android")
+
+    @JvmField
+    val koinTest = koin("test")
+
+    @JvmStatic
+    fun koin(type: String) = "org.koin:koin-$type:${Versions.koin}"
 
     const val junit = "junit:junit:${Versions.junit}"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"

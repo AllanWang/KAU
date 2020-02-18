@@ -27,7 +27,7 @@ object Versions {
     const val constraintLayout = "2.0.0-beta4"
 
     // https://mvnrepository.com/artifact/androidx.core/core-ktx
-    const val coreKtx = "1.2.0-rc01"
+    const val coreKtx = "1.2.0"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
     const val kotlin = "1.3.61"
@@ -54,7 +54,10 @@ object Versions {
     const val iconicsCommunity = "3.5.95.1"
 
     // https://github.com/afollestad/material-dialogs/releases
-    const val materialDialog = "3.1.1"
+    const val materialDialog = "3.3.0"
+
+    // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
+    const val koin = "2.0.1"
 
     // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
     const val espresso = "3.2.0"
@@ -78,7 +81,7 @@ object Versions {
     const val bugsnagPlugin="4.7.3"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "3.6.0-rc02"
+    const val gradlePlugin = "3.6.0-rc03"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
