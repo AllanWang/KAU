@@ -26,7 +26,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withChild
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -35,13 +34,11 @@ import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.RuleChain
+import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -55,23 +52,17 @@ import kotlin.test.assertTrue
 @MediumTest
 class KPrefViewTest : KoinTest {
 
-    @get:Rule
     val activity: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
+
+    @get:Rule
+    val rule: TestRule = RuleChain.outerRule(SampleTestRule()).around(activity)
+
+    private val pref: KPrefSample by inject()
 
     @BeforeTest
     fun before() {
-        startKoin {
-            androidContext(InstrumentationRegistry.getInstrumentation().context)
-            modules(listOf(SampleApp.prefModule(), SampleTestApp.prefFactoryModule()))
-        }
+        pref.reset()
     }
-
-    @AfterTest
-    fun after() {
-        stopKoin()
-    }
-
-    private val pref: KPrefSample by inject()
 
     fun verifyCheck(checked: Boolean): Matcher<View> {
         return object : BoundedMatcher<View, View>(View::class.java) {
@@ -132,20 +123,24 @@ class KPrefViewTest : KoinTest {
     fun dependentCheckboxToggle() {
         val checkbox2 = onCheckboxView(withChild(withText(R.string.checkbox_2)))
         val checkbox3 =
-            onCheckboxView(withChild(withText(R.string.checkbox_3)), withChild(withText(R.string.desc_dependent)))
+            onCheckboxView(
+                withChild(withText(R.string.checkbox_3)),
+                withChild(withText(R.string.desc_dependent))
+            )
 
         assertFalse(pref.check2, "check2 not normalized")
         assertFalse(pref.check3, "check3 not normalized")
 
-        checkbox3.verifyCheck("checkbox3 init", true, true)
+        checkbox2.verifyCheck("checkbox2 init", checked = false, enabled = true)
+        checkbox3.verifyCheck("checkbox3 init", checked = false, enabled = false)
         checkbox3.perform(click())
-        checkbox3.verifyCheck("checkbox3 after click", false, true)
+        checkbox3.verifyCheck("checkbox3 after disabled click", checked = false, enabled = false)
 
         checkbox2.perform(click())
-        checkbox2.verifyCheck("checkbox2 after click", false, true)
-        checkbox3.verifyCheck("checkbox3 after checkbox2 click", false, false)
+        checkbox2.verifyCheck("checkbox2 after click", checked = true, enabled = true)
+        checkbox3.verifyCheck("checkbox3 after checkbox2 click", checked = false, enabled = true)
 
         checkbox3.perform(click())
-        checkbox3.verifyCheck("checkbox3 after disabled click", false, false)
+        checkbox3.verifyCheck("checkbox3 after enabled click", checked = true, enabled = true)
     }
 }

@@ -42,6 +42,12 @@ open class KPref private constructor(
 
     internal val prefMap: MutableMap<String, ILazyResettable<*>> = mutableMapOf()
 
+     fun add(entry : KPrefDelegate<*>) {
+        if (prefMap.containsKey(entry.key))
+            throw KPrefException("${entry.key} is already used elsewhere in preference $preferenceName")
+        prefMap[entry.key] = entry
+    }
+
     fun reset() {
         prefMap.values.forEach { it.invalidate() }
     }
