@@ -27,6 +27,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import androidx.test.rule.ActivityTestRule
+import kotlin.test.BeforeTest
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -39,9 +42,6 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import kotlin.test.BeforeTest
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 
 /**
  * Created by Allan Wang on 21/12/2018.

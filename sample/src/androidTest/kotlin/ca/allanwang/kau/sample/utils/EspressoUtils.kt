@@ -15,8 +15,6 @@
  */
 package ca.allanwang.kau.sample.utils
 
-import android.content.Context
-import androidx.test.platform.app.InstrumentationRegistry
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher

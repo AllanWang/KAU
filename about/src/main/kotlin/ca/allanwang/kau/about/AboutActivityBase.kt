@@ -57,7 +57,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
      * Holds some common configurations that may be added directly from the constructor
      * Applied lazily since it needs the context to fetch resources
      */
-    val configs: Configs by lazy { Configs().apply{buildConfigs()} }
+    val configs: Configs by lazy { Configs().apply { buildConfigs() } }
 
     open fun Configs.buildConfigs() = Unit
 
