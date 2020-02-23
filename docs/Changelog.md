@@ -1,7 +1,8 @@
 # Changelog
 
-## v5.2.1
+## v5.3.0
 * :color: Allow option to disable selected ring
+* :core: Breaking KPref changes; see migration
 
 ## v5.2.0
 * :about: Migrate about libraries to v7.x.x

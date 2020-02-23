@@ -2,6 +2,18 @@
 
 Below are some highlights on major refactoring/breaking changes
 
+# v5.2.0
+
+## KPref
+
+In an effort to improve testing options, KPref has some updates to allow for in memory preferences during unit tests.
+While you can still use KPref like before as an object (provide the `KPrefFactoryAndroid` factory), 
+it is recommended that you use some sort of dependency injection/service locator to provide the factory.
+An example can be found in the sample app test class.
+
+Also note that to better support in memory preferences, `reset()` will clear the in memory content for both variants,
+meaning that in memory preferences will reset to default. Previously, in memory `reset()` did nothing.
+
 # v5.1.0
 
 ## KPref
