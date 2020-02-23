@@ -71,7 +71,7 @@ interface KPrefBuilder {
     /**
      * Remove keys from pref so they revert to the default
      */
-    fun KPref.deleteKeys(keys: Array<String>)
+    fun KPref.deleteKeys(keys: Array<out String>)
 }
 
 class KPrefBuilderAndroid(val sp: SharedPreferences) : KPrefBuilder {
@@ -143,7 +143,7 @@ class KPrefBuilderAndroid(val sp: SharedPreferences) : KPrefBuilder {
     override fun KPref.kprefSingle(key: String) =
         KPrefSingleDelegateAndroid(key, this, this@KPrefBuilderAndroid)
 
-    override fun KPref.deleteKeys(keys: Array<String>) {
+    override fun KPref.deleteKeys(keys: Array<out String>) {
         // Remove pref listing
         sp.edit().apply {
             keys.forEach { remove(it) }
@@ -179,7 +179,7 @@ object KPrefBuilderInMemory : KPrefBuilder {
 
     override fun KPref.kprefSingle(key: String) = KPrefSingleDelegateInMemory(key, this)
 
-    override fun KPref.deleteKeys(keys: Array<String>) {
+    override fun KPref.deleteKeys(keys: Array<out String>) {
         // Clear cached values
         keys.forEach { prefMap[it]?.invalidate() }
     }

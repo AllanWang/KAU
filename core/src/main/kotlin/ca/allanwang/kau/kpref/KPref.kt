@@ -42,7 +42,7 @@ open class KPref private constructor(
 
     internal val prefMap: MutableMap<String, ILazyResettable<*>> = mutableMapOf()
 
-     fun add(entry : KPrefDelegate<*>) {
+    fun add(entry: KPrefDelegate<*>) {
         if (prefMap.containsKey(entry.key))
             throw KPrefException("${entry.key} is already used elsewhere in preference $preferenceName")
         prefMap[entry.key] = entry
@@ -53,4 +53,12 @@ open class KPref private constructor(
     }
 
     operator fun get(key: String): ILazyResettable<*>? = prefMap[key]
+
+    /**
+     * Exposed key deletion function from builder.
+     * To avoid recursion, this type uses vararg
+     */
+    fun deleteKeys(vararg keys: String) {
+        deleteKeys(keys)
+    }
 }
