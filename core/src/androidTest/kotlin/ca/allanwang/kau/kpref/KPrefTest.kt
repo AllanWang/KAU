@@ -16,14 +16,14 @@
 package ca.allanwang.kau.kpref
 
 import android.annotation.SuppressLint
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
+import android.content.SharedPreferences
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import kotlin.test.assertEquals
+import ca.allanwang.kau.context
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 /**
  * Created by Allan Wang on 2017-08-01.
@@ -33,13 +33,11 @@ import org.junit.runner.RunWith
 class KPrefTest {
 
     lateinit var androidPref: TestPref
+    lateinit var androidSp: SharedPreferences
     lateinit var memPref: TestPref
 
-    class TestPref(builder: KPrefBuilder) : KPref(builder) {
-
-        init {
-            initialize(ApplicationProvider.getApplicationContext<Context>(), "kpref_test_${System.currentTimeMillis()}")
-        }
+    class TestPref(factory: KPrefFactory) :
+        KPref("kpref_test_${System.currentTimeMillis()}", factory) {
 
         var postSetterCount: Int = 0
 
@@ -60,9 +58,10 @@ class KPrefTest {
 
     @Before
     fun init() {
-        androidPref = TestPref(KPrefBuilderAndroid)
-        androidPref.sp.edit().clear().commit()
-        memPref = TestPref(KPrefBuilderInMemory)
+        androidPref = TestPref(KPrefFactoryAndroid(context))
+        androidSp = (androidPref.builder as KPrefBuilderAndroid).sp
+        androidSp.edit().clear().commit()
+        memPref = TestPref(KPrefFactoryInMemory)
     }
 
     private fun pref(action: TestPref.() -> Unit) {
@@ -70,7 +69,11 @@ class KPrefTest {
         memPref.action()
     }
 
-    private fun <T> assertPrefEquals(expected: T, actual: TestPref.() -> T, message: String? = null) {
+    private fun <T> assertPrefEquals(
+        expected: T,
+        actual: TestPref.() -> T,
+        message: String? = null
+    ) {
         assertEquals(expected, androidPref.actual(), "Android KPrefs: $message")
         assertEquals(expected, memPref.actual(), "In Mem KPrefs: $message")
     }
@@ -83,7 +86,7 @@ class KPrefTest {
         assertPrefEquals("hello", { hello })
         assertPrefEquals(3, { set.size })
         assertPrefEquals(setOf("po", "ta", "to"), { set })
-        assertEquals(0, androidPref.sp.all.size, "Defaults should not be set automatically")
+        assertEquals(0, androidSp.all.size, "Defaults should not be set automatically")
     }
 
     @Test
@@ -93,8 +96,8 @@ class KPrefTest {
         assertPrefEquals(2, { one })
         pref { hello = "goodbye" }
         assertPrefEquals("goodbye", { hello })
-        assertEquals(androidPref.hello, androidPref.sp.getString("hello", "badfallback"))
-        assertEquals(2, androidPref.sp.all.size)
+        assertEquals(androidPref.hello, androidSp.getString("hello", "badfallback"))
+        assertEquals(2, androidSp.all.size)
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -104,9 +107,10 @@ class KPrefTest {
         assertPrefEquals(2, { one })
         assertPrefEquals(6, { prefMap.size }, "Prefmap does not have all elements")
         pref { reset() } // only invalidates our lazy delegate; doesn't change the actual pref
-        assertPrefEquals(2, { one }, "Kpref did not properly fetch from shared prefs")
+        assertEquals(1, memPref.one, "Memory Kpref did not invalidate value")
+        assertEquals(2, androidPref.one, "Android Kpref did not properly fetch from shared prefs")
         // Android pref only
-        androidPref.sp.edit().putInt("one", -1).commit()
+        androidSp.edit().putInt("one", -1).commit()
         assertEquals(2, androidPref.one, "Lazy kpref should still retain old value")
         androidPref.reset()
         assertEquals(-1, androidPref.one, "Kpref did not refetch from shared prefs upon reset")

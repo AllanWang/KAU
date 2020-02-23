@@ -15,6 +15,7 @@
  */
 package ca.allanwang.kau.kpref
 
+import android.content.SharedPreferences
 import ca.allanwang.kau.kotlin.ILazyResettable
 
 /**
@@ -26,29 +27,31 @@ import ca.allanwang.kau.kotlin.ILazyResettable
  */
 
 interface KPrefDelegate<T> : ILazyResettable<T> {
+    val key: String
     operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T)
 }
 
 class KPrefException(message: String) : IllegalAccessException(message)
 
 class KPrefDelegateAndroid<T> internal constructor(
-    private val key: String,
+    override val key: String,
     private val fallback: T,
     private val pref: KPref,
+    private val prefBuilder: KPrefBuilderAndroid,
     private val transaction: KPrefTransaction<T>,
     private var postSetter: (value: T) -> Unit = {}
 ) : KPrefDelegate<T> {
 
     private object UNINITIALIZED
 
+    private val sp: SharedPreferences get() = prefBuilder.sp
+
     @Volatile
     private var _value: Any? = UNINITIALIZED
     private val lock = this
 
     init {
-        if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
-        pref.prefMap[key] = this@KPrefDelegateAndroid
+        pref.add(this)
     }
 
     override fun invalidate() {
@@ -67,7 +70,7 @@ class KPrefDelegateAndroid<T> internal constructor(
                 if (_v2 !== UNINITIALIZED) {
                     _v2 as T
                 } else {
-                    _value = transaction.get(pref.sp, key, fallback)
+                    _value = transaction.get(sp, key, fallback)
                     _value as T
                 }
             }
@@ -75,11 +78,12 @@ class KPrefDelegateAndroid<T> internal constructor(
 
     override fun isInitialized(): Boolean = _value !== UNINITIALIZED
 
-    override fun toString(): String = if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+    override fun toString(): String =
+        if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 
     override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
         _value = t
-        val editor = pref.sp.edit()
+        val editor = sp.edit()
         transaction.set(editor, key, t)
         editor.apply()
         postSetter(t)
@@ -87,7 +91,7 @@ class KPrefDelegateAndroid<T> internal constructor(
 }
 
 class KPrefDelegateInMemory<T> internal constructor(
-    private val key: String,
+    override val key: String,
     private val fallback: T,
     private val pref: KPref,
     private var postSetter: (value: T) -> Unit = {}
@@ -100,13 +104,11 @@ class KPrefDelegateInMemory<T> internal constructor(
     private val lock = this
 
     init {
-        if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.PREFERENCE_NAME}")
-        pref.prefMap[key] = this
+       pref.add(this)
     }
 
     override fun invalidate() {
-        // No op
+        _value = UNINITIALIZED
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -129,7 +131,8 @@ class KPrefDelegateInMemory<T> internal constructor(
 
     override fun isInitialized(): Boolean = _value !== UNINITIALIZED
 
-    override fun toString(): String = if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+    override fun toString(): String =
+        if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 
     override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
         _value = t

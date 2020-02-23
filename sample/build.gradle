@@ -26,7 +26,7 @@ android {
         versionName androidGitVersion.name()
         versionCode androidGitVersion.code()
         multiDexEnabled true
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "ca.allanwang.kau.sample.SampleTestRunner"
     }
     viewBinding {
         enabled = true
@@ -137,9 +137,11 @@ dependencies {
     implementation project(':mediapicker')
 
     implementation Dependencies.materialDialog("input")
+    implementation Dependencies.koin
 
     testImplementation Dependencies.kotlinTest
     testImplementation Dependencies.junit
+    testImplementation Dependencies.koinTest
 
     androidTestImplementation Dependencies.kotlinTest
     androidTestImplementation Dependencies.espresso
@@ -147,4 +149,5 @@ dependencies {
     androidTestImplementation Dependencies.espresso("contrib")
     androidTestImplementation Dependencies.testRules
     androidTestImplementation Dependencies.testRunner
+    androidTestImplementation Dependencies.koinTest
 }

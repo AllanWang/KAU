@@ -16,6 +16,13 @@
 package ca.allanwang.kau.sample
 
 import android.app.Application
+import ca.allanwang.kau.kpref.KPrefFactory
+import ca.allanwang.kau.kpref.KPrefFactoryAndroid
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.module.Module
+import org.koin.dsl.module
 
 /**
  * Created by Allan Wang on 2017-06-08.
@@ -23,6 +30,27 @@ import android.app.Application
 class SampleApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        KPrefSample.initialize(this, "pref_sample")
+
+        startKoin {
+            if (BuildConfig.DEBUG) {
+                androidLogger()
+            }
+            androidContext(this@SampleApp)
+            modules(listOf(prefFactoryModule(), prefModule()))
+        }
+    }
+
+    companion object {
+        fun prefFactoryModule(): Module = module {
+            single<KPrefFactory> {
+                KPrefFactoryAndroid(get())
+            }
+        }
+
+        fun prefModule(): Module = module {
+            single {
+                KPrefSample(get())
+            }
+        }
     }
 }
