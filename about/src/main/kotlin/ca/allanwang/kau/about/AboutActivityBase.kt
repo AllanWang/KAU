@@ -40,17 +40,14 @@ import kotlinx.android.synthetic.main.kau_activity_about.*
  * Created by Allan Wang on 2017-06-28.
  *
  * Floating About Activity Panel for your app
- * This contains all the necessary layouts, and can be extended and configured using the [configBuilder]
+ * This contains all the necessary layouts, and can be extended and configured using [buildConfigs]
  * The [rClass] is necessary to generate the list of libraries used in your app, and should point to your app's
  * R.string::class.java
  * If you don't need auto detect, you can pass null instead
  * Note that for the auto detection to work, the R fields must be excluded from Proguard
  * Manual lib listings and other extra modifications can be done so by overriding the open functions
  */
-abstract class AboutActivityBase(
-    val rClass: Class<*>?,
-    private val configBuilder: Configs.() -> Unit = {}
-) :
+abstract class AboutActivityBase(val rClass: Class<*>?) :
     KauBaseActivity(), ViewPager.OnPageChangeListener {
 
     val currentPage: Int
@@ -60,7 +57,9 @@ abstract class AboutActivityBase(
      * Holds some common configurations that may be added directly from the constructor
      * Applied lazily since it needs the context to fetch resources
      */
-    val configs: Configs by lazy { Configs().apply { configBuilder() } }
+    val configs: Configs by lazy { Configs().apply{buildConfigs()} }
+
+    open fun Configs.buildConfigs() = Unit
 
     /**
      * Holds that status of each page
