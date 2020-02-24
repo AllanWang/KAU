@@ -14,6 +14,10 @@ An example can be found in the sample app test class.
 Also note that to better support in memory preferences, `reset()` will clear the in memory content for both variants,
 meaning that in memory preferences will reset to default. Previously, in memory `reset()` did nothing.
 
+## AboutActivityBase
+
+`configBuilder` was previously required in the constructor, but is now an open function so that activity fields can be used in the builder.
+
 # v5.1.0
 
 ## KPref

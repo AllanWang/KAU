@@ -104,7 +104,7 @@ class KPrefDelegateInMemory<T> internal constructor(
     private val lock = this
 
     init {
-       pref.add(this)
+        pref.add(this)
     }
 
     override fun invalidate() {

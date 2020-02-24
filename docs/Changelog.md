@@ -1,6 +1,7 @@
 # Changelog
 
 ## v5.3.0
+* :about: Moved config builder inside activity
 * :color: Allow option to disable selected ring
 * :core: Breaking KPref changes; see migration
 
