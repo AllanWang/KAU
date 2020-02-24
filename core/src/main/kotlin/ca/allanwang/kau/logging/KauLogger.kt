@@ -47,7 +47,7 @@ open class KauLogger(
     /**
      * Toggle to dictate whether a message should be logged
      */
-    var shouldLog: (priority: Int) -> Boolean = { true }
+    var shouldLog: (priority: Int) -> Boolean = { it >= Log.INFO }
 ) {
 
     inline fun v(message: () -> Any?) = log(Log.VERBOSE, message)
