@@ -62,7 +62,12 @@ class SampleTestApp : Application() {
                 androidLogger()
             }
             androidContext(this@SampleTestApp)
-            modules(listOf(prefFactoryModule(), SampleApp.prefModule()))
+            modules(
+                listOf(
+                    prefFactoryModule(),
+                    KPrefSample.module()
+                )
+            )
         }
     }
 

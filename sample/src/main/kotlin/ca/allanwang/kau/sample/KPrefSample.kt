@@ -18,6 +18,7 @@ package ca.allanwang.kau.sample
 import android.graphics.Color
 import ca.allanwang.kau.kpref.KPref
 import ca.allanwang.kau.kpref.KPrefFactory
+import org.koin.dsl.module
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -34,4 +35,10 @@ class KPrefSample(factory: KPrefFactory) : KPref("pref_sample", factory = factor
     var seekbar: Int by kpref("seekbar", 20)
     var time12: Int by kpref("time_12", 315)
     var time24: Int by kpref("time_24", 2220)
+
+    companion object {
+        fun module() = module {
+            single { KPrefSample(get()) }
+        }
+    }
 }

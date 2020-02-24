@@ -36,7 +36,12 @@ class SampleApp : Application() {
                 androidLogger()
             }
             androidContext(this@SampleApp)
-            modules(listOf(prefFactoryModule(), prefModule()))
+            modules(
+                listOf(
+                    prefFactoryModule(),
+                    KPrefSample.module()
+                )
+            )
         }
     }
 
@@ -44,12 +49,6 @@ class SampleApp : Application() {
         fun prefFactoryModule(): Module = module {
             single<KPrefFactory> {
                 KPrefFactoryAndroid(get())
-            }
-        }
-
-        fun prefModule(): Module = module {
-            single {
-                KPrefSample(get())
             }
         }
     }
