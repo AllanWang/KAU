@@ -5,9 +5,6 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 29
 
-    // https://developer.android.com/studio/releases/build-tools
-    const val buildTools = "29.0.0"
-
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
     const val appcompat = "1.1.0"
 
@@ -57,7 +54,10 @@ object Versions {
     const val materialDialog = "3.3.0"
 
     // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-    const val koin = "2.0.1"
+    const val koin = "2.1.0"
+
+    // https://square.github.io/leakcanary/changelog/
+    const val leakCanary = "2.2"
 
     // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
     const val espresso = "3.2.0"
@@ -72,7 +72,7 @@ object Versions {
 
     // Keep version for now, see https://github.com/diffplug/spotless/issues/521
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
-    const val spotless = "3.26.1"
+    const val spotless = "3.27.1"
 
     // https://github.com/bugsnag/bugsnag-android/releases
     const val bugsnag = "4.22.3"
@@ -81,15 +81,15 @@ object Versions {
     const val bugsnagPlugin="4.7.3"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "3.6.0-rc03"
+    const val gradlePlugin = "4.0.0-beta01"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
-    const val playPublishPlugin = "2.6.2"
+    const val playPublishPlugin = "2.7.2"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
     const val dexCountPlugin = "1.0.2"
 
     // https://github.com/gladed/gradle-android-git-version/releases
-    const val gitVersionPlugin = "0.4.12"
+    const val gitVersionPlugin = "0.4.13"
 }

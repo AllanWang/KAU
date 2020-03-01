@@ -10,7 +10,6 @@ group = "ca.allanwang"
 
 android {
     compileSdkVersion Versions.targetSdk
-    buildToolsVersion Versions.buildTools
 
     androidGitVersion {
         codeFormat = 'MMNNPPXX'

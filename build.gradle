@@ -23,10 +23,6 @@ buildscript {
     wrapper.setDistributionType(Wrapper.DistributionType.ALL)
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
-
 task generateChangelogMd {
     ChangelogGenerator.generate("${project.rootDir}/sample/src/main/res/xml/kau_changelog.xml", "${project.rootDir}/docs/Changelog.md")
 }
