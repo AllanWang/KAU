@@ -56,6 +56,9 @@ object Versions {
     // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
     const val koin = "2.1.0"
 
+    // https://square.github.io/leakcanary/changelog/
+    const val leakCanary = "2.2"
+
     // https://mvnrepository.com/artifact/androidx.test.espresso/espresso-core?repo=google
     const val espresso = "3.2.0"
 

@@ -101,6 +101,8 @@ object Dependencies {
 
     const val bugsnag = "com.bugsnag:bugsnag-android:${Versions.bugsnag}"
 
+    const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
+
     @JvmStatic
     fun espresso(type: String) = "androidx.test.espresso:espresso-$type:${Versions.espresso}"
 

@@ -18,6 +18,11 @@ meaning that in memory preferences will reset to default. Previously, in memory 
 
 `configBuilder` was previously required in the constructor, but is now an open function so that activity fields can be used in the builder.
 
+## Gradle
+
+* Due to Spotless updates, gradle should not include the `clean` task ([#521](https://github.com/diffplug/spotless/issues/521)).
+* `buildToolsVersion` is already included in Android Studio, so you no longer need to specify the link with KAU.
+
 # v5.1.0
 
 ## KPref
