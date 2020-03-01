@@ -5,9 +5,6 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 29
 
-    // https://developer.android.com/studio/releases/build-tools
-    const val buildTools = "29.0.0"
-
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
     const val appcompat = "1.1.0"
 
