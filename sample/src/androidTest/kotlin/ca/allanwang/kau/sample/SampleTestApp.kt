@@ -46,8 +46,7 @@ class SampleTestRule : TestRule {
             override fun evaluate() {
 
                 // Reset prefs
-                val pref: KPrefSample = get()
-                pref.reset()
+                get<KPrefSample>().reset()
 
                 base.evaluate()
             }
