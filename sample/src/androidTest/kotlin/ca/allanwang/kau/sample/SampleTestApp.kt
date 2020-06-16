@@ -17,18 +17,17 @@ package ca.allanwang.kau.sample
 
 import android.app.Application
 import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.runner.AndroidJUnitRunner
-import ca.allanwang.kau.kpref.KPrefFactory
-import ca.allanwang.kau.kpref.KPrefFactoryInMemory
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.testing.HiltTestApplication
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.KoinComponent
-import org.koin.core.context.startKoin
-import org.koin.core.get
-import org.koin.dsl.module
+import java.lang.RuntimeException
 
 class SampleTestRunner : AndroidJUnitRunner() {
     override fun newApplication(
@@ -36,43 +35,30 @@ class SampleTestRunner : AndroidJUnitRunner() {
         className: String?,
         context: Context?
     ): Application {
-        return super.newApplication(cl, SampleTestApp::class.java.name, context)
+        return super.newApplication(cl, HiltTestApplication::class.java.name, context)
     }
 }
 
 class SampleTestRule : TestRule {
+
+    @EntryPoint
+    @InstallIn(ApplicationComponent::class)
+    interface SampleTestRuleEntryPoint {
+        fun pref(): KPrefSample
+    }
+
     override fun apply(base: Statement, description: Description): Statement =
-        object : Statement(), KoinComponent {
+        object : Statement() {
             override fun evaluate() {
+                val entryPoint = EntryPointAccessors.fromApplication(
+                    ApplicationProvider.getApplicationContext(),
+                    SampleTestRuleEntryPoint::class.java
+                )
 
                 // Reset prefs
-                get<KPrefSample>().reset()
+                entryPoint.pref().reset()
 
                 base.evaluate()
             }
         }
-}
-
-class SampleTestApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        startKoin {
-            if (BuildConfig.DEBUG) {
-                androidLogger()
-            }
-            androidContext(this@SampleTestApp)
-            modules(
-                listOf(
-                    prefFactoryModule(),
-                    KPrefSample.module()
-                )
-            )
-        }
-    }
-
-    fun prefFactoryModule() = module {
-        single<KPrefFactory> {
-            KPrefFactoryInMemory
-        }
-    }
 }

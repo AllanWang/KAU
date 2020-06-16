@@ -2,8 +2,10 @@ import kau.Dependencies
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'dagger.hilt.android.plugin'
 
 play {
     serviceAccountCredentials = file('../files/gplay-keys.json')
@@ -135,12 +137,16 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
+    implementation "com.google.dagger:hilt-android:2.28-alpha"
+    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+
     implementation Dependencies.materialDialog("input")
-    implementation Dependencies.koin
 
     testImplementation Dependencies.kotlinTest
     testImplementation Dependencies.junit
-    testImplementation Dependencies.koinTest
+    testImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
+    kaptTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+
 
     androidTestImplementation Dependencies.kotlinTest
     androidTestImplementation Dependencies.espresso
@@ -148,5 +154,6 @@ dependencies {
     androidTestImplementation Dependencies.espresso("contrib")
     androidTestImplementation Dependencies.testRules
     androidTestImplementation Dependencies.testRunner
-    androidTestImplementation Dependencies.koinTest
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.28-alpha'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
 }

@@ -16,40 +16,10 @@
 package ca.allanwang.kau.sample
 
 import android.app.Application
-import ca.allanwang.kau.kpref.KPrefFactory
-import ca.allanwang.kau.kpref.KPrefFactoryAndroid
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * Created by Allan Wang on 2017-06-08.
  */
-class SampleApp : Application() {
-    override fun onCreate() {
-        super.onCreate()
-
-        startKoin {
-            if (BuildConfig.DEBUG) {
-                androidLogger()
-            }
-            androidContext(this@SampleApp)
-            modules(
-                listOf(
-                    prefFactoryModule(),
-                    KPrefSample.module()
-                )
-            )
-        }
-    }
-
-    companion object {
-        fun prefFactoryModule(): Module = module {
-            single<KPrefFactory> {
-                KPrefFactoryAndroid(get())
-            }
-        }
-    }
-}
+@HiltAndroidApp
+class SampleApp : Application()

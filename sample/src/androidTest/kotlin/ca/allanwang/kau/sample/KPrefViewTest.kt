@@ -27,6 +27,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import androidx.test.rule.ActivityTestRule
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
+import dagger.hilt.android.testing.UninstallModules
 import kotlin.test.BeforeTest
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -40,8 +44,7 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import org.koin.test.KoinTest
-import org.koin.test.inject
+import javax.inject.Inject
 
 /**
  * Created by Allan Wang on 21/12/2018.
@@ -49,19 +52,22 @@ import org.koin.test.inject
  * Tests related to the :kpref-activity module
  */
 @RunWith(AndroidJUnit4::class)
-@MediumTest
-class KPrefViewTest : KoinTest {
+@HiltAndroidTest
+@UninstallModules(PrefFactoryModule::class)
+class KPrefViewTest {
 
     val activity: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
-    @get:Rule
-    val rule: TestRule = RuleChain.outerRule(SampleTestRule()).around(activity)
+    val hiltRule = HiltAndroidRule(this)
 
-    private val pref: KPrefSample by inject()
+    @get:Rule
+    val rule: TestRule = RuleChain.outerRule(hiltRule).around(SampleTestRule()).around(activity)
+
+    @Inject lateinit var pref: KPrefSample
 
     @BeforeTest
     fun before() {
-        pref.reset()
+        hiltRule.inject()
     }
 
     fun verifyCheck(checked: Boolean): Matcher<View> {

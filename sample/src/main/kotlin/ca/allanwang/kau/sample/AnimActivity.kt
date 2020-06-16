@@ -28,7 +28,8 @@ import ca.allanwang.kau.utils.fullLinearRecycler
 import ca.allanwang.kau.utils.startActivity
 import ca.allanwang.kau.utils.withAlpha
 import ca.allanwang.kau.utils.withSlideOut
-import org.koin.android.ext.android.inject
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Created by Allan Wang on 2017-06-12.
@@ -36,9 +37,11 @@ import org.koin.android.ext.android.inject
  * Activity for animations
  * Now also showcases permissions
  */
+@AndroidEntryPoint
 class AnimActivity : KauBaseActivity() {
 
-    private val pref: KPrefSample by inject()
+    @Inject
+    lateinit var pref: KPrefSample
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
