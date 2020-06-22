@@ -25,13 +25,9 @@ import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withChild
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.MediumTest
 import androidx.test.rule.ActivityTestRule
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.HiltTestApplication
 import dagger.hilt.android.testing.UninstallModules
-import kotlin.test.BeforeTest
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import org.hamcrest.BaseMatcher
@@ -54,21 +50,14 @@ import javax.inject.Inject
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
 @UninstallModules(PrefFactoryModule::class)
-class KPrefViewTest {
+class KPrefViewTest : BaseTest() {
 
     val activity: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
-    val hiltRule = HiltAndroidRule(this)
-
     @get:Rule
-    val rule: TestRule = RuleChain.outerRule(hiltRule).around(SampleTestRule()).around(activity)
+    val rule: TestRule = RuleChain.outerRule(SampleTestRule()).around(activity)
 
     @Inject lateinit var pref: KPrefSample
-
-    @BeforeTest
-    fun before() {
-        hiltRule.inject()
-    }
 
     fun verifyCheck(checked: Boolean): Matcher<View> {
         return object : BoundedMatcher<View, View>(View::class.java) {

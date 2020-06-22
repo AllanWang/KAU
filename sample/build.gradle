@@ -101,14 +101,16 @@ android {
         main.res.srcDirs += 'src/main/res-public'
     }
 
-    testOptions.unitTests {
-        // Don't throw runtime exceptions for android calls that are not mocked
-        returnDefaultValues = true
+    testOptions {
+        unitTests {
+            // Don't throw runtime exceptions for android calls that are not mocked
+            returnDefaultValues = true
 
-        // Always show the result of every unit test, even if it passes.
-        all {
-            testLogging {
-                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            // Always show the result of every unit test, even if it passes.
+            all {
+                testLogging {
+                    events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+                }
             }
         }
     }
