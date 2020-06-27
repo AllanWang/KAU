@@ -29,6 +29,7 @@ import androidx.test.rule.ActivityTestRule
 import ca.allanwang.kau.sample.test.BaseTest
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import javax.inject.Inject
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import org.hamcrest.BaseMatcher
@@ -41,7 +42,6 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import javax.inject.Inject
 
 /**
  * Created by Allan Wang on 21/12/2018.
