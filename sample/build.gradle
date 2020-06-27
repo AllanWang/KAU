@@ -109,19 +109,7 @@ android {
             // Always show the result of every unit test, even if it passes.
             all {
                 testLogging {
-                    events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
-                }
-            }
-        }
-    }
-
-    // See https://github.com/facebook/flipper/issues/146
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            def requested = details.requested
-            if (requested.group == "com.android.support") {
-                if (!requested.name.startsWith("multidex")) {
-                    details.useVersion "26.+"
+                    events 'skipped', 'failed', 'standardOut', 'standardError'
                 }
             }
         }
@@ -139,15 +127,15 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
-    implementation "com.google.dagger:hilt-android:2.28-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
+    implementation Dependencies.hilt
+    kapt Dependencies.hiltCompiler
 
     implementation Dependencies.materialDialog("input")
 
     testImplementation Dependencies.kotlinTest
     testImplementation Dependencies.junit
-    testImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
-    kaptTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    testImplementation Dependencies.hiltTest
+    kaptTest Dependencies.hiltCompiler
 
 
     androidTestImplementation Dependencies.kotlinTest
@@ -156,6 +144,6 @@ dependencies {
     androidTestImplementation Dependencies.espresso("contrib")
     androidTestImplementation Dependencies.testRules
     androidTestImplementation Dependencies.testRunner
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.28-alpha'
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28-alpha'
+    testImplementation Dependencies.hiltTest
+    kaptTest Dependencies.hiltCompiler
 }

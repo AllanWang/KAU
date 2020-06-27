@@ -1,4 +1,4 @@
-package ca.allanwang.kau.sample
+package ca.allanwang.kau.sample.test
 
 import ca.allanwang.kau.kpref.KPrefFactory
 import ca.allanwang.kau.kpref.KPrefFactoryInMemory

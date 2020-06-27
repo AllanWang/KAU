@@ -1,4 +1,4 @@
-package ca.allanwang.kau.sample
+package ca.allanwang.kau.sample.test
 
 import dagger.hilt.android.testing.HiltAndroidRule
 import org.junit.Rule

@@ -59,6 +59,18 @@ object Dependencies {
     @JvmStatic
     fun koin(type: String) = "org.koin:koin-$type:${Versions.koin}"
 
+    @JvmField
+    val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+
+    @JvmField
+    val hiltCompiler = hilt("compiler")
+
+    @JvmField
+    val hiltTest = hilt("testing")
+
+    @JvmStatic
+    fun hilt(type: String) = "com.google.dagger:hilt-android-$type:${Versions.hilt}"
+
     const val junit = "junit:junit:${Versions.junit}"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
