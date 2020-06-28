@@ -16,10 +16,23 @@
 package ca.allanwang.kau.sample
 
 import android.app.Application
+import com.bugsnag.android.Bugsnag
 import dagger.hilt.android.HiltAndroidApp
 
 /**
  * Created by Allan Wang on 2017-06-08.
  */
 @HiltAndroidApp
-class SampleApp : Application()
+class SampleApp : Application() {
+    override fun onCreate() {
+        super.onCreate()
+//        initBugsnag()
+    }
+
+    private fun initBugsnag() {
+        if (BuildConfig.DEBUG) {
+            return
+        }
+        Bugsnag.init(this)
+    }
+}

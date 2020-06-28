@@ -82,7 +82,7 @@ object Versions {
     const val bugsnag = "4.22.3"
 
     // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
-    const val bugsnagPlugin="4.7.4"
+    const val bugsnagPlugin="4.7.5"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     const val gradlePlugin = "4.1.0-beta02"
