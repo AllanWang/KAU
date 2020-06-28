@@ -4,6 +4,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'com.bugsnag.android.gradle'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'dagger.hilt.android.plugin'
 
@@ -64,6 +65,7 @@ android {
             versionNameSuffix "-debug"
             signingConfig signingConfigs.debug
             resValue "string", "app_name", "KAU Debug"
+            ext.enableBugsnag = false
         }
 
         release {
@@ -130,13 +132,14 @@ dependencies {
     implementation Dependencies.hilt
     kapt Dependencies.hiltCompiler
 
+    implementation Dependencies.bugsnag
+
     implementation Dependencies.materialDialog("input")
 
     testImplementation Dependencies.kotlinTest
     testImplementation Dependencies.junit
     testImplementation Dependencies.hiltTest
     kaptTest Dependencies.hiltCompiler
-
 
     androidTestImplementation Dependencies.kotlinTest
     androidTestImplementation Dependencies.espresso

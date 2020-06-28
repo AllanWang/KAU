@@ -57,6 +57,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/kau_file_paths" />
         </provider>
+        <meta-data
+            android:name="com.bugsnag.android.API_KEY"
+            android:value="0a09e498a253b98237500fb5f948e5c6"/>
     </application>
 
 </manifest>
