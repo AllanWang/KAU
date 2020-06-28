@@ -15,10 +15,16 @@
  */
 package ca.allanwang.kau.sample
 
+import android.content.Context
 import android.graphics.Color
 import ca.allanwang.kau.kpref.KPref
 import ca.allanwang.kau.kpref.KPrefFactory
-import org.koin.dsl.module
+import ca.allanwang.kau.kpref.KPrefFactoryAndroid
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -35,10 +41,18 @@ class KPrefSample(factory: KPrefFactory) : KPref("pref_sample", factory = factor
     var seekbar: Int by kpref("seekbar", 20)
     var time12: Int by kpref("time_12", 315)
     var time24: Int by kpref("time_24", 2220)
+}
 
-    companion object {
-        fun module() = module {
-            single { KPrefSample(get()) }
-        }
-    }
+@Module
+@InstallIn(ApplicationComponent::class)
+object PrefModule {
+    @Provides
+    fun pref(factory: KPrefFactory): KPrefSample = KPrefSample(factory)
+}
+
+@Module
+@InstallIn(ApplicationComponent::class)
+object PrefFactoryModule {
+    @Provides
+    fun factory(@ApplicationContext context: Context): KPrefFactory = KPrefFactoryAndroid(context)
 }

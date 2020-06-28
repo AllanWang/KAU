@@ -25,9 +25,11 @@ import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withChild
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.MediumTest
 import androidx.test.rule.ActivityTestRule
-import kotlin.test.BeforeTest
+import ca.allanwang.kau.sample.test.BaseTest
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
+import javax.inject.Inject
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import org.hamcrest.BaseMatcher
@@ -40,8 +42,6 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import org.koin.test.KoinTest
-import org.koin.test.inject
 
 /**
  * Created by Allan Wang on 21/12/2018.
@@ -49,20 +49,16 @@ import org.koin.test.inject
  * Tests related to the :kpref-activity module
  */
 @RunWith(AndroidJUnit4::class)
-@MediumTest
-class KPrefViewTest : KoinTest {
+@HiltAndroidTest
+@UninstallModules(PrefFactoryModule::class)
+class KPrefViewTest : BaseTest() {
 
     val activity: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
 
     @get:Rule
     val rule: TestRule = RuleChain.outerRule(SampleTestRule()).around(activity)
 
-    private val pref: KPrefSample by inject()
-
-    @BeforeTest
-    fun before() {
-        pref.reset()
-    }
+    @Inject lateinit var pref: KPrefSample
 
     fun verifyCheck(checked: Boolean): Matcher<View> {
         return object : BoundedMatcher<View, View>(View::class.java) {

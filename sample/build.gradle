@@ -2,8 +2,10 @@ import kau.Dependencies
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'dagger.hilt.android.plugin'
 
 play {
     serviceAccountCredentials = file('../files/gplay-keys.json')
@@ -99,25 +101,15 @@ android {
         main.res.srcDirs += 'src/main/res-public'
     }
 
-    testOptions.unitTests {
-        // Don't throw runtime exceptions for android calls that are not mocked
-        returnDefaultValues = true
+    testOptions {
+        unitTests {
+            // Don't throw runtime exceptions for android calls that are not mocked
+            returnDefaultValues = true
 
-        // Always show the result of every unit test, even if it passes.
-        all {
-            testLogging {
-                events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
-            }
-        }
-    }
-
-    // See https://github.com/facebook/flipper/issues/146
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            def requested = details.requested
-            if (requested.group == "com.android.support") {
-                if (!requested.name.startsWith("multidex")) {
-                    details.useVersion "26.+"
+            // Always show the result of every unit test, even if it passes.
+            all {
+                testLogging {
+                    events 'skipped', 'failed', 'standardOut', 'standardError'
                 }
             }
         }
@@ -135,12 +127,16 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
+    implementation Dependencies.hilt
+    kapt Dependencies.hiltCompiler
+
     implementation Dependencies.materialDialog("input")
-    implementation Dependencies.koin
 
     testImplementation Dependencies.kotlinTest
     testImplementation Dependencies.junit
-    testImplementation Dependencies.koinTest
+    testImplementation Dependencies.hiltTest
+    kaptTest Dependencies.hiltCompiler
+
 
     androidTestImplementation Dependencies.kotlinTest
     androidTestImplementation Dependencies.espresso
@@ -148,5 +144,6 @@ dependencies {
     androidTestImplementation Dependencies.espresso("contrib")
     androidTestImplementation Dependencies.testRules
     androidTestImplementation Dependencies.testRunner
-    androidTestImplementation Dependencies.koinTest
+    testImplementation Dependencies.hiltTest
+    kaptTest Dependencies.hiltCompiler
 }

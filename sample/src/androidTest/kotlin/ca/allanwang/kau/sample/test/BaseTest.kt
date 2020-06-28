@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Allan Wang
+ * Copyright 2020 Allan Wang
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ca.allanwang.kau.sample
+package ca.allanwang.kau.sample.test
 
-import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.testing.HiltAndroidRule
+import kotlin.test.BeforeTest
+import org.junit.Rule
 
-/**
- * Created by Allan Wang on 2017-06-08.
- */
-@HiltAndroidApp
-class SampleApp : Application()
+abstract class BaseTest {
+    @Suppress("LeakingThis")
+    @get:Rule
+    val hiltRule: HiltAndroidRule =
+        HiltAndroidRule(this)
+
+    @BeforeTest
+    fun before() {
+        hiltRule.inject()
+    }
+}

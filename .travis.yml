@@ -22,8 +22,8 @@ android:
 script:
 - chmod +x gradlew
 - "./gradlew --quiet androidGitVersion"
-- if [[ "$TRAVIS_BRANCH" == "master" ]]; then ./gradlew lintRelease publishRelease;
-  else ./gradlew lintRelease testReleaseUnitTest; fi
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then ./gradlew spotlessCheck lintRelease publishRelease;
+  else ./gradlew spotlessCheck lintRelease testReleaseUnitTest; fi
 branches:
   except:
   - gh-pages
