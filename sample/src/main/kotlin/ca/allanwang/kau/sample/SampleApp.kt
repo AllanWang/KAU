@@ -17,7 +17,6 @@ package ca.allanwang.kau.sample
 
 import android.app.Application
 import com.bugsnag.android.Bugsnag
-import com.bugsnag.android.Configuration
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -34,6 +33,6 @@ class SampleApp : Application() {
         if (BuildConfig.DEBUG) {
             return
         }
-        Bugsnag.start(this)
+        Bugsnag.init(this)
     }
 }
