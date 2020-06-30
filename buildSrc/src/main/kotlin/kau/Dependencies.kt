@@ -71,6 +71,9 @@ object Dependencies {
     @JvmStatic
     fun hilt(type: String) = "com.google.dagger:hilt-android-$type:${Versions.hilt}"
 
+    @JvmStatic
+    fun compose(type: String) = "androidx.ui:ui-$type:${Versions.compose}"
+
     const val junit = "junit:junit:${Versions.junit}"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 

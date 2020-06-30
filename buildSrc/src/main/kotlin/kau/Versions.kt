@@ -59,6 +59,9 @@ object Versions {
     // https://mvnrepository.com/artifact/com.google.dagger/hilt-android
     const val hilt = "2.28.1-alpha"
 
+    // https://mvnrepository.com/artifact/androidx.ui/ui-core?repo=google
+    const val compose = "0.1.0-dev14"
+
     // https://square.github.io/leakcanary/changelog/
     const val leakCanary = "2.2"
 
@@ -85,7 +88,7 @@ object Versions {
     const val bugsnagPlugin="4.7.5"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "4.1.0-beta02"
+    const val gradlePlugin = "4.2.0-alpha02"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
