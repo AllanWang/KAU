@@ -19,7 +19,8 @@ buildscript {
         classpath Plugins.dexCount
         classpath Plugins.gitVersion
         classpath Plugins.spotless
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
+        classpath Plugins.aboutLibraries
+        classpath Plugins.hilt
     }
 
     wrapper.setDistributionType(Wrapper.DistributionType.ALL)

@@ -7,6 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'com.bugsnag.android.gradle'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'com.mikepenz.aboutlibraries.plugin'
 
 play {
     serviceAccountCredentials = file('../files/gplay-keys.json')

@@ -33,7 +33,7 @@ object Versions {
     const val coroutines = "1.3.8"
 
     // https://github.com/mikepenz/AboutLibraries/releases
-    const val aboutLibraries = "7.1.0"
+    const val aboutLibraries = "8.3.0"
 
     // https://github.com/wasabeef/Blurry/releases
     const val blurry = "3.0.0"
