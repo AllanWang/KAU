@@ -45,7 +45,7 @@ object Versions {
     const val glide = "4.11.0"
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
-    const val iconics = "4.0.2"
+    const val iconics = "5.0.3"
     const val iconicsGoogle = "3.0.1.4"
     const val iconicsMaterial = "2.2.0.6"
     const val iconicsCommunity = "3.5.95.1"
