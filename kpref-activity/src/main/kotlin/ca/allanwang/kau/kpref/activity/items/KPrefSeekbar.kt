@@ -37,7 +37,7 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
     override fun KClick<Int>.defaultOnClick() = Unit
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         val text = holder.bindInnerView<TextView>(R.layout.kau_pref_seekbar_text)
         withTextColor(text::setTextColor)

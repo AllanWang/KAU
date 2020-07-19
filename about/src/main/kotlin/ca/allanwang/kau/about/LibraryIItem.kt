@@ -59,7 +59,7 @@ class LibraryIItem(val lib: Library) : KauIItem<LibraryIItem.ViewHolder>(
         get() = false
         set(_) {}
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         with(holder) {
             name.text = lib.libraryName

@@ -92,6 +92,7 @@ object Dependencies {
     const val iconicsCommunity =
         "com.mikepenz:community-material-typeface:${Versions.iconicsCommunity}-kotlin@aar"
 
+    const val aboutLibraries = "com.mikepenz:aboutlibraries:${Versions.aboutLibraries}"
     const val aboutLibrariesCore = "com.mikepenz:aboutlibraries-core:${Versions.aboutLibraries}"
 
     const val blurry = "jp.wasabeef:blurry:${Versions.blurry}"

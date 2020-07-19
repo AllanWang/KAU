@@ -40,7 +40,7 @@ class HeaderIItem(
 
     var text: String = text ?: "Header Placeholder"
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         holder.text.text = holder.itemView.context.string(textRes, text)
         bindTextColor(holder.text)

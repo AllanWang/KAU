@@ -46,7 +46,7 @@ class MediaActionItem(
         get() = false
         set(_) {}
 
-    override fun bindView(holder: MediaItemBasic.ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: MediaItemBasic.ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         holder.image.apply {
             setImageDrawable(

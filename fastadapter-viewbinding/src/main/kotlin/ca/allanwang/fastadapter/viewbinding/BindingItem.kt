@@ -56,13 +56,13 @@ abstract class BindingItem<Binding : ViewBinding>(open val data: Any?) :
         return binding.root
     }
 
-    final override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    final override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         val binding = holder.getBinding<Binding>()
         binding.bindView(holder, payloads)
     }
 
-    abstract fun Binding.bindView(holder: ViewHolder, payloads: MutableList<Any>)
+    abstract fun Binding.bindView(holder: ViewHolder, payloads: List<Any>)
 
     protected fun unbind(vararg textViews: TextView) {
         textViews.forEach { it.text = null }

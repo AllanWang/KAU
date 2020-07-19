@@ -78,7 +78,7 @@ class SearchItem(
         )
     }
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         holder.title.setTextColor(foregroundColor)
         holder.desc.setTextColor(foregroundColor.adjustAlpha(0.6f))

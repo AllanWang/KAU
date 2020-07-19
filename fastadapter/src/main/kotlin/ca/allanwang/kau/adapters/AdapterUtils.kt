@@ -27,8 +27,8 @@ import com.mikepenz.fastadapter.select.SelectExtension
 /**
  * Add kotlin's generic syntax to better support out types
  */
-fun <Item : GenericItem> fastAdapter(vararg adapter: IAdapter<out Item>) =
-    FastAdapter.with<Item, IAdapter<out Item>>(adapter.toList())
+fun <Item : GenericItem> fastAdapter(vararg adapter: IAdapter<out Item>): FastAdapter<Item> =
+    FastAdapter.with(adapter.toList())
 
 /**
  * Returns selection size, or -1 if selection is disabled

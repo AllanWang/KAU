@@ -41,7 +41,7 @@ import com.mikepenz.fastadapter.listeners.EventHook
 class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox.ViewHolder>(
     R.layout.permission_checkbox, { ViewHolder(it) }) {
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         holder.text.text = permission
         holder.checkbox.isChecked = holder.itemView.context.hasPermission(permission)
@@ -72,7 +72,7 @@ class PermissionCheckboxViewBinding(
 
     override fun PermissionCheckboxBinding.bindView(
         holder: ViewHolder,
-        payloads: MutableList<Any>
+        payloads: List<Any>
     ) {
         permText.text = data.permission
         permCheckbox.apply {

@@ -28,7 +28,7 @@ open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
     override val layoutRes: Int
         get() = R.layout.kau_pref_header
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         withAccentColor(holder.title::setTextColor)
     }

@@ -52,7 +52,7 @@ class MediaItemBasic(val data: MediaModel) :
         get() = false
         set(_) {}
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         glide(holder.itemView)
             .load(data.data)

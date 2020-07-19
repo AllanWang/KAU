@@ -33,7 +33,7 @@ import com.afollestad.materialdialogs.MaterialDialog
  */
 open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBase<Int>(builder) {
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         if (builder.showPreview) {
             val preview = holder.bindInnerView<CircleView>(R.layout.kau_pref_color)
