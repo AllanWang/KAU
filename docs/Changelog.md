@@ -1,5 +1,9 @@
 # Changelog
 
+## v6.0.0
+* Add support for Android 4.1.x
+* Add major version library updates (FastAdapter, AboutLibrary, Iconics)
+
 ## v5.3.0
 * :about: Moved config builder inside activity
 * :color: Allow option to disable selected ring
