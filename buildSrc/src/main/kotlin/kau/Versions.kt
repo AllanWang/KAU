@@ -39,7 +39,7 @@ object Versions {
     const val blurry = "3.0.0"
 
     // https://github.com/mikepenz/FastAdapter/releases
-    const val fastAdapter = "4.1.2"
+    const val fastAdapter = "5.2.2"
 
     // https://github.com/bumptech/glide/releases
     const val glide = "4.11.0"

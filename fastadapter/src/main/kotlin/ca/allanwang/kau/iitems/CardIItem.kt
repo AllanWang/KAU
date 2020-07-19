@@ -89,7 +89,7 @@ class CardIItem(
         var imageRes: Int = INVALID_ID
     }
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         with(holder.itemView.context) context@{
             with(configs) {

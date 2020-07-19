@@ -47,7 +47,7 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
     }
 
     @CallSuper
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         _enabled = base.enabler()
         with(holder) {

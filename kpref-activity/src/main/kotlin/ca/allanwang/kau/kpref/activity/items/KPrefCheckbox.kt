@@ -34,7 +34,7 @@ open class KPrefCheckbox(builder: BaseContract<Boolean>) : KPrefItemBase<Boolean
         (innerView as AppCompatCheckBox).isChecked = pref
     }
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         val checkbox = holder.bindInnerView<CheckBox>(R.layout.kau_pref_checkbox)
         withAccentColor(checkbox::tint)

@@ -35,7 +35,7 @@ class CutoutIItem(val config: CutoutView.() -> Unit = {}) : KauIItem<CutoutIItem
         get() = false
         set(_) {}
 
-    override fun bindView(holder: ViewHolder, payloads: MutableList<Any>) {
+    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         with(holder) {
             if (accentColor != null && themeEnabled) cutout.foregroundColor = accentColor!!
