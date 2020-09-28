@@ -6,10 +6,10 @@ object Versions {
     const val targetSdk = 29
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
-    const val appcompat = "1.1.0"
+    const val appcompat = "1.2.0"
 
     // https://mvnrepository.com/artifact/com.google.android.material/material
-    const val googleMaterial = "1.1.0-rc02"
+    const val googleMaterial = "1.2.1"
 
     // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
     const val recyclerView = "1.1.0"
@@ -21,10 +21,10 @@ object Versions {
     const val cardView = "1.0.0"
 
     // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
-    const val constraintLayout = "2.0.0-beta8"
+    const val constraintLayout = "2.0.1"
 
     // https://mvnrepository.com/artifact/androidx.core/core-ktx
-    const val coreKtx = "1.2.0"
+    const val coreKtx = "1.3.1"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
     const val kotlin = "1.3.72"
