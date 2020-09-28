@@ -27,10 +27,10 @@ object Versions {
     const val coreKtx = "1.3.1"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    const val kotlin = "1.3.72"
+    const val kotlin = "1.4.10"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    const val coroutines = "1.3.8"
+    const val coroutines = "1.3.9"
 
     // https://github.com/mikepenz/AboutLibraries/releases
     const val aboutLibraries = "8.3.0"
