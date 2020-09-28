@@ -54,7 +54,7 @@ object Versions {
     const val materialDialog = "3.3.0"
 
     // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-    const val koin = "2.1.6"
+    const val koin = "2.2.0-beta-1"
 
     // https://mvnrepository.com/artifact/com.google.dagger/hilt-android
     const val hilt = "2.29.1-alpha"
