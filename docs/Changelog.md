@@ -1,5 +1,9 @@
 # Changelog
 
+## v6.1.0
+* Add support for Android 4.1 RC03
+* Breaking: Updated iconics and buganizer dependencies
+
 ## v6.0.0
 * Add support for Android 4.1.x
 * Add major version library updates (FastAdapter, AboutLibrary, Iconics)
