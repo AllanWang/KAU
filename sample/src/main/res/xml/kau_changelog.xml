@@ -6,10 +6,6 @@
     <item text="" />
     -->
 
-    <version title="v6.1.0" />
-    <item text="Add support for Android 4.1 RC03" />
-    <item text="Breaking: Updated iconics, buganizer, and spotless dependencies (major version bump)" />
-
     <version title="v6.0.0" />
     <item text="Add support for Android 4.1.x" />
     <item text="Add major version library updates (FastAdapter, AboutLibrary, Iconics)" />

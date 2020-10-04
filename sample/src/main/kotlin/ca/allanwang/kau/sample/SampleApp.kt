@@ -26,13 +26,13 @@ import dagger.hilt.android.HiltAndroidApp
 class SampleApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        initBugsnag()
+//        initBugsnag()
     }
 
     private fun initBugsnag() {
         if (BuildConfig.DEBUG) {
             return
         }
-        Bugsnag.start(this)
+        Bugsnag.init(this)
     }
 }
