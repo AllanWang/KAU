@@ -84,14 +84,14 @@ object Versions {
     const val bugsnagPlugin="5.2.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "4.1.0-rc03"
+    const val gradlePlugin = "4.1.0"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
     const val playPublishPlugin = "3.0.0"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    const val dexCountPlugin = "2.0.0-RC1"
+    const val dexCountPlugin = "2.0.0"
 
     // https://github.com/gladed/gradle-android-git-version/releases
     const val gitVersionPlugin = "0.4.13"
