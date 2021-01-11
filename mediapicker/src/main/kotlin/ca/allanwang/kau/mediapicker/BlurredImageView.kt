@@ -18,12 +18,13 @@ package ca.allanwang.kau.mediapicker
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import ca.allanwang.kau.mediapicker.databinding.KauBlurredImageviewBinding
 import ca.allanwang.kau.ui.views.MeasureSpecContract
 import ca.allanwang.kau.ui.views.MeasureSpecDelegate
-import ca.allanwang.kau.utils.inflate
 import ca.allanwang.kau.utils.scaleXY
 import ca.allanwang.kau.utils.setBackgroundColorRes
 import ca.allanwang.kau.utils.setIcon
@@ -31,7 +32,6 @@ import ca.allanwang.kau.utils.visible
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import jp.wasabeef.blurry.internal.BlurFactor
 import jp.wasabeef.blurry.internal.BlurTask
-import kotlinx.android.synthetic.main.kau_blurred_imageview.view.*
 
 /**
  * Created by Allan Wang on 2017-07-14.
@@ -51,12 +51,13 @@ class BlurredImageView @JvmOverloads constructor(
     var isBlurred = false
         private set
 
-    val imageBase: ImageView get() = image_base
+    val imageBase: ImageView get() = binding.imageBase
+    
+    private val binding: KauBlurredImageviewBinding = KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        inflate(R.layout.kau_blurred_imageview, true)
         initAttrs(context, attrs)
-        image_foreground.setIcon(GoogleMaterial.Icon.gmd_check, 30)
+        binding.imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -66,9 +67,11 @@ class BlurredImageView @JvmOverloads constructor(
 
     override fun clearAnimation() {
         super.clearAnimation()
-        imageBase.clearAnimation()
-        image_blur.clearAnimation()
-        image_foreground.clearAnimation()
+        with (binding) {
+            imageBase.clearAnimation()
+            imageBlur.clearAnimation()
+            imageForeground.clearAnimation()
+        }
     }
 
     private fun View.scaleAnimate(scale: Float) =
@@ -88,10 +91,12 @@ class BlurredImageView @JvmOverloads constructor(
         factor.width = width
         factor.height = height
         BlurTask(imageBase, factor) {
-            image_blur.setImageDrawable(it)
-            scaleAnimate(ANIMATION_SCALE).start()
-            image_blur.alphaAnimate(1f).start()
-            image_foreground.alphaAnimate(1f).start()
+            with (binding) {
+                imageBlur.setImageDrawable(it)
+                scaleAnimate(ANIMATION_SCALE).start()
+                imageBlur.alphaAnimate(1f).start()
+                imageForeground.alphaAnimate(1f).start()
+            }
         }.execute()
     }
 
@@ -107,10 +112,12 @@ class BlurredImageView @JvmOverloads constructor(
         factor.width = width
         factor.height = height
         BlurTask(imageBase, factor) { drawable ->
-            image_blur.setImageDrawable(drawable)
-            scaleXY = ANIMATION_SCALE
-            image_blur.alpha = 1f
-            image_foreground.alpha = 1f
+            with (binding) {
+                imageBlur.setImageDrawable(drawable)
+                scaleXY = ANIMATION_SCALE
+                imageBlur.alpha = 1f
+                imageForeground.alpha = 1f
+            }
         }.execute()
     }
 
@@ -121,8 +128,10 @@ class BlurredImageView @JvmOverloads constructor(
         if (!isBlurred) return
         isBlurred = false
         scaleAnimate(1.0f).start()
-        image_blur.alphaAnimate(0f).withEndAction { image_blur.setImageDrawable(null) }.start()
-        image_foreground.alphaAnimate(0f).start()
+        with (binding) {
+            imageBlur.alphaAnimate(0f).withEndAction { imageBlur.setImageDrawable(null) }.start()
+            imageForeground.alphaAnimate(0f).start()
+        }
     }
 
     /**
@@ -133,9 +142,11 @@ class BlurredImageView @JvmOverloads constructor(
         clearAnimation()
         scaleX = 1.0f
         scaleX = 1.0f
-        image_blur.alpha = 0f
-        image_blur.setImageDrawable(null)
-        image_foreground.alpha = 0f
+        with (binding) {
+            imageBlur.alpha = 0f
+            imageBlur.setImageDrawable(null)
+            imageForeground.alpha = 0f
+        }
     }
 
     /**
@@ -163,15 +174,17 @@ class BlurredImageView @JvmOverloads constructor(
      */
     fun fullReset() {
         reset()
-        fullAction { it.visible().background = null }
-        image_foreground.setBackgroundColorRes(R.color.kau_blurred_image_selection_overlay)
-        image_foreground.setIcon(GoogleMaterial.Icon.gmd_check, 30, Color.WHITE)
+        with(binding) {
+            fullAction { it.visible().background = null }
+            imageForeground.setBackgroundColorRes(R.color.kau_blurred_image_selection_overlay)
+            imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30, Color.WHITE)
+        }
     }
 
-    private fun fullAction(action: (View) -> Unit) {
-        action(this)
+    private fun KauBlurredImageviewBinding.fullAction(action: (View) -> Unit) {
+        action(this@BlurredImageView)
         action(imageBase)
-        action(image_blur)
-        action(image_foreground)
+        action(imageBlur)
+        action(imageForeground)
     }
 }

@@ -3,7 +3,7 @@ import kau.Dependencies
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 //apply plugin: 'com.bugsnag.android.gradle'
 apply plugin: 'com.github.triplet.play'
 apply plugin: 'dagger.hilt.android.plugin'
@@ -31,8 +31,8 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "ca.allanwang.kau.sample.SampleTestRunner"
     }
-    buildFeatures {
-        viewBinding = true
+    viewBinding {
+        enabled true
     }
 
     def releaseSigning = file("../files/kau.properties")
@@ -86,6 +86,7 @@ android {
         pickFirst 'META-INF/core_release.kotlin_module'
         pickFirst 'META-INF/library_release.kotlin_module'
         pickFirst 'META-INF/library-core_release.kotlin_module'
+        exclude "**/module-info.class"
     }
 
     compileOptions {

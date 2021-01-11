@@ -23,8 +23,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.RecyclerView
 import ca.allanwang.kau.internal.KauBaseActivity
 import ca.allanwang.kau.ui.R
+import ca.allanwang.kau.ui.databinding.KauElasticRecyclerActivityBinding
 import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
-import kotlinx.android.synthetic.main.kau_elastic_recycler_activity.*
 
 /**
  * Created by Allan Wang on 2017-07-17.
@@ -41,8 +41,11 @@ import kotlinx.android.synthetic.main.kau_elastic_recycler_activity.*
 abstract class ElasticRecyclerActivity : KauBaseActivity() {
 
     private val configs = Configs()
-    protected val toolbar: Toolbar get() = kau_toolbar
-    protected val recycler: RecyclerView get() = kau_recycler
+
+    private lateinit var binding: KauElasticRecyclerActivityBinding
+
+    protected val toolbar: Toolbar get() = binding.kauToolbar
+    protected val recycler: RecyclerView get() = binding.kauRecycler
 
     class Configs {
         var exitTransitionBottom = R.transition.kau_exit_slide_bottom
@@ -51,17 +54,22 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
 
     final override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.kau_elastic_recycler_activity)
-        setSupportActionBar(kau_toolbar)
+        binding = KauElasticRecyclerActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.kauToolbar)
         if (!onCreate(savedInstanceState, configs)) {
             return
         }
 
-        kau_draggable.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this) {
+        binding.init()
+    }
+
+    private fun KauElasticRecyclerActivityBinding.init() {
+        kauDraggable.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this@ElasticRecyclerActivity) {
             override fun onDragDismissed() {
                 window.returnTransition = TransitionInflater.from(this@ElasticRecyclerActivity)
-                    .inflateTransition(if (kau_draggable.translationY > 0) configs.exitTransitionBottom else configs.exitTransitionTop)
-                kau_recycler.stopScroll()
+                        .inflateTransition(if (kauDraggable.translationY > 0) configs.exitTransitionBottom else configs.exitTransitionTop)
+                kauRecycler.stopScroll()
                 finishAfterTransition()
             }
         })
@@ -79,6 +87,6 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
      * Receive actions when the a click event is received outside of the coordinator
      */
     fun setOutsideTapListener(listener: () -> Unit) {
-        kau_draggable.setOnClickListener { listener() }
+        binding.kauDraggable.setOnClickListener { listener() }
     }
 }
