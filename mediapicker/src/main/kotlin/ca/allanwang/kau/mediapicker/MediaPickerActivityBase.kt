@@ -39,8 +39,8 @@ import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
  * Having three layered images makes this slightly slower than [MediaPickerActivityOverlayBase]
  */
 abstract class MediaPickerActivityBase(
-        mediaType: MediaType,
-        mediaActions: List<MediaAction> = emptyList()
+    mediaType: MediaType,
+    mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
     private lateinit var binding: KauActivityImagePickerBinding

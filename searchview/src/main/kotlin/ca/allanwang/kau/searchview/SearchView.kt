@@ -55,9 +55,9 @@ import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
  * https://github.com/lapism/SearchView
  */
 class SearchView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     /**
@@ -388,10 +388,10 @@ class SearchView @JvmOverloads constructor(
      * If not, see the extension function [bindSearchView]
      */
     fun bind(
-            menu: Menu,
-            @IdRes id: Int,
-            @ColorInt menuIconColor: Int = Color.WHITE,
-            config: Configs.() -> Unit = {}
+        menu: Menu,
+        @IdRes id: Int,
+        @ColorInt menuIconColor: Int = Color.WHITE,
+        config: Configs.() -> Unit = {}
     ): SearchView {
         config(config)
         val menuItem = menu.findItem(id)
@@ -537,10 +537,10 @@ annotation class KauSearch
  */
 @KauSearch
 fun Activity.bindSearchView(
-        menu: Menu,
-        @IdRes id: Int,
-        @ColorInt menuIconColor: Int = Color.WHITE,
-        config: Configs.() -> Unit = {}
+    menu: Menu,
+    @IdRes id: Int,
+    @ColorInt menuIconColor: Int = Color.WHITE,
+    config: Configs.() -> Unit = {}
 ): SearchView =
         findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
 
@@ -551,10 +551,10 @@ fun Activity.bindSearchView(
  */
 @KauSearch
 fun ViewGroup.bindSearchView(
-        menu: Menu,
-        @IdRes id: Int,
-        @ColorInt menuIconColor: Int = Color.WHITE,
-        config: Configs.() -> Unit = {}
+    menu: Menu,
+    @IdRes id: Int,
+    @ColorInt menuIconColor: Int = Color.WHITE,
+    config: Configs.() -> Unit = {}
 ): SearchView {
     val searchView = SearchView(context)
     searchView.layoutParams =

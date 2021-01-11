@@ -31,10 +31,10 @@ import ca.allanwang.kau.ui.views.RippleCanvas
 import ca.allanwang.kau.utils.*
 import com.mikepenz.fastadapter.adapters.FastItemAdapter
 import com.mikepenz.fastadapter.select.getSelectExtension
+import java.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
 abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
 
@@ -118,9 +118,9 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
             binding.showNextPrefs(toolbarTitleRes, builder, false)
 
     private fun KauPrefActivityBinding.showNextPrefs(
-            @StringRes toolbarTitleRes: Int,
-            builder: KPrefAdapterBuilder.() -> Unit,
-            first: Boolean
+        @StringRes toolbarTitleRes: Int,
+        builder: KPrefAdapterBuilder.() -> Unit,
+        first: Boolean
     ) {
         launch {
             val items = withContext(Dispatchers.Default) {

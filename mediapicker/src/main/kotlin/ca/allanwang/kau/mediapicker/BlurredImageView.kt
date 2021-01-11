@@ -52,7 +52,7 @@ class BlurredImageView @JvmOverloads constructor(
         private set
 
     val imageBase: ImageView get() = binding.imageBase
-    
+
     private val binding: KauBlurredImageviewBinding = KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this)
 
     init {
@@ -67,7 +67,7 @@ class BlurredImageView @JvmOverloads constructor(
 
     override fun clearAnimation() {
         super.clearAnimation()
-        with (binding) {
+        with(binding) {
             imageBase.clearAnimation()
             imageBlur.clearAnimation()
             imageForeground.clearAnimation()
@@ -91,7 +91,7 @@ class BlurredImageView @JvmOverloads constructor(
         factor.width = width
         factor.height = height
         BlurTask(imageBase, factor) {
-            with (binding) {
+            with(binding) {
                 imageBlur.setImageDrawable(it)
                 scaleAnimate(ANIMATION_SCALE).start()
                 imageBlur.alphaAnimate(1f).start()
@@ -112,7 +112,7 @@ class BlurredImageView @JvmOverloads constructor(
         factor.width = width
         factor.height = height
         BlurTask(imageBase, factor) { drawable ->
-            with (binding) {
+            with(binding) {
                 imageBlur.setImageDrawable(drawable)
                 scaleXY = ANIMATION_SCALE
                 imageBlur.alpha = 1f
@@ -128,7 +128,7 @@ class BlurredImageView @JvmOverloads constructor(
         if (!isBlurred) return
         isBlurred = false
         scaleAnimate(1.0f).start()
-        with (binding) {
+        with(binding) {
             imageBlur.alphaAnimate(0f).withEndAction { imageBlur.setImageDrawable(null) }.start()
             imageForeground.alphaAnimate(0f).start()
         }
@@ -142,7 +142,7 @@ class BlurredImageView @JvmOverloads constructor(
         clearAnimation()
         scaleX = 1.0f
         scaleX = 1.0f
-        with (binding) {
+        with(binding) {
             imageBlur.alpha = 0f
             imageBlur.setImageDrawable(null)
             imageForeground.alpha = 0f
