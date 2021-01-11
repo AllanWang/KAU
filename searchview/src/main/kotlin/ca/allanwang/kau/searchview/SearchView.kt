@@ -280,7 +280,7 @@ class SearchView @JvmOverloads constructor(
     var menuY: Int = -1 // reference for cardview's marginTop
     var menuHalfHeight: Int = -1 // starting y for circular reveal (relative to the cardview)
 
-    private val binding: KauSearchViewBinding = KauSearchViewBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding: KauSearchViewBinding = KauSearchViewBinding.inflate(LayoutInflater.from(context), this)
 
     init {
         z = 99f

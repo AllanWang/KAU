@@ -53,7 +53,7 @@ class BlurredImageView @JvmOverloads constructor(
 
     val imageBase: ImageView get() = binding.imageBase
     
-    private val binding: KauBlurredImageviewBinding = KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this, true)
+    private val binding: KauBlurredImageviewBinding = KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this)
 
     init {
         initAttrs(context, attrs)

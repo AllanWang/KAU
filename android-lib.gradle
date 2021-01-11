@@ -48,7 +48,7 @@ android {
     }
 
     lintOptions {
-        warningsAsErrors true
+        // warningsAsErrors true
         disable 'UnusedResources',
                 'ContentDescription',
                 'RtlSymmetry',
