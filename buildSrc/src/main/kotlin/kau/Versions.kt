@@ -54,7 +54,7 @@ object Versions {
     const val materialDialog = "3.3.0"
 
     // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-    const val koin = "2.2.0-beta-1"
+    const val koin = "2.2.2"
 
     // https://mvnrepository.com/artifact/com.google.dagger/hilt-android
     const val hilt = "2.29.1-alpha"
@@ -75,16 +75,16 @@ object Versions {
     const val testRules = "1.3.0"
 
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
-    const val spotless = "5.5.1"
+    const val spotless = "5.6.1"
 
     // https://github.com/bugsnag/bugsnag-android/releases
-    const val bugsnag = "5.2.0"
+    const val bugsnag = "5.5.0"
 
     // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
-    const val bugsnagPlugin="5.2.0"
+    const val bugsnagPlugin="5.6.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "4.1.0"
+    const val gradlePlugin = "4.1.1"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
@@ -94,5 +94,5 @@ object Versions {
     const val dexCountPlugin = "2.0.0"
 
     // https://github.com/gladed/gradle-android-git-version/releases
-    const val gitVersionPlugin = "0.4.13"
+    const val gitVersionPlugin = "0.4.14"
 }
