@@ -75,7 +75,7 @@ object Versions {
     const val testRules = "1.3.0"
 
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
-    const val spotless = "5.6.1"
+    const val spotless = "5.7.0"
 
     // https://github.com/bugsnag/bugsnag-android/releases
     const val bugsnag = "5.5.0"
@@ -84,7 +84,7 @@ object Versions {
     const val bugsnagPlugin="5.6.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "4.1.1"
+    const val gradlePlugin = "4.2.0-beta03"
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
     // https://github.com/Triple-T/gradle-play-publisher/releases
