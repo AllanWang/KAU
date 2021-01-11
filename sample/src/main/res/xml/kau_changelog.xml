@@ -6,6 +6,12 @@
     <item text="" />
     -->
 
+    <version title="v6.2.0" />
+    <item text="Add support for Android 4.2 beta03" />
+    <item text="Remove all usages of kotlin synthetics" />
+    <item text="Many version bumps" />
+    <item text="" />
+
     <version title="v6.1.0" />
     <item text="Add support for Android 4.1 RC03" />
     <item text="Breaking: Updated iconics, buganizer, and spotless dependencies (major version bump)" />

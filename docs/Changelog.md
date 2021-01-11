@@ -1,5 +1,10 @@
 # Changelog
 
+## v6.2.0
+* Add support for Android 4.2 beta03
+* Remove all usages of kotlin synthetics
+* Many version bumps
+
 ## v6.1.0
 * Add support for Android 4.1 RC03
 * Breaking: Updated iconics, buganizer, and spotless dependencies (major version bump)
