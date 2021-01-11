@@ -30,4 +30,6 @@
 .idea/modules.xml
 .idea/modules
 .idea/vcs.xml
+.idea/compiler.xml
+.idea/misc.xml
 .idea/codeStyles/Project.xml
