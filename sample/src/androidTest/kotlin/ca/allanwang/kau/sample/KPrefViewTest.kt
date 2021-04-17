@@ -50,7 +50,6 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-@UninstallModules(PrefFactoryModule::class)
 class KPrefViewTest : BaseTest() {
 
     val activity: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)

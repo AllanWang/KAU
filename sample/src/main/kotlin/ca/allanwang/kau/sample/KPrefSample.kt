@@ -23,8 +23,8 @@ import ca.allanwang.kau.kpref.KPrefFactoryAndroid
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 
 /**
  * Created by Allan Wang on 2017-06-07.
@@ -44,14 +44,14 @@ class KPrefSample(factory: KPrefFactory) : KPref("pref_sample", factory = factor
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object PrefModule {
     @Provides
     fun pref(factory: KPrefFactory): KPrefSample = KPrefSample(factory)
 }
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@InstallIn(SingletonComponent::class)
 object PrefFactoryModule {
     @Provides
     fun factory(@ApplicationContext context: Context): KPrefFactory = KPrefFactoryAndroid(context)

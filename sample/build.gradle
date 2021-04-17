@@ -149,6 +149,6 @@ dependencies {
     androidTestImplementation Dependencies.espresso("contrib")
     androidTestImplementation Dependencies.testRules
     androidTestImplementation Dependencies.testRunner
-    testImplementation Dependencies.hiltTest
-    kaptTest Dependencies.hiltCompiler
+    androidTestImplementation Dependencies.hiltTest
+    kaptAndroidTest Dependencies.hiltCompiler
 }
