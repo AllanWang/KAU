@@ -57,7 +57,7 @@ object Dependencies {
     val koinTest = koin("test")
 
     @JvmStatic
-    fun koin(type: String) = "org.koin:koin-$type:${Versions.koin}"
+    fun koin(type: String) = "io.insert-koin:koin-$type:${Versions.koin}"
 
     @JvmField
     val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
