@@ -17,13 +17,16 @@ package ca.allanwang.kau.sample.test
 
 import ca.allanwang.kau.kpref.KPrefFactory
 import ca.allanwang.kau.kpref.KPrefFactoryInMemory
+import ca.allanwang.kau.sample.PrefFactoryModule
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 
 @Module
-@InstallIn(ApplicationComponent::class)
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [PrefFactoryModule::class])
 object PrefFactoryTestModule {
     @Provides
     fun factory(): KPrefFactory = KPrefFactoryInMemory

@@ -3,7 +3,7 @@ import kau.Versions
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'com.getkeepsafe.dexcount'
 group = "ca.allanwang"
@@ -36,6 +36,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -44,7 +48,7 @@ android {
     }
 
     lintOptions {
-        warningsAsErrors true
+        // warningsAsErrors true
         disable 'UnusedResources',
                 'ContentDescription',
                 'RtlSymmetry',
@@ -62,6 +66,7 @@ android {
         pickFirst 'META-INF/core_release.kotlin_module'
         pickFirst 'META-INF/library_release.kotlin_module'
         pickFirst 'META-INF/library-core_release.kotlin_module'
+        exclude "**/module-info.class"
     }
 
     compileOptions {

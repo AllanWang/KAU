@@ -22,8 +22,8 @@ import androidx.test.runner.AndroidJUnitRunner
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
-import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.testing.HiltTestApplication
+import dagger.hilt.components.SingletonComponent
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -41,7 +41,7 @@ class SampleTestRunner : AndroidJUnitRunner() {
 class SampleTestRule : TestRule {
 
     @EntryPoint
-    @InstallIn(ApplicationComponent::class)
+    @InstallIn(SingletonComponent::class)
     interface SampleTestRuleEntryPoint {
         fun pref(): KPrefSample
     }

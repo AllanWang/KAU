@@ -21,6 +21,7 @@ import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
 import ca.allanwang.kau.adapters.selectedItems
 import ca.allanwang.kau.adapters.selectionSize
+import ca.allanwang.kau.mediapicker.databinding.KauActivityImagePickerBinding
 import ca.allanwang.kau.utils.hideOnDownwardsScroll
 import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.toDrawable
@@ -29,7 +30,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.mikepenz.fastadapter.ISelectionListener
 import com.mikepenz.fastadapter.select.selectExtension
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
-import kotlinx.android.synthetic.main.kau_activity_image_picker.*
 
 /**
  * Created by Allan Wang on 2017-07-04.
@@ -43,45 +43,50 @@ abstract class MediaPickerActivityBase(
     mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
+    private lateinit var binding: KauActivityImagePickerBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = KauActivityImagePickerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.init()
+    }
 
-        setContentView(R.layout.kau_activity_image_picker)
-
-        kau_selection_count.setCompoundDrawables(
-            null,
-            null,
-            GoogleMaterial.Icon.gmd_image.toDrawable(this, 18),
-            null
+    private fun KauActivityImagePickerBinding.init() {
+        kauSelectionCount.setCompoundDrawables(
+                null,
+                null,
+                GoogleMaterial.Icon.gmd_image.toDrawable(this@MediaPickerActivityBase, 18),
+                null
         )
 
-        setSupportActionBar(kau_toolbar)
+        setSupportActionBar(kauToolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
             setHomeAsUpIndicator(
-                GoogleMaterial.Icon.gmd_close.toDrawable(
-                    this@MediaPickerActivityBase,
-                    18
-                )
+                    GoogleMaterial.Icon.gmd_close.toDrawable(
+                            this@MediaPickerActivityBase,
+                            18
+                    )
             )
         }
-        kau_toolbar.setNavigationOnClickListener { onBackPressed() }
+        kauToolbar.setNavigationOnClickListener { onBackPressed() }
 
-        initializeRecycler(kau_recyclerview)
+        initializeRecycler(kauRecyclerview)
 
         adapter.fastAdapter!!.let {
             MediaItem.bindEvents(it)
             it.selectExtension {
                 selectionListener = object : ISelectionListener<MediaItem> {
                     override fun onSelectionChanged(item: MediaItem, selected: Boolean) {
-                        kau_selection_count.text = adapter.selectionSize.toString()
+                        kauSelectionCount.text = adapter.selectionSize.toString()
                     }
                 }
             }
         }
 
-        kau_fab.apply {
+        kauFab.apply {
             show()
             setIcon(GoogleMaterial.Icon.gmd_send)
             setOnClickListener {
@@ -92,7 +97,7 @@ abstract class MediaPickerActivityBase(
                     finish(ArrayList(selection.map { it.data }))
                 }
             }
-            hideOnDownwardsScroll(kau_recyclerview)
+            hideOnDownwardsScroll(kauRecyclerview)
         }
 
         loadItems()
@@ -108,11 +113,11 @@ abstract class MediaPickerActivityBase(
 
      * @param scrollable true if scroll flags are enabled, false otherwise
      */
-    private fun setToolbarScrollable(scrollable: Boolean) {
-        val params = kau_toolbar.layoutParams as AppBarLayout.LayoutParams
+    private fun KauActivityImagePickerBinding.setToolbarScrollable(scrollable: Boolean) {
+        val params = kauToolbar.layoutParams as AppBarLayout.LayoutParams
         if (scrollable) {
             params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
-                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                    AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
         } else {
             params.scrollFlags = 0
         }
@@ -120,13 +125,13 @@ abstract class MediaPickerActivityBase(
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         super.onLoadFinished(loader, data)
-        setToolbarScrollable(
-            (kau_recyclerview.layoutManager as LinearLayoutManager)
-                .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1
+        binding.setToolbarScrollable(
+                (binding.kauRecyclerview.layoutManager as LinearLayoutManager)
+                        .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1
         )
     }
 
     override fun onStatusChange(loaded: Boolean) {
-        setToolbarScrollable(loaded)
+        binding.setToolbarScrollable(loaded)
     }
 }

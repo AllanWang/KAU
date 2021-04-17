@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import ca.allanwang.kau.about.databinding.KauActivityAboutBinding
 import ca.allanwang.kau.adapters.FastItemThemedAdapter
 import ca.allanwang.kau.adapters.ThemableIItemColors
 import ca.allanwang.kau.adapters.ThemableIItemColorsDelegate
@@ -34,7 +35,6 @@ import ca.allanwang.kau.utils.dimenPixelSize
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.GenericItem
-import kotlinx.android.synthetic.main.kau_activity_about.*
 
 /**
  * Created by Allan Wang on 2017-06-28.
@@ -51,7 +51,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
     KauBaseActivity(), ViewPager.OnPageChangeListener {
 
     val currentPage: Int
-        get() = about_pager.currentItem
+        get() = binding.aboutPager.currentItem
 
     /**
      * Holds some common configurations that may be added directly from the constructor
@@ -77,31 +77,38 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
         defaultPanels
     }
 
+    private lateinit var binding: KauActivityAboutBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.kau_activity_about)
+        binding = KauActivityAboutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.init()
+    }
+
+    private fun KauActivityAboutBinding.init() {
         pageStatus = IntArray(panels.size)
         pageStatus[0] = 2 // the first page is instantly visible
         if (configs.textColor != null) {
-            about_indicator.setColour(configs.textColor!!)
+            aboutIndicator.setColour(configs.textColor!!)
         }
-        with(about_pager) {
+        with(aboutPager) {
             adapter = AboutPagerAdapter()
             pageMargin = dimenPixelSize(R.dimen.kau_spacing_normal)
             offscreenPageLimit = panels.size - 1
             addOnPageChangeListener(this@AboutActivityBase)
         }
-        about_indicator.setViewPager(about_pager)
-        about_draggable_frame.addListener(object :
-            ElasticDragDismissFrameLayout.SystemChromeFader(this) {
+        aboutIndicator.setViewPager(aboutPager)
+        aboutDraggableFrame.addListener(object :
+                ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
             override fun onDragDismissed() {
                 window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
-                    .inflateTransition(if (about_draggable_frame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
+                        .inflateTransition(if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
                 panels[currentPage].recycler?.stopScroll()
                 finishAfterTransition()
             }
         })
-        panels.forEachIndexed { index, contract -> contract.loadItems(this, index) }
+        panels.forEachIndexed { index, contract -> contract.loadItems(this@AboutActivityBase, index) }
     }
 
     class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {

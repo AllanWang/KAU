@@ -71,6 +71,9 @@ object Dependencies {
     @JvmStatic
     fun hilt(type: String) = "com.google.dagger:hilt-android-$type:${Versions.hilt}"
 
+    @JvmStatic
+    fun compose(type: String) = "androidx.ui:ui-$type:${Versions.compose}"
+
     const val junit = "junit:junit:${Versions.junit}"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
@@ -86,7 +89,7 @@ object Dependencies {
 
     const val iconics = "com.mikepenz:iconics-core:${Versions.iconics}"
     const val iconicsGoogle =
-        "com.mikepenz:google-material-typeface:${Versions.iconicsGoogle}.original-kotlin@aar"
+        "com.mikepenz:google-material-typeface:${Versions.iconicsGoogle}-kotlin@aar"
     const val iconicsMaterial =
         "com.mikepenz:material-design-iconic-typeface:${Versions.iconicsMaterial}-kotlin@aar"
     const val iconicsCommunity =

@@ -18,8 +18,8 @@ package ca.allanwang.kau.mediapicker
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
+import ca.allanwang.kau.mediapicker.databinding.KauActivityImagePickerOverlayBinding
 import ca.allanwang.kau.utils.toast
-import kotlinx.android.synthetic.main.kau_activity_image_picker_overlay.*
 
 /**
  * Created by Allan Wang on 2017-07-23.
@@ -35,20 +35,27 @@ abstract class MediaPickerActivityOverlayBase(
     mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItemBasic>(mediaType, mediaActions) {
 
+    private lateinit var binding: KauActivityImagePickerOverlayBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.kau_activity_image_picker_overlay)
-        initializeRecycler(kau_recyclerview)
-        MediaItemBasic.bindEvents(this, adapter.fastAdapter!!)
+        binding = KauActivityImagePickerOverlayBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.init()
+    }
 
-        kau_draggable.addExitListener(this, R.transition.kau_image_exit_bottom, R.transition.kau_image_exit_top)
-        kau_draggable.setOnClickListener { finishAfterTransition() }
+    private fun KauActivityImagePickerOverlayBinding.init() {
+        initializeRecycler(kauRecyclerview)
+        MediaItemBasic.bindEvents(this@MediaPickerActivityOverlayBase, adapter.fastAdapter!!)
+
+        kauDraggable.addExitListener(this@MediaPickerActivityOverlayBase, R.transition.kau_image_exit_bottom, R.transition.kau_image_exit_top)
+        kauDraggable.setOnClickListener { finishAfterTransition() }
 
         loadItems()
     }
 
     override fun finishAfterTransition() {
-        kau_recyclerview.stopScroll()
+        binding.kauRecyclerview.stopScroll()
         super.finishAfterTransition()
     }
 

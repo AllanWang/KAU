@@ -28,7 +28,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import ca.allanwang.kau.sample.test.BaseTest
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import javax.inject.Inject
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -50,7 +49,6 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-@UninstallModules(PrefFactoryModule::class)
 class KPrefViewTest : BaseTest() {
 
     val activity: ActivityTestRule<MainActivity> = ActivityTestRule(MainActivity::class.java)
