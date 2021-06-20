@@ -1,6 +1,6 @@
 import groovy.xml.MarkupBuilder
 
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 
 // build a jar with source files
 task sourcesJar(type: Jar) {
@@ -12,7 +12,7 @@ task javadoc(type: Javadoc) {
     failOnError false
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
+    classpath += configurations.implementation
 }
 
 // build a jar with javadoc

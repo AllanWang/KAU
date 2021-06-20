@@ -4,7 +4,6 @@ import kau.Versions
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
-apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'com.getkeepsafe.dexcount'
 group = "ca.allanwang"
 

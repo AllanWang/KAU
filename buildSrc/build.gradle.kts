@@ -1,10 +1,10 @@
 plugins {
     `kotlin-dsl`
-    maven
+//    maven
 }
 
 group = "ca.allanwang"
 
 repositories {
-    jcenter()
+    mavenCentral()
 }

@@ -3,7 +3,7 @@ package kau
 object Versions {
     const val coreMinSdk = 19
     const val minSdk = 21
-    const val targetSdk = 29
+    const val targetSdk = 30
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
     const val appcompat = "1.3.0-rc01"
@@ -21,20 +21,21 @@ object Versions {
     const val cardView = "1.0.0"
 
     // https://mvnrepository.com/artifact/androidx.constraintlayout/constraintlayout
-    const val constraintLayout = "2.1.0-beta01"
+    const val constraintLayout = "2.1.0-beta02"
 
     // https://mvnrepository.com/artifact/androidx.core/core-ktx
-    const val coreKtx = "1.5.0-rc01"
+    const val coreKtx = "1.6.0-rc01"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    const val kotlin = "1.4.32"
+    const val kotlin = "1.5.10"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
-    const val coroutines = "1.4.3"
+    const val coroutines = "1.5.0"
 
     // https://github.com/mikepenz/AboutLibraries/releases
-    const val aboutLibraries = "8.8.5"
+    const val aboutLibraries = "8.9.0"
 
+    // Keep old version
     // https://github.com/wasabeef/Blurry/releases
     const val blurry = "3.0.0"
 
@@ -54,11 +55,11 @@ object Versions {
     const val materialDialog = "3.3.0"
 
     // https://github.com/InsertKoinIO/koin/blob/master/CHANGELOG.md
-    const val koin = "3.0.1"
+    const val koin = "3.1.0"
 
     // https://github.com/google/dagger/releases
     // https://mvnrepository.com/artifact/com.google.dagger/hilt-android
-    const val hilt = "2.34.1-beta"
+    const val hilt = "2.37"
 
     // https://mvnrepository.com/artifact/androidx.ui/ui-core?repo=google
     const val compose = "0.1.0-dev14"
@@ -88,7 +89,7 @@ object Versions {
     const val bugsnagPlugin="5.7.6"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "4.2.0-rc01"
+    const val gradlePlugin = "7.1.0-alpha02"
 
     // https://github.com/dcendents/android-maven-gradle-plugin/releases
     const val mavenPlugin = "2.1"
@@ -97,7 +98,7 @@ object Versions {
     const val playPublishPlugin = "3.4.0-agp7.0"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    const val dexCountPlugin = "2.0.0"
+    const val dexCountPlugin = "2.1.0-RC01"
 
     // https://github.com/gladed/gradle-android-git-version/releases
     const val gitVersionPlugin = "0.4.14"
