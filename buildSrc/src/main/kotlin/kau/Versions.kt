@@ -1,9 +1,13 @@
 package kau
 
+import org.gradle.api.JavaVersion
+
 object Versions {
     const val coreMinSdk = 19
     const val minSdk = 21
     const val targetSdk = 30
+
+    val java = JavaVersion.VERSION_11
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
     const val appcompat = "1.3.0-rc01"
@@ -37,7 +41,7 @@ object Versions {
 
     // Keep old version
     // https://github.com/wasabeef/Blurry/releases
-    const val blurry = "3.0.0"
+    const val blurry = "4.0.0"
 
     // https://github.com/mikepenz/FastAdapter/releases
     const val fastAdapter = "5.4.1"
@@ -86,7 +90,7 @@ object Versions {
     const val bugsnag = "5.9.0"
 
     // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
-    const val bugsnagPlugin="5.7.6"
+    const val bugsnagPlugin = "5.7.6"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     const val gradlePlugin = "7.1.0-alpha02"

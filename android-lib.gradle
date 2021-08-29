@@ -54,8 +54,17 @@ android {
                 'RtlHardcoded',
                 'RtlEnabled',
                 'Overdraw',
-                'MissingTranslation'
+                'MissingTranslation',
+                'MissingQuantity',
+                'UnspecifiedImmutableFlag',
+                'QueryPermissionsNeeded',
+                'AnnotateVersionCheck',
+                'Recycle',
+                'MissingSuperCall',
+                'UnsafeExperimentalUsageError',
+                'UnsafeExperimentalUsageWarning'
 
+        abortOnError false
         xmlReport false
         textReport true
         textOutput 'stdout'
@@ -69,12 +78,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Versions.java
+        targetCompatibility Versions.java
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = Versions.java.toString()
     }
 
     sourceSets {
