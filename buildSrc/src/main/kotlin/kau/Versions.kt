@@ -99,7 +99,7 @@ object Versions {
     const val playPublishPlugin = "3.4.0-agp7.0"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
-    const val dexCountPlugin = "2.1.0-RC01"
+    const val dexCountPlugin = "3.0.0"
 
     // https://github.com/gladed/gradle-android-git-version/releases
     const val gitVersionPlugin = "0.4.14"
