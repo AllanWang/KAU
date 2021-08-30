@@ -7,7 +7,7 @@ object Versions {
     const val minSdk = 21
     const val targetSdk = 30
 
-    val java = JavaVersion.VERSION_11
+    val java = JavaVersion.VERSION_1_8
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
     const val appcompat = "1.3.0-rc01"
