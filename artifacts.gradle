@@ -2,30 +2,6 @@ import groovy.xml.MarkupBuilder
 
 apply plugin: 'maven-publish'
 
-//// build a jar with source files
-//task sourcesJar(type: Jar) {
-//    from android.sourceSets.main.java.srcDirs
-//    classifier = 'sources'
-//}
-//
-//task javadoc(type: Javadoc) {
-//    failOnError false
-//    source = android.sourceSets.main.java.sourceFiles
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//    classpath += configurations.implementation
-//}
-//
-//// build a jar with javadoc
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//}
-
-//artifacts {
-//    archives sourcesJar
-//    archives javadocJar
-//}
-
 // Task to generate our public.xml file
 // See https://developer.android.com/studio/projects/android-library.html#PrivateResources
 // We assume resources within res-public are public

@@ -8,7 +8,6 @@ object Plugins {
     const val aboutLibraries = "com.mikepenz.aboutlibraries.plugin:aboutlibraries-plugin:${Versions.aboutLibraries}"
     const val bugsnag = "com.bugsnag:bugsnag-android-gradle-plugin:${Versions.bugsnagPlugin}"
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val androidMaven = "com.github.dcendents:android-maven-gradle-plugin:${Versions.mavenPlugin}"
     const val playPublisher = "com.github.triplet.gradle:play-publisher:${Versions.playPublishPlugin}"
     const val dexCount = "com.getkeepsafe.dexcount:dexcount-gradle-plugin:${Versions.dexCountPlugin}"
     const val gitVersion = "com.gladed.androidgitversion:gradle-android-git-version:${Versions.gitVersionPlugin}"
