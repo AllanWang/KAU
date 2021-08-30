@@ -7,6 +7,8 @@ dependencies {
     implementation project(':core-ui')
     implementation project(':fastadapter')
 
+    implementation kau.Dependencies.iconicsGoogle
+
     api kau.Dependencies.glide
     api kau.Dependencies.blurry
 }

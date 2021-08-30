@@ -132,6 +132,8 @@ dependencies {
     implementation project(':searchview')
     implementation project(':mediapicker')
 
+    implementation Dependencies.iconicsGoogle
+
     implementation Dependencies.hilt
     kapt Dependencies.hiltCompiler
 
