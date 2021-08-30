@@ -93,7 +93,7 @@ object Versions {
     const val bugsnagPlugin = "5.7.6"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "7.1.0-alpha02"
+    const val gradlePlugin = "7.1.0-alpha10"
 
     // https://github.com/Triple-T/gradle-play-publisher/releases
     const val playPublishPlugin = "3.4.0-agp7.0"
