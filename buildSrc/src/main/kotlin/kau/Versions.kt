@@ -87,10 +87,10 @@ object Versions {
     const val spotless = "5.7.0"
 
     // https://github.com/bugsnag/bugsnag-android/releases
-    const val bugsnag = "5.9.0"
+    const val bugsnag = "5.12.0"
 
     // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
-    const val bugsnagPlugin = "5.7.6"
+    const val bugsnagPlugin = "7.0.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     const val gradlePlugin = "7.1.0-alpha05"
