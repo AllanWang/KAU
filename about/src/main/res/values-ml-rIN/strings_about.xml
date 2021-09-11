@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="kau_about_libraries_intro">ചുവടെയുള്ള മികച്ച ലൈബ്രറികൾ ഇല്ലാതെ ഈ ആപ്ലിക്കേഷൻ സാധ്യമാകുമായിരുന്നില്ല.</string>
+    <string name="kau_about_faq_intro">പതിവുചോദ്യങ്ങൾ</string>
+</resources>
