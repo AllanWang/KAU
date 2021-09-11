@@ -3,4 +3,76 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">O aplikaci</string>
+    <string name="kau_about_x">O %s</string>
+    <string name="kau_add_account">Přidat účet</string>
+    <string name="kau_back">Zpět</string>
+    <string name="kau_cancel">Zrušit</string>
+    <string name="kau_changelog">Seznam změn</string>
+    <string name="kau_close">Zavřít</string>
+    <string name="kau_contact_us">Kontaktujte nás</string>
+    <string name="kau_copy">Kopírovat</string>
+    <string name="kau_custom">Vlastní</string>
+    <string name="kau_dark">Tmavý</string>
+    <string name="kau_default">Výchozí</string>
+    <string name="kau_do_not_show_again">Znovu nezobrazovat</string>
+    <string name="kau_done">Hotovo</string>
+    <string name="kau_error">Chyba</string>
+    <string name="kau_exit">Ukončit</string>
+    <string name="kau_exit_confirmation">Opravdu chcete ukončit?</string>
+    <string name="kau_exit_confirmation_x">Opravdu chcete ukončit %s?</string>
+    <string name="kau_glass">Sklo</string>
+    <string name="kau_got_it">Rozumím</string>
+    <string name="kau_great">Skvělé</string>
+    <string name="kau_hide">Skrýt</string>
+    <string name="kau_light">Světlý</string>
+    <string name="kau_login">Přihlásit</string>
+    <string name="kau_logout">Odhlásit</string>
+    <string name="kau_logout_confirm_as_x">Opravdu se chcete odhlásit jako %s?</string>
+    <string name="kau_manage_account">Správa účtu</string>
+    <string name="kau_maybe">Možná</string>
+    <string name="kau_menu">Menu</string>
+    <string name="kau_no">Ne</string>
+    <string name="kau_no_results_found">Nebyly nalezeny žádné výsledky</string>
+    <string name="kau_none">Nic</string>
+    <string name="kau_ok">OK</string>
+    <string name="kau_play_store">Obchod Play</string>
+    <string name="kau_rate">Ohodnotit</string>
+    <string name="kau_report_bug">Nahlásit chybu</string>
+    <string name="kau_search">Hledat</string>
+    <string name="kau_send_feedback">Odeslat zpětnou vazbu</string>
+    <string name="kau_send_via">Odeslat přes</string>
+    <string name="kau_settings">Nastavení</string>
+    <string name="kau_share">Sdílet</string>
+    <string name="kau_text_copied">Text zkopírován do schránky.</string>
+    <string name="kau_thank_you">Děkujeme</string>
+    <string name="kau_uh_oh">A jéje</string>
+    <string name="kau_warning">Varování</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d den</item>
+        <item quantity="few">%d dny</item>
+        <item quantity="many">%d dnů</item>
+        <item quantity="other">%d dnů</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d hodina</item>
+        <item quantity="few">%d hodiny</item>
+        <item quantity="many">%d hodin</item>
+        <item quantity="other">%d hodin</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d minuta</item>
+        <item quantity="few">%d minuty</item>
+        <item quantity="many">%d minut</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="one">%d sekunda</item>
+        <item quantity="few">%d sekundy</item>
+        <item quantity="many">%d sekund</item>
+        <item quantity="other">%d sekund</item>
+    </plurals>
+    <string name="kau_yes">Ano</string>
+    <string name="kau_permission_denied">Přístup odepřen</string>
+</resources>
