@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="kau_no_items_found">アイテムが見つかりませんでした</string>
+    <string name="kau_no_items_selected">アイテムが選択されていません</string>
+    <string name="kau_no_items_loaded">アイテムが読み込めませんでした</string>
+    <string name="kau_no_camera_found">カメラが見つかりません</string>
+    <string name="kau_no_camera_found_content">カメラのアプリをインストールして、もう一度やり直してください。</string>
+    <string name="kau_temp_file_creation_failed">一時ファイルを作成できませんでした。</string>
+    <string name="kau_select_media">メディアの選択</string>
+</resources>
