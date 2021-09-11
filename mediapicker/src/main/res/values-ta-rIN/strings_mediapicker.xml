@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="kau_no_items_found">உருப்படிகள் எதுவும் கிடைக்கவில்லை</string>
+    <string name="kau_no_items_selected">உருப்படிகள் எதுவும் தேர்ந்தெடுக்கப்படவில்லை</string>
+    <string name="kau_no_items_loaded">உருப்படிகள் எதுவும் ஏற்றப்படவில்லை</string>
+    <string name="kau_no_camera_found">கேமரா எதுவும் கிடைக்கவில்லை</string>
+    <string name="kau_no_camera_found_content">கேமரா பயன்பாட்டை நிறுவி மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="kau_temp_file_creation_failed">தற்காலிக கோப்பை உருவாக்குவதில் தோல்வி.</string>
+    <string name="kau_select_media">மீடியாவைத் தேர்ந்தெடுக்கவும்</string>
+</resources>
