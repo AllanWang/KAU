@@ -3,4 +3,68 @@
 A collection of common string values
 Most resources are verbatim and x represents a formatted item
 -->
-<resources></resources>
+<resources>
+    <string name="kau_about_app">Tietoja sovelluksesta</string>
+    <string name="kau_about_x">Tietoa %s</string>
+    <string name="kau_add_account">Lisää tili</string>
+    <string name="kau_back">Takaisin</string>
+    <string name="kau_cancel">Peruuta</string>
+    <string name="kau_changelog">Muutosloki</string>
+    <string name="kau_close">Sulje</string>
+    <string name="kau_contact_us">Ota yhteyttä</string>
+    <string name="kau_copy">Kopioi</string>
+    <string name="kau_custom">Mukautettu</string>
+    <string name="kau_dark">Tumma</string>
+    <string name="kau_default">Oletus</string>
+    <string name="kau_do_not_show_again">Älä näytä uudelleen</string>
+    <string name="kau_done">Valmis</string>
+    <string name="kau_error">Virhe</string>
+    <string name="kau_exit">Lopeta</string>
+    <string name="kau_exit_confirmation">Haluatko varmasti poistua?</string>
+    <string name="kau_exit_confirmation_x">Haluatko varmasti poistua %s?</string>
+    <string name="kau_glass">Lasi</string>
+    <string name="kau_got_it">Selvä</string>
+    <string name="kau_great">Loistava</string>
+    <string name="kau_hide">Piilota</string>
+    <string name="kau_light">Vaalea</string>
+    <string name="kau_login">Kirjautuminen</string>
+    <string name="kau_logout">Kirjaudu ulos</string>
+    <string name="kau_logout_confirm_as_x">Haluatko varmasti poistua %s?</string>
+    <string name="kau_manage_account">Tilin Hallinta</string>
+    <string name="kau_maybe">Ehkä</string>
+    <string name="kau_menu">Valikko</string>
+    <string name="kau_no">Ei</string>
+    <string name="kau_no_results_found">Tuloksia ei löytynyt</string>
+    <string name="kau_none">Ei mikään</string>
+    <string name="kau_ok">OK</string>
+    <string name="kau_play_store">Play-kauppa</string>
+    <string name="kau_rate">Arvostele</string>
+    <string name="kau_report_bug">Ilmoita virheestä</string>
+    <string name="kau_search">Haku</string>
+    <string name="kau_send_feedback">Lähetä palautetta</string>
+    <string name="kau_send_via">Lähetä kautta</string>
+    <string name="kau_settings">Asetukset</string>
+    <string name="kau_share">Jaa</string>
+    <string name="kau_text_copied">Teksti kopioitu leikepöydälle.</string>
+    <string name="kau_thank_you">Kiitos</string>
+    <string name="kau_uh_oh">Voi ei</string>
+    <string name="kau_warning">Varoitus</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d päivä</item>
+        <item quantity="other">%d päivää</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d tunti</item>
+        <item quantity="other">%d tuntia</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d minuutti</item>
+        <item quantity="other">%d minuuttia</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="one">%d sekunti</item>
+        <item quantity="other">%d sekuntia</item>
+    </plurals>
+    <string name="kau_yes">Kyllä</string>
+    <string name="kau_permission_denied">Lupa evätty</string>
+</resources>
