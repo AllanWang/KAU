@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kau_about_libraries_intro">このアプリは、以下の素晴らしいライブラリのおかげで成り立っています。</string>
+    <string name="kau_about_faq_intro">よくある質問</string>
+</resources>

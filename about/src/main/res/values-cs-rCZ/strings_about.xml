@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kau_about_libraries_intro">Tato aplikace by nevznikla bez následujících skvělých knihoven.</string>
+    <string name="kau_about_faq_intro">FAQ</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kau_no_items_found">ഇനങ്ങളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="kau_no_items_selected">ഒരിനവും തിരഞ്ഞെടുക്കപ്പെട്ടിട്ടില്ല</string>
+    <string name="kau_no_items_loaded">ഒരിനവും ലോഡായിട്ടില്ല</string>
+    <string name="kau_no_camera_found">ക്യാമറയൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="kau_no_camera_found_content">ഒരു ക്യാമറ ആപ്ലിക്കേഷൻ ഇൻസ്റ്റാൾ ചെയ്‌തശേഷം വീണ്ടും ശ്രമിക്കുക.</string>
+    <string name="kau_temp_file_creation_failed">ഒരു താൽക്കാലിക ഫയൽ സൃഷ്ടിക്കുന്നതിൽ പരാജയപ്പെട്ടു.</string>
+    <string name="kau_select_media">മീഡിയ തിരഞ്ഞെടുക്കുക</string>
+</resources>

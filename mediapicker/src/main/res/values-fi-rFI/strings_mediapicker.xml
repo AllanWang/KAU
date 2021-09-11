@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kau_no_items_found">Kohteita ei löytynyt</string>
+    <string name="kau_no_items_selected">Ei valittua kohdetta</string>
+    <string name="kau_no_items_loaded">Ei ladattuja kohteita</string>
+    <string name="kau_no_camera_found">Kameraa ei löytynyt</string>
+    <string name="kau_no_camera_found_content">Asenna kamerasovellus ja yritä uudelleen.</string>
+    <string name="kau_temp_file_creation_failed">Väliaikaisen tiedoston luominen epäonnistui.</string>
+    <string name="kau_select_media">Valitse media</string>
+</resources>

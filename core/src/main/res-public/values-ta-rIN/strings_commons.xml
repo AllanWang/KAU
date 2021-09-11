@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--
+A collection of common string values
+Most resources are verbatim and x represents a formatted item
+-->
+<resources>
+    <string name="kau_about_app">பயன்பாட்டைப் பற்றி</string>
+    <string name="kau_about_x">சுமார் %s</string>
+    <string name="kau_add_account">கணக்கு சேர்க்க</string>
+    <string name="kau_back">பின்னால்</string>
+    <string name="kau_cancel">ரத்துசெய்</string>
+    <string name="kau_changelog">சேஞ்ச்லாக்</string>
+    <string name="kau_close">மூடு</string>
+    <string name="kau_contact_us">எங்களை தொடர்பு கொள்ள</string>
+    <string name="kau_copy">நகலெடுக்கவும்</string>
+    <string name="kau_custom">தனிப்பயன்</string>
+    <string name="kau_dark">இருள்</string>
+    <string name="kau_default">இயல்புநிலை</string>
+    <string name="kau_do_not_show_again">மீண்டும் காட்ட வேண்டாம்</string>
+    <string name="kau_done">முடிந்தது</string>
+    <string name="kau_error">பிழை</string>
+    <string name="kau_exit">வெளியேறு</string>
+    <string name="kau_exit_confirmation">நிச்சயமாக நீங்கள் வெளியேற வேண்டுமா?</string>
+    <string name="kau_exit_confirmation_x">%s இலிருந்து வெளியேற விரும்புகிறீர்களா?</string>
+    <string name="kau_glass">கண்ணாடி</string>
+    <string name="kau_got_it">அறிந்துகொண்டேன்</string>
+    <string name="kau_great">நன்று</string>
+    <string name="kau_hide">மறை</string>
+    <string name="kau_light">ஒளி</string>
+    <string name="kau_login">உள்நுழை</string>
+    <string name="kau_logout">வெளியேறு</string>
+    <string name="kau_logout_confirm_as_x">%s ஆக வெளியேற விரும்புகிறீர்களா?</string>
+    <string name="kau_manage_account">கணக்கை நிர்வகி</string>
+    <string name="kau_maybe">இருக்கலாம்</string>
+    <string name="kau_menu">பட்டியல்</string>
+    <string name="kau_no">இல்லை</string>
+    <string name="kau_no_results_found">முடிவுகள் எதுவும் இல்லை</string>
+    <string name="kau_none">எதுவுமில்லை</string>
+    <string name="kau_ok">சரி</string>
+    <string name="kau_play_store">பிளே ஸ்டோர்</string>
+    <string name="kau_rate">மதிப்பிடுக</string>
+    <string name="kau_report_bug">ஒரு பிழையைப் புகாரளிக்கவும்</string>
+    <string name="kau_search">தேடல்</string>
+    <string name="kau_send_feedback">கருத்தினை அனுப்பவும்</string>
+    <string name="kau_send_via">வழியாக அனுப்புங்கள்</string>
+    <string name="kau_settings">அமைப்புகள்</string>
+    <string name="kau_share">பகிர்</string>
+    <string name="kau_text_copied">உரை கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது.</string>
+    <string name="kau_thank_you">நன்றி</string>
+    <string name="kau_uh_oh">அட டா</string>
+    <string name="kau_warning">எச்சரிக்கை</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d நாள்</item>
+        <item quantity="other">%d நாட்கள்</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d மணி</item>
+        <item quantity="other">%d மணிநேரம்</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d நிமிடம்</item>
+        <item quantity="other">%d நிமிடங்கள்</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="one">%d நொடி</item>
+        <item quantity="other">%d நொடிகள்</item>
+    </plurals>
+    <string name="kau_yes">ஆம்</string>
+    <string name="kau_permission_denied">அனுமதி மறுக்கப்பட்டது</string>
+</resources>

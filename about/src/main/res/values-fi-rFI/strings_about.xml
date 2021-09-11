@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kau_about_libraries_intro">Tämä sovellus ei olisi mahdollinen ilman seuraavia hienoja kirjastoja.</string>
+    <string name="kau_about_faq_intro">UKK</string>
+</resources>
