@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="kau_about_libraries_intro">பின்வரும் சிறந்த நூலகங்கள் இல்லாமல் இந்த பயன்பாடு சாத்தியமில்லை.</string>
+    <string name="kau_about_faq_intro">FAQ</string>
+</resources>
