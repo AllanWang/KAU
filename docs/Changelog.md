@@ -1,7 +1,12 @@
 # Changelog
 
+## v6.3.0
+* Add support for Arctic Fox 2020.3.1
+* Move to new maven release system
+* Many version bumps
+
 ## v6.2.0
-* Add support for Android 4.2
+* Add support for Android Studio 4.2
 * Remove all usages of kotlin synthetics
 * Many version bumps
 * Added Hilt dep

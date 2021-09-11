@@ -30,8 +30,7 @@ import ca.allanwang.kau.utils.setBackgroundColorRes
 import ca.allanwang.kau.utils.setIcon
 import ca.allanwang.kau.utils.visible
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
-import jp.wasabeef.blurry.internal.BlurFactor
-import jp.wasabeef.blurry.internal.BlurTask
+import jp.wasabeef.blurry.Blurry
 
 /**
  * Created by Allan Wang on 2017-07-14.
@@ -53,7 +52,8 @@ class BlurredImageView @JvmOverloads constructor(
 
     val imageBase: ImageView get() = binding.imageBase
 
-    private val binding: KauBlurredImageviewBinding = KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this)
+    private val binding: KauBlurredImageviewBinding =
+        KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this)
 
     init {
         initAttrs(context, attrs)
@@ -87,17 +87,12 @@ class BlurredImageView @JvmOverloads constructor(
     fun blur() {
         if (isBlurred) return
         isBlurred = true
-        val factor = BlurFactor()
-        factor.width = width
-        factor.height = height
-        BlurTask(imageBase, factor) {
-            with(binding) {
-                imageBlur.setImageDrawable(it)
-                scaleAnimate(ANIMATION_SCALE).start()
-                imageBlur.alphaAnimate(1f).start()
-                imageForeground.alphaAnimate(1f).start()
-            }
-        }.execute()
+        with(binding) {
+            Blurry.with(imageBase.context).capture(imageBase).into(imageBlur)
+            scaleAnimate(ANIMATION_SCALE).start()
+            imageBlur.alphaAnimate(1f).start()
+            imageForeground.alphaAnimate(1f).start()
+        }
     }
 
     /**
@@ -108,17 +103,12 @@ class BlurredImageView @JvmOverloads constructor(
     fun blurInstantly() {
         isBlurred = true
         clearAnimation()
-        val factor = BlurFactor()
-        factor.width = width
-        factor.height = height
-        BlurTask(imageBase, factor) { drawable ->
-            with(binding) {
-                imageBlur.setImageDrawable(drawable)
-                scaleXY = ANIMATION_SCALE
-                imageBlur.alpha = 1f
-                imageForeground.alpha = 1f
-            }
-        }.execute()
+        with(binding) {
+            Blurry.with(imageBase.context).capture(imageBase).into(imageBlur)
+            scaleXY = ANIMATION_SCALE
+            imageBlur.alpha = 1f
+            imageForeground.alpha = 1f
+        }
     }
 
     /**

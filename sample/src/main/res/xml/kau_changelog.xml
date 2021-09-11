@@ -6,8 +6,13 @@
     <item text="" />
     -->
 
+    <version title="v6.3.0" />
+    <item text="Add support for Arctic Fox 2020.3.1" />
+    <item text="Move to new maven release system" />
+    <item text="Many version bumps" />
+
     <version title="v6.2.0" />
-    <item text="Add support for Android 4.2" />
+    <item text="Add support for Android Studio 4.2" />
     <item text="Remove all usages of kotlin synthetics" />
     <item text="Many version bumps" />
     <item text="Added Hilt dep" />

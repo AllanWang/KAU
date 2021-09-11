@@ -5,7 +5,7 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://plugins.gradle.org/m2/" }
     }
@@ -14,7 +14,6 @@ buildscript {
         classpath Plugins.android
         classpath Plugins.kotlin
         classpath Plugins.bugsnag
-        classpath Plugins.androidMaven
         classpath Plugins.playPublisher
         classpath Plugins.dexCount
         classpath Plugins.gitVersion
@@ -41,7 +40,7 @@ subprojects {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
     }
 }

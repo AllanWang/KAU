@@ -10,6 +10,8 @@ dependencies {
     implementation project(':core')
     implementation project(':colorpicker')
     implementation project(':fastadapter')
+
+    implementation kau.Dependencies.materialDialog("color")
 }
 
 apply from: '../artifacts.gradle'

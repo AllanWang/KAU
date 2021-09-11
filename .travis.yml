@@ -1,11 +1,13 @@
 language: android
 jdk:
-- oraclejdk8
+- openjdk11
 env:
   global:
-  - ANDROID_API=29
+  - ANDROID_API=30
   - EMULATOR_API=19
-  - ANDROID_BUILD_TOOLS=29.0.2
+  - ANDROID_BUILD_TOOLS=30.0.2
+  - ANDROID_COMMAND_LINE_TOOLS=7583922
+  - ANDROID_HOME=~/android-sdk
 git:
   depth: 500
 android:
@@ -42,7 +44,13 @@ cache:
   - "$HOME/.gradle/wrapper/"
   - "$HOME/.android/build-cache"
 before_install:
-- yes | sdkmanager "platforms;android-$ANDROID_API"
+# Get Java 11 compatible tools: https://stackoverflow.com/a/68534598/4407321
+- touch $HOME/.android/repositories.cfg
+- wget "https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_COMMAND_LINE_TOOLS}_latest.zip" -O commandlinetools.zip
+- unzip commandlinetools.zip -d $ANDROID_HOME/
+- yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "platforms;android-${ANDROID_API}" --sdk_root=$ANDROID_HOME
+- yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" --sdk_root=$ANDROID_HOME
+# Get KAU content
 - openssl aes-256-cbc -K $encrypted_12e8842891a3_key -iv $encrypted_12e8842891a3_iv
   -in files/kau.tar.enc -out kau.tar -d
 - tar xvf kau.tar
