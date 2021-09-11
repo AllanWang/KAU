@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--
+A collection of common string values
+Most resources are verbatim and x represents a formatted item
+-->
+<resources>
+    <string name="kau_about_app">ആപ്പിനെ കുറിച്ച്</string>
+    <string name="kau_about_x">%sനെക്കുറിച്ച്</string>
+    <string name="kau_add_account">അക്കൗണ്ട് ചേര്‍ക്കുക</string>
+    <string name="kau_back">പിന്നോട്ട്</string>
+    <string name="kau_cancel">റദ്ദാക്കുക</string>
+    <string name="kau_changelog">ചേഞ്ച് ലോഗ്</string>
+    <string name="kau_close">അടയ്ക്കുക</string>
+    <string name="kau_contact_us">ഞങ്ങളെ സമീപിക്കുക</string>
+    <string name="kau_copy">പകര്‍ത്തുക</string>
+    <string name="kau_custom">ഇഷ്‌ടാനുസൃതം</string>
+    <string name="kau_dark">ഇരുണ്ടത്</string>
+    <string name="kau_default">സ്ഥിരമായത്</string>
+    <string name="kau_do_not_show_again">വീണ്ടും കാണിക്കാതിരിക്കുക</string>
+    <string name="kau_done">കഴിഞ്ഞു</string>
+    <string name="kau_error">തെറ്റ്</string>
+    <string name="kau_exit">പുറത്തുകടക്കുക</string>
+    <string name="kau_exit_confirmation">തങ്കൾ ഉറപ്പായും പുറത്തു കടക്കുവാൻ ആഗ്രഹിക്കുന്നോ?</string>
+    <string name="kau_exit_confirmation_x">%s തങ്കൾ ഉറപ്പായും പുറത്തു കടക്കുവാൻ ആഗ്രഹിക്കുന്നോ?</string>
+    <string name="kau_glass">ഗ്ലാസ്സ്</string>
+    <string name="kau_got_it">മനസ്സിലായി</string>
+    <string name="kau_great">ഗംഭീരം</string>
+    <string name="kau_hide">മറയ്ക്കുക</string>
+    <string name="kau_light">ലൈറ്റ്</string>
+    <string name="kau_login">ലോഗിൻ</string>
+    <string name="kau_logout">ലോഗൗട്ട്</string>
+    <string name="kau_logout_confirm_as_x">%s ആയി ലോഗൗട്ട് ചെയ്യാൻ തങ്കൾ ഉറപ്പായും ആഗ്രഹിക്കുന്നോ?</string>
+    <string name="kau_manage_account">അക്കൌണ്ട് കൈകാര്യം ചെയ്യുക</string>
+    <string name="kau_maybe">ചിലപ്പോൾ</string>
+    <string name="kau_menu">മെനു</string>
+    <string name="kau_no">ഇല്ല</string>
+    <string name="kau_no_results_found">ഫലങ്ങൾ ഒന്നുമില്ല</string>
+    <string name="kau_none">ഒന്നുമില്ല</string>
+    <string name="kau_ok">ശരി</string>
+    <string name="kau_play_store">പ്ലേ സ്റ്റോർ</string>
+    <string name="kau_rate">വിലയിരുത്തുക</string>
+    <string name="kau_report_bug">ഒരു ബഗ്ഗ് റിപ്പോർട്ടുചെയ്യുക</string>
+    <string name="kau_search">തിരയുക</string>
+    <string name="kau_send_feedback">പ്രതികരണം അയയ്ക്കുക</string>
+    <string name="kau_send_via">ഇതിലൂടെ അയക്കുക</string>
+    <string name="kau_settings">ക്രമീകരണങ്ങള്‍</string>
+    <string name="kau_share">പങ്കിടുക</string>
+    <string name="kau_text_copied">വാചകം ക്ലിപ്‍ബോർഡിലേക്ക് പകർത്തി.</string>
+    <string name="kau_thank_you">നന്ദി</string>
+    <string name="kau_uh_oh">ഒ ഓഹ്</string>
+    <string name="kau_warning">മുന്നറിയിപ്പ്‌</string>
+    <plurals name="kau_x_days">
+        <item quantity="one">%d ദിവസം</item>
+        <item quantity="other">%d ദിവസങ്ങള്‍</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="one">%d മണിക്കൂർ</item>
+        <item quantity="other">%d മണിക്കുറുകള്‍</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="one">%d മിനിറ്റ്</item>
+        <item quantity="other">%d മിനിറ്റുകൾ</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="one">%d സെക്കന്റ്</item>
+        <item quantity="other">%d സെക്കന്റുകൾ</item>
+    </plurals>
+    <string name="kau_yes">അതെ</string>
+    <string name="kau_permission_denied">അനുമതി നിഷേധിച്ചു</string>
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--
+A collection of common string values
+Most resources are verbatim and x represents a formatted item
+-->
+<resources>
+    <string name="kau_about_app">このアプリについて</string>
+    <string name="kau_about_x">%s について</string>
+    <string name="kau_add_account">アカウントを追加する</string>
+    <string name="kau_back">戻る</string>
+    <string name="kau_cancel">キャンセル</string>
+    <string name="kau_changelog">変更履歴</string>
+    <string name="kau_close">閉じる</string>
+    <string name="kau_contact_us">連絡先</string>
+    <string name="kau_copy">コピー</string>
+    <string name="kau_custom">カスタム</string>
+    <string name="kau_dark">ダーク</string>
+    <string name="kau_default">デフォルト</string>
+    <string name="kau_do_not_show_again">次回から表示しない</string>
+    <string name="kau_done">完了</string>
+    <string name="kau_error">エラー</string>
+    <string name="kau_exit">終了</string>
+    <string name="kau_exit_confirmation">終了してもよろしいですか？</string>
+    <string name="kau_exit_confirmation_x">%s を終了しますか？</string>
+    <string name="kau_glass">ガラス</string>
+    <string name="kau_got_it">分かりました</string>
+    <string name="kau_great">素晴らしい</string>
+    <string name="kau_hide">隠す</string>
+    <string name="kau_light">普通</string>
+    <string name="kau_login">ログイン</string>
+    <string name="kau_logout">ログアウト</string>
+    <string name="kau_logout_confirm_as_x">%s をログアウトしますか？</string>
+    <string name="kau_manage_account">アカウントの管理</string>
+    <string name="kau_maybe">わからない</string>
+    <string name="kau_menu">メニュー</string>
+    <string name="kau_no">いいえ</string>
+    <string name="kau_no_results_found">該当するものはありません</string>
+    <string name="kau_none">無し</string>
+    <string name="kau_ok">OK</string>
+    <string name="kau_play_store">Google Play ストア</string>
+    <string name="kau_rate">評価</string>
+    <string name="kau_report_bug">バグの報告</string>
+    <string name="kau_search">検索</string>
+    <string name="kau_send_feedback">フィードバックを送信</string>
+    <string name="kau_send_via">経由で送信</string>
+    <string name="kau_settings">設定</string>
+    <string name="kau_share">共有</string>
+    <string name="kau_text_copied">テキストをクリップボードにコピーしました。</string>
+    <string name="kau_thank_you">ありがとうございました</string>
+    <string name="kau_uh_oh">おっとっと！</string>
+    <string name="kau_warning">警告</string>
+    <plurals name="kau_x_days">
+        <item quantity="other">%d 日</item>
+    </plurals>
+    <plurals name="kau_x_hours">
+        <item quantity="other">%d 時間</item>
+    </plurals>
+    <plurals name="kau_x_minutes">
+        <item quantity="other">%d 分</item>
+    </plurals>
+    <plurals name="kau_x_seconds">
+        <item quantity="other">%d 秒</item>
+    </plurals>
+    <string name="kau_yes">はい</string>
+    <string name="kau_permission_denied">アクセス権限がありません</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kau_no_items_found">Nebyly nalezeny žádné položky</string>
+    <string name="kau_no_items_selected">Nebyly vybrány žádné položky</string>
+    <string name="kau_no_items_loaded">Nebyly načteny žádné položky</string>
+    <string name="kau_no_camera_found">Nebyl nalezen žádný fotoaparát</string>
+    <string name="kau_no_camera_found_content">Nainstalujte si aplikaci Fotoaparát a zkuste to znovu.</string>
+    <string name="kau_temp_file_creation_failed">Vytvoření dočasného souboru se nezdařilo.</string>
+    <string name="kau_select_media">Výběr médií</string>
+</resources>

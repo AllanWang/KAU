@@ -15,4 +15,4 @@ else
     find . -type d -empty -delete
 fi
 
-echo "Finished cleanieckng files"
+echo "Finished cleaning files"

@@ -4,6 +4,7 @@
 * Add support for Arctic Fox 2020.3.1
 * Move to new maven release system
 * Many version bumps
+* Update translations
 
 ## v6.2.0
 * Add support for Android Studio 4.2
