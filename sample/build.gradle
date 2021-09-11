@@ -32,8 +32,8 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "ca.allanwang.kau.sample.SampleTestRunner"
     }
-    viewBinding {
-        enabled true
+    buildFeatures {
+        viewBinding = true
     }
 
     def releaseSigning = file("../files/kau.properties")
