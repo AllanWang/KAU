@@ -32,9 +32,10 @@ jobs:
       uses: gradle/wrapper-validation-action@v1
 
     - name: Decrypt secret
+      if: ${{ false }}
       run: |
         gpg -d --passphrase "${{ secrets.KAU_TAR_SECRET }}" --batch "files/kau_github.tar.gpg" > "files/kau_github.tar"
-#        tar xvf files/kau_github.tar -C files
+        tar xvf files/kau_github.tar -C files
 
     - name: Checkout Gradle Build Cache
       if: ${{ steps.self_hosted.outputs.FLAG != 'self-hosted' }}
@@ -51,5 +52,5 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew buildRelease
+    - name: Check and Test
+      run: ./gradlew assembleRelease
