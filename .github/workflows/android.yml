@@ -34,7 +34,7 @@ jobs:
     - name: Decrypt secret
       run: |
         gpg -d --passphrase "${{ secrets.KAU_TAR_SECRET }}" --batch "files/kau_github.tar.gpg" > "files/kau_github.tar"
-        tar xvf kau_github.tar
+        tar xvf files/kau_github.tar
         ls ./files
       
     - name: Checkout Gradle Build Cache
