@@ -28,6 +28,7 @@ android {
         minSdkVersion Versions.minSdk
         targetSdkVersion Versions.targetSdk
         versionName androidGitVersion.name()
+        println("ASDF Version code ${androidGitVersion.code()}")
         versionCode androidGitVersion.code()
         multiDexEnabled true
         testInstrumentationRunner "ca.allanwang.kau.sample.SampleTestRunner"
