@@ -53,4 +53,4 @@ jobs:
       run: chmod +x gradlew
 
     - name: Check and Test
-      run: ./gradlew assembleRelease
+      run: ./gradlew spotlessCheck lintRelease testReleaseUnitTest
