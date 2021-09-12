@@ -16,7 +16,7 @@ This library contains small helper functions used throughout almost all of my ot
 KAU is available on JitPack
 
 [![](https://jitpack.io/v/ca.allanwang/kau.svg)](https://jitpack.io/#ca.allanwang/kau) 
-[![Build Status](https://travis-ci.com/AllanWang/KAU.svg?branch=dev)](https://travis-ci.com/AllanWang/KAU)
+[![Build Status](https://github.com/AllanWang/KAU/actions/workflows/android.yml/badge.svg?branch=dev)](https://github.com/AllanWang/KAU/actions/workflows/android.yml)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/kotlin-android-utils/localized.svg)](https://crowdin.com/project/kotlin-android-utils)
 [![Awesome Kotlin Badge](https://kotlin.link/awesome-kotlin.svg)](https://github.com/KotlinBy/awesome-kotlin)
 [![ZenHub](https://img.shields.io/badge/Shipping%20faster%20with-ZenHub-45529A.svg)](https://app.zenhub.com/workspace/o/allanwang/kau/boards)
