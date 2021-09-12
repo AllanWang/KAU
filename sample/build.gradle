@@ -51,6 +51,9 @@ android {
                 keyAlias releaseProps.getProperty('keyAlias')
                 keyPassword releaseProps.getProperty('keyPassword')
             }
+            println("Added KAU release signing")
+        } else {
+            println("No KAU release signing found")
         }
 
         debug {
