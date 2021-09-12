@@ -2,7 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ '*' ]
+    branches:
+      - '*'
+      - '!l10n_dev'
 
 jobs:
   build:
@@ -49,6 +51,9 @@ jobs:
           
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
+    - name: Android Git Version
+      run: ./gradlew --quiet androidGitVersion
 
     - name: Check and Test
       run: ./gradlew spotlessCheck lintRelease testReleaseUnitTest
