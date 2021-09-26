@@ -18,10 +18,7 @@
 package ca.allanwang.kau.utils
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -31,18 +28,9 @@ import android.util.TypedValue
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.annotation.AnimRes
-import androidx.annotation.AttrRes
-import androidx.annotation.BoolRes
-import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
-import androidx.annotation.DimenRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.IntegerRes
-import androidx.annotation.InterpolatorRes
-import androidx.annotation.PluralsRes
-import androidx.annotation.StringRes
+import androidx.annotation.*
 import androidx.core.content.ContextCompat
+import ca.allanwang.kau.BuildConfig
 import ca.allanwang.kau.R
 import ca.allanwang.kau.logging.KL
 import com.afollestad.materialdialogs.DialogBehavior
@@ -69,9 +57,9 @@ inline fun <reified T : Activity> Context.startActivity(
 ) = startActivity(T::class.java, clearStack, bundleBuilder, intentBuilder)
 
 @Deprecated(
-    "Use reified generic instead of passing class",
-    ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
-    DeprecationLevel.WARNING
+        "Use reified generic instead of passing class",
+        ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
+        DeprecationLevel.WARNING
 )
 inline fun <T : Activity> Context.startActivity(
     clazz: Class<T>,
@@ -92,42 +80,53 @@ inline fun <T : Activity> Context.startActivity(
     }
 }
 
-fun Context.startPlayStoreLink(@StringRes packageIdRes: Int) = startPlayStoreLink(string(packageIdRes))
+fun Context.startPlayStoreLink(@StringRes packageIdRes: Int): Boolean = startPlayStoreLink(string(packageIdRes))
 
-fun Context.startPlayStoreLink(packageId: String) {
+/**
+ * Open play store link for [packageId].
+ *
+ * Returns [true] if intent succeeded.
+ */
+fun Context.startPlayStoreLink(packageId: String): Boolean {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageId"))
-    if (intent.resolveActivity(packageManager) != null) {
+    return try {
         startActivity(intent)
-    } else {
-        toast("Cannot resolve play store", log = true)
+        true
+    } catch (e: ActivityNotFoundException) {
+        if (BuildConfig.DEBUG) toast("Cannot resolve play store", log = true)
+        false
     }
 }
 
 /**
- * Starts a url
- * If given a series of links, will open the first one that isn't null
+ * Starts a url.
+ *
+ * If given a series of links, will open the first one that isn't null.
+ * Returns [true] if link was opened.
  */
-fun Context.startLink(vararg url: String?) {
-    val link = url.firstOrNull { !it.isNullOrBlank() } ?: return
+fun Context.startLink(vararg url: String?): Boolean {
+    val link = url.firstOrNull { !it.isNullOrBlank() } ?: return false
     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-    if (browserIntent.resolveActivity(packageManager) != null) {
+    return try {
         startActivity(browserIntent)
-    } else {
-        toast("Cannot resolve browser", log = true)
+        true
+    } catch (e: ActivityNotFoundException) {
+        if (BuildConfig.DEBUG) toast("Cannot resolve browser", log = true)
+        false
     }
 }
 
-fun Context.startLink(@StringRes url: Int) = startLink(string(url))
+fun Context.startLink(@StringRes url: Int): Boolean = startLink(string(url))
 
 // Toast helpers
 inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
-    context.toast(id, duration, log)
+        context.toast(id, duration, log)
 
 inline fun Context.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
-    toast(this.string(id), duration, log)
+        toast(this.string(id), duration, log)
 
 inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
-    context.toast(text, duration, log)
+        context.toast(text, duration, log)
 
 inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) {
     Toast.makeText(this, text, duration).show()
@@ -140,10 +139,10 @@ const val INVALID_ID = 0
 inline fun Context.string(@StringRes id: Int): String = getString(id)
 
 inline fun Context.string(@StringRes id: Int, fallback: String?): String? =
-    if (id != INVALID_ID) string(id) else fallback
+        if (id != INVALID_ID) string(id) else fallback
 
 inline fun Context.string(@StringRes id: Int, fallback: () -> String?): String? =
-    if (id != INVALID_ID) string(id) else fallback()
+        if (id != INVALID_ID) string(id) else fallback()
 
 inline fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 inline fun Context.boolean(@BoolRes id: Int): Boolean = resources.getBoolean(id)
@@ -151,21 +150,22 @@ inline fun Context.integer(@IntegerRes id: Int): Int = resources.getInteger(id)
 inline fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
 inline fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
 inline fun Context.drawable(@DrawableRes id: Int): Drawable = ContextCompat.getDrawable(this, id)
-    ?: throw KauException("Drawable with id $id not found")
+        ?: throw KauException("Drawable with id $id not found")
 
 inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? =
-    if (id != INVALID_ID) drawable(id) else fallback
+        if (id != INVALID_ID) drawable(id) else fallback
 
 inline fun Context.drawable(@DrawableRes id: Int, fallback: () -> Drawable?): Drawable? =
-    if (id != INVALID_ID) drawable(id) else fallback()
+        if (id != INVALID_ID) drawable(id) else fallback()
 
 inline fun Context.interpolator(@InterpolatorRes id: Int) = AnimationUtils.loadInterpolator(this, id)!!
 inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)!!
+
 /**
  * Returns plural form of res. The quantity is also passed to the formatter as an int
  */
 inline fun Context.plural(@PluralsRes id: Int, quantity: Number) =
-    resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
+        resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
 
 // Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, @ColorInt fallback: Int = 0): Int {
@@ -221,7 +221,7 @@ inline fun Context.materialDialog(
 }
 
 fun Context.getDip(value: Float): Float =
-    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
+        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
 
 inline val Context.isRtl: Boolean
     get() = resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
@@ -239,8 +239,8 @@ inline val Context.isNavBarOnBottom: Boolean
     }
 
 fun Context.hasPermission(permissions: String) = !buildIsMarshmallowAndUp || ContextCompat.checkSelfPermission(
-    this,
-    permissions
+        this,
+        permissions
 ) == PackageManager.PERMISSION_GRANTED
 
 fun Context.copyToClipboard(text: String?, label: String = "Copied Text", showToast: Boolean = true) {
@@ -251,16 +251,26 @@ fun Context.copyToClipboard(text: String?, label: String = "Copied Text", showTo
     }
 }
 
-fun Context.shareText(text: String?) {
-    text ?: return toast("Share text is null")
+/**
+ * Share text to external activity.
+ *
+ * Returns [true] if intent succeeds. Return [false] otherwise, or if text is empty.
+ */
+fun Context.shareText(text: String?): Boolean {
+    if (text.isNullOrBlank()) {
+        if (BuildConfig.DEBUG) toast("Share text is null")
+        return false
+    }
     val intent = Intent(Intent.ACTION_SEND)
     intent.type = "text/plain"
     intent.putExtra(Intent.EXTRA_TEXT, text)
     val chooserIntent = Intent.createChooser(intent, string(R.string.kau_share))
-    if (chooserIntent.resolveActivity(packageManager) != null) {
+    return try {
         startActivity(chooserIntent)
-    } else {
-        toast("Cannot resolve activity to share text", log = true)
+        true
+    } catch (e: ActivityNotFoundException) {
+        if (BuildConfig.DEBUG) toast("Cannot resolve activity to share text", log = true)
+        false
     }
 }
 
