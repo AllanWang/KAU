@@ -22,6 +22,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.annotation.ChecksSdkIntAtLeast
 
 /**
  * Created by Allan Wang on 2017-06-23.
@@ -67,13 +68,20 @@ fun Context.showAppInfo(packageName: String) {
 }
 
 inline val buildIsMarshmallowAndUp: Boolean
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.M)
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
 inline val buildIsLollipopAndUp: Boolean
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.LOLLIPOP)
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
 inline val buildIsNougatAndUp: Boolean
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.N)
     get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+
+inline val buildIsOreoAndUp: Boolean
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.O)
+    get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
 const val INSTALLER_GOOGLE_PLAY_VENDING = "com.android.vending"
 const val INSTALLER_GOOGLE_PLAY_FEEDBACK = "com.google.android.feedback"
