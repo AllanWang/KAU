@@ -127,6 +127,7 @@ class EmailBuilder(val email: String, val subject: String) {
      * Create the intent and send the request when possible
      * If a stream uri is added, it will automatically be flagged to pass on read permissions
      */
+    @Deprecated(level = DeprecationLevel.WARNING, message = "Resolution fails after Android 11")
     fun execute(context: Context) {
         val intent = getIntent(context)
         intent.extras()
