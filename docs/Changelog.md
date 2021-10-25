@@ -4,6 +4,7 @@
 * Add support for Bumblebee 2021.1.1
 * Remove Koin
 * Many version bumps
+* Update target SDK to 31
 
 ## v6.3.0
 * Add support for Arctic Fox 2020.3.1

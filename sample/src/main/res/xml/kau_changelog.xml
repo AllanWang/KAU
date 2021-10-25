@@ -10,7 +10,7 @@
     <item text="Add support for Bumblebee 2021.1.1" />
     <item text="Remove Koin" />
     <item text="Many version bumps" />
-    <item text="" />
+    <item text="Update target SDK to 31" />
 
     <version title="v6.3.0" />
     <item text="Add support for Arctic Fox 2020.3.1" />
