@@ -16,8 +16,8 @@
 package ca.allanwang.kau.utils
 
 import android.graphics.Color
-import kotlin.test.assertEquals
 import org.junit.Test
+import kotlin.test.assertEquals
 
 /**
  * Created by Allan Wang on 2017-06-23.

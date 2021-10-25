@@ -42,8 +42,8 @@ interface BindingLayout<Binding : ViewBinding> {
 }
 
 abstract class BindingItem<Binding : ViewBinding>(open val data: Any?) :
-        AbstractItem<BindingItem.ViewHolder>(),
-        BindingLayout<Binding> {
+    AbstractItem<BindingItem.ViewHolder>(),
+    BindingLayout<Binding> {
 
     override val type: Int
         get() = layoutRes
@@ -81,7 +81,7 @@ abstract class BindingItem<Binding : ViewBinding>(open val data: Any?) :
     open fun Binding.unbindView(holder: ViewHolder) {}
 
     final override fun getViewHolder(v: View): ViewHolder =
-            ViewHolder(v, layoutRes)
+        ViewHolder(v, layoutRes)
 
     override fun failedToRecycle(holder: ViewHolder): Boolean {
         KL.e { "Failed to recycle" }
@@ -97,7 +97,7 @@ abstract class BindingItem<Binding : ViewBinding>(open val data: Any?) :
     override fun hashCode(): Int = data.hashCode()
 
     class ViewHolder(itemView: View, internal val layoutRes: Int) :
-            RecyclerView.ViewHolder(itemView) {
+        RecyclerView.ViewHolder(itemView) {
 
         /**
          * Retrieves a binding.
@@ -119,7 +119,7 @@ abstract class BindingItem<Binding : ViewBinding>(open val data: Any?) :
 }
 
 abstract class BindingClickEventHook<Binding : ViewBinding, Item : BindingItem<Binding>>(val identifier: BindingLayout<Binding>) :
-        ClickEventHook<Item>() {
+    ClickEventHook<Item>() {
 
     private fun RecyclerView.ViewHolder.binding(): Binding? {
         val holder = this as? BindingItem.ViewHolder ?: return null
@@ -146,7 +146,7 @@ abstract class BindingClickEventHook<Binding : ViewBinding, Item : BindingItem<B
     }
 
     open fun Binding.onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? =
-            super.onBindMany(viewHolder)
+        super.onBindMany(viewHolder)
 
     final override fun onClick(v: View, position: Int, fastAdapter: FastAdapter<Item>, item: Item) {
         BindingItem.getBinding<Binding>(v).onClick(v, position, fastAdapter, item)

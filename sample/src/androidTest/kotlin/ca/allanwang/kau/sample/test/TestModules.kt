@@ -26,7 +26,8 @@ import dagger.hilt.testing.TestInstallIn
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [PrefFactoryModule::class])
+    replaces = [PrefFactoryModule::class]
+)
 object PrefFactoryTestModule {
     @Provides
     fun factory(): KPrefFactory = KPrefFactoryInMemory

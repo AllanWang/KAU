@@ -179,14 +179,14 @@ class SearchView @JvmOverloads constructor(
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
          */
         var onItemClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit =
-                { _, _, _, _ -> }
+            { _, _, _, _ -> }
 
         /**
          * Long click event for suggestion items
          * This event is only triggered when [key] is not blank (like in [noResultsFound]
          */
         var onItemLongClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit =
-                { _, _, _, _ -> }
+            { _, _, _, _ -> }
 
         /**
          * If a [SearchItem]'s title contains the submitted query, make that portion bold
@@ -239,7 +239,7 @@ class SearchView @JvmOverloads constructor(
             else value
             if (configs.highlightQueryText && value.isNotEmpty()) list.forEach {
                 it.withHighlights(
-                        binding.kauSearchEditText.text?.toString()
+                    binding.kauSearchEditText.text?.toString()
                 )
             }
             cardTransition()
@@ -259,7 +259,7 @@ class SearchView @JvmOverloads constructor(
 
     // views
     private var textCallback: Debouncer2<String, SearchView> =
-            debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
+        debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
     private val adapter = FastItemAdapter<SearchItem>()
     private var menuItem: MenuItem? = null
     val isOpen: Boolean
@@ -290,7 +290,7 @@ class SearchView @JvmOverloads constructor(
     private fun KauSearchViewBinding.init() {
         kauSearchNav.setSearchIcon(configs.navIcon).setOnClickListener { revealClose() }
         kauSearchClear.setSearchIcon(configs.clearIcon)
-                .setOnClickListener { kauSearchEditText.text?.clear() }
+            .setOnClickListener { kauSearchEditText.text?.clear() }
         tintForeground(configs.foregroundColor)
         tintBackground(configs.backgroundColor)
         with(kauSearchRecycler) {
@@ -312,19 +312,19 @@ class SearchView @JvmOverloads constructor(
             }
             onClickListener = { _, _, item, position ->
                 if (item.key.isNotBlank()) configs.onItemClick(
-                        position,
-                        item.key,
-                        item.content,
-                        this@SearchView
+                    position,
+                    item.key,
+                    item.content,
+                    this@SearchView
                 ); true
             }
             onLongClickListener = { _, _, item, position ->
                 if (item.key.isNotBlank()) {
                     configs.onItemLongClick(
-                            position,
-                            item.key,
-                            item.content,
-                            this@SearchView
+                        position,
+                        item.key,
+                        item.content,
+                        this@SearchView
                     )
                 }
                 true
@@ -365,13 +365,15 @@ class SearchView @JvmOverloads constructor(
     }
 
     internal fun cardTransition(builder: TransitionSet.() -> Unit = {}) {
-        TransitionManager.beginDelayedTransition(binding.kauSearchCardview,
-                // we are only using change bounds, as the recyclerview items may be animated as well,
-                // which causes a measure IllegalStateException
-                TransitionSet().addTransition(ChangeBounds()).apply {
-                    duration = configs.transitionDuration
-                    builder()
-                })
+        TransitionManager.beginDelayedTransition(
+            binding.kauSearchCardview,
+            // we are only using change bounds, as the recyclerview items may be animated as well,
+            // which causes a measure IllegalStateException
+            TransitionSet().addTransition(ChangeBounds()).apply {
+                duration = configs.transitionDuration
+                builder()
+            }
+        )
     }
 
     /**
@@ -395,7 +397,7 @@ class SearchView @JvmOverloads constructor(
     ): SearchView {
         config(config)
         val menuItem = menu.findItem(id)
-                ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
+            ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
         if (menuItem.icon == null) {
             menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
         }
@@ -430,12 +432,12 @@ class SearchView @JvmOverloads constructor(
         menuY = (locations[1] + menuHalfHeight)
         kauSearchCardview.viewTreeObserver.addOnPreDrawListener(object :
                 ViewTreeObserver.OnPreDrawListener {
-            override fun onPreDraw(): Boolean {
-                view.viewTreeObserver.removeOnPreDrawListener(this)
-                kauSearchCardview.setMarginTop(menuY - kauSearchCardview.height / 2)
-                return true
-            }
-        })
+                override fun onPreDraw(): Boolean {
+                    view.viewTreeObserver.removeOnPreDrawListener(this)
+                    kauSearchCardview.setMarginTop(menuY - kauSearchCardview.height / 2)
+                    return true
+                }
+            })
     }
 
     /**
@@ -489,9 +491,9 @@ class SearchView @JvmOverloads constructor(
             kauSearchShadow.fadeIn()
             kauSearchEditText.showKeyboard()
             kauSearchCardview.circularReveal(
-                    menuX,
-                    menuHalfHeight,
-                    duration = configs.revealDuration
+                menuX,
+                menuHalfHeight,
+                duration = configs.revealDuration
             ) {
                 cardTransition()
                 kauSearchRecycler.visible()
@@ -510,15 +512,17 @@ class SearchView @JvmOverloads constructor(
             kauSearchShadow.fadeOut(duration = configs.transitionDuration)
             cardTransition {
                 addEndListener {
-                    kauSearchCardview.circularHide(menuX,
-                            menuHalfHeight,
-                            duration = configs.revealDuration,
-                            onFinish = {
-                                configs.closeListener?.invoke(this@SearchView)
-                                if (configs.shouldClearOnClose) {
-                                    kauSearchEditText.text?.clear()
-                                }
-                            })
+                    kauSearchCardview.circularHide(
+                        menuX,
+                        menuHalfHeight,
+                        duration = configs.revealDuration,
+                        onFinish = {
+                            configs.closeListener?.invoke(this@SearchView)
+                            if (configs.shouldClearOnClose) {
+                                kauSearchEditText.text?.clear()
+                            }
+                        }
+                    )
                 }
             }
             kauSearchRecycler.gone()
@@ -542,7 +546,7 @@ fun Activity.bindSearchView(
     @ColorInt menuIconColor: Int = Color.WHITE,
     config: Configs.() -> Unit = {}
 ): SearchView =
-        findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
+    findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
 
 /**
  * Bind searchView to a menu item; call this in [Activity.onCreateOptionsMenu]
@@ -558,10 +562,10 @@ fun ViewGroup.bindSearchView(
 ): SearchView {
     val searchView = SearchView(context)
     searchView.layoutParams =
-            FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
-            )
+        FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        )
     addView(searchView)
     searchView.bind(menu, id, menuIconColor, config)
     return searchView

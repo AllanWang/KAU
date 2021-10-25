@@ -61,7 +61,8 @@ internal object ColorPalette {
                 "#D32F2F",
                 "#C62828",
                 "#B71C1C"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FCE4EC",
                 "#F8BBD0",
                 "#F48FB1",
@@ -72,7 +73,8 @@ internal object ColorPalette {
                 "#C2185B",
                 "#AD1457",
                 "#880E4F"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#F3E5F5",
                 "#E1BEE7",
                 "#CE93D8",
@@ -83,7 +85,8 @@ internal object ColorPalette {
                 "#7B1FA2",
                 "#6A1B9A",
                 "#4A148C"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#EDE7F6",
                 "#D1C4E9",
                 "#B39DDB",
@@ -94,7 +97,8 @@ internal object ColorPalette {
                 "#512DA8",
                 "#4527A0",
                 "#311B92"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#E8EAF6",
                 "#C5CAE9",
                 "#9FA8DA",
@@ -105,7 +109,8 @@ internal object ColorPalette {
                 "#303F9F",
                 "#283593",
                 "#1A237E"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#E3F2FD",
                 "#BBDEFB",
                 "#90CAF9",
@@ -116,7 +121,8 @@ internal object ColorPalette {
                 "#1976D2",
                 "#1565C0",
                 "#0D47A1"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#E1F5FE",
                 "#B3E5FC",
                 "#81D4FA",
@@ -127,7 +133,8 @@ internal object ColorPalette {
                 "#0288D1",
                 "#0277BD",
                 "#01579B"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#E0F7FA",
                 "#B2EBF2",
                 "#80DEEA",
@@ -138,7 +145,8 @@ internal object ColorPalette {
                 "#0097A7",
                 "#00838F",
                 "#006064"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#E0F2F1",
                 "#B2DFDB",
                 "#80CBC4",
@@ -149,7 +157,8 @@ internal object ColorPalette {
                 "#00796B",
                 "#00695C",
                 "#004D40"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#E8F5E9",
                 "#C8E6C9",
                 "#A5D6A7",
@@ -160,7 +169,8 @@ internal object ColorPalette {
                 "#388E3C",
                 "#2E7D32",
                 "#1B5E20"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#F1F8E9",
                 "#DCEDC8",
                 "#C5E1A5",
@@ -171,7 +181,8 @@ internal object ColorPalette {
                 "#689F38",
                 "#558B2F",
                 "#33691E"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#F9FBE7",
                 "#F0F4C3",
                 "#E6EE9C",
@@ -182,7 +193,8 @@ internal object ColorPalette {
                 "#AFB42B",
                 "#9E9D24",
                 "#827717"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FFFDE7",
                 "#FFF9C4",
                 "#FFF59D",
@@ -193,7 +205,8 @@ internal object ColorPalette {
                 "#FBC02D",
                 "#F9A825",
                 "#F57F17"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FFF8E1",
                 "#FFECB3",
                 "#FFE082",
@@ -204,7 +217,8 @@ internal object ColorPalette {
                 "#FFA000",
                 "#FF8F00",
                 "#FF6F00"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FFF3E0",
                 "#FFE0B2",
                 "#FFCC80",
@@ -215,7 +229,8 @@ internal object ColorPalette {
                 "#F57C00",
                 "#EF6C00",
                 "#E65100"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FBE9E7",
                 "#FFCCBC",
                 "#FFAB91",
@@ -226,7 +241,8 @@ internal object ColorPalette {
                 "#E64A19",
                 "#D84315",
                 "#BF360C"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#EFEBE9",
                 "#D7CCC8",
                 "#BCAAA4",
@@ -237,7 +253,8 @@ internal object ColorPalette {
                 "#5D4037",
                 "#4E342E",
                 "#3E2723"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FAFAFA",
                 "#F5F5F5",
                 "#EEEEEE",
@@ -248,7 +265,8 @@ internal object ColorPalette {
                 "#616161",
                 "#424242",
                 "#212121"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#ECEFF1",
                 "#CFD8DC",
                 "#B0BEC5",
@@ -291,77 +309,92 @@ internal object ColorPalette {
                 "#FF5252",
                 "#FF1744",
                 "#D50000"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FF80AB",
                 "#FF4081",
                 "#F50057",
                 "#C51162"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#EA80FC",
                 "#E040FB",
                 "#D500F9",
                 "#AA00FF"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#B388FF",
                 "#7C4DFF",
                 "#651FFF",
                 "#6200EA"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#8C9EFF",
                 "#536DFE",
                 "#3D5AFE",
                 "#304FFE"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#82B1FF",
                 "#448AFF",
                 "#2979FF",
                 "#2962FF"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#80D8FF",
                 "#40C4FF",
                 "#00B0FF",
                 "#0091EA"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#84FFFF",
                 "#18FFFF",
                 "#00E5FF",
                 "#00B8D4"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#A7FFEB",
                 "#64FFDA",
                 "#1DE9B6",
                 "#00BFA5"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#B9F6CA",
                 "#69F0AE",
                 "#00E676",
                 "#00C853"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#CCFF90",
                 "#B2FF59",
                 "#76FF03",
                 "#64DD17"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#F4FF81",
                 "#EEFF41",
                 "#C6FF00",
                 "#AEEA00"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FFFF8D",
                 "#FFFF00",
                 "#FFEA00",
                 "#FFD600"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FFE57F",
                 "#FFD740",
                 "#FFC400",
                 "#FFAB00"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FFD180",
                 "#FFAB40",
                 "#FF9100",
                 "#FF6D00"
-            ), colorArrayOf(
+            ),
+            colorArrayOf(
                 "#FF9E80",
                 "#FF6E40",
                 "#FF3D00",

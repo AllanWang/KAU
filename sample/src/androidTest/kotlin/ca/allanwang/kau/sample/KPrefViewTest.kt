@@ -28,9 +28,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import ca.allanwang.kau.sample.test.BaseTest
 import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -41,6 +38,9 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
+import javax.inject.Inject
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * Created by Allan Wang on 21/12/2018.

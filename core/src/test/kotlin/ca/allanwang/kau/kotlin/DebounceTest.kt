@@ -15,9 +15,9 @@
  */
 package ca.allanwang.kau.kotlin
 
-import kotlin.test.assertEquals
 import org.junit.Ignore
 import org.junit.Test
+import kotlin.test.assertEquals
 
 /**
  * Created by Allan Wang on 2017-08-05.

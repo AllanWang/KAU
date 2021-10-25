@@ -46,17 +46,21 @@ class AnimActivity : KauBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val adapter = SingleFastAdapter()
-        setContentView(fullLinearRecycler(adapter).apply {
-            setBackgroundColor(
-                pref.bgColor.withAlpha(255)
-            )
-        })
+        setContentView(
+            fullLinearRecycler(adapter).apply {
+                setBackgroundColor(
+                    pref.bgColor.withAlpha(255)
+                )
+            }
+        )
 
-        adapter.add(listOf(
-            PERMISSION_ACCESS_COARSE_LOCATION,
-            PERMISSION_ACCESS_FINE_LOCATION,
-            PERMISSION_CAMERA
-        ).map { PermissionCheckboxModel(it).vh() })
+        adapter.add(
+            listOf(
+                PERMISSION_ACCESS_COARSE_LOCATION,
+                PERMISSION_ACCESS_FINE_LOCATION,
+                PERMISSION_CAMERA
+            ).map { PermissionCheckboxModel(it).vh() }
+        )
         adapter.addEventHook(PermissionCheckboxViewBinding.clickHook())
         kauSwipeOnCreate {
             edgeFlag = SWIPE_EDGE_LEFT
@@ -69,8 +73,10 @@ class AnimActivity : KauBaseActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity<MainActivity>(bundleBuilder = {
-            withSlideOut(this@AnimActivity)
-        })
+        startActivity<MainActivity>(
+            bundleBuilder = {
+                withSlideOut(this@AnimActivity)
+            }
+        )
     }
 }

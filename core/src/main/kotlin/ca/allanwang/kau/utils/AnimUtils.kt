@@ -166,10 +166,13 @@ fun View.fadeOut(
 
 @KauUtils
 fun TextView.setTextWithFade(text: String, duration: Long = 200, onFinish: (() -> Unit)? = null) {
-    fadeOut(duration = duration, onFinish = {
-        setText(text)
-        fadeIn(duration = duration, onFinish = onFinish)
-    })
+    fadeOut(
+        duration = duration,
+        onFinish = {
+            setText(text)
+            fadeIn(duration = duration, onFinish = onFinish)
+        }
+    )
 }
 
 @KauUtils
