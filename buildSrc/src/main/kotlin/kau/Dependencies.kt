@@ -51,15 +51,6 @@ object Dependencies {
     val kotlinReflect = kotlin("reflect")
 
     @JvmField
-    val koin = koin("android")
-
-    @JvmField
-    val koinTest = koin("test")
-
-    @JvmStatic
-    fun koin(type: String) = "io.insert-koin:koin-$type:${Versions.koin}"
-
-    @JvmField
     val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
 
     @JvmField
