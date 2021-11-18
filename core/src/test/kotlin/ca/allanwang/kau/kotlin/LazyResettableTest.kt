@@ -15,10 +15,10 @@
  */
 package ca.allanwang.kau.kotlin
 
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
 /**
  * Created by Allan Wang on 2017-07-29.

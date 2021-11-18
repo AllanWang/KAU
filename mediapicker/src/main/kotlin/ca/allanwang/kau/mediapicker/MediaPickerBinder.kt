@@ -35,10 +35,13 @@ import com.bumptech.glide.request.RequestOptions
  * Image picker launchers
  */
 inline fun <reified T : MediaPickerCore<*>> Activity.kauLaunchMediaPicker(requestCode: Int) {
-    startActivityForResult<T>(requestCode, bundleBuilder = {
-        if (MediaPickerActivityOverlayBase::class.java.isAssignableFrom(T::class.java))
-            withSceneTransitionAnimation(this@kauLaunchMediaPicker)
-    })
+    startActivityForResult<T>(
+        requestCode,
+        bundleBuilder = {
+            if (MediaPickerActivityOverlayBase::class.java.isAssignableFrom(T::class.java))
+                withSceneTransitionAnimation(this@kauLaunchMediaPicker)
+        }
+    )
 }
 
 /**

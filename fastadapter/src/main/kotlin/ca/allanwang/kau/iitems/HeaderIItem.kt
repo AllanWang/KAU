@@ -36,7 +36,8 @@ class HeaderIItem(
     var textRes: Int = INVALID_ID
 ) : KauIItem<HeaderIItem.ViewHolder>(
     R.layout.kau_iitem_header, { ViewHolder(it) }, R.id.kau_item_header_big_margin_top
-), ThemableIItem by ThemableIItemDelegate() {
+),
+    ThemableIItem by ThemableIItemDelegate() {
 
     var text: String = text ?: "Header Placeholder"
 

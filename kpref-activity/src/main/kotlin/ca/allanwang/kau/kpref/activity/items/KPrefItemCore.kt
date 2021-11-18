@@ -48,7 +48,9 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 
-abstract class KPrefItemCore(val core: CoreContract) : AbstractItem<KPrefItemCore.ViewHolder>(), KPrefItemActions by core,
+abstract class KPrefItemCore(val core: CoreContract) :
+    AbstractItem<KPrefItemCore.ViewHolder>(),
+    KPrefItemActions by core,
     ThemableIItem by ThemableIItemDelegate() {
 
     final override fun getViewHolder(v: View) = ViewHolder(v)

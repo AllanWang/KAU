@@ -93,9 +93,12 @@ fun bundleOf(vararg params: kotlin.Pair<String, Any?>): Bundle {
  * create a scene transition animation
  */
 fun Bundle.withSceneTransitionAnimation(parent: View, data: Map<Int, String>) =
-    withSceneTransitionAnimation(parent.context, data.mapKeys { (id, _) ->
-        parent.findViewById<View>(id)
-    })
+    withSceneTransitionAnimation(
+        parent.context,
+        data.mapKeys { (id, _) ->
+            parent.findViewById<View>(id)
+        }
+    )
 
 /**
  * Given a mapping of views to tags,

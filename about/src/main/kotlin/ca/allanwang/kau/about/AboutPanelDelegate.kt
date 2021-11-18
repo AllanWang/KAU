@@ -35,10 +35,10 @@ import ca.allanwang.kau.utils.withMarginDecoration
 import ca.allanwang.kau.xml.kauParseFaq
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.fastadapter.GenericItem
-import java.lang.reflect.Field
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.reflect.Field
 
 /**
  * Created by Allan Wang on 2017-08-02.
@@ -154,16 +154,18 @@ open class AboutPanelMain : AboutPanelRecycler() {
         with(activity) {
             adapter = FastItemThemedAdapter(configs)
             recycler = fullLinearRecycler(adapter)
-            adapter.add(CutoutIItem {
-                with(configs) {
-                    text = string(cutoutTextRes, cutoutText)
-                    drawable = drawable(cutoutDrawableRes, cutoutDrawable)
-                    if (configs.cutoutForeground != null) foregroundColor =
-                        configs.cutoutForeground!!
+            adapter.add(
+                CutoutIItem {
+                    with(configs) {
+                        text = string(cutoutTextRes, cutoutText)
+                        drawable = drawable(cutoutDrawableRes, cutoutDrawable)
+                        if (configs.cutoutForeground != null) foregroundColor =
+                            configs.cutoutForeground!!
+                    }
+                }.apply {
+                    themeEnabled = configs.cutoutForeground == null
                 }
-            }.apply {
-                themeEnabled = configs.cutoutForeground == null
-            })
+            )
             postInflateMainPage(adapter)
             return recycler!!
         }

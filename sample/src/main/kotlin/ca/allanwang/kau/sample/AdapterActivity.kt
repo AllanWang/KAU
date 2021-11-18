@@ -59,7 +59,8 @@ class AdapterActivity : ElasticRecyclerActivity() {
                     titleRes = R.string.kau_text_copied
                     button = "Test"
                     buttonClick = { toast("HI") }
-                })
+                }
+            )
         )
         setOutsideTapListener { finishAfterTransition() }
         return true

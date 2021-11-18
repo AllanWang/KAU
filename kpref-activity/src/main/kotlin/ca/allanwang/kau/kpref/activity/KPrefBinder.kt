@@ -86,8 +86,10 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
         setter: KPrefItemActions.(value: Boolean) -> Unit,
         builder: KPrefItemBase.BaseContract<Boolean>.() -> Unit = {}
     ) = list.add(
-        KPrefCheckbox(KPrefItemBase.BaseBuilder(globalOptions, title, getter, setter)
-            .apply { builder() })
+        KPrefCheckbox(
+            KPrefItemBase.BaseBuilder(globalOptions, title, getter, setter)
+                .apply { builder() }
+        )
     )
 
     @KPrefMarker
@@ -97,8 +99,10 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
         setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefColorPicker.KPrefColorContract.() -> Unit = {}
     ) = list.add(
-        KPrefColorPicker(KPrefColorPicker.KPrefColorBuilder(globalOptions, title, getter, setter)
-            .apply { builder() })
+        KPrefColorPicker(
+            KPrefColorPicker.KPrefColorBuilder(globalOptions, title, getter, setter)
+                .apply { builder() }
+        )
     )
 
     @KPrefMarker
@@ -108,8 +112,10 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
         setter: KPrefItemActions.(value: T) -> Unit,
         builder: KPrefText.KPrefTextContract<T>.() -> Unit = {}
     ) = list.add(
-        KPrefText(KPrefText.KPrefTextBuilder(globalOptions, title, getter, setter)
-            .apply { builder() })
+        KPrefText(
+            KPrefText.KPrefTextBuilder(globalOptions, title, getter, setter)
+                .apply { builder() }
+        )
     )
 
     @KPrefMarker
@@ -118,8 +124,10 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
         itemBuilder: KPrefAdapterBuilder.() -> Unit,
         builder: KPrefSubItems.KPrefSubItemsContract.() -> Unit
     ) = list.add(
-        KPrefSubItems(KPrefSubItems.KPrefSubItemsBuilder(globalOptions, title, itemBuilder)
-            .apply { builder() })
+        KPrefSubItems(
+            KPrefSubItems.KPrefSubItemsBuilder(globalOptions, title, itemBuilder)
+                .apply { builder() }
+        )
     )
 
     @KPrefMarker
@@ -127,8 +135,10 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
         @StringRes title: Int,
         builder: KPrefItemBase.BaseContract<Unit>.() -> Unit = {}
     ) = list.add(
-        KPrefPlainText(KPrefPlainText.KPrefPlainTextBuilder(globalOptions, title)
-            .apply { builder() })
+        KPrefPlainText(
+            KPrefPlainText.KPrefPlainTextBuilder(globalOptions, title)
+                .apply { builder() }
+        )
     )
 
     @KPrefMarker
@@ -138,8 +148,10 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
         setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefSeekbar.KPrefSeekbarContract.() -> Unit = {}
     ) = list.add(
-        KPrefSeekbar(KPrefSeekbar.KPrefSeekbarBuilder(globalOptions, title, getter, setter)
-            .apply { builder() })
+        KPrefSeekbar(
+            KPrefSeekbar.KPrefSeekbarBuilder(globalOptions, title, getter, setter)
+                .apply { builder() }
+        )
     )
 
     @KPrefMarker
@@ -149,8 +161,10 @@ class KPrefAdapterBuilder(val globalOptions: GlobalOptions) {
         setter: KPrefItemActions.(value: Int) -> Unit,
         builder: KPrefTimePicker.KPrefTimeContract.() -> Unit = {}
     ) = list.add(
-        KPrefTimePicker(KPrefTimePicker.KPrefTimeBuilder(globalOptions, title, getter, setter)
-            .apply { builder() })
+        KPrefTimePicker(
+            KPrefTimePicker.KPrefTimeBuilder(globalOptions, title, getter, setter)
+                .apply { builder() }
+        )
     )
 
     @KPrefMarker

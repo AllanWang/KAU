@@ -574,10 +574,12 @@ class MainActivity : KPrefActivity() {
         /**
          * This is how the setup looks like with all the proper tags
          */
-        checkbox(title = R.string.checkbox_1, getter = pref::check1, setter = { pref.check1 = it },
+        checkbox(
+            title = R.string.checkbox_1, getter = pref::check1, setter = { pref.check1 = it },
             builder = {
                 descRes = R.string.desc
-            })
+            }
+        )
 
         /**
          * Since we know the order, we may omit the tags
@@ -585,7 +587,8 @@ class MainActivity : KPrefActivity() {
         checkbox(
             R.string.checkbox_2,
             pref::check2,
-            { pref.check2 = it; reloadByTitle(R.string.checkbox_3) })
+            { pref.check2 = it; reloadByTitle(R.string.checkbox_3) }
+        )
 
         /**
          * Since the builder is the last argument and is a lambda, we may write the setup cleanly like so:
@@ -601,19 +604,25 @@ class MainActivity : KPrefActivity() {
             allowCustom = true
         }
 
-        colorPicker(R.string.accent_color, pref::accentColor, {
-            pref.accentColor = it
-            reload()
-            this@MainActivity.navigationBarColor = it
-            toolbarCanvas.ripple(it, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500L)
-        }) {
+        colorPicker(
+            R.string.accent_color, pref::accentColor,
+            {
+                pref.accentColor = it
+                reload()
+                this@MainActivity.navigationBarColor = it
+                toolbarCanvas.ripple(it, RippleCanvas.MIDDLE, RippleCanvas.END, duration = 500L)
+            }
+        ) {
             descRes = R.string.color_no_custom
             allowCustom = false
         }
 
-        colorPicker(R.string.background_color, pref::bgColor, {
-            pref.bgColor = it; bgCanvas.ripple(it, duration = 500L)
-        }) {
+        colorPicker(
+            R.string.background_color, pref::bgColor,
+            {
+                pref.bgColor = it; bgCanvas.ripple(it, duration = 500L)
+            }
+        ) {
             iicon = GoogleMaterial.Icon.gmd_colorize
             descRes = R.string.color_custom_alpha
             allowCustomAlpha = true
@@ -663,9 +672,11 @@ class MainActivity : KPrefActivity() {
 
         plainText(R.string.adapter_showcase) {
             onClick = {
-                startActivity<AdapterActivity>(bundleBuilder = {
-                    withSceneTransitionAnimation(this@MainActivity)
-                })
+                startActivity<AdapterActivity>(
+                    bundleBuilder = {
+                        withSceneTransitionAnimation(this@MainActivity)
+                    }
+                )
             }
         }
 
@@ -682,7 +693,8 @@ class MainActivity : KPrefActivity() {
         checkbox(
             R.string.checkbox_2,
             pref::check2,
-            { pref.check2 = it; reloadByTitle(R.string.checkbox_3) }) {
+            { pref.check2 = it; reloadByTitle(R.string.checkbox_3) }
+        ) {
             titleFun = { R.string.checkbox_3 }
             descRes = R.string.kau_lorem_ipsum
         }

@@ -39,7 +39,8 @@ import com.mikepenz.fastadapter.listeners.EventHook
  * Created by Allan Wang on 2017-07-03.
  */
 class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox.ViewHolder>(
-    R.layout.permission_checkbox, { ViewHolder(it) }) {
+    R.layout.permission_checkbox, { ViewHolder(it) }
+) {
 
     override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)

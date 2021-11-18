@@ -89,9 +89,11 @@ fun Int.isColorVisibleOn(
     @IntRange(from = 0L, to = 255L) minAlpha: Int = 50
 ): Boolean =
     if (Color.alpha(this) < minAlpha) false
-    else !(abs(Color.red(this) - Color.red(color)) < delta &&
-        abs(Color.green(this) - Color.green(color)) < delta &&
-        abs(Color.blue(this) - Color.blue(color)) < delta)
+    else !(
+        abs(Color.red(this) - Color.red(color)) < delta &&
+            abs(Color.green(this) - Color.green(color)) < delta &&
+            abs(Color.blue(this) - Color.blue(color)) < delta
+        )
 
 @ColorInt
 fun Context.getDisabledColor(): Int {

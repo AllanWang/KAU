@@ -101,13 +101,13 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
         aboutIndicator.setViewPager(aboutPager)
         aboutDraggableFrame.addListener(object :
                 ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
-            override fun onDragDismissed() {
-                window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
+                override fun onDragDismissed() {
+                    window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
                         .inflateTransition(if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
-                panels[currentPage].recycler?.stopScroll()
-                finishAfterTransition()
-            }
-        })
+                    panels[currentPage].recycler?.stopScroll()
+                    finishAfterTransition()
+                }
+            })
         panels.forEachIndexed { index, contract -> contract.loadItems(this@AboutActivityBase, index) }
     }
 

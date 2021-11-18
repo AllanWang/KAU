@@ -21,9 +21,9 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.annotation.TransitionRes
 import androidx.transition.AutoTransition
-import androidx.transition.Transition as SupportTransition
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
+import androidx.transition.Transition as SupportTransition
 
 /**
  * Created by Allan Wang on 2017-06-24.

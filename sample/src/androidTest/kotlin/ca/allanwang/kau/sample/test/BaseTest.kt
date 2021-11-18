@@ -16,8 +16,8 @@
 package ca.allanwang.kau.sample.test
 
 import dagger.hilt.android.testing.HiltAndroidRule
-import kotlin.test.BeforeTest
 import org.junit.Rule
+import kotlin.test.BeforeTest
 
 abstract class BaseTest {
     @Suppress("LeakingThis")

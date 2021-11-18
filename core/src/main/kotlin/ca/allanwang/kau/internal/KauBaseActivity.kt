@@ -19,10 +19,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ca.allanwang.kau.permissions.kauOnRequestPermissionsResult
 import ca.allanwang.kau.utils.ContextHelper
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Created by Allan Wang on 2017-08-01.

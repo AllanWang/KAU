@@ -15,14 +15,14 @@
  */
 package ca.allanwang.kau.kotlin
 
-import kotlin.test.assertEquals
-import kotlin.test.fail
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.fail
 
 /**
  * Tests geared towards coroutines

@@ -37,9 +37,11 @@ import com.mikepenz.fastadapter.select.getSelectExtension
 /**
  * Created by Allan Wang on 2017-08-02.
  */
-class FaqIItem(val content: FaqItem) : KauIItem<FaqIItem.ViewHolder>(
-    R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq
-), ThemableIItem by ThemableIItemDelegate() {
+class FaqIItem(val content: FaqItem) :
+    KauIItem<FaqIItem.ViewHolder>(
+        R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq
+    ),
+    ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {

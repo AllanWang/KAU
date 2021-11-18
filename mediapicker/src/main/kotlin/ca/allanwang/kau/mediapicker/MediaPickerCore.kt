@@ -50,9 +50,9 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.iconics.dsl.iconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
+import kotlinx.coroutines.CancellationException
 import java.io.File
 import kotlin.math.min
-import kotlinx.coroutines.CancellationException
 
 /**
  * Created by Allan Wang on 2017-07-23.
@@ -324,11 +324,13 @@ abstract class MediaPickerCore<T : GenericItem>(
         } else if (data != null) {
             val clip = data.clipData
             if (clip != null) {
-                items.addAll((0 until clip.itemCount).map {
-                    clip.getItemAt(it).uri.apply {
-                        KL.v { "Media picker clip uri $path" }
+                items.addAll(
+                    (0 until clip.itemCount).map {
+                        clip.getItemAt(it).uri.apply {
+                            KL.v { "Media picker clip uri $path" }
+                        }
                     }
-                })
+                )
             }
         }
         if (items.isEmpty()) return KL.d { "Media picker empty intent" }

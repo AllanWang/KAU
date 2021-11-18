@@ -33,7 +33,8 @@ import java.util.Locale
  */
 open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<Int>(builder) {
 
-    interface KPrefTimeContract : KPrefText.KPrefTextContract<Int>,
+    interface KPrefTimeContract :
+        KPrefText.KPrefTextContract<Int>,
         TimePickerDialog.OnTimeSetListener {
         var use24HourFormat: Boolean
     }

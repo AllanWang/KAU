@@ -48,7 +48,8 @@ class CardIItem(
     val builder: Config.() -> Unit = {}
 ) : KauIItem< CardIItem.ViewHolder>(
     R.layout.kau_iitem_card, ::ViewHolder, R.id.kau_item_card
-), ThemableIItem by ThemableIItemDelegate() {
+),
+    ThemableIItem by ThemableIItemDelegate() {
 
     companion object {
         fun bindClickEvents(fastAdapter: FastAdapter<GenericItem>) {
