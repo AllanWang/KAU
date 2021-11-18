@@ -10,10 +10,10 @@ object Versions {
     val java = JavaVersion.VERSION_1_8
 
     // https://mvnrepository.com/artifact/androidx.appcompat/appcompat?repo=google
-    const val appcompat = "1.4.0-beta01"
+    const val appcompat = "1.4.0-rc01"
 
     // https://mvnrepository.com/artifact/com.google.android.material/material
-    const val googleMaterial = "1.4.0"
+    const val googleMaterial = "1.5.0-beta01"
 
     // https://mvnrepository.com/artifact/androidx.recyclerview/recyclerview
     const val recyclerView = "1.2.0"
@@ -28,10 +28,10 @@ object Versions {
     const val constraintLayout = "2.1.1"
 
     // https://mvnrepository.com/artifact/androidx.core/core-ktx
-    const val coreKtx = "1.7.0-rc01"
+    const val coreKtx = "1.7.0"
 
     // https://kotlinlang.org/docs/reference/using-gradle.html
-    const val kotlin = "1.5.31"
+    const val kotlin = "1.6.0"
 
     // https://github.com/Kotlin/kotlinx.coroutines/releases
     const val coroutines = "1.5.2"
@@ -81,22 +81,22 @@ object Versions {
     const val testRules = "1.4.0"
 
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
-    const val spotless = "5.14.3"
+    const val spotless = "5.15.0"
 
     // https://github.com/pinterest/ktlint/releases
     const val ktlint = "0.41.0"
 
     // https://github.com/bugsnag/bugsnag-android/releases
-    const val bugsnag = "5.14.0"
+    const val bugsnag = "5.15.0"
 
     // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
     const val bugsnagPlugin = "7.1.0"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
-    const val gradlePlugin = "7.1.0-beta01"
+    const val gradlePlugin = "7.1.0-beta03"
 
     // https://github.com/Triple-T/gradle-play-publisher/releases
-    const val playPublishPlugin = "3.5.0-agp7.0"
+    const val playPublishPlugin = "3.6.0"
 
     // https://github.com/KeepSafe/dexcount-gradle-plugin/releases
     const val dexCountPlugin = "3.0.1"
