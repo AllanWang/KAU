@@ -35,76 +35,72 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.listeners.EventHook
 
-/**
- * Created by Allan Wang on 2017-07-03.
- */
-class PermissionCheckbox(val permission: String) : KauIItem<PermissionCheckbox.ViewHolder>(
-    R.layout.permission_checkbox, { ViewHolder(it) }
-) {
+/** Created by Allan Wang on 2017-07-03. */
+class PermissionCheckbox(val permission: String) :
+    KauIItem<PermissionCheckbox.ViewHolder>(R.layout.permission_checkbox, { ViewHolder(it) }) {
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
-        super.bindView(holder, payloads)
-        holder.text.text = permission
-        holder.checkbox.isChecked = holder.itemView.context.hasPermission(permission)
-        holder.checkbox.isClickable = false
-        holder.checkbox.jumpDrawablesToCurrentState() // Cancel the animation
-    }
+  override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    super.bindView(holder, payloads)
+    holder.text.text = permission
+    holder.checkbox.isChecked = holder.itemView.context.hasPermission(permission)
+    holder.checkbox.isClickable = false
+    holder.checkbox.jumpDrawablesToCurrentState() // Cancel the animation
+  }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val text: TextView = v.findViewById(R.id.perm_text)
-        val checkbox: CheckBox = v.findViewById(R.id.perm_checkbox)
-    }
+  class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    val text: TextView = v.findViewById(R.id.perm_text)
+    val checkbox: CheckBox = v.findViewById(R.id.perm_checkbox)
+  }
 }
 
 data class PermissionCheckboxModel(val permission: String) : VhModel {
-    override fun vh(): GenericItem = PermissionCheckboxViewBinding(this)
+  override fun vh(): GenericItem = PermissionCheckboxViewBinding(this)
 }
 
-class PermissionCheckboxViewBinding(
-    override val data: PermissionCheckboxModel
-) : BindingItem<PermissionCheckboxBinding>(data),
+class PermissionCheckboxViewBinding(override val data: PermissionCheckboxModel) :
+    BindingItem<PermissionCheckboxBinding>(data),
     BindingLayout<PermissionCheckboxBinding> by Companion {
 
-    override fun createBinding(
-        layoutInflater: LayoutInflater,
-        parent: ViewGroup?
-    ): PermissionCheckboxBinding =
-        PermissionCheckboxBinding.inflate(layoutInflater, parent, false)
+  override fun createBinding(
+      layoutInflater: LayoutInflater,
+      parent: ViewGroup?
+  ): PermissionCheckboxBinding = PermissionCheckboxBinding.inflate(layoutInflater, parent, false)
 
-    override fun PermissionCheckboxBinding.bindView(
-        holder: ViewHolder,
-        payloads: List<Any>
-    ) {
-        permText.text = data.permission
-        permCheckbox.apply {
-            isChecked = holder.itemView.context.hasPermission(data.permission)
-            isFocusable = false
-            isClickable = false
-            jumpDrawablesToCurrentState() // Cancel the animation
-        }
+  override fun PermissionCheckboxBinding.bindView(holder: ViewHolder, payloads: List<Any>) {
+    permText.text = data.permission
+    permCheckbox.apply {
+      isChecked = holder.itemView.context.hasPermission(data.permission)
+      isFocusable = false
+      isClickable = false
+      jumpDrawablesToCurrentState() // Cancel the animation
     }
+  }
 
-    companion object : BindingLayout<PermissionCheckboxBinding> {
-        override val layoutRes: Int
-            get() = R.layout.permission_checkbox
+  companion object : BindingLayout<PermissionCheckboxBinding> {
+    override val layoutRes: Int
+      get() = R.layout.permission_checkbox
 
-        fun clickHook(): EventHook<PermissionCheckboxViewBinding> = object : BindingClickEventHook<PermissionCheckboxBinding, PermissionCheckboxViewBinding>(this) {
-            override fun PermissionCheckboxBinding.onBind(viewHolder: RecyclerView.ViewHolder): View? = root
+    fun clickHook(): EventHook<PermissionCheckboxViewBinding> =
+        object :
+            BindingClickEventHook<PermissionCheckboxBinding, PermissionCheckboxViewBinding>(this) {
+          override fun PermissionCheckboxBinding.onBind(
+              viewHolder: RecyclerView.ViewHolder
+          ): View? = root
 
-            override fun PermissionCheckboxBinding.onClick(
-                v: View,
-                position: Int,
-                fastAdapter: FastAdapter<PermissionCheckboxViewBinding>,
-                item: PermissionCheckboxViewBinding
-            ) {
-                KL.d { "Perm Click" }
-                with(v.context) {
-                    kauRequestPermissions(item.data.permission) { granted, _ ->
-                        toast("${item.data.permission} enabled: $granted")
-                        fastAdapter.notifyAdapterDataSetChanged()
-                    }
-                }
+          override fun PermissionCheckboxBinding.onClick(
+              v: View,
+              position: Int,
+              fastAdapter: FastAdapter<PermissionCheckboxViewBinding>,
+              item: PermissionCheckboxViewBinding
+          ) {
+            KL.d { "Perm Click" }
+            with(v.context) {
+              kauRequestPermissions(item.data.permission) { granted, _ ->
+                toast("${item.data.permission} enabled: $granted")
+                fastAdapter.notifyAdapterDataSetChanged()
+              }
             }
+          }
         }
-    }
+  }
 }

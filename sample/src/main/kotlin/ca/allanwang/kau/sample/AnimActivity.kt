@@ -34,49 +34,35 @@ import javax.inject.Inject
 /**
  * Created by Allan Wang on 2017-06-12.
  *
- * Activity for animations
- * Now also showcases permissions
+ * Activity for animations Now also showcases permissions
  */
 @AndroidEntryPoint
 class AnimActivity : KauBaseActivity() {
 
-    @Inject
-    lateinit var pref: KPrefSample
+  @Inject lateinit var pref: KPrefSample
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val adapter = SingleFastAdapter()
-        setContentView(
-            fullLinearRecycler(adapter).apply {
-                setBackgroundColor(
-                    pref.bgColor.withAlpha(255)
-                )
-            }
-        )
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    val adapter = SingleFastAdapter()
+    setContentView(
+        fullLinearRecycler(adapter).apply { setBackgroundColor(pref.bgColor.withAlpha(255)) })
 
-        adapter.add(
-            listOf(
+    adapter.add(
+        listOf(
                 PERMISSION_ACCESS_COARSE_LOCATION,
                 PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_CAMERA
-            ).map { PermissionCheckboxModel(it).vh() }
-        )
-        adapter.addEventHook(PermissionCheckboxViewBinding.clickHook())
-        kauSwipeOnCreate {
-            edgeFlag = SWIPE_EDGE_LEFT
-        }
-    }
+                PERMISSION_CAMERA)
+            .map { PermissionCheckboxModel(it).vh() })
+    adapter.addEventHook(PermissionCheckboxViewBinding.clickHook())
+    kauSwipeOnCreate { edgeFlag = SWIPE_EDGE_LEFT }
+  }
 
-    override fun onDestroy() {
-        kauSwipeOnDestroy()
-        super.onDestroy()
-    }
+  override fun onDestroy() {
+    kauSwipeOnDestroy()
+    super.onDestroy()
+  }
 
-    override fun onBackPressed() {
-        startActivity<MainActivity>(
-            bundleBuilder = {
-                withSlideOut(this@AnimActivity)
-            }
-        )
-    }
+  override fun onBackPressed() {
+    startActivity<MainActivity>(bundleBuilder = { withSlideOut(this@AnimActivity) })
+  }
 }

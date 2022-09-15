@@ -24,16 +24,16 @@ import android.view.MenuItem
  */
 interface SearchViewHolder {
 
-    var searchView: SearchView?
+  var searchView: SearchView?
 
-    fun searchViewBindIfNull(binder: () -> SearchView) {
-        if (searchView == null) searchView = binder()
-    }
+  fun searchViewBindIfNull(binder: () -> SearchView) {
+    if (searchView == null) searchView = binder()
+  }
 
-    fun searchViewOnBackPress() = searchView?.onBackPressed() ?: false
+  fun searchViewOnBackPress() = searchView?.onBackPressed() ?: false
 
-    fun searchViewUnBind(replacementMenuItemClickListener: ((item: MenuItem) -> Boolean)? = null) {
-        searchView?.unBind(replacementMenuItemClickListener)
-        searchView = null
-    }
+  fun searchViewUnBind(replacementMenuItemClickListener: ((item: MenuItem) -> Boolean)? = null) {
+    searchView?.unBind(replacementMenuItemClickListener)
+    searchView = null
+  }
 }

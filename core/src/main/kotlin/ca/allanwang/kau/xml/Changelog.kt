@@ -41,76 +41,73 @@ import org.xmlpull.v1.XmlPullParser
  * Easy changelog loader
  */
 fun Context.showChangelog(@XmlRes xmlRes: Int, customize: MaterialDialog.() -> Unit = {}) {
-    ctxCoroutine.launch(Dispatchers.Main) {
-        val items = withContext(Dispatchers.IO) { parse(this@showChangelog, xmlRes) }
-        materialDialog {
-            title(R.string.kau_changelog)
-            positiveButton(R.string.kau_great)
-            customListAdapter(ChangelogAdapter(items), null)
-            customize()
-        }
+  ctxCoroutine.launch(Dispatchers.Main) {
+    val items = withContext(Dispatchers.IO) { parse(this@showChangelog, xmlRes) }
+    materialDialog {
+      title(R.string.kau_changelog)
+      positiveButton(R.string.kau_great)
+      customListAdapter(ChangelogAdapter(items), null)
+      customize()
     }
+  }
 }
 
 /**
- * Internals of the changelog dialog
- * Contains an mainAdapter for each item, as well as the tags to parse
+ * Internals of the changelog dialog Contains an mainAdapter for each item, as well as the tags to
+ * parse
  */
 internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>) :
     RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ChangelogVH(
-        LayoutInflater.from(parent.context)
-            .inflate(items[viewType].second.layout, parent, false)
-    )
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+      ChangelogVH(
+          LayoutInflater.from(parent.context).inflate(items[viewType].second.layout, parent, false))
 
-    override fun onBindViewHolder(holder: ChangelogVH, position: Int) {
-        holder.text.text = items[position].first
-    }
+  override fun onBindViewHolder(holder: ChangelogVH, position: Int) {
+    holder.text.text = items[position].first
+  }
 
-    override fun getItemId(position: Int) = position.toLong()
+  override fun getItemId(position: Int) = position.toLong()
 
-    override fun getItemViewType(position: Int) = position
+  override fun getItemViewType(position: Int) = position
 
-    override fun getItemCount() = items.size
+  override fun getItemCount() = items.size
 
-    internal class ChangelogVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val text: TextView = itemView.findViewById(R.id.kau_changelog_text)
-    }
+  internal class ChangelogVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val text: TextView = itemView.findViewById(R.id.kau_changelog_text)
+  }
 }
 
 internal fun parse(context: Context, @XmlRes xmlRes: Int): List<Pair<String, ChangelogType>> {
-    val items = mutableListOf<Pair<String, ChangelogType>>()
-    context.resources.getXml(xmlRes).use { parser: XmlResourceParser ->
-        var eventType = parser.eventType
-        while (eventType != XmlPullParser.END_DOCUMENT) {
-            if (eventType == XmlPullParser.START_TAG) {
-                ChangelogType.values.any { it.add(parser, items) }
-            }
-            eventType = parser.next()
-        }
+  val items = mutableListOf<Pair<String, ChangelogType>>()
+  context.resources.getXml(xmlRes).use { parser: XmlResourceParser ->
+    var eventType = parser.eventType
+    while (eventType != XmlPullParser.END_DOCUMENT) {
+      if (eventType == XmlPullParser.START_TAG) {
+        ChangelogType.values.any { it.add(parser, items) }
+      }
+      eventType = parser.next()
     }
-    return items
+  }
+  return items
 }
 
 internal enum class ChangelogType(val tag: String, val attr: String, @LayoutRes val layout: Int) {
-    TITLE("version", "title", R.layout.kau_changelog_title),
-    ITEM("item", "text", R.layout.kau_changelog_content);
+  TITLE("version", "title", R.layout.kau_changelog_title),
+  ITEM("item", "text", R.layout.kau_changelog_content);
 
-    companion object {
-        val values = values()
-    }
+  companion object {
+    val values = values()
+  }
 
-    /**
-     * Returns true if tag matches; false otherwise
-     */
-    fun add(parser: XmlResourceParser, list: MutableList<Pair<String, ChangelogType>>): Boolean {
-        if (parser.name != tag) {
-            return false
-        }
-        if (parser.getAttributeValue(null, attr).isNotBlank()) {
-            list.add(Pair(parser.getAttributeValue(null, attr), this))
-        }
-        return true
+  /** Returns true if tag matches; false otherwise */
+  fun add(parser: XmlResourceParser, list: MutableList<Pair<String, ChangelogType>>): Boolean {
+    if (parser.name != tag) {
+      return false
     }
+    if (parser.getAttributeValue(null, attr).isNotBlank()) {
+      list.add(Pair(parser.getAttributeValue(null, attr), this))
+    }
+    return true
+  }
 }

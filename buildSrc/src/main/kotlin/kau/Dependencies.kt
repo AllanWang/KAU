@@ -45,8 +45,10 @@ object Dependencies {
 
     @JvmField
     val kotlin = kotlin("stdlib")
+
     @JvmField
     val kotlinTest = kotlin("test-junit")
+
     @JvmField
     val kotlinReflect = kotlin("reflect")
 
@@ -70,7 +72,8 @@ object Dependencies {
 
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appcompat}"
     const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
-    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
+    const val swipeRefreshLayout =
+        "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
     const val cardView = "androidx.cardview:cardview:${Versions.cardView}"
     const val constraintLayout =
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
@@ -102,6 +105,7 @@ object Dependencies {
     val materialDialog = materialDialog("core")
 
     const val fastAdapter = "com.mikepenz:fastadapter:${Versions.fastAdapter}"
+
     @JvmStatic
     fun fastAdapter(type: String) =
         "com.mikepenz:fastadapter-extensions-$type:${Versions.fastAdapter}"

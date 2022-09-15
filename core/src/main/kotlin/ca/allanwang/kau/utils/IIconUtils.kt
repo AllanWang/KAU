@@ -23,18 +23,18 @@ import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.iconics.dsl.iconicsDrawable
 import com.mikepenz.iconics.typeface.IIcon
 
-/**
- * Created by Allan Wang on 2017-05-29.
- */
+/** Created by Allan Wang on 2017-05-29. */
 @KauUtils
 fun IIcon.toDrawable(
     c: Context,
     sizeDp: Int = 24,
     @ColorInt color: Int = Color.WHITE,
     builder: IconicsDrawable.() -> Unit = {}
-): Drawable = c.iconicsDrawable(this) {
-    this.color = colorInt(color)
-    if (sizeDp > 0) {
-        size = sizeDp(sizeDp)
-    }
-}.apply(builder)
+): Drawable =
+    c.iconicsDrawable(this) {
+          this.color = colorInt(color)
+          if (sizeDp > 0) {
+            size = sizeDp(sizeDp)
+          }
+        }
+        .apply(builder)

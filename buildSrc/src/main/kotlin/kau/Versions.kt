@@ -83,8 +83,8 @@ object Versions {
     // https://github.com/diffplug/spotless/blob/master/plugin-gradle/CHANGES.md
     const val spotless = "6.11.0"
 
-    // https://github.com/pinterest/ktlint/releases
-    const val ktlint = "0.41.0"
+    // https://github.com/facebookincubator/ktfmt/releases
+    const val ktfmt = "0.40"
 
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     const val gradlePlugin = "7.3.0-rc01"

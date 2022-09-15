@@ -34,77 +34,76 @@ import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.listeners.ClickEventHook
 import com.mikepenz.fastadapter.select.getSelectExtension
 
-/**
- * Created by Allan Wang on 2017-08-02.
- */
+/** Created by Allan Wang on 2017-08-02. */
 class FaqIItem(val content: FaqItem) :
-    KauIItem<FaqIItem.ViewHolder>(
-        R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq
-    ),
+    KauIItem<FaqIItem.ViewHolder>(R.layout.kau_iitem_faq, ::ViewHolder, R.id.kau_item_faq),
     ThemableIItem by ThemableIItemDelegate() {
 
-    companion object {
-        fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
-            fastAdapter.getSelectExtension().isSelectable = true
-            fastAdapter.addEventHook(object : ClickEventHook<GenericItem>() {
+  companion object {
+    fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
+      fastAdapter.getSelectExtension().isSelectable = true
+      fastAdapter.addEventHook(
+          object : ClickEventHook<GenericItem>() {
 
-                override fun onBind(viewHolder: RecyclerView.ViewHolder): View? =
-                    (viewHolder as? ViewHolder)?.questionContainer
+            override fun onBind(viewHolder: RecyclerView.ViewHolder): View? =
+                (viewHolder as? ViewHolder)?.questionContainer
 
-                override fun onClick(
-                    v: View,
-                    position: Int,
-                    fastAdapter: FastAdapter<GenericItem>,
-                    item: GenericItem
-                ) {
-                    if (item !is FaqIItem) return
-                    item.isExpanded = !item.isExpanded
-                    v.parentViewGroup.findViewById<CollapsibleTextView>(R.id.faq_item_answer)
-                        .setExpanded(item.isExpanded)
-                }
-            })
-        }
+            override fun onClick(
+                v: View,
+                position: Int,
+                fastAdapter: FastAdapter<GenericItem>,
+                item: GenericItem
+            ) {
+              if (item !is FaqIItem) return
+              item.isExpanded = !item.isExpanded
+              v.parentViewGroup
+                  .findViewById<CollapsibleTextView>(R.id.faq_item_answer)
+                  .setExpanded(item.isExpanded)
+            }
+          })
     }
+  }
 
-    private var isExpanded = false
+  private var isExpanded = false
 
-    @SuppressLint("SetTextI18n")
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
-        super.bindView(holder, payloads)
-        with(holder) {
-            number.text = "${content.number}."
-            question.text = content.question
-            answer.setExpanded(isExpanded, false)
-            if (accentColor != null) answer.setLinkTextColor(accentColor!!)
-            answer.text = content.answer
-            answer.post { answer.setPaddingLeft(16.dpToPx + number.width) } // TODO not performant at all; and doesn't align across all items
-            bindTextColor(number, question)
-            bindTextColorSecondary(answer)
-            val bg2 = backgroundColor?.colorToForeground(0.1f)
-            if (bg2 != null)
-                answer.setBackgroundColor(bg2)
-            bindBackgroundRipple(questionContainer)
-        }
+  @SuppressLint("SetTextI18n")
+  override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    super.bindView(holder, payloads)
+    with(holder) {
+      number.text = "${content.number}."
+      question.text = content.question
+      answer.setExpanded(isExpanded, false)
+      if (accentColor != null) answer.setLinkTextColor(accentColor!!)
+      answer.text = content.answer
+      answer.post {
+        answer.setPaddingLeft(16.dpToPx + number.width)
+      } // TODO not performant at all; and doesn't align across all items
+      bindTextColor(number, question)
+      bindTextColorSecondary(answer)
+      val bg2 = backgroundColor?.colorToForeground(0.1f)
+      if (bg2 != null) answer.setBackgroundColor(bg2)
+      bindBackgroundRipple(questionContainer)
     }
+  }
 
-    override fun unbindView(holder: ViewHolder) {
-        super.unbindView(holder)
-        with(holder) {
-            number.text = null
-            question.text = null
-            answer.text = null
-        }
+  override fun unbindView(holder: ViewHolder) {
+    super.unbindView(holder)
+    with(holder) {
+      number.text = null
+      question.text = null
+      answer.text = null
     }
+  }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val container: ViewGroup = v.findViewById(R.id.faq_item)
-        val questionContainer: ViewGroup = v.findViewById(R.id.faq_item_question_container)
-        val number: TextView = v.findViewById(R.id.faq_item_number)
-        val question: TextView = v.findViewById(R.id.faq_item_question)
-        val answer: CollapsibleTextView = v.findViewById(R.id.faq_item_answer)
+  class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    val container: ViewGroup = v.findViewById(R.id.faq_item)
+    val questionContainer: ViewGroup = v.findViewById(R.id.faq_item_question_container)
+    val number: TextView = v.findViewById(R.id.faq_item_number)
+    val question: TextView = v.findViewById(R.id.faq_item_question)
+    val answer: CollapsibleTextView = v.findViewById(R.id.faq_item_answer)
 
-        init {
-            answer.movementMethod = LinkMovementMethod.getInstance()
-        }
+    init {
+      answer.movementMethod = LinkMovementMethod.getInstance()
     }
+  }
 }

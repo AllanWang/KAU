@@ -20,19 +20,19 @@ import ca.allanwang.kau.kpref.activity.R
 /**
  * Created by Allan Wang on 2017-06-07.
  *
- * Header preference
- * This view just holds a title and is not clickable. It is styled using the accent color
+ * Header preference This view just holds a title and is not clickable. It is styled using the
+ * accent color
  */
 open class KPrefHeader(builder: CoreContract) : KPrefItemCore(builder) {
 
-    override val layoutRes: Int
-        get() = R.layout.kau_pref_header
+  override val layoutRes: Int
+    get() = R.layout.kau_pref_header
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
-        super.bindView(holder, payloads)
-        withAccentColor(holder.title::setTextColor)
-    }
+  override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    super.bindView(holder, payloads)
+    withAccentColor(holder.title::setTextColor)
+  }
 
-    override val type: Int
-        get() = R.id.kau_item_pref_header
+  override val type: Int
+    get() = R.id.kau_item_pref_header
 }

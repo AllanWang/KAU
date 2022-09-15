@@ -23,35 +23,30 @@ import ca.allanwang.kau.kpref.activity.R
 /**
  * Created by Allan Wang on 2017-06-14.
  *
- * Sub item preference
- * When clicked, will navigate to a new set of preferences and add the old list to a stack
- *
+ * Sub item preference When clicked, will navigate to a new set of preferences and add the old list
+ * to a stack
  */
 open class KPrefSubItems(open val builder: KPrefSubItemsContract) : KPrefItemCore(builder) {
 
-    override fun onClick(itemView: View) {
-        builder.globalOptions.showNextPrefs(builder.titleFun(), builder.itemBuilder)
-    }
+  override fun onClick(itemView: View) {
+    builder.globalOptions.showNextPrefs(builder.titleFun(), builder.itemBuilder)
+  }
 
-    override val layoutRes: Int
-        get() = R.layout.kau_pref_core
+  override val layoutRes: Int
+    get() = R.layout.kau_pref_core
 
-    /**
-     * Extension of the base contract with an optional text getter
-     */
-    interface KPrefSubItemsContract : CoreContract {
-        val itemBuilder: KPrefAdapterBuilder.() -> Unit
-    }
+  /** Extension of the base contract with an optional text getter */
+  interface KPrefSubItemsContract : CoreContract {
+    val itemBuilder: KPrefAdapterBuilder.() -> Unit
+  }
 
-    /**
-     * Default implementation of [KPrefTextContract]
-     */
-    class KPrefSubItemsBuilder(
-        globalOptions: GlobalOptions,
-        titleId: Int,
-        override val itemBuilder: KPrefAdapterBuilder.() -> Unit
-    ) : KPrefSubItemsContract, CoreContract by CoreBuilder(globalOptions, titleId)
+  /** Default implementation of [KPrefTextContract] */
+  class KPrefSubItemsBuilder(
+      globalOptions: GlobalOptions,
+      titleId: Int,
+      override val itemBuilder: KPrefAdapterBuilder.() -> Unit
+  ) : KPrefSubItemsContract, CoreContract by CoreBuilder(globalOptions, titleId)
 
-    override val type: Int
-        get() = R.id.kau_item_pref_sub_item
+  override val type: Int
+    get() = R.id.kau_item_pref_sub_item
 }

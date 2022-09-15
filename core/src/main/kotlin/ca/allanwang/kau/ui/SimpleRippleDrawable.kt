@@ -29,9 +29,12 @@ import ca.allanwang.kau.utils.adjustAlpha
  * Tries to mimic a standard ripple, given the foreground and background colors
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-fun createSimpleRippleDrawable(@ColorInt foregroundColor: Int, @ColorInt backgroundColor: Int): RippleDrawable {
-    val states = ColorStateList(arrayOf(intArrayOf()), intArrayOf(foregroundColor))
-    val content = ColorDrawable(backgroundColor)
-    val mask = ColorDrawable(foregroundColor.adjustAlpha(0.16f))
-    return RippleDrawable(states, content, mask)
+fun createSimpleRippleDrawable(
+    @ColorInt foregroundColor: Int,
+    @ColorInt backgroundColor: Int
+): RippleDrawable {
+  val states = ColorStateList(arrayOf(intArrayOf()), intArrayOf(foregroundColor))
+  val content = ColorDrawable(backgroundColor)
+  val mask = ColorDrawable(foregroundColor.adjustAlpha(0.16f))
+  return RippleDrawable(states, content, mask)
 }

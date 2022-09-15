@@ -28,61 +28,57 @@ import com.afollestad.materialdialogs.MaterialDialog
 /**
  * Created by Allan Wang on 2017-06-07.
  *
- * ColorPicker preference
- * When a color is successfully selected in the dialog, it will be saved as an int
+ * ColorPicker preference When a color is successfully selected in the dialog, it will be saved as
+ * an int
  */
 open class KPrefColorPicker(open val builder: KPrefColorContract) : KPrefItemBase<Int>(builder) {
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
-        super.bindView(holder, payloads)
-        if (builder.showPreview) {
-            val preview = holder.bindInnerView<CircleView>(R.layout.kau_pref_color)
-            preview.setBackgroundColor(pref)
-            preview.withBorder = true
-            builder.callback = { _, color ->
-                pref = color
-                if (builder.showPreview)
-                    preview.setBackgroundColor(color)
-                holder.updateTitle()
-                holder.updateDesc()
-            }
-        } else {
-            builder.callback = { _, color -> pref = color }
-        }
+  override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    super.bindView(holder, payloads)
+    if (builder.showPreview) {
+      val preview = holder.bindInnerView<CircleView>(R.layout.kau_pref_color)
+      preview.setBackgroundColor(pref)
+      preview.withBorder = true
+      builder.callback = { _, color ->
+        pref = color
+        if (builder.showPreview) preview.setBackgroundColor(color)
+        holder.updateTitle()
+        holder.updateDesc()
+      }
+    } else {
+      builder.callback = { _, color -> pref = color }
     }
+  }
 
-    override fun KClick<Int>.defaultOnClick() {
-        builder.defaultColor = pref
-        MaterialDialog(context).show {
-            kauColorChooser(builder)
-            builder.dialogBuilder(this)
-            title(core.titleFun())
-        }
+  override fun KClick<Int>.defaultOnClick() {
+    builder.defaultColor = pref
+    MaterialDialog(context).show {
+      kauColorChooser(builder)
+      builder.dialogBuilder(this)
+      title(core.titleFun())
     }
+  }
 
-    /**
-     * Extension of the base contract and [ColorContract] along with a showPreview option
-     */
-    interface KPrefColorContract : BaseContract<Int>, ColorContract {
-        var showPreview: Boolean
-        var dialogBuilder: MaterialDialog.() -> Unit
-    }
+  /** Extension of the base contract and [ColorContract] along with a showPreview option */
+  interface KPrefColorContract : BaseContract<Int>, ColorContract {
+    var showPreview: Boolean
+    var dialogBuilder: MaterialDialog.() -> Unit
+  }
 
-    /**
-     * Default implementation of [KPrefColorContract]
-     */
-    class KPrefColorBuilder(
-        globalOptions: GlobalOptions,
-        titleId: Int,
-        getter: () -> Int,
-        setter: KPrefItemActions.(value: Int) -> Unit
-    ) : KPrefColorContract,
-        BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter),
-        ColorContract by ColorBuilder() {
-        override var showPreview: Boolean = true
-        override var dialogBuilder: MaterialDialog.() -> Unit = {}
-    }
+  /** Default implementation of [KPrefColorContract] */
+  class KPrefColorBuilder(
+      globalOptions: GlobalOptions,
+      titleId: Int,
+      getter: () -> Int,
+      setter: KPrefItemActions.(value: Int) -> Unit
+  ) :
+      KPrefColorContract,
+      BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter),
+      ColorContract by ColorBuilder() {
+    override var showPreview: Boolean = true
+    override var dialogBuilder: MaterialDialog.() -> Unit = {}
+  }
 
-    override val type: Int
-        get() = R.id.kau_item_pref_color_picker
+  override val type: Int
+    get() = R.id.kau_item_pref_color_picker
 }

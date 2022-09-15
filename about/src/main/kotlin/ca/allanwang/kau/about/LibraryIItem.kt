@@ -32,84 +32,80 @@ import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.select.getSelectExtension
 
-/**
- * Created by Allan Wang on 2017-06-27.
- */
+/** Created by Allan Wang on 2017-06-27. */
 class LibraryIItem(val lib: Library) :
     KauIItem<LibraryIItem.ViewHolder>(
-        R.layout.kau_iitem_library, ::ViewHolder, R.id.kau_item_library
-    ),
+        R.layout.kau_iitem_library, ::ViewHolder, R.id.kau_item_library),
     ThemableIItem by ThemableIItemDelegate() {
 
-    companion object {
-        fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
-            fastAdapter.getSelectExtension().isSelectable = true
-            fastAdapter.onClickListener = { v, _, item, _ ->
-                if (item !is LibraryIItem) {
-                    false
-                } else {
-                    v!!.context.startLink(item.lib.website)
-                    true
-                }
-            }
+  companion object {
+    fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
+      fastAdapter.getSelectExtension().isSelectable = true
+      fastAdapter.onClickListener = { v, _, item, _ ->
+        if (item !is LibraryIItem) {
+          false
+        } else {
+          v!!.context.startLink(item.lib.website)
+          true
         }
+      }
     }
+  }
 
-    override var isSelectable: Boolean
-        get() = false
-        set(_) {}
+  override var isSelectable: Boolean
+    get() = false
+    set(_) {}
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
-        super.bindView(holder, payloads)
-        with(holder) {
-            name.text = lib.name
-            creator.text = lib.developers.mapNotNull { it.name }.joinToString()
-            @Suppress("DEPRECATION")
-            description.text = when {
-                lib.description.isNullOrBlank() -> lib.description
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
-                    lib.description,
-                    Html.FROM_HTML_MODE_LEGACY
-                )
-                else -> Html.fromHtml(lib.description)
-            }
-            bottomDivider.gone()
-            if (lib.artifactVersion?.isNotBlank() == true) {
-                bottomDivider.visible()
-                version.visible().text = lib.artifactVersion
-            }
-            if (lib.licenses.isNotEmpty()) {
-                bottomDivider.visible()
-                license.visible().text = lib.licenses.map { it.name }.sorted().joinToString()
-            }
-            bindTextColor(name, creator)
-            bindTextColorSecondary(description)
-            bindAccentColor(license, version)
-            bindDividerColor(divider, bottomDivider)
-            bindBackgroundRipple(card)
-        }
+  override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    super.bindView(holder, payloads)
+    with(holder) {
+      name.text = lib.name
+      creator.text = lib.developers.mapNotNull { it.name }.joinToString()
+      @Suppress("DEPRECATION")
+      description.text =
+          when {
+            lib.description.isNullOrBlank() -> lib.description
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ->
+                Html.fromHtml(lib.description, Html.FROM_HTML_MODE_LEGACY)
+            else -> Html.fromHtml(lib.description)
+          }
+      bottomDivider.gone()
+      if (lib.artifactVersion?.isNotBlank() == true) {
+        bottomDivider.visible()
+        version.visible().text = lib.artifactVersion
+      }
+      if (lib.licenses.isNotEmpty()) {
+        bottomDivider.visible()
+        license.visible().text = lib.licenses.map { it.name }.sorted().joinToString()
+      }
+      bindTextColor(name, creator)
+      bindTextColorSecondary(description)
+      bindAccentColor(license, version)
+      bindDividerColor(divider, bottomDivider)
+      bindBackgroundRipple(card)
     }
+  }
 
-    override fun unbindView(holder: ViewHolder) {
-        super.unbindView(holder)
-        with(holder) {
-            name.text = null
-            creator.text = null
-            description.text = null
-            bottomDivider.gone()
-            version.gone().text = null
-            license.gone().text = null
-        }
+  override fun unbindView(holder: ViewHolder) {
+    super.unbindView(holder)
+    with(holder) {
+      name.text = null
+      creator.text = null
+      description.text = null
+      bottomDivider.gone()
+      version.gone().text = null
+      license.gone().text = null
     }
+  }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val card: CardView = v.findViewById(R.id.lib_item_card)
-        val name: TextView = v.findViewById(R.id.lib_item_name)
-        val creator: TextView = v.findViewById(R.id.lib_item_author)
-        val description: TextView = v.findViewById(R.id.lib_item_description)
-        val version: TextView = v.findViewById(R.id.lib_item_version)
-        val license: TextView = v.findViewById(R.id.lib_item_license)
-        val divider: View = v.findViewById(R.id.lib_item_top_divider)
-        val bottomDivider: View = v.findViewById(R.id.lib_item_bottom_divider)
-    }
+  class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    val card: CardView = v.findViewById(R.id.lib_item_card)
+    val name: TextView = v.findViewById(R.id.lib_item_name)
+    val creator: TextView = v.findViewById(R.id.lib_item_author)
+    val description: TextView = v.findViewById(R.id.lib_item_description)
+    val version: TextView = v.findViewById(R.id.lib_item_version)
+    val license: TextView = v.findViewById(R.id.lib_item_license)
+    val divider: View = v.findViewById(R.id.lib_item_top_divider)
+    val bottomDivider: View = v.findViewById(R.id.lib_item_bottom_divider)
+  }
 }

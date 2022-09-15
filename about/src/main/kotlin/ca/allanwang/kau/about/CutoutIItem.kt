@@ -28,32 +28,30 @@ import ca.allanwang.kau.ui.views.CutoutView
  * Just a cutout item with some defaults in [R.layout.kau_iitem_cutout]
  */
 class CutoutIItem(val config: CutoutView.() -> Unit = {}) :
-    KauIItem<CutoutIItem.ViewHolder>(
-        R.layout.kau_iitem_cutout, ::ViewHolder, R.id.kau_item_cutout
-    ),
+    KauIItem<CutoutIItem.ViewHolder>(R.layout.kau_iitem_cutout, ::ViewHolder, R.id.kau_item_cutout),
     ThemableIItem by ThemableIItemDelegate() {
 
-    override var isSelectable: Boolean
-        get() = false
-        set(_) {}
+  override var isSelectable: Boolean
+    get() = false
+    set(_) {}
 
-    override fun bindView(holder: ViewHolder, payloads: List<Any>) {
-        super.bindView(holder, payloads)
-        with(holder) {
-            if (accentColor != null && themeEnabled) cutout.foregroundColor = accentColor!!
-            cutout.config()
-        }
+  override fun bindView(holder: ViewHolder, payloads: List<Any>) {
+    super.bindView(holder, payloads)
+    with(holder) {
+      if (accentColor != null && themeEnabled) cutout.foregroundColor = accentColor!!
+      cutout.config()
     }
+  }
 
-    override fun unbindView(holder: ViewHolder) {
-        super.unbindView(holder)
-        with(holder) {
-            cutout.drawable = null
-            cutout.text = "Text" // back to default
-        }
+  override fun unbindView(holder: ViewHolder) {
+    super.unbindView(holder)
+    with(holder) {
+      cutout.drawable = null
+      cutout.text = "Text" // back to default
     }
+  }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        val cutout: CutoutView = v.findViewById(R.id.kau_cutout)
-    }
+  class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    val cutout: CutoutView = v.findViewById(R.id.kau_cutout)
+  }
 }

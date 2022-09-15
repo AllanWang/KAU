@@ -23,9 +23,7 @@ import androidx.annotation.XmlRes
 import ca.allanwang.kau.utils.use
 import org.xmlpull.v1.XmlPullParser
 
-/**
- * Created by Allan Wang on 2017-07-30.
- */
+/** Created by Allan Wang on 2017-07-30. */
 
 /**
  * Parse an xml asynchronously with two tags, <question>Text</question> and <answer>Text</answer>.
@@ -34,47 +32,45 @@ import org.xmlpull.v1.XmlPullParser
 @Suppress("DEPRECATION")
 fun Context.kauParseFaq(
     @XmlRes xmlRes: Int,
-    /**
-     * If \n is used, it will automatically be converted to </br>
-     */
+    /** If \n is used, it will automatically be converted to </br> */
     parseNewLine: Boolean = true
 ): List<FaqItem> {
-    val items = mutableListOf<FaqItem>()
-    resources.getXml(xmlRes).use { parser: XmlResourceParser ->
-        var eventType = parser.eventType
-        var question: Spanned? = null
-        var flag = -1 // -1, 0, 1 -> invalid, question, answer
-        while (eventType != XmlPullParser.END_DOCUMENT) {
-            if (eventType == XmlPullParser.START_TAG) {
-                flag = when (parser.name) {
-                    "question" -> 0
-                    "answer" -> 1
-                    else -> -1
-                }
-            } else if (eventType == XmlPullParser.TEXT) {
-                when (flag) {
-                    0 -> {
-                        question = Html.fromHtml(parser.text.replace("\n", if (parseNewLine) "<br/>" else ""))
-                        flag = -1
-                    }
-                    1 -> {
-                        items.add(
-                            FaqItem(
-                                items.size + 1,
-                                question
-                                    ?: throw IllegalArgumentException("KAU FAQ answer found without a question"),
-                                Html.fromHtml(parser.text.replace("\n", if (parseNewLine) "<br/>" else ""))
-                            )
-                        )
-                        question = null
-                        flag = -1
-                    }
-                }
+  val items = mutableListOf<FaqItem>()
+  resources.getXml(xmlRes).use { parser: XmlResourceParser ->
+    var eventType = parser.eventType
+    var question: Spanned? = null
+    var flag = -1 // -1, 0, 1 -> invalid, question, answer
+    while (eventType != XmlPullParser.END_DOCUMENT) {
+      if (eventType == XmlPullParser.START_TAG) {
+        flag =
+            when (parser.name) {
+              "question" -> 0
+              "answer" -> 1
+              else -> -1
             }
-            eventType = parser.next()
+      } else if (eventType == XmlPullParser.TEXT) {
+        when (flag) {
+          0 -> {
+            question = Html.fromHtml(parser.text.replace("\n", if (parseNewLine) "<br/>" else ""))
+            flag = -1
+          }
+          1 -> {
+            items.add(
+                FaqItem(
+                    items.size + 1,
+                    question
+                        ?: throw IllegalArgumentException(
+                            "KAU FAQ answer found without a question"),
+                    Html.fromHtml(parser.text.replace("\n", if (parseNewLine) "<br/>" else ""))))
+            question = null
+            flag = -1
+          }
         }
+      }
+      eventType = parser.next()
     }
-    return items
+  }
+  return items
 }
 
 data class FaqItem(val number: Int, val question: Spanned, val answer: Spanned)

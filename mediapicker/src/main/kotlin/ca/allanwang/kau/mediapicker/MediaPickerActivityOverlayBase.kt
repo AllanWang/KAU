@@ -24,10 +24,9 @@ import ca.allanwang.kau.utils.toast
 /**
  * Created by Allan Wang on 2017-07-23.
  *
- * Base activity for selecting images from storage
- * This variant is an overlay and selects one image only before returning directly
- * It is more efficient than [MediaPickerActivityBase], as all images are one layer deep
- * as opposed to three layers deep
+ * Base activity for selecting images from storage This variant is an overlay and selects one image
+ * only before returning directly It is more efficient than [MediaPickerActivityBase], as all images
+ * are one layer deep as opposed to three layers deep
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 abstract class MediaPickerActivityOverlayBase(
@@ -35,37 +34,40 @@ abstract class MediaPickerActivityOverlayBase(
     mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItemBasic>(mediaType, mediaActions) {
 
-    private lateinit var binding: KauActivityImagePickerOverlayBinding
+  private lateinit var binding: KauActivityImagePickerOverlayBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = KauActivityImagePickerOverlayBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.init()
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = KauActivityImagePickerOverlayBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.init()
+  }
 
-    private fun KauActivityImagePickerOverlayBinding.init() {
-        initializeRecycler(kauRecyclerview)
-        MediaItemBasic.bindEvents(this@MediaPickerActivityOverlayBase, adapter.fastAdapter!!)
+  private fun KauActivityImagePickerOverlayBinding.init() {
+    initializeRecycler(kauRecyclerview)
+    MediaItemBasic.bindEvents(this@MediaPickerActivityOverlayBase, adapter.fastAdapter!!)
 
-        kauDraggable.addExitListener(this@MediaPickerActivityOverlayBase, R.transition.kau_image_exit_bottom, R.transition.kau_image_exit_top)
-        kauDraggable.setOnClickListener { finishAfterTransition() }
+    kauDraggable.addExitListener(
+        this@MediaPickerActivityOverlayBase,
+        R.transition.kau_image_exit_bottom,
+        R.transition.kau_image_exit_top)
+    kauDraggable.setOnClickListener { finishAfterTransition() }
 
-        loadItems()
-    }
+    loadItems()
+  }
 
-    override fun finishAfterTransition() {
-        binding.kauRecyclerview.stopScroll()
-        super.finishAfterTransition()
-    }
+  override fun finishAfterTransition() {
+    binding.kauRecyclerview.stopScroll()
+    super.finishAfterTransition()
+  }
 
-    override fun onStatusChange(loaded: Boolean) {
-        if (!loaded) toast(R.string.kau_no_items_loaded)
-    }
+  override fun onStatusChange(loaded: Boolean) {
+    if (!loaded) toast(R.string.kau_no_items_loaded)
+  }
 
-    override fun converter(model: MediaModel): MediaItemBasic = MediaItemBasic(model)
+  override fun converter(model: MediaModel): MediaItemBasic = MediaItemBasic(model)
 
-    override fun onBackPressed() {
-        finishAfterTransition()
-    }
+  override fun onBackPressed() {
+    finishAfterTransition()
+  }
 }

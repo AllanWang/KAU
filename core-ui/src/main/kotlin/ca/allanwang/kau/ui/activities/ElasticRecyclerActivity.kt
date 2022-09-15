@@ -29,8 +29,8 @@ import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 /**
  * Created by Allan Wang on 2017-07-17.
  *
- * A generic activity comprised of an ElasticDragDismissFrameLayout, CoordinatorLayout, Toolbar, RecyclerView, and Fab
- * [ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout]
+ * A generic activity comprised of an ElasticDragDismissFrameLayout, CoordinatorLayout, Toolbar,
+ * RecyclerView, and Fab [ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout]
  * [androidx.recyclerview.widget.RecyclerView]
  *
  * The recyclerview defaults to a linearlayoutmanager, and the adapter is automatically bounded
@@ -40,53 +40,56 @@ import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 abstract class ElasticRecyclerActivity : KauBaseActivity() {
 
-    private val configs = Configs()
+  private val configs = Configs()
 
-    private lateinit var binding: KauElasticRecyclerActivityBinding
+  private lateinit var binding: KauElasticRecyclerActivityBinding
 
-    protected val toolbar: Toolbar get() = binding.kauToolbar
-    protected val recycler: RecyclerView get() = binding.kauRecycler
+  protected val toolbar: Toolbar
+    get() = binding.kauToolbar
+  protected val recycler: RecyclerView
+    get() = binding.kauRecycler
 
-    class Configs {
-        var exitTransitionBottom = R.transition.kau_exit_slide_bottom
-        var exitTransitionTop = R.transition.kau_exit_slide_top
+  class Configs {
+    var exitTransitionBottom = R.transition.kau_exit_slide_bottom
+    var exitTransitionTop = R.transition.kau_exit_slide_top
+  }
+
+  final override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = KauElasticRecyclerActivityBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    setSupportActionBar(binding.kauToolbar)
+    if (!onCreate(savedInstanceState, configs)) {
+      return
     }
 
-    final override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = KauElasticRecyclerActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setSupportActionBar(binding.kauToolbar)
-        if (!onCreate(savedInstanceState, configs)) {
-            return
-        }
+    binding.init()
+  }
 
-        binding.init()
-    }
-
-    private fun KauElasticRecyclerActivityBinding.init() {
-        kauDraggable.addListener(object : ElasticDragDismissFrameLayout.SystemChromeFader(this@ElasticRecyclerActivity) {
-            override fun onDragDismissed() {
-                window.returnTransition = TransitionInflater.from(this@ElasticRecyclerActivity)
-                    .inflateTransition(if (kauDraggable.translationY > 0) configs.exitTransitionBottom else configs.exitTransitionTop)
-                kauRecycler.stopScroll()
-                finishAfterTransition()
-            }
+  private fun KauElasticRecyclerActivityBinding.init() {
+    kauDraggable.addListener(
+        object : ElasticDragDismissFrameLayout.SystemChromeFader(this@ElasticRecyclerActivity) {
+          override fun onDragDismissed() {
+            window.returnTransition =
+                TransitionInflater.from(this@ElasticRecyclerActivity)
+                    .inflateTransition(
+                        if (kauDraggable.translationY > 0) configs.exitTransitionBottom
+                        else configs.exitTransitionTop)
+            kauRecycler.stopScroll()
+            finishAfterTransition()
+          }
         })
-    }
+  }
 
-    /**
-     * The replacement method for the original [onCreate]
-     * The configurations are passed and can be customized here
-     * Returns true (default) if we wish to continue with the remaining optional setup
-     * Return false if we wish to skip this (usually if we have more complez requirements)
-     */
-    abstract fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean
+  /**
+   * The replacement method for the original [onCreate] The configurations are passed and can be
+   * customized here Returns true (default) if we wish to continue with the remaining optional setup
+   * Return false if we wish to skip this (usually if we have more complez requirements)
+   */
+  abstract fun onCreate(savedInstanceState: Bundle?, configs: Configs): Boolean
 
-    /**
-     * Receive actions when the a click event is received outside of the coordinator
-     */
-    fun setOutsideTapListener(listener: () -> Unit) {
-        binding.kauDraggable.setOnClickListener { listener() }
-    }
+  /** Receive actions when the a click event is received outside of the coordinator */
+  fun setOutsideTapListener(listener: () -> Unit) {
+    binding.kauDraggable.setOnClickListener { listener() }
+  }
 }

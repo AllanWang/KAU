@@ -29,146 +29,142 @@ import com.mikepenz.fastadapter.adapters.FastItemAdapter
 /**
  * Created by Allan Wang on 2017-06-29.
  *
- * Adapter with a set of colors that will be added to all subsequent items
- * Changing a color while the adapter is not empty will reload all items
+ * Adapter with a set of colors that will be added to all subsequent items Changing a color while
+ * the adapter is not empty will reload all items
  *
- * This adapter overrides every method where an item is added
- * If that item extends [ThemableIItem], then the colors will be set
+ * This adapter overrides every method where an item is added If that item extends [ThemableIItem],
+ * then the colors will be set
  */
 class FastItemThemedAdapter<Item : GenericItem>(
     textColor: Int? = null,
     backgroundColor: Int? = null,
     accentColor: Int? = null
 ) : FastItemAdapter<Item>() {
-    constructor(colors: ThemableIItemColors) : this(
-        colors.textColor,
-        colors.backgroundColor,
-        colors.accentColor
-    )
+  constructor(
+      colors: ThemableIItemColors
+  ) : this(colors.textColor, colors.backgroundColor, colors.accentColor)
 
-    init {
-        itemAdapter.interceptor = {
-            injectTheme(it)
-            it
-        }
+  init {
+    itemAdapter.interceptor = {
+      injectTheme(it)
+      it
+    }
+  }
+
+  var textColor: Int? = textColor
+    set(value) {
+      if (field == value) return
+      field = value
+      themeChanged()
+    }
+  var backgroundColor: Int? = backgroundColor
+    set(value) {
+      if (field == value) return
+      field = value
+      themeChanged()
+    }
+  var accentColor: Int? = accentColor
+    set(value) {
+      if (field == value) return
+      field = value
+      themeChanged()
     }
 
-    var textColor: Int? = textColor
-        set(value) {
-            if (field == value) return
-            field = value
-            themeChanged()
-        }
-    var backgroundColor: Int? = backgroundColor
-        set(value) {
-            if (field == value) return
-            field = value
-            themeChanged()
-        }
-    var accentColor: Int? = accentColor
-        set(value) {
-            if (field == value) return
-            field = value
-            themeChanged()
-        }
+  fun setColors(colors: ThemableIItemColors) {
+    this.textColor = colors.textColor
+    this.backgroundColor = colors.backgroundColor
+    this.accentColor = colors.accentColor
+  }
 
-    fun setColors(colors: ThemableIItemColors) {
-        this.textColor = colors.textColor
-        this.backgroundColor = colors.backgroundColor
-        this.accentColor = colors.accentColor
+  fun themeChanged() {
+    if (adapterItemCount == 0) {
+      return
     }
+    injectTheme(adapterItems)
+    notifyAdapterDataSetChanged()
+  }
 
-    fun themeChanged() {
-        if (adapterItemCount == 0) {
-            return
-        }
-        injectTheme(adapterItems)
-        notifyAdapterDataSetChanged()
-    }
+  private fun injectTheme(items: Collection<GenericItem?>?) {
+    items?.forEach { injectTheme(it) }
+  }
 
-    private fun injectTheme(items: Collection<GenericItem?>?) {
-        items?.forEach { injectTheme(it) }
+  protected fun injectTheme(item: GenericItem?) {
+    if (item is ThemableIItem && item.themeEnabled) {
+      item.textColor = textColor
+      item.backgroundColor = backgroundColor
+      item.accentColor = accentColor
     }
-
-    protected fun injectTheme(item: GenericItem?) {
-        if (item is ThemableIItem && item.themeEnabled) {
-            item.textColor = textColor
-            item.backgroundColor = backgroundColor
-            item.accentColor = accentColor
-        }
-    }
+  }
 }
 
 interface ThemableIItemColors {
-    var textColor: Int?
-    var backgroundColor: Int?
-    var accentColor: Int?
+  var textColor: Int?
+  var backgroundColor: Int?
+  var accentColor: Int?
 }
 
 class ThemableIItemColorsDelegate : ThemableIItemColors {
-    override var textColor: Int? = null
-    override var backgroundColor: Int? = null
-    override var accentColor: Int? = null
+  override var textColor: Int? = null
+  override var backgroundColor: Int? = null
+  override var accentColor: Int? = null
 }
 
 /**
- * Interface that needs to be implemented by every iitem
- * Holds the color values and has helper methods to inject the colors
+ * Interface that needs to be implemented by every iitem Holds the color values and has helper
+ * methods to inject the colors
  */
 interface ThemableIItem : ThemableIItemColors {
-    var themeEnabled: Boolean
-    fun bindTextColor(vararg views: TextView?)
-    fun bindTextColorSecondary(vararg views: TextView?)
-    fun bindDividerColor(vararg views: View?)
-    fun bindAccentColor(vararg views: TextView?)
-    fun bindBackgroundColor(vararg views: View?)
-    fun bindBackgroundRipple(vararg views: View?)
-    fun bindIconColor(vararg views: ImageView?)
+  var themeEnabled: Boolean
+  fun bindTextColor(vararg views: TextView?)
+  fun bindTextColorSecondary(vararg views: TextView?)
+  fun bindDividerColor(vararg views: View?)
+  fun bindAccentColor(vararg views: TextView?)
+  fun bindBackgroundColor(vararg views: View?)
+  fun bindBackgroundRipple(vararg views: View?)
+  fun bindIconColor(vararg views: ImageView?)
 }
 
-/**
- * The delegate for [ThemableIItem]
- */
+/** The delegate for [ThemableIItem] */
 class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIItemColorsDelegate() {
-    override var themeEnabled: Boolean = true
+  override var themeEnabled: Boolean = true
 
-    override fun bindTextColor(vararg views: TextView?) {
-        val color = textColor ?: return
-        views.forEach { it?.setTextColor(color) }
-    }
+  override fun bindTextColor(vararg views: TextView?) {
+    val color = textColor ?: return
+    views.forEach { it?.setTextColor(color) }
+  }
 
-    override fun bindTextColorSecondary(vararg views: TextView?) {
-        val color = textColor?.adjustAlpha(0.8f) ?: return
-        views.forEach { it?.setTextColor(color) }
-    }
+  override fun bindTextColorSecondary(vararg views: TextView?) {
+    val color = textColor?.adjustAlpha(0.8f) ?: return
+    views.forEach { it?.setTextColor(color) }
+  }
 
-    override fun bindAccentColor(vararg views: TextView?) {
-        val color = accentColor ?: textColor ?: return
-        views.forEach { it?.setTextColor(color) }
-    }
+  override fun bindAccentColor(vararg views: TextView?) {
+    val color = accentColor ?: textColor ?: return
+    views.forEach { it?.setTextColor(color) }
+  }
 
-    override fun bindDividerColor(vararg views: View?) {
-        val color = (textColor ?: accentColor)?.adjustAlpha(0.1f) ?: return
-        views.forEach { it?.setBackgroundColor(color) }
-    }
+  override fun bindDividerColor(vararg views: View?) {
+    val color = (textColor ?: accentColor)?.adjustAlpha(0.1f) ?: return
+    views.forEach { it?.setBackgroundColor(color) }
+  }
 
-    override fun bindBackgroundColor(vararg views: View?) {
-        val color = backgroundColor ?: return
-        views.forEach { it?.setBackgroundColor(color) }
-    }
+  override fun bindBackgroundColor(vararg views: View?) {
+    val color = backgroundColor ?: return
+    views.forEach { it?.setBackgroundColor(color) }
+  }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun bindBackgroundRipple(vararg views: View?) {
-        val background = backgroundColor ?: return
-        val foreground = accentColor ?: textColor ?: backgroundColor
-            ?: return // default to normal background
-        val ripple = createSimpleRippleDrawable(foreground, background)
-        views.forEach { it?.background = ripple }
-    }
+  @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+  override fun bindBackgroundRipple(vararg views: View?) {
+    val background = backgroundColor ?: return
+    val foreground =
+        accentColor ?: textColor ?: backgroundColor ?: return // default to normal background
+    val ripple = createSimpleRippleDrawable(foreground, background)
+    views.forEach { it?.background = ripple }
+  }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun bindIconColor(vararg views: ImageView?) {
-        val color = accentColor ?: textColor ?: return
-        views.forEach { it?.drawable?.setTintList(ColorStateList.valueOf(color)) }
-    }
+  @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+  override fun bindIconColor(vararg views: ImageView?) {
+    val color = accentColor ?: textColor ?: return
+    views.forEach { it?.drawable?.setTintList(ColorStateList.valueOf(color)) }
+  }
 }

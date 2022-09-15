@@ -37,166 +37,157 @@ import com.mikepenz.fastadapter.GenericItem
 /**
  * Created by Allan Wang on 2017-06-28.
  *
- * Floating About Activity Panel for your app
- * This contains all the necessary layouts, and can be extended and configured using [buildConfigs]
- * The [rClass] is necessary to generate the list of libraries used in your app, and should point to your app's
- * R.string::class.java
- * If you don't need auto detect, you can pass null instead
- * Note that for the auto detection to work, the R fields must be excluded from Proguard
- * Manual lib listings and other extra modifications can be done so by overriding the open functions
+ * Floating About Activity Panel for your app This contains all the necessary layouts, and can be
+ * extended and configured using [buildConfigs] The [rClass] is necessary to generate the list of
+ * libraries used in your app, and should point to your app's R.string::class.java If you don't need
+ * auto detect, you can pass null instead Note that for the auto detection to work, the R fields
+ * must be excluded from Proguard Manual lib listings and other extra modifications can be done so
+ * by overriding the open functions
  */
 abstract class AboutActivityBase(val rClass: Class<*>?) :
     KauBaseActivity(), ViewPager.OnPageChangeListener {
 
-    val currentPage: Int
-        get() = binding.aboutPager.currentItem
+  val currentPage: Int
+    get() = binding.aboutPager.currentItem
 
-    /**
-     * Holds some common configurations that may be added directly from the constructor
-     * Applied lazily since it needs the context to fetch resources
-     */
-    val configs: Configs by lazy { Configs().apply { buildConfigs() } }
+  /**
+   * Holds some common configurations that may be added directly from the constructor Applied lazily
+   * since it needs the context to fetch resources
+   */
+  val configs: Configs by lazy { Configs().apply { buildConfigs() } }
 
-    open fun Configs.buildConfigs() = Unit
+  open fun Configs.buildConfigs() = Unit
 
-    /**
-     * Holds that status of each page
-     * 0 means nothing has happened
-     * 1 means this page has been in view at least once
-     * The rest is up to you
-     */
-    lateinit var pageStatus: IntArray
+  /**
+   * Holds that status of each page 0 means nothing has happened 1 means this page has been in view
+   * at least once The rest is up to you
+   */
+  lateinit var pageStatus: IntArray
 
-    val panels: List<AboutPanelContract> by lazy {
-        val defaultPanels = mutableListOf(AboutPanelMain(), AboutPanelLibs())
-        if (configs.faqXmlRes != INVALID_ID) {
-            defaultPanels.add(AboutPanelFaqs())
-        }
-        defaultPanels
+  val panels: List<AboutPanelContract> by lazy {
+    val defaultPanels = mutableListOf(AboutPanelMain(), AboutPanelLibs())
+    if (configs.faqXmlRes != INVALID_ID) {
+      defaultPanels.add(AboutPanelFaqs())
+    }
+    defaultPanels
+  }
+
+  private lateinit var binding: KauActivityAboutBinding
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = KauActivityAboutBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.init()
+  }
+
+  private fun KauActivityAboutBinding.init() {
+    pageStatus = IntArray(panels.size)
+    pageStatus[0] = 2 // the first page is instantly visible
+    if (configs.textColor != null) {
+      aboutIndicator.setColour(configs.textColor!!)
+    }
+    with(aboutPager) {
+      adapter = AboutPagerAdapter()
+      pageMargin = dimenPixelSize(R.dimen.kau_spacing_normal)
+      offscreenPageLimit = panels.size - 1
+      addOnPageChangeListener(this@AboutActivityBase)
+    }
+    aboutIndicator.setViewPager(aboutPager)
+    aboutDraggableFrame.addListener(
+        object : ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
+          override fun onDragDismissed() {
+            window.returnTransition =
+                TransitionInflater.from(this@AboutActivityBase)
+                    .inflateTransition(
+                        if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom
+                        else R.transition.kau_exit_slide_top)
+            panels[currentPage].recycler?.stopScroll()
+            finishAfterTransition()
+          }
+        })
+    panels.forEachIndexed { index, contract -> contract.loadItems(this@AboutActivityBase, index) }
+  }
+
+  class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {
+    var cutoutTextRes: Int = INVALID_ID
+    var cutoutText: String? = null
+    var cutoutDrawableRes: Int = INVALID_ID
+    var cutoutDrawable: Drawable? = null
+    var cutoutForeground: Int? = null
+    var libPageTitleRes: Int = R.string.kau_about_libraries_intro
+    var libPageTitle: String? = null
+      set(value) {
+        field = value
+        libPageTitleRes = INVALID_ID // reset res so we don't use our default
+      }
+    var faqXmlRes: Int = INVALID_ID
+    var faqPageTitleRes: Int = R.string.kau_about_faq_intro
+    var faqPageTitle: String? = null
+      set(value) {
+        field = value
+        faqPageTitleRes = INVALID_ID // reset res so we don't use our default
+      }
+
+    /** Whether new lines should be included */
+    var faqParseNewLine: Boolean = true
+  }
+
+  /**
+   * For [mainPanel]
+   *
+   * Open hook called just before the main page view is returned Feel free to add your own items to
+   * the adapter in here
+   */
+  open fun postInflateMainPage(adapter: FastItemThemedAdapter<GenericItem>) {}
+
+  /*
+   * -------------------------------------------------------------------
+   * Page 3: FAQ
+   * -------------------------------------------------------------------
+   */
+
+  private inner class AboutPagerAdapter : PagerAdapter() {
+
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(this@AboutActivityBase)
+    private val views = Array<View?>(panels.size) { null }
+
+    override fun instantiateItem(collection: ViewGroup, position: Int): Any {
+      val layout = getPage(position, collection)
+      collection.addView(layout)
+      return layout
     }
 
-    private lateinit var binding: KauActivityAboutBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = KauActivityAboutBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.init()
+    override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
+      collection.removeView(view as View)
+      views[position] = null
     }
 
-    private fun KauActivityAboutBinding.init() {
-        pageStatus = IntArray(panels.size)
-        pageStatus[0] = 2 // the first page is instantly visible
-        if (configs.textColor != null) {
-            aboutIndicator.setColour(configs.textColor!!)
-        }
-        with(aboutPager) {
-            adapter = AboutPagerAdapter()
-            pageMargin = dimenPixelSize(R.dimen.kau_spacing_normal)
-            offscreenPageLimit = panels.size - 1
-            addOnPageChangeListener(this@AboutActivityBase)
-        }
-        aboutIndicator.setViewPager(aboutPager)
-        aboutDraggableFrame.addListener(object :
-                ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
-                override fun onDragDismissed() {
-                    window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
-                        .inflateTransition(if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
-                    panels[currentPage].recycler?.stopScroll()
-                    finishAfterTransition()
-                }
-            })
-        panels.forEachIndexed { index, contract ->
-            contract.loadItems(
-                this@AboutActivityBase,
-                index
-            )
-        }
+    override fun getCount(): Int = panels.size
+
+    override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
+
+    /** Only get page if view does not exist */
+    private fun getPage(position: Int, parent: ViewGroup): View {
+      if (views[position] == null)
+          views[position] = panels[position].inflatePage(this@AboutActivityBase, parent, position)
+      return views[position]!!
     }
+  }
 
-    class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {
-        var cutoutTextRes: Int = INVALID_ID
-        var cutoutText: String? = null
-        var cutoutDrawableRes: Int = INVALID_ID
-        var cutoutDrawable: Drawable? = null
-        var cutoutForeground: Int? = null
-        var libPageTitleRes: Int = R.string.kau_about_libraries_intro
-        var libPageTitle: String? = null
-            set(value) {
-                field = value
-                libPageTitleRes = INVALID_ID // reset res so we don't use our default
-            }
-        var faqXmlRes: Int = INVALID_ID
-        var faqPageTitleRes: Int = R.string.kau_about_faq_intro
-        var faqPageTitle: String? = null
-            set(value) {
-                field = value
-                faqPageTitleRes = INVALID_ID // reset res so we don't use our default
-            }
+  override fun onPageScrollStateChanged(state: Int) = Unit
 
-        /**
-         * Whether new lines should be included
-         */
-        var faqParseNewLine: Boolean = true
-    }
+  override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) =
+      Unit
 
-    /**
-     * For [mainPanel]
-     *
-     * Open hook called just before the main page view is returned
-     * Feel free to add your own items to the adapter in here
-     */
-    open fun postInflateMainPage(adapter: FastItemThemedAdapter<GenericItem>) {
-    }
+  override fun onPageSelected(position: Int) {
+    if (pageStatus[position] == 0) pageStatus[position] = 1 // mark as seen if previously null
+    if (pageStatus[position] == 1) panels[position].addItems(this, position)
+  }
 
-    /*
-     * -------------------------------------------------------------------
-     * Page 3: FAQ
-     * -------------------------------------------------------------------
-     */
-
-    private inner class AboutPagerAdapter : PagerAdapter() {
-
-        private val layoutInflater: LayoutInflater = LayoutInflater.from(this@AboutActivityBase)
-        private val views = Array<View?>(panels.size) { null }
-
-        override fun instantiateItem(collection: ViewGroup, position: Int): Any {
-            val layout = getPage(position, collection)
-            collection.addView(layout)
-            return layout
-        }
-
-        override fun destroyItem(collection: ViewGroup, position: Int, view: Any) {
-            collection.removeView(view as View)
-            views[position] = null
-        }
-
-        override fun getCount(): Int = panels.size
-
-        override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
-
-        /**
-         * Only get page if view does not exist
-         */
-        private fun getPage(position: Int, parent: ViewGroup): View {
-            if (views[position] == null) views[position] = panels[position]
-                .inflatePage(this@AboutActivityBase, parent, position)
-            return views[position]!!
-        }
-    }
-
-    override fun onPageScrollStateChanged(state: Int) = Unit
-
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) =
-        Unit
-
-    override fun onPageSelected(position: Int) {
-        if (pageStatus[position] == 0) pageStatus[position] = 1 // mark as seen if previously null
-        if (pageStatus[position] == 1) panels[position].addItems(this, position)
-    }
-
-    override fun onDestroy() {
-        AnimHolder.decelerateInterpolator.invalidate() // clear the reference to the interpolators we've used
-        super.onDestroy()
-    }
+  override fun onDestroy() {
+    AnimHolder.decelerateInterpolator
+        .invalidate() // clear the reference to the interpolators we've used
+    super.onDestroy()
+  }
 }
