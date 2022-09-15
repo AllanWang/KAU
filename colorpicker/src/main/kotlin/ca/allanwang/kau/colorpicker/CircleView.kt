@@ -49,213 +49,206 @@ import kotlin.math.roundToInt
  * An extension of MaterialDialog's CircleView with animation selection
  * [https://github.com/afollestad/material-dialogs/blob/master/commons/src/main/java/com/afollestad/materialdialogs/color/CircleView.java]
  */
-class CircleView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) :
-    FrameLayout(context, attrs, defStyleAttr) {
+class CircleView
+@JvmOverloads
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+  FrameLayout(context, attrs, defStyleAttr) {
 
-    private val borderWidthMicro: Float = context.getDip(1f)
-    private val borderWidthSmall: Float = context.getDip(3f)
-    private val borderWidthLarge: Float = context.getDip(5f)
-    private var whiteOuterBound: Float = borderWidthLarge
+  private val borderWidthMicro: Float = context.getDip(1f)
+  private val borderWidthSmall: Float = context.getDip(3f)
+  private val borderWidthLarge: Float = context.getDip(5f)
+  private var whiteOuterBound: Float = borderWidthLarge
 
-    private val outerPaint: Paint = Paint().apply { isAntiAlias = true }
-    private val whitePaint: Paint = Paint().apply { isAntiAlias = true; color = Color.WHITE }
-    private val innerPaint: Paint = Paint().apply { isAntiAlias = true }
-    val colorSelected: Boolean
-        get() = selected
-    private var selected: Boolean = false
-    var withBorder: Boolean = false
-        set(value) {
-            if (field != value) {
-                field = value
-                invalidate()
-            }
-        }
-    var selectedRing: Boolean = true
-
-    init {
-        update(Color.DKGRAY)
-        setWillNotDraw(false)
-        context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.CircleView,
-            0, 0
-        ).apply {
-            try {
-                selectedRing = getBoolean(R.styleable.CircleView_selectedRing, selectedRing)
-            } finally {
-                recycle()
-            }
-        }
+  private val outerPaint: Paint = Paint().apply { isAntiAlias = true }
+  private val whitePaint: Paint =
+    Paint().apply {
+      isAntiAlias = true
+      color = Color.WHITE
     }
-
-    private fun update(@ColorInt color: Int) {
-        innerPaint.color = color
-        outerPaint.color = shiftColorDown(color)
-
-        val selector = createSelector(color)
-        foreground = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val states = arrayOf(intArrayOf(android.R.attr.state_pressed))
-            val colors = intArrayOf(shiftColorUp(color))
-            val rippleColors = ColorStateList(states, colors)
-            RippleDrawable(rippleColors, selector, null)
-        } else {
-            selector
-        }
-    }
-
-    override fun setBackgroundColor(@ColorInt color: Int) {
-        update(color)
-        requestLayout()
+  private val innerPaint: Paint = Paint().apply { isAntiAlias = true }
+  val colorSelected: Boolean
+    get() = selected
+  private var selected: Boolean = false
+  var withBorder: Boolean = false
+    set(value) {
+      if (field != value) {
+        field = value
         invalidate()
+      }
     }
+  var selectedRing: Boolean = true
 
-    override fun setBackgroundResource(@ColorRes color: Int) {
-        setBackgroundColorRes(color)
+  init {
+    update(Color.DKGRAY)
+    setWillNotDraw(false)
+    context.theme.obtainStyledAttributes(attrs, R.styleable.CircleView, 0, 0).apply {
+      try {
+        selectedRing = getBoolean(R.styleable.CircleView_selectedRing, selectedRing)
+      } finally {
+        recycle()
+      }
     }
+  }
 
-    @Deprecated("Cannot use setBackground() on CircleView", level = DeprecationLevel.ERROR)
-    override fun setBackground(background: Drawable) {
-        throw IllegalStateException("Cannot use setBackground() on CircleView.")
-    }
+  private fun update(@ColorInt color: Int) {
+    innerPaint.color = color
+    outerPaint.color = shiftColorDown(color)
 
-    @Deprecated("Cannot use setBackgroundDrawable() on CircleView", level = DeprecationLevel.ERROR)
-    override fun setBackgroundDrawable(background: Drawable) {
-        throw IllegalStateException("Cannot use setBackgroundDrawable() on CircleView.")
-    }
+    val selector = createSelector(color)
+    foreground =
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val states = arrayOf(intArrayOf(android.R.attr.state_pressed))
+        val colors = intArrayOf(shiftColorUp(color))
+        val rippleColors = ColorStateList(states, colors)
+        RippleDrawable(rippleColors, selector, null)
+      } else {
+        selector
+      }
+  }
 
-    @Deprecated("Cannot use setActivated() on CircleView", level = DeprecationLevel.ERROR)
-    override fun setActivated(activated: Boolean) {
-        throw IllegalStateException("Cannot use setActivated() on CircleView.")
-    }
+  override fun setBackgroundColor(@ColorInt color: Int) {
+    update(color)
+    requestLayout()
+    invalidate()
+  }
 
-    override fun setSelected(selected: Boolean) {
-        this.selected = selected
-        whiteOuterBound = borderWidthLarge
+  override fun setBackgroundResource(@ColorRes color: Int) {
+    setBackgroundColorRes(color)
+  }
+
+  @Deprecated("Cannot use setBackground() on CircleView", level = DeprecationLevel.ERROR)
+  override fun setBackground(background: Drawable) {
+    throw IllegalStateException("Cannot use setBackground() on CircleView.")
+  }
+
+  @Deprecated("Cannot use setBackgroundDrawable() on CircleView", level = DeprecationLevel.ERROR)
+  override fun setBackgroundDrawable(background: Drawable) {
+    throw IllegalStateException("Cannot use setBackgroundDrawable() on CircleView.")
+  }
+
+  @Deprecated("Cannot use setActivated() on CircleView", level = DeprecationLevel.ERROR)
+  override fun setActivated(activated: Boolean) {
+    throw IllegalStateException("Cannot use setActivated() on CircleView.")
+  }
+
+  override fun setSelected(selected: Boolean) {
+    this.selected = selected
+    whiteOuterBound = borderWidthLarge
+    invalidate()
+  }
+
+  fun animateSelected(selected: Boolean) {
+    if (!this.selectedRing || this.selected == selected) return
+    this.selected = selected // We need to draw the other bands
+    val range =
+      if (selected) Pair(-borderWidthSmall, borderWidthLarge)
+      else Pair(borderWidthLarge, -borderWidthSmall)
+    ValueAnimator.ofFloat(range.first, range.second).apply {
+      reverse()
+      duration = 150L
+      addUpdateListener { animation ->
+        whiteOuterBound = animation.animatedValue as Float
         invalidate()
+      }
+      start()
+    }
+  }
+
+  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    super.onMeasure(widthMeasureSpec, widthMeasureSpec)
+    setMeasuredDimension(measuredWidth, measuredWidth)
+  }
+
+  override fun onDrawForeground(canvas: Canvas) {
+    super.onDrawForeground(canvas)
+    val centerWidth = (measuredWidth / 2).toFloat()
+    val centerHeight = (measuredHeight / 2).toFloat()
+    if (withBorder) canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
+    if (selected && selectedRing) {
+      val whiteRadius = centerWidth - whiteOuterBound
+      val innerRadius = whiteRadius - borderWidthSmall
+      if (whiteRadius >= centerWidth) {
+        canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
+      } else {
+        canvas.drawCircle(
+          centerWidth,
+          centerHeight,
+          if (withBorder) centerWidth - borderWidthMicro else centerWidth,
+          outerPaint
+        )
+        canvas.drawCircle(centerWidth, centerHeight, whiteRadius, whitePaint)
+      }
+      canvas.drawCircle(centerWidth, centerHeight, innerRadius, innerPaint)
+    } else {
+      canvas.drawCircle(
+        centerWidth,
+        centerHeight,
+        if (withBorder) centerWidth - borderWidthMicro else centerWidth,
+        innerPaint
+      )
+    }
+  }
+
+  private fun createSelector(color: Int): Drawable {
+    val darkerCircle = ShapeDrawable(OvalShape())
+    darkerCircle.paint.color = translucentColor(shiftColorUp(color))
+    val stateListDrawable = StateListDrawable()
+    stateListDrawable.addState(intArrayOf(android.R.attr.state_pressed), darkerCircle)
+    return stateListDrawable
+  }
+
+  fun showHint(color: Int) {
+    val screenPos = IntArray(2)
+    val displayFrame = Rect()
+    getLocationOnScreen(screenPos)
+    getWindowVisibleDisplayFrame(displayFrame)
+    val context = context
+    val width = width
+    val height = height
+    val midy = screenPos[1] + height / 2
+    var referenceX = screenPos[0] + width / 2
+    if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_LTR) {
+      val screenWidth = context.resources.displayMetrics.widthPixels
+      referenceX = screenWidth - referenceX // mirror
+    }
+    val cheatSheet =
+      Toast.makeText(context, String.format("#%06X", 0xFFFFFF and color), Toast.LENGTH_SHORT)
+    if (midy < displayFrame.height()) {
+      // Show along the top; follow action buttons
+      cheatSheet.setGravity(
+        Gravity.TOP or GravityCompat.END,
+        referenceX,
+        screenPos[1] + height - displayFrame.top
+      )
+    } else {
+      // Show along the bottom center
+      cheatSheet.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, height)
+    }
+    cheatSheet.show()
+  }
+
+  private companion object {
+
+    @ColorInt
+    fun translucentColor(color: Int): Int {
+      val factor = 0.7f
+      val alpha = (Color.alpha(color) * factor).roundToInt()
+      val red = Color.red(color)
+      val green = Color.green(color)
+      val blue = Color.blue(color)
+      return Color.argb(alpha, red, green, blue)
     }
 
-    fun animateSelected(selected: Boolean) {
-        if (!this.selectedRing || this.selected == selected) return
-        this.selected = selected // We need to draw the other bands
-        val range =
-            if (selected) Pair(-borderWidthSmall, borderWidthLarge) else Pair(
-                borderWidthLarge,
-                -borderWidthSmall
-            )
-        ValueAnimator.ofFloat(range.first, range.second).apply {
-            reverse()
-            duration = 150L
-            addUpdateListener { animation ->
-                whiteOuterBound = animation.animatedValue as Float
-                invalidate()
-            }
-            start()
-        }
+    @ColorInt
+    fun shiftColor(@ColorInt color: Int, @FloatRange(from = 0.0, to = 2.0) by: Float): Int {
+      if (by == 1f) return color
+      val hsv = color.toHSV()
+      hsv[2] *= by // value component
+      return hsv.toColor()
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
-        setMeasuredDimension(measuredWidth, measuredWidth)
-    }
+    @ColorInt fun shiftColorDown(@ColorInt color: Int): Int = shiftColor(color, 0.9f)
 
-    override fun onDrawForeground(canvas: Canvas) {
-        super.onDrawForeground(canvas)
-        val centerWidth = (measuredWidth / 2).toFloat()
-        val centerHeight = (measuredHeight / 2).toFloat()
-        if (withBorder) canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
-        if (selected && selectedRing) {
-            val whiteRadius = centerWidth - whiteOuterBound
-            val innerRadius = whiteRadius - borderWidthSmall
-            if (whiteRadius >= centerWidth) {
-                canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
-            } else {
-                canvas.drawCircle(
-                    centerWidth,
-                    centerHeight,
-                    if (withBorder) centerWidth - borderWidthMicro else centerWidth,
-                    outerPaint
-                )
-                canvas.drawCircle(centerWidth, centerHeight, whiteRadius, whitePaint)
-            }
-            canvas.drawCircle(centerWidth, centerHeight, innerRadius, innerPaint)
-        } else {
-            canvas.drawCircle(
-                centerWidth,
-                centerHeight,
-                if (withBorder) centerWidth - borderWidthMicro else centerWidth,
-                innerPaint
-            )
-        }
-    }
-
-    private fun createSelector(color: Int): Drawable {
-        val darkerCircle = ShapeDrawable(OvalShape())
-        darkerCircle.paint.color = translucentColor(shiftColorUp(color))
-        val stateListDrawable = StateListDrawable()
-        stateListDrawable.addState(intArrayOf(android.R.attr.state_pressed), darkerCircle)
-        return stateListDrawable
-    }
-
-    fun showHint(color: Int) {
-        val screenPos = IntArray(2)
-        val displayFrame = Rect()
-        getLocationOnScreen(screenPos)
-        getWindowVisibleDisplayFrame(displayFrame)
-        val context = context
-        val width = width
-        val height = height
-        val midy = screenPos[1] + height / 2
-        var referenceX = screenPos[0] + width / 2
-        if (ViewCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_LTR) {
-            val screenWidth = context.resources.displayMetrics.widthPixels
-            referenceX = screenWidth - referenceX // mirror
-        }
-        val cheatSheet = Toast
-            .makeText(context, String.format("#%06X", 0xFFFFFF and color), Toast.LENGTH_SHORT)
-        if (midy < displayFrame.height()) {
-            // Show along the top; follow action buttons
-            cheatSheet.setGravity(
-                Gravity.TOP or GravityCompat.END, referenceX,
-                screenPos[1] + height - displayFrame.top
-            )
-        } else {
-            // Show along the bottom center
-            cheatSheet.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, height)
-        }
-        cheatSheet.show()
-    }
-
-    private companion object {
-
-        @ColorInt
-        fun translucentColor(color: Int): Int {
-            val factor = 0.7f
-            val alpha = (Color.alpha(color) * factor).roundToInt()
-            val red = Color.red(color)
-            val green = Color.green(color)
-            val blue = Color.blue(color)
-            return Color.argb(alpha, red, green, blue)
-        }
-
-        @ColorInt
-        fun shiftColor(
-            @ColorInt color: Int,
-            @FloatRange(from = 0.0, to = 2.0) by: Float
-        ): Int {
-            if (by == 1f) return color
-            val hsv = color.toHSV()
-            hsv[2] *= by // value component
-            return hsv.toColor()
-        }
-
-        @ColorInt
-        fun shiftColorDown(@ColorInt color: Int): Int = shiftColor(color, 0.9f)
-
-        @ColorInt
-        fun shiftColorUp(@ColorInt color: Int): Int = shiftColor(color, 1.1f)
-    }
+    @ColorInt fun shiftColorUp(@ColorInt color: Int): Int = shiftColor(color, 1.1f)
+  }
 }

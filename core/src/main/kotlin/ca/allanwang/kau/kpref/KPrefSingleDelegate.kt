@@ -21,97 +21,96 @@ import ca.allanwang.kau.kotlin.ILazyResettable
 /**
  * Created by Allan Wang on 2017-06-07.
  *
- * Singular KPref Delegate for booleans
- * When the shared pref is not initialized, it will return [true] then set the pref to [false]
- * All subsequent retrievals will be [false]
- * This is useful for one time toggles such as showcasing items
+ * Singular KPref Delegate for booleans When the shared pref is not initialized, it will return
+ * [true] then set the pref to [false] All subsequent retrievals will be [false] This is useful for
+ * one time toggles such as showcasing items
  */
 interface KPrefSingleDelegate : ILazyResettable<Boolean>
 
-class KPrefSingleDelegateAndroid internal constructor(
-    private val key: String,
-    private val pref: KPref,
-    private val prefBuilder: KPrefBuilderAndroid
+class KPrefSingleDelegateAndroid
+internal constructor(
+  private val key: String,
+  private val pref: KPref,
+  private val prefBuilder: KPrefBuilderAndroid
 ) : KPrefSingleDelegate {
 
-    @Volatile
-    private var _value: Boolean? = null
-    private val lock = this
+  @Volatile private var _value: Boolean? = null
+  private val lock = this
 
-    private val sp: SharedPreferences get() = prefBuilder.sp
+  private val sp: SharedPreferences
+    get() = prefBuilder.sp
 
-    init {
-        if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
-        pref.prefMap[key] = this
-    }
+  init {
+    if (pref.prefMap.containsKey(key))
+      throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
+    pref.prefMap[key] = this
+  }
 
-    override fun invalidate() {
-        _value = null
-    }
+  override fun invalidate() {
+    _value = null
+  }
 
-    override val value: Boolean
-        get() {
-            val _v1 = _value
-            if (_v1 != null) {
-                return _v1
-            }
-            return synchronized(lock) {
-                val _v2 = _value
-                if (_v2 != null) {
-                    _v2
-                } else {
-                    _value = sp.getBoolean(key, true)
-                    if (_value!!) {
-                        sp.edit().putBoolean(key, false).apply()
-                        _value = false
-                        true
-                    } else false
-                }
-            }
+  override val value: Boolean
+    get() {
+      val _v1 = _value
+      if (_v1 != null) {
+        return _v1
+      }
+      return synchronized(lock) {
+        val _v2 = _value
+        if (_v2 != null) {
+          _v2
+        } else {
+          _value = sp.getBoolean(key, true)
+          if (_value!!) {
+            sp.edit().putBoolean(key, false).apply()
+            _value = false
+            true
+          } else false
         }
+      }
+    }
 
-    override fun isInitialized(): Boolean = _value != null
+  override fun isInitialized(): Boolean = _value != null
 
-    override fun toString(): String = if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+  override fun toString(): String =
+    if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 }
 
-class KPrefSingleDelegateInMemory internal constructor(
-    private val key: String,
-    private val pref: KPref
-) : KPrefSingleDelegate {
-    @Volatile
-    private var _value: Boolean? = null
-    private val lock = this
+class KPrefSingleDelegateInMemory
+internal constructor(private val key: String, private val pref: KPref) : KPrefSingleDelegate {
+  @Volatile private var _value: Boolean? = null
+  private val lock = this
 
-    init {
-        if (pref.prefMap.containsKey(key))
-            throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
-        pref.prefMap[key] = this
-    }
+  init {
+    if (pref.prefMap.containsKey(key))
+      throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
+    pref.prefMap[key] = this
+  }
 
-    override fun invalidate() {
-        // No op
-    }
+  override fun invalidate() {
+    // No op
+  }
 
-    override val value: Boolean
-        get() {
-            val _v1 = _value
-            if (_v1 != null) {
-                return _v1
-            }
-            return synchronized(lock) {
-                val _v2 = _value
-                if (_v2 != null) {
-                    _v2
-                } else {
-                    _value = false
-                    true
-                }
-            }
+  override val value: Boolean
+    get() {
+      val _v1 = _value
+      if (_v1 != null) {
+        return _v1
+      }
+      return synchronized(lock) {
+        val _v2 = _value
+        if (_v2 != null) {
+          _v2
+        } else {
+          _value = false
+          true
         }
+      }
+    }
 
-    override fun isInitialized(): Boolean = _value != null
+  override fun isInitialized(): Boolean = _value != null
 
-    override fun toString(): String = if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+  override fun toString(): String =
+    if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 }

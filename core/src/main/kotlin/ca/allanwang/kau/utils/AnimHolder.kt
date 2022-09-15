@@ -26,7 +26,7 @@ import ca.allanwang.kau.kotlin.lazyInterpolator
  */
 object AnimHolder {
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    val fastOutSlowInInterpolator = lazyInterpolator(android.R.interpolator.fast_out_linear_in)
-    val decelerateInterpolator = lazyInterpolator(android.R.interpolator.decelerate_cubic)
+  @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+  val fastOutSlowInInterpolator = lazyInterpolator(android.R.interpolator.fast_out_linear_in)
+  val decelerateInterpolator = lazyInterpolator(android.R.interpolator.decelerate_cubic)
 }

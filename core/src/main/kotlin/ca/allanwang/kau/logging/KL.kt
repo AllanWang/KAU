@@ -24,11 +24,8 @@ import ca.allanwang.kau.BuildConfig
  */
 object KL : KauLogger("KAU", { BuildConfig.DEBUG }) {
 
-    /**
-     * Logger with searchable tag and thread info
-     */
-    inline fun test(message: () -> Any?) {
-        if (BuildConfig.DEBUG)
-            d { "Test1234 ${Thread.currentThread().name} ${message()}" }
-    }
+  /** Logger with searchable tag and thread info */
+  inline fun test(message: () -> Any?) {
+    if (BuildConfig.DEBUG) d { "Test1234 ${Thread.currentThread().name} ${message()}" }
+  }
 }

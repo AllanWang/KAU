@@ -26,33 +26,30 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
-/**
- * Created by Allan Wang on 2017-06-07.
- */
+/** Created by Allan Wang on 2017-06-07. */
 class KPrefSample(factory: KPrefFactory) : KPref("pref_sample", factory = factory) {
-    var version: Int by kpref("version", -1)
-    var textColor: Int by kpref("TEXT_COLOR", Color.WHITE)
-    var accentColor: Int by kpref("ACCENT_COLOR", 0xffff8900.toInt())
-    var bgColor: Int by kpref("BG_COLOR", 0xff303030.toInt())
-    var check1: Boolean by kpref("check1", true)
-    var check2: Boolean by kpref("check2", false)
-    var check3: Boolean by kpref("check3", false)
-    var text: String by kpref("text", "empty")
-    var seekbar: Int by kpref("seekbar", 20)
-    var time12: Int by kpref("time_12", 315)
-    var time24: Int by kpref("time_24", 2220)
+  var version: Int by kpref("version", -1)
+  var textColor: Int by kpref("TEXT_COLOR", Color.WHITE)
+  var accentColor: Int by kpref("ACCENT_COLOR", 0xffff8900.toInt())
+  var bgColor: Int by kpref("BG_COLOR", 0xff303030.toInt())
+  var check1: Boolean by kpref("check1", true)
+  var check2: Boolean by kpref("check2", false)
+  var check3: Boolean by kpref("check3", false)
+  var text: String by kpref("text", "empty")
+  var seekbar: Int by kpref("seekbar", 20)
+  var time12: Int by kpref("time_12", 315)
+  var time24: Int by kpref("time_24", 2220)
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
 object PrefModule {
-    @Provides
-    fun pref(factory: KPrefFactory): KPrefSample = KPrefSample(factory)
+  @Provides fun pref(factory: KPrefFactory): KPrefSample = KPrefSample(factory)
 }
 
 @Module
 @InstallIn(SingletonComponent::class)
 object PrefFactoryModule {
-    @Provides
-    fun factory(@ApplicationContext context: Context): KPrefFactory = KPrefFactoryAndroid(context)
+  @Provides
+  fun factory(@ApplicationContext context: Context): KPrefFactory = KPrefFactoryAndroid(context)
 }

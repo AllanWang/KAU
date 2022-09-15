@@ -17,9 +17,7 @@ package ca.allanwang.kau.utils
 
 import androidx.customview.widget.ViewDragHelper
 
-/**
- * Created by Allan Wang on 2017-06-08.
- */
+/** Created by Allan Wang on 2017-06-08. */
 const val ANDROID_NAMESPACE = "http://schemas.android.com/apk/res/android"
 
 const val KAU_LEFT = ViewDragHelper.EDGE_LEFT

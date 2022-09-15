@@ -22,24 +22,27 @@ import android.content.pm.PackageManager
  *
  * Pending permission collector
  */
-class PermissionResult(permissions: Array<out String>, val callback: (granted: Boolean, deniedPerm: String?) -> Unit) {
-    val permissions = mutableSetOf(*permissions)
+class PermissionResult(
+  permissions: Array<out String>,
+  val callback: (granted: Boolean, deniedPerm: String?) -> Unit
+) {
+  val permissions = mutableSetOf(*permissions)
 
-    /**
-     * Called from the manager whenever a permission has changed
-     * Returns true if result is completed, false otherwise
-     */
-    fun onResult(permission: String, result: Int): Boolean {
-        if (result != PackageManager.PERMISSION_GRANTED) {
-            callback(false, permission)
-            permissions.clear()
-            return true
-        }
-        permissions.remove(permission)
-        if (permissions.isNotEmpty()) {
-            return false
-        }
-        callback(true, null)
-        return true
+  /**
+   * Called from the manager whenever a permission has changed Returns true if result is completed,
+   * false otherwise
+   */
+  fun onResult(permission: String, result: Int): Boolean {
+    if (result != PackageManager.PERMISSION_GRANTED) {
+      callback(false, permission)
+      permissions.clear()
+      return true
     }
+    permissions.remove(permission)
+    if (permissions.isNotEmpty()) {
+      return false
+    }
+    callback(true, null)
+    return true
+  }
 }

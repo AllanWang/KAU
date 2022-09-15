@@ -29,35 +29,36 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 class SampleTestRunner : AndroidJUnitRunner() {
-    override fun newApplication(
-        cl: ClassLoader?,
-        className: String?,
-        context: Context?
-    ): Application {
-        return super.newApplication(cl, HiltTestApplication::class.java.name, context)
-    }
+  override fun newApplication(
+    cl: ClassLoader?,
+    className: String?,
+    context: Context?
+  ): Application {
+    return super.newApplication(cl, HiltTestApplication::class.java.name, context)
+  }
 }
 
 class SampleTestRule : TestRule {
 
-    @EntryPoint
-    @InstallIn(SingletonComponent::class)
-    interface SampleTestRuleEntryPoint {
-        fun pref(): KPrefSample
+  @EntryPoint
+  @InstallIn(SingletonComponent::class)
+  interface SampleTestRuleEntryPoint {
+    fun pref(): KPrefSample
+  }
+
+  override fun apply(base: Statement, description: Description): Statement =
+    object : Statement() {
+      override fun evaluate() {
+        val entryPoint =
+          EntryPointAccessors.fromApplication(
+            ApplicationProvider.getApplicationContext(),
+            SampleTestRuleEntryPoint::class.java
+          )
+
+        // Reset prefs
+        entryPoint.pref().reset()
+
+        base.evaluate()
+      }
     }
-
-    override fun apply(base: Statement, description: Description): Statement =
-        object : Statement() {
-            override fun evaluate() {
-                val entryPoint = EntryPointAccessors.fromApplication(
-                    ApplicationProvider.getApplicationContext(),
-                    SampleTestRuleEntryPoint::class.java
-                )
-
-                // Reset prefs
-                entryPoint.pref().reset()
-
-                base.evaluate()
-            }
-        }
 }

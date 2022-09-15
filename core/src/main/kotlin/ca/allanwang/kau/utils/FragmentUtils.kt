@@ -17,10 +17,8 @@ package ca.allanwang.kau.utils
 
 import androidx.fragment.app.Fragment
 
-/**
- * Created by Allan Wang on 2017-07-02.
- */
+/** Created by Allan Wang on 2017-07-02. */
 fun <T : Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
-    arguments = bundleOf(*params)
-    return this
+  arguments = bundleOf(*params)
+  return this
 }

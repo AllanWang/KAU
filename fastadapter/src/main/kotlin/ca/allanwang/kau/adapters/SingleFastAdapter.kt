@@ -23,44 +23,42 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter
 import com.mikepenz.fastadapter.diff.DiffCallback
 import com.mikepenz.fastadapter.diff.FastAdapterDiffUtil
 
-/**
- * Fast adapter with prewrapped item adapter
- */
+/** Fast adapter with prewrapped item adapter */
 class SingleFastAdapter private constructor(val adapter: ItemAdapter<GenericItem>) :
-    FastAdapter<GenericItem>(), IItemAdapter<GenericItem, GenericItem> by adapter {
+  FastAdapter<GenericItem>(), IItemAdapter<GenericItem, GenericItem> by adapter {
 
-    constructor() : this(ItemAdapter())
+  constructor() : this(ItemAdapter())
 
-    var lastClearTime: Long = -1
+  var lastClearTime: Long = -1
 
-    init {
-        super.addAdapter(0, adapter)
+  init {
+    super.addAdapter(0, adapter)
+  }
+
+  override fun clear(): SingleFastAdapter {
+    if (itemCount != 0) {
+      adapter.clear()
+      lastClearTime = System.currentTimeMillis()
     }
+    return this
+  }
 
-    override fun clear(): SingleFastAdapter {
-        if (itemCount != 0) {
-            adapter.clear()
-            lastClearTime = System.currentTimeMillis()
-        }
-        return this
-    }
+  override fun <A : IAdapter<GenericItem>> addAdapter(
+    index: Int,
+    adapter: A
+  ): FastAdapter<GenericItem> {
+    throw IllegalStateException("SingleFastAdapter only allows one adapter.")
+  }
 
-    override fun <A : IAdapter<GenericItem>> addAdapter(
-        index: Int,
-        adapter: A
-    ): FastAdapter<GenericItem> {
-        throw IllegalStateException("SingleFastAdapter only allows one adapter.")
+  fun setWithDiff(
+    items: List<GenericItem>,
+    detectMoves: Boolean = true,
+    callback: DiffCallback<GenericItem>? = null
+  ) {
+    if (callback == null) {
+      FastAdapterDiffUtil.set(adapter, items, detectMoves)
+    } else {
+      FastAdapterDiffUtil.set(adapter, items, callback, detectMoves)
     }
-
-    fun setWithDiff(
-        items: List<GenericItem>,
-        detectMoves: Boolean = true,
-        callback: DiffCallback<GenericItem>? = null
-    ) {
-        if (callback == null) {
-            FastAdapterDiffUtil.set(adapter, items, detectMoves)
-        } else {
-            FastAdapterDiffUtil.set(adapter, items, callback, detectMoves)
-        }
-    }
+  }
 }

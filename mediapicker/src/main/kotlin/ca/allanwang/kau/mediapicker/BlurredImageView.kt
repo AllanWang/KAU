@@ -35,146 +35,137 @@ import jp.wasabeef.blurry.Blurry
 /**
  * Created by Allan Wang on 2017-07-14.
  *
- * ImageView that can be blurred and selected
- * The frame is composed of three layers: the base, the blur, and the foreground
- * Images should be placed in the base view, and the blur view should not be touched
- * as the class will handle it
- * The foreground by default contains a white checkmark, but can be customized or hidden depending on the situation
+ * ImageView that can be blurred and selected The frame is composed of three layers: the base, the
+ * blur, and the foreground Images should be placed in the base view, and the blur view should not
+ * be touched as the class will handle it The foreground by default contains a white checkmark, but
+ * can be customized or hidden depending on the situation
  */
-class BlurredImageView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
+class BlurredImageView
+@JvmOverloads
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+  FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
-    var isBlurred = false
-        private set
+  var isBlurred = false
+    private set
 
-    val imageBase: ImageView get() = binding.imageBase
+  val imageBase: ImageView
+    get() = binding.imageBase
 
-    private val binding: KauBlurredImageviewBinding =
-        KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this)
+  private val binding: KauBlurredImageviewBinding =
+    KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this)
 
-    init {
-        initAttrs(context, attrs)
-        binding.imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30)
+  init {
+    initAttrs(context, attrs)
+    binding.imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30)
+  }
+
+  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    val result = onMeasure(this, widthMeasureSpec, heightMeasureSpec)
+    super.onMeasure(result.first, result.second)
+  }
+
+  override fun clearAnimation() {
+    super.clearAnimation()
+    with(binding) {
+      imageBase.clearAnimation()
+      imageBlur.clearAnimation()
+      imageForeground.clearAnimation()
     }
+  }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val result = onMeasure(this, widthMeasureSpec, heightMeasureSpec)
-        super.onMeasure(result.first, result.second)
+  private fun View.scaleAnimate(scale: Float) =
+    animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
+
+  private fun View.alphaAnimate(alpha: Float) =
+    animate().alpha(alpha).setDuration(ANIMATION_DURATION)
+
+  /**
+   * Applies a blur and fills the blur image asynchronously When ready, scales the image down and
+   * shows the blur & foreground
+   */
+  fun blur() {
+    if (isBlurred) return
+    isBlurred = true
+    with(binding) {
+      Blurry.with(imageBase.context).capture(imageBase).into(imageBlur)
+      scaleAnimate(ANIMATION_SCALE).start()
+      imageBlur.alphaAnimate(1f).start()
+      imageForeground.alphaAnimate(1f).start()
     }
+  }
 
-    override fun clearAnimation() {
-        super.clearAnimation()
-        with(binding) {
-            imageBase.clearAnimation()
-            imageBlur.clearAnimation()
-            imageForeground.clearAnimation()
-        }
+  /**
+   * Clears animations and blurs the image without further animations This method is relatively
+   * instantaneous, as retrieving the blurred image is still asynchronous and takes time
+   */
+  fun blurInstantly() {
+    isBlurred = true
+    clearAnimation()
+    with(binding) {
+      Blurry.with(imageBase.context).capture(imageBase).into(imageBlur)
+      scaleXY = ANIMATION_SCALE
+      imageBlur.alpha = 1f
+      imageForeground.alpha = 1f
     }
+  }
 
-    private fun View.scaleAnimate(scale: Float) =
-        animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
-
-    private fun View.alphaAnimate(alpha: Float) =
-        animate().alpha(alpha).setDuration(ANIMATION_DURATION)
-
-    /**
-     * Applies a blur and fills the blur image asynchronously
-     * When ready, scales the image down and shows the blur & foreground
-     */
-    fun blur() {
-        if (isBlurred) return
-        isBlurred = true
-        with(binding) {
-            Blurry.with(imageBase.context).capture(imageBase).into(imageBlur)
-            scaleAnimate(ANIMATION_SCALE).start()
-            imageBlur.alphaAnimate(1f).start()
-            imageForeground.alphaAnimate(1f).start()
-        }
+  /** Animate view back to original state and remove drawable when finished */
+  fun removeBlur() {
+    if (!isBlurred) return
+    isBlurred = false
+    scaleAnimate(1.0f).start()
+    with(binding) {
+      imageBlur.alphaAnimate(0f).withEndAction { imageBlur.setImageDrawable(null) }.start()
+      imageForeground.alphaAnimate(0f).start()
     }
+  }
 
-    /**
-     * Clears animations and blurs the image without further animations
-     * This method is relatively instantaneous, as retrieving the blurred image
-     * is still asynchronous and takes time
-     */
-    fun blurInstantly() {
-        isBlurred = true
-        clearAnimation()
-        with(binding) {
-            Blurry.with(imageBase.context).capture(imageBase).into(imageBlur)
-            scaleXY = ANIMATION_SCALE
-            imageBlur.alpha = 1f
-            imageForeground.alpha = 1f
-        }
+  /** Clear all animations and unblur the image */
+  fun removeBlurInstantly() {
+    isBlurred = false
+    clearAnimation()
+    scaleX = 1.0f
+    scaleX = 1.0f
+    with(binding) {
+      imageBlur.alpha = 0f
+      imageBlur.setImageDrawable(null)
+      imageForeground.alpha = 0f
     }
+  }
 
-    /**
-     * Animate view back to original state and remove drawable when finished
-     */
-    fun removeBlur() {
-        if (!isBlurred) return
-        isBlurred = false
-        scaleAnimate(1.0f).start()
-        with(binding) {
-            imageBlur.alphaAnimate(0f).withEndAction { imageBlur.setImageDrawable(null) }.start()
-            imageForeground.alphaAnimate(0f).start()
-        }
-    }
+  /**
+   * Switch blur state and apply transition
+   *
+   * @return true if new state is blurred; false otherwise
+   */
+  fun toggleBlur(): Boolean {
+    if (isBlurred) removeBlur() else blur()
+    return isBlurred
+  }
 
-    /**
-     * Clear all animations and unblur the image
-     */
-    fun removeBlurInstantly() {
-        isBlurred = false
-        clearAnimation()
-        scaleX = 1.0f
-        scaleX = 1.0f
-        with(binding) {
-            imageBlur.alpha = 0f
-            imageBlur.setImageDrawable(null)
-            imageForeground.alpha = 0f
-        }
-    }
+  /**
+   * Clears all of the blur effects to restore the original states If views were modified in other
+   * ways, this method won't affect it
+   */
+  fun reset() {
+    removeBlurInstantly()
+    imageBase.setImageDrawable(null)
+  }
 
-    /**
-     * Switch blur state and apply transition
-     *
-     * @return true if new state is blurred; false otherwise
-     */
-    fun toggleBlur(): Boolean {
-        if (isBlurred) removeBlur()
-        else blur()
-        return isBlurred
+  /** Reset most of possible changes to the view */
+  fun fullReset() {
+    reset()
+    with(binding) {
+      fullAction { it.visible().background = null }
+      imageForeground.setBackgroundColorRes(R.color.kau_blurred_image_selection_overlay)
+      imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30, Color.WHITE)
     }
+  }
 
-    /**
-     * Clears all of the blur effects to restore the original states
-     * If views were modified in other ways, this method won't affect it
-     */
-    fun reset() {
-        removeBlurInstantly()
-        imageBase.setImageDrawable(null)
-    }
-
-    /**
-     * Reset most of possible changes to the view
-     */
-    fun fullReset() {
-        reset()
-        with(binding) {
-            fullAction { it.visible().background = null }
-            imageForeground.setBackgroundColorRes(R.color.kau_blurred_image_selection_overlay)
-            imageForeground.setIcon(GoogleMaterial.Icon.gmd_check, 30, Color.WHITE)
-        }
-    }
-
-    private fun KauBlurredImageviewBinding.fullAction(action: (View) -> Unit) {
-        action(this@BlurredImageView)
-        action(imageBase)
-        action(imageBlur)
-        action(imageForeground)
-    }
+  private fun KauBlurredImageviewBinding.fullAction(action: (View) -> Unit) {
+    action(this@BlurredImageView)
+    action(imageBase)
+    action(imageBlur)
+    action(imageForeground)
+  }
 }

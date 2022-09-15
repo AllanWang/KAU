@@ -21,121 +21,119 @@ import ca.allanwang.kau.kotlin.ILazyResettable
 /**
  * Created by Allan Wang on 2017-06-07.
  *
- * Implementation of a kpref data item
- * Contains a unique key for the shared preference as well as a nonnull fallback item
- * Also contains an optional mutable postSetter that will be called every time a new value is given
+ * Implementation of a kpref data item Contains a unique key for the shared preference as well as a
+ * nonnull fallback item Also contains an optional mutable postSetter that will be called every time
+ * a new value is given
  */
-
 interface KPrefDelegate<T> : ILazyResettable<T> {
-    val key: String
-    operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T)
+  val key: String
+  operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T)
 }
 
 class KPrefException(message: String) : IllegalAccessException(message)
 
-class KPrefDelegateAndroid<T> internal constructor(
-    override val key: String,
-    private val fallback: T,
-    private val pref: KPref,
-    private val prefBuilder: KPrefBuilderAndroid,
-    private val transaction: KPrefTransaction<T>,
-    private var postSetter: (value: T) -> Unit = {}
+class KPrefDelegateAndroid<T>
+internal constructor(
+  override val key: String,
+  private val fallback: T,
+  private val pref: KPref,
+  private val prefBuilder: KPrefBuilderAndroid,
+  private val transaction: KPrefTransaction<T>,
+  private var postSetter: (value: T) -> Unit = {}
 ) : KPrefDelegate<T> {
 
-    private object UNINITIALIZED
+  private object UNINITIALIZED
 
-    private val sp: SharedPreferences get() = prefBuilder.sp
+  private val sp: SharedPreferences
+    get() = prefBuilder.sp
 
-    @Volatile
-    private var _value: Any? = UNINITIALIZED
-    private val lock = this
+  @Volatile private var _value: Any? = UNINITIALIZED
+  private val lock = this
 
-    init {
-        pref.add(this)
-    }
+  init {
+    pref.add(this)
+  }
 
-    override fun invalidate() {
-        _value = UNINITIALIZED
-    }
+  override fun invalidate() {
+    _value = UNINITIALIZED
+  }
 
-    @Suppress("UNCHECKED_CAST")
-    override val value: T
-        get() {
-            val _v1 = _value
-            if (_v1 !== UNINITIALIZED)
-                return _v1 as T
+  @Suppress("UNCHECKED_CAST")
+  override val value: T
+    get() {
+      val _v1 = _value
+      if (_v1 !== UNINITIALIZED) return _v1 as T
 
-            return synchronized(lock) {
-                val _v2 = _value
-                if (_v2 !== UNINITIALIZED) {
-                    _v2 as T
-                } else {
-                    _value = transaction.get(sp, key, fallback)
-                    _value as T
-                }
-            }
+      return synchronized(lock) {
+        val _v2 = _value
+        if (_v2 !== UNINITIALIZED) {
+          _v2 as T
+        } else {
+          _value = transaction.get(sp, key, fallback)
+          _value as T
         }
-
-    override fun isInitialized(): Boolean = _value !== UNINITIALIZED
-
-    override fun toString(): String =
-        if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
-
-    override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
-        _value = t
-        val editor = sp.edit()
-        transaction.set(editor, key, t)
-        editor.apply()
-        postSetter(t)
+      }
     }
+
+  override fun isInitialized(): Boolean = _value !== UNINITIALIZED
+
+  override fun toString(): String =
+    if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+
+  override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
+    _value = t
+    val editor = sp.edit()
+    transaction.set(editor, key, t)
+    editor.apply()
+    postSetter(t)
+  }
 }
 
-class KPrefDelegateInMemory<T> internal constructor(
-    override val key: String,
-    private val fallback: T,
-    private val pref: KPref,
-    private var postSetter: (value: T) -> Unit = {}
+class KPrefDelegateInMemory<T>
+internal constructor(
+  override val key: String,
+  private val fallback: T,
+  private val pref: KPref,
+  private var postSetter: (value: T) -> Unit = {}
 ) : KPrefDelegate<T> {
 
-    private object UNINITIALIZED
+  private object UNINITIALIZED
 
-    @Volatile
-    private var _value: Any? = UNINITIALIZED
-    private val lock = this
+  @Volatile private var _value: Any? = UNINITIALIZED
+  private val lock = this
 
-    init {
-        pref.add(this)
-    }
+  init {
+    pref.add(this)
+  }
 
-    override fun invalidate() {
-        _value = UNINITIALIZED
-    }
+  override fun invalidate() {
+    _value = UNINITIALIZED
+  }
 
-    @Suppress("UNCHECKED_CAST")
-    override val value: T
-        get() {
-            val _v1 = _value
-            if (_v1 !== UNINITIALIZED)
-                return _v1 as T
+  @Suppress("UNCHECKED_CAST")
+  override val value: T
+    get() {
+      val _v1 = _value
+      if (_v1 !== UNINITIALIZED) return _v1 as T
 
-            return synchronized(lock) {
-                val _v2 = _value
-                if (_v2 !== UNINITIALIZED) {
-                    _v2 as T
-                } else {
-                    _value = fallback
-                    _value as T
-                }
-            }
+      return synchronized(lock) {
+        val _v2 = _value
+        if (_v2 !== UNINITIALIZED) {
+          _v2 as T
+        } else {
+          _value = fallback
+          _value as T
         }
-
-    override fun isInitialized(): Boolean = _value !== UNINITIALIZED
-
-    override fun toString(): String =
-        if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
-
-    override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
-        _value = t
-        postSetter(t)
+      }
     }
+
+  override fun isInitialized(): Boolean = _value !== UNINITIALIZED
+
+  override fun toString(): String =
+    if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+
+  override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
+    _value = t
+    postSetter(t)
+  }
 }

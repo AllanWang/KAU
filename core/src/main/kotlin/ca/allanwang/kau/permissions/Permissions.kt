@@ -24,31 +24,31 @@ import androidx.annotation.RequiresApi
 /**
  * Created by Allan Wang on 2017-07-02.
  *
- * Bindings for the permission manager
- * This is the only class you need to worry about when using KAU's manager
+ * Bindings for the permission manager This is the only class you need to worry about when using
+ * KAU's manager
  *
- * MAKE SURE [kauOnRequestPermissionsResult] is added to your activities,
- * and don't forget to request the permissions in your manifest.
- * A collection of constants redirecting to the [Manifest.permission] counterparts
- * are added for your convenience
+ * MAKE SURE [kauOnRequestPermissionsResult] is added to your activities, and don't forget to
+ * request the permissions in your manifest. A collection of constants redirecting to the
+ * [Manifest.permission] counterparts are added for your convenience
  */
 
 /**
- * Hook that should be added inside all [Activity.onRequestPermissionsResult] so that the Permission manager can handle the responses
+ * Hook that should be added inside all [Activity.onRequestPermissionsResult] so that the Permission
+ * manager can handle the responses
  */
 fun Activity.kauOnRequestPermissionsResult(permissions: Array<out String>, grantResults: IntArray) =
-    PermissionManager.onRequestPermissionsResult(this, permissions, grantResults)
+  PermissionManager.onRequestPermissionsResult(this, permissions, grantResults)
 
 /**
- * Request a permission with a callback
- * In reality, an activity is needed to fulfill the request, but a context is enough if those permissions are already granted
- * To be safe, you may want to check that the context can be casted successfully first
- * The [callback] returns [granted], which is true if all permissions are granted
- * [deniedPerm] is the first denied permission, if granted is false
+ * Request a permission with a callback In reality, an activity is needed to fulfill the request,
+ * but a context is enough if those permissions are already granted To be safe, you may want to
+ * check that the context can be casted successfully first The [callback] returns [granted], which
+ * is true if all permissions are granted [deniedPerm] is the first denied permission, if granted is
+ * false
  */
 fun Context.kauRequestPermissions(
-    vararg permissions: String,
-    callback: (granted: Boolean, deniedPerm: String?) -> Unit
+  vararg permissions: String,
+  callback: (granted: Boolean, deniedPerm: String?) -> Unit
 ) = PermissionManager(this, permissions, callback)
 
 /**

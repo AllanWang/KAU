@@ -34,104 +34,102 @@ import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 /**
  * Created by Allan Wang on 2017-07-04.
  *
- * Base activity for selecting images from storage
- * Images are blurred when selected, and multiple images can be selected at a time.
- * Having three layered images makes this slightly slower than [MediaPickerActivityOverlayBase]
+ * Base activity for selecting images from storage Images are blurred when selected, and multiple
+ * images can be selected at a time. Having three layered images makes this slightly slower than
+ * [MediaPickerActivityOverlayBase]
  */
 abstract class MediaPickerActivityBase(
-    mediaType: MediaType,
-    mediaActions: List<MediaAction> = emptyList()
+  mediaType: MediaType,
+  mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
-    private lateinit var binding: KauActivityImagePickerBinding
+  private lateinit var binding: KauActivityImagePickerBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = KauActivityImagePickerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        binding.init()
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    binding = KauActivityImagePickerBinding.inflate(layoutInflater)
+    setContentView(binding.root)
+    binding.init()
+  }
+
+  private fun KauActivityImagePickerBinding.init() {
+    kauSelectionCount.setCompoundDrawables(
+      null,
+      null,
+      GoogleMaterial.Icon.gmd_image.toDrawable(this@MediaPickerActivityBase, 18),
+      null
+    )
+
+    setSupportActionBar(kauToolbar)
+    supportActionBar?.apply {
+      setDisplayHomeAsUpEnabled(true)
+      setDisplayShowHomeEnabled(true)
+      setHomeAsUpIndicator(
+        GoogleMaterial.Icon.gmd_close.toDrawable(this@MediaPickerActivityBase, 18)
+      )
+    }
+    kauToolbar.setNavigationOnClickListener { onBackPressed() }
+
+    initializeRecycler(kauRecyclerview)
+
+    adapter.fastAdapter!!.let {
+      MediaItem.bindEvents(it)
+      it.selectExtension {
+        selectionListener =
+          object : ISelectionListener<MediaItem> {
+            override fun onSelectionChanged(item: MediaItem, selected: Boolean) {
+              kauSelectionCount.text = adapter.selectionSize.toString()
+            }
+          }
+      }
     }
 
-    private fun KauActivityImagePickerBinding.init() {
-        kauSelectionCount.setCompoundDrawables(
-            null,
-            null,
-            GoogleMaterial.Icon.gmd_image.toDrawable(this@MediaPickerActivityBase, 18),
-            null
-        )
-
-        setSupportActionBar(kauToolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-            setHomeAsUpIndicator(
-                GoogleMaterial.Icon.gmd_close.toDrawable(
-                    this@MediaPickerActivityBase,
-                    18
-                )
-            )
-        }
-        kauToolbar.setNavigationOnClickListener { onBackPressed() }
-
-        initializeRecycler(kauRecyclerview)
-
-        adapter.fastAdapter!!.let {
-            MediaItem.bindEvents(it)
-            it.selectExtension {
-                selectionListener = object : ISelectionListener<MediaItem> {
-                    override fun onSelectionChanged(item: MediaItem, selected: Boolean) {
-                        kauSelectionCount.text = adapter.selectionSize.toString()
-                    }
-                }
-            }
-        }
-
-        kauFab.apply {
-            show()
-            setIcon(GoogleMaterial.Icon.gmd_send)
-            setOnClickListener {
-                val selection = adapter.selectedItems
-                if (selection.isEmpty()) {
-                    toast(R.string.kau_no_items_selected)
-                } else {
-                    finish(ArrayList(selection.map { it.data }))
-                }
-            }
-            hideOnDownwardsScroll(kauRecyclerview)
-        }
-
-        loadItems()
-    }
-
-    override fun converter(model: MediaModel): MediaItem = MediaItem(model)
-
-    /**
-     * Decide whether the toolbar can hide itself
-     * We typically want this behaviour unless we don't have enough images
-     * to fill the entire screen. In that case we don't want the recyclerview to be scrollable
-     * which means the toolbar shouldn't scroll either
-
-     * @param scrollable true if scroll flags are enabled, false otherwise
-     */
-    private fun KauActivityImagePickerBinding.setToolbarScrollable(scrollable: Boolean) {
-        val params = kauToolbar.layoutParams as AppBarLayout.LayoutParams
-        if (scrollable) {
-            params.scrollFlags = AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
-                AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+    kauFab.apply {
+      show()
+      setIcon(GoogleMaterial.Icon.gmd_send)
+      setOnClickListener {
+        val selection = adapter.selectedItems
+        if (selection.isEmpty()) {
+          toast(R.string.kau_no_items_selected)
         } else {
-            params.scrollFlags = 0
+          finish(ArrayList(selection.map { it.data }))
         }
+      }
+      hideOnDownwardsScroll(kauRecyclerview)
     }
 
-    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
-        super.onLoadFinished(loader, data)
-        binding.setToolbarScrollable(
-            (binding.kauRecyclerview.layoutManager as LinearLayoutManager)
-                .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1
-        )
-    }
+    loadItems()
+  }
 
-    override fun onStatusChange(loaded: Boolean) {
-        binding.setToolbarScrollable(loaded)
+  override fun converter(model: MediaModel): MediaItem = MediaItem(model)
+
+  /**
+   * Decide whether the toolbar can hide itself We typically want this behaviour unless we don't
+   * have enough images to fill the entire screen. In that case we don't want the recyclerview to be
+   * scrollable which means the toolbar shouldn't scroll either
+   *
+   * @param scrollable true if scroll flags are enabled, false otherwise
+   */
+  private fun KauActivityImagePickerBinding.setToolbarScrollable(scrollable: Boolean) {
+    val params = kauToolbar.layoutParams as AppBarLayout.LayoutParams
+    if (scrollable) {
+      params.scrollFlags =
+        AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
+          AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+    } else {
+      params.scrollFlags = 0
     }
+  }
+
+  override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
+    super.onLoadFinished(loader, data)
+    binding.setToolbarScrollable(
+      (binding.kauRecyclerview.layoutManager as LinearLayoutManager)
+        .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1
+    )
+  }
+
+  override fun onStatusChange(loaded: Boolean) {
+    binding.setToolbarScrollable(loaded)
+  }
 }

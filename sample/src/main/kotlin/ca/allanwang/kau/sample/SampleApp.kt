@@ -18,8 +18,5 @@ package ca.allanwang.kau.sample
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
-/**
- * Created by Allan Wang on 2017-06-08.
- */
-@HiltAndroidApp
-class SampleApp : Application()
+/** Created by Allan Wang on 2017-06-08. */
+@HiltAndroidApp class SampleApp : Application()

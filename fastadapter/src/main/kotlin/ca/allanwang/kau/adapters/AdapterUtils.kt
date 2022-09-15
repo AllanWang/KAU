@@ -20,21 +20,15 @@ import com.mikepenz.fastadapter.GenericItem
 import com.mikepenz.fastadapter.IAdapter
 import com.mikepenz.fastadapter.select.SelectExtension
 
-/**
- * Created by Allan Wang on 2017-11-08.
- */
+/** Created by Allan Wang on 2017-11-08. */
 
-/**
- * Add kotlin's generic syntax to better support out types
- */
+/** Add kotlin's generic syntax to better support out types */
 fun <Item : GenericItem> fastAdapter(vararg adapter: IAdapter<out Item>): FastAdapter<Item> =
-    FastAdapter.with(adapter.toList())
+  FastAdapter.with(adapter.toList())
 
-/**
- * Returns selection size, or -1 if selection is disabled
- */
+/** Returns selection size, or -1 if selection is disabled */
 inline val <Item : GenericItem> IAdapter<Item>.selectionSize: Int
-    get() = fastAdapter?.getExtension<SelectExtension<Item>>()?.selections?.size ?: -1
+  get() = fastAdapter?.getExtension<SelectExtension<Item>>()?.selections?.size ?: -1
 
 inline val <Item : GenericItem> IAdapter<Item>.selectedItems: Set<Item>
-    get() = fastAdapter?.getExtension<SelectExtension<Item>>()?.selectedItems ?: emptySet()
+  get() = fastAdapter?.getExtension<SelectExtension<Item>>()?.selectedItems ?: emptySet()
