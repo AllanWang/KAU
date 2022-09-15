@@ -50,10 +50,10 @@ object Versions {
     const val glide = "4.13.2"
 
     // https://github.com/mikepenz/Android-Iconics#1-provide-the-gradle-dependency
-    const val iconics = "5.3.2"
+    const val iconics = "5.3.4"
     const val iconicsGoogle = "4.0.0.2"
     const val iconicsMaterial = "2.2.0.8"
-    const val iconicsCommunity = "5.8.55.0"
+    const val iconicsCommunity = "6.4.95.0"
 
     // https://github.com/afollestad/material-dialogs/releases
     const val materialDialog = "3.3.0"

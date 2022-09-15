@@ -32,8 +32,6 @@ import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.utils.AnimHolder
 import ca.allanwang.kau.utils.INVALID_ID
 import ca.allanwang.kau.utils.dimenPixelSize
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.GenericItem
 
 /**
@@ -100,14 +98,14 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
         }
         aboutIndicator.setViewPager(aboutPager)
         aboutDraggableFrame.addListener(object :
-            ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
-            override fun onDragDismissed() {
-                window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
-                    .inflateTransition(if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
-                panels[currentPage].recycler?.stopScroll()
-                finishAfterTransition()
-            }
-        })
+                ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
+                override fun onDragDismissed() {
+                    window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
+                        .inflateTransition(if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
+                    panels[currentPage].recycler?.stopScroll()
+                    finishAfterTransition()
+                }
+            })
         panels.forEachIndexed { index, contract ->
             contract.loadItems(
                 this@AboutActivityBase,
