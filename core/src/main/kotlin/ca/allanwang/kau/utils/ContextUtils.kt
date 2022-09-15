@@ -48,20 +48,21 @@ fun Context.runOnUiThread(f: Context.() -> Unit) {
  */
 @Suppress("DEPRECATION")
 inline fun <reified T : Activity> Context.startActivity(
-    clearStack: Boolean = false,
-    bundleBuilder: Bundle.() -> Unit = {},
-    intentBuilder: Intent.() -> Unit = {}
+  clearStack: Boolean = false,
+  bundleBuilder: Bundle.() -> Unit = {},
+  intentBuilder: Intent.() -> Unit = {}
 ) = startActivity(T::class.java, clearStack, bundleBuilder, intentBuilder)
 
 @Deprecated(
-    "Use reified generic instead of passing class",
-    ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
-    DeprecationLevel.WARNING)
+  "Use reified generic instead of passing class",
+  ReplaceWith("startActivity<T>(clearStack, bundleBuilder, intentBuilder)"),
+  DeprecationLevel.WARNING
+)
 inline fun <T : Activity> Context.startActivity(
-    clazz: Class<T>,
-    clearStack: Boolean = false,
-    bundleBuilder: Bundle.() -> Unit = {},
-    intentBuilder: Intent.() -> Unit = {}
+  clazz: Class<T>,
+  clearStack: Boolean = false,
+  bundleBuilder: Bundle.() -> Unit = {},
+  intentBuilder: Intent.() -> Unit = {}
 ) {
   val intent = Intent(this, clazz)
   if (clearStack) {
@@ -77,7 +78,7 @@ inline fun <T : Activity> Context.startActivity(
 }
 
 fun Context.startPlayStoreLink(@StringRes packageIdRes: Int): Boolean =
-    startPlayStoreLink(string(packageIdRes))
+  startPlayStoreLink(string(packageIdRes))
 
 /**
  * Open play store link for [packageId].
@@ -86,8 +87,10 @@ fun Context.startPlayStoreLink(@StringRes packageIdRes: Int): Boolean =
  */
 fun Context.startPlayStoreLink(packageId: String): Boolean {
   val intent =
-      Intent(
-          Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageId"))
+    Intent(
+      Intent.ACTION_VIEW,
+      Uri.parse("https://play.google.com/store/apps/details?id=$packageId")
+    )
   return try {
     startActivity(intent)
     true
@@ -119,16 +122,16 @@ fun Context.startLink(@StringRes url: Int): Boolean = startLink(string(url))
 
 // Toast helpers
 inline fun View.toast(@StringRes id: Int, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
-    context.toast(id, duration, log)
+  context.toast(id, duration, log)
 
 inline fun Context.toast(
-    @StringRes id: Int,
-    duration: Int = Toast.LENGTH_LONG,
-    log: Boolean = false
+  @StringRes id: Int,
+  duration: Int = Toast.LENGTH_LONG,
+  log: Boolean = false
 ) = toast(this.string(id), duration, log)
 
 inline fun View.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) =
-    context.toast(text, duration, log)
+  context.toast(text, duration, log)
 
 inline fun Context.toast(text: String, duration: Int = Toast.LENGTH_LONG, log: Boolean = false) {
   Toast.makeText(this, text, duration).show()
@@ -141,10 +144,10 @@ const val INVALID_ID = 0
 inline fun Context.string(@StringRes id: Int): String = getString(id)
 
 inline fun Context.string(@StringRes id: Int, fallback: String?): String? =
-    if (id != INVALID_ID) string(id) else fallback
+  if (id != INVALID_ID) string(id) else fallback
 
 inline fun Context.string(@StringRes id: Int, fallback: () -> String?): String? =
-    if (id != INVALID_ID) string(id) else fallback()
+  if (id != INVALID_ID) string(id) else fallback()
 
 inline fun Context.color(@ColorRes id: Int): Int = ContextCompat.getColor(this, id)
 
@@ -157,22 +160,22 @@ inline fun Context.dimen(@DimenRes id: Int): Float = resources.getDimension(id)
 inline fun Context.dimenPixelSize(@DimenRes id: Int): Int = resources.getDimensionPixelSize(id)
 
 inline fun Context.drawable(@DrawableRes id: Int): Drawable =
-    ContextCompat.getDrawable(this, id) ?: throw KauException("Drawable with id $id not found")
+  ContextCompat.getDrawable(this, id) ?: throw KauException("Drawable with id $id not found")
 
 inline fun Context.drawable(@DrawableRes id: Int, fallback: Drawable?): Drawable? =
-    if (id != INVALID_ID) drawable(id) else fallback
+  if (id != INVALID_ID) drawable(id) else fallback
 
 inline fun Context.drawable(@DrawableRes id: Int, fallback: () -> Drawable?): Drawable? =
-    if (id != INVALID_ID) drawable(id) else fallback()
+  if (id != INVALID_ID) drawable(id) else fallback()
 
 inline fun Context.interpolator(@InterpolatorRes id: Int) =
-    AnimationUtils.loadInterpolator(this, id)!!
+  AnimationUtils.loadInterpolator(this, id)!!
 
 inline fun Context.animation(@AnimRes id: Int) = AnimationUtils.loadAnimation(this, id)!!
 
 /** Returns plural form of res. The quantity is also passed to the formatter as an int */
 inline fun Context.plural(@PluralsRes id: Int, quantity: Number) =
-    resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
+  resources.getQuantityString(id, quantity.toInt(), quantity.toInt())
 
 // Attr retrievers
 fun Context.resolveColor(@AttrRes attr: Int, @ColorInt fallback: Int = 0): Int {
@@ -214,8 +217,8 @@ fun Context.resolveString(@AttrRes attr: Int, fallback: String = ""): String {
  * https://github.com/afollestad/material-dialogs/issues/1778
  */
 inline fun Context.materialDialog(
-    dialogBehavior: DialogBehavior = ModalDialog,
-    action: MaterialDialog.() -> Unit
+  dialogBehavior: DialogBehavior = ModalDialog,
+  action: MaterialDialog.() -> Unit
 ): MaterialDialog {
   val dialog = MaterialDialog(this, dialogBehavior)
   dialog.action()
@@ -228,7 +231,7 @@ inline fun Context.materialDialog(
 }
 
 fun Context.getDip(value: Float): Float =
-    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
+  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
 
 inline val Context.isRtl: Boolean
   get() = resources.configuration.layoutDirection == View.LAYOUT_DIRECTION_RTL
@@ -246,13 +249,13 @@ inline val Context.isNavBarOnBottom: Boolean
   }
 
 fun Context.hasPermission(permissions: String) =
-    !buildIsMarshmallowAndUp ||
-        ContextCompat.checkSelfPermission(this, permissions) == PackageManager.PERMISSION_GRANTED
+  !buildIsMarshmallowAndUp ||
+    ContextCompat.checkSelfPermission(this, permissions) == PackageManager.PERMISSION_GRANTED
 
 fun Context.copyToClipboard(
-    text: String?,
-    label: String = "Copied Text",
-    showToast: Boolean = true
+  text: String?,
+  label: String = "Copied Text",
+  showToast: Boolean = true
 ) {
   val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
   clipboard.setPrimaryClip(ClipData.newPlainText(label, text ?: ""))

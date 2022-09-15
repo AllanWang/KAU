@@ -29,7 +29,7 @@ object PrimaryColors : ColorOptions(ColorPalette.PRIMARY_COLORS, ColorPalette.PR
 object AccentColors : ColorOptions(ColorPalette.ACCENT_COLORS, ColorPalette.ACCENT_COLORS_SUB)
 
 class CustomColors(colors: IntArray, subColors: Array<IntArray>? = null) :
-    ColorOptions(colors, subColors)
+  ColorOptions(colors, subColors)
 
 class ColorBuilder : ColorContract {
   override var colors: ColorOptions = PrimaryColors
@@ -49,17 +49,18 @@ interface ColorContract {
 
 @SuppressLint("CheckResult")
 fun MaterialDialog.kauColorChooser(action: ColorContract.() -> Unit) =
-    kauColorChooser(ColorBuilder().apply(action))
+  kauColorChooser(ColorBuilder().apply(action))
 
 /** Thin wrapper that exposes color chooser options as [ColorContract] */
 @SuppressLint("CheckResult")
 fun MaterialDialog.kauColorChooser(c: ColorContract) {
   colorChooser(
-      colors = c.colors.colors,
-      subColors = c.colors.subColors,
-      initialSelection = c.defaultColor,
-      allowCustomArgb = c.allowCustom,
-      showAlphaSelector = c.allowCustomAlpha,
-      selection = c.callback)
+    colors = c.colors.colors,
+    subColors = c.colors.subColors,
+    initialSelection = c.defaultColor,
+    allowCustomArgb = c.allowCustom,
+    showAlphaSelector = c.allowCustomAlpha,
+    selection = c.callback
+  )
   positiveButton(R.string.kau_done)
 }

@@ -37,33 +37,36 @@ import java.util.Stack
  * track of title changes
  */
 class TextSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
-    TextSwitcher(context, attrs) {
+  TextSwitcher(context, attrs) {
 
   val titleStack: Stack<CharSequence?> = Stack()
 
   /** Holds a mapping of animation types to their respective animations */
   val animationMap =
-      mapOf(
-          ANIMATION_NONE to null,
-          ANIMATION_SLIDE_HORIZONTAL to
-              AnimationBundle(
-                  R.anim.kau_slide_in_right,
-                  R.anim.kau_slide_out_left,
-                  R.anim.kau_slide_in_left,
-                  R.anim.kau_slide_out_right),
-          ANIMATION_SLIDE_VERTICAL to
-              AnimationBundle(
-                  R.anim.kau_slide_in_bottom,
-                  R.anim.kau_slide_out_top,
-                  R.anim.kau_slide_in_top,
-                  R.anim.kau_slide_out_bottom))
+    mapOf(
+      ANIMATION_NONE to null,
+      ANIMATION_SLIDE_HORIZONTAL to
+        AnimationBundle(
+          R.anim.kau_slide_in_right,
+          R.anim.kau_slide_out_left,
+          R.anim.kau_slide_in_left,
+          R.anim.kau_slide_out_right
+        ),
+      ANIMATION_SLIDE_VERTICAL to
+        AnimationBundle(
+          R.anim.kau_slide_in_bottom,
+          R.anim.kau_slide_out_top,
+          R.anim.kau_slide_in_top,
+          R.anim.kau_slide_out_bottom
+        )
+    )
 
   /** Holds lazy instances of the animations */
   inner class AnimationBundle(
-      private val nextIn: Int,
-      private val nextOut: Int,
-      private val prevIn: Int,
-      private val prevOut: Int
+    private val nextIn: Int,
+    private val nextOut: Int,
+    private val prevIn: Int,
+    private val prevOut: Int
   ) {
     val NEXT_IN: Animation by lazyUi { AnimationUtils.loadAnimation(context, nextIn) }
     val NEXT_OUT: Animation by lazyUi { AnimationUtils.loadAnimation(context, nextOut) }
@@ -93,7 +96,7 @@ class TextSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet
     if (attrs != null) {
       val styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.TextSlider)
       animationType =
-          styledAttrs.getInteger(R.styleable.TextSlider_animation_type, ANIMATION_SLIDE_HORIZONTAL)
+        styledAttrs.getInteger(R.styleable.TextSlider_animation_type, ANIMATION_SLIDE_HORIZONTAL)
       styledAttrs.recycle()
     }
   }

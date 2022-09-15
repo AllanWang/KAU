@@ -31,7 +31,7 @@ import java.util.Locale
 open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<Int>(builder) {
 
   interface KPrefTimeContract :
-      KPrefText.KPrefTextContract<Int>, TimePickerDialog.OnTimeSetListener {
+    KPrefText.KPrefTextContract<Int>, TimePickerDialog.OnTimeSetListener {
     var use24HourFormat: Boolean
   }
 
@@ -42,10 +42,10 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
 
   /** Default implementation of [KPrefTimeContract] */
   class KPrefTimeBuilder(
-      globalOptions: GlobalOptions,
-      titleId: Int,
-      getter: () -> Int,
-      setter: KPrefItemActions.(value: Int) -> Unit
+    globalOptions: GlobalOptions,
+    titleId: Int,
+    getter: () -> Int,
+    setter: KPrefItemActions.(value: Int) -> Unit
   ) : KPrefTimeContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
     override var use24HourFormat: Boolean = false
@@ -59,7 +59,7 @@ open class KPrefTimePicker(override val builder: KPrefTimeContract) : KPrefText<
       val (hour, min) = it.splitTime
       if (use24HourFormat) String.format(Locale.CANADA, "%d:%02d", hour, min)
       else
-          String.format(Locale.CANADA, "%d:%02d %s", hour % 12, min, if (hour >= 12) "PM" else "AM")
+        String.format(Locale.CANADA, "%d:%02d %s", hour % 12, min, if (hour >= 12) "PM" else "AM")
     }
   }
 

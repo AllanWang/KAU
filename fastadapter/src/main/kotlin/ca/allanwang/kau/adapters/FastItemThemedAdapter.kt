@@ -36,12 +36,12 @@ import com.mikepenz.fastadapter.adapters.FastItemAdapter
  * then the colors will be set
  */
 class FastItemThemedAdapter<Item : GenericItem>(
-    textColor: Int? = null,
-    backgroundColor: Int? = null,
-    accentColor: Int? = null
+  textColor: Int? = null,
+  backgroundColor: Int? = null,
+  accentColor: Int? = null
 ) : FastItemAdapter<Item>() {
   constructor(
-      colors: ThemableIItemColors
+    colors: ThemableIItemColors
   ) : this(colors.textColor, colors.backgroundColor, colors.accentColor)
 
   init {
@@ -157,7 +157,7 @@ class ThemableIItemDelegate : ThemableIItem, ThemableIItemColors by ThemableIIte
   override fun bindBackgroundRipple(vararg views: View?) {
     val background = backgroundColor ?: return
     val foreground =
-        accentColor ?: textColor ?: backgroundColor ?: return // default to normal background
+      accentColor ?: textColor ?: backgroundColor ?: return // default to normal background
     val ripple = createSimpleRippleDrawable(foreground, background)
     views.forEach { it?.background = ripple }
   }

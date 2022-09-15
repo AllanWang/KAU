@@ -23,8 +23,8 @@ import android.content.pm.PackageManager
  * Pending permission collector
  */
 class PermissionResult(
-    permissions: Array<out String>,
-    val callback: (granted: Boolean, deniedPerm: String?) -> Unit
+  permissions: Array<out String>,
+  val callback: (granted: Boolean, deniedPerm: String?) -> Unit
 ) {
   val permissions = mutableSetOf(*permissions)
 

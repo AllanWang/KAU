@@ -45,14 +45,13 @@ class AnimActivity : KauBaseActivity() {
     super.onCreate(savedInstanceState)
     val adapter = SingleFastAdapter()
     setContentView(
-        fullLinearRecycler(adapter).apply { setBackgroundColor(pref.bgColor.withAlpha(255)) })
+      fullLinearRecycler(adapter).apply { setBackgroundColor(pref.bgColor.withAlpha(255)) }
+    )
 
     adapter.add(
-        listOf(
-                PERMISSION_ACCESS_COARSE_LOCATION,
-                PERMISSION_ACCESS_FINE_LOCATION,
-                PERMISSION_CAMERA)
-            .map { PermissionCheckboxModel(it).vh() })
+      listOf(PERMISSION_ACCESS_COARSE_LOCATION, PERMISSION_ACCESS_FINE_LOCATION, PERMISSION_CAMERA)
+        .map { PermissionCheckboxModel(it).vh() }
+    )
     adapter.addEventHook(PermissionCheckboxViewBinding.clickHook())
     kauSwipeOnCreate { edgeFlag = SWIPE_EDGE_LEFT }
   }

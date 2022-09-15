@@ -35,9 +35,10 @@ class AboutActivity : AboutActivityBase(R.string::class.java) {
 
   override fun postInflateMainPage(adapter: FastItemThemedAdapter<GenericItem>) {
     adapter.add(
-        CardIItem {
-          title = "About KAU"
-          descRes = R.string.about_kau
-        })
+      CardIItem {
+        title = "About KAU"
+        descRes = R.string.about_kau
+      }
+    )
   }
 }

@@ -23,13 +23,13 @@ import kotlin.math.max
 
 /** Created by Allan Wang on 2017-06-27. */
 open class KauAnimator(
-    val addAnimator: KauAnimatorAdd = SlideAnimatorAdd(KAU_BOTTOM),
-    val removeAnimator: KauAnimatorRemove = SlideAnimatorRemove(KAU_RIGHT),
-    val changeAnimator: KauAnimatorChange = FadeAnimatorChange()
+  val addAnimator: KauAnimatorAdd = SlideAnimatorAdd(KAU_BOTTOM),
+  val removeAnimator: KauAnimatorRemove = SlideAnimatorRemove(KAU_RIGHT),
+  val changeAnimator: KauAnimatorChange = FadeAnimatorChange()
 ) : BaseItemAnimator() {
 
   open fun startDelay(holder: RecyclerView.ViewHolder, duration: Long, factor: Float) =
-      max(0L, (holder.adapterPosition * duration * factor).toLong())
+    max(0L, (holder.adapterPosition * duration * factor).toLong())
 
   override fun removeAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator {
     return holder.itemView.animate().apply {
@@ -45,7 +45,7 @@ open class KauAnimator(
   }
 
   override fun getRemoveDelay(remove: Long, move: Long, change: Long): Long =
-      removeAnimator.getDelay(remove, move, change)
+    removeAnimator.getDelay(remove, move, change)
 
   override fun addAnimationPrepare(holder: RecyclerView.ViewHolder) {
     holder.itemView.apply { addAnimator.animationPrepare(holder)() }
@@ -65,11 +65,11 @@ open class KauAnimator(
   }
 
   override fun getAddDelay(remove: Long, move: Long, change: Long): Long =
-      addAnimator.getDelay(remove, move, change)
+    addAnimator.getDelay(remove, move, change)
 
   override fun changeOldAnimation(
-      holder: RecyclerView.ViewHolder,
-      changeInfo: ChangeInfo
+    holder: RecyclerView.ViewHolder,
+    changeInfo: ChangeInfo
   ): ViewPropertyAnimator {
     return holder.itemView.animate().apply {
       duration = changeDuration

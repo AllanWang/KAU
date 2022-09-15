@@ -37,7 +37,7 @@ import androidx.annotation.RequiresApi
  * manager can handle the responses
  */
 fun Activity.kauOnRequestPermissionsResult(permissions: Array<out String>, grantResults: IntArray) =
-    PermissionManager.onRequestPermissionsResult(this, permissions, grantResults)
+  PermissionManager.onRequestPermissionsResult(this, permissions, grantResults)
 
 /**
  * Request a permission with a callback In reality, an activity is needed to fulfill the request,
@@ -47,8 +47,8 @@ fun Activity.kauOnRequestPermissionsResult(permissions: Array<out String>, grant
  * false
  */
 fun Context.kauRequestPermissions(
-    vararg permissions: String,
-    callback: (granted: Boolean, deniedPerm: String?) -> Unit
+  vararg permissions: String,
+  callback: (granted: Boolean, deniedPerm: String?) -> Unit
 ) = PermissionManager(this, permissions, callback)
 
 /**

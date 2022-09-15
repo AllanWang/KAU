@@ -44,7 +44,7 @@ import kotlin.math.min
 class CutoutView
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    View(context, attrs, defStyleAttr) {
+  View(context, attrs, defStyleAttr) {
 
   companion object {
     const val PHI = 1.6182f
@@ -54,10 +54,10 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
   }
 
   private val paint: TextPaint =
-      TextPaint().apply {
-        isAntiAlias = true
-        xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-      }
+    TextPaint().apply {
+      isAntiAlias = true
+      xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+    }
   private var bitmapScaling: Float = 1f
   private var cutout: Bitmap? = null
   var foregroundColor = Color.MAGENTA
@@ -65,11 +65,11 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     set(value) {
       field = value
       cutoutType =
-          when {
-            value != null -> TYPE_TEXT
-            drawable != null -> TYPE_DRAWABLE
-            else -> TYPE_EMPTY
-          }
+        when {
+          value != null -> TYPE_TEXT
+          drawable != null -> TYPE_DRAWABLE
+          else -> TYPE_EMPTY
+        }
     }
   var cutoutType: Int = TYPE_EMPTY
   private var textSize: Float = 0f
@@ -79,11 +79,11 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     set(value) {
       field = value
       cutoutType =
-          when {
-            drawable != null -> TYPE_DRAWABLE
-            value != null -> TYPE_TEXT
-            else -> TYPE_EMPTY
-          }
+        when {
+          drawable != null -> TYPE_DRAWABLE
+          value != null -> TYPE_TEXT
+          else -> TYPE_EMPTY
+        }
     }
   private var heightPercentage: Float = 0f
   private var minHeight: Float = 0f
@@ -94,12 +94,12 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     if (attrs != null) {
       val a = context.obtainStyledAttributes(attrs, R.styleable.CutoutView, 0, 0)
       if (a.hasValue(R.styleable.CutoutView_font))
-          paint.typeface = context.getFont(a.getString(R.styleable.CutoutView_font)!!)
+        paint.typeface = context.getFont(a.getString(R.styleable.CutoutView_font)!!)
       foregroundColor = a.getColor(R.styleable.CutoutView_foregroundColor, foregroundColor)
       text = a.getString(R.styleable.CutoutView_android_text) ?: text
       minHeight = a.getDimension(R.styleable.CutoutView_android_minHeight, minHeight)
       heightPercentage =
-          a.getFloat(R.styleable.CutoutView_heightPercentageToScreen, heightPercentage)
+        a.getFloat(R.styleable.CutoutView_heightPercentageToScreen, heightPercentage)
       a.recycle()
     }
     maxTextSize = context.dimenPixelSize(R.dimen.kau_display_4_text_size).toFloat()
@@ -121,8 +121,15 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
   private fun calculateTextPosition() {
     val targetWidth = width / PHI
     textSize =
-        getSingleLineTextSize(
-            text!!, paint, targetWidth, 0f, maxTextSize, 0.5f, resources.displayMetrics)
+      getSingleLineTextSize(
+        text!!,
+        paint,
+        targetWidth,
+        0f,
+        maxTextSize,
+        0.5f,
+        resources.displayMetrics
+      )
     paint.textSize = textSize
 
     // measuring text is fun :] see: https://chris.banes.me/2014/03/27/measuring-text/
@@ -135,11 +142,11 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
   private fun calculateImagePosition() {
     if (drawable!!.intrinsicHeight <= 0 || drawable!!.intrinsicWidth <= 0)
-        throw IllegalArgumentException("Drawable's intrinsic size cannot be less than 0")
+      throw IllegalArgumentException("Drawable's intrinsic size cannot be less than 0")
     val targetWidth = width / PHI
     val targetHeight = height / PHI
     bitmapScaling =
-        min(targetHeight / drawable!!.intrinsicHeight, targetWidth / drawable!!.intrinsicWidth)
+      min(targetHeight / drawable!!.intrinsicHeight, targetWidth / drawable!!.intrinsicWidth)
     cutoutX = (width - drawable!!.intrinsicWidth * bitmapScaling) / 2
     cutoutY = (height - drawable!!.intrinsicHeight * bitmapScaling) / 2
   }
@@ -149,9 +156,9 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     parentViewGroup.getWindowVisibleDisplayFrame(parentFrame)
     val minHeight = max(minHeight, heightPercentage * parentFrame.height())
     val trueHeightMeasureSpec =
-        if (minHeight > 0)
-            MeasureSpec.makeMeasureSpec(max(minHeight.toInt(), measuredHeight), MeasureSpec.EXACTLY)
-        else heightMeasureSpec
+      if (minHeight > 0)
+        MeasureSpec.makeMeasureSpec(max(minHeight.toInt(), measuredHeight), MeasureSpec.EXACTLY)
+      else heightMeasureSpec
     super.onMeasure(widthMeasureSpec, trueHeightMeasureSpec)
   }
 
@@ -161,13 +168,13 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
    * Adapted from https://github.com/grantland/android-autofittextview
    */
   fun getSingleLineTextSize(
-      text: String,
-      paint: TextPaint,
-      targetWidth: Float,
-      low: Float,
-      high: Float,
-      precision: Float,
-      metrics: DisplayMetrics
+    text: String,
+    paint: TextPaint,
+    targetWidth: Float,
+    low: Float,
+    high: Float,
+    precision: Float,
+    metrics: DisplayMetrics
   ): Float {
     val mid = (low + high) / 2.0f
 
@@ -177,9 +184,9 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     return when {
       high - low < precision -> low
       maxLineWidth > targetWidth ->
-          getSingleLineTextSize(text, paint, targetWidth, low, mid, precision, metrics)
+        getSingleLineTextSize(text, paint, targetWidth, low, mid, precision, metrics)
       maxLineWidth < targetWidth ->
-          getSingleLineTextSize(text, paint, targetWidth, mid, high, precision, metrics)
+        getSingleLineTextSize(text, paint, targetWidth, mid, high, precision, metrics)
       else -> mid
     }
   }
@@ -197,7 +204,11 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
       }
       TYPE_DRAWABLE -> {
         cutoutCanvas.drawBitmap(
-            drawable!!.toBitmap(bitmapScaling, Bitmap.Config.ALPHA_8), cutoutX, cutoutY, paint)
+          drawable!!.toBitmap(bitmapScaling, Bitmap.Config.ALPHA_8),
+          cutoutX,
+          cutoutY,
+          paint
+        )
       }
       TYPE_EMPTY -> {
         // do nothing

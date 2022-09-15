@@ -41,26 +41,26 @@ internal object PermissionManager {
 
   /** Retrieve permissions requested in our manifest */
   private val manifestPermission =
-      lazyContext<Set<String>> {
-        try {
-          it.packageManager
-              .getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)
-              ?.requestedPermissions
-              ?.toSet()
-              ?: emptySet()
-        } catch (e: Exception) {
-          emptySet()
-        }
+    lazyContext<Set<String>> {
+      try {
+        it.packageManager
+          .getPackageInfo(it.packageName, PackageManager.GET_PERMISSIONS)
+          ?.requestedPermissions
+          ?.toSet()
+          ?: emptySet()
+      } catch (e: Exception) {
+        emptySet()
       }
+    }
 
   /**
    * Registers a new permission request. It is expected that the callback will be called eventually,
    * unless the parent activity is destroyed.
    */
   operator fun invoke(
-      context: Context,
-      permissions: Array<out String>,
-      callback: (granted: Boolean, deniedPerm: String?) -> Unit
+    context: Context,
+    permissions: Array<out String>,
+    callback: (granted: Boolean, deniedPerm: String?) -> Unit
   ) {
     KL.d { "Permission manager for: ${permissions.contentToString()}" }
     if (!buildIsMarshmallowAndUp) return callback(true, null)
@@ -90,9 +90,10 @@ internal object PermissionManager {
       }
     }
     val activity =
-        (context as? Activity)
-            ?: throw KauException(
-                "Context is not an instance of an activity; cannot request permissions")
+      (context as? Activity)
+        ?: throw KauException(
+          "Context is not an instance of an activity; cannot request permissions"
+        )
     KL.i { "Requesting permissions ${permissions.contentToString()}" }
     ActivityCompat.requestPermissions(activity, permissions, 1)
   }
@@ -102,16 +103,16 @@ internal object PermissionManager {
    * cleans up destroyed or completed pending requests.
    */
   fun onRequestPermissionsResult(
-      context: Context,
-      permissions: Array<out String>,
-      grantResults: IntArray
+    context: Context,
+    permissions: Array<out String>,
+    grantResults: IntArray
   ) {
     KL.i { "On permission result: pending ${pendingResults.size}" }
     val count = min(permissions.size, grantResults.size)
     pendingResults.kauRemoveIf {
       val action = it.get()
       action == null ||
-          (0 until count).any { i -> action.onResult(permissions[i], grantResults[i]) }
+        (0 until count).any { i -> action.onResult(permissions[i], grantResults[i]) }
     }
     val action = pendingResults.asSequence().map { it.get() }.firstOrNull { it != null }
     if (action == null) { // actions have been unlinked from their weak references

@@ -58,14 +58,14 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
 
   final override fun onClick(itemView: View) {
     val kclick =
-        object : KClick<T> {
-          override val context = itemView.context
-          override val itemView = itemView
-          override val innerView: View? by lazyUi {
-            itemView.findViewById<View>(R.id.kau_pref_inner_content)
-          }
-          override val item = this@KPrefItemBase
+      object : KClick<T> {
+        override val context = itemView.context
+        override val itemView = itemView
+        override val innerView: View? by lazyUi {
+          itemView.findViewById<View>(R.id.kau_pref_inner_content)
         }
+        override val item = this@KPrefItemBase
+      }
     if (_enabled) {
       val onClick = base.onClick ?: return
       kclick.onClick()
@@ -103,10 +103,10 @@ abstract class KPrefItemBase<T>(protected val base: BaseContract<T>) : KPrefItem
 
   /** Default implementation of [BaseContract] */
   class BaseBuilder<T>(
-      globalOptions: GlobalOptions,
-      titleId: Int,
-      override val getter: () -> T,
-      override val setter: KPrefItemActions.(value: T) -> Unit
+    globalOptions: GlobalOptions,
+    titleId: Int,
+    override val getter: () -> T,
+    override val setter: KPrefItemActions.(value: T) -> Unit
   ) : CoreContract by CoreBuilder(globalOptions, titleId), BaseContract<T> {
     override var enabler: () -> Boolean = { true }
     override var onClick: (KClick<T>.() -> Unit)? = null

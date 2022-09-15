@@ -31,18 +31,18 @@ internal object SwipeBackHelper {
   private val pageStack = Stack<SwipeBackPage>()
 
   private operator fun get(activity: Activity): SwipeBackPage? =
-      pageStack.firstOrNull { it.activityRef.get() === activity }
+    pageStack.firstOrNull { it.activityRef.get() === activity }
 
   fun onCreate(activity: Activity, builder: SwipeBackContract.() -> Unit = {}): SwipeBackContract {
     val swipeBackPage = SwipeBackPage(activity).apply(builder)
     val page = this[activity] ?: pageStack.push(swipeBackPage)
     val startAnimation: Int =
-        when (page.edgeFlag) {
-          SWIPE_EDGE_LEFT -> R.anim.kau_slide_in_right
-          SWIPE_EDGE_RIGHT -> R.anim.kau_slide_in_left
-          SWIPE_EDGE_TOP -> R.anim.kau_slide_in_bottom
-          else -> R.anim.kau_slide_in_top
-        }
+      when (page.edgeFlag) {
+        SWIPE_EDGE_LEFT -> R.anim.kau_slide_in_right
+        SWIPE_EDGE_RIGHT -> R.anim.kau_slide_in_left
+        SWIPE_EDGE_TOP -> R.anim.kau_slide_in_bottom
+        else -> R.anim.kau_slide_in_top
+      }
     activity.overridePendingTransition(startAnimation, 0)
     page.onPostCreate()
     KL.v { "KauSwipe onCreate ${activity.localClassName}" }
@@ -75,15 +75,16 @@ internal object SwipeBackHelper {
  * Lastly, don't forget to call [kauSwipeOnDestroy] as well when the activity is destroyed.
  */
 fun Activity.kauSwipeOnCreate(builder: SwipeBackContract.() -> Unit = {}): SwipeBackContract =
-    SwipeBackHelper.onCreate(this, builder)
+  SwipeBackHelper.onCreate(this, builder)
 
 /**
  * Deprecated as onPostCreate seems unreliable. We will instead initialize everything during
  * [kauSwipeOnCreate]
  */
 @Deprecated(
-    level = DeprecationLevel.WARNING,
-    message = "All functionality has been moved to kauSwipeOnCreate")
+  level = DeprecationLevel.WARNING,
+  message = "All functionality has been moved to kauSwipeOnCreate"
+)
 fun Activity.kauSwipeOnPostCreate() {}
 
 /**

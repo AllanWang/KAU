@@ -46,13 +46,13 @@ internal class RelativeSlider(var curPage: SwipeBackPage) : SwipeListener {
     }
     when (edgeFlag) {
       SWIPE_EDGE_LEFT ->
-          page.swipeBackLayout.x = min(-offset * max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
+        page.swipeBackLayout.x = min(-offset * max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
       SWIPE_EDGE_RIGHT ->
-          page.swipeBackLayout.x = min(offset * max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
+        page.swipeBackLayout.x = min(offset * max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
       SWIPE_EDGE_TOP ->
-          page.swipeBackLayout.y = min(-offset * max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
+        page.swipeBackLayout.y = min(-offset * max(1 - percent, 0f) + DEFAULT_OFFSET, 0f)
       SWIPE_EDGE_BOTTOM ->
-          page.swipeBackLayout.y = min(offset * max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
+        page.swipeBackLayout.y = min(offset * max(1 - percent, 0f) - DEFAULT_OFFSET, 0f)
     }
   }
 

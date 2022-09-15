@@ -34,12 +34,12 @@ class KPrefException(message: String) : IllegalAccessException(message)
 
 class KPrefDelegateAndroid<T>
 internal constructor(
-    override val key: String,
-    private val fallback: T,
-    private val pref: KPref,
-    private val prefBuilder: KPrefBuilderAndroid,
-    private val transaction: KPrefTransaction<T>,
-    private var postSetter: (value: T) -> Unit = {}
+  override val key: String,
+  private val fallback: T,
+  private val pref: KPref,
+  private val prefBuilder: KPrefBuilderAndroid,
+  private val transaction: KPrefTransaction<T>,
+  private var postSetter: (value: T) -> Unit = {}
 ) : KPrefDelegate<T> {
 
   private object UNINITIALIZED
@@ -78,7 +78,7 @@ internal constructor(
   override fun isInitialized(): Boolean = _value !== UNINITIALIZED
 
   override fun toString(): String =
-      if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+    if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 
   override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
     _value = t
@@ -91,10 +91,10 @@ internal constructor(
 
 class KPrefDelegateInMemory<T>
 internal constructor(
-    override val key: String,
-    private val fallback: T,
-    private val pref: KPref,
-    private var postSetter: (value: T) -> Unit = {}
+  override val key: String,
+  private val fallback: T,
+  private val pref: KPref,
+  private var postSetter: (value: T) -> Unit = {}
 ) : KPrefDelegate<T> {
 
   private object UNINITIALIZED
@@ -130,7 +130,7 @@ internal constructor(
   override fun isInitialized(): Boolean = _value !== UNINITIALIZED
 
   override fun toString(): String =
-      if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+    if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 
   override operator fun setValue(any: Any, property: kotlin.reflect.KProperty<*>, t: T) {
     _value = t

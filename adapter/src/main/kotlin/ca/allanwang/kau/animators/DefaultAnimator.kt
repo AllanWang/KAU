@@ -50,8 +50,8 @@ open class DefaultAnimator : BaseItemAnimator() {
   }
 
   override fun changeOldAnimation(
-      holder: RecyclerView.ViewHolder,
-      changeInfo: ChangeInfo
+    holder: RecyclerView.ViewHolder,
+    changeInfo: ChangeInfo
   ): ViewPropertyAnimator {
     return holder.itemView.animate().apply {
       alpha(0f)

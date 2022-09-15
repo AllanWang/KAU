@@ -43,7 +43,7 @@ import jp.wasabeef.blurry.Blurry
 class BlurredImageView
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
+  FrameLayout(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
   var isBlurred = false
     private set
@@ -52,7 +52,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     get() = binding.imageBase
 
   private val binding: KauBlurredImageviewBinding =
-      KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this)
+    KauBlurredImageviewBinding.inflate(LayoutInflater.from(context), this)
 
   init {
     initAttrs(context, attrs)
@@ -74,10 +74,10 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
   }
 
   private fun View.scaleAnimate(scale: Float) =
-      animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
+    animate().scaleXY(scale).setDuration(ANIMATION_DURATION)
 
   private fun View.alphaAnimate(alpha: Float) =
-      animate().alpha(alpha).setDuration(ANIMATION_DURATION)
+    animate().alpha(alpha).setDuration(ANIMATION_DURATION)
 
   /**
    * Applies a blur and fills the blur image asynchronously When ready, scales the image down and

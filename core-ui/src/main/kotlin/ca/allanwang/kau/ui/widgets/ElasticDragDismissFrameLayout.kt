@@ -47,10 +47,10 @@ import kotlin.math.min
 class ElasticDragDismissFrameLayout
 @JvmOverloads
 constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
+  context: Context,
+  attrs: AttributeSet? = null,
+  defStyleAttr: Int = 0,
+  defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
   // configurable attribs
@@ -75,19 +75,22 @@ constructor(
   init {
     if (attrs != null) {
       val a =
-          getContext()
-              .obtainStyledAttributes(attrs, R.styleable.ElasticDragDismissFrameLayout, 0, 0)
+        getContext().obtainStyledAttributes(attrs, R.styleable.ElasticDragDismissFrameLayout, 0, 0)
       dragDismissDistance =
-          a.getDimensionPixelSize(
-                  R.styleable.ElasticDragDismissFrameLayout_dragDismissDistance, Int.MAX_VALUE)
-              .toFloat()
+        a.getDimensionPixelSize(
+            R.styleable.ElasticDragDismissFrameLayout_dragDismissDistance,
+            Int.MAX_VALUE
+          )
+          .toFloat()
       dragDismissFraction =
-          a.getFloat(
-              R.styleable.ElasticDragDismissFrameLayout_dragDismissFraction, dragDismissFraction)
+        a.getFloat(
+          R.styleable.ElasticDragDismissFrameLayout_dragDismissFraction,
+          dragDismissFraction
+        )
       dragDismissScale =
-          a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissScale, dragDismissScale)
+        a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragDismissScale, dragDismissScale)
       dragElacticity =
-          a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragElasticity, dragElacticity)
+        a.getFloat(R.styleable.ElasticDragDismissFrameLayout_dragElasticity, dragElacticity)
       a.recycle()
     }
   }
@@ -106,10 +109,10 @@ constructor(
      * @param rawOffsetPixels The raw distance the user has dragged
      */
     internal open fun onDrag(
-        elasticOffset: Float,
-        elasticOffsetPixels: Float,
-        rawOffset: Float,
-        rawOffsetPixels: Float
+      elasticOffset: Float,
+      elasticOffsetPixels: Float,
+      rawOffset: Float,
+      rawOffsetPixels: Float
     ) {}
 
     /** Called when dragging is released and has exceeded the threshold dismiss distance. */
@@ -134,11 +137,11 @@ constructor(
   }
 
   override fun onNestedScroll(
-      target: View,
-      dxConsumed: Int,
-      dyConsumed: Int,
-      dxUnconsumed: Int,
-      dyUnconsumed: Int
+    target: View,
+    dxConsumed: Int,
+    dyConsumed: Int,
+    dxUnconsumed: Int,
+    dyUnconsumed: Int
   ) {
     dragScale(dyUnconsumed)
   }
@@ -153,12 +156,12 @@ constructor(
         scaleXY = 1f
       } else {
         animate()
-            .translationY(0f)
-            .scaleXY(1f)
-            .setDuration(200L)
-            .setInterpolator(AnimHolder.fastOutSlowInInterpolator(context))
-            .setListener(null)
-            .start()
+          .translationY(0f)
+          .scaleXY(1f)
+          .setDuration(200L)
+          .setInterpolator(AnimHolder.fastOutSlowInInterpolator(context))
+          .setListener(null)
+          .start()
       }
 
       totalDrag = 0f
@@ -228,14 +231,18 @@ constructor(
       scaleXY = 1f
     }
     dispatchDragCallback(
-        dragFraction, dragTo, min(1f, abs(totalDrag) / dragDismissDistance), totalDrag)
+      dragFraction,
+      dragTo,
+      min(1f, abs(totalDrag) / dragDismissDistance),
+      totalDrag
+    )
   }
 
   private fun dispatchDragCallback(
-      elasticOffset: Float,
-      elasticOffsetPixels: Float,
-      rawOffset: Float,
-      rawOffsetPixels: Float
+    elasticOffset: Float,
+    elasticOffsetPixels: Float,
+    rawOffset: Float,
+    rawOffsetPixels: Float
   ) {
     callbacks.forEach { it.onDrag(elasticOffset, elasticOffsetPixels, rawOffset, rawOffsetPixels) }
   }
@@ -255,15 +262,15 @@ constructor(
     private val fadeNavBar: Boolean = activity.isNavBarOnBottom
 
     public override fun onDrag(
-        elasticOffset: Float,
-        elasticOffsetPixels: Float,
-        rawOffset: Float,
-        rawOffsetPixels: Float
+      elasticOffset: Float,
+      elasticOffsetPixels: Float,
+      rawOffset: Float,
+      rawOffsetPixels: Float
     ) {
       if (elasticOffsetPixels > 0) {
         // dragging downward, fade the status bar in proportion
         activity.statusBarColor =
-            activity.statusBarColor.withAlpha(((1f - rawOffset) * statusBarAlpha).toInt())
+          activity.statusBarColor.withAlpha(((1f - rawOffset) * statusBarAlpha).toInt())
       } else if (elasticOffsetPixels == 0f) {
         // reset
         activity.statusBarColor = activity.statusBarColor.withAlpha(statusBarAlpha)
@@ -271,7 +278,7 @@ constructor(
       } else if (fadeNavBar) {
         // dragging upward, fade the navigation bar in proportion
         activity.navigationBarColor =
-            activity.navigationBarColor.withAlpha(((1f - rawOffset) * navBarAlpha).toInt())
+          activity.navigationBarColor.withAlpha(((1f - rawOffset) * navBarAlpha).toInt())
       }
     }
 
@@ -281,19 +288,20 @@ constructor(
   }
 
   fun addExitListener(
-      activity: Activity,
-      transitionBottom: Int = R.transition.kau_exit_slide_bottom,
-      transitionTop: Int = R.transition.kau_exit_slide_top
+    activity: Activity,
+    transitionBottom: Int = R.transition.kau_exit_slide_bottom,
+    transitionTop: Int = R.transition.kau_exit_slide_top
   ) {
     addListener(
-        object : ElasticDragDismissFrameLayout.SystemChromeFader(activity) {
-          override fun onDragDismissed() {
-            KL.v { "New transition" }
-            activity.window.returnTransition =
-                TransitionInflater.from(activity)
-                    .inflateTransition(if (translationY > 0) transitionBottom else transitionTop)
-            activity.finishAfterTransition()
-          }
-        })
+      object : ElasticDragDismissFrameLayout.SystemChromeFader(activity) {
+        override fun onDragDismissed() {
+          KL.v { "New transition" }
+          activity.window.returnTransition =
+            TransitionInflater.from(activity)
+              .inflateTransition(if (translationY > 0) transitionBottom else transitionTop)
+          activity.finishAfterTransition()
+        }
+      }
+    )
   }
 }

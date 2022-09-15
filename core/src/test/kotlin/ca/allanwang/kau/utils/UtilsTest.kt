@@ -29,7 +29,9 @@ class UtilsTest {
   @Test
   fun colorToHex() {
     assertEquals(
-        "#ffffff", Color.WHITE.toHexString(withAlpha = false, withHexPrefix = true).toLowerCase())
+      "#ffffff",
+      Color.WHITE.toHexString(withAlpha = false, withHexPrefix = true).toLowerCase()
+    )
   }
 
   @Test
@@ -40,7 +42,10 @@ class UtilsTest {
     assertEquals(0xFF123456.toInt(), origColor.withAlpha(255), "Failed to convert with alpha 255")
     assertEquals(0xFF123456.toInt(), origColor.withAlpha(0xFF), "Failed to convert with alpha 0xFF")
     assertEquals(
-        Color.TRANSPARENT, Color.BLACK.withAlpha(0), "Failed to convert black to transparent")
+      Color.TRANSPARENT,
+      Color.BLACK.withAlpha(0),
+      "Failed to convert black to transparent"
+    )
   }
 
   @Test
@@ -48,9 +53,15 @@ class UtilsTest {
     val origColor = 0x80123456.toInt()
     assertEquals(origColor, origColor.withMinAlpha(0), "Failed to convert with min alpha 0")
     assertEquals(
-        0xFA123456.toInt(), origColor.withMinAlpha(0xFA), "Failed to convert with min alpha 0xFA")
+      0xFA123456.toInt(),
+      origColor.withMinAlpha(0xFA),
+      "Failed to convert with min alpha 0xFA"
+    )
     assertEquals(
-        Color.BLUE, Color.BLUE.withMinAlpha(89), "Failed to convert blue with min alpha 89")
+      Color.BLUE,
+      Color.BLUE.withMinAlpha(89),
+      "Failed to convert blue with min alpha 89"
+    )
   }
 
   @Test

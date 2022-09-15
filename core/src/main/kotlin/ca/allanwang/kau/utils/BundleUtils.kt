@@ -86,35 +86,39 @@ fun bundleOf(vararg params: kotlin.Pair<String, Any?>): Bundle {
 
 /** Given the parent view and map of view ids to tags, create a scene transition animation */
 fun Bundle.withSceneTransitionAnimation(parent: View, data: Map<Int, String>) =
-    withSceneTransitionAnimation(
-        parent.context, data.mapKeys { (id, _) -> parent.findViewById<View>(id) })
+  withSceneTransitionAnimation(
+    parent.context,
+    data.mapKeys { (id, _) -> parent.findViewById<View>(id) }
+  )
 
 /** Given a mapping of views to tags, create a scene transition animation */
 @SuppressLint("NewApi")
 fun Bundle.withSceneTransitionAnimation(
-    context: Context,
-    data: Map<out View, String> = emptyMap()
+  context: Context,
+  data: Map<out View, String> = emptyMap()
 ) {
   if (context !is Activity || !buildIsLollipopAndUp) return
   val options =
-      ActivityOptions.makeSceneTransitionAnimation(
-          context, *data.map { (view, tag) -> Pair(view, tag) }.toTypedArray())
+    ActivityOptions.makeSceneTransitionAnimation(
+      context,
+      *data.map { (view, tag) -> Pair(view, tag) }.toTypedArray()
+    )
   putAll(options.toBundle())
 }
 
 fun Bundle.withCustomAnimation(
-    context: Context,
-    @AnimRes enterResId: Int,
-    @AnimRes exitResId: Int
+  context: Context,
+  @AnimRes enterResId: Int,
+  @AnimRes exitResId: Int
 ) {
   this with ActivityOptions.makeCustomAnimation(context, enterResId, exitResId).toBundle()
 }
 
 fun Bundle.withSlideIn(context: Context) =
-    withCustomAnimation(context, R.anim.kau_slide_in_right, R.anim.kau_fade_out)
+  withCustomAnimation(context, R.anim.kau_slide_in_right, R.anim.kau_fade_out)
 
 fun Bundle.withSlideOut(context: Context) =
-    withCustomAnimation(context, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top)
+  withCustomAnimation(context, R.anim.kau_fade_in, R.anim.kau_slide_out_right_top)
 
 fun Bundle.withFade(context: Context) =
-    withCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out)
+  withCustomAnimation(context, android.R.anim.fade_in, android.R.anim.fade_out)

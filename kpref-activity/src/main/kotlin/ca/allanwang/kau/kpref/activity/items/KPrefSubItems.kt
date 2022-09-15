@@ -42,9 +42,9 @@ open class KPrefSubItems(open val builder: KPrefSubItemsContract) : KPrefItemCor
 
   /** Default implementation of [KPrefTextContract] */
   class KPrefSubItemsBuilder(
-      globalOptions: GlobalOptions,
-      titleId: Int,
-      override val itemBuilder: KPrefAdapterBuilder.() -> Unit
+    globalOptions: GlobalOptions,
+    titleId: Int,
+    override val itemBuilder: KPrefAdapterBuilder.() -> Unit
   ) : KPrefSubItemsContract, CoreContract by CoreBuilder(globalOptions, titleId)
 
   override val type: Int

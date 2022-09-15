@@ -53,13 +53,15 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
 
   private val recyclerAnimatorNext: KauAnimator by lazyUi {
     KauAnimator(
-        SlideAnimatorAdd(KAU_RIGHT, itemDelayFactor = 0f),
-        SlideAnimatorRemove(KAU_LEFT, itemDelayFactor = 0f))
+      SlideAnimatorAdd(KAU_RIGHT, itemDelayFactor = 0f),
+      SlideAnimatorRemove(KAU_LEFT, itemDelayFactor = 0f)
+    )
   }
   private val recyclerAnimatorPrev: KauAnimator by lazyUi {
     KauAnimator(
-        SlideAnimatorAdd(KAU_LEFT, itemDelayFactor = 0f),
-        SlideAnimatorRemove(KAU_RIGHT, itemDelayFactor = 0f))
+      SlideAnimatorAdd(KAU_LEFT, itemDelayFactor = 0f),
+      SlideAnimatorRemove(KAU_RIGHT, itemDelayFactor = 0f)
+    )
   }
 
   /** Core attribute builder that is consistent throughout all items Leave blank to use defaults */
@@ -90,7 +92,7 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
       insets
     }
     window.decorView.systemUiVisibility =
-        View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+      View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
     statusBarColor = 0x30000000
     kauToolbarRipple.set(resolveColor(R.attr.colorPrimary))
     kauRipple.set(resolveColor(android.R.attr.colorBackground))
@@ -111,23 +113,23 @@ abstract class KPrefActivity : KauBaseActivity(), KPrefActivityContract {
   }
 
   override fun showNextPrefs(
-      @StringRes toolbarTitleRes: Int,
-      builder: KPrefAdapterBuilder.() -> Unit
+    @StringRes toolbarTitleRes: Int,
+    builder: KPrefAdapterBuilder.() -> Unit
   ) = binding.showNextPrefs(toolbarTitleRes, builder, false)
 
   private fun KauPrefActivityBinding.showNextPrefs(
-      @StringRes toolbarTitleRes: Int,
-      builder: KPrefAdapterBuilder.() -> Unit,
-      first: Boolean
+    @StringRes toolbarTitleRes: Int,
+    builder: KPrefAdapterBuilder.() -> Unit,
+    first: Boolean
   ) {
     launch {
       val items =
-          withContext(Dispatchers.Default) {
-            val items = KPrefAdapterBuilder(globalOptions)
-            builder(items)
-            kprefStack.push(toolbarTitleRes to items.list)
-            items.list
-          }
+        withContext(Dispatchers.Default) {
+          val items = KPrefAdapterBuilder(globalOptions)
+          builder(items)
+          kprefStack.push(toolbarTitleRes to items.list)
+          items.list
+        }
       kauRecycler.itemAnimator = if (animate && !first) recyclerAnimatorNext else null
       show(toolbarTitleRes, items)
     }

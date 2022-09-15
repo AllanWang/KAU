@@ -26,10 +26,10 @@ import kotlin.reflect.KProperty
 internal object UNINITIALIZED
 
 fun <T : Any> lazyResettable(initializer: () -> T): LazyResettable<T> =
-    LazyResettable<T>(initializer)
+  LazyResettable<T>(initializer)
 
 class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = null) :
-    ILazyResettable<T>, Serializable {
+  ILazyResettable<T>, Serializable {
   @Volatile private var _value: Any = UNINITIALIZED
   private val lock = lock ?: this
 
@@ -58,7 +58,7 @@ class LazyResettable<T : Any>(private val initializer: () -> T, lock: Any? = nul
   override fun isInitialized(): Boolean = _value !== UNINITIALIZED
 
   override fun toString(): String =
-      if (isInitialized()) value.toString() else "Lazy value not initialized yet."
+    if (isInitialized()) value.toString() else "Lazy value not initialized yet."
 
   operator fun setValue(any: Any, property: KProperty<*>, t: T) {
     _value = t
@@ -85,7 +85,7 @@ class LazyResettableRegistry : ILazyResettableRegistry {
   var lazyRegistry: MutableList<LazyResettable<*>> = mutableListOf()
 
   override fun <T : Any> lazy(initializer: () -> T): LazyResettable<T> =
-      add(lazyResettable(initializer))
+    add(lazyResettable(initializer))
 
   override fun <T : Any> add(resettable: LazyResettable<T>): LazyResettable<T> {
     lazyRegistry.add(resettable)

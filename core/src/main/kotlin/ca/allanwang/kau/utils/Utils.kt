@@ -74,12 +74,12 @@ inline val Int.spToDp: Int
  */
 @KauUtils
 fun Context.minuteToText(minutes: Long): String =
-    with(minutes) {
-      if (this < 0L) string(R.string.kau_none)
-      else if (this % 1440L == 0L) plural(R.plurals.kau_x_days, this / 1440L)
-      else if (this % 60L == 0L) plural(R.plurals.kau_x_hours, this / 60L)
-      else plural(R.plurals.kau_x_minutes, this)
-    }
+  with(minutes) {
+    if (this < 0L) string(R.string.kau_none)
+    else if (this % 1440L == 0L) plural(R.plurals.kau_x_days, this / 1440L)
+    else if (this % 60L == 0L) plural(R.plurals.kau_x_hours, this / 60L)
+    else plural(R.plurals.kau_x_minutes, this)
+  }
 
 @KauUtils
 fun Number.round(@IntRange(from = 1L) decimalCount: Int): String {
@@ -96,8 +96,8 @@ fun Number.round(@IntRange(from = 1L) decimalCount: Int): String {
  */
 @KauUtils
 fun Drawable.toBitmap(
-    scaling: Float = 1f,
-    config: Bitmap.Config = Bitmap.Config.ARGB_8888
+  scaling: Float = 1f,
+  config: Bitmap.Config = Bitmap.Config.ARGB_8888
 ): Bitmap {
   if (this is BitmapDrawable && bitmap != null) {
     if (scaling == 1f) return bitmap
@@ -106,10 +106,13 @@ fun Drawable.toBitmap(
     return Bitmap.createScaledBitmap(bitmap, width, height, false)
   }
   val bitmap =
-      if (intrinsicWidth <= 0 || intrinsicHeight <= 0) Bitmap.createBitmap(1, 1, config)
-      else
-          Bitmap.createBitmap(
-              (intrinsicWidth * scaling).toInt(), (intrinsicHeight * scaling).toInt(), config)
+    if (intrinsicWidth <= 0 || intrinsicHeight <= 0) Bitmap.createBitmap(1, 1, config)
+    else
+      Bitmap.createBitmap(
+        (intrinsicWidth * scaling).toInt(),
+        (intrinsicHeight * scaling).toInt(),
+        config
+      )
   val canvas = Canvas(bitmap)
   setBounds(0, 0, bitmap.width, bitmap.height)
   draw(canvas)
@@ -146,4 +149,4 @@ inline val kauIsMainThread: Boolean
 class KauException(message: String) : RuntimeException(message)
 
 fun String.withMaxLength(n: Int): String =
-    if (length <= n) this else substring(0, n - 1) + KAU_ELLIPSIS
+  if (length <= n) this else substring(0, n - 1) + KAU_ELLIPSIS

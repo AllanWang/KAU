@@ -26,7 +26,7 @@ import ca.allanwang.kau.ui.views.CollapsibleViewDelegate
 class CollapsibleTextView
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    AppCompatTextView(context, attrs, defStyleAttr), CollapsibleView by CollapsibleViewDelegate() {
+  AppCompatTextView(context, attrs, defStyleAttr), CollapsibleView by CollapsibleViewDelegate() {
 
   init {
     initCollapsible(this)

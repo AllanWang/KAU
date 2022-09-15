@@ -48,9 +48,9 @@ import com.mikepenz.iconics.typeface.IIcon
  * Core class containing nothing but the view items
  */
 abstract class KPrefItemCore(val core: CoreContract) :
-    AbstractItem<KPrefItemCore.ViewHolder>(),
-    KPrefItemActions by core,
-    ThemableIItem by ThemableIItemDelegate() {
+  AbstractItem<KPrefItemCore.ViewHolder>(),
+  KPrefItemActions by core,
+  ThemableIItem by ThemableIItemDelegate() {
 
   final override fun getViewHolder(v: View) = ViewHolder(v)
 
@@ -82,10 +82,10 @@ abstract class KPrefItemCore(val core: CoreContract) :
   }
 
   protected inline fun withAccentColor(action: (color: Int) -> Unit) =
-      withColor(core.globalOptions.accentColor, action)
+    withColor(core.globalOptions.accentColor, action)
 
   protected inline fun withTextColor(action: (color: Int) -> Unit) =
-      withColor(core.globalOptions.textColor, action)
+    withColor(core.globalOptions.textColor, action)
 
   protected inline fun withColor(noinline supplier: (() -> Int)?, action: (color: Int) -> Unit) {
     val color = supplier?.invoke() ?: return
@@ -119,7 +119,7 @@ abstract class KPrefItemCore(val core: CoreContract) :
 
   /** Default implementation of [CoreContract] */
   class CoreBuilder(override val globalOptions: GlobalOptions, override val titleId: Int) :
-      CoreContract {
+    CoreContract {
     override var descRes: Int = INVALID_ID
       set(value) {
         field = value
@@ -151,9 +151,8 @@ abstract class KPrefItemCore(val core: CoreContract) :
 
     inline fun <reified T : View> bindInnerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
       val innerFrame =
-          this.innerFrame
-              ?: throw IllegalStateException(
-                  "Cannot bind inner view when innerFrame does not exist")
+        this.innerFrame
+          ?: throw IllegalStateException("Cannot bind inner view when innerFrame does not exist")
       if (innerView !is T) {
         innerFrame.removeAllViews()
         LayoutInflater.from(innerFrame.context).inflate(id, innerFrame)
@@ -166,9 +165,8 @@ abstract class KPrefItemCore(val core: CoreContract) :
 
     inline fun <reified T : View> bindLowerView(@LayoutRes id: Int, onFirstBind: (T) -> Unit): T {
       val lowerFrame =
-          this.lowerFrame
-              ?: throw IllegalStateException(
-                  "Cannot bind inner view when lowerContent does not exist")
+        this.lowerFrame
+          ?: throw IllegalStateException("Cannot bind inner view when lowerContent does not exist")
       if (lowerContent !is T) {
         lowerFrame.removeAllViews()
         LayoutInflater.from(lowerFrame.context).inflate(id, lowerFrame)

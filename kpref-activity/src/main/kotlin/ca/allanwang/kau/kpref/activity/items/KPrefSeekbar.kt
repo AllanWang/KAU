@@ -49,24 +49,25 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
     text.tvc()
     val seekbar =
-        holder.bindLowerView<SeekBar>(R.layout.kau_pref_seekbar) {
-          it.max = (max - min) / increment
-          it.setOnSeekBarChangeListener(
-              object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(sb: SeekBar, progress: Int, fromUser: Boolean) {
-                  text.text = builder.toText(progress.fromProgress)
-                }
+      holder.bindLowerView<SeekBar>(R.layout.kau_pref_seekbar) {
+        it.max = (max - min) / increment
+        it.setOnSeekBarChangeListener(
+          object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(sb: SeekBar, progress: Int, fromUser: Boolean) {
+              text.text = builder.toText(progress.fromProgress)
+            }
 
-                override fun onStartTrackingTouch(sb: SeekBar) {}
+            override fun onStartTrackingTouch(sb: SeekBar) {}
 
-                override fun onStopTrackingTouch(sb: SeekBar) {
-                  pref = sb.progress.fromProgress
-                }
-              })
-        }
+            override fun onStopTrackingTouch(sb: SeekBar) {
+              pref = sb.progress.fromProgress
+            }
+          }
+        )
+      }
     withAccentColor(seekbar::tint)
     text.text =
-        builder.toText(seekbar.progress.fromProgress) // set initial text in case no change occurs
+      builder.toText(seekbar.progress.fromProgress) // set initial text in case no change occurs
     seekbar.progress = pref.toProgress
     seekbar.isEnabled = builder.enabler()
   }
@@ -83,13 +84,12 @@ open class KPrefSeekbar(val builder: KPrefSeekbarContract) : KPrefItemBase<Int>(
 
   /** Default implementation of [KPrefSeekbarContract] */
   class KPrefSeekbarBuilder(
-      globalOptions: GlobalOptions,
-      titleId: Int,
-      getter: () -> Int,
-      setter: KPrefItemActions.(value: Int) -> Unit
+    globalOptions: GlobalOptions,
+    titleId: Int,
+    getter: () -> Int,
+    setter: KPrefItemActions.(value: Int) -> Unit
   ) :
-      KPrefSeekbarContract,
-      BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
+    KPrefSeekbarContract, BaseContract<Int> by BaseBuilder(globalOptions, titleId, getter, setter) {
 
     override var min: Int = 0
 

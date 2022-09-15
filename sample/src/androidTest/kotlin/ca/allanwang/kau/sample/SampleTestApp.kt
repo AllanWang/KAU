@@ -30,9 +30,9 @@ import org.junit.runners.model.Statement
 
 class SampleTestRunner : AndroidJUnitRunner() {
   override fun newApplication(
-      cl: ClassLoader?,
-      className: String?,
-      context: Context?
+    cl: ClassLoader?,
+    className: String?,
+    context: Context?
   ): Application {
     return super.newApplication(cl, HiltTestApplication::class.java.name, context)
   }
@@ -47,16 +47,18 @@ class SampleTestRule : TestRule {
   }
 
   override fun apply(base: Statement, description: Description): Statement =
-      object : Statement() {
-        override fun evaluate() {
-          val entryPoint =
-              EntryPointAccessors.fromApplication(
-                  ApplicationProvider.getApplicationContext(), SampleTestRuleEntryPoint::class.java)
+    object : Statement() {
+      override fun evaluate() {
+        val entryPoint =
+          EntryPointAccessors.fromApplication(
+            ApplicationProvider.getApplicationContext(),
+            SampleTestRuleEntryPoint::class.java
+          )
 
-          // Reset prefs
-          entryPoint.pref().reset()
+        // Reset prefs
+        entryPoint.pref().reset()
 
-          base.evaluate()
-        }
+        base.evaluate()
       }
+    }
 }

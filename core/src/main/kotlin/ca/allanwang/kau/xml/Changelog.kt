@@ -57,11 +57,12 @@ fun Context.showChangelog(@XmlRes xmlRes: Int, customize: MaterialDialog.() -> U
  * parse
  */
 internal class ChangelogAdapter(val items: List<Pair<String, ChangelogType>>) :
-    RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
+  RecyclerView.Adapter<ChangelogAdapter.ChangelogVH>() {
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-      ChangelogVH(
-          LayoutInflater.from(parent.context).inflate(items[viewType].second.layout, parent, false))
+    ChangelogVH(
+      LayoutInflater.from(parent.context).inflate(items[viewType].second.layout, parent, false)
+    )
 
   override fun onBindViewHolder(holder: ChangelogVH, position: Int) {
     holder.text.text = items[position].first

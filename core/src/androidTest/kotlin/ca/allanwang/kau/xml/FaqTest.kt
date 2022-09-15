@@ -37,13 +37,20 @@ class FaqTest {
     val data = context.kauParseFaq(R.xml.test_faq, false)
     assertEquals(2, data.size, "FAQ size is incorrect")
     assertEquals(
-        "This is a question", data.first().question.toString(), "First question does not match")
+      "This is a question",
+      data.first().question.toString(),
+      "First question does not match"
+    )
     assertEquals("This is an answer", data.first().answer.toString(), "First answer does not match")
     assertEquals(
-        "This is another question",
-        data.last().question.toString(),
-        "Second question does not match")
+      "This is another question",
+      data.last().question.toString(),
+      "Second question does not match"
+    )
     assertEquals(
-        "This is another answer", data.last().answer.toString(), "Second answer does not match")
+      "This is another answer",
+      data.last().answer.toString(),
+      "Second answer does not match"
+    )
   }
 }

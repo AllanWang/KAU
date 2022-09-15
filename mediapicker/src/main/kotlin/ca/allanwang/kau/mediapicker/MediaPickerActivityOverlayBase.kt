@@ -30,8 +30,8 @@ import ca.allanwang.kau.utils.toast
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 abstract class MediaPickerActivityOverlayBase(
-    mediaType: MediaType,
-    mediaActions: List<MediaAction> = emptyList()
+  mediaType: MediaType,
+  mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItemBasic>(mediaType, mediaActions) {
 
   private lateinit var binding: KauActivityImagePickerOverlayBinding
@@ -48,9 +48,10 @@ abstract class MediaPickerActivityOverlayBase(
     MediaItemBasic.bindEvents(this@MediaPickerActivityOverlayBase, adapter.fastAdapter!!)
 
     kauDraggable.addExitListener(
-        this@MediaPickerActivityOverlayBase,
-        R.transition.kau_image_exit_bottom,
-        R.transition.kau_image_exit_top)
+      this@MediaPickerActivityOverlayBase,
+      R.transition.kau_image_exit_bottom,
+      R.transition.kau_image_exit_top
+    )
     kauDraggable.setOnClickListener { finishAfterTransition() }
 
     loadItems()

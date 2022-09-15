@@ -45,17 +45,17 @@ class ProgressAnimatorTest {
   fun `start end hooks`() {
     var i = 0
     ProgressAnimator.ofFloat {
-          withStartAction { i = 1 }
-          withDisposableAnimator {
-            assertEquals(1, i)
-            true
-          }
-          withEndAction {
-            assertEquals(0, animatorCount, "Disposable animator not removed")
-            i = 2
-          }
+        withStartAction { i = 1 }
+        withDisposableAnimator {
+          assertEquals(1, i)
+          true
         }
-        .test()
+        withEndAction {
+          assertEquals(0, animatorCount, "Disposable animator not removed")
+          i = 2
+        }
+      }
+      .test()
     assertEquals(2, i)
   }
 
@@ -63,13 +63,13 @@ class ProgressAnimatorTest {
   fun `disposable actions`() {
     var i = 0f
     ProgressAnimator.ofFloat {
-          withDisposableAnimator {
-            i = if (it < 0.5f) it else 0.5f
-            i > 0.5f
-          }
-          withAnimator { assertEquals(min(it, 0.5f), i) }
+        withDisposableAnimator {
+          i = if (it < 0.5f) it else 0.5f
+          i > 0.5f
         }
-        .test()
+        withAnimator { assertEquals(min(it, 0.5f), i) }
+      }
+      .test()
   }
 
   @Test
@@ -77,13 +77,13 @@ class ProgressAnimatorTest {
     var called = false
     var i = 0f
     ProgressAnimator.ofFloat {
-          withPointAnimator(0.5f) {
-            assertFalse(called)
-            i = it
-            called = true
-          }
+        withPointAnimator(0.5f) {
+          assertFalse(called)
+          i = it
+          called = true
         }
-        .test()
+      }
+      .test()
     assertTrue(called)
     assertTrue(i > 0.5f)
   }

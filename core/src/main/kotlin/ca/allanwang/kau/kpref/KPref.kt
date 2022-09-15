@@ -29,18 +29,18 @@ import ca.allanwang.kau.kotlin.ILazyResettable
  * also invalidate the kpref from that map
  */
 open class KPref private constructor(val preferenceName: String, val builder: KPrefBuilder) :
-    KPrefBuilder by builder {
+  KPrefBuilder by builder {
 
   constructor(
-      preferenceName: String,
-      factory: KPrefFactory
+    preferenceName: String,
+    factory: KPrefFactory
   ) : this(preferenceName, factory.createBuilder(preferenceName))
 
   internal val prefMap: MutableMap<String, ILazyResettable<*>> = mutableMapOf()
 
   fun add(entry: KPrefDelegate<*>) {
     if (prefMap.containsKey(entry.key))
-        throw KPrefException("${entry.key} is already used elsewhere in preference $preferenceName")
+      throw KPrefException("${entry.key} is already used elsewhere in preference $preferenceName")
     prefMap[entry.key] = entry
   }
 

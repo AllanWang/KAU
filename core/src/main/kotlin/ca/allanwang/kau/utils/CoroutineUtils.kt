@@ -54,18 +54,18 @@ inline val Context.ctxCoroutine: CoroutineScope
 
 /** Calls [launch] with an explicit dispatcher for Android's main thread */
 fun CoroutineScope.launchMain(
-    context: CoroutineContext = EmptyCoroutineContext,
-    start: CoroutineStart = CoroutineStart.DEFAULT,
-    block: suspend CoroutineScope.() -> Unit
+  context: CoroutineContext = EmptyCoroutineContext,
+  start: CoroutineStart = CoroutineStart.DEFAULT,
+  block: suspend CoroutineScope.() -> Unit
 ) = launch(ContextHelper.dispatcher + context, start, block)
 
 /** Calls [async] with an explicit dispatcher for Android's main thread */
 fun CoroutineScope.asyncMain(
-    context: CoroutineContext = EmptyCoroutineContext,
-    start: CoroutineStart = CoroutineStart.DEFAULT,
-    block: suspend CoroutineScope.() -> Unit
+  context: CoroutineContext = EmptyCoroutineContext,
+  start: CoroutineStart = CoroutineStart.DEFAULT,
+  block: suspend CoroutineScope.() -> Unit
 ) = async(ContextHelper.dispatcher + context, start, block)
 
 /** Calls [withContext] with an explicit dispatcher for Android's main thread */
 suspend fun <T> withMainContext(block: suspend CoroutineScope.() -> T) =
-    withContext(ContextHelper.dispatcher, block)
+  withContext(ContextHelper.dispatcher, block)

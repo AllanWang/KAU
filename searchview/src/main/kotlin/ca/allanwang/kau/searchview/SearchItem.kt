@@ -41,14 +41,17 @@ import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
  * url) and a [content] which is displayed in the item
  */
 class SearchItem(
-    val key: String,
-    val content: String = key,
-    val description: String? = null,
-    val iicon: IIcon? = GoogleMaterial.Icon.gmd_search,
-    val image: Drawable? = null
+  val key: String,
+  val content: String = key,
+  val description: String? = null,
+  val iicon: IIcon? = GoogleMaterial.Icon.gmd_search,
+  val image: Drawable? = null
 ) :
-    KauIItem<SearchItem.ViewHolder>(
-        R.layout.kau_search_iitem, { ViewHolder(it) }, R.id.kau_item_search) {
+  KauIItem<SearchItem.ViewHolder>(
+    R.layout.kau_search_iitem,
+    { ViewHolder(it) },
+    R.id.kau_item_search
+  ) {
 
   companion object {
     var foregroundColor: Int = 0xdd000000.toInt()
@@ -66,7 +69,11 @@ class SearchItem(
     }
     styledContent = SpannableStringBuilder(content)
     styledContent!!.setSpan(
-        StyleSpan(Typeface.BOLD), index, index + subText.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+      StyleSpan(Typeface.BOLD),
+      index,
+      index + subText.length,
+      Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
   }
 
   override fun bindView(holder: ViewHolder, payloads: List<Any>) {

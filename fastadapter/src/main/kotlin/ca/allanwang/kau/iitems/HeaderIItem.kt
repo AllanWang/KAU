@@ -31,9 +31,12 @@ import ca.allanwang.kau.utils.string
  * Simple Header with lots of padding on the top Contains only one text view
  */
 class HeaderIItem(text: String? = null, var textRes: Int = INVALID_ID) :
-    KauIItem<HeaderIItem.ViewHolder>(
-        R.layout.kau_iitem_header, { ViewHolder(it) }, R.id.kau_item_header_big_margin_top),
-    ThemableIItem by ThemableIItemDelegate() {
+  KauIItem<HeaderIItem.ViewHolder>(
+    R.layout.kau_iitem_header,
+    { ViewHolder(it) },
+    R.id.kau_item_header_big_margin_top
+  ),
+  ThemableIItem by ThemableIItemDelegate() {
 
   var text: String = text ?: "Header Placeholder"
 

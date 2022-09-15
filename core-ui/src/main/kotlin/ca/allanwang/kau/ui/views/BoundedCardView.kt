@@ -31,7 +31,7 @@ import ca.allanwang.kau.utils.parentViewGroup
 class BoundedCardView
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    CardView(context, attrs, defStyleAttr) {
+  CardView(context, attrs, defStyleAttr) {
 
   /**
    * Maximum height possible, defined in dp (will be converted to px) Defaults to parent's visible

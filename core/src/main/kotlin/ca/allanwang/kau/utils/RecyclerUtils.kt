@@ -29,10 +29,10 @@ class MarginItemDecoration(sizeDp: Int, val edgeFlags: Int) : RecyclerView.ItemD
   private val sizePx = sizeDp.dpToPx
 
   override fun getItemOffsets(
-      outRect: Rect,
-      view: View,
-      parent: RecyclerView,
-      state: RecyclerView.State
+    outRect: Rect,
+    view: View,
+    parent: RecyclerView,
+    state: RecyclerView.State
   ) {
     super.getItemOffsets(outRect, view, parent, state)
     if (edgeFlags and KAU_LEFT > 0) outRect.left += sizePx

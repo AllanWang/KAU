@@ -68,17 +68,19 @@ abstract class ElasticRecyclerActivity : KauBaseActivity() {
 
   private fun KauElasticRecyclerActivityBinding.init() {
     kauDraggable.addListener(
-        object : ElasticDragDismissFrameLayout.SystemChromeFader(this@ElasticRecyclerActivity) {
-          override fun onDragDismissed() {
-            window.returnTransition =
-                TransitionInflater.from(this@ElasticRecyclerActivity)
-                    .inflateTransition(
-                        if (kauDraggable.translationY > 0) configs.exitTransitionBottom
-                        else configs.exitTransitionTop)
-            kauRecycler.stopScroll()
-            finishAfterTransition()
-          }
-        })
+      object : ElasticDragDismissFrameLayout.SystemChromeFader(this@ElasticRecyclerActivity) {
+        override fun onDragDismissed() {
+          window.returnTransition =
+            TransitionInflater.from(this@ElasticRecyclerActivity)
+              .inflateTransition(
+                if (kauDraggable.translationY > 0) configs.exitTransitionBottom
+                else configs.exitTransitionTop
+              )
+          kauRecycler.stopScroll()
+          finishAfterTransition()
+        }
+      }
+    )
   }
 
   /**

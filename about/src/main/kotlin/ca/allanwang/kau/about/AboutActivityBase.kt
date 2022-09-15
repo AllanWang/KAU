@@ -45,7 +45,7 @@ import com.mikepenz.fastadapter.GenericItem
  * by overriding the open functions
  */
 abstract class AboutActivityBase(val rClass: Class<*>?) :
-    KauBaseActivity(), ViewPager.OnPageChangeListener {
+  KauBaseActivity(), ViewPager.OnPageChangeListener {
 
   val currentPage: Int
     get() = binding.aboutPager.currentItem
@@ -95,17 +95,19 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
     }
     aboutIndicator.setViewPager(aboutPager)
     aboutDraggableFrame.addListener(
-        object : ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
-          override fun onDragDismissed() {
-            window.returnTransition =
-                TransitionInflater.from(this@AboutActivityBase)
-                    .inflateTransition(
-                        if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom
-                        else R.transition.kau_exit_slide_top)
-            panels[currentPage].recycler?.stopScroll()
-            finishAfterTransition()
-          }
-        })
+      object : ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
+        override fun onDragDismissed() {
+          window.returnTransition =
+            TransitionInflater.from(this@AboutActivityBase)
+              .inflateTransition(
+                if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom
+                else R.transition.kau_exit_slide_top
+              )
+          panels[currentPage].recycler?.stopScroll()
+          finishAfterTransition()
+        }
+      }
+    )
     panels.forEachIndexed { index, contract -> contract.loadItems(this@AboutActivityBase, index) }
   }
 
@@ -170,7 +172,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
     /** Only get page if view does not exist */
     private fun getPage(position: Int, parent: ViewGroup): View {
       if (views[position] == null)
-          views[position] = panels[position].inflatePage(this@AboutActivityBase, parent, position)
+        views[position] = panels[position].inflatePage(this@AboutActivityBase, parent, position)
       return views[position]!!
     }
   }
@@ -178,7 +180,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
   override fun onPageScrollStateChanged(state: Int) = Unit
 
   override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) =
-      Unit
+    Unit
 
   override fun onPageSelected(position: Int) {
     if (pageStatus[position] == 0) pageStatus[position] = 1 // mark as seen if previously null
@@ -186,8 +188,8 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
   }
 
   override fun onDestroy() {
-    AnimHolder.decelerateInterpolator
-        .invalidate() // clear the reference to the interpolators we've used
+    AnimHolder.decelerateInterpolator.invalidate(
+    ) // clear the reference to the interpolators we've used
     super.onDestroy()
   }
 }

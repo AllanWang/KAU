@@ -28,7 +28,7 @@ import java.lang.ref.WeakReference
  * Updated by Allan Wang on 2017/07/05
  */
 internal class SwipeBackPage(activity: Activity) :
-    SwipeBackContractInternal by SwipeBackLayout(activity) {
+  SwipeBackContractInternal by SwipeBackLayout(activity) {
 
   var activityRef = WeakReference(activity)
   var slider: RelativeSlider
@@ -38,8 +38,10 @@ internal class SwipeBackPage(activity: Activity) :
     activity.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     activity.window.decorView.setBackgroundColor(Color.TRANSPARENT)
     swipeBackLayout.layoutParams =
-        ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+      ViewGroup.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT
+      )
     slider = RelativeSlider(this)
   }
 
@@ -56,7 +58,7 @@ internal class SwipeBackPage(activity: Activity) :
 
   private fun handleLayout() {
     val activity =
-        activityRef.get() ?: return KL.v { "KauSwipe activity ref gone during handleLayout" }
+      activityRef.get() ?: return KL.v { "KauSwipe activity ref gone during handleLayout" }
     if (swipeEnabled) swipeBackLayout.attachToActivity(activity)
     else swipeBackLayout.removeFromActivity(activity)
   }

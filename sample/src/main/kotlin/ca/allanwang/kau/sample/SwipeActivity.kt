@@ -50,20 +50,21 @@ class SwipeActivity : KauBaseActivity() {
 
     binding.apply {
       mapOf(
-              swipeFromLeft to SWIPE_EDGE_LEFT,
-              swipeFromRight to SWIPE_EDGE_RIGHT,
-              swipeFromTop to SWIPE_EDGE_TOP,
-              swipeFromBottom to SWIPE_EDGE_BOTTOM)
-          .forEach { (button, edge) -> button.setOnClickListener { startActivityWithEdge(edge) } }
+          swipeFromLeft to SWIPE_EDGE_LEFT,
+          swipeFromRight to SWIPE_EDGE_RIGHT,
+          swipeFromTop to SWIPE_EDGE_TOP,
+          swipeFromBottom to SWIPE_EDGE_BOTTOM
+        )
+        .forEach { (button, edge) -> button.setOnClickListener { startActivityWithEdge(edge) } }
       val flag = intent.getIntExtra(SWIPE_EDGE, -1)
       swipeToolbar.title =
-          when (flag) {
-            SWIPE_EDGE_LEFT -> "Left Edge Swipe"
-            SWIPE_EDGE_RIGHT -> "Right Edge Swipe"
-            SWIPE_EDGE_TOP -> "Top Edge Swipe"
-            SWIPE_EDGE_BOTTOM -> "Bottom Edge Swipe"
-            else -> "Invalid Edge Swipe"
-          }
+        when (flag) {
+          SWIPE_EDGE_LEFT -> "Left Edge Swipe"
+          SWIPE_EDGE_RIGHT -> "Right Edge Swipe"
+          SWIPE_EDGE_TOP -> "Top Edge Swipe"
+          SWIPE_EDGE_BOTTOM -> "Bottom Edge Swipe"
+          else -> "Invalid Edge Swipe"
+        }
       setSupportActionBar(swipeToolbar)
       val headerColor = rndColor.darken(0.6f)
       swipeToolbar.setBackgroundColor(headerColor)

@@ -39,8 +39,8 @@ interface KauAnimatorRemove {
 
 interface KauAnimatorChange {
   fun changeOldAnimation(
-      holder: RecyclerView.ViewHolder,
-      changeInfo: BaseItemAnimator.ChangeInfo
+    holder: RecyclerView.ViewHolder,
+    changeInfo: BaseItemAnimator.ChangeInfo
   ): ViewPropertyAnimator.() -> Unit
 
   fun changeNewAnimation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit

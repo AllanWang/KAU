@@ -23,7 +23,7 @@ import androidx.appcompat.widget.AppCompatImageView
 class MeasuredImageView
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    AppCompatImageView(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
+  AppCompatImageView(context, attrs, defStyleAttr), MeasureSpecContract by MeasureSpecDelegate() {
 
   init {
     initAttrs(context, attrs)

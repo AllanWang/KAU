@@ -89,25 +89,26 @@ abstract class AboutPanelRecycler : AboutPanelContract {
   override fun onInflatingPage(activity: AboutActivityBase, recycler: RecyclerView, position: Int) {
     recycler.adapter = adapter
     recycler.itemAnimator =
-        KauAnimator(
-                addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f),
-                changeAnimator = NoAnimatorChange)
-            .apply {
-              addDuration = 300
-              interpolator = AnimHolder.decelerateInterpolator(recycler.context)
-            }
+      KauAnimator(
+          addAnimator = FadeScaleAnimatorAdd(scaleFactor = 0.7f, itemDelayFactor = 0.2f),
+          changeAnimator = NoAnimatorChange
+        )
+        .apply {
+          addDuration = 300
+          interpolator = AnimHolder.decelerateInterpolator(recycler.context)
+        }
   }
 
   override fun inflatePage(activity: AboutActivityBase, parent: ViewGroup, position: Int): View {
     val v =
-        LayoutInflater.from(activity)
-            .inflate(R.layout.kau_recycler_detached_background, parent, false)
+      LayoutInflater.from(activity)
+        .inflate(R.layout.kau_recycler_detached_background, parent, false)
     adapter = FastItemThemedAdapter(activity.configs)
     recycler = v.findViewById(R.id.kau_recycler_detached)
     onInflatingPage(activity, recycler!!, position)
     val background = v.findViewById<View>(R.id.kau_recycler_detached_background)
     if (activity.configs.backgroundColor != null)
-        background.setBackgroundColor(activity.configs.backgroundColor!!.colorToForeground())
+      background.setBackgroundColor(activity.configs.backgroundColor!!.colorToForeground())
     loadItems(activity, position)
     return v
   }
@@ -132,9 +133,9 @@ abstract class AboutPanelRecycler : AboutPanelContract {
 open class AboutPanelMain : AboutPanelRecycler() {
 
   override fun onInflatingPage(
-      activity: AboutActivityBase,
-      recycler: RecyclerView,
-      position: Int
+    activity: AboutActivityBase,
+    recycler: RecyclerView,
+    position: Int
   ) {}
 
   override fun inflatePage(activity: AboutActivityBase, parent: ViewGroup, position: Int): View {
@@ -142,14 +143,15 @@ open class AboutPanelMain : AboutPanelRecycler() {
       adapter = FastItemThemedAdapter(configs)
       recycler = fullLinearRecycler(adapter)
       adapter.add(
-          CutoutIItem {
-                with(configs) {
-                  text = string(cutoutTextRes, cutoutText)
-                  drawable = drawable(cutoutDrawableRes, cutoutDrawable)
-                  if (configs.cutoutForeground != null) foregroundColor = configs.cutoutForeground!!
-                }
-              }
-              .apply { themeEnabled = configs.cutoutForeground == null })
+        CutoutIItem {
+            with(configs) {
+              text = string(cutoutTextRes, cutoutText)
+              drawable = drawable(cutoutDrawableRes, cutoutDrawable)
+              if (configs.cutoutForeground != null) foregroundColor = configs.cutoutForeground!!
+            }
+          }
+          .apply { themeEnabled = configs.cutoutForeground == null }
+      )
       postInflateMainPage(adapter)
       return recycler!!
     }
@@ -195,8 +197,8 @@ open class AboutPanelFaqs : AboutPanelRecycler() {
     with(activity) {
       launch {
         items =
-            withContext(Dispatchers.IO) { kauParseFaq(configs.faqXmlRes, configs.faqParseNewLine) }
-                .map(::FaqIItem)
+          withContext(Dispatchers.IO) { kauParseFaq(configs.faqXmlRes, configs.faqParseNewLine) }
+            .map(::FaqIItem)
         if (pageStatus[position] == 1) addItems(activity, position)
       }
     }

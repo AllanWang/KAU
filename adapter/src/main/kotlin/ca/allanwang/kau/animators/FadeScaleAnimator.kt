@@ -22,8 +22,8 @@ import ca.allanwang.kau.utils.scaleXY
 
 /** Created by Allan Wang on 2017-07-11. */
 class FadeScaleAnimatorAdd(
-    val scaleFactor: Float = 1.0f,
-    override var itemDelayFactor: Float = 0.125f
+  val scaleFactor: Float = 1.0f,
+  override var itemDelayFactor: Float = 0.125f
 ) : KauAnimatorAdd {
 
   override fun animationPrepare(holder: RecyclerView.ViewHolder): View.() -> Unit = {
@@ -45,8 +45,8 @@ class FadeScaleAnimatorAdd(
 }
 
 class FadeScaleAnimatorRemove(
-    val scaleFactor: Float = 1.0f,
-    override var itemDelayFactor: Float = 0.125f
+  val scaleFactor: Float = 1.0f,
+  override var itemDelayFactor: Float = 0.125f
 ) : KauAnimatorRemove {
 
   override fun animation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = {
@@ -65,12 +65,12 @@ class FadeScaleAnimatorRemove(
 class FadeAnimatorChange : KauAnimatorChange {
 
   override fun changeOldAnimation(
-      holder: RecyclerView.ViewHolder,
-      changeInfo: BaseItemAnimator.ChangeInfo
+    holder: RecyclerView.ViewHolder,
+    changeInfo: BaseItemAnimator.ChangeInfo
   ): ViewPropertyAnimator.() -> Unit = { alpha(0f) }
 
   override fun changeNewAnimation(
-      holder: RecyclerView.ViewHolder
+    holder: RecyclerView.ViewHolder
   ): ViewPropertyAnimator.() -> Unit = { alpha(1f) }
 
   override fun changeAnimationCleanup(holder: RecyclerView.ViewHolder): View.() -> Unit = {

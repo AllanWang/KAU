@@ -65,37 +65,37 @@ class KPrefViewTest : BaseTest() {
       }
 
       override fun matchesSafely(item: View): Boolean =
-          item.findViewById<CheckBox>(R.id.kau_pref_inner_content).isChecked == checked
+        item.findViewById<CheckBox>(R.id.kau_pref_inner_content).isChecked == checked
     }
   }
 
   inline fun <reified T : View> ViewInteraction.checkInnerContent(
-      desc: String,
-      crossinline matcher: (T) -> Boolean
+    desc: String,
+    crossinline matcher: (T) -> Boolean
   ): ViewInteraction {
     val viewMatcher =
-        object : BaseMatcher<View>() {
-          override fun describeTo(description: Description) {
-            description.appendText(desc)
-          }
-
-          override fun matches(item: Any?): Boolean {
-            val view = item as? View ?: return false
-            val inner = view.findViewById<View>(R.id.kau_pref_inner_content) as? T ?: return false
-            return matcher(inner)
-          }
+      object : BaseMatcher<View>() {
+        override fun describeTo(description: Description) {
+          description.appendText(desc)
         }
+
+        override fun matches(item: Any?): Boolean {
+          val view = item as? View ?: return false
+          val inner = view.findViewById<View>(R.id.kau_pref_inner_content) as? T ?: return false
+          return matcher(inner)
+        }
+      }
     return check(matches(viewMatcher))
   }
 
   fun ViewInteraction.verifyCheck(tag: String, checked: Boolean, enabled: Boolean = true) =
-      checkInnerContent<CheckBox>("$tag should be ${if (checked) "checked" else "not checked"}") {
-            it.isChecked == checked
-          }
-          .check { view, _ -> ((view.alpha == 1f) == enabled) }
+    checkInnerContent<CheckBox>("$tag should be ${if (checked) "checked" else "not checked"}") {
+        it.isChecked == checked
+      }
+      .check { view, _ -> ((view.alpha == 1f) == enabled) }
 
   fun onCheckboxView(vararg matchers: Matcher<View>) =
-      onView(allOf(*matchers, withChild(withChild(instanceOf(CheckBox::class.java)))))
+    onView(allOf(*matchers, withChild(withChild(instanceOf(CheckBox::class.java)))))
 
   @Test
   fun basicCheckboxToggle() {
@@ -113,8 +113,10 @@ class KPrefViewTest : BaseTest() {
   fun dependentCheckboxToggle() {
     val checkbox2 = onCheckboxView(withChild(withText(R.string.checkbox_2)))
     val checkbox3 =
-        onCheckboxView(
-            withChild(withText(R.string.checkbox_3)), withChild(withText(R.string.desc_dependent)))
+      onCheckboxView(
+        withChild(withText(R.string.checkbox_3)),
+        withChild(withText(R.string.desc_dependent))
+      )
 
     assertFalse(pref.check2, "check2 not normalized")
     assertFalse(pref.check3, "check3 not normalized")

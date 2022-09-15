@@ -28,8 +28,8 @@ import ca.allanwang.kau.ui.views.CutoutView
  * Just a cutout item with some defaults in [R.layout.kau_iitem_cutout]
  */
 class CutoutIItem(val config: CutoutView.() -> Unit = {}) :
-    KauIItem<CutoutIItem.ViewHolder>(R.layout.kau_iitem_cutout, ::ViewHolder, R.id.kau_item_cutout),
-    ThemableIItem by ThemableIItemDelegate() {
+  KauIItem<CutoutIItem.ViewHolder>(R.layout.kau_iitem_cutout, ::ViewHolder, R.id.kau_item_cutout),
+  ThemableIItem by ThemableIItemDelegate() {
 
   override var isSelectable: Boolean
     get() = false

@@ -30,8 +30,8 @@ import ca.allanwang.kau.utils.adjustAlpha
  */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 fun createSimpleRippleDrawable(
-    @ColorInt foregroundColor: Int,
-    @ColorInt backgroundColor: Int
+  @ColorInt foregroundColor: Int,
+  @ColorInt backgroundColor: Int
 ): RippleDrawable {
   val states = ColorStateList(arrayOf(intArrayOf()), intArrayOf(foregroundColor))
   val content = ColorDrawable(backgroundColor)

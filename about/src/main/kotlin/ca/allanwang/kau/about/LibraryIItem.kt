@@ -34,9 +34,12 @@ import com.mikepenz.fastadapter.select.getSelectExtension
 
 /** Created by Allan Wang on 2017-06-27. */
 class LibraryIItem(val lib: Library) :
-    KauIItem<LibraryIItem.ViewHolder>(
-        R.layout.kau_iitem_library, ::ViewHolder, R.id.kau_item_library),
-    ThemableIItem by ThemableIItemDelegate() {
+  KauIItem<LibraryIItem.ViewHolder>(
+    R.layout.kau_iitem_library,
+    ::ViewHolder,
+    R.id.kau_item_library
+  ),
+  ThemableIItem by ThemableIItemDelegate() {
 
   companion object {
     fun bindEvents(fastAdapter: FastAdapter<GenericItem>) {
@@ -63,12 +66,12 @@ class LibraryIItem(val lib: Library) :
       creator.text = lib.developers.mapNotNull { it.name }.joinToString()
       @Suppress("DEPRECATION")
       description.text =
-          when {
-            lib.description.isNullOrBlank() -> lib.description
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ->
-                Html.fromHtml(lib.description, Html.FROM_HTML_MODE_LEGACY)
-            else -> Html.fromHtml(lib.description)
-          }
+        when {
+          lib.description.isNullOrBlank() -> lib.description
+          Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ->
+            Html.fromHtml(lib.description, Html.FROM_HTML_MODE_LEGACY)
+          else -> Html.fromHtml(lib.description)
+        }
       bottomDivider.gone()
       if (lib.artifactVersion?.isNotBlank() == true) {
         bottomDivider.visible()

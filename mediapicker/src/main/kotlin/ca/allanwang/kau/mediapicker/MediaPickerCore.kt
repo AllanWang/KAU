@@ -60,8 +60,8 @@ import kotlinx.coroutines.CancellationException
  * Container for the main logic behind the both pickers
  */
 abstract class MediaPickerCore<T : GenericItem>(
-    val mediaType: MediaType,
-    val mediaActions: List<MediaAction>
+  val mediaType: MediaType,
+  val mediaActions: List<MediaAction>
 ) : KauBaseActivity(), LoaderManager.LoaderCallbacks<Cursor> {
 
   companion object {
@@ -86,7 +86,7 @@ abstract class MediaPickerCore<T : GenericItem>(
 
     /** Create error tile for a given item */
     fun getErrorDrawable(context: Context) =
-        getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
+      getIconDrawable(context, GoogleMaterial.Icon.gmd_error, accentColor)
 
     fun getIconDrawable(context: Context, iicon: IIcon, color: Int): Drawable {
       val sizePx = computeViewSize(context)
@@ -134,12 +134,12 @@ abstract class MediaPickerCore<T : GenericItem>(
     adapterHeader.add(mediaActions.map { MediaActionItem(it, mediaType) })
     recycler.apply {
       val manager =
-          object : GridLayoutManager(context, computeColumnCount(context)) {
-            override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
-              return if (mediaType != MediaType.VIDEO) extraSpace
-              else super.getExtraLayoutSpace(state)
-            }
+        object : GridLayoutManager(context, computeColumnCount(context)) {
+          override fun getExtraLayoutSpace(state: RecyclerView.State?): Int {
+            return if (mediaType != MediaType.VIDEO) extraSpace
+            else super.getExtraLayoutSpace(state)
           }
+        }
       setItemViewCacheSize(CACHE_SIZE)
       layoutManager = manager
       adapter = fulladapter
@@ -189,9 +189,9 @@ abstract class MediaPickerCore<T : GenericItem>(
     if (!hasPreloaded && mediaType == MediaType.VIDEO) {
       hasPreloaded = true
       val preloads =
-          models.subList(0, min(models.size, 50)).map {
-            glide.load(it.data).applyMediaOptions(this@MediaPickerCore).preload()
-          }
+        models.subList(0, min(models.size, 50)).map {
+          glide.load(it.data).applyMediaOptions(this@MediaPickerCore).preload()
+        }
       job.invokeOnCompletion {
         if (it is CancellationException) {
           preloads.forEach(glide::clear)
@@ -229,19 +229,19 @@ abstract class MediaPickerCore<T : GenericItem>(
    * href="http://hmkcode.com/android-display-selected-image-and-its-real-path/"></a>
    */
   private fun <R> ContentResolver.query(
-      baseUri: Uri,
-      uris: List<Uri>,
-      block: (cursor: Cursor) -> R
+    baseUri: Uri,
+    uris: List<Uri>,
+    block: (cursor: Cursor) -> R
   ) {
     val ids =
-        uris
-            .filter {
-              val valid = DocumentsContract.isDocumentUri(this@MediaPickerCore, it)
-              if (!valid) KL.d { "Non document uri: ${it.encodedPath}" }
-              valid
-            }
-            .mapNotNull { DocumentsContract.getDocumentId(it).split(":").getOrNull(1) }
-            .joinToString(prefix = "(", separator = ",", postfix = ")")
+      uris
+        .filter {
+          val valid = DocumentsContract.isDocumentUri(this@MediaPickerCore, it)
+          if (!valid) KL.d { "Non document uri: ${it.encodedPath}" }
+          valid
+        }
+        .mapNotNull { DocumentsContract.getDocumentId(it).split(":").getOrNull(1) }
+        .joinToString(prefix = "(", separator = ",", postfix = ")")
     // ? query replacements are done for one arg at a time
     // since we potentially have a list of ids, we'll just format the WHERE clause ourself
     query(baseUri, MediaModel.projection, "${BaseColumns._ID} IN $ids", null, sortQuery)?.use(block)
@@ -300,9 +300,10 @@ abstract class MediaPickerCore<T : GenericItem>(
       val clip = data.clipData
       if (clip != null) {
         items.addAll(
-            (0 until clip.itemCount).map {
-              clip.getItemAt(it).uri.apply { KL.v { "Media picker clip uri $path" } }
-            })
+          (0 until clip.itemCount).map {
+            clip.getItemAt(it).uri.apply { KL.v { "Media picker clip uri $path" } }
+          }
+        )
       }
     }
     if (items.isEmpty()) return KL.d { "Media picker empty intent" }

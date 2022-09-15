@@ -39,8 +39,8 @@ import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
  * [MediaPickerActivityOverlayBase]
  */
 abstract class MediaPickerActivityBase(
-    mediaType: MediaType,
-    mediaActions: List<MediaAction> = emptyList()
+  mediaType: MediaType,
+  mediaActions: List<MediaAction> = emptyList()
 ) : MediaPickerCore<MediaItem>(mediaType, mediaActions) {
 
   private lateinit var binding: KauActivityImagePickerBinding
@@ -54,17 +54,19 @@ abstract class MediaPickerActivityBase(
 
   private fun KauActivityImagePickerBinding.init() {
     kauSelectionCount.setCompoundDrawables(
-        null,
-        null,
-        GoogleMaterial.Icon.gmd_image.toDrawable(this@MediaPickerActivityBase, 18),
-        null)
+      null,
+      null,
+      GoogleMaterial.Icon.gmd_image.toDrawable(this@MediaPickerActivityBase, 18),
+      null
+    )
 
     setSupportActionBar(kauToolbar)
     supportActionBar?.apply {
       setDisplayHomeAsUpEnabled(true)
       setDisplayShowHomeEnabled(true)
       setHomeAsUpIndicator(
-          GoogleMaterial.Icon.gmd_close.toDrawable(this@MediaPickerActivityBase, 18))
+        GoogleMaterial.Icon.gmd_close.toDrawable(this@MediaPickerActivityBase, 18)
+      )
     }
     kauToolbar.setNavigationOnClickListener { onBackPressed() }
 
@@ -74,11 +76,11 @@ abstract class MediaPickerActivityBase(
       MediaItem.bindEvents(it)
       it.selectExtension {
         selectionListener =
-            object : ISelectionListener<MediaItem> {
-              override fun onSelectionChanged(item: MediaItem, selected: Boolean) {
-                kauSelectionCount.text = adapter.selectionSize.toString()
-              }
+          object : ISelectionListener<MediaItem> {
+            override fun onSelectionChanged(item: MediaItem, selected: Boolean) {
+              kauSelectionCount.text = adapter.selectionSize.toString()
             }
+          }
       }
     }
 
@@ -112,8 +114,8 @@ abstract class MediaPickerActivityBase(
     val params = kauToolbar.layoutParams as AppBarLayout.LayoutParams
     if (scrollable) {
       params.scrollFlags =
-          AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
-              AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+        AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or
+          AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
     } else {
       params.scrollFlags = 0
     }
@@ -122,8 +124,9 @@ abstract class MediaPickerActivityBase(
   override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
     super.onLoadFinished(loader, data)
     binding.setToolbarScrollable(
-        (binding.kauRecyclerview.layoutManager as LinearLayoutManager)
-            .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1)
+      (binding.kauRecyclerview.layoutManager as LinearLayoutManager)
+        .findLastCompletelyVisibleItemPosition() < adapter.adapterItemCount - 1
+    )
   }
 
   override fun onStatusChange(loaded: Boolean) {

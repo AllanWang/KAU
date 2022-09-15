@@ -29,9 +29,9 @@ interface KPrefSingleDelegate : ILazyResettable<Boolean>
 
 class KPrefSingleDelegateAndroid
 internal constructor(
-    private val key: String,
-    private val pref: KPref,
-    private val prefBuilder: KPrefBuilderAndroid
+  private val key: String,
+  private val pref: KPref,
+  private val prefBuilder: KPrefBuilderAndroid
 ) : KPrefSingleDelegate {
 
   @Volatile private var _value: Boolean? = null
@@ -42,7 +42,7 @@ internal constructor(
 
   init {
     if (pref.prefMap.containsKey(key))
-        throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
+      throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
     pref.prefMap[key] = this
   }
 
@@ -74,7 +74,7 @@ internal constructor(
   override fun isInitialized(): Boolean = _value != null
 
   override fun toString(): String =
-      if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+    if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 }
 
 class KPrefSingleDelegateInMemory
@@ -84,7 +84,7 @@ internal constructor(private val key: String, private val pref: KPref) : KPrefSi
 
   init {
     if (pref.prefMap.containsKey(key))
-        throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
+      throw KPrefException("$key is already used elsewhere in preference ${pref.preferenceName}")
     pref.prefMap[key] = this
   }
 
@@ -112,5 +112,5 @@ internal constructor(private val key: String, private val pref: KPref) : KPrefSi
   override fun isInitialized(): Boolean = _value != null
 
   override fun toString(): String =
-      if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
+    if (isInitialized()) value.toString() else "Lazy kPref $key not initialized yet."
 }

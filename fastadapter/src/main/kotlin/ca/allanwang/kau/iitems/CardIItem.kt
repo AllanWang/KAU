@@ -45,34 +45,35 @@ import com.mikepenz.iconics.typeface.IIcon
  * hidden by default unless values are given
  */
 class CardIItem(val builder: Config.() -> Unit = {}) :
-    KauIItem<CardIItem.ViewHolder>(R.layout.kau_iitem_card, ::ViewHolder, R.id.kau_item_card),
-    ThemableIItem by ThemableIItemDelegate() {
+  KauIItem<CardIItem.ViewHolder>(R.layout.kau_iitem_card, ::ViewHolder, R.id.kau_item_card),
+  ThemableIItem by ThemableIItemDelegate() {
 
   companion object {
     fun bindClickEvents(fastAdapter: FastAdapter<GenericItem>) {
       fastAdapter.addEventHook(
-          object : ClickEventHook<GenericItem>() {
-            override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
-              return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button)
-              else null
-            }
+        object : ClickEventHook<GenericItem>() {
+          override fun onBindMany(viewHolder: RecyclerView.ViewHolder): List<View>? {
+            return if (viewHolder is ViewHolder) listOf(viewHolder.card, viewHolder.button)
+            else null
+          }
 
-            override fun onClick(
-                v: View,
-                position: Int,
-                fastAdapter: FastAdapter<GenericItem>,
-                item: GenericItem
-            ) {
-              if (item !is CardIItem) return
-              with(item.configs) {
-                when (v.id) {
-                  R.id.kau_card_container -> cardClick?.invoke()
-                  R.id.kau_card_button -> buttonClick?.invoke()
-                  else -> {}
-                }
+          override fun onClick(
+            v: View,
+            position: Int,
+            fastAdapter: FastAdapter<GenericItem>,
+            item: GenericItem
+          ) {
+            if (item !is CardIItem) return
+            with(item.configs) {
+              when (v.id) {
+                R.id.kau_card_container -> cardClick?.invoke()
+                R.id.kau_card_button -> buttonClick?.invoke()
+                else -> {}
               }
             }
-          })
+          }
+        }
+      )
     }
   }
 
@@ -106,9 +107,9 @@ class CardIItem(val builder: Config.() -> Unit = {}) :
           holder.button.text = buttonText
         }
         val icon =
-            drawable(imageRes) {
-              imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor) ?: image
-            }
+          drawable(imageRes) {
+            imageIIcon?.toDrawable(this@context, sizeDp = 24, color = imageIIconColor) ?: image
+          }
         if (icon != null) holder.icon.visible().setImageDrawable(icon)
       }
       with(holder) {

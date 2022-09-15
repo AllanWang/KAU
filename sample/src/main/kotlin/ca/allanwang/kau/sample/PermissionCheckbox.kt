@@ -37,7 +37,7 @@ import com.mikepenz.fastadapter.listeners.EventHook
 
 /** Created by Allan Wang on 2017-07-03. */
 class PermissionCheckbox(val permission: String) :
-    KauIItem<PermissionCheckbox.ViewHolder>(R.layout.permission_checkbox, { ViewHolder(it) }) {
+  KauIItem<PermissionCheckbox.ViewHolder>(R.layout.permission_checkbox, { ViewHolder(it) }) {
 
   override fun bindView(holder: ViewHolder, payloads: List<Any>) {
     super.bindView(holder, payloads)
@@ -58,12 +58,12 @@ data class PermissionCheckboxModel(val permission: String) : VhModel {
 }
 
 class PermissionCheckboxViewBinding(override val data: PermissionCheckboxModel) :
-    BindingItem<PermissionCheckboxBinding>(data),
-    BindingLayout<PermissionCheckboxBinding> by Companion {
+  BindingItem<PermissionCheckboxBinding>(data),
+  BindingLayout<PermissionCheckboxBinding> by Companion {
 
   override fun createBinding(
-      layoutInflater: LayoutInflater,
-      parent: ViewGroup?
+    layoutInflater: LayoutInflater,
+    parent: ViewGroup?
   ): PermissionCheckboxBinding = PermissionCheckboxBinding.inflate(layoutInflater, parent, false)
 
   override fun PermissionCheckboxBinding.bindView(holder: ViewHolder, payloads: List<Any>) {
@@ -81,26 +81,25 @@ class PermissionCheckboxViewBinding(override val data: PermissionCheckboxModel) 
       get() = R.layout.permission_checkbox
 
     fun clickHook(): EventHook<PermissionCheckboxViewBinding> =
-        object :
-            BindingClickEventHook<PermissionCheckboxBinding, PermissionCheckboxViewBinding>(this) {
-          override fun PermissionCheckboxBinding.onBind(
-              viewHolder: RecyclerView.ViewHolder
-          ): View? = root
+      object :
+        BindingClickEventHook<PermissionCheckboxBinding, PermissionCheckboxViewBinding>(this) {
+        override fun PermissionCheckboxBinding.onBind(viewHolder: RecyclerView.ViewHolder): View? =
+          root
 
-          override fun PermissionCheckboxBinding.onClick(
-              v: View,
-              position: Int,
-              fastAdapter: FastAdapter<PermissionCheckboxViewBinding>,
-              item: PermissionCheckboxViewBinding
-          ) {
-            KL.d { "Perm Click" }
-            with(v.context) {
-              kauRequestPermissions(item.data.permission) { granted, _ ->
-                toast("${item.data.permission} enabled: $granted")
-                fastAdapter.notifyAdapterDataSetChanged()
-              }
+        override fun PermissionCheckboxBinding.onClick(
+          v: View,
+          position: Int,
+          fastAdapter: FastAdapter<PermissionCheckboxViewBinding>,
+          item: PermissionCheckboxViewBinding
+        ) {
+          KL.d { "Perm Click" }
+          with(v.context) {
+            kauRequestPermissions(item.data.permission) { granted, _ ->
+              toast("${item.data.permission} enabled: $granted")
+              fastAdapter.notifyAdapterDataSetChanged()
             }
           }
         }
+      }
   }
 }

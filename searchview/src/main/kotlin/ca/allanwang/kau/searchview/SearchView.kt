@@ -56,7 +56,7 @@ import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 class SearchView
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    FrameLayout(context, attrs, defStyleAttr) {
+  FrameLayout(context, attrs, defStyleAttr) {
 
   /**
    * Collection of all possible arguments when building the SearchView Everything is made as opened
@@ -154,17 +154,17 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
      * in [noResultsFound]
      */
     var onItemClick: (position: Int, key: String, content: String, searchView: SearchView) -> Unit =
-        { _, _, _, _ ->
-        }
+      { _, _, _, _ ->
+      }
 
     /**
      * Long click event for suggestion items This event is only triggered when [key] is not blank
      * (like in [noResultsFound]
      */
     var onItemLongClick:
-        (position: Int, key: String, content: String, searchView: SearchView) -> Unit =
-        { _, _, _, _ ->
-        }
+      (position: Int, key: String, content: String, searchView: SearchView) -> Unit =
+      { _, _, _, _ ->
+      }
 
     /**
      * If a [SearchItem]'s title contains the submitted query, make that portion bold See
@@ -210,16 +210,16 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
   var results: List<SearchItem>
     get() = adapter.adapterItems
     set(value) =
-        context.runOnUiThread {
-          val list =
-              if (value.isEmpty() && configs.noResultsFound != INVALID_ID)
-                  listOf(SearchItem("", context.string(configs.noResultsFound), iicon = null))
-              else value
-          if (configs.highlightQueryText && value.isNotEmpty())
-              list.forEach { it.withHighlights(binding.kauSearchEditText.text?.toString()) }
-          cardTransition()
-          adapter.setNewList(list)
-        }
+      context.runOnUiThread {
+        val list =
+          if (value.isEmpty() && configs.noResultsFound != INVALID_ID)
+            listOf(SearchItem("", context.string(configs.noResultsFound), iicon = null))
+          else value
+        if (configs.highlightQueryText && value.isNotEmpty())
+          list.forEach { it.withHighlights(binding.kauSearchEditText.text?.toString()) }
+        cardTransition()
+        adapter.setNewList(list)
+      }
 
   /** Empties the list on the UI thread The noResults item will not be added */
   internal fun clearResults() {
@@ -234,7 +234,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
   // views
   private var textCallback: Debouncer2<String, SearchView> =
-      debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
+    debounce(0) { query, _ -> KL.d { "Search query $query found; set your own textCallback" } }
   private val adapter = FastItemAdapter<SearchItem>()
   private var menuItem: MenuItem? = null
   val isOpen: Boolean
@@ -254,7 +254,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
   var menuHalfHeight: Int = -1 // starting y for circular reveal (relative to the cardview)
 
   private val binding: KauSearchViewBinding =
-      KauSearchViewBinding.inflate(LayoutInflater.from(context), this)
+    KauSearchViewBinding.inflate(LayoutInflater.from(context), this)
 
   init {
     z = 99f
@@ -272,21 +272,22 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
       isNestedScrollingEnabled = false
       withLinearAdapter(this@SearchView.adapter)
       addOnScrollListener(
-          object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-              super.onScrollStateChanged(recyclerView, newState)
-              if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                hideKeyboard()
-              }
+        object : RecyclerView.OnScrollListener() {
+          override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+              hideKeyboard()
             }
-          })
+          }
+        }
+      )
       itemAnimator = null
     }
     with(adapter) {
       selectExtension { isSelectable = true }
       onClickListener = { _, _, item, position ->
         if (item.key.isNotBlank())
-            configs.onItemClick(position, item.key, item.content, this@SearchView)
+          configs.onItemClick(position, item.key, item.content, this@SearchView)
         true
       }
       onLongClickListener = { _, _, item, position ->
@@ -297,21 +298,22 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
       }
     }
     kauSearchEditText.addTextChangedListener(
-        object : TextWatcher {
-          override fun afterTextChanged(s: Editable?) {}
+      object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
 
-          override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-          override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val text = s.toString().trim()
-            textCallback.cancel()
-            if (text.isNotEmpty()) {
-              textCallback(text, this@SearchView)
-            } else if (!configs.textClearedCallback(this@SearchView)) {
-              clearResults()
-            }
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+          val text = s.toString().trim()
+          textCallback.cancel()
+          if (text.isNotEmpty()) {
+            textCallback(text, this@SearchView)
+          } else if (!configs.textClearedCallback(this@SearchView)) {
+            clearResults()
           }
-        })
+        }
+      }
+    )
     kauSearchEditText.setOnEditorActionListener { _, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_SEARCH) {
         val query = kauSearchEditText.text?.toString() ?: ""
@@ -333,13 +335,14 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
   internal fun cardTransition(builder: TransitionSet.() -> Unit = {}) {
     TransitionManager.beginDelayedTransition(
-        binding.kauSearchCardview,
-        // we are only using change bounds, as the recyclerview items may be animated as well,
-        // which causes a measure IllegalStateException
-        TransitionSet().addTransition(ChangeBounds()).apply {
-          duration = configs.transitionDuration
-          builder()
-        })
+      binding.kauSearchCardview,
+      // we are only using change bounds, as the recyclerview items may be animated as well,
+      // which causes a measure IllegalStateException
+      TransitionSet().addTransition(ChangeBounds()).apply {
+        duration = configs.transitionDuration
+        builder()
+      }
+    )
   }
 
   /** Update the base configurations and apply them to the searchView */
@@ -354,14 +357,14 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
    * [bindSearchView]
    */
   fun bind(
-      menu: Menu,
-      @IdRes id: Int,
-      @ColorInt menuIconColor: Int = Color.WHITE,
-      config: Configs.() -> Unit = {}
+    menu: Menu,
+    @IdRes id: Int,
+    @ColorInt menuIconColor: Int = Color.WHITE,
+    config: Configs.() -> Unit = {}
   ): SearchView {
     config(config)
     val menuItem =
-        menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
+      menu.findItem(id) ?: throw IllegalArgumentException("Menu item with given id doesn't exist")
     if (menuItem.icon == null) {
       menuItem.icon = GoogleMaterial.Icon.gmd_search.toDrawable(context, 18, menuIconColor)
     }
@@ -398,13 +401,14 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     menuHalfHeight = view.height / 2
     menuY = (locations[1] + menuHalfHeight)
     kauSearchCardview.viewTreeObserver.addOnPreDrawListener(
-        object : ViewTreeObserver.OnPreDrawListener {
-          override fun onPreDraw(): Boolean {
-            view.viewTreeObserver.removeOnPreDrawListener(this)
-            kauSearchCardview.setMarginTop(menuY - kauSearchCardview.height / 2)
-            return true
-          }
-        })
+      object : ViewTreeObserver.OnPreDrawListener {
+        override fun onPreDraw(): Boolean {
+          view.viewTreeObserver.removeOnPreDrawListener(this)
+          kauSearchCardview.setMarginTop(menuY - kauSearchCardview.height / 2)
+          return true
+        }
+      }
+    )
   }
 
   /** Handle a back press event Returns true if back press is consumed, false otherwise */
@@ -473,15 +477,16 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
       cardTransition {
         addEndListener {
           kauSearchCardview.circularHide(
-              menuX,
-              menuHalfHeight,
-              duration = configs.revealDuration,
-              onFinish = {
-                configs.closeListener?.invoke(this@SearchView)
-                if (configs.shouldClearOnClose) {
-                  kauSearchEditText.text?.clear()
-                }
-              })
+            menuX,
+            menuHalfHeight,
+            duration = configs.revealDuration,
+            onFinish = {
+              configs.closeListener?.invoke(this@SearchView)
+              if (configs.shouldClearOnClose) {
+                kauSearchEditText.text?.clear()
+              }
+            }
+          )
         }
       }
       kauSearchRecycler.gone()
@@ -497,12 +502,12 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 /** Helper function that binds to an activity's main view */
 @KauSearch
 fun Activity.bindSearchView(
-    menu: Menu,
-    @IdRes id: Int,
-    @ColorInt menuIconColor: Int = Color.WHITE,
-    config: Configs.() -> Unit = {}
+  menu: Menu,
+  @IdRes id: Int,
+  @ColorInt menuIconColor: Int = Color.WHITE,
+  config: Configs.() -> Unit = {}
 ): SearchView =
-    findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
+  findViewById<ViewGroup>(android.R.id.content).bindSearchView(menu, id, menuIconColor, config)
 
 /**
  * Bind searchView to a menu item; call this in [Activity.onCreateOptionsMenu] Be wary that if you
@@ -511,15 +516,17 @@ fun Activity.bindSearchView(
  */
 @KauSearch
 fun ViewGroup.bindSearchView(
-    menu: Menu,
-    @IdRes id: Int,
-    @ColorInt menuIconColor: Int = Color.WHITE,
-    config: Configs.() -> Unit = {}
+  menu: Menu,
+  @IdRes id: Int,
+  @ColorInt menuIconColor: Int = Color.WHITE,
+  config: Configs.() -> Unit = {}
 ): SearchView {
   val searchView = SearchView(context)
   searchView.layoutParams =
-      FrameLayout.LayoutParams(
-          FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
+    FrameLayout.LayoutParams(
+      FrameLayout.LayoutParams.MATCH_PARENT,
+      FrameLayout.LayoutParams.MATCH_PARENT
+    )
   addView(searchView)
   searchView.bind(menu, id, menuIconColor, config)
   return searchView

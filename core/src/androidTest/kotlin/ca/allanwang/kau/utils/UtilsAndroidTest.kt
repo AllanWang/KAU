@@ -32,26 +32,47 @@ class UtilsAndroidTest {
   @Test
   fun colorBlend() {
     assertEquals(
-        0x22446688, 0x11335577.blendWith(0x33557799, 0.5f), "Failed to blend with 50% ratio")
+      0x22446688,
+      0x11335577.blendWith(0x33557799, 0.5f),
+      "Failed to blend with 50% ratio"
+    )
     assertEquals(
-        0x11335577, 0x11335577.blendWith(0x33557799, 0.0f), "Failed to blend with 0% ratio")
+      0x11335577,
+      0x11335577.blendWith(0x33557799, 0.0f),
+      "Failed to blend with 0% ratio"
+    )
     assertEquals(
-        0x33557799, 0x22446688.blendWith(0x33557799, 1.0f), "Failed to blend with 100% ratio")
+      0x33557799,
+      0x22446688.blendWith(0x33557799, 1.0f),
+      "Failed to blend with 100% ratio"
+    )
   }
 
   @Test
   fun lighten() {
     assertEquals(
-        Color.WHITE, Color.WHITE.lighten(0.35f), "Should not be able to further lighten white")
+      Color.WHITE,
+      Color.WHITE.lighten(0.35f),
+      "Should not be able to further lighten white"
+    )
     assertEquals(
-        0xFFEEAAEA.toInt(), 0xFFDD55D5.toInt().lighten(0.5f), "Failed to lighten color by 50%")
+      0xFFEEAAEA.toInt(),
+      0xFFDD55D5.toInt().lighten(0.5f),
+      "Failed to lighten color by 50%"
+    )
   }
 
   @Test
   fun darken() {
     assertEquals(
-        Color.BLACK, Color.BLACK.darken(0.35f), "Should not be able to further darken black")
+      Color.BLACK,
+      Color.BLACK.darken(0.35f),
+      "Should not be able to further darken black"
+    )
     assertEquals(
-        0xFF224424.toInt(), 0xFF448848.toInt().darken(0.5f), "Failed to darken color by 50%")
+      0xFF224424.toInt(),
+      0xFF448848.toInt().darken(0.5f),
+      "Failed to darken color by 50%"
+    )
   }
 }

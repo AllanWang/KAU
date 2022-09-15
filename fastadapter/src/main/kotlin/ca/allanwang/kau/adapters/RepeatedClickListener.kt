@@ -24,9 +24,9 @@ import com.mikepenz.fastadapter.IAdapter
 
 /** Created by Allan Wang on 26/12/17. */
 fun <Item : GenericItem> FastAdapter<Item>.withOnRepeatedClickListener(
-    count: Int,
-    duration: Long,
-    event: ClickListener<Item>
+  count: Int,
+  duration: Long,
+  event: ClickListener<Item>
 ): FastAdapter<Item> {
   onClickListener = RepeatedClickListener(count, duration, event)
   return this
@@ -37,15 +37,15 @@ fun <Item : GenericItem> FastAdapter<Item>.withOnRepeatedClickListener(
  * [duration] from each other. Only then will the [event] be fired, and everything will be reset.
  */
 private class RepeatedClickListener<Item : GenericItem>(
-    @IntRange(from = 1) val count: Int,
-    @IntRange(from = 1) val duration: Long,
-    val event: ClickListener<Item>
+  @IntRange(from = 1) val count: Int,
+  @IntRange(from = 1) val duration: Long,
+  val event: ClickListener<Item>
 ) : ClickListener<Item> {
 
   init {
     if (count <= 0) throw IllegalArgumentException("RepeatedClickListener's count must be > 1")
     if (duration <= 0)
-        throw IllegalArgumentException("RepeatedClickListener's duration must be > 1L")
+      throw IllegalArgumentException("RepeatedClickListener's duration must be > 1L")
   }
 
   private var chain = 0

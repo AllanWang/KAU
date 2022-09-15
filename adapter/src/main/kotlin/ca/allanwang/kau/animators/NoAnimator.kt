@@ -43,12 +43,12 @@ class NoAnimatorRemove(override var itemDelayFactor: Float = 0f) : KauAnimatorRe
 object NoAnimatorChange : KauAnimatorChange {
 
   override fun changeOldAnimation(
-      holder: RecyclerView.ViewHolder,
-      changeInfo: BaseItemAnimator.ChangeInfo
+    holder: RecyclerView.ViewHolder,
+    changeInfo: BaseItemAnimator.ChangeInfo
   ): ViewPropertyAnimator.() -> Unit = {}
 
   override fun changeNewAnimation(
-      holder: RecyclerView.ViewHolder
+    holder: RecyclerView.ViewHolder
   ): ViewPropertyAnimator.() -> Unit = {}
 
   override fun changeAnimationCleanup(holder: RecyclerView.ViewHolder): View.() -> Unit = {

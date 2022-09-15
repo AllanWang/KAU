@@ -43,7 +43,7 @@ import kotlin.math.min
 internal class SwipeBackLayout
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
-    FrameLayout(context, attrs, defStyle), SwipeBackContract, SwipeBackContractInternal {
+  FrameLayout(context, attrs, defStyle), SwipeBackContract, SwipeBackContractInternal {
 
   override val swipeBackLayout: SwipeBackLayout
     get() = this
@@ -98,19 +98,19 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
   private var navBarBase: Int = 0
 
   private val chromeFadeListener: SwipeListener =
-      object : SwipeListener {
-        override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
-          if (!transitionSystemBars) return
-          activity?.apply {
-            statusBarColor = statusBarBase.adjustAlpha(scrimOpacity)
-            navigationBarColor = navBarBase.adjustAlpha(scrimOpacity)
-          }
+    object : SwipeListener {
+      override fun onScroll(percent: Float, px: Int, edgeFlag: Int) {
+        if (!transitionSystemBars) return
+        activity?.apply {
+          statusBarColor = statusBarBase.adjustAlpha(scrimOpacity)
+          navigationBarColor = navBarBase.adjustAlpha(scrimOpacity)
         }
-
-        override fun onEdgeTouch() {}
-
-        override fun onScrollToClose(edgeFlag: Int) {}
       }
+
+      override fun onEdgeTouch() {}
+
+      override fun onScrollToClose(edgeFlag: Int) {}
+    }
 
   private var inLayout: Boolean = false
 
@@ -165,9 +165,9 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
 
   override fun setEdgeSizePercent(swipeEdgePercent: Float) {
     edgeSize =
-        ((if (horizontal) resources.displayMetrics.widthPixels
-            else resources.displayMetrics.heightPixels) * swipeEdgePercent)
-            .toInt()
+      ((if (horizontal) resources.displayMetrics.widthPixels
+        else resources.displayMetrics.heightPixels) * swipeEdgePercent)
+        .toInt()
   }
 
   /**
@@ -211,10 +211,10 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
   /** Scroll out contentView and finish the activity */
   override fun scrollToFinishActivity() {
     val contentView =
-        contentViewRef.get()
-            ?: return KL.e {
-              "KauSwipe cannot scroll to finish as contentView is null. Is onPostCreate called?"
-            }
+      contentViewRef.get()
+        ?: return KL.e {
+          "KauSwipe cannot scroll to finish as contentView is null. Is onPostCreate called?"
+        }
     val swipeWidth = contentView.width + OVERSCROLL_DISTANCE
     val swipeHeight = contentView.height + OVERSCROLL_DISTANCE
     var top = 0
@@ -251,10 +251,10 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
 
   override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
     val contentView =
-        contentViewRef.get()
-            ?: return KL.e {
-              "KauSwipe cannot change layout as contentView is null. Is onPostCreate called?"
-            }
+      contentViewRef.get()
+        ?: return KL.e {
+          "KauSwipe cannot change layout as contentView is null. Is onPostCreate called?"
+        }
     inLayout = true
     val xOffset: Int
     val yOffset: Int
@@ -266,7 +266,11 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
       yOffset = contentOffset
     }
     contentView.layout(
-        xOffset, yOffset, xOffset + contentView.measuredWidth, yOffset + contentView.measuredHeight)
+      xOffset,
+      yOffset,
+      xOffset + contentView.measuredWidth,
+      yOffset + contentView.measuredHeight
+    )
     inLayout = false
   }
 
@@ -278,7 +282,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
     val drawContent = child === contentViewRef.get()
     val ret = super.drawChild(canvas, child, drawingTime)
     if (scrimOpacity > 0 && drawContent && dragHelper.viewDragState != ViewDragHelper.STATE_IDLE)
-        drawScrim(canvas, child)
+      drawScrim(canvas, child)
     return ret
   }
 
@@ -350,21 +354,22 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
     override fun onViewPositionChanged(changedView: View, left: Int, top: Int, dx: Int, dy: Int) {
       super.onViewPositionChanged(changedView, left, top, dx, dy)
       val contentView =
-          contentViewRef.get()
-              ?: return KL.e {
-                "KauSwipe cannot change view position as contentView is null; is onPostCreate called?"
-              }
+        contentViewRef.get()
+          ?: return KL.e {
+            "KauSwipe cannot change view position as contentView is null; is onPostCreate called?"
+          }
       // make sure that we are using the proper axis
       scrollPercent =
-          abs(
-              if (horizontal) left.toFloat() / contentView.width
-              else (top.toFloat() / contentView.height))
+        abs(
+          if (horizontal) left.toFloat() / contentView.width
+          else (top.toFloat() / contentView.height)
+        )
       contentOffset = if (horizontal) left else top
       invalidate()
       if (scrollPercent < scrollThreshold && !isScrollOverValid) isScrollOverValid = true
 
       if (scrollPercent <= 1)
-          listeners.forEach { it.get()?.onScroll(scrollPercent, contentOffset, edgeFlag) }
+        listeners.forEach { it.get()?.onScroll(scrollPercent, contentOffset, edgeFlag) }
 
       if (scrollPercent >= 1) {
         if (activity?.isFinishing == false) {
@@ -382,11 +387,13 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) :
       var result = Pair(0, 0)
       if (scrollPercent <= scrollThreshold) {
         // threshold not met; check velocities
-        if ((edgeFlag == SWIPE_EDGE_LEFT && xvel > minVelocity) ||
+        if (
+          (edgeFlag == SWIPE_EDGE_LEFT && xvel > minVelocity) ||
             (edgeFlag == SWIPE_EDGE_RIGHT && xvel < -minVelocity) ||
             (edgeFlag == SWIPE_EDGE_TOP && yvel > minVelocity) ||
-            (edgeFlag == SWIPE_EDGE_BOTTOM && yvel < -minVelocity))
-            result = exitCaptureOffsets(edgeFlag, releasedChild)
+            (edgeFlag == SWIPE_EDGE_BOTTOM && yvel < -minVelocity)
+        )
+          result = exitCaptureOffsets(edgeFlag, releasedChild)
       } else {
         // threshold met; fling to designated side
         result = exitCaptureOffsets(edgeFlag, releasedChild)

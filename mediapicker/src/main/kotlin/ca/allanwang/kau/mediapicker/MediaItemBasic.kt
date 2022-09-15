@@ -31,8 +31,8 @@ import com.mikepenz.fastadapter.select.getSelectExtension
 
 /** Created by Allan Wang on 2017-07-04. */
 class MediaItemBasic(val data: MediaModel) :
-    KauIItem<MediaItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { ViewHolder(it) }),
-    GlideContract by GlideDelegate() {
+  KauIItem<MediaItemBasic.ViewHolder>(R.layout.kau_iitem_image_basic, { ViewHolder(it) }),
+  GlideContract by GlideDelegate() {
 
   companion object {
     @SuppressLint("NewApi")
@@ -53,32 +53,32 @@ class MediaItemBasic(val data: MediaModel) :
   override fun bindView(holder: ViewHolder, payloads: List<Any>) {
     super.bindView(holder, payloads)
     glide(holder.itemView)
-        .load(data.data)
-        .applyMediaOptions(holder.itemView.context)
-        .listener(
-            object : RequestListener<Drawable> {
-              override fun onLoadFailed(
-                  e: GlideException?,
-                  model: Any,
-                  target: Target<Drawable>,
-                  isFirstResource: Boolean
-              ): Boolean {
-                holder.image.setImageDrawable(
-                    MediaPickerCore.getErrorDrawable(holder.itemView.context))
-                return true
-              }
+      .load(data.data)
+      .applyMediaOptions(holder.itemView.context)
+      .listener(
+        object : RequestListener<Drawable> {
+          override fun onLoadFailed(
+            e: GlideException?,
+            model: Any,
+            target: Target<Drawable>,
+            isFirstResource: Boolean
+          ): Boolean {
+            holder.image.setImageDrawable(MediaPickerCore.getErrorDrawable(holder.itemView.context))
+            return true
+          }
 
-              override fun onResourceReady(
-                  resource: Drawable,
-                  model: Any,
-                  target: Target<Drawable>,
-                  dataSource: DataSource,
-                  isFirstResource: Boolean
-              ): Boolean {
-                return false
-              }
-            })
-        .into(holder.image)
+          override fun onResourceReady(
+            resource: Drawable,
+            model: Any,
+            target: Target<Drawable>,
+            dataSource: DataSource,
+            isFirstResource: Boolean
+          ): Boolean {
+            return false
+          }
+        }
+      )
+      .into(holder.image)
   }
 
   override fun unbindView(holder: ViewHolder) {

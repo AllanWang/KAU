@@ -98,7 +98,7 @@ private class DebounceTask(inline val callback: () -> Unit) : Runnable {
 
 /** A zero input debouncer */
 class Debouncer0 internal constructor(interval: Long, val callback: () -> Unit) :
-    Debouncer(interval) {
+  Debouncer(interval) {
   operator fun invoke() = invoke(callback)
 }
 
@@ -108,7 +108,7 @@ fun (() -> Unit).debounce(interval: Long) = debounce(interval, this)
 
 /** A one argument input debouncer */
 class Debouncer1<T> internal constructor(interval: Long, val callback: (T) -> Unit) :
-    Debouncer(interval) {
+  Debouncer(interval) {
   operator fun invoke(key: T) = invoke { callback(key) }
 }
 
@@ -118,7 +118,7 @@ fun <T> ((T) -> Unit).debounce(interval: Long) = debounce(interval, this)
 
 /** A two argument input debouncer */
 class Debouncer2<T, V> internal constructor(interval: Long, val callback: (T, V) -> Unit) :
-    Debouncer(interval) {
+  Debouncer(interval) {
   operator fun invoke(arg0: T, arg1: V) = invoke { callback(arg0, arg1) }
 }
 
@@ -128,11 +128,11 @@ fun <T, V> ((T, V) -> Unit).debounce(interval: Long) = debounce(interval, this)
 
 /** A three argument input debouncer */
 class Debouncer3<T, U, V> internal constructor(interval: Long, val callback: (T, U, V) -> Unit) :
-    Debouncer(interval) {
+  Debouncer(interval) {
   operator fun invoke(arg0: T, arg1: U, arg2: V) = invoke { callback(arg0, arg1, arg2) }
 }
 
 fun <T, U, V> debounce(interval: Long, callback: ((T, U, V) -> Unit)) =
-    Debouncer3(interval, callback)
+  Debouncer3(interval, callback)
 
 fun <T, U, V> ((T, U, V) -> Unit).debounce(interval: Long) = debounce(interval, this)

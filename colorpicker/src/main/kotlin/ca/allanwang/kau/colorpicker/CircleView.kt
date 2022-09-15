@@ -52,7 +52,7 @@ import kotlin.math.roundToInt
 class CircleView
 @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    FrameLayout(context, attrs, defStyleAttr) {
+  FrameLayout(context, attrs, defStyleAttr) {
 
   private val borderWidthMicro: Float = context.getDip(1f)
   private val borderWidthSmall: Float = context.getDip(3f)
@@ -61,10 +61,10 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
   private val outerPaint: Paint = Paint().apply { isAntiAlias = true }
   private val whitePaint: Paint =
-      Paint().apply {
-        isAntiAlias = true
-        color = Color.WHITE
-      }
+    Paint().apply {
+      isAntiAlias = true
+      color = Color.WHITE
+    }
   private val innerPaint: Paint = Paint().apply { isAntiAlias = true }
   val colorSelected: Boolean
     get() = selected
@@ -96,14 +96,14 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
     val selector = createSelector(color)
     foreground =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-          val states = arrayOf(intArrayOf(android.R.attr.state_pressed))
-          val colors = intArrayOf(shiftColorUp(color))
-          val rippleColors = ColorStateList(states, colors)
-          RippleDrawable(rippleColors, selector, null)
-        } else {
-          selector
-        }
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        val states = arrayOf(intArrayOf(android.R.attr.state_pressed))
+        val colors = intArrayOf(shiftColorUp(color))
+        val rippleColors = ColorStateList(states, colors)
+        RippleDrawable(rippleColors, selector, null)
+      } else {
+        selector
+      }
   }
 
   override fun setBackgroundColor(@ColorInt color: Int) {
@@ -141,8 +141,8 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
     if (!this.selectedRing || this.selected == selected) return
     this.selected = selected // We need to draw the other bands
     val range =
-        if (selected) Pair(-borderWidthSmall, borderWidthLarge)
-        else Pair(borderWidthLarge, -borderWidthSmall)
+      if (selected) Pair(-borderWidthSmall, borderWidthLarge)
+      else Pair(borderWidthLarge, -borderWidthSmall)
     ValueAnimator.ofFloat(range.first, range.second).apply {
       reverse()
       duration = 150L
@@ -171,19 +171,21 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
         canvas.drawCircle(centerWidth, centerHeight, centerWidth, whitePaint)
       } else {
         canvas.drawCircle(
-            centerWidth,
-            centerHeight,
-            if (withBorder) centerWidth - borderWidthMicro else centerWidth,
-            outerPaint)
+          centerWidth,
+          centerHeight,
+          if (withBorder) centerWidth - borderWidthMicro else centerWidth,
+          outerPaint
+        )
         canvas.drawCircle(centerWidth, centerHeight, whiteRadius, whitePaint)
       }
       canvas.drawCircle(centerWidth, centerHeight, innerRadius, innerPaint)
     } else {
       canvas.drawCircle(
-          centerWidth,
-          centerHeight,
-          if (withBorder) centerWidth - borderWidthMicro else centerWidth,
-          innerPaint)
+        centerWidth,
+        centerHeight,
+        if (withBorder) centerWidth - borderWidthMicro else centerWidth,
+        innerPaint
+      )
     }
   }
 
@@ -210,11 +212,14 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
       referenceX = screenWidth - referenceX // mirror
     }
     val cheatSheet =
-        Toast.makeText(context, String.format("#%06X", 0xFFFFFF and color), Toast.LENGTH_SHORT)
+      Toast.makeText(context, String.format("#%06X", 0xFFFFFF and color), Toast.LENGTH_SHORT)
     if (midy < displayFrame.height()) {
       // Show along the top; follow action buttons
       cheatSheet.setGravity(
-          Gravity.TOP or GravityCompat.END, referenceX, screenPos[1] + height - displayFrame.top)
+        Gravity.TOP or GravityCompat.END,
+        referenceX,
+        screenPos[1] + height - displayFrame.top
+      )
     } else {
       // Show along the bottom center
       cheatSheet.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, height)

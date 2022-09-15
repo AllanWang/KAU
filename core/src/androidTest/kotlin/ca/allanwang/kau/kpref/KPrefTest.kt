@@ -35,7 +35,7 @@ class KPrefTest {
   lateinit var memPref: TestPref
 
   class TestPref(factory: KPrefFactory) :
-      KPref("kpref_test_${System.currentTimeMillis()}", factory) {
+    KPref("kpref_test_${System.currentTimeMillis()}", factory) {
 
     var postSetterCount: Int = 0
 

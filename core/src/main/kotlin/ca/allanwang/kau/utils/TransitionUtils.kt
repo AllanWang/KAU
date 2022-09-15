@@ -28,7 +28,7 @@ import androidx.transition.TransitionManager
 /** Created by Allan Wang on 2017-06-24. */
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class TransitionEndListener(val onEnd: (transition: Transition) -> Unit) :
-    Transition.TransitionListener {
+  Transition.TransitionListener {
   override fun onTransitionEnd(transition: Transition) = onEnd(transition)
   override fun onTransitionResume(transition: Transition) {}
   override fun onTransitionPause(transition: Transition) {}
@@ -44,7 +44,7 @@ fun Transition.addEndListener(onEnd: (transition: Transition) -> Unit) {
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class SupportTransitionEndListener(val onEnd: (transition: SupportTransition) -> Unit) :
-    SupportTransition.TransitionListener {
+  SupportTransition.TransitionListener {
   override fun onTransitionEnd(transition: SupportTransition) = onEnd(transition)
   override fun onTransitionResume(transition: SupportTransition) {}
   override fun onTransitionPause(transition: SupportTransition) {}
@@ -68,8 +68,8 @@ fun ViewGroup.transitionAuto(builder: AutoTransition.() -> Unit = {}) {
 
 @KauUtils
 fun ViewGroup.transitionDelayed(
-    @TransitionRes id: Int,
-    builder: androidx.transition.Transition.() -> Unit = {}
+  @TransitionRes id: Int,
+  builder: androidx.transition.Transition.() -> Unit = {}
 ) {
   if (!buildIsLollipopAndUp) return
   val transition = TransitionInflater.from(context).inflateTransition(id)

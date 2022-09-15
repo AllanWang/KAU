@@ -40,10 +40,10 @@ import ca.allanwang.kau.utils.kauIsMainThread
  * proguard for production builds
  */
 open class KauLogger(
-    /** Tag to be used for each log */
-    val tag: String,
-    /** Toggle to dictate whether a message should be logged */
-    var shouldLog: (priority: Int) -> Boolean = { it >= Log.INFO }
+  /** Tag to be used for each log */
+  val tag: String,
+  /** Toggle to dictate whether a message should be logged */
+  var shouldLog: (priority: Int) -> Boolean = { it >= Log.INFO }
 ) {
 
   inline fun v(message: () -> Any?) = log(Log.VERBOSE, message)
@@ -106,17 +106,18 @@ class KauLoggerExtension(val tag: String, val logger: KauLogger) {
   }
 
   inline fun log(priority: Int, message: () -> Any?, t: Throwable? = null) =
-      logger.log(
-          priority,
-          {
-            val msg = message()?.toString()
-            if (msg == null) {
-              null
-            } else {
-              "$tag: $msg"
-            }
-          },
-          t)
+    logger.log(
+      priority,
+      {
+        val msg = message()?.toString()
+        if (msg == null) {
+          null
+        } else {
+          "$tag: $msg"
+        }
+      },
+      t
+    )
 
   inline fun checkThread(id: Int) {
     d {

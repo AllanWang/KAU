@@ -25,9 +25,9 @@ import ca.allanwang.kau.utils.KAU_TOP
 
 /** Created by Allan Wang on 2017-07-11. */
 class SlideAnimatorAdd(
-    val fromEdge: Int,
-    val slideFactor: Float = 1f,
-    override var itemDelayFactor: Float = 0.125f
+  val fromEdge: Int,
+  val slideFactor: Float = 1f,
+  override var itemDelayFactor: Float = 0.125f
 ) : KauAnimatorAdd {
 
   override fun animationPrepare(holder: RecyclerView.ViewHolder): View.() -> Unit = {
@@ -37,7 +37,7 @@ class SlideAnimatorAdd(
       KAU_BOTTOM -> translationY = slideFactor * height
       KAU_RIGHT -> translationX = slideFactor * width
       else ->
-          throw KauAnimatorException("Invalid edge flag used in Slide Animator; use one of KAU_*")
+        throw KauAnimatorException("Invalid edge flag used in Slide Animator; use one of KAU_*")
     }
     alpha = 0f
   }
@@ -58,9 +58,9 @@ class SlideAnimatorAdd(
 }
 
 class SlideAnimatorRemove(
-    val fromEdge: Int,
-    val slideFactor: Float = 1f,
-    override var itemDelayFactor: Float = 0.125f
+  val fromEdge: Int,
+  val slideFactor: Float = 1f,
+  override var itemDelayFactor: Float = 0.125f
 ) : KauAnimatorRemove {
   override fun animation(holder: RecyclerView.ViewHolder): ViewPropertyAnimator.() -> Unit = {
     with(holder.itemView) {
@@ -70,7 +70,7 @@ class SlideAnimatorRemove(
         KAU_BOTTOM -> translationY(slideFactor * height)
         KAU_RIGHT -> translationX(slideFactor * width)
         else ->
-            throw KauAnimatorException("Invalid edge flag used in Slide Animator; use one of KAU_*")
+          throw KauAnimatorException("Invalid edge flag used in Slide Animator; use one of KAU_*")
       }
     }
     alpha(0f)

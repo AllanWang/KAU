@@ -47,20 +47,21 @@ annotation class KauActivity
  */
 @Suppress("DEPRECATION")
 inline fun <reified T : Activity> Activity.startActivityForResult(
-    requestCode: Int,
-    bundleBuilder: Bundle.() -> Unit = {},
-    intentBuilder: Intent.() -> Unit = {}
+  requestCode: Int,
+  bundleBuilder: Bundle.() -> Unit = {},
+  intentBuilder: Intent.() -> Unit = {}
 ) = startActivityForResult(T::class.java, requestCode, bundleBuilder, intentBuilder)
 
 @Deprecated(
-    "Use reified generic instead of passing class",
-    ReplaceWith("startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)"),
-    DeprecationLevel.WARNING)
+  "Use reified generic instead of passing class",
+  ReplaceWith("startActivityForResult<T>(requestCode, bundleBuilder, intentBuilder)"),
+  DeprecationLevel.WARNING
+)
 inline fun <T : Activity> Activity.startActivityForResult(
-    clazz: Class<T>,
-    requestCode: Int,
-    bundleBuilder: Bundle.() -> Unit = {},
-    intentBuilder: Intent.() -> Unit = {}
+  clazz: Class<T>,
+  requestCode: Int,
+  bundleBuilder: Bundle.() -> Unit = {},
+  intentBuilder: Intent.() -> Unit = {}
 ) {
   val intent = Intent(this, clazz)
   intent.intentBuilder()
@@ -92,7 +93,7 @@ inline fun Activity.restartApplication() {
   val pending = PendingIntent.getActivity(this, 666, intent, PendingIntent.FLAG_CANCEL_CURRENT)
   val alarm = getSystemService(Context.ALARM_SERVICE) as AlarmManager
   if (buildIsMarshmallowAndUp)
-      alarm.setExactAndAllowWhileIdle(AlarmManager.RTC, System.currentTimeMillis() + 100, pending)
+    alarm.setExactAndAllowWhileIdle(AlarmManager.RTC, System.currentTimeMillis() + 100, pending)
   else alarm.setExact(AlarmManager.RTC, System.currentTimeMillis() + 100, pending)
   finish()
   exitProcess(0)
@@ -105,8 +106,8 @@ fun Activity.finishSlideOut() {
 
 inline var Activity.navigationBarColor: Int
   get() =
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor
-      else Color.BLACK
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.navigationBarColor
+    else Color.BLACK
   set(value) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       return
@@ -117,18 +118,18 @@ inline var Activity.navigationBarColor: Int
     }
     var prevSystemUiVisibility = window.decorView.systemUiVisibility
     prevSystemUiVisibility =
-        if (value.isColorDark) {
-          prevSystemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
-        } else {
-          prevSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-        }
+      if (value.isColorDark) {
+        prevSystemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+      } else {
+        prevSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+      }
     window.decorView.systemUiVisibility = prevSystemUiVisibility
   }
 
 inline var Activity.statusBarColor: Int
   get() =
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.statusBarColor
-      else Color.BLACK
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) window.statusBarColor
+    else Color.BLACK
   set(value) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       return
@@ -139,11 +140,11 @@ inline var Activity.statusBarColor: Int
     }
     var prevSystemUiVisibility = window.decorView.systemUiVisibility
     prevSystemUiVisibility =
-        if (value.isColorDark) {
-          prevSystemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
-        } else {
-          prevSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
+      if (value.isColorDark) {
+        prevSystemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+      } else {
+        prevSystemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+      }
     window.decorView.systemUiVisibility = prevSystemUiVisibility
   }
 
@@ -153,9 +154,9 @@ inline var Activity.statusBarColor: Int
  * Call in [Activity.onCreateOptionsMenu]
  */
 fun Context.setMenuIcons(
-    menu: Menu,
-    @ColorInt color: Int = Color.WHITE,
-    vararg iicons: Pair<Int, IIcon>
+  menu: Menu,
+  @ColorInt color: Int = Color.WHITE,
+  vararg iicons: Pair<Int, IIcon>
 ) {
   iicons.forEach { (id, iicon) ->
     menu.findItem(id).icon = iicon.toDrawable(this, sizeDp = 18, color = color)
@@ -182,13 +183,13 @@ inline val Activity.contentView: View?
   get() = (findViewById(android.R.id.content) as? ViewGroup)?.getChildAt(0)
 
 inline fun Activity.snackbar(
-    text: String,
-    duration: Int = Snackbar.LENGTH_LONG,
-    noinline builder: Snackbar.() -> Unit = {}
+  text: String,
+  duration: Int = Snackbar.LENGTH_LONG,
+  noinline builder: Snackbar.() -> Unit = {}
 ) = contentView!!.snackbar(text, duration, builder)
 
 inline fun Activity.snackbar(
-    @StringRes textId: Int,
-    duration: Int = Snackbar.LENGTH_LONG,
-    noinline builder: Snackbar.() -> Unit = {}
+  @StringRes textId: Int,
+  duration: Int = Snackbar.LENGTH_LONG,
+  noinline builder: Snackbar.() -> Unit = {}
 ) = contentView!!.snackbar(textId, duration, builder)

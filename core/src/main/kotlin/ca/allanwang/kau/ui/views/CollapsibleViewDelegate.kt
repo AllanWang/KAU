@@ -73,12 +73,12 @@ class CollapsibleViewDelegate : CollapsibleView {
         v = 0f
       }
       stateHolder =
-          when {
-            v == 0f -> KAU_COLLAPSED
-            v == 1f -> KAU_EXPANDED
-            v - field < 0 -> KAU_COLLAPSING
-            else -> KAU_EXPANDING
-          }
+        when {
+          v == 0f -> KAU_COLLAPSED
+          v == 1f -> KAU_EXPANDED
+          v - field < 0 -> KAU_COLLAPSING
+          else -> KAU_EXPANDING
+        }
       field = v
       view?.goneIf(state == KAU_COLLAPSED)
       view?.requestLayout()
@@ -114,10 +114,10 @@ class CollapsibleViewDelegate : CollapsibleView {
   private fun animateSize(target: Float) {
     resetCollapsibleAnimation()
     animator =
-        ValueAnimator.ofFloat(expansion, target).apply {
-          addUpdateListener { expansion = it.animatedValue as Float }
-          start()
-        }
+      ValueAnimator.ofFloat(expansion, target).apply {
+        addUpdateListener { expansion = it.animatedValue as Float }
+        start()
+      }
   }
 
   override fun toggleExpansion() = toggleExpansion(true)
