@@ -28,7 +28,7 @@ To apply, add the following to your root build.gradle:
 allprojects {
     repositories {
         ...
-        jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
         google()
     }
