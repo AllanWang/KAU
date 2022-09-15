@@ -48,10 +48,8 @@ class LibraryIItem(val lib: Library) :
                 if (item !is LibraryIItem) {
                     false
                 } else {
-                    with(item.lib) {
-                        v!!.context.startLink(libraryWebsite, repositoryLink, authorWebsite)
-                        true
-                    }
+                    v!!.context.startLink(item.lib.website)
+                    true
                 }
             }
         }
@@ -64,25 +62,25 @@ class LibraryIItem(val lib: Library) :
     override fun bindView(holder: ViewHolder, payloads: List<Any>) {
         super.bindView(holder, payloads)
         with(holder) {
-            name.text = lib.libraryName
-            creator.text = lib.author
+            name.text = lib.name
+            creator.text = lib.developers.mapNotNull { it.name }.joinToString()
             @Suppress("DEPRECATION")
             description.text = when {
-                lib.libraryDescription.isBlank() -> lib.libraryDescription
+                lib.description.isNullOrBlank() -> lib.description
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> Html.fromHtml(
-                    lib.libraryDescription,
+                    lib.description,
                     Html.FROM_HTML_MODE_LEGACY
                 )
-                else -> Html.fromHtml(lib.libraryDescription)
+                else -> Html.fromHtml(lib.description)
             }
             bottomDivider.gone()
-            if (lib.libraryVersion?.isNotBlank() == true) {
+            if (lib.artifactVersion?.isNotBlank() == true) {
                 bottomDivider.visible()
-                version.visible().text = lib.libraryVersion
+                version.visible().text = lib.artifactVersion
             }
-            if (lib.license?.licenseName?.isNotBlank() == true) {
+            if (lib.licenses.isNotEmpty()) {
                 bottomDivider.visible()
-                license.visible().text = lib.license?.licenseName
+                license.visible().text = lib.licenses.map { it.name }.sorted().joinToString()
             }
             bindTextColor(name, creator)
             bindTextColorSecondary(description)

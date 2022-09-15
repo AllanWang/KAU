@@ -34,11 +34,11 @@ import ca.allanwang.kau.utils.string
 import ca.allanwang.kau.utils.withMarginDecoration
 import ca.allanwang.kau.xml.kauParseFaq
 import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.util.withContext
 import com.mikepenz.fastadapter.GenericItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.reflect.Field
 
 /**
  * Created by Allan Wang on 2017-08-02.
@@ -50,10 +50,12 @@ interface AboutPanelContract {
      * Model list to be added to [adapter]
      */
     var items: List<GenericItem>
+
     /**
      * The adapter, will be late initialized as it depends on configs
      */
     var adapter: FastItemThemedAdapter<GenericItem>
+
     /**
      * Reference to the recyclerview, will be used to stop scrolling upon exit
      */
@@ -181,8 +183,6 @@ open class AboutPanelMain : AboutPanelRecycler() {
 
 /**
  * Panel for loading libraries
- * There is a [AboutActivityBase.getLibraries] hook that can be overridden
- * to customize the libraries listed
  */
 open class AboutPanelLibs : AboutPanelRecycler() {
 
@@ -197,24 +197,10 @@ open class AboutPanelLibs : AboutPanelRecycler() {
     }
 
     override fun loadItems(activity: AboutActivityBase, position: Int) {
-        with(activity) {
-            launch {
-                items = withContext(Dispatchers.Default) {
-                    getLibraries(
-                        if (rClass == null) Libs(activity)
-                        else Libs(activity, rClass.fields.toStringArray())
-                    ).map(::LibraryIItem)
-                }
-                if (pageStatus[position] == 1)
-                    addItems(activity, position)
-            }
-        }
+        items = Libs.Builder().withContext(activity).build().libraries.map(::LibraryIItem)
+        if (activity.pageStatus[position] == 1)
+            addItems(activity, position)
     }
-
-    // TODO remove and use from AboutLibrary
-    // https://github.com/mikepenz/AboutLibraries/issues/449
-    private fun Array<Field>.toStringArray(): Array<String> =
-        map { it.name }.filter { it.contains("define_") }.toTypedArray()
 
     override fun addItemsImpl(activity: AboutActivityBase, position: Int) {
         with(activity.configs) {

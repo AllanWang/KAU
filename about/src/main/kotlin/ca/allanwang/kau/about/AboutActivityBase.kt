@@ -100,15 +100,20 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
         }
         aboutIndicator.setViewPager(aboutPager)
         aboutDraggableFrame.addListener(object :
-                ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
-                override fun onDragDismissed() {
-                    window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
-                        .inflateTransition(if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
-                    panels[currentPage].recycler?.stopScroll()
-                    finishAfterTransition()
-                }
-            })
-        panels.forEachIndexed { index, contract -> contract.loadItems(this@AboutActivityBase, index) }
+            ElasticDragDismissFrameLayout.SystemChromeFader(this@AboutActivityBase) {
+            override fun onDragDismissed() {
+                window.returnTransition = TransitionInflater.from(this@AboutActivityBase)
+                    .inflateTransition(if (aboutDraggableFrame.translationY > 0) R.transition.kau_exit_slide_bottom else R.transition.kau_exit_slide_top)
+                panels[currentPage].recycler?.stopScroll()
+                finishAfterTransition()
+            }
+        })
+        panels.forEachIndexed { index, contract ->
+            contract.loadItems(
+                this@AboutActivityBase,
+                index
+            )
+        }
     }
 
     class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {
@@ -130,6 +135,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
                 field = value
                 faqPageTitleRes = INVALID_ID // reset res so we don't use our default
             }
+
         /**
          * Whether new lines should be included
          */
@@ -144,22 +150,6 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
      */
     open fun postInflateMainPage(adapter: FastItemThemedAdapter<GenericItem>) {
     }
-
-    /**
-     * For [libPanel]
-     *
-     * Method to fetch the library list
-     * This is fetched asynchronously and you may override it to customize the list
-     */
-    open fun getLibraries(libs: Libs): List<Library> =
-        libs.prepareLibraries(
-            this,
-            internalLibraries = emptyArray(), // TODO remove parameter declarations; https://github.com/mikepenz/AboutLibraries/issues/449
-            excludeLibraries = emptyArray(),
-            autoDetect = true,
-            checkCachedDetection = true,
-            sort = true
-        )
 
     /*
      * -------------------------------------------------------------------

@@ -37,7 +37,7 @@ object Versions {
     const val coroutines = "1.6.4"
 
     // https://github.com/mikepenz/AboutLibraries/releases
-    const val aboutLibraries = "8.9.4"
+    const val aboutLibraries = "10.4.0"
 
     // Keep old version
     // https://github.com/wasabeef/Blurry/tags
