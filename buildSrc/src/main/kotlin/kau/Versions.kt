@@ -86,12 +86,6 @@ object Versions {
     // https://github.com/pinterest/ktlint/releases
     const val ktlint = "0.41.0"
 
-    // https://github.com/bugsnag/bugsnag-android/releases
-    const val bugsnag = "5.15.0"
-
-    // https://github.com/bugsnag/bugsnag-android-gradle-plugin/releases
-    const val bugsnagPlugin = "7.1.0"
-
     // https://mvnrepository.com/artifact/com.android.tools.build/gradle?repo=google
     const val gradlePlugin = "7.3.0-rc01"
 
