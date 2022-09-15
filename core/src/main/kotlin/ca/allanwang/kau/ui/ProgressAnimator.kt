@@ -38,17 +38,18 @@ class ProgressAnimator private constructor() : ValueAnimator() {
                 setFloatValues(0f, 1f)
                 addUpdateListener { apply(it.animatedValue as Float) }
                 addListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator?, isReverse: Boolean) {
+
+                    override fun onAnimationStart(animation: Animator, isReverse: Boolean) {
                         isCancelled = false
                         startActions.runAll()
                     }
 
-                    override fun onAnimationCancel(animation: Animator?) {
+                    override fun onAnimationCancel(animation: Animator) {
                         isCancelled = true
                         cancelActions.runAll()
                     }
 
-                    override fun onAnimationEnd(animation: Animator?) {
+                    override fun onAnimationEnd(animation: Animator) {
                         endActions.runAll()
                         isCancelled = false
                     }

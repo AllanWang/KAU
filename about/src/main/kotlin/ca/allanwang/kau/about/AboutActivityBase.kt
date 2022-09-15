@@ -32,8 +32,6 @@ import ca.allanwang.kau.ui.widgets.ElasticDragDismissFrameLayout
 import ca.allanwang.kau.utils.AnimHolder
 import ca.allanwang.kau.utils.INVALID_ID
 import ca.allanwang.kau.utils.dimenPixelSize
-import com.mikepenz.aboutlibraries.Libs
-import com.mikepenz.aboutlibraries.entity.Library
 import com.mikepenz.fastadapter.GenericItem
 
 /**
@@ -108,7 +106,12 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
                     finishAfterTransition()
                 }
             })
-        panels.forEachIndexed { index, contract -> contract.loadItems(this@AboutActivityBase, index) }
+        panels.forEachIndexed { index, contract ->
+            contract.loadItems(
+                this@AboutActivityBase,
+                index
+            )
+        }
     }
 
     class Configs : ThemableIItemColors by ThemableIItemColorsDelegate() {
@@ -130,6 +133,7 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
                 field = value
                 faqPageTitleRes = INVALID_ID // reset res so we don't use our default
             }
+
         /**
          * Whether new lines should be included
          */
@@ -144,22 +148,6 @@ abstract class AboutActivityBase(val rClass: Class<*>?) :
      */
     open fun postInflateMainPage(adapter: FastItemThemedAdapter<GenericItem>) {
     }
-
-    /**
-     * For [libPanel]
-     *
-     * Method to fetch the library list
-     * This is fetched asynchronously and you may override it to customize the list
-     */
-    open fun getLibraries(libs: Libs): List<Library> =
-        libs.prepareLibraries(
-            this,
-            internalLibraries = emptyArray(), // TODO remove parameter declarations; https://github.com/mikepenz/AboutLibraries/issues/449
-            excludeLibraries = emptyArray(),
-            autoDetect = true,
-            checkCachedDetection = true,
-            sort = true
-        )
 
     /*
      * -------------------------------------------------------------------

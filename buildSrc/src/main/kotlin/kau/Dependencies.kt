@@ -106,8 +106,6 @@ object Dependencies {
     fun fastAdapter(type: String) =
         "com.mikepenz:fastadapter-extensions-$type:${Versions.fastAdapter}"
 
-    const val bugsnag = "com.bugsnag:bugsnag-android:${Versions.bugsnag}"
-
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
 
     @JvmStatic
